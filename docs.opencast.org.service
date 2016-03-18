@@ -1,0 +1,14 @@
+[Unit]
+Description=Opencast Documentation Webhook Receptor
+After=network.target
+After=local-fs.target
+Before=nginx.service
+
+[Service]
+User=opencastdocs
+WorkingDirectory=/opt/docs.opencast.org
+ExecStart=gunicorn -b unix:socket receptor:app
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
