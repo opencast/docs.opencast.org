@@ -2,7 +2,7 @@
 set -eu
 
 SCRIPTPATH="$(cd "$(dirname "$0")" && pwd -P)"
-OUTDIR="${SCRIPTPATH}/www"
+OUTDIR="/srv/www/docs.opencast.org"
 MSGFILE="${SCRIPTPATH}/update"
 
 cd "${SCRIPTPATH}"
