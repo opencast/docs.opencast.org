@@ -18,10 +18,12 @@ def update():
 
     # Check target branch:
     targets = []
-    for change in content.get('push', {}).get('changes', []):
-        if change.get('new', {}).get('type') != 'branch':
+    push = content.get('push') or {}
+    for change in push.get('changes') or []:
+        new = change.get('new') or {}
+        if new.get('type') != 'branch':
             continue
-        cname = change.get('new', {}).get('name')
+        cname = new.get('name') or ''
         if cname == 'develop' or (
                 cname.startswith('r/') and not cname.startswith('r/1.')):
             targets.append(cname)
