@@ -8,7 +8,7 @@ MSGFILE="${SCRIPTPATH}/update"
 cd "${SCRIPTPATH}"
 
 # Check if we need to build the docs
-if [ "${1:-}" != "--force" -a ! -f "${MSGFILE}" ]; then
+if [ "${1:-}" != "--force" ] && [ ! -f "${MSGFILE}" ]; then
     exit
 fi
 rm -f "${MSGFILE}"
@@ -52,7 +52,7 @@ do
         pushd "${SCRIPTPATH}/matterhorn/docs/guides/${target}" > /dev/null
         mkdocs build > /dev/null
         mkdir -p "${OUTDIR}/${branch}" > /dev/null
-        rm -rf "${OUTDIR}/${branch}/${target}" > /dev/null
+        rm -rf "${OUTDIR:?}/${branch}/${target}" > /dev/null
         mv site "${OUTDIR}/${branch}/${target}" > /dev/null
         popd > /dev/null
     done
