@@ -28,7 +28,7 @@ $(git branch -a |
     sed -e 's#^.*remotes/origin/\(r/[2-9]*\.[0-9]*\.x\).*$#\1#;tx;d;:x' |
     sort -r)"
 
-VERSIONS="var versions = ['latest'"
+VERSIONS="var versions = ["
 
 for branch in ${BRANCHES}
 do
@@ -68,9 +68,3 @@ do
 done
 
 echo "${VERSIONS}];" > "${OUTDIR}/versions.js"
-
-# Link latest released version
-LATEST="r/$(git tag | sed 's/^\([0-9]*\.[0-9]*\)\.[0-9]*$/\1/;tx;d;:x' |
-    sort | tail -n1).x"
-rm -f "${OUTDIR}/latest"
-ln -sf "${LATEST}" "${OUTDIR}/latest" &> /dev/null
