@@ -33,6 +33,8 @@ VERSIONS="var versions = ['latest'"
 for branch in ${BRANCHES}
 do
     VERSIONS="${VERSIONS}, '${branch}'"
+    git reset --hard HEAD
+    git clean -fdx
     git checkout "origin/${branch}" &> /dev/null
 
     # Check if this state has been built already
