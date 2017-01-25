@@ -28,11 +28,11 @@ $(git branch -a |
     sed -e 's#^.*remotes/origin/\(r/[2-9]*\.[0-9]*\.x\).*$#\1#;tx;d;:x' |
     sort -r)"
 
-VERSIONS="var versions = ["
+VERSIONS="var versions = ['develop'"
 
 for branch in ${BRANCHES}
 do
-    VERSIONS="${VERSIONS}, '${branch}'"
+    [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
     git reset --hard HEAD
     git clean -fdx
     git checkout "origin/${branch}" &> /dev/null
