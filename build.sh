@@ -25,7 +25,7 @@ git fetch --prune &> /dev/null
 # Get the branches
 BRANCHES="develop
 $(git branch -a |
-    sed -e 's#^.*remotes/origin/\(r/[2-9]*\.[0-9]*\.x\).*$#\1#;tx;d;:x' |
+    sed -e 's#^.*remotes/origin/\(r/[2-9]*\.*[0-9]*\.x\).*$#\1#;tx;d;:x' |
     sort -r)"
 
 VERSIONS="var versions = ['develop'"
