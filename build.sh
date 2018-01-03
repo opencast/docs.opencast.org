@@ -14,13 +14,13 @@ fi
 rm -f "${MSGFILE}"
 
 # Check out the Opencast repository
-if [ ! -d matterhorn ]; then
-    git clone https://bitbucket.org/opencast-community/matterhorn.git &> /dev/null
+if [ ! -d opencast ]; then
+    git clone https://github.com/opencast/opencast.git &> /dev/null
 fi
 
 # Make sure to update the repository
-cd "${SCRIPTPATH}/matterhorn"
-git fetch &> /dev/null
+cd "${SCRIPTPATH}/opencast"
+git fetch --prune &> /dev/null
 
 # Get the branches
 BRANCHES="develop
@@ -49,7 +49,7 @@ do
     echo "Building documentation for ${branch}"
     for target in admin developer user
     do
-        pushd "${SCRIPTPATH}/matterhorn/docs/guides/${target}" > /dev/null
+        pushd "${SCRIPTPATH}/opencast/docs/guides/${target}" > /dev/null
         mkdocs build > /dev/null
         mkdir -p "${OUTDIR}/${branch}" > /dev/null
         rm -rf "${OUTDIR:?}/${branch}/${target}" > /dev/null
@@ -62,7 +62,7 @@ do
 
     # Add index page
     if [ "${branch}" == 'develop' ]; then
-        cp "${SCRIPTPATH}/matterhorn/docs/guides/index.html" \
+        cp "${SCRIPTPATH}/opencast/docs/guides/index.html" \
             "${OUTDIR}/index.html"
     fi
 done
