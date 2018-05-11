@@ -68,3 +68,12 @@ do
 done
 
 echo "${VERSIONS}];" > "${OUTDIR}/versions.js"
+
+BRANCHES_ARR=($BRANCHES)
+cat /dev/null > "${OUTDIR}/robots.txt"
+#Magic number is 4.  Array has develop, current dev branch, stable, legacy, and then the ones we want to block.
+#Worst case we have one extra older branch excluded from the robots.txt when there isn't a current dev branch.
+for ((i=4; i<${#BRANCHES_ARR[*]}; i++));
+do
+    echo -e "USER-agent: *\nDisallow: /${BRANCHES_ARR[i]}\n" >> "${OUTDIR}/robots.txt"
+done
