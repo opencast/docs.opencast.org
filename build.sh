@@ -1,26 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 set -eu
 
-SCRIPTPATH="$(cd "$(dirname "$0")" && pwd -P)"
-OUTDIR="/srv/www/docs.opencast.org"
-MSGFILE="${SCRIPTPATH}/update"
+OUTDIR=~/output/
 
-cd "${SCRIPTPATH}"
+cd
+pwd
 
-# Check if we need to build the docs
-if [ "${1:-}" != "--force" ] && [ ! -f "${MSGFILE}" ]; then
-    exit
-fi
-rm -f "${MSGFILE}"
-
-# Check out the Opencast repository
-if [ ! -d opencast ]; then
-    git clone https://github.com/opencast/opencast.git &> /dev/null
-fi
-
-# Make sure to update the repository
-cd "${SCRIPTPATH}/opencast"
-git fetch --prune &> /dev/null
+# Clone Opencast repository
+rm -rf opencast || :
+git clone https://github.com/opencast/opencast.git
+cd opencast
 
 # Get the branches
 BRANCHES="develop
@@ -32,48 +21,81 @@ VERSIONS="var versions = ['develop'"
 
 for branch in ${BRANCHES}
 do
+    echo
+    python -c "print('='*10 + ' Building docs for ${branch} ' + '='*50)"
+    echo
+
+    # install mkdocs
+    # deliberately install an old version for the old docs
+    if echo "$branch" | grep -q '^r/[234]\.'; then
+        pip -q install mkdocs==0.16.3
+    else
+        pip -q install mkdocs==0.16.3 # todo install new version
+    fi
+
     [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
     git reset --hard HEAD
     git clean -fdx
-    git checkout "origin/${branch}" &> /dev/null
-
-    # Check if this state has been built already
-    HASH="$(git log -n1 --format="%H" -- docs/guides)"
-    if [ -f "${OUTDIR}/${branch}/hash" ]; then
-        if grep -q "${HASH}" "${OUTDIR}/${branch}/hash"; then
-            echo "Skipping ${branch}"
-            continue
-        fi
-    fi
+    git checkout "origin/${branch}"
 
     echo "Building documentation for ${branch}"
     for target in admin developer user
     do
-        pushd "${SCRIPTPATH}/opencast/docs/guides/${target}" > /dev/null
-        mkdocs build > /dev/null
-        mkdir -p "${OUTDIR}/${branch}" > /dev/null
-        rm -rf "${OUTDIR:?}/${branch}/${target}" > /dev/null
-        mv site "${OUTDIR}/${branch}/${target}" > /dev/null
-        popd > /dev/null
+        (
+            set -eu
+            cd ~/opencast/docs/guides/"${target}"
+            mkdocs build
+            mkdir -p "${OUTDIR}/${branch}"
+            mv site "${OUTDIR}/${branch}/${target}"
+        )
     done
 
-    # Add build hash
-    echo "${HASH}" > "${OUTDIR}/${branch}/hash"
-
     # Add index page
-    if [ "${branch}" == 'develop' ]; then
-        cp "${SCRIPTPATH}/opencast/docs/guides/index.html" \
-            "${OUTDIR}/index.html"
+    if [ "${branch}" = 'develop' ]; then
+        cp ~/opencast/docs/guides/index.html "${OUTDIR}"
     fi
+
+    # Remove mkdocs to ensure we can install the version we need
+    pip uninstall -y mkdocs
 done
 
 echo "${VERSIONS}];" > "${OUTDIR}/versions.js"
 
-BRANCHES_ARR=($BRANCHES)
-cat /dev/null > "${OUTDIR}/robots.txt"
-#Magic number is 4.  Array has develop, current dev branch, stable, legacy, and then the ones we want to block.
-#Worst case we have one extra older branch excluded from the robots.txt when there isn't a current dev branch.
-for ((i=4; i<${#BRANCHES_ARR[*]}; i++));
-do
-    echo -e "USER-agent: *\nDisallow: /${BRANCHES_ARR[i]}\n" >> "${OUTDIR}/robots.txt"
-done
+# Hide all exept develop and the last 3 release branches from search engines
+# shellcheck disable=SC2016
+echo "$BRANCHES" |\
+    tail -n +5 |\
+    sed 's_^.*$_USER-agent: *\nDisallow: /\0\n_g' > "${OUTDIR}/robots.txt"
+
+
+echo
+python -c "print('='*10 + ' Deployment ' + '='*50)"
+echo
+
+# Prepare Github SSH key
+echo "${GITHUB_DEPLOY_KEY}" | base64 -d > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+set -x
+
+# Get target repository
+cd
+rm -rf docs.opencast.org || :
+git clone git@github.com:opencast/docs.opencast.org.git
+cd docs.opencast.org
+
+# Prepare gh-pages branch
+if git checkout gh-pages; then
+    git ls-files | while read -r f; do git rm -rf "$f"; done
+else
+    git checkout --orphan gh-pages
+    git ls-files | while read -r f; do rm -f "$f"; git rm --cached "$f"; done
+fi
+
+# Add new content
+mv "${OUTDIR}"/* .
+echo docs.opencast.org > CNAME
+git add ./*
+git commit -m "Documentation ($(date))"
+git push origin gh-pages
