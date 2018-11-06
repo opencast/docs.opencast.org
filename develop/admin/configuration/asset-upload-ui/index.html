@@ -13,18 +13,19 @@
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Manual Asset Upload";
     var mkdocs_page_input_path = "configuration/asset-upload-ui/index.md";
-    var mkdocs_page_url = "/configuration/asset-upload-ui/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../../js/jquery-2.1.1.min.js"></script>
-  <script src="../../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -750,7 +751,7 @@ EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={
    "flavorSubType":"source", "multiple":false, "displayOrder": 2}
 </code></pre>
 <p>Source upload options as displayed in the Admin UI Create event:
-    <img alt="assetUploadSource" src="./assetUploadSource.png" /></p>
+    <img alt="assetUploadSource" src="assetUploadSource.png" /></p>
 <p>Asset flavor and sub-flavor are used by default Opencast workflows. When you add new asset types, you may need to adjust
 workflows to process the new asset flavor.</p>
 <p>These workflow variables are avaiable to workflows started by the create event or add asset action:</p>
@@ -831,14 +832,14 @@ EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={"id": "track_presentation","type":"
 <p>After enabling an upload option, a new navigation area becomes visible in the "Create event", called "Asset Upload".
 Assets can be uploaded to new events. The "Asset Upload" navigation disapears for scheduled events.
 Assets cannot be uploaded for scheduled events until after the scheduled event is processed.
-    <img alt="assetUpload" src="./assetUpload.png" /></p>
+    <img alt="assetUpload" src="assetUpload.png" /></p>
 <p>The manually uploaded assets appear in the Create event summary
-    <img alt="assetUploadSummary" src="./assetUploadSummary.png" /></p>
+    <img alt="assetUploadSummary" src="assetUploadSummary.png" /></p>
 <p>To Upload an asset to an existing event, go into the existing event details Assets tab, and click "Add Asset &gt;" link
-    <img alt="assetUploadExistingEvent" src="./assetUploadExistingEvent.png" /></p>
+    <img alt="assetUploadExistingEvent" src="assetUploadExistingEvent.png" /></p>
 <p>The option selection is the same as for Create event, execpt the "Add Asset" button automatically executes the workflow
 defined by <code>EVENTS.EVENTS.NEW.UPLOAD_ASSET.WORKFLOWDEFID</code>
-    <img alt="assetUploadExistingOptions" src="./assetUploadExistingOptions.png" /></p>
+    <img alt="assetUploadExistingOptions" src="assetUploadExistingOptions.png" /></p>
 <h2 id="how-to-create-a-new-asset-option">How to Create a New Asset Option</h2>
 <p>The following steps will assist you in creating a new asset upload option. As mentioned before, only catalog and
 attachments can be added to existing events. New source types can be added to new events.</p>
@@ -991,18 +992,18 @@ Add a translation for the option property when adding new option, otherwise the 
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../metadata/" style="color: #fcfcfc;">&laquo; Previous</a></span>
@@ -1012,7 +1013,9 @@ Add a translation for the option property when adding new option, otherwise the 
       
     </span>
 </div>
-    <script src="../../js/theme.js"></script>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
 
 </body>
 </html>
