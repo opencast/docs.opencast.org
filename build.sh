@@ -26,11 +26,11 @@ do
     echo
 
     # install mkdocs
-    # deliberately install an old version for the old docs
     if echo "$branch" | grep -q '^r/[234]\.'; then
+        # deliberately install an old version for the old docs
         pip -q install mkdocs==0.16.3
     else
-        pip -q install mkdocs==0.16.3 # todo install new version
+        pip -q install mkdocs
     fi
 
     [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
