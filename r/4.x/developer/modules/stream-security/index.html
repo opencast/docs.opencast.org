@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Stream Security - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Stream Security";
+    var mkdocs_page_input_path = "modules/stream-security.md";
+    var mkdocs_page_url = "/modules/stream-security/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../capture-agent/">Capture Agent</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Stream Security</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#stream-security-developer-guide">Stream Security Developer Guide</a></li>
+    
+
+    <li class="toctree-l3"><a href="#opencast-signing-protocol">Opencast Signing Protocol</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#policy">Policy</a></li>
+        
+            <li><a class="toctree-l4" href="#signature">Signature</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#signing-urls-from-a-3rd-party-system">Signing URLs from a 3rd party system</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#option-1-use-the-existing-url-signing-service">Option #1: Use the existing URL Signing Service**</a></li>
+        
+            <li><a class="toctree-l4" href="#option-2-create-custom-url-signing-service">Option #2: Create custom URL Signing Service</a></li>
+        
+            <li><a class="toctree-l4" href="#option-3-give-access-to-third-party-systems-to-signing-rest-endpoints">Option #3: Give Access to Third Party Systems to Signing REST Endpoints</a></li>
+        
+            <li><a class="toctree-l4" href="#further-information">Further information</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/glossary/">Glossary</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/security-api/">Security API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Stream Security</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/modules/stream-security.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="stream-security-developer-guide">Stream Security Developer Guide</h1>
+<p>To get an introduction to Stream Security, please read the sub section Stream Security in the section Modules of the Admin Guide.</p>
+<h1 id="opencast-signing-protocol">Opencast Signing Protocol</h1>
+<p>The Signing Providers as well as the verification components that are developed by the Opencast community implement the policy and signature specified in the Opencast Signing Protocol. </p>
+<h2 id="policy">Policy</h2>
+<p>The policy is a Base64 encoded JSON document. A human-readable version of the JSON document looks like this:</p>
+<pre><code class="json">{
+  &quot;Statement&quot;:{
+    &quot;Resource&quot;:&quot;http:\/\/opencast.org\/engage\/resource.mp4&quot;,
+    &quot;Condition&quot;:{
+      &quot;DateLessThan&quot;:1425170777000,
+      &quot;DateGreaterThan&quot;:1425084379000,
+      &quot;IpAddress&quot;:&quot;10.0.0.1&quot;
+    }
+  }
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Property Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resource</strong></td>
+<td>URL of the resource, must exactly match the requested URL including the schema. In case of a RTMP request, this is only the resource path, without the RTMP application name or the server.</td>
+</tr>
+<tr>
+<td><strong>DateLessThan</strong></td>
+<td>Unix epoch that a resource should expire on in milliseconds</td>
+</tr>
+<tr>
+<td>DateGreaterThan</td>
+<td>Unix epoch that a resource should become available in milliseconds</td>
+</tr>
+<tr>
+<td>IpAddress</td>
+<td>Client's IP address that will be accessing the resource</td>
+</tr>
+</tbody>
+</table>
+<p>Properties in bold are mandatory.</p>
+<p>Before the JSON document is Base64 encoded, all whitespaces need to be removed. The above sample document would then look like this:</p>
+<pre><code class="json">{&quot;Statement&quot;:{&quot;Resource&quot;:&quot;http:\/\/opencast.org\/engage\/resource.mp4&quot;,&quot;Condition&quot;:{&quot;DateLessThan&quot;:1425170777000,&quot;DateGreaterThan&quot;:1425084379000,&quot;IpAddress&quot;:&quot;10.0.0.1&quot;}}}
+</code></pre>
+
+<p>The Base64-encoding must be performed in a URL safe way which means that instead of using the characters ‘+’ and ‘/’ they have to be replaced by '-' and '_' respectively. The example above would be encoded into:</p>
+<pre><code>eyJTdGF0ZW1lbnQiOnsiUmVzb3VyY2UiOiJodHRwOlwvXC9vcGVuY2FzdC5vcmdcL2VuZ2FnZVwvcmVzb3VyY2UubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0=
+</code></pre>
+<p>The encoded policy must be sent to the server as a query parameter named ‘policy’, e.g.</p>
+<pre><code>http://opencast.org/engage/resource.mp4?policy=eyJTdGF0ZW1lbnQiOnsiUmVzb3VyY2UiOiJodHRwOlwvXC9vcGVuY2FzdC5vcmdcL2VuZ2FnZVwvcmVzb3VyY2UubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0
+</code></pre>
+<p>Note: Be aware that Base64 encoding can have up to two ‘=’ characters at the end of the string to pad a message to a necessary length divisible by 3. All components should be able to handle Base64 encoded strings with or without this padding (Resources signed by Opencast will have the padding characters URL encoded to ‘%3D’).</p>
+<h2 id="signature">Signature</h2>
+<p>The signature is a hash-based message authentication code (HMAC) based on a secret key. The algorithm used is HMAC-SHA-256. Only the encoded policy needs to be taken as input for the hash-calculation.</p>
+<p>The keys used are simple character strings without any special format. It could be something like ‘AbCdEfGh’, but it’s recommended to use a key with a length of 256 bit like ‘2195265EE84ED1E1324D31F37F7E3’. Each key must have a unique identifier, e.g. ‘key1’. In this example, the following key has been used:</p>
+<p>Key ID: demoKeyOne
+Secret Key: 6EDB5EDDCF994B7432C371D7C274F</p>
+<p>The HMAC for the signature from the previous section calculated based on the <em>demoKey1</em> is </p>
+<pre><code>c8712284aabc843f76a132a3a7c8997670414b2f89cb96b367d5f35d0f62a2e4
+</code></pre>
+<p>The signature must also be sent as a query parameter that forms part of the resource request. The example from above would now look like this:</p>
+<pre><code>http://opencast.org/engage/resource.mp4?policy=eyJTdGF0ZW1lbnQiOnsiUmVzb3VyY2UiOiJodHRwOlwvXC9vcGVuY2FzdC5vcmdcL2VuZ2FnZVwvcmVzb3VyY2UubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0&amp;signature=c8712284aabc843f76a132a3a7c8997670414b2f89cb96b367d5f35d0f62a2e4
+</code></pre>
+<p>The same is true for the key id, which needs to be included to determine which key was used to create the signature. </p>
+<pre><code>http://opencast.org/engage/resource.mp4?policy=eyJTdGF0ZW1lbnQiOnsiUmVzb3VyY2UiOiJodHRwOlwvXC9vcGVuY2FzdC5vcmdcL2VuZ2FnZVwvcmVzb3VyY2UubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0&amp;signature=c8712284aabc843f76a132a3a7c8997670414b2f89cb96b367d5f35d0f62a2e4&amp;keyId=demoKeyOne
+</code></pre>
+<h1 id="signing-urls-from-a-3rd-party-system">Signing URLs from a 3rd party system</h1>
+<p>URL signatures also need to be issued for resources presented on and linked from a third party system (such as a custom video portal). There are two options for signing 3rd party system URLs:</p>
+<h3 id="option-1-use-the-existing-url-signing-service">Option #1: Use the existing URL Signing Service**</h3>
+<p>If the third party system is based on Java, the existing URL Signing bundles/JARs can be reused. They do not have dependencies to other parts of Opencast and can therefore be used independently.</p>
+<p>These bundles are required:</p>
+<ul>
+<li>matterhorn-urlsigning-common</li>
+<li>matterhorn-urlsigning-service-api</li>
+<li>matterhorn-urlsigning-service-impl</li>
+</ul>
+<p>Code example:</p>
+<pre><code class="java">private UrlSigningService urlSigningService;
+
+/** OSGi DI */
+void setUrlSigningService(UrlSigningService service) {
+  this.urlSigningService = service;
+}
+
+… 
+
+String urlToSign = “http://my.custom.url/with/path.mp4”;
+long signedUrlExpiresDuration = 60;
+
+if (urlSigningService.accepts(urlToSign)) {
+  try {
+    String signedUrl = urlSigningService.sign(
+        urlToSign,
+        signedUrlExpiresDuration,
+        null,
+        null);
+    ...
+  } catch (UrlSigningException e) {
+    // handle exception
+  }
+}
+</code></pre>
+
+<h3 id="option-2-create-custom-url-signing-service">Option #2: Create custom URL Signing Service</h3>
+<p>Based on the technical details outlined in the Opencast Signing Protocol, a URL Signing Service that is compatible with the other existing parts of the Stream Security system can be implemented.</p>
+<h3 id="option-3-give-access-to-third-party-systems-to-signing-rest-endpoints">Option #3: Give Access to Third Party Systems to Signing REST Endpoints</h3>
+<p>Opencast servers that have been configured to use URL signing service will have two REST endpoints at http://admin.matterhorn.com:8080/signing/docs. The accepts endpoint will return true if the Opencast server can sign a particular URL. The sign endpoint will return a signed URL when the correct parameters are given. Due to the sensitive nature of these endpoints they are locked down to be only accessible by a user with ROLE_ADMIN privileges in the etc/security/mh_default_org.xml configuration file. Creating a new user with this role and accessing the endpoint using these credentials will allow a third party system to sign any URLs.</p>
+<h2 id="further-information">Further information</h2>
+<ul>
+<li>For an overview of Stream Security, please consult the sub section Stream Security in the section Modules of the Admin Guide.</li>
+<li>For information about how to configure stream security on your Opencast servers, please consult the sub section Stream Security in the section Configuration of the Admin Guide</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../oaipmh/" class="btn btn-neutral float-right" title="OAI-PMH">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../player/testing/" class="btn btn-neutral" title="Testing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../player/testing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../oaipmh/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

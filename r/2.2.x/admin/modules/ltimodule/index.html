@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>LTI Module - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "LTI Module";
+    var mkdocs_page_input_path = "modules/ltimodule.md";
+    var mkdocs_page_url = "/modules/ltimodule/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">LTI Module</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#integrating-opencast-in-an-lms-with-the-lti-module">Integrating Opencast in an LMS with The LTI module</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#how-to-use-it">How To Use It</a></li>
+        
+            <li><a class="toctree-l4" href="#configure-opencast">Configure Opencast</a></li>
+        
+            <li><a class="toctree-l4" href="#configure-the-lms">Configure the LMS</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-customise-it">How To Customise It</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>LTI Module</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/modules/ltimodule.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="integrating-opencast-in-an-lms-with-the-lti-module">Integrating Opencast in an LMS with The LTI module</h1>
+<p>The LTI - "Learning Tools Interoperability"  module has been introduced to offer an easy way to integrate Opencast in a learning management system. This guide has been written to explain how to use this module.
+For more information about LTI specifications themselves, please visit http://www.imsglobal.org/toolsinteroperability2.cfm or http://developers.imsglobal.org/.</p>
+<h2 id="how-to-use-it">How To Use It</h2>
+<p>Test if the LTI module is present in the Opencast instance.
+First of all, be sure that the module matterhorn-lti has been compiled, deployed and starts within the opencast instance.To test if the module is running, go on the page
+<code>OPENCAST-URL/ltitools/index.html</code>.</p>
+<p>A welcome message from the LTI tools should appear. This is the default index page for the LTI tool. But two ready-to-use elements  are available in this module:</p>
+<p>The engage player:
+<code>OPENCAST-URL/ltitools/player/index.html?id=RESOURCEID</code></p>
+<p>The media module (recording list, use the player above): <code>OPENCAST-URL/ltitools/series/index.html?series=[SERIES-ID]</code></p>
+<p>If no SERIES-ID is given, the media module will display the recordings from all the series.</p>
+<h2 id="configure-opencast">Configure Opencast</h2>
+<p>The integration of Opencast in the LMS through the LTI module has to be configured on both sides: In Opencast and in the LMS.
+To let the LMS access Opencast, the security file etc/security/mh_default_org.xml from the opencast folder must be configured. The relevant sections are shown below:
+Uncomment:</p>
+<pre><code>&lt;sec:custom-filter after=&quot;BASIC_AUTH_FILTER&quot; ref=&quot;oauthProtectedResourceFilter&quot; /&gt;
+</code></pre>
+
+<p>Set the CONSUMER_KEY and the CONSUMER_SECRET</p>
+<pre><code>  &lt;!-- ####################### --&gt;
+  &lt;!-- # OAuth (LTI) Support # --&gt;
+  &lt;!-- ####################### --&gt;
+  &lt;bean name=&quot;oAuthConsumerDetailsService&quot; class=&quot;org.opencastproject.kernel.security.OAuthSingleConsumerDetailsService&quot;&gt;
+    &lt;constructor-arg index=&quot;0&quot; ref=&quot;userDetailsService&quot; /&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;CONSUMER_KEY&quot; /&gt;
+    &lt;constructor-arg index=&quot;2&quot; value=&quot;CONSUMER_SECRET&quot; /&gt;
+    &lt;constructor-arg index=&quot;3&quot; value=&quot;consumerName&quot; /&gt;
+  &lt;/bean&gt;
+</code></pre>
+
+<p>Change trustedKey to:</p>
+<pre><code>&lt;bean class=&quot;org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler&quot;&gt;
+        &lt;constructor-arg index=&quot;0&quot; ref=&quot;userDetailsService&quot; /&gt;
+        &lt;constructor-arg index=&quot;1&quot; ref=&quot;securityService&quot; /&gt;
+        &lt;constructor-arg index=&quot;2&quot;&gt;
+          &lt;list&gt;
+            &lt;value&gt;CONSUMER_KEY&lt;/value&gt;
+          &lt;/list&gt;
+        &lt;/constructor-arg&gt;
+      &lt;/bean&gt;
+</code></pre>
+
+<ul>
+<li>The two OAuth parameters CONSUMER_KEY and CONSUMER_SECRET have to be set with your own values.
+They are then required to embed OPENCAST into my LMS.</li>
+</ul>
+<h2 id="configure-the-lms">Configure the LMS</h2>
+<p>To connect OPENCAST to the LMS additional configuration parameters besides the LTI endpoint (ENGAGE-URL/lti), the consumerkey and consumersecret are needed on the LMS side. OPENCAST uses custom LTI tags to pass additional information. These include the kind of interface to present (engage player or media module) and the id of the media to show.</p>
+<p>The interface is passed using the custom_tool parameter:
+<code>custom_tool = ltitools/player/index.html  (to show the engage player)</code>
+or
+<code>custom_tool = ltitools/series/index.html (to show the series overview)</code></p>
+<p>The ID of the series/episode needs to be passed differently depending on the interface chosen. For the engage player the custom_id field is used:
+<code>custom_id = 3e9f15b1-97ef-4be6-8276-59da869ceecd</code>
+For the series overview the id is passed as custom_series:
+<code>custom_series = 3e9f15b1-97ef-4be6-8276-59da869ceecd</code></p>
+<p>For debugging purposes, it could be useful to set the following custom tag:
+<code>custom_test = true</code></p>
+<p>For more information about how to set custom LTI tags, please check the documenation of your LMS.</p>
+<h2 id="how-to-customise-it">How To Customise It</h2>
+<p>The LTI module can be extended/customised to fullfill your own needs.  The default elements from the LTI module (player, series) can be found in the folder <code>OPENCAST/modules/matterhorn-lti/src/main/resources/tools</code>.  These elements can be modified or new one can be created to extend the LTI module. Keep in mind that the player and series elements are using some files from the OPENCAST/shared-resources folder. These files are copied at compile-time. For more information about it, look at the maven pom file of the LTI module.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mediamodule.configuration/" class="btn btn-neutral float-right" title="Media Module">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../atomrss/" class="btn btn-neutral" title="Atom/RSS Feed"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../atomrss/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../mediamodule.configuration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

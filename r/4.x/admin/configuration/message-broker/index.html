@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Message Broker - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Message Broker";
+    var mkdocs_page_input_path = "configuration/message-broker.md";
+    var mkdocs_page_url = "/configuration/message-broker/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-manager/">Asset Manager</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Message Broker</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#message-broker-configuration">Message Broker Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#required-version">Required Version</a></li>
+        
+            <li><a class="toctree-l4" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#configuration">Configuration</a></li>
+        
+            <li><a class="toctree-l4" href="#firewall">Firewall</a></li>
+        
+            <li><a class="toctree-l4" href="#memory-settings">Memory settings</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-upload-ui/">Manual Asset Upload</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.piwik.tracking/">Piwik Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishaws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Message Broker</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/message-broker.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="message-broker-configuration">Message Broker Configuration</h1>
+<p>Since version 2, Opencast requires an Apache ActiveMQ message broker as message relay for the administrative user
+interface. ActiveMQ can either be set up to run on its own machine or on one of the existing Opencast nodes (usually the
+admin node).</p>
+<h3 id="required-version">Required Version</h3>
+<ul>
+<li>ActiveMQ 5.10 or above</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>If you use the Opencast package repository, simply install the <code>activemq-dist</code> package.</li>
+<li>If you are running RHEL, CentOS or Fedora you can use the <a href="https://copr.fedoraproject.org/coprs/lkiesow/apache-activemq-dist/">ActiveMQ-dist Copr RPM repository
+   </a></li>
+<li>Newer Debian based operating systems contain a sufficient new version, however the ActiveMQ configuration file will require modification to function correctly.</li>
+<li>You can download binary distributions from the <a href="http://activemq.apache.org/download.html">Apache ActiveMQ website</a></li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>What you need to do:</p>
+<ul>
+<li>Set-up required message queues for Opencast</li>
+<li>Point all your Opencast nodes to your message broker.</li>
+<li>Configure authentication and access control</li>
+</ul>
+<p>The first task is easy. Opencast comes with a ActiveMQ configuration file, located at
+<code>docs/scripts/activemq/activemq.xml</code> (RPM repo: <code>/usr/share/opencast/docs/scripts/activemq/activemq.xml</code>). This file
+will give you a basic configuration with all queues set-up and accepting connections from all hosts over TCP port
+<code>61616</code>.</p>
+<p>Replacing the default ActiveMQ configuration with this file will already give you a fully functional ActiveMQ set-up for
+an all-in-one server. You will find the configuration in the usually locations, e.g. <code>/etc/activemq/</code>. On Debian you
+first need to activate or create a new ActiveMQ instance. For more details on that see
+<code>/usr/share/doc/activemq/README.Debian</code>.</p>
+<p>Note that the default configuration needs to be adjusted for distributed set-ups since:</p>
+<ul>
+<li>ActiveMQ listens to localhost only (<code>activemq.xml</code>)</li>
+<li>Opencast tries to connect to ActiveMQ locally (<code>custom.properties</code>)</li>
+<li>No password is set (<code>activemq.xml</code>, <code>custom.properties</code>)</li>
+</ul>
+<h3 id="connection">Connection</h3>
+<p>The ActiveMQ connection is configured in the <code>custom.properties</code>. The default configuration points to a local
+installation of ActiveMQ. You can easily configure this to point somewhere else:</p>
+<pre><code>activemq.broker.url = failover://tcp://example.opencast.org:61616
+</code></pre>
+<h3 id="bind-host">Bind Host</h3>
+<p>The default configuration tells ActiveMQ to listen to <code>127.0.0.1</code> only. On a distributed system, you want to set this to
+<code>0.0.0.0</code> to listen to all hosts by changing the <code>transportConnector</code>:</p>
+<pre><code>&lt;transportConnector name="openwire" uri="tcp://127.0.0.1:61616?..."/&gt;
+</code></pre>
+<h3 id="username-and-password">Username and Password</h3>
+<p>ActiveMQ can secure its message queues by requiring login credentials. This section will go through the steps of setting
+up a username and a password. Have a look at the <a href="http://activemq.apache.org/security.html">ActiveMQ security site</a> for
+details about using alternative authentication and authorization providers.</p>
+<h4 id="create-activemq-admin-user">Create ActiveMQ Admin User</h4>
+<p>First, you need to create a new user that will have access to the queues. This is configured in the <code>users.properties</code>
+configuration file in the configuration directory for ActiveMQ. It is a list of the format <code>username = password</code> so, for
+example, we could create a new admin user with the following file contents:</p>
+<pre><code>admin=password
+</code></pre>
+<h4 id="create-activemq-admin-group">Create ActiveMQ Admin Group</h4>
+<p>The next step is to provide a group that will have our user in it and will secure access to the message queues. This is
+configured in the file <code>groups.properties</code> in the configuration directory for ActiveMQ. It is a list of the format
+<code>group = user1,user2,…</code>. For example:</p>
+<pre><code>groups=user1,user2,user3
+</code></pre>
+<p>To set-up our new user to be a part of the admins group:</p>
+<pre><code>admins=admin
+</code></pre>
+<h4 id="configure-users-and-groups-configuration-files">Configure Users and Groups Configuration Files</h4>
+<p>Next, we need to make sure that ActiveMQ is using our <code>users.properties</code> and <code>groups.properties</code> files to authenticate
+and authorize users. The <code>login.config</code> file should be in the ActiveMQ configuration directory and contain:</p>
+<pre><code>activemq {
+    org.apache.activemq.jaas.PropertiesLoginModule required
+    org.apache.activemq.jaas.properties.user="users.properties"
+    org.apache.activemq.jaas.properties.group="groups.properties";
+};
+</code></pre>
+<h4 id="configure-message-broker-security">Configure Message Broker Security</h4>
+<p>The final step to secure the ActiveMQ queues is to limit access to a specific group. This can be done by editing
+<code>activemq.xml</code> in the ActiveMQ configuration directory. In this file, we need to add some XML in between these tags:</p>
+<pre><code>&lt;broker&gt;&lt;/broker&gt;
+</code></pre>
+<p>We will add the following plugin configuration:</p>
+<pre><code>&lt;plugins&gt;
+  &lt;jaasAuthenticationPlugin configuration="activemq" /&gt;
+  &lt;authorizationPlugin&gt;
+    &lt;map&gt;
+      &lt;authorizationMap&gt;
+        &lt;authorizationEntries&gt;
+          &lt;authorizationEntry queue="&gt;" read="admins" write="admins" admin="admins" /&gt;
+          &lt;authorizationEntry topic="&gt;" read="admins" write="admins" admin="admins" /&gt;
+          &lt;authorizationEntry topic="ActiveMQ.Advisory.&gt;" read="admins" write="admins" admin="admins"/&gt;
+        &lt;/authorizationEntries&gt;
+      &lt;/authorizationMap&gt;
+    &lt;/map&gt;
+  &lt;/authorizationPlugin&gt;
+&lt;/plugins&gt;
+</code></pre>
+<ul>
+<li>
+<p>The <code>jaasAuthenticationPlugin</code> configures the broker to use our <code>login.config</code> file for the authentication.</p>
+<pre><code>&lt;jaasAuthenticationPlugin configuration="activemq" /&gt;
+</code></pre>
+</li>
+<li>
+<p>The property:</p>
+<pre><code>configuration=activemq
+</code></pre>
+</li>
+</ul>
+<p>needs to match the name given for surrounding object in <code>login.config</code> i.e. activemq{};</p>
+<ul>
+<li>The <code>authorizationEntry</code> restricts read, write and admin access for queues and topics to members of the group admins.</li>
+</ul>
+<h4 id="configure-opencast-to-connect-with-username-and-password-to-message-broker">Configure Opencast to Connect with Username and Password to Message Broker</h4>
+<p>Now that we have secured the queues, Opencast will complain that it is unable to connect, using the current username and
+password. The username and password used above need to be added to the <code>custom.properties</code> file of Opencast.  There are
+two properties to set:</p>
+<pre><code>activemq.broker.username=admin
+activemq.broker.password=password
+</code></pre>
+<h2 id="firewall">Firewall</h2>
+<p>Do not forget that ActiveMQ uses the TCP port 61616 (default configuration) for communication. You probably want to
+allow communication over this port in your firewall on a distributed setup or explicitly forbid public access on an
+all-in-one installation.</p>
+<h2 id="memory-settings">Memory settings</h2>
+<p>When ActiveMQ is under heavy load it may require additional RAM. There are two places to change this:</p>
+<p>In <code>docs/scripts/activemq/activemq.xml</code>:</p>
+<pre><code>...
+&lt;systemUsage&gt;
+  &lt;systemUsage&gt;
+    &lt;memoryUsage&gt;
+      &lt;!--&lt;memoryUsage percentOfJvmHeap="70" /&gt;--&gt;
+      &lt;memoryUsage limit="2048 MB"/&gt;
+...
+</code></pre>
+<p>This controls the allowed memory of ActiveMQ inside of its JVM instance. For more information see <a href="http://activemq.apache.org/javalangoutofmemory.html">the ActiveMQ documentation</a></p>
+<p>In <code>/usr/share/activemq/bin/env</code>:</p>
+<pre><code>ACTIVEMQ_OPTS_MEMORY="-Xms64M -Xmx4G"
+</code></pre>
+<p>These are the classic JVM minimum and maximum memory flags.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../metadata/" class="btn btn-neutral float-right" title="Metadata">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../asset-manager/" class="btn btn-neutral" title="Asset Manager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../asset-manager/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../metadata/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Process Smil - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Process Smil";
+    var mkdocs_page_input_path = "workflowoperationhandlers/process-smil-woh.md";
+    var mkdocs_page_url = "/workflowoperationhandlers/process-smil-woh/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/asset-upload-ui/">Manual Asset Upload</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/ui/">Admin UI Configuration</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Process Smil</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#processsmilworkflowhandler">ProcessSmilWorkflowHandler</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#description">Description</a></li>
+        
+            <li><a class="toctree-l4" href="#configuration-details">Configuration details</a></li>
+        
+            <li><a class="toctree-l4" href="#notevery-important">Note:(Very Important)</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workflow Operation Handler &raquo;</li>
+        
+      
+    
+    <li>Process Smil</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/workflowoperationhandlers/process-smil-woh.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="processsmilworkflowhandler">ProcessSmilWorkflowHandler</h1>
+<h2 id="description">Description</h2>
+<p>The ProcessSmilWorkflowHandler is used to edit media files using descriptions from a SMIL file.
+The SMIL file is typically generated by the editor or it can be constructed and uploaded.
+It contains names of one or more source tracks and a list of selected clips defined by
+in/out points in ms in the source tracks.
+It will concatenate all the clips from the source tracks according to the in/out points and encode the result into
+multiple target videos using a list of encoding profiles.
+In addition, the target videos are optionally tagged with the name of the encoding profiles.</p>
+<p>The Video editor produces a SMIL file and by default will also encode one set of edited videos
+targets as an intermediate format to be used to do segmentation and then used as source to generate multiple delivery
+formats.
+This workflow operation is used to bypass the generation of the temporary targets and generate the delivery formats
+directly.
+Subsequent workflow operations can select the highest quality source medium by tags and flavors.
+This operation saves the encoding time of one set of full length video and allows concurrent
+processing of multiple independent ffmpeg operations.</p>
+<p>To use this operation with the editor, the following must be added to the <a href="../editor-woh/">editor</a> workflow operation
+to bypass the video editor encoding,</p>
+<pre><code>&lt;configuration key=&quot;skip-processing&quot;&gt;true&lt;/configuration&gt;
+</code></pre>
+
+<h2 id="configuration-details">Configuration details</h2>
+<p>Currently, there is only one transition type, which is "fade to black".
+The edited video will fade in from black with a fade-out/fade-in for each clip transition and a fade out at the end.
+The transition duration is a 2 second fade, configured in org.opencastproject.composer.impl.ComposerServiceImpl.cfg.
+In the future, each transition can be configurable as a SMIL element.</p>
+<p>The SMIL file can use more than one source video, but the caller has to take care that the dimension of
+all the source videos are the same.
+This workflow will generate one independent ffmpeg operation per SMIL paramgroup (based on source) regardless
+of the number of target outputs.</p>
+<p>This workflow can handle each source flavor selector independently.
+eg: Each source selector can have its own set of encoding profiles, target tags and flavors.
+The parameters for each configuration, such as flavor are separated into sections by "<strong>;</strong>".
+E
+ach source media selector can have its own sets of encoding profile ids (one for each target recording)
+and target tags,
+as well as its own set of target tags and flavors, defined as a comma delimited list.</p>
+<p>As an example, using presenter/source and presentation/source as uploaded media.
+eg:</p>
+<pre><code> &lt;configuration key=&quot;source-flavors&quot;&gt;*/source&lt;/configuration&gt;
+</code></pre>
+
+<blockquote>
+<p>One source selector means that all the matching recording will be processed the same way.</p>
+</blockquote>
+<pre><code> &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/source;presentation/source&lt;/configuration&gt;
+</code></pre>
+
+<blockquote>
+<p>Two different source selectors separated by semicolons means that all the matching recordings in the
+first selector will be processed according to the parameters in the first
+section and the all the
+matching recordings in the second selector will be processed according to the parameters in next section
+of the other configuration values such as encoding profiles.</p>
+</blockquote>
+<p>Each source selector can have only one corresponding section in each set of values.
+The use of the semi-colon is optional. If it is absent, there is only one section.
+If there is only one source selector, but multiple sections in the parameters, then the sections are collapsed
+into one and they will apply to all the source flavors in the source selector.
+"N to N" means that each section has its own processing configuration.
+"1 to N" or "N to 1" means that all the sections are processed the same way,
+ but "M to N" where "M &lt;&gt; N" will result in an error.</p>
+<p>eg:</p>
+<pre><code>&lt;configuration key=&quot;target-flavors&quot;&gt;*/preview&lt;/configuration&gt;
+&lt;configuration key=&quot;encoding-profiles&quot;&gt;mp4-low.http;mp4-vga-medium&lt;/configuration&gt;
+</code></pre>
+
+<blockquote>
+<p>All targets are flavored the same way.
+Using the example above,
+all media are encoded with "mp4-low.http" and "mp4-vga-medium" and
+targets are flavored as "presenter/preview" and "presentation/preview"</p>
+</blockquote>
+<pre><code> &lt;configuration key=&quot;target-tags&quot;&gt;engage-streaming,rss,atom;engage-download,rss,atom&lt;/configuration&gt;
+ &lt;configuration key=&quot;encoding-profiles&quot;&gt;mp4-medium.http;mp4-vga-medium&lt;/configuration&gt;
+</code></pre>
+
+<blockquote>
+<p>Each section is tagged individually. Using the example above,
+presenter/preview is encoded with "mp4-medium.http" and tagged with "engage-streaming" ,"rss" and "atom",
+presentation/preview is encoded with "mp4-vga-medium" and tagged with "engage-download","rss" and "atom".</p>
+</blockquote>
+<p>If presenter/work is to be encoded with "mp4-low.http,mp4-medium.http" and
+presentation/work is to be encoded with "mp4-vga-medium,mp4-medium.http",
+and the target media are flavored as "presenter/delivery" and "presentation/delivery" respectively,
+and all targets are tagged with "engage" and "archive" in addition to the names of the encoding profiles used.</p>
+<p>It will look like the following.</p>
+<h3 id="parameter-table">Parameter Table</h3>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>smil-flavor</td>
+<td>smil/smil</td>
+<td>Specifies the flavor of the new media</td>
+</tr>
+<tr>
+<td>source-flavors</td>
+<td>presenter/work<strong>;</strong>presentation/work</td>
+<td>Which media should be encoded</td>
+</tr>
+<tr>
+<td>target-flavors</td>
+<td>*/delivery</td>
+<td>Specifies the flavor of the new media</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>engage,archive</td>
+<td>Specifies the tags of the new media</td>
+</tr>
+<tr>
+<td>encoding-profiles</td>
+<td>mp4-low.http,mp4-medium.http<strong>;</strong>mp4-vga-medium,mp4-medium.http</td>
+<td>Profiles for each source flavor</td>
+</tr>
+<tr>
+<td>tag-with-profile</td>
+<td>true (default to false)</td>
+<td>target medium are tagged with coresponding encoding profile Id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operation-example">Operation Example</h3>
+<p>The parameters in the table above will look like this as a workflow operation.</p>
+<pre><code>&lt;operation
+    id="process-smil"
+    fail-on-error="true"
+    exception-handler-workflow="error"
+    description="Encoding presenter (camera) video to Flash download"&gt;
+    &lt;configurations&gt;
+        &lt;configuration key="smil-flavor"&gt;smil/cutting&lt;/configuration&gt;
+        &lt;configuration key="source-flavors"&gt;presenter/work;presentation/work&lt;/configuration&gt;
+        &lt;configuration key="target-flavors"&gt;*/delivery&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;engage,archive&lt;/configuration&gt;
+        &lt;configuration key="encoding-profiles"&gt;
+                mp4-low.http,mp4-medium.http*;*mp4-vga-medium,mp4-medium.http&lt;/configuration&gt;
+        &lt;configuration key="tag-with-profile"&gt;true&lt;/configuration&gt;
+    &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h2 id="notevery-important">Note:(Very Important)</h2>
+<p>Each encoding section generates all the target media in one ffmpeg call by incorporating relevant parts
+of each encoding profile command using complex filters.</p>
+<ul>
+<li>
+<p>Care must be taken that <strong>no complex filters</strong> are used in the encoding profiles used for this workflow,
+as it can cause a conflict and ffmpeg will fail.
+Simple filters (i.e.: -vf, -af , -filter:v, -filter:a) can be used.</p>
+</li>
+<li>
+<p>Encoded target recording are distinguished by the suffix, it is important that <strong>all the encoding profiles
+used have distinct suffixes</strong> or the target video tagging can be wrong, for example:</p>
+</li>
+</ul>
+<pre><code>profile.mp4-vga-medium.http.suffix = -vga-medium.mp4
+profile.mp4-medium.http.suffix = -medium.mp4
+</code></pre>
+
+<ul>
+<li>If using this to process SMIL files generated by the editor in the same workflow,
+be sure to set the "skip-processing" key in the editor to true.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../publish-aws-woh/" class="btn btn-neutral float-right" title="Publish AWS">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../probe-resolution-woh/" class="btn btn-neutral" title="Probe Resolution"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../probe-resolution-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../publish-aws-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

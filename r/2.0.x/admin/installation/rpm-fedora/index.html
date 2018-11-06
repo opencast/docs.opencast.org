@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>RPM Fedora - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "RPM Fedora";
+    var mkdocs_page_input_path = "installation/rpm-fedora.md";
+    var mkdocs_page_url = "/installation/rpm-fedora/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Administration Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../release.notes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Installation Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">RPM Fedora</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#install-from-repository-fedora">Install from Repository (Fedora)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#supported-versions">Supported Versions</a></li>
+        
+            <li><a class="toctree-l4" href="#registration">Registration</a></li>
+        
+            <li><a class="toctree-l4" href="#activate-repository">Activate Repository</a></li>
+        
+            <li><a class="toctree-l4" href="#install-3rd-party-tools">Install 3rd-party-tools</a></li>
+        
+            <li><a class="toctree-l4" href="#install-apache-activemq">Install Apache ActiveMQ</a></li>
+        
+            <li><a class="toctree-l4" href="#install-opencast">Install Opencast</a></li>
+        
+            <li><a class="toctree-l4" href="#advanced-installation">Advanced Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#pre-built-opencast-distributions">Pre-built Opencast Distributions</a></li>
+        
+            <li><a class="toctree-l4" href="#uninstall-opencast">Uninstall Opencast</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rpm-rhel-sl-centos/">RPM RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../source-debian-ubuntu/">Source Debian/Ubuntu</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../source-rhel-sl-centos/">Source RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../source-macosx/">Source Mac OS X</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/security/">Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/security.cas/">Security - CAS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/configuration.files.and.keys/">Configuration Files and Keys</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Module Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.architecture/">Player - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.core.reference/">Player - Core Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.events/">Player - Events</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.storage/">Player - Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugins/">Player - Plugins</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugin.development/">Player - Plugin Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.testing/">Player - Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.url.parameter/">Player - URL Parameters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Video Editor - Setup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.manual/">Video Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Video Editor - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Upgrade</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../upgrade/">Upgrading Home</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handlers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Workflow Operation Handler Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip WOH</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Installation &raquo;</li>
+        
+      
+    
+    <li>RPM Fedora</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/installation/rpm-fedora.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="install-from-repository-fedora">Install from Repository (Fedora)</h1>
+<p>There is an RPM software repository available for RedHat-based Linux distributions provided by the University of
+Osnabrück. This repository provides preconfigured Opencast installations, including all 3rd-Party-Tools. Using this
+method, you do not have to compile the software by yourself.</p>
+<p>It is also interesting for developers as all dependencies for Opencast usage, testing and development are provided by
+the RPM repository.</p>
+<h2 id="supported-versions">Supported Versions</h2>
+<p>For Fedora usually the latest two versions are supported, meaning that the support is dependent on the status of the
+Fedora release. For architectures, <em>only</em> <code>x86_64</code> is supported. 32bit architectures are <em>not</em> supported.</p>
+<h2 id="registration">Registration</h2>
+<p>Before you can start you need to get an account for the repository. You will need the credentials that you get by mail
+after the registration to successfully complete this manual. The placeholders <code>[your_username]</code> and <code>[your_password]</code>
+are used in this manual wherever the credentials are needed.</p>
+<ul>
+<li>http://repo.virtuos.uos.de</li>
+</ul>
+<h2 id="activate-repository">Activate Repository</h2>
+<p>First you have to install the necessary repositories so that your package manager can access them:</p>
+<ol>
+<li>
+<p>Add matterhorn repository:</p>
+<p><code>cd /etc/yum.repos.d
+curl -O http://repo.virtuos.uos.de/matterhorn-testing.repo \
+  -d 'version=$releasever' -d os=fc \
+  -u [your_username]:[your_password]</code></p>
+</li>
+<li>
+<p>Add RPMfusion repository:</p>
+<p>dnf install --nogpgcheck \
+  http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonf</p>
+</li>
+</ol>
+<h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
+<p>This step is optional and only recommended for those who want to build Opencast from source. If you install Opencast
+from the repository, all necessary dependencies will be installed automatically.</p>
+<p>You can install all necessary 3rd-Party-Tools for matterhorn like this:</p>
+<pre><code>sudo dnf install opencast20-third-party-tools
+</code></pre>
+<p>Or manually:</p>
+<pre><code>sudo dnf install ffmpeg qt_sbtl_embedder tesseract mediainfo
+</code></pre>
+<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
+<p>The Apache ActiveMQ message broker is required by Opencast since version 2.0. It does not necessarily have to be
+installed on the same machine as Opencast but would commonly for an all-in-one system. ActiveMQ is available from the
+Opencast RPM repository as well and can be installed by running:</p>
+<pre><code>dnf install activemq-dist
+</code></pre>
+<p>A prepared configuration file for ActiveMQ can be found at <code>/usr/share/matterhorn/docs/scripts/activemq/activemq.xml</code>
+<em>after Opencast itself has been installed</em> and should replace <code>/etc/activemq/activemq.xml</code>. For an all-in-one
+installation the following command should suffice:</p>
+<pre><code>sudo cp /usr/share/matterhorn/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
+</code></pre>
+<p>ActiveMQ should be started before starting Opencast.</p>
+<p>More information about how to properly set up ActiveMQ for Opencast can be found in the <a href="../../configuration/message-broker/">message broker configuration
+documentation</a>.</p>
+<h2 id="install-opencast">Install Opencast</h2>
+<p>For this guide, <code>opencast20</code> is used as placeholder for the package name. It will install the latest version of the
+Opencast 2.0.x branch. If you want to install another version, please change the name accordingly.</p>
+<blockquote>
+<p><em>Notice: Since the name <code>matterhorn</code> was dropped between version 1.6 and 2.0, old packages were named
+<code>opencast-matterhornXX</code>.</em></p>
+</blockquote>
+<h3 id="basic-installation">Basic Installation</h3>
+<p>For a basic installation (All-In-One) just run:</p>
+<pre><code>sudo dnf install opencast20
+</code></pre>
+<p>This will install the default distribution of matterhorn and all its dependencies, including the 3rd-Party-Tools.</p>
+<p>Now you can start Opencast:</p>
+<pre><code>sudo systemctl start matterhorn.service
+</code></pre>
+<p>While Opencast is preconfigured, it is strongly recommended to follow at least the <a href="../../configuration/basic/">Basic Configuration
+guide</a>. It will help you to set your hostname, login information, …</p>
+<h2 id="advanced-installation">Advanced Installation</h2>
+<p>While the basic installation will give you an all-in-one Opencast distribution which is nice for testing, you might
+want to have more control over your system and deploy it over several machines by choosing which parts of Opencast you
+want to install. You can list all Opencast packages with:</p>
+<pre><code>dnf search opencast
+</code></pre>
+<p>This will list four kinds of packages:</p>
+<p><code>opencastXX</code> is the package that was used for the basic installation. It represents a default Opencast
+distribution.  This is what you would get if you built Opencast from source and do not change any options.</p>
+<p>The <code>opencastXX-distribution-...</code> packages will install preconfigured Opencast distributions. Have a look at
+the Opencast Distribution section below for more information about the different distributions.</p>
+<p><code>opencastXX-profile-...</code> are the Opencast profiles from the main pom.xml. Each profile keeps track of a
+couple of modules.  You should only install these if you know what you are doing.</p>
+<p><code>opencastXX-module-...</code> are the Opencast modules itself. It should only be necessary to install these
+directly in special cases.  And you should only do that if you know what you are doing.</p>
+<p>Normally you would either install the main package or a distribution package.</p>
+<h2 id="pre-built-opencast-distributions">Pre-built Opencast Distributions</h2>
+<p>The following list provides an overview of the currently available pre-built Opencast distributions. Each distribution
+should keep track of all its dependencies.</p>
+<h3 id="admin-opencast-distribution">Admin Opencast distribution</h3>
+<p><code>opencastXX-distribution-admin</code></p>
+<p>Install this package for an Opencast admin server. On this server, the Administrative services are hosted. You would usually
+select this package for one node if you are running Opencast across three or more servers.</p>
+<h3 id="adminworker-opencast-distribution">Admin/Worker Opencast distribution</h3>
+<p><code>opencastXX-distribution-admin-worker</code></p>
+<p>Combined Admin/Worker Opencast distribution. This will install both the modules and profiles for the Administrative
+Tools and the Worker. This package is targeted at medium-sized installations, where you want to separate the "backend"
+server that the admin accesses from the "frontend" server that the viewers use.</p>
+<h3 id="default-opencast-distribution">Default Opencast distribution</h3>
+<p><code>opencastXX-distribution-default</code></p>
+<p>This is the default package containing all 3 main profiles (Admin, Worker, Engage) in one. This installation is only
+recommended if you do not have many videos that you want to ingest and you do not expect many viewers. This is perfect
+for a first test and to get an impression of Opencast, as it works out of the box and does not need much configuration.</p>
+<h3 id="engage-opencast-distribution">Engage Opencast distribution</h3>
+<p><code>opencastXX-distribution-engage</code></p>
+<p>This is the package for the Opencast Engage Modules, which are the front-end to the viewer of your videos. It is always
+highly recommended to keep these separated from the rest of your system.</p>
+<h3 id="worker-opencast-distribution">Worker Opencast distribution</h3>
+<p><code>opencastXX-distribution-worker</code></p>
+<p>This is the worker package that contains the modules that create the most CPU load (encoding, OCR, etc). So it is
+recommended to deploy this on a more powerful machine.</p>
+<h2 id="uninstall-opencast">Uninstall Opencast</h2>
+<p>Sometimes you want to uninstall Opencast. For example to do a clean reinstall. You can do that by executing:</p>
+<pre><code>sudo dnf remove 'opencast*'
+</code></pre>
+<p>This will not touch your created media files or modified configuration files.  If you want to remove them as well, you
+have to to that by yourself.</p>
+<pre><code># Remove media files
+sudo rm -rf /srv/matterhorn
+
+# Remove configuration files
+sudo rm -rf /etc/matterhorn
+
+# Remove system logfiles
+sudo rm -rf /var/log/matterhorn
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../rpm-rhel-sl-centos/" class="btn btn-neutral float-right" title="RPM RHEL/CentOS">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../multiple-servers/" class="btn btn-neutral" title="Multiple Servers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../multiple-servers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../rpm-rhel-sl-centos/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

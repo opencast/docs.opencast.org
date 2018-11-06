@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Metadata - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Metadata";
+    var mkdocs_page_input_path = "configuration/metadata.md";
+    var mkdocs_page_url = "/configuration/metadata/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Metadata</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#overview">Overview</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#standard-metadata">Standard Metadata</a></li>
+        
+            <li><a class="toctree-l4" href="#extended-metadata">Extended Metadata</a></li>
+        
+            <li><a class="toctree-l4" href="#metadata-catalog-configuration">Metadata Catalog Configuration</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-upload-ui/">Manual Asset Upload</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../user-statistics.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Metadata</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/metadata.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="overview">Overview</h1>
+<p>In Opencast, metadata is stored in so-called metadata catalogs. For each event or series, an arbiraty number of
+such configurable metadata catalog can be managed. A common set of metadata has been standarized to form a
+common basis (standard metadata), whereas administrators can configure Opencast to support other metadata sets
+(extended metadata).</p>
+<p>This document provides an overview over Opencast's metadata capabilities and its configuration.</p>
+<h2 id="standard-metadata">Standard Metadata</h2>
+<p>For both events and series, a common set of metadata is supported by Opencast out-of-the box. Since metadata catalogs
+are referenced from within media package, flavors can be used to identify a specific metadata catalog. The following
+flavors are treated by Opencast as standard metadata in means of Opencast expects them to be present:</p>
+<ul>
+<li><code>dublincore/episode</code> holds the standard metadata of an event</li>
+<li><code>dublincore/series</code> holds the standard metadata of a series</li>
+</ul>
+<p>Opencast assumes specific metadata fields to be present in the standard metadata in means of defining hard-coded
+filters, table columns and search indices.</p>
+<p>To adjust the standard metadata to your specific needs, you can configure them in
+<code>/opt/opencast/etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-episode-common.cfg</code> and
+<code>/opt/opencast/etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-series-common.cfg</code>.</p>
+<p>For details on how to configure metadata catalogs, see section Configuring Metadata Catalogs.</p>
+<p>As mentioned above, however, Opencast expects specific metafields to be present to work correctly. In case you want
+to map metadata specific to your use case, you might consider to use the extended metadata capbilities of Opencast
+described in the next section.</p>
+<h2 id="extended-metadata">Extended Metadata</h2>
+<p>For both events and series, Opencast support an arbitrary number of customized metadata catalogs.</p>
+<p>To add extended metadata catalogs, create a configuration file with a valid filename of the form
+<code>org.opencastproject.ui.metadata.CatalogUIAdapterFactory-&lt;name&gt;.cfg</code> in <code>/opt/opencast/etc.</code> on the admin node.</p>
+<p>For details on how to configure metadata catalogs, see section Configuring Metadata Catalogs.</p>
+<p>Limitations:</p>
+<ul>
+<li>Cannot be sorted, searched or filtered</li>
+<li>Cannot be displayed in tables</li>
+</ul>
+<h2 id="metadata-catalog-configuration">Metadata Catalog Configuration</h2>
+<p>The metadata configuration file format can be logically split up into different parts:</p>
+<h3 id="part-1-general-catalog-information">Part 1: General catalog information</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>events</td>
+<td>Two different types of catalog UI adapters may be configured, such for events and others for series.</td>
+</tr>
+<tr>
+<td>organization</td>
+<td>mh_default_org</td>
+<td>A custom catalog definition is mapped 1:1 to an organization and is available to this one organization only.</td>
+</tr>
+<tr>
+<td>flavor</td>
+<td>mycompany/episode</td>
+<td>The catalog must be of a certain flavor. For a events catalog, the flavor consists of the form type/subtype whereas for series you only need to define the subtype. Attention: For series catalogs, the type (the part before the slash '/') is used as element type.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>My Personal Catalog Name</td>
+<td>This is the title that is displayed in the UI. It should be something that is readable by humans.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="part-2-xml-serialization-information">Part 2: XML serialization information</h3>
+<p>The only supported serialization of catalogs is currently the XML file format. The file follows the recommendation of
+the Dublin Core Metadata Initiative.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xml.rootElement.name</td>
+<td>mycatalog</td>
+<td>The name of the XML root element</td>
+</tr>
+<tr>
+<td>xml.rootElement.namespace.URI</td>
+<td>http://myorg.com/metadata/catalog</td>
+<td>The URI of the XML namespace of the root element</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Namespace bindings</strong></p>
+<p>To properly serialize to XML each prefix has to be bound to an XML namespace. Multiple namespace bindings can be
+configured, each identified by its unique name.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xml.namespaceBinding.{name}.URI</td>
+<td>http://myorg.com/metadata/terms</td>
+<td>The URI of the XML namespace</td>
+</tr>
+<tr>
+<td>xml.namespaceBinding.{name}.prefix</td>
+<td>myterms</td>
+<td>The prefix used to identify elements of the namespace</td>
+</tr>
+</tbody>
+</table>
+<h3 id="part-3-catalog-fields-configuration">Part 3: Catalog fields configuration</h3>
+<p><code>{field-id}</code> must be a unique identifier for each property for a given catalog and can be the same as the input or
+output id to make it easy to find.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>property.{field-id}.inputID*</td>
+<td>title</td>
+<td>The id used to identify this property in the catalog e.g. The name of the property inside the xml file of a Dublin Core catalog. If an outputID is not specified then this inputID is used for both the catalog and the front end id. This value is mandatory.</td>
+</tr>
+<tr>
+<td>property.{field-id}.outputID</td>
+<td>title</td>
+<td>The id used inside the json for this property. If this value is missing then the inputID will be used instead.</td>
+</tr>
+<tr>
+<td>property.{field-id}.namespace</td>
+<td>http://purl.org/dc/terms/</td>
+<td>The URL that represents the namespace for this property. Different properties in the same catalog can have different namespaces.</td>
+</tr>
+<tr>
+<td>property.{field-id}.label</td>
+<td>"EVENTS.EVENTS.DETAILS.METADATA.TITLE" or "Event Title"</td>
+<td>The label to show for this property in the UI. If there is a i18n support for a label that should be the value used so that it will be translated, if you don't mind it being locked to one translation just put that single value in.</td>
+</tr>
+<tr>
+<td>property.{field-id}.type</td>
+<td>text</td>
+<td>The type of the metadata field.</td>
+</tr>
+<tr>
+<td>property.{field-id}.pattern</td>
+<td>yyyy-MM-dd</td>
+<td>Applies to date and time types for now. It is used to format their values using the java DateTimeFormatter values**</td>
+</tr>
+<tr>
+<td>property.{field-id}.readOnly</td>
+<td>false</td>
+<td>If the property can be edited in the UI or if it should only be displayed.</td>
+</tr>
+<tr>
+<td>property.{field-id}.required</td>
+<td>true</td>
+<td>If the property has to have a value before the metadata can be saved (the UI's save button will be disabled until all of the required fields are entered)</td>
+</tr>
+<tr>
+<td>property.{field-id}.collectionID</td>
+<td>USERS</td>
+<td>The id of the list provider that will be used to validate the input in the backend. So for example entering a username that doesn't exist will throw an error in this case.</td>
+</tr>
+<tr>
+<td>property.{field-id}.listprovider</td>
+<td>USERS</td>
+<td>The id of the list provider that will be used as a drop down option for that field. So for example using the USERS list provider means that in the front end the user will be able to choose the field value from the list of users in Opencast.</td>
+</tr>
+<tr>
+<td>property.{field-id}.order</td>
+<td>3</td>
+<td>Defines the order of properties where this property should be oriented in the UI i.e. 0 means the property should come first, 1 means it should come second etc. Giving two properties the same number will cause them to be next to one another but doesn't guarantee one above or below the other.</td>
+</tr>
+</tbody>
+</table>
+<p>* Mandatory field attribute</p>
+<p>** See https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html</p>
+<p><strong>Field types</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Example value in catalog</th>
+<th>Example value in UI</th>
+<th>JSON response example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>Represents a true / false value in the UI that is represented by a check box.</td>
+<td>false</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>date</td>
+<td>A Java Date object that can include the year, month, day, hour, minute second ... and is formatted by the pattern value.</td>
+<td>2014-12-10T16:29:43Z</td>
+<td>2014-12-10</td>
+<td></td>
+</tr>
+<tr>
+<td>text</td>
+<td>A text input value for entering in one line of text. It supports more, it just won't increase in size for the interface.</td>
+<td>This is the Title</td>
+<td>This is the Title</td>
+<td></td>
+</tr>
+<tr>
+<td>text_long</td>
+<td>A textarea which allows for more than 1 row of text</td>
+<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
+<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
+<td>{<br>"id": "notesEpisode",<br>"readOnly": false,<br>"value": "",<br>"label": "Notes",<br>"required": false,<br>"type":"text_long"<br>}</td>
+</tr>
+<tr>
+<td>iterable_text</td>
+<td>A text input value for entering in a list of text objects that are comma separated in the front end but stored separately in the catalog.</td>
+<td><presenter>Adam,Basil,Lukas</presenter></td>
+<td>value : ["Adam","Basil","Lukas"]</td>
+<td>{<br>"id": "contributor",<br> "readOnly": true,<br>"value": ["Adam", "Basil", "Lukas"],<br>"label": "Contributor(s)",<br>"required": false,<br>"type": "text"<br>}</td>
+</tr>
+<tr>
+<td>start_date</td>
+<td>The start date portion of a Dublin Core Catalog Period.</td>
+<td>start=2014-11-04T19:00:00Z; end=2014-11-05T20:00:00Z; scheme=W3C-DTF;</td>
+<td>2014-11-04</td>
+<td></td>
+</tr>
+<tr>
+<td>start_time</td>
+<td>The start time portion of a Dublin Core Catalog Period.</td>
+<td>start=2014-11-04T19:00:00Z; end=2014-11-05T20:00:00Z; scheme=W3C-DTF;</td>
+<td>19:00:00</td>
+<td></td>
+</tr>
+<tr>
+<td>duration</td>
+<td>The duration of the event portion of a Dublin Core Catalog Period.</td>
+<td>start=2014-11-04T19:00:00Z; end=2014-11-05T20:00:00Z; scheme=W3C-DTF;</td>
+<td>01:00:00</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow Configuration</strong></p>
+<p>Since the extended metadata don't have the <code>dublincore/*</code> flavor, a tagging operation for the archive has to be added
+for the extended catalogs.
+In our examples below, we use ext/episode as a flavor, so the following operation should be added to the workflows</p>
+<pre><code>&lt;!-- Tag the extended metadata catalogs for publishing --&gt;
+&lt;operation
+    id="tag"
+    description="Tagging extended metadata catalogs for archival and/or publication"&gt;
+    &lt;configurations&gt;
+        &lt;configuration key="source-flavors"&gt;ext/*&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;+archive&lt;/configuration&gt;
+    &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>If you want the extended metadata to be published the same way as the standard metadata, you can update the existing
+tagging operation for dublincore metadata the following way</p>
+<pre><code>&lt;!-- Tag the incoming metadata catalogs for publishing --&gt;
+&lt;operation
+  id="tag"
+  description="Tagging metadata catalogs for archival and publication"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavors"&gt;dublincore/*,ext/*&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;+archive,+engage-download&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../asset-upload-ui/" class="btn btn-neutral float-right" title="Manual Asset Upload">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../message-broker/" class="btn btn-neutral" title="Message Broker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../message-broker/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../asset-upload-ui/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

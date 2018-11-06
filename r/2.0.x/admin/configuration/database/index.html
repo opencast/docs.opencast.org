@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Database - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Database";
+    var mkdocs_page_input_path = "configuration/database.md";
+    var mkdocs_page_url = "/configuration/database/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Administration Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../release.notes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Installation Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-fedora/">RPM Fedora</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RPM RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Source Debian/Ubuntu</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">Source RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-macosx/">Source Mac OS X</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Database</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#database-configuration">Database Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#other-databases">Other databases</a></li>
+        
+            <li><a class="toctree-l4" href="#setting-up-mysqlmariadb">Setting up MySQL/MariaDB</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security/">Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security.cas/">Security - CAS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration.files.and.keys/">Configuration Files and Keys</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Module Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.architecture/">Player - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.core.reference/">Player - Core Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.events/">Player - Events</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.storage/">Player - Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugins/">Player - Plugins</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugin.development/">Player - Plugin Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.testing/">Player - Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.url.parameter/">Player - URL Parameters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Video Editor - Setup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.manual/">Video Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Video Editor - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Upgrade</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../upgrade/">Upgrading Home</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handlers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Workflow Operation Handler Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip WOH</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Database</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/configuration/database.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="database-configuration">Database Configuration</h1>
+<p>Matterhorn ships with embedded JDBC drivers for the H2 (HSQL), MySQL/MariaDB databases. The built in H2
+databased is used by default and needs no configuration, but it is strongly recommended to use MySQL or MariaDB instead
+as there will be a huge performance gain, especially if more data are in that database.</p>
+<p><em>Notice:</em> For a distributed set-up of Matterhorn, you cannot use the internal H2 database.</p>
+<h3 id="other-databases">Other databases</h3>
+<p>Running Matterhorn with PostgreSQL should be possible and there is some community support for this. While it should
+work, the support for this is unofficial and we cannot guarantee that every new feature is well tested on that platform.</p>
+<p>The EclipseLink JPA implementation which is used in Matterhorn supports other databases as well and it should be
+possible to attach other database engines.</p>
+<h2 id="setting-up-mysqlmariadb">Setting up MySQL/MariaDB</h2>
+<h3 id="requirements">Requirements</h3>
+<p>Before following this guide you should have:</p>
+<ul>
+<li>Installed the Matterhorn Core System</li>
+<li>Followed the <a href="../basic/">Basic Configuration instructions</a></li>
+</ul>
+<h3 id="step-0-set-up-mysqlmariadb">Step 0: Set-up MySQL/MariaDB</h3>
+<p>This step is not Matterhorn specific and may be different for your needs (e.g.  if you want to have a dedicated database
+server). It shall only be a guide for people with no experience setting up MySQL/MariaDB and to help them get things
+running.</p>
+<p><em>Notice:</em> If your distribution still shipps MySQL instead of MariaDB, the installation should still be very much the
+same. Only the names will of course change.</p>
+<p>First you have to install the MariaDB server. Usually you would do that by using the package management tool of you
+distribution. On RedHat based systems (CentOS, Scientific Linux, …) this should be:</p>
+<pre><code>yum install mariadb mariadb-server
+</code></pre>
+<p>After the installation you can start the server and set it up to start automatically after each reboot with the
+following commands:</p>
+<pre><code># If you are using Systemd
+systemctl start mariadb.service
+systemctl enable mariadb.service
+# If you are using SysV-Init
+service mariadb start
+chkconfig --level 345 mariadb on
+</code></pre>
+<p>Now you have a MariaDB server running, but without a properly set up root account (no password, etc.) which might pose a
+security risk. To create this initial configuration, there is a convenient tool that comes which MariaDB and which will
+help. You can launch this tool by executing (yes, it is still called mysql_…):</p>
+<pre><code>mysql_secure_installation
+</code></pre>
+<p>It will guide you through the steps of setting up a root account with password, etc.</p>
+<h3 id="step-1-create-a-matterhorn-database">Step 1: Create a Matterhorn Database</h3>
+<p>The first step, if you have not already done this, is obviously to create a database for Matterhorn. You can use the
+following SQL code to to that. For executing the SQL, use the MySQL/MariaDB client (run the mysql program from your
+shell) or use a graphical tool like phpMyAdmin. For now, we will use the MySQL shell client and the default
+administrative (root) user. Launch the client with:</p>
+<pre><code>mysql -u root -p
+</code></pre>
+<p>You will be asked for the password of the user root. After entering it, you will end up in the MySQL/MariaDB shell.
+Next, create a database called “matterhorn” by executing:</p>
+<pre><code>CREATE DATABASE matterhorn CHARACTER SET utf8 COLLATE utf8_general_ci;
+</code></pre>
+<p>Then create a user “matterhorn” with the password “opencast_password” and grant him all necessary rights:</p>
+<pre><code>GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX ON matterhorn.*
+  TO 'matterhorn'@'localhost' IDENTIFIED BY 'opencast_password';
+</code></pre>
+<p><em>Notice:</em> Of cause you may use other names for user or database and should use a different password.</p>
+<p>On Distributed Systems, additionally to 'username'@'localhost' which would allow access from the local machine only, for
+a distributed system you would also create a user like 'username'@'10.0.1.%' and grant the necessary rights to this user
+as well. The '10.0.1.%' specifies the IP range which gets access to the server with '%' being a wildcard for anything.
+For more details on MySQL user creation have a look at MySQL Reference Manual :: 6.3.2 Adding User Accounts.</p>
+<p>Finally, leave the MySQL/MariaDB client shell and restart the database server to enable the user with:</p>
+<pre><code>service mysqld restart
+</code></pre>
+<p>or if you have a systemd based system:</p>
+<pre><code>systemctl restart mariadb.service
+</code></pre>
+<h3 id="step-2-set-up-the-database-structure">Step 2: Set up the Database Structure</h3>
+<p>To set up the database structure you can (and should!) use the Matterhorn ddl scripts. You can find the script either at
+<code>/usr/share/matterhorn/docs/scripts/ddl/mysql5.sql</code> or download it from BitBucket.</p>
+<p>Switch to the directory that contains the mysql5.sql file and run the MySQL/MariaDB client with the user you created in
+the previous step (-u matterhorn) and switch to the database you want to use (matterhorn):</p>
+<pre><code>mysql -u matterhorn -p matterhorn
+</code></pre>
+<p>Run the ddl script:</p>
+<pre><code>mysql&gt; source mysql5.sql;
+</code></pre>
+<p>Instead of using the MySQL/MariaDB Client, you can, of cause, also use every other method for executing SQL code like
+phpMyAdmin or MySQL-Workbench…</p>
+<h3 id="step-3-configure-matterhorn">Step 3: Configure Matterhorn</h3>
+<p>The following settings are made in the <code>&lt;MH_CONFIG_DIR&gt;/config.properties</code> file (often
+<code>/etc/matterhorn/config.properties</code>). Use the editor of your choice to open it, e.g.:</p>
+<pre><code>vim /etc/matterhorn/config.properties
+</code></pre>
+<p>Now change the following configuration keys:</p>
+<pre><code>org.opencastproject.db.ddl.generation=false
+</code></pre>
+<p>If set to true, the database structure will be generated automatically. It works, but all database optimizations are
+lost. You should never do this, unless you need it for development purposes.</p>
+<pre><code>org.opencastproject.db.vendor=MySQL
+</code></pre>
+<p>Tell Matterhorn that you use MySQL. </p>
+<pre><code>org.opencastproject.db.jdbc.driver=com.mysql.jdbc.Driver
+</code></pre>
+<p>Tell Matterhorn to use the JDBC driver for MySQL.</p>
+<pre><code>org.opencastproject.db.jdbc.url=jdbc:mysql://localhost/matterhorn
+</code></pre>
+<p>Tell Matterhorn where to find the database and the name of the database. Replace “localhost” and “matterhorn” if necessary.</p>
+<pre><code>org.opencastproject.db.jdbc.user=matterhorn
+</code></pre>
+<p>Tell Matterhorn which username to use for accessing the database. This user need to have the rights to read from and
+write to the database.</p>
+<pre><code>org.opencastproject.db.jdbc.pass=opencast_password
+</code></pre>
+<p>Tell Matterhorn which password to use for accessing the database. This must obviously fit the username.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../message-broker/" class="btn btn-neutral float-right" title="Message Broker">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../basic/" class="btn btn-neutral" title="Basic"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../basic/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../message-broker/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

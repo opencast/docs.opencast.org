@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Multiple Servers - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Multiple Servers";
+    var mkdocs_page_input_path = "installation/multiple-servers.md";
+    var mkdocs_page_url = "/installation/multiple-servers/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Multiple Servers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#install-across-multiple-servers">Install Across Multiple Servers</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#step-1-install-opencast">Step 1: Install Opencast</a></li>
+        
+            <li><a class="toctree-l4" href="#step-2-set-up-nfs-server">Step 2: Set-Up NFS Server</a></li>
+        
+            <li><a class="toctree-l4" href="#step-3-set-up-the-database">Step 3: Set-Up the Database</a></li>
+        
+            <li><a class="toctree-l4" href="#step-4-set-up-activemq">Step 4: Set-Up ActiveMQ</a></li>
+        
+            <li><a class="toctree-l4" href="#step-5-configure-opencast">Step 5: Configure Opencast</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/external-api/">External API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Installation &raquo;</li>
+        
+      
+    
+    <li>Multiple Servers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/installation/multiple-servers.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="install-across-multiple-servers">Install Across Multiple Servers</h1>
+<p><em>Note that this is not a comprehensive guide of all possible ways to install Opencast. It is more like a guide to good
+practices and presents what a lot of people are running.</em></p>
+<h2 id="step-1-install-opencast">Step 1: Install Opencast</h2>
+<p>Opencast consists of a large set of modules which together build the whole system. In a distributed set-up, different
+kinds of nodes are basically only defined by the existence or absence of specific modules.</p>
+<p>While it is possible to stick together a system module by module, opencast comes with a set of pre-defined distribution
+which can directly be built and installed. To build these distributions, you would compile Opencast just like it is
+outlined in the basic installation guides and will then find a set of different distributions, both as archive and in a
+separate directory.</p>
+<p>To list all distributions, run the following command after Opencast is built:</p>
+<pre><code>% ls -1 build/*.tar.gz
+build/opencast-dist-admin-${version}.tar.gz
+build/opencast-dist-allinone-${version}.tar.gz
+build/opencast-dist-presentation-${version}.tar.gz
+build/opencast-dist-worker-${version}.tar.g
+...
+</code></pre>
+<p>The same distributions can be found in the packages provided in the Opencast RPM repository.  These packages will
+automatically install all dependencies for a given node type. For example, to install an Opencast worker node, you would
+install the package <code>opencast21-distribution-worker</code>.</p>
+<p>The following list describes possible set-ups:</p>
+<h3 id="all-in-one">All-In-One</h3>
+<p>This is the default set-up described in the basic installation guides. It works fine for testing purposes. It should
+usually not be used in production. It is not distributed but is listed here to have a comprehensive list of predefined
+distributions.</p>
+<h3 id="two-server-set-up">Two-Server Set-up</h3>
+<p>This set-up is the minimum set-up recommended for productive use. It will separate the presentation layer from the
+administrative and working layer. This means that even if one server is under heavy load while videos are processed, it
+will not effect the distribution and users should still be able to watch videos smoothly. However, it might happen that
+under heavy load the handling of the administrative user interface gets a bit rough.</p>
+<h3 id="three-or-more-server-set-up">Three (or more) Server Set-up</h3>
+<p>While in the last example we have created one combined node for both the administrative tools and the workers, in this
+example we will split it into dedicated worker and admin nodes. Using this set-up it is easy to increase the systems
+performance simply by adding further worker nodes to the system.</p>
+<h2 id="step-2-set-up-nfs-server">Step 2: Set-Up NFS Server</h2>
+<p>Though it is possible to have Opencast run without shared storage, it is still a good idea to do so, as hard links can
+be used to link files instead of copying them and not everything has to be tunneled over HTTP.</p>
+<p>Thus you should first set-up your NFS server. The best solution is certainly to have a dedicated storage server. For
+smaller set-ups, however, it can also be put on one of the Opencast nodes, i.e. on the admin node.</p>
+<p>To do this, you first have to install and enable the NFS server:</p>
+<pre><code>yum install nfs-utils nfs-utils-lib
+chkconfig  --level 345 nfs on
+service nfs start
+</code></pre>
+<p>You want to have one common user on all your systems, so that file permissions do not become an issue.. As preparation
+for this it makes sense to manually create an <em>opencast</em> user and group with a common UID and GID:</p>
+<pre><code>groupadd -g 1234 opencast
+useradd -g 1234 -u 1234 opencast
+</code></pre>
+<p>If the user and group id <code>1234</code> is already used, just pick another one but make sure to pick the same one on all your
+Opencast nodes.</p>
+<p>Then create the directory to be shared and set its ownership to the newly created users:</p>
+<pre><code>mkdir -p /srv/opencast
+chown opencast:opencast /srv/opencast
+</code></pre>
+<p>Next we actually share the storage dir. For this we need to edit the file <code>/etc/exports</code> and set:</p>
+<pre><code>/srv/opencast  131.173.172.190(rw,sync,no_subtree_check)
+</code></pre>
+<p>with 131.173.172.190 being the IP address of the other machine that should get access. Finally we enable the share with:</p>
+<pre><code>exportfs -a
+</code></pre>
+<p>Of cause you have to open the necessary ports in your firewall configuration.  For iptables, appropriate rules could be
+for example:</p>
+<pre><code>-A INPUT -m state --state NEW -p tcp -m multiport --dport 111,892,2049,32803 -j ACCEPT
+-A INPUT -m state --state NEW -p udp -m multiport --dport 111,892,2049,32803 -j ACCEPT
+</code></pre>
+<p>You can set them by editing <code>/etc/sysconfig/iptables</code> and restarting the service afterwards.</p>
+<p>Now you have set-up your storage server. What is still left to do is to mount the network storage on all other servers
+of the Opencast clusters except the capture agents. To do that you need to edit the <code>/etc/fstab</code> on each server and add
+the command to mount the network storage on startup:</p>
+<pre><code>storageserver.example.com:/srv/opencast /srv/opencast   nfs rw,hard,intr,rsize=32768,wsize=32768 0 0
+</code></pre>
+<p><em>Important:</em> Do not use multiple NFS shares for different parts of the Opencast storage dir. Opencast will check if
+hard links are possible across in a distributed set-up, but the detection may fail if hard links are only possible
+between certain parts of the storage. This may lead to failures.</p>
+<p><em>Important:</em> Do not share the Karaf data directory. Doing so will cause Opencast to fail. Please share the storage
+directory only.</p>
+<h2 id="step-3-set-up-the-database">Step 3: Set-Up the Database</h2>
+<p>First make sure to follow the <a href="../../configuration/database/">regular database set-up</a>.</p>
+<p>Do not forget to set the user also for the remote servers and grant them the necessary rights. Additionally, you need to
+configure your firewall:</p>
+<pre><code>-A INPUT -p tcp -s 131.173.172.190 --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
+</code></pre>
+<h2 id="step-4-set-up-activemq">Step 4: Set-Up ActiveMQ</h2>
+<p>Since version 2, Opencast requires an Apache ActiveMQ message broker as message relay for the administrative user
+interface. ActiveMQ can either be set up to run on its own machine or on one of the existing Opencast nodes (usually the
+admin node).</p>
+<p>ActiveMQ 5.10 or above should work. ActiveMQ 5.6 will not work. Versions in between are untested.</p>
+<h3 id="installation">Installation</h3>
+<ul>
+<li>If you use the Opencast RPM repository, simply install the <code>activemq-dist</code> package.</li>
+<li>If you are running RHEL, CentOS or Fedora you can use the <a href="https://copr.fedoraproject.org/coprs/lkiesow/apache-activemq-dist/">ActiveMQ-dist Copr RPM repository
+   </a></li>
+<li>You can download binary distributions from the <a href="http://activemq.apache.org/download.html">Apache ActiveMQ website</a></li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p>What you basically need to do is to point all your Opencast nodes to your message broker. For more information about
+the configuration, have a look at the <a href="../../configuration/message-broker/">Message Broker Set-Up Guide</a>.</p>
+<p>Do not forget that ActiveMQ uses TCP port 61616 (default configuration) for communication which you might have to allow
+in your firewall.</p>
+<h2 id="step-5-configure-opencast">Step 5: Configure Opencast</h2>
+<p>You did already set-up and configured your database and message broker in the last steps, but there is some more
+configuration you have to do. First of all you should follow the Basic Configuration guide which will tell you how to
+set the login credentials etc. After that continue with the following steps:</p>
+<h3 id="customproperties">custom.properties</h3>
+<p>Set the server URL to the public url of each server (admin URL on admin, worker URL on worker, engage URL on engage, …).
+This may either be this nodes IP address or preferable its domain name:</p>
+<pre><code>org.opencastproject.server.url=http://&lt;URL&gt;:8080
+</code></pre>
+<p>Set the location of the shared storage directory:</p>
+<pre><code>org.opencastproject.storage.dir=/srv/opencast
+</code></pre>
+<p>Define that the file repository shall access all files locally:</p>
+<pre><code>org.opencastproject.file.repo.url=${org.opencastproject.admin.ui.url}
+</code></pre>
+<h3 id="orgopencastprojectorganization-mh95default95orgcfg">org.opencastproject.organization-mh_default_org.cfg</h3>
+<p>Set the base URL of the server hosting the administrative tools. Again use a domain name instead of an IP address if
+possible:</p>
+<pre><code>org.opencastproject.admin.ui.url=http://&lt;ADMIN-URL&gt;:8080
+</code></pre>
+<p>Set the base URL of the server hosting the engage tools:</p>
+<pre><code>org.opencastproject.engage.ui.url=http://&lt;ENGAGE-URL&gt;:8080
+</code></pre>
+<h3 id="orgopencastprojectserviceregistryimplserviceregistryjpaimplcfg">org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg</h3>
+<p>To ensure that jobs are not dispatched by non-admin nodes, on these you should also set:</p>
+<pre><code>dispatchinterval=0
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../source-debian-ubuntu/" class="btn btn-neutral float-right" title="Debian/Ubuntu">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../source-debian-ubuntu/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

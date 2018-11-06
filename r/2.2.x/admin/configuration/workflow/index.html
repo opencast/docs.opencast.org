@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Workflow - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Workflow";
+    var mkdocs_page_input_path = "configuration/workflow.md";
+    var mkdocs_page_url = "/configuration/workflow/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Workflow</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#create-a-custom-workflow">Create a Custom Workflow</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l4" href="#create-a-workflow">Create a Workflow</a></li>
+        
+            <li><a class="toctree-l4" href="#accept-user-input">Accept User Input</a></li>
+        
+            <li><a class="toctree-l4" href="#conditional-execution">Conditional Execution</a></li>
+        
+            <li><a class="toctree-l4" href="#test-the-workflow">Test the Workflow</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Workflow</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/configuration/workflow.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="create-a-custom-workflow">Create a Custom Workflow</h1>
+<p>This document will help you get started with creating your own Opencast workflows. For a list of available workflow
+operations, see:</p>
+<blockquote>
+<p><a href="../../workflowoperationhandlers/">List of Workflow Operation Handler</a></p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>A Opencast workflow is an ordered list of operations. There is no limit to the number of operations or their
+repetition in a given workflow.</p>
+<p>Workflow operations can be configured using configuration elements. The use of string replacement in configuration
+values allows workflows to dynamically adapt to a given input or user decision.</p>
+<h3 id="document">Document</h3>
+<p>Opencast workflows are defined in XML.  The structure of a Opencast workflow looks like this:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+
+  &lt;!-- Description --&gt;
+  &lt;id&gt;&lt;/id&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;tags&gt;&lt;/tags&gt;
+  &lt;description&gt;&lt;/description&gt;
+
+  &lt;!-- Operations --&gt;
+  &lt;operations&gt;
+    &lt;operation&gt;&lt;/operation&gt;
+    ...
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<h2 id="create-a-workflow">Create a Workflow</h2>
+<p>This sections will walk you through creating a custom workflow, which will encode ingested tracks to defined output
+format.</p>
+<h3 id="encoding-profiles">Encoding Profiles</h3>
+<p>First create or select the encoding profiles you want to use. For more details on this, have a look at the <a href="../encoding/">Encoding
+Profile Configuration Guide</a>. For this guide we assume that we have an encoding profile <code>mov-low.http</code>
+which creates a distribution format definition for mp4 video and a <code>feed-cover.http</code> encoding profile to create
+thumbnail images for the videos.</p>
+<h3 id="describe-the-workflow">Describe the Workflow</h3>
+<p>Start by naming the workflow and giving it a meaningful description:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+
+  &lt;!-- Description --&gt;
+  &lt;id&gt;example&lt;/id&gt;
+  &lt;title&gt;Encode Mp4, Distribute and Publish&lt;/title&gt;
+  &lt;tags&gt;
+    &lt;!-- Tell the UI where to show this workflow --&gt;
+    &lt;tag&gt;upload-ng&lt;/tag&gt;
+    &lt;tag&gt;schedule-ng&lt;/tag&gt;
+    &lt;tag&gt;archive&lt;/tag&gt;
+  &lt;/tags&gt;
+  &lt;description&gt;
+    Encode to Mp4 and thumbnail.
+    Distribute to local repository.
+    Publish to search index.
+  &lt;/description&gt;
+
+  &lt;!-- Operations --&gt;
+  &lt;operations&gt;&lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<ul>
+<li>The <code>id</code> is used in several Opencast endpoints to identify and select this workflow. Make sure that this identifier
+  is unique among all endpoints in the system.</li>
+<li>The <code>tags</code> define where the user interfaces may use these workflows. Useful tags are:<ul>
+<li><em>upload-ng</em>: Usable for uploaded media (new admin ui)</li>
+<li><em>schedule-ng</em>: Usable for scheduled events (new admin ui)</li>
+<li><em>archive-ng</em>: Usable for archived media (new admin ui)</li>
+<li><em>delete-ng</em>: Usable for deletion of events with publications (new admin ui)</li>
+<li><em>editor</em>: Usable from the video editor</li>
+<li><em>upload</em>: Usable for uploaded media (old admin ui)</li>
+<li><em>schedule</em>: Usable for scheduled events (old admin ui)</li>
+<li><em>archive</em>: Usable for archived media (old admin ui)</li>
+</ul>
+</li>
+</ul>
+<h3 id="inspect-the-media">Inspect the Media</h3>
+<p>The first operation will be to inspect the media for technical metadata, such as format and length:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+
+  &lt;!-- Description --&gt;
+  ...
+
+  &lt;!-- Operations --&gt;
+  &lt;operations&gt;
+
+    &lt;!-- inspect media --&gt;
+    &lt;operation
+      id="inspect"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Inspect media package"&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<p>The <em>fail-on-error</em> attribute is a boolean determining whether the workflow will throw an error to the
+exception-handler-workflow or simply proceed with the remaining operations.</p>
+<h3 id="encoding">Encoding</h3>
+<p>The next operations will encode the media to the Mp4 format:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+
+  &lt;!-- Description --&gt;
+  ...
+
+  &lt;!-- Operations --&gt;
+  &lt;operations&gt;
+
+    &lt;!-- inspect media --&gt;
+    ...
+
+    &lt;!-- encode: mp4 --&gt;
+    &lt;operation
+      id="compose"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Encode camera to mp4"&gt;
+      &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id="compose"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Encode screen to mp4"&gt;
+      &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;presentation/delivery&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<ul>
+<li>The <code>target-tags</code> attribute causes the resulting media to be tagged. For example, this could be used to define these
+  media as input for other operations, using their <code>source-tags</code> attribute.</li>
+<li>The <code>encoding-profile</code> attribute refers to an encoding profile defined in <code>etc/encoding</code>.</li>
+</ul>
+<h3 id="encode-to-thumbnail">Encode to Thumbnail</h3>
+<p>The next operations will create thumbnails from the media:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+  ...
+  &lt;operations&gt;
+    ...
+    &lt;!-- encode: images --&gt;
+    &lt;operation
+      id="image"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Encode camera to thumbnail"&gt;
+      &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
+        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
+        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id="image"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Encode screen to thumbnail"&gt;
+      &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
+        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
+        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<ul>
+<li>The time attribute determines the approximate frame of the source media is used. The time unit is in seconds.</li>
+</ul>
+<h3 id="distribute-the-media">Distribute the Media</h3>
+<p>The next operation copies the encoded media to the Opencast distribution channel:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+  ...
+  &lt;operations&gt;
+
+    &lt;!-- distribute: local --&gt;
+    &lt;operation
+      id="publish-engage"
+      fail-on-error="true"
+      exception-handler-workflow="error"
+      description="Distribute media to the local distribution channel"&gt;
+      &lt;configurations&gt;
+        &lt;configuration key="download-source-tags"&gt;publish,rss,atom&lt;/configuration&gt;
+        &lt;configuration key="streaming-source-tags"&gt;&lt;/configuration&gt;
+        &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+</code></pre>
+<ul>
+<li>The publish-engage operation uses all media tagged as <em>rss</em> or <em>atom</em> as input.</li>
+</ul>
+<h2 id="accept-user-input">Accept User Input</h2>
+<p>Workflow definitions may optionally include variables to be replaced by user input. For instance, this may be used to
+select optional parts of a workflow. To enable user control of individual workflow instances, the workflow definition
+must:</p>
+<ul>
+<li>use the <code>${variable}</code> notation in the workflow definition</li>
+<li>contain a custom configuration panel.</li>
+</ul>
+<p>Here is an example of a configurable operation:</p>
+<pre><code>&lt;operation id="..." if="${somevar}"&gt;
+  ...
+&lt;/operation&gt;
+</code></pre>
+<p>The attribute <code>if</code> specifies the execution condition in means of the operation only being executed if that condition
+evaluates to true. You can find more details on conditional execution in the next section.</p>
+<p>Once the operation is configured to accept a variable, we need to describe how to gather the value from the
+administrative user. The <code>&lt;configuration_panel&gt;</code> element of a workflow definitions describes this user interface
+snippet.  A simple configuration panel could look like this:</p>
+<pre><code>&lt;configuration_panel&gt;
+  &lt;![CDATA[
+    &lt;input id="someaction" name="someaction" type="checkbox" value="true" /&gt;
+    &lt;label for="someaction"&gt;Execute some operation?&lt;/label&gt;
+  ]]&gt;
+&lt;/configuration_panel&gt;
+</code></pre>
+<p>The checkbox in this <code>&lt;configuration_panel&gt;</code> will now be displayed in the administrative tools, and the user's
+selection will be used to replace the <code>${review.hold}</code> variable in the workflow.</p>
+<p>This input can also be sent by capture agents, using the ingest endpoints. Please note that capture agents usually do
+not load the configuration panel. Hence defaults set in the user interface will not apply to ingests. To circumvent
+this, the <a href="../../workflowoperationhandlers/defaults-woh/">defaults operation</a> can be used.</p>
+<h2 id="conditional-execution">Conditional Execution</h2>
+<p>The attribute <code>if</code> of the <code>operation</code> element can be used to specify a condition to control whether the workflow
+operation should be executed. This so-called execution condition is a boolean expression of the following form:</p>
+<pre><code>&lt;expression&gt; ::= &lt;term&gt; ["OR" &lt;expression&gt;]
+&lt;term&gt; ::= &lt;value&gt; ["AND" &lt;term&gt;]
+&lt;value&gt; ::= ["NOT"]* ( "(" &lt;expression&gt; ")" | &lt;relation&gt; | &lt;bool-literal&gt; )
+&lt;relation&gt; ::= &lt;relation-factor&gt; &lt;rel-literal&gt; &lt;relation-factor&gt;
+&lt;relation-factor&gt; ::= &lt;operation&gt; | &lt;number&gt;
+&lt;operation&gt; ::= &lt;number&gt; &lt;op-literal&gt; &lt;number&gt;
+&lt;rel-literal&gt; ::= "&gt;=" | "&gt;" | "&lt;=" | "&lt;" | "=" | "!="
+&lt;op-literal&gt; ::= "+" | "-" | "*" | "/"
+&lt;bool-literal&gt; ::= "true" | "false"
+</code></pre>
+<p>As the formal description above explains, such boolean expressions may contain the booelan constants (<code>true</code> and
+<code>false</code>) and numbers, as well as references to the variables of the workflow instance that contain these data types.
+Workflow instance variables can be accessed by using <code>${variableName}</code>. </p>
+<p>Example:</p>
+<pre><code>&lt;operation id="..." if="${variableName1} AND NOT (${variableName2} OR ${variableName3})"&gt;
+  ...
+&lt;/operation&gt;
+</code></pre>
+<h2 id="test-the-workflow">Test the Workflow</h2>
+<p>The easiest way to test a workflow is to just put it into the workflow folder where it will be picked up by Opencast
+automatically and will be available in Opencast a few seconds later.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../modules/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../acl/" class="btn btn-neutral" title="Access Control Lists"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../acl/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../modules/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Events - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+  <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Events";
+    var mkdocs_page_input_path = "modules/player/events.md";
+    var mkdocs_page_url = "/modules/player/events/";
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../release-manager/">Release Manager</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../development-environment/">Development Environment</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Events</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#theodul-pass-player-events">Theodul Pass Player - Events</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../stream-security/">Stream Security</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/nexus/">Nexus Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/glossary/">Glossary</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/security-api/">Security API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+        
+          <li>Player &raquo;</li>
+        
+      
+    
+    <li>Events</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs/src/default/docs/modules/player/events.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="theodul-pass-player-events">Theodul Pass Player - Events</h1>
+<p>A Theodul Pass Player plugin can trigger and/or subscribe to events.</p>
+<p>An event is defined in the events section of the plugin and looks like this:</p>
+<pre><code>NAME: new Engage.Event("MODULE:NAME", "DESCRIPTION", "OPTION")
+</code></pre>
+<p>The event has the event name "MODULE:NAME", the description DESCRIPTION and one of the options "trigger", "handler" or "both" as OPTION. When the plugin just triggers the event, the option is "trigger", when it just handles the events the option is "handler" and when it does both - trigger and handle it - the option is "both".</p>
+<p>An event can be triggered via</p>
+<pre><code>Engage.trigger(plugin.events.NAME.getName(), [parameter(s)]);
+</code></pre>
+<p>and can be subscribed to via</p>
+<pre><code>Engage.on(plugin.events.NAME.getName(), function () {});
+</code></pre>
+<p>The following list contains all events of the Core + of all official plugins, sorted alphabetically after "Event name" for version 1.0 of Feb 12, 2015.</p>
+<p>Currently official plugins are</p>
+<ul>
+<li>Controls</li>
+<li>MHConnection</li>
+<li>Notifications</li>
+<li>Usertracking</li>
+<li>Description</li>
+<li>Description (Tab)</li>
+<li>Slide text (Tab)</li>
+<li>Shortcuts (Tab)</li>
+<li>Timeline statistics</li>
+<li>Videodisplay</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Event name</th>
+<th>Additional parameters</th>
+<th>Description</th>
+<th>Triggered in</th>
+<th>Handled in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>coreInit</td>
+<td>Core:init</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>plugin_load_done</td>
+<td>Core:plugin_load_done</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Core, Controls, MHConnection, Notifications, Usertracking, Description, Description (Tab), Slide text (Tab), Shortcuts (Tab), Timeline statistics, Videodisplay</td>
+</tr>
+<tr>
+<td>timelineplugin_closed</td>
+<td>Engage:timelineplugin_closed</td>
+<td><em>Note: No "Engage Event", just use as string, example: Engage.on("Engage:timelineplugin_closed", function() {});</em></td>
+<td>when the timeline plugin container closed</td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>timelineplugin_opened</td>
+<td>Engage:timelineplugin_opened</td>
+<td><em>Note: No "Engage Event", just use as string, example: Engage.on("Engage:timelineplugin_opened", function() {});</em></td>
+<td>when the timeline plugin container opened</td>
+<td>Core</td>
+<td>Timeline statistics</td>
+</tr>
+<tr>
+<td>getMediaInfo</td>
+<td>MhConnection:getMediaInfo</td>
+<td></td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+</tr>
+<tr>
+<td>getMediaPackage</td>
+<td>MhConnection:getMediaPackage</td>
+<td></td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+</tr>
+<tr>
+<td>mediaPackageModelError</td>
+<td>MhConnection:mediaPackageModelError</td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+<td>Core, Controls, Notifications, Usertracking, Description, Description (Tab), Slide text (Tab), Shortcuts (Tab), Timeline statistics, Videodisplay</td>
+</tr>
+<tr>
+<td>customError</td>
+<td>Notification:customError</td>
+<td>msg: The message to display</td>
+<td>an error occurred</td>
+<td>Core, Controls, Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customNotification</td>
+<td>Notification:customNotification</td>
+<td>msg: The message to display</td>
+<td>a custom message</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customOKMessage</td>
+<td>Notification:customOKMessage</td>
+<td>msg: The message to display</td>
+<td>a custom message with an OK button</td>
+<td>Controls</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customSuccess</td>
+<td>Notification:customSuccess</td>
+<td>msg: The message to display</td>
+<td>a custom success message</td>
+<td>Core, Controls</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>segmentMouseout</td>
+<td>Segment:mouseOut</td>
+<td>no: Segment number</td>
+<td>the mouse is off a segment</td>
+<td>Controls, Slide text (Tab)</td>
+<td>Controls, Slide text (Tab)</td>
+</tr>
+<tr>
+<td>segmentMouseover</td>
+<td>Segment:mouseOver</td>
+<td>no: Segment number</td>
+<td>the mouse is over a segment</td>
+<td>Controls, Slide text (Tab)</td>
+<td>Controls, Slide text (Tab)</td>
+</tr>
+<tr>
+<td>sliderMousein</td>
+<td>Slider:mouseIn</td>
+<td></td>
+<td>the mouse entered the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderMouseout</td>
+<td>Slider:mouseOut</td>
+<td></td>
+<td>the mouse is off the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderMousemove</td>
+<td>Slider:mouseMoved</td>
+<td>timeInMs: The time on the hovered position in ms</td>
+<td>the mouse is moving over the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderStart</td>
+<td>Slider:start</td>
+<td></td>
+<td>slider started</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderStop</td>
+<td>Slider:stop</td>
+<td>time: The time the slider stopped at</td>
+<td>slider stopped</td>
+<td>Controls</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>aspectRatioSet</td>
+<td>Video:aspectRatioSet</td>
+<td>as: (array) as[0] = width, as[1] = height, as[2] = aspect ratio in %</td>
+<td>the aspect ratio has been calculated</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>audioCodecNotSupported</td>
+<td>Video:audioCodecNotSupported</td>
+<td></td>
+<td>when the audio codec seems not to be supported by the browser</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td>Video:autoplay</td>
+<td></td>
+<td>autoplay the video</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>bufferedAndAutoplaying</td>
+<td>Video:bufferedAndAutoplaying</td>
+<td></td>
+<td>buffering successful, was playing, autoplaying now</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>bufferedButNotAutoplaying</td>
+<td>Video:bufferedButNotAutoplaying</td>
+<td></td>
+<td>buffering successful, was not playing, not autoplaying now</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>buffering</td>
+<td>Video:buffering</td>
+<td></td>
+<td>video is buffering</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>ended</td>
+<td>Video:ended</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>video ended</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>fullscreenCancel</td>
+<td>Video:fullscreenCancel</td>
+<td></td>
+<td>cancel fullscreen</td>
+<td>Controls, Videodisplay</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>fullscreenChange</td>
+<td>Video:fullscreenChange</td>
+<td></td>
+<td>a fullscreen change happened</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>fullscreenEnable</td>
+<td>Video:fullscreenEnable</td>
+<td></td>
+<td>enable fullscreen</td>
+<td>Controls, Core</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>isAudioOnly</td>
+<td>Video:isAudioOnly</td>
+<td>audio: true if audio only, false else</td>
+<td>whether it's audio only or not</td>
+<td>Videodisplay</td>
+<td>Controls, Notifications</td>
+</tr>
+<tr>
+<td>initialSeek</td>
+<td>Video:initialSeek</td>
+<td>time: The time to seek to</td>
+<td>Seeks initially after all plugins have been loaded after a short delay</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>mute</td>
+<td>Video:mute</td>
+<td></td>
+<td>mute</td>
+<td>Videodisplay</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>muteToggle</td>
+<td>Video:muteToggle</td>
+<td></td>
+<td>toggle mute and unmute</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>nextChapter</td>
+<td>Video:nextChapter</td>
+<td></td>
+<td>Core</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>numberOfVideodisplaysSet</td>
+<td>Video:numberOfVideodisplaysSet</td>
+<td>no: Number of videodisplays</td>
+<td>the number of videodisplays has been set</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>pause</td>
+<td>Video:pause</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>pauses the video</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Core, Controls, Videodisplay</td>
+<td>Controls, Videodisplay</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>play</td>
+<td>Video:play</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>plays the video</td>
+<td>Core, Controls, Videodisplay</td>
+<td>Controls,Videodisplay</td>
+</tr>
+<tr>
+<td>playPause</td>
+<td>Video:playPause</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>previousChapter</td>
+<td>Video:previousChapter</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>playbackRateChanged</td>
+<td>Video:playbackRateChanged</td>
+<td>rate: The video playback rate (0.0-x, default: 1.0)</td>
+<td>The video playback rate changed</td>
+<td>Controls</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>playbackRateIncrease</td>
+<td>Video:playbackRateIncrease</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>playbackRateDecrease</td>
+<td>Video:playbackRateDecrease</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>playerLoaded</td>
+<td>Video:playerLoaded</td>
+<td></td>
+<td>player loaded successfully</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>ready</td>
+<td>Video:ready</td>
+<td></td>
+<td>all videos loaded successfully</td>
+<td>Videodisplay</td>
+<td>Controls, Notifications</td>
+</tr>
+<tr>
+<td>seek</td>
+<td>Video:seek</td>
+<td>time: Current time in seconds  seek video to a given position in seconds</td>
+<td>Core, Controls, Slide text (Tab)</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>seekLeft</td>
+<td>Video:seekLeft</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>seekRight</td>
+<td>Video:seekRight</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>synchronizing</td>
+<td>Video:synchronizing</td>
+<td></td>
+<td>synchronizing videos with the master video</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>timeupdate</td>
+<td>Video:timeupdate</td>
+<td>time: Current time in seconds, triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>a timeupdate happened</td>
+<td>Videodisplay</td>
+<td>Controls, Usertracking</td>
+</tr>
+<tr>
+<td>qualitySet</td>
+<td>Video:qualitySet</td>
+<td>quality: the quality that has been set a video quality has been set</td>
+<td>Controls</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>unmute</td>
+<td>Video:unmute</td>
+<td></td>
+<td>unmute</td>
+<td>Controls</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>usingFlash</td>
+<td>Video:usingFlash</td>
+<td>flash: true if flash is being used, false else</td>
+<td>flash is being used</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>videoFormatsFound</td>
+<td>Video:videoFormatsFound</td>
+<td>format: array of video formats if different video formats (qualities) have been found</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>volumechange</td>
+<td>Video:volumechange</td>
+<td>vol: Current volume (0 is off (muted), 1.0 is all the way up, 0.5 is half way)</td>
+<td>a volume change happened</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>volumeDown</td>
+<td>Video:volumeDown</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>volumeGet</td>
+<td>Video:volumeGet</td>
+<td>callback: A callback function with the current volume as a parameter</td>
+<td>get the volume</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>volumeSet</td>
+<td>Video:volumeSet</td>
+<td>percentAsDecimal: Volume to set (0 is off (muted), 1.0 is all the way up, 0.5 is half way)</td>
+<td>set the volume</td>
+<td>Controls</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>volumeUp</td>
+<td>Video:volumeUp</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Controls</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../storage/" class="btn btn-neutral float-right" title="Storage">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../core.reference/" class="btn btn-neutral" title="Core Reference"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../core.reference/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../storage/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../../js/theme.js"></script>
+
+</body>
+</html>

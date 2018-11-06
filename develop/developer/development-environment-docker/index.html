@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>With Docker - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "With Docker";
+    var mkdocs_page_input_path = "development-environment-docker.md";
+    var mkdocs_page_url = "/development-environment-docker/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-environment/">Overview</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">With Docker</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#development-environment-with-docker">Development Environment with Docker</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#setting-up-a-docker-build-environment">Setting up a Docker build environment</a></li>
+        
+            <li><a class="toctree-l4" href="#attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Capture Agent</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/capture-agent/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/capture-agent/testcases/">Test Cases</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/agents-api/">Agents API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/workflow-api/">Workflow API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development Environment &raquo;</li>
+        
+      
+    
+    <li>With Docker</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/development-environment-docker.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="development-environment-with-docker">Development Environment with Docker</h1>
+<p>Setting up and maintaining a proper Opencast build environment can be challenging. The <code>quay.io/opencast/build</code> Docker image,
+developed by the University of Münster, provides such a build environment already configured and ready to use. In fact,
+because of Docker's isolation functionality, multiple environments can be operated side by side on a single machine.</p>
+<h2 id="setting-up-a-docker-build-environment">Setting up a Docker build environment</h2>
+<p>A <code>docker-compose</code> file is provided to start up the development environment. You also need the ActiveMQ configuration
+(see "Testing Locally with Docker" guide in the administration documentation).</p>
+<pre><code class="sh">$ mkdir assets
+$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.build.yml
+$ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
+</code></pre>
+
+<p>Now create a folder where the Opencast repository should be located, and expose its path as an environment variable. You
+must also create the local Maven repository if it does not already exist.</p>
+<pre><code class="sh">$ mkdir -p opencast ~/.m2
+$ export OPENCAST_SRC=$PWD/opencast
+</code></pre>
+
+<p>The <code>OPENCAST_SRC</code> variable is used in the compose file to set up a Docker volume so that the host and Docker container
+can share the Opencast codebase. Similarly, the local Maven repository is shared in order to persist Maven artifacts
+beyond the lifetime of the Docker container. If you do not want to use the default path <code>~/.m2</code> you can set the
+<code>M2_REPO</code> variable to any other directory on the host system.</p>
+<p>Next, you should specify your UID and GID. A matching user will then be created within the container so that all new
+files can also be accessed from the host. If these variables remain unset, both default to 1000.</p>
+<pre><code class="sh">$ export OPENCAST_BUILD_USER_UID=$(id -u)
+$ export OPENCAST_BUILD_USER_GID=$(id -g)
+</code></pre>
+
+<p>With this you are ready to start up the build environment:</p>
+<pre><code class="sh">$ docker-compose up -d
+</code></pre>
+
+<p>You can enter the Opencast build environment with the <code>exec</code> command. Omitting the <code>--user opencast-builder</code> argument
+would give you a root shell, but that is not necessary because the user <code>opencast-builder</code> can use <code>sudo</code> within the
+container.</p>
+<pre><code class="sh">$ docker-compose exec --user opencast-builder opencast bash
+</code></pre>
+
+<p>There are multiple helper scripts available within the container:</p>
+<pre><code class="sh"># Clone the Opencast source code to the shared volume.
+$ oc_clone
+
+# Build Opencast.
+$ oc_build
+
+# Install Opencast in the same way as it would be installed in the other Opencast Docker images.
+$ oc_install &lt;distribution&gt;
+
+# Run the installed Opencast
+$ oc_run
+
+# Uninstall Opencast.
+$ oc_uninstall
+
+# Remove all Opencast files (database, media packages, etc.).
+$ oc_clean_data
+</code></pre>
+
+<p>These scripts are provided to automate common tasks, but you can also run the necessary commands directly. The install
+script has the advantage that it automatically connects Opencast to the configured ActiveMQ instance available at
+<code>tcp://activemq:61616</code>.</p>
+<p>Since the Opencast code is shared, any change from an IDE is directly visible within the container.</p>
+<h2 id="attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</h2>
+<p>By default, the compose file sets the necessary variables to enable remote debugging. The network port is published by
+the container so that you can connect the remote debugger of your IDE to the port <code>5005</code> on <code>localhost</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../committer/" class="btn btn-neutral float-right" title="Committers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../development-environment/" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../development-environment/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../committer/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

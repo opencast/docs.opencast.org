@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Manual Asset Upload - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Manual Asset Upload";
+    var mkdocs_page_input_path = "configuration/asset-upload-ui/index.md";
+    var mkdocs_page_url = "/configuration/asset-upload-ui/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Manual Asset Upload</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#asset-upload-options">Asset Upload Options</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#description">Description</a></li>
+        
+            <li><a class="toctree-l4" href="#default-setup">Default Setup</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-enable-preconfigured-asset-options">How to Enable Preconfigured Asset Options</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-upload-assets-in-the-admin-ui">How to Upload Assets in the Admin UI</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-create-a-new-asset-option">How to Create a New Asset Option</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ui/">Admin UI Configuration</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Manual Asset Upload</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/asset-upload-ui/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="asset-upload-options">Asset Upload Options</h1>
+<h2 id="description">Description</h2>
+<p>This guide will help you customize manual upload asset options for the Admin UI.</p>
+<p>Opencast event media packages reference several different types of assets. These may include video file tracks,
+metadata catalogs, image files and class handout notes. Some assets are automatically created through workflow
+events. Others need to be manually attached to the mediapackage. An example of automatically created assets are
+navigation slides. An example of a manually attached assets are handout notes.</p>
+<p>This guide describes how to customize the Admin UI to support new asset upload options.</p>
+<h2 id="default-setup">Default Setup</h2>
+<p>Out of the box, Opencast provides preconfigured asset and source upload configuration. The configuration is a
+listprovider properties file:</p>
+<pre><code>etc/listproviders/event.upload.asset.options.properties
+</code></pre>
+<p>Two source types are enabled by default for use in the Admin UI.</p>
+<pre><code>EVENTS.EVENTS.NEW.SOURCE.UPLOAD.NON_SEGMENTABLE={
+   "id":"track_presenter", "type":"track", "flavorType":"presenter",
+   "flavorSubType":"source", "multiple":false, "displayOrder": 1}
+
+EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={
+   "id":"track_presentation", "type":"track", "flavorType":"presentation",
+   "flavorSubType":"source", "multiple":false, "displayOrder": 2}
+</code></pre>
+<p>Source upload options as displayed in the Admin UI Create event:
+    <img alt="assetUploadSource" src="./assetUploadSource.png" /></p>
+<p>Asset flavor and sub-flavor are used by default Opencast workflows. When you add new asset types, you may need to adjust
+workflows to process the new asset flavor.</p>
+<p>These workflow variables are avaiable to workflows started by the create event or add asset action:</p>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uploadedSearchPreview</td>
+<td>boolean</td>
+<td>true if manually uploaded preview image, false otherwise. Used to prevent image extraction overwrite in compose operation</td>
+</tr>
+<tr>
+<td>downloadSourceflavorsExist</td>
+<td>boolean</td>
+<td>true if download-source-flavors variable exists, false otherwise. Identifies existence of download-source-flavors var for tagging</td>
+</tr>
+<tr>
+<td>download-source-flavors</td>
+<td>comma separated list</td>
+<td>A convenience variable that lists manually uploaded asset flavors.</td>
+</tr>
+</tbody>
+</table>
+<p>Example of variables in a workflow:</p>
+<pre><code class="xml">    &lt;!-- Tag any optionally uploaded assets --&gt;
+    &lt;operation
+      id=&quot;tag&quot;
+      if=&quot;${downloadSourceflavorsExist}&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Tagging uploaded assets for distribution&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;${download-source-flavors}&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;+engage-download&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+
+<h2 id="how-to-enable-preconfigured-asset-options">How to Enable Preconfigured Asset Options</h2>
+<p>Catalogs and attachments can be added to new and existing events. Source tracks are uploaded as new events. Some
+predefined catalog and attachment examples are commented out in the properties file. You can uncomment any of these
+to make them upload options in the Admin UI. The workflow <code>publish-uploaded-assets</code> will automatically distribute,
+publish, and archive uploaded assets on existing events.</p>
+<pre><code># Attachments and catalogs upload options are for new and existing events.
+# Only one file can be uploaded for each of these options, the uploaded file replaces existing elements of the same
+# type and flavor in the mediapackage.
+# EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.CAPTIONS_DFXP={"id":"catalog_captions_dfxp", "type": "catalog",
+#     "flavorType": "captions", "flavorSubType": "timedtext", "displayOrder": 2}
+# EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.CAPTIONS_WEBVTT={"id":"attachment_captions_webvtt",
+#     "type": "attachment", "flavorType": "text", "flavorSubType": "webvtt", "displayOrder": 3}
+# EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.CLASS_HANDOUT_NOTES={"id": "attachment_class_handout_notes",
+#     "type": "attachment", "flavorType": "attachment", "flavorSubType": "notes", "displayOrder": 4}
+# EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.SMIL={"id":"catalog_smil", "type":"catalog", "flavorType": "smil",
+#      "flavorSubType": "smil", "displayOrder": 5}
+# EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.PREVIEW_IMAGE={"id":"attachment_preview_image",
+#     "type":"attachment", "flavorType": "presenter","flavorSubType": "search+preview", "displayOrder": 6}
+EVENTS.EVENTS.NEW.UPLOAD_ASSET.WORKFLOWDEFID=publish-uploaded-assets
+
+# The video source track upload options are only for new events.
+# Unlike the other assets, multiple source tracks can be uploaded for a single flavor.
+# The MULTIPLE_PARTS example shows how to enable choosing multiple source files for a single flavor. In this case,
+# a fictional "multipart/part+source".
+# EVENTS.EVENTS.NEW.SOURCE.UPLOAD.MULTIPLE_PARTS={"id": "track_parts","type":"track",
+#    "flavorType": "multipart", "flavorSubType": "part+source", "multiple":true, "displayOrder": 10}
+# EVENTS.EVENTS.NEW.SOURCE.UPLOAD.AUDIO_ONLY={"id": "track_audio","type":"track",
+#     "flavorType": "presenter-audio", "flavorSubType": "source", "multiple":false, "displayOrder": 11}
+EVENTS.EVENTS.NEW.SOURCE.UPLOAD.NON_SEGMENTABLE={"id": "track_presenter","type":"track",
+     "flavorType":"presenter", "flavorSubType": "source", "multiple":false, "displayOrder": 12}
+EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={"id": "track_presentation","type":"track",
+     "flavorType":"presentation", "flavorSubType": "source", "multiple":false, "displayOrder": 13}
+</code></pre>
+<h2 id="how-to-upload-assets-in-the-admin-ui">How to Upload Assets in the Admin UI</h2>
+<p>After enabling an upload option, a new navigation area becomes visible in the "Create event", called "Asset Upload".
+Assets can be uploaded to new events. The "Asset Upload" navigation disapears for scheduled events.
+Assets cannot be uploaded for scheduled events until after the scheduled event is processed.
+    <img alt="assetUpload" src="./assetUpload.png" /></p>
+<p>The manually uploaded assets appear in the Create event summary
+    <img alt="assetUploadSummary" src="./assetUploadSummary.png" /></p>
+<p>To Upload an asset to an existing event, go into the existing event details Assets tab, and click "Add Asset &gt;" link
+    <img alt="assetUploadExistingEvent" src="./assetUploadExistingEvent.png" /></p>
+<p>The option selection is the same as for Create event, execpt the "Add Asset" button automatically executes the workflow
+defined by <code>EVENTS.EVENTS.NEW.UPLOAD_ASSET.WORKFLOWDEFID</code>
+    <img alt="assetUploadExistingOptions" src="./assetUploadExistingOptions.png" /></p>
+<h2 id="how-to-create-a-new-asset-option">How to Create a New Asset Option</h2>
+<p>The following steps will assist you in creating a new asset upload option. As mentioned before, only catalog and
+attachments can be added to existing events. New source types can be added to new events.</p>
+<p>Tasks:</p>
+<ul>
+<li>Modify <code>etc/listproviders/event.upload.asset.options.properties</code></li>
+<li>Add Admin UI translation for the new asset name
+  <code>modules/admin-ui/src/main/resources/public/org/opencastproject/adminui/languages/...</code></li>
+<li>Modify your workflow from <code>etc/workflows/...</code></li>
+<li>Test your changes</li>
+</ul>
+<p>The following steps describe how to change the properties configuration.</p>
+<h3 id="step-1-determine-your-new-option-type-and-processing-needs">Step 1. Determine your new option type and processing needs</h3>
+<p>There are 3 asset upload types:</p>
+<ul>
+<li><strong>track</strong> is a media source such as video file</li>
+<li><strong>catalog</strong> is an XML formatted metadata file</li>
+<li><strong>attachment</strong> can be any type of file. For example jpeg, pdf, text, etc.</li>
+</ul>
+<p>Tracks are usually associated with workflow processing. If you need special processing with your custom track flavors,
+update or create  workflows to work with your new track flavor.</p>
+<p>Attachments and Catalogs, such as smil files, can also be used for processing. If you only need to publish manually
+uploaded assets with a unique flavor, this is already built into the default workflows.</p>
+<h3 id="step-2-add-your-new-option-to-the-list-configuration">Step 2. Add your new option to the list configuration</h3>
+<p>You add your new asset upload configuration as a row to this file:</p>
+<pre><code>etc/listproviders/event.upload.asset.options.properties
+</code></pre>
+<p>Copy an existing row as a template for your new asset. Retain the property key prefix <code>EVENTS.EVENTS.NEW.SOURCE.</code>
+or <code>EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.</code></p>
+<p>Your unique asset identifier will follow the last dot after the prefix, in all capital alphabetical characters.
+Underbars are allowed. CONFIGURATION values are in JSON object format.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>track_presenter</td>
+<td>One of "attachment" or "catalog" or "track", underbar (_), unique text (no spaces)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>track</td>
+<td>One of "attachment" or "catalog" or "track" to designate asset type (must match id prefix)</td>
+</tr>
+<tr>
+<td>flavorType</td>
+<td>presentation</td>
+<td>The primary flavor type. Used to reference asset in workflows, player, and media module</td>
+</tr>
+<tr>
+<td>flavorSubType</td>
+<td>source</td>
+<td>The sub flavor type. Used to identify the sub flavor of this flavor type</td>
+</tr>
+<tr>
+<td>multiple</td>
+<td>false</td>
+<td>true or false, used by the admin UI to enable single or multiple file input selection</td>
+</tr>
+<tr>
+<td>displayOrder</td>
+<td>32</td>
+<td>Integer number, used by the admin UI to sort the display of upload options in the UI</td>
+</tr>
+<tr>
+<td>displayOverride</td>
+<td>'My New Catalog'</td>
+<td>A short asset title which overrides all translations</td>
+</tr>
+<tr>
+<td>displayFallback</td>
+<td>'My New Catalog'</td>
+<td>A short asset title which displays when no translation is found</td>
+</tr>
+<tr>
+<td>displayOverride.SHORT</td>
+<td>'Video of a Presenter'</td>
+<td>A short source title which overrides all translations</td>
+</tr>
+<tr>
+<td>displayFallback.SHORT</td>
+<td>'Video of a Presenter'</td>
+<td>A short source title which displays when no translation is found</td>
+</tr>
+<tr>
+<td>displayOverride.DETAIL</td>
+<td>'A recording that showing the lecturer speaking'</td>
+<td>A longer source description which overrides all translation</td>
+</tr>
+<tr>
+<td>displayFallback.DETAIL</td>
+<td>'A recording that showing the lecturer speaking'</td>
+<td>A longer source description which displays when no translation is found</td>
+</tr>
+</tbody>
+</table>
+<p>The parameter key is internationalized as the display text in the admin UI
+ref: modules/admin-ui/src/main/resources/public/org/opencastproject/adminui/languages/</p>
+<h3 id="step-3-add-translation-for-the-new-option">Step 3. Add translation for the new option</h3>
+<p>The option property key is internationalized for display in the Admin UI.
+Add a translation for the option property when adding new option, otherwise the Admin UI will display the raw key.</p>
+<p>The translation language files are located:</p>
+<pre><code>modules/admin-ui/src/main/resources/public/org/opencastproject/adminui/languages/...
+</code></pre>
+<p>Example of US English translation for <code>EVENTS.EVENTS.NEW.UPLOAD_ASSET.OPTION.CAPTIONS_WEBVTT</code>:</p>
+<pre><code>modules/admin-ui/src/main/resources/public/org/opencastproject/adminui/languages/lang-en_US.json
+</code></pre>
+<pre><code class="json">{
+  ...
+  &quot;EVENTS&quot;: {
+    ...
+    &quot;EVENTS&quot;: {
+       ...
+       &quot;NEW&quot;: {
+        ...
+        &quot;UPLOAD_ASSET&quot;: {
+             ...
+            &quot;CAPTIONS_WEBVTT&quot; : &quot;Captions WebVTT&quot;,
+             ...
+</code></pre>
+
+<p>Now you are ready to test and deploy.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../encoding/" class="btn btn-neutral float-right" title="Encoding">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../metadata/" class="btn btn-neutral" title="Metadata"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../metadata/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../encoding/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

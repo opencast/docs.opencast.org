@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Stream Security - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Stream Security";
+    var mkdocs_page_input_path = "modules/stream-security.md";
+    var mkdocs_page_url = "/modules/stream-security/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../searchindex/">Search Index</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Stream Security</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#stream-security">Stream Security</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#introduction">Introduction</a></li>
+        
+            <li><a class="toctree-l4" href="#content-security-in-opencast">Content Security in Opencast</a></li>
+        
+            <li><a class="toctree-l4" href="#securing-the-streams">Securing the Streams</a></li>
+        
+            <li><a class="toctree-l4" href="#what-is-secured-and-what-is-not">What is secured and what is not?</a></li>
+        
+            <li><a class="toctree-l4" href="#technical-overview">Technical Overview</a></li>
+        
+            <li><a class="toctree-l4" href="#further-information">Further Information</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Stream Security</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/modules/stream-security.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="stream-security">Stream Security</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Security usually is a challenging, technically aspects of any software system. However, diving into technical details
+before understanding the principles of the solution can lead to false assumptions about the level of security in place.
+Therefore, this section provides a high-level overview of Opencast's stream security functionality.</p>
+<h2 id="content-security-in-opencast">Content Security in Opencast</h2>
+<p>In many settings, some or even all content published by an Opencast installation must not be accessible by everyone.
+Instead, access should be restricted to those users with corresponding permissions. So, if access control already
+ensures that each user only has access to the recordings he or she is allowed to see, what does stream security add to
+the mix?</p>
+<p>Looking more closely at what it means to serve recordings to a viewer reveals that a distinction needs to be made
+between:</p>
+<ul>
+<li>the presentation of the video player, the recording metadata</li>
+<li>the serving of the video streams, preview images etc. to that player.</li>
+</ul>
+<p>The former is protected by the engage part of Opencast. The latter may be served by download and streaming servers.
+Those distribution servers are independent of Opencast and have no knowledge about the current user and its permissions
+with regard to the requested video asset .</p>
+<p>To summarize: Opencast is capable of assessing a recording’s access control list and the current user’s permissions to
+decide if a user is allowed to access the recording’s metadata and the player.  External download and streaming servers,
+serving the actual video files are not aware of these permissions. As a result, nothing prevents an authorized user from
+passing on the actual video and image URLs to the public, thereby circumventing the restrictions implied on the
+presentation layer earlier on.</p>
+<h2 id="securing-the-streams">Securing the Streams</h2>
+<p>Since the download and streaming servers do not (and should not) have access to security related information about the
+user, its roles nor its permissions with regard to the media files, there is no way to perform authorization checks the
+same way Opencast is performing them while serving up recording metadata. The only way to decide if a given request
+should be served or not is to leave authorization to Opencast and agree on a secure protocol that defines whether a
+request is meant to be granted by Opencast or not.</p>
+<p>Stream security solves the problem exactly as described: Each request that is sent to any of the download or streaming
+servers must contain a validation policy, indicating for how long access should be granted and optionally even from
+which IP address. Signing of the policy ensures that potential changes to the policy will be detected. On the other end,
+the server must be enabled to verify the signature and extract the policy to verify whether it should comply with the
+request or not.</p>
+<h2 id="what-is-secured-and-what-is-not">What is secured and what is not?</h2>
+<p>Even with Stream security enabled, some loopholes exist where unauthorized viewers might be able to get access to
+protected resources, even though for a limited time only. The following section describes in detail what is and what
+is not secured.</p>
+<h3 id="url-hacking">URL hacking</h3>
+<p><em>Executive summary: Accessing a resource with an unsigned or incorrectly signed URL is impossible.</em></p>
+<p>Resources distributed by Opencast are organized in a file structure that is built upon a resource’s series identifier as
+well as the identifier of the recording itself. Since those identifiers usually are based on
+<a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUIDs</a>, guessing the URL is hard but not impossible. In
+addition, a malicious user might be getting hold of a valid identifier through network sniffing, social hacking or by
+other means.</p>
+<p>With Stream Security enabled, a user cannot access that resource, since the URL for accessing the resource would either
+be lacking the policy and signature completely or would contain a broken signature due to an identifier mismatch in the
+policy.</p>
+<p>It is important to note that, if stream security is enabled, all resources will be signed and protected, even ones that
+do not have any access restrictions defined in their access control lists. Accessing resources with unsigned URLs will
+not be possible.</p>
+<h3 id="revoking-access-rights">Revoking access rights</h3>
+<p><em>Executive summary: Access is revoked once the digital signature expires.</em></p>
+<p>If a user has the rights to access a resource, it does not automatically mean that permission has been granted for a
+lifetime. After a signed URL’s policy has expired, the URL must receive an updated policy and be signed again in order
+to provide continuous access to the corresponding resource, so in the case of revoked access rights, the user in
+question will be able to keep access to the resource as long as the initially signed url is valid. After that, Opencast
+will not provide a signed URL anymore due to the change in permissions.</p>
+<p>On the other hand, there is no way to revoke access to that resource for that particular user unless the URL expires.
+The only way would be to completely remove the resource from the distribution server. It is therefore important to
+choose reasonable expiration times for signed URLs.</p>
+<h3 id="unauthorized-sharing-of-urls">Unauthorized sharing of URLs</h3>
+<p><em>Executive summary: Leaked signed URLs are only accessible for the duration of the validity of the signature.</em></p>
+<p>A signed URL shared by an authorized user with a non-authorized third party will expire (as explained above). The
+expiration time can be set as low as some seconds but will then require even authorized users to obtain newly signed
+URLs as they continue to access protected content (e.g. the user takes a quick break watching a recording by hitting
+“pause”, then hits “play” again to resume). This risk can be lowered further by restricting a resource to a client’s IP
+address so that it can only be played by someone with the same IP.</p>
+<h3 id="downloading-or-ripping-content">Downloading or ripping content</h3>
+<p><em>Executive summary: Content protected by stream security is not protected against unauthorized publication through
+authorized users.</em></p>
+<p>Since stream security does not implement digital rights management (DRM), authorized users may download content while in
+possession of correctly signed URLs. When that content is republished on systems that are not under the control of the
+original owner (i.e. are not protected by stream security or any other means), it is publicly available.</p>
+<p>Most institutions will have a policy in place that legally prevents circumventing protection and sharing of protected
+media, and as a result, the above scenario will be taxed as piracy.</p>
+<h2 id="technical-overview">Technical Overview</h2>
+<p>Stream security consists of several components, and each of these components must be installed and configured properly,
+otherwise the system may not behave as expected. This part of the documentation describes how each of the components
+need to be installed and holds information on which configuration options are available.</p>
+<h3 id="terms">Terms</h3>
+<p>For the understanding of this document it is important to have the following terms clearly defined.</p>
+<h4 id="policy">Policy</h4>
+<p>A policy defines the timeframe and (optionally) from which addresses a specified resource may be accessed. In order to
+exchange the policy between system components, the involved components must agree on a serialization specification.</p>
+<h4 id="signature">Signature</h4>
+<p>The signature expresses the validity of a policy. As with the policy, the system’s signature components, must follow a
+predefined signing algorithm. Only then is it possible to verify if the signature was issued for a specific policy, or
+if either the signature or the policy was modified.</p>
+<h4 id="key">Key</h4>
+<p>Using keys is a common way to protect information that is being shared between two or more systems. In stream security,
+keys are used to prevent signature forgery. A key consists of an identifier (ID) and a secret value. The keys need to be
+kept private, otherwise everyone can create signatures and thereby gain unlimited access to all resource protected by
+that key.</p>
+<h4 id="signing-protocol">Signing Protocol</h4>
+<p>The combination of a policy specification and a signature algorithm forms the signing protocol, where the policy
+contains the rules to be applied and the signature ensures that the rules remain unaltered. Components that implement
+the same signing protocol are compatible and can be used in combination.</p>
+<h3 id="components">Components</h3>
+<p>A typical signing infrastructure consists of two main components: a signing service and a verification component. While
+the signing service is used to sign arbitrary URLs, the verification component is located on the distribution servers to
+protect the resources and only serve requests that have been properly signed.</p>
+<p>All signing providers and verification components developed by the Opencast community implement the Opencast signing
+protocol as documented in the developer guide and are therefore compatible.</p>
+<h4 id="url-signing-service">URL Signing Service</h4>
+<p>The URL signing service is designed to support one or more signing implementations called signing providers. With this
+concept, different signing protocols, and by virtue, different verification components are supported. The resource is
+presented to each signing provider in turn, where it is either signed or passed on. This process continues until a
+signature is obtained.</p>
+<p>Out of the box, Opencast provides the following implementation:</p>
+<ul>
+<li><em>Generic Signing Provider</em>: This provider may be used in combination with HTTP servers. It appends the necessary
+  information (policy, signature and key id) to the URL.</li>
+</ul>
+<p>The URL signing service makes it straightforward to provide additional implementations to handle third party
+distribution servers URL signatures. This becomes important in situations where files are served by a server that is
+currently not supported or if files are served by a CDN that implements its own proprietary signing protocol.</p>
+<h4 id="verification-components">Verification components</h4>
+<p>In order to take advantage of the signed URLs, a verification component needs to reside on the distribution servers to
+verify the validity of the signature (i.e. check that the URL has not been altered after it was signed) and then grant
+or deny access to the resource, based on the policy associated with the URL.</p>
+<p>In addition to these external verification components there is also an Opencast verification component called the
+<em>UrlSigningFilter</em> that is used to protect files that Opencast itself provides.</p>
+<p>Verification components have the option of strict or non-strict checking. Strict verification of resources means the
+entire URL will be considered when comparing the incoming request for a resource against the policy, including the
+scheme (http, https, etc.), hostname and port. If using non-strict checking, only the path to the resource will be
+considered. So if the request is for a resource at <code>http://httpdserver:8080/the/full/path/video.mp4</code>, only the
+<code>/the/full/path/video.mp4</code> part of the URL will be checked against the policy’s path. This is useful when using a load
+balancer so that the requested hostname does not have to match the actual hostname or if a video player is rewriting
+requests, e.g. by inserting the port number.</p>
+<h2 id="further-information">Further Information</h2>
+<p>For further technical information like installation instructions, configuration guides, server plugins and the signing
+specification, please have a look at these documents:</p>
+<ul>
+<li><a href="../../configuration/stream-security/">Stream Security Configuration &amp; Testing</a></li>
+<li>The Opencast Signing Protocol is defined in the subsection Stream Security in the modules section of the developer guide.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../textextraction/" class="btn btn-neutral float-right" title="Text Extraction">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../searchindex/" class="btn btn-neutral" title="Search Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../searchindex/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../textextraction/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Authentication and Authorization Infrastructure (AAI) - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Authentication and Authorization Infrastructure (AAI)";
+    var mkdocs_page_input_path = "configuration/security.aai.md";
+    var mkdocs_page_url = "/configuration/security.aai/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Authentication and Authorization Infrastructure (AAI)</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#authentication-and-authorization-infrastructure-aai-configuration">Authentication and Authorization Infrastructure (AAI) Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#prerequesites">Prerequesites</a></li>
+        
+            <li><a class="toctree-l5" href="#step-1-configuration-of-the-aai-login-handler">Step 1: Configuration of the AAI Login handler</a></li>
+        
+            <li><a class="toctree-l5" href="#step-2-spring-security-configuration">Step 2: Spring Security Configuration</a></li>
+        
+            <li><a class="toctree-l5" href="#step-3-protecting-html-pages-by-shibboleth">Step 3: Protecting HTML pages by Shibboleth</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.piwik.tracking/">Piwik Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishaws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+        
+          <li>Security &raquo;</li>
+        
+      
+    
+    <li>Authentication and Authorization Infrastructure (AAI)</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/security.aai.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="authentication-and-authorization-infrastructure-aai-configuration">Authentication and Authorization Infrastructure (AAI) Configuration</h1>
+<p>This page describes how to configure Opencast to take advantage of the Authentication and Authorization
+Infrastructure (AAI).</p>
+<h2 id="prerequesites">Prerequesites</h2>
+<p>This guides assumes that you know how to setup and configure a Shibboleth Service Provider, i.e. you are assumed
+to already have performed the following steps:</p>
+<ul>
+<li>Registeration of your Shibboleth Service Provider at your Shibboleth Federation Service Registry</li>
+<li>Setup and configuration of Shibboleth on the servers you want to use it</li>
+<li>Configuration of your web server</li>
+</ul>
+<p>In case you require help on this, contact the institution responsilbe for managing the Shibboleth Federation you
+are part of.</p>
+<p>An informative list of Shibboleth Federations can be found on:</p>
+<p><a href="https://refeds.org/federations">https://refeds.org/federations</a></p>
+<h2 id="step-1-configuration-of-the-aai-login-handler">Step 1: Configuration of the AAI Login handler</h2>
+<p>Opencast ships with a configurable AAI Login handler that needs to be adjusted to your environment.
+The configuration can be found in <code>etc/org.opencastproject.security.aai.ConfigurableLoginHandler.cfg</code>.</p>
+<p>First off all, enable the AAI login handler:</p>
+<pre><code>enabled=true
+</code></pre>
+<p>For bootstrapping purposes, you might want to configure the AAI bootstrap user:</p>
+<pre><code>bootstrap.user.id=&lt;AAI ID&gt;
+</code></pre>
+<p>That user will be assigned ROLE_ADMIN at login time. This enables you to access the administrative UI and
+configure user authorization without the need to fiddle with the database directly.
+Once user authorization has been setup, disable the AAI bootstrap user.</p>
+<p>Since the HTTP request header names required by the AAI login handler are specific to Shibboleth Federations,
+you will need to first adjust the following properties.</p>
+<p>Set the following header names to the correct values:</p>
+<pre><code>header.given_name = "&lt;Name of Shibboleth attribute&gt;"
+header.surname = "&lt;Name of Shibboleth attribute&gt;"
+header.email = "&lt;Name of Shibboleth attribute&gt;"
+header.home_organization = "&lt;Name of Shibboleth attribute&gt;"
+</code></pre>
+<p>Optionally, you can configure the name of some basic roles the AAI login handler will assign to authenticated users.</p>
+<p>The prefix of the user role will determine what unique role a given Shibboleth user has. The role is of the
+form <em>role.user.prefix + Unique ID provided by Shibboleth</em>.</p>
+<pre><code>role.user.prefix = "ROLE_AAI_USER_"
+</code></pre>
+<p>To indicate the AAI home organization a user belongs to, the organization membership role is assigned to the user.
+The role is of the form <em>role.organization.prefix + Home Organization provided by Shibboleth +
+role.organization.suffix</em></p>
+<pre><code>role.organization.prefix = "ROLE_AAI_ORG_"
+role.organization.suffix = "_MEMBER"
+</code></pre>
+<p>To indicate the fact that a user has authenticated himself using Shibboleth, the login handler assigns the
+role as specified by the property <em>role.federation</em>.</p>
+<pre><code>role.federation = "ROLE_AAI_USER"
+</code></pre>
+<h2 id="step-2-spring-security-configuration">Step 2: Spring Security Configuration</h2>
+<p>In order to take advantage of Shibboleth authentication, you will need to uncomment the following lines found
+in <code>etc/security/mh_default_org.xml</code>:</p>
+<p>The Shibboleth header authentification filter needs to be enabled to get access to the Shibboleth information
+within the HTTP request headers.</p>
+<pre><code>&lt;!-- Shibboleth header authentication filter --&gt;
+&lt;sec:custom-filter ref="shibbolethHeaderFilter" position="PRE_AUTH_FILTER"/&gt;
+</code></pre>
+<p>To ensure that a logout is not just logging out the user from the Opencast application but also from Shibboleth,
+you will need to configure the logout-success-url:</p>
+<pre><code>&lt;!-- Enables log out --&gt;
+&lt;sec:logout logout-success-url="/Shibboleth.sso/Logout?return=www.opencast.org" /&gt;
+</code></pre>
+<p><strong>IMPORTANT:</strong> In the section <em>Shibboleth Support</em>, be sure to adapt the value of <em>principalRequestHeader</em> to the
+respective name of the Shibboleth attribute you use in your Shibboleth Federation:</p>
+<pre><code>&lt;!-- ###################### --&gt;
+&lt;!-- # Shibboleth Support # --&gt;
+&lt;!-- ###################### --&gt;
+
+&lt;!-- General Shibboleth header extration filter --&gt;
+&lt;bean id="shibbolethHeaderFilter"
+      class="org.opencastproject.security.shibboleth.ShibbolethRequestHeaderAuthenticationFilter"&gt;
+  &lt;property name="principalRequestHeader" value="&lt;Shibboleth attribute name&gt;"/&gt;
+  &lt;property name="authenticationManager" ref="authenticationManager" /&gt;
+  &lt;property name="userDetailsService" ref="userDetailsService" /&gt;
+  &lt;property name="userDirectoryService" ref="userDirectoryService" /&gt;
+  &lt;property name="shibbolethLoginHandler" ref="configurableLoginHandler" /&gt;
+  &lt;property name="exceptionIfHeaderMissing" value="false" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- AAI specific header extractor and user generator --&gt;
+&lt;bean id="configurableLoginHandler" class="org.opencastproject.security.aai.ConfigurableLoginHandler"&gt;
+  &lt;property name="securityService" ref="securityService" /&gt;
+  &lt;property name="userReferenceProvider" ref="userReferenceProvider" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="preauthAuthProvider"
+      class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider"&gt;
+  &lt;property name="preAuthenticatedUserDetailsService"&gt;
+    &lt;bean id="userDetailsServiceWrapper"
+          class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper"&gt;
+      &lt;property name="userDetailsService" ref="userDetailsService"/&gt;
+    &lt;/bean&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>Finally be sure to enable the user reference provider to enable support for externally provided users:</p>
+<pre><code>&lt;osgi:reference id="userReferenceProvider" cardinality="1..1"
+              interface="org.opencastproject.userdirectory.api.UserReferenceProvider" /&gt;
+</code></pre>
+<p>Since the Opencast login page is not used when Shibboleth authentication is in place, there is no point in redirecting
+unauthenticated requests to the Opencast login form. You can redirect them directly to the administrative user
+interface which is supposed to be protected by Shibboleth.</p>
+<pre><code>&lt;!-- Redirects unauthenticated requests to the login form --&gt;
+&lt;bean id="userEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"&gt;
+  &lt;property name="loginFormUrl" value="/admin-ng/index.html" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>Last but not least, you need to add the <em>preauthAuthProvider</em> authentication provider to the <em>authentication-manager</em>:</p>
+<pre><code>&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider ref="preauthAuthProvider"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;
+    &lt;sec:password-encoder hash="md5"&gt;&lt;sec:salt-source user-property="username" /&gt;&lt;/sec:password-encoder&gt;
+  &lt;/sec:authentication-provider&gt;
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<h2 id="step-3-protecting-html-pages-by-shibboleth">Step 3: Protecting HTML pages by Shibboleth</h2>
+<p>It is important to understand that Shibboleth is only used to protect content that is accessed by human users.
+Access to APIs is protected by other means of authentication as, for example, digest authentication.</p>
+<p>To protect HTML pages, you will need to adapt the configuration of your web server:</p>
+<pre><code>&lt;LocationMatch \.(htm|html)$&gt;
+    AuthType shibboleth
+    ShibRequireSession On
+    ShibUseHeaders On
+    require valid-user
+&lt;/LocationMatch&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../security.cas/" class="btn btn-neutral float-right" title="Central Authentication Service (CAS)">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../acl/" class="btn btn-neutral" title="Access Control Lists"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../acl/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../security.cas/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

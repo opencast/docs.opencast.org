@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Development Environment - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Development Environment";
+    var mkdocs_page_input_path = "development-environment.md";
+    var mkdocs_page_url = "/development-environment/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../release-manager/">Release Manager</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Development Environment</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#development-environment">Development Environment</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#building-single-modules">Building single modules</a></li>
+        
+            <li><a class="toctree-l3" href="#attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/admin-ui/">Admin UI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/stream-security/">Stream Security</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/nexus/">Nexus Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Development Environment</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs/src/default/docs/development-environment.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="development-environment">Development Environment</h1>
+<h2 id="building-single-modules">Building single modules</h2>
+<p>When working on a single Opencast module, it can be extremely helpful to watch the newly built version and include 
+it automatically in the Opencast OSGi infrastructure. This can be done through the
+<a href="https://karaf.apache.org/manual/latest/commands/bundle-watch.html">bundle:watch</a> command in Karaf. The workflow would
+be as follows:</p>
+<ul>
+<li>Start Opencast and use <code>la -u</code> in the Karaf console to list all installed bundles/modules. Note down the IDs of the
+   bundles you want to watch.</li>
+<li>Use <code>bundle:watch IDs</code> to watch the desired modules, e.g. <code>bundle:watch 190 199</code></li>
+<li>Make your changes and rebuild the module (e.g. execute <code>mvn clean install</code> in the module folder).</li>
+<li>Watch how Karaf automatically redeploys the changed jars from your local Maven repository. You can verify that
+   everything went smoothly by checking the log with <code>log:tail</code>.</li>
+</ul>
+<p>The updated bundles are only available in the currently running Karaf instance. To create a Opencast version that has
+this changes permanently, you have to run <code>mvn clean install</code> in the the assemblies directory again. Your current
+instance will be deleted by the new assembly!</p>
+<p>In several cases the bundle:watch can bring Karaf in an unstable condition, as dependencies between bundles will not
+correctly be restored, after the new bundle has been deployed.</p>
+<h2 id="attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</h2>
+<p>To debug a running Opencast system, you can attach a remote debugger in your IDE (Eclipse or NetBeans, i.e.). For that
+you have to enable the remote debugging in Karaf OSGI server that runs Opencast.</p>
+<p>You have to add "debug" as an additional paramenter to the Opencast start script:</p>
+<pre><code>bin/start-opencast debug
+</code></pre>
+<p>If you want to enable debug permanently you can export the variable in the shell:</p>
+<pre><code>export DEFAULT_JAVA_DEBUG_OPTS='-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
+</code></pre>
+<p>You can connect the remote debugger of your IDE on port <code>5005</code>.</p>
+<p>For more information on remote debugging with Karaf you can visit <a href="https://karaf.apache.org/manual/latest/developers-guide/debugging.html">this
+site.</a></p>
+<p>It is not recommended to enable remote debugging on production systems!</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license/" class="btn btn-neutral float-right" title="Licenses and Legal Matters">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../release-manager/" class="btn btn-neutral" title="Release Manager"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../release-manager/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

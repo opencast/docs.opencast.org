@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Security Issues - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Security Issues";
+    var mkdocs_page_input_path = "security.md";
+    var mkdocs_page_url = "/security/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Security Issues</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#opencast-security-issue-process">Opencast Security Issue Process</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#for-users-and-administrators">For Users and Administrators</a></li>
+        
+            <li><a class="toctree-l4" href="#what-to-do-if-you-find-a-security-issue">What to do if you find a security issue</a></li>
+        
+            <li><a class="toctree-l4" href="#what-to-do-once-you-have-reported-your-security-issue">What to do once you have reported your security issue</a></li>
+        
+            <li><a class="toctree-l4" href="#what-happens-once-the-issue-has-been-fixed">What happens once the issue has been fixed?</a></li>
+        
+            <li><a class="toctree-l4" href="#for-committers">For Committers</a></li>
+        
+            <li><a class="toctree-l4" href="#what-to-do-with-a-security-report">What to do with a security report</a></li>
+        
+            <li><a class="toctree-l4" href="#where-do-we-review-security-patches">Where do we review security patches?</a></li>
+        
+            <li><a class="toctree-l4" href="#once-a-security-issue-has-been-resolved">Once a security issue has been resolved</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development Process &raquo;</li>
+        
+      
+    
+    <li>Security Issues</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/security.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="opencast-security-issue-process">Opencast Security Issue Process</h1>
+<p>This document summarizes how issues are reported, who is responsible for what actions, and how things are handled
+internally. The instructions here should be considered the <em>minimum</em>, and further/faster responses are certainly
+possible depending on the severity and type of issue.</p>
+<hr />
+<h2 id="for-users-and-administrators">For Users and Administrators</h2>
+<h2 id="what-to-do-if-you-find-a-security-issue">What to do if you find a security issue</h2>
+<p>Report it to <code>security@opencast.org</code>! Please include a complete description of the issue, including which version(s) it
+affects, as well as any steps required to reproduce it. This email will be sent privately to the full list of
+committers for the project. You should receive an email acknowledging the issue from the QA coordinator, or release
+manager(s) within 3 business days. At this point, depending on the issue, you may be asked for your Attlassian and GitHub
+logins. It is enouraged to have one, since internal discussion on JIRA will be restricted to committers and the
+reporter. Likewise, all code reviews will be done on in an internal GitHub repository.</p>
+<h2 id="what-to-do-once-you-have-reported-your-security-issue">What to do once you have reported your security issue</h2>
+<p>Wait, and/or help fix the issue. The committers will work to find a mitigation for the immediate case, and a proper
+solution for the long term. This may take a while, please be patient. It may also require you to test it if the issue
+is derived from a complex system that most committers would not necessarily have access to (e.g: your LDAP or LTI
+servers).</p>
+<h2 id="what-happens-once-the-issue-has-been-fixed">What happens once the issue has been fixed?</h2>
+<p>A notice to <code>security-notices@opencast.org</code> will be released once the issue has been resolved and proper patches applied
+to the codebase. This notice may be accompanied by a release, or instructions on how to patch a live system depending
+on the issue.</p>
+<hr />
+<h2 id="for-committers">For Committers</h2>
+<h2 id="what-to-do-with-a-security-report">What to do with a security report</h2>
+<p>If no one else has, create a JIRA issue with a 'Committer' security level, and the details in the security report.
+Assign the ticket either to yourself (if you intend on working on it) or nobody, and reply on <code>committers@opencast.org</code>
+with the ticket. Thus far most of our security issues have come with patches attached, however this will not always be
+true. Issues which require work beyond application of a provided patch should be treated the same as any other JIRA
+issue, aside from the security level. Note that that security level will keep non-committers from viewing the ticket
+or comments. Depending on the issue and severity, the QA coordinator and/or release manager(s) may apply for a Common
+ Vulnerability and Exposures (CVE) number as well.</p>
+<h2 id="where-do-we-review-security-patches">Where do we review security patches?</h2>
+<p>Minor patches can be reviewed on an adhoc basis but larger patches, especially those requring collaboration in private,
+or extensive comment and review, can use the opencast-security repository under the opencast-community account. Note
+that this repository is private to committers, and reporters. Add the security repository to your remotes with this
+command:</p>
+<pre><code class="no-highlight">git remote add security git@bitbucket.org:opencast-community/opencast-security.git
+</code></pre>
+
+<p>Then create your branch locally. When the branch is ready to be pushed to the security repo do something like this:</p>
+<pre><code class="no-highlight">git push security &lt;your branch name&gt;
+</code></pre>
+
+<p>You can then create your branch like you normally would, pushing it to security rather than your own repository.</p>
+<h2 id="once-a-security-issue-has-been-resolved">Once a security issue has been resolved</h2>
+<p>Once a security issue has been resolved, the QA coordinator, and/or the release manager(s) affected will work together
+to ensure that any relevant release(s) are created and available, and then release the security notice. This notice
+must contain the CVE (if applicable) and JIRA ticket number, as well as the affected version(s) of Opencast, a
+description of the issue, mitigation/upgrade instructions, as well as credit to the reporter(s) of the issue. As an
+example, this is a good notice:</p>
+<pre><code class="no-highlight">Hello,
+this is the official security notice regarding a security issue
+recently discovered in Opencast.
+
+Description:
+
+   The Solr index for the search service (back-end e.g. for player and
+   media module) in some cases returns results that should not be
+   available to the current user.
+
+
+Affects:
+
+   This issue affects all recent versions of Opencast.
+
+
+Details:
+
+   Solr in some cases returned results that should not be available to
+   the current user. For example, if `UserX` has the role `ROLE_USER`
+   and a video should only be available for `ROLE_USER_ADMIN`, `UserX`
+   can still access it.
+
+   This may happen only if the second role starts with the complete
+   first role. If the rules do not overlap, there should be no problem.
+
+
+Patching the system:
+
+   Patches for this issue are included in Opencast 2.2.4 and 2.3.0.
+   A patch can also be found at
+   https://bitbucket.org/opencast-community/opencast/pull-requests/1236
+
+
+Credits:
+
+  Thanks to Matthias Neugebauer from the University of Münster for
+  finding, reporting and fixing the issue.
+
+
+Best regards,
+Lars Kiesow
+</code></pre>
+
+<p>Once the issue has been fixed and the notice sent, the security level should be removed from the JIRA ticket so it
+becomes publicly viewable.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../code-style/" class="btn btn-neutral float-right" title="Code Style">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../qa-coordinator/" class="btn btn-neutral" title="QA Coordinator"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../qa-coordinator/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../code-style/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
