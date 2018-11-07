@@ -177,10 +177,6 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../asset-upload-ui/">Manual Asset Upload</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../encoding/">Encoding</a>
                 </li>
                 <li class="">
@@ -273,7 +269,25 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../ui/">Admin UI Configuration</a>
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -1064,73 +1078,8 @@ information in variables of workflow instances:</p>
 </tr>
 </tbody>
 </table>
-<p>At any given point of time, there is exactly one thumbnail available for each published event.
-There are three different kinds of thumbnails:</p>
-<ul>
-<li>Default thumbnail</li>
-<li>Uploaded thumbnail</li>
-<li>Snapshot thumbnail</li>
-</ul>
-<h3 id="default-thumbnail">Default Thumbnail</h3>
-<p>This thumbnail is supposed to be automatically generated without user interaction. It is extracted from the time
-position as you define it in your workflow.</p>
-<p>If you are not using the default time position, be sure to adapt the value of <code>thumbnail.default.position</code> in
-<code>etc/org.opencastproject.adminui.cfg</code>. This is required to allow the Admin UI to dynamically generate a preview
-image for the default thumbnail.</p>
-<h3 id="uploaded-thumbnail">Uploaded Thumbnail</h3>
-<p>The Admin UI supports the upload of an image to be used as thumbnail. This thumbnail image will available to
-workflows for further processing as media package attachment with a configurable flavour
-(default: <code>thumbnail/source</code>).</p>
-<p>If you need another flavor for the thumbnail in your specific environment, be sure to adapt the value of
-<code>thumbnail.source.flavor.type</code> and <code>thumbnail.source.flavor.subtype</code> in <code>etc/org.opencastproject.adminui.cfg</code>
-so that the Admin UI adds the thumbnail images with the expected flavour.</p>
-<h3 id="snapshot-thumbnail">Snapshot Thumbnail</h3>
-<p>As a balance between the quality of the thumbnail (default) and the effort to create a thumbnail (upload), the Admin UI
-supports thumbnails that are be extracted from existing tracks. This allows users to take a snapshot at an arbitrary
-time position from a source track by simply selecting the position and pressing a button.</p>
-<p>The variable <code>thumbnailPosition</code> holds the time value (in seconds as floating point) and the variable <code>thumbnailTrack</code>
-holds the flavour type of the track where that thumbnail is supposed to be extracted.</p>
-<p>Please note that <code>thumbnailPosition</code> refers to the (unmodified) track identified by  <code>thumbnailTrack</code>.</p>
-<h3 id="thumbnail-preview">Thumbnail Preview</h3>
-<p>The Admin UI is capable of presenting a preview image of the currently used thumbnail which a) must be
-created by the workflow that generates previews for the Admin UI initially and b) will be created and re-distributed
-by the Admin UI each time the thumbnail is changed.</p>
-<p>The Admin UI manages this preview image of the thumbnail in the publication channel <code>internal</code>. To make this thumbnail
-preview work in environments that use custom flavors, a number of configuration options are available in
-<code>etc/org.opencastproject.adminui.cfg</code>:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Option</th>
-<th align="left">Default</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">thumbnail.preview.flavor</td>
-<td align="left">thumbnail/preview</td>
-<td align="left">The flavor of the thumbnail preview image</td>
-</tr>
-<tr>
-<td align="left">thumbnail.default.position</td>
-<td align="left">1.0</td>
-<td align="left">The time position where the default thumbnail is extracted at</td>
-</tr>
-<tr>
-<td align="left">thumbnail.default.track.primary</td>
-<td align="left">presenter</td>
-<td align="left">The flavor type of the track where the default thumbnail is extracted</td>
-</tr>
-<tr>
-<td align="left">thumbnail.default.track.secondary</td>
-<td align="left">presentation</td>
-<td align="left">The flavor type of the track where the default thumbnail is extracted in case no track with flavor type thumbnail.default.track.primary is available</td>
-</tr>
-</tbody>
-</table>
-<p>Note that the preview image for the default thumbnail needs to be initially created and published which usually is done
-in the workflow definition responsible for creating the previews required by the Admin UI.</p>
+<p>To fully support the thumbnail feature, your workflows should take care of creating the different types of thumbnails
+and be consistent to the Admin UI thumbnail configuration (see <a href="../admin-ui/thumbnails/">Thumbnail Configuration</a>)</p>
 <h2 id="test-the-workflow">Test the Workflow</h2>
 <p>The easiest way to test a workflow is to just put it into the workflow folder where it will be picked up by Opencast
 automatically and will be available in Opencast a few seconds later.</p>
