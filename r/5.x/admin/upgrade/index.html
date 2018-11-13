@@ -63,6 +63,9 @@
     <a class="current" href="./">Upgrade</a>
     <ul class="subnav">
             
+    <li class="toctree-l2"><a href="#update-opencast-51-to-52">Update Opencast 5.1 to 5.2</a></li>
+    
+
     <li class="toctree-l2"><a href="#upgrading-opencast-from-4x-to-50">Upgrading Opencast from 4.x to 5.0</a></li>
     
         <ul>
@@ -676,7 +679,10 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="upgrading-opencast-from-4x-to-50">Upgrading Opencast from 4.x to 5.0</h1>
+                <h1 id="update-opencast-51-to-52">Update Opencast 5.1 to 5.2</h1>
+<p>Opencast 5.2 minor release introduces several security patches. One of them requires a configuration update.
+The <a href="#configuration-changes-since-opencast-52">configuration changes</a> section has been updated to track the new changes.</p>
+<h1 id="upgrading-opencast-from-4x-to-50">Upgrading Opencast from 4.x to 5.0</h1>
 <p>This guide describes how to upgrade Opencast 4.x to 5.0. In case you need information about how to upgrade older
 versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
 <h2 id="how-to-upgrade">How to Upgrade</h2>
@@ -751,6 +757,18 @@ So if you already configured a Piwik server please adapt the following keys in
 <p>Several service job load values were updated. You can find these configuration files by running the command
 <code>grep job.load etc/org.opencastproject.*</code> on the command line or by searching for <code>job.load</code> string in Opencast's
 service configuration files.</p>
+<h3 id="configuration-changes-since-opencast-52">Configuration changes since Opencast 5.2</h3>
+<p>The tenant security configuration (e.g. <code>etc/security/mh_default_org.xml</code>) has been changed in between Opencast 5.1 and 5.2
+([<a href="https://opencast.jira.com/browse/MH-13082">MH-13082</a>][<a href="https://github.com/opencast/opencast/pull/449">#449</a>]).
+The LTI OAuth configuration part was moved to separate configuration files.</p>
+<blockquote>
+<p><strong>NOTE:</strong> All Opencast nodes must adapt the configuration changes, regardless of whether the LTI is used or not</p>
+</blockquote>
+<p>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> introduces the LTI authentication configurations.
+It is now possible to define multiple trusted OAuth consumer keys.
+Some other security related configurations are also added. Please consult the <a href="modules/ltimodule/#configure-lti-optional">LTI configuration guide</a> for the complete documentation.</p>
+<p>In the configuration file <code>etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> one or more OAuth consumer keys and their secrets can be defined.
+Please consult the <a href="modules/ltimodule/#configure-oauth-authentication">LTI configuration guide</a> for the complete documentation.</p>
               
             </div>
           </div>
