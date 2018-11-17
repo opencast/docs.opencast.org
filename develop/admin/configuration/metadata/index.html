@@ -186,14 +186,12 @@
         
             <li><a class="toctree-l4" href="#metadata-catalog-configuration">Metadata Catalog Configuration</a></li>
         
+            <li><a class="toctree-l4" href="#configuring-the-events-publisher-metadata-field">Configuring the events publisher metadata field</a></li>
+        
         </ul>
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../asset-upload-ui/">Manual Asset Upload</a>
                 </li>
                 <li class="">
                     
@@ -267,7 +265,25 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../ui/">Admin UI Configuration</a>
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -352,6 +368,10 @@
                 <li class="">
                     
     <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/timelinepreviews/">Timeline Previews</a>
                 </li>
                 <li class="">
                     
@@ -1006,6 +1026,37 @@ tagging operation for dublincore metadata the following way</p>
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
+<h2 id="configuring-the-events-publisher-metadata-field">Configuring the events publisher metadata field</h2>
+<p>The metadata field can be used in two ways, and its meaning varies slightly:</p>
+<ul>
+<li>The publisher is the creator of the event: when an event is created, this field is filled automatically with the
+logged in user. It cannot be modified on creation of the event nor later.</li>
+<li>The publisher is responsible for uploading the content but may not be the creator of the event in the UI:
+in this case, when the event is created, the publisher is selected from a list provider that includes the logged in user
+(selected by default) and it is also modifiable later, but then the logged in user is not selectable.</li>
+</ul>
+<p>The configuration is done in the file: <code>etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-episode-common.cfg</code>.</p>
+<p>First option is the default one and the configuration is as follows:</p>
+<pre><code>property.publisher.inputID=publisher
+property.publisher.label=EVENTS.EVENTS.DETAILS.METADATA.PUBLISHER
+property.publisher.type=text
+property.publisher.readOnly=true
+property.publisher.required=true
+property.publisher.order=16
+</code></pre>
+<p>To configure the second option:</p>
+<pre><code>property.publisher.inputID=publisher
+property.publisher.label=EVENTS.EVENTS.DETAILS.METADATA.PUBLISHER
+property.publisher.type=text
+property.publisher.readOnly=false
+property.publisher.required=true
+property.publisher.listprovider=YOUR_LIST_PROVIDER
+property.publisher.order=16
+</code></pre>
+<p>If you want to use the publishers as list provider, you must set up the provider in this way:</p>
+<pre><code>property.publisher.listprovider=EVENTS.PUBLISHER
+</code></pre>
+<p>In both cases, you can filter events by publisher.</p>
               
             </div>
           </div>
@@ -1013,7 +1064,7 @@ tagging operation for dublincore metadata the following way</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../asset-upload-ui/" class="btn btn-neutral float-right" title="Manual Asset Upload">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../encoding/" class="btn btn-neutral float-right" title="Encoding">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../message-broker/" class="btn btn-neutral" title="Message Broker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1047,7 +1098,7 @@ tagging operation for dublincore metadata the following way</p>
         <span><a href="../message-broker/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../asset-upload-ui/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../encoding/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
