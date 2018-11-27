@@ -73,6 +73,8 @@
         
             <li><a class="toctree-l3" href="#activemq-migration">ActiveMQ Migration</a></li>
         
+            <li><a class="toctree-l3" href="#removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</a></li>
+        
             <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
         
         </ul>
@@ -763,6 +765,24 @@ update. As with all database migrations, we recommend to create a database backu
 MySQL.</p>
 <h2 id="activemq-migration">ActiveMQ Migration</h2>
 <p><em>So far, this is not required</em></p>
+<h2 id="removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</h2>
+<p>Opencast 7 finally removes the long-since deprecated <code>security/xacml</code> flavor for access control lists. This had not been
+used since before Opencast 1.2 (we could not track down its exact deprecation date due to its age). Additionally, all
+rule-sets which had been modified since had also been automnatically been updated to <code>security/xacml+series</code> which
+serves as replacement for the old flavor.</p>
+<p>In case Opencast still encounters such a rule set, it will now be ignored and access will be denied by default. A simple
+update of the permissions would fix this if that is required.</p>
+<p>Due to the extreme unlikeliness of anyone encountering this problem, there is no automatic migration. In case you run a
+system migrated from a pre-1.2 Matterhorn, you can make sure that there are no old rule-sets left using the following
+SQL queries:</p>
+<pre><code class="sql">-- Check OAI-PMH publications:
+select * from oc_oaipmh_elements where flavor = 'security/xacml';
+-- Check engage publications:
+select * from oc_search where mediapackage_xml like '%&quot;security/xacml&quot;%';
+-- Check asset manager:
+select * from oc_assets_snapshot where mediapackage_xml like '%&quot;security/xacml&quot;%';
+</code></pre>
+
 <h2 id="configuration-changes">Configuration Changes</h2>
 <ul>
 <li><em>TODO</em></li>
