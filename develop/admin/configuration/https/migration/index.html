@@ -773,7 +773,7 @@ what you are doing!</p>
 <li>
 <p>Update the media packages:</p>
 <pre><code>find . -type f -name "*.xml" -exec \
-  sed -i 's/http\:\/\/oc-presentation\.example\.com\:80/https:\/\/oc-presentation.example.com/g' {} +`
+  sed -i 's/http\:\/\/oc-presentation\.example\.com\:80/https:\/\/oc-presentation.example.com/g' {} +
 </code></pre>
 </li>
 <li>
@@ -795,13 +795,15 @@ UPDATE opencast.oc_search
 </code></pre>
 </li>
 <li>
-<p>Rebuild the Elasticsearch indices using the REST endpoint listed in the docs:
-   https://admin.opencast.example.com/docs.html?path=/admin-ng/index</p>
+<p>Remove the search service's Solr index. It usually is located at <code>solr-indexes/search</code> but its location really
+   depends on <code>org.opencastproject.solr.dir</code> and <code>org.opencastproject.search.solr.dir</code></p>
 </li>
-<li>Remove the search service's Solr index. It usually is located at <code>solr-indexes/search</code> but its location really
-   depends on <code>org.opencastproject.solr.dir</code> and <code>org.opencastproject.search.solr.dir</code></li>
 <li>Rebuild the Solr indices by re-starting your Opencast node running the search service (usually presentation).</li>
+<li>Rebuild the Elasticsearch indices using the REST endpoint listed in the docs:
+   https://admin.opencast.example.com/docs.html?path=/admin-ng/index</li>
 </ol>
+<p>Note: If the solr index does not repopulate by itself please check if your nodes are still in maintenance mode and
+reactiveate them.</p>
               
             </div>
           </div>
