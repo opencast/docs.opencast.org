@@ -774,16 +774,16 @@ and can play back videos in an Opencast series set up for the course.</p>
 <a href="http://www.imsglobal.org/activity/learning-tools-interoperability">IMS Learning Tools Interoperability</a>.</p>
 <h2 id="configure-opencast">Configure Opencast</h2>
 <h3 id="configure-oauth-authentication">Configure OAuth authentication</h3>
-<p>LTI uses OAuth to authenticate users. To enable OAuth in Opencast, edit <code>OPENCAST/etc/security/mh_default_org.xml</code> and
-uncomment the oAuthProtectedResourceFilter in the Authentication Filters section:</p>
+<p>LTI uses OAuth to authenticate users. To enable OAuth in Opencast, edit <code>etc/security/mh_default_org.xml</code> and uncomment
+the oauthProtectedResourceFilter in the Authentication Filters section:</p>
 <pre><code class="xml">    &lt;!-- 2-legged OAuth is used by trusted 3rd party applications, including LTI. --&gt;
     &lt;!-- Uncomment the line below to support LTI or other OAuth clients.          --&gt;
     &lt;ref bean=&quot;oauthProtectedResourceFilter&quot; /&gt;
 </code></pre>
 
 <p>To configure OAuth consumers (e.g. a LMS), edit
-<code>OPENCAST/etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> and replace CONSUMERNAME,
-CONSUMERKEY, and CONSUMERSECRET with the values you will use in your LMS:</p>
+<code>etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> and replace CONSUMERNAME, CONSUMERKEY, and
+CONSUMERSECRET with the values you will use in your LMS:</p>
 <pre><code class="properties">oauth.consumer.name.1=CONSUMERNAME
 oauth.consumer.key.1=CONSUMERKEY
 oauth.consumer.secret.1=CONSUMERSECRET

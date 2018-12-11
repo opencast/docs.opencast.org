@@ -63,7 +63,7 @@
     <a class="current" href="./">Upgrade</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#upgrading-opencast-from-4x-to-5">Upgrading Opencast from 4.x to 5</a></li>
+    <li class="toctree-l2"><a href="#upgrading-opencast-from-5x-to-6">Upgrading Opencast from 5.x to 6</a></li>
     
         <ul>
         
@@ -71,9 +71,11 @@
         
             <li><a class="toctree-l3" href="#database-migration">Database Migration</a></li>
         
-            <li><a class="toctree-l3" href="#activemq-migration">ActiveMQ Migration</a></li>
+            <li><a class="toctree-l3" href="#rebuild-elasticsearch-index">Rebuild ElasticSearch Index</a></li>
         
             <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
+        
+            <li><a class="toctree-l3" href="#security-configuration-changes">Security Configuration Changes</a></li>
         
         </ul>
     
@@ -740,100 +742,54 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="upgrading-opencast-from-4x-to-5">Upgrading Opencast from 4.x to 5</h1>
-<blockquote>
-<p>Note about 5.2 release:
-Opencast 5.2 introduces several security fixes. One of them requires a configuration update.  The <a href="#configuration-changes-since-opencast-52">configuration
-changes</a> section has been updated to track the new changes.</p>
-</blockquote>
-<p>This guide describes how to upgrade Opencast 4.x to 5.0. In case you need information about how to upgrade older
+                <h1 id="upgrading-opencast-from-5x-to-6">Upgrading Opencast from 5.x to 6</h1>
+<p>This guide describes how to upgrade Opencast 5.x to 6.0. In case you need information about how to upgrade older
 versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
 <h2 id="how-to-upgrade">How to Upgrade</h2>
 <ol>
 <li>Stop your current Opencast instance</li>
-<li>Replace Opencast 4.x with 5.0</li>
+<li>Replace Opencast 5.x with 6.x</li>
 <li>Back-up Opencast files and database (optional)</li>
 <li><a href="#database-migration">Upgrade the database</a></li>
-<li><a href="#activemq-migration">Upgrade the ActiveMQ configuration</a></li>
-<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
+<li><a href="#rebuild-elasticsearch-index">Rebuild Elasticsearch index</a></li>
+<li>Review the <a href="#configuration-changes">configuration</a> and <a href="#security-configuration-changes">security configuration
+   changes</a> and adjust your configuration accordingly</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
-<p>As part of removing mentions of the old name Matterhorn, all database table names have been changed and are now prefixed
-with <code>oc_</code>.  This requires an database schema update. As with all database migrations, we recommend to make a database
-backup before attempting the upgrade.</p>
-<p>You can find the database upgrade script in <code>docs/upgrade/4_to_5/</code>. There are two scripts which are essentially doing
-the same thing with the MariaDB one running a few more checks on the database for safety which cannot be run like this
-on MySQL.  More information about the differences can be found in the readme next to the scripts.</p>
-<h2 id="activemq-migration">ActiveMQ Migration</h2>
-<p>Opencast 5.0 needs a new ActiveMQ message broker configuration. Please follow the steps of the <a href="../configuration/message-broker/">message broker
-configuration guide</a> to deploy a new configuration. No data migration is required for
-this since the message broker contains only temporary data.</p>
-<h2 id="configuration-changes">Configuration Changes</h2>
-<p>HTTP Basic authentication is enabled by default (see <code>etc/security/mh_default_org.xml</code>). Make sure you've enabled
-HTTPS before using it.</p>
-<p>Paella Player has been included in Opencast 5.0. So you can choose between the Theodul and Paella player.
-This can be done by setting the <code>prop.player</code> property in the tennant's configuration file (for example
-<code>etc/org.opencastproject.organization-mh_default_org.cfg</code>).  Additionally, the path to the Paella player configuration
-folder is added in <code>etc/custom.properties</code> as <code>org.opencastproject.engage.paella.config.folder</code> with the default value
-of <code>${karaf.etc}/paella</code>. There you will find the default configuration. The Paella URL pattern was also added to the
-default security configuration <code>etc/security/mh_default_org.xml</code>.</p>
-<p>Workflow definition IDs have been changed and are no longer prefixed with <code>ng-</code> anymore. If you are using the default
-workflows or include them as part of your custom workflow, please adapt the changes. You can find the workflow
-definitions in <code>etc/workflows/*.xml</code>. You may also want to adapt the workflow ID changes in the following configuration
-files:</p>
-<table>
-<thead>
-<tr>
-<th>Configuration file name</th>
-<th>Property name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>custom.properties</td>
-<td>org.opencastproject.workflow.default.definition</td>
-</tr>
-<tr>
-<td>org.opencastproject.ingest.scanner.InboxScannerService-inbox.cfg</td>
-<td>workflow.definition</td>
-</tr>
-<tr>
-<td>org.opencastproject.transcription.ibmwatson.IBMWatsonTranscriptionService.cfg</td>
-<td>workflow</td>
-</tr>
-</tbody>
-</table>
-<p>The workflow control functionality includes some new REST endpoints.  Therefore the new URL patterns has been added to
-the tenant's security configuration (e.g. <code>etc/security/mh_default_org.xml</code>.)</p>
-<p>As Piwik has been renamed to Matomo, Opencast changed the name for the plugin and configuration keys too.
-So if you already configured a Piwik server please adapt the following keys in
-<code>etc/org.opencastproject.organization-mh_default_org.cfg</code>:</p>
+<p>The new asset manager extensions require a database migration. The migration should be very fast and uncritical but as
+with all database migrations, we recommend to make a database backup before attempting the upgrade regardless.</p>
+<p>You can find the database upgrade script in <code>docs/upgrade/5_to_6/</code>.</p>
+<h2 id="rebuild-elasticsearch-index">Rebuild ElasticSearch Index</h2>
+<p>The update requires an ElasticSearch index rebuild. For that, stop Opencast, delete the index directory at <code>data/index</code>,
+start Opencast and use one of the following methods to recreate the index:</p>
 <ul>
-<li><code>prop.player.piwik.server</code> → <code>prop.player.matomo.server</code></li>
-<li><code>prop.player.piwik.site_id</code> → <code>prop.player.matomo.site_id</code></li>
-<li><code>prop.player.piwik.heartbeat</code> → <code>prop.player.matomo.heartbeat</code></li>
-<li><code>prop.player.piwik.track_events</code> → <code>prop.player.matomo.track_events</code></li>
+<li>Make an HTTP POST request to <code>/admin-ng/index/recreateIndex</code> using your browser or an alternative HTTP client.</li>
+<li>Open the REST documentation, which can be found under the “Help” section in the Admin UI (by clicking on the “?”
+  symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+  <code>/recreateIndex</code>.</li>
 </ul>
-<p>The publication channel's listprovider configurations <code>etc/listproviders/publication.channel.labels.properties</code> and
-<code>etc/listproviders/publication.channel.icons.properties</code> have been merged into
-<code>etc/listproviders/publication.channels.properties</code>.</p>
-<p>Several service job load values were updated. You can find these configuration files by running the command
-<code>grep job.load etc/org.opencastproject.*</code> on the command line or by searching for <code>job.load</code> string in Opencast's
-service configuration files.</p>
-<h3 id="configuration-changes-since-opencast-52">Configuration changes since Opencast 5.2</h3>
-<p>The tenant security configuration (e.g. <code>etc/security/mh_default_org.xml</code>) has been changed in between Opencast 5.1 and
-5.2 ([<a href="https://opencast.jira.com/browse/MH-13082">MH-13082</a>][<a href="https://github.com/opencast/opencast/pull/449">#449</a>]).
-The LTI OAuth configuration part was moved to separate configuration files.</p>
-<blockquote>
-<p><strong>NOTE:</strong> All Opencast nodes must adapt the configuration changes, regardless of whether the LTI is used or not</p>
-</blockquote>
+<p>In both cases, the resulting page is empty but should return a HTTP status 200.</p>
+<p>If you are going to use the External API, then the corresponding ElasticSearch index must also be recreated:</p>
+<ul>
+<li>Make an HTTP POST request to <code>/api/recreateIndex</code> using your browser or an alternative HTTP client.</li>
+<li>Open the REST documentation, which can be found under the “Help” section in the Admin UI (by clicking on the “?”
+  symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+  <code>/recreateIndex</code>.</li>
+</ul>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>The Paella Player configuration has been updated for version 6.0.x.</p>
+<h2 id="security-configuration-changes">Security Configuration Changes</h2>
+<p>The tenant security configuration (e.g. <code>etc/security/mh_default_org.xml</code>) has been changed and
+([<a href="https://opencast.jira.com/browse/MH-13082">MH-13082</a>][<a href="https://github.com/opencast/opencast/pull/449">#449</a>]).  The
+LTI OAuth configuration part was moved to separate configuration files, but all Opencast nodes must adapt the
+configuration changes, regardless of whether the LTI is used or not.</p>
 <p>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> introduces the LTI
-authentication configurations.  It is now possible to define multiple trusted OAuth consumer keys.
-Some other security related configurations are also added. Please consult the <a href="../modules/ltimodule/#configure-lti-optional">LTI configuration
-guide</a> for the complete documentation.</p>
+authentication configurations.  It is now possible to define multiple trusted OAuth consumer keys.  Some other security
+related configurations are also added. Please consult the <a href="../modules/ltimodule/#configure-lti-optional">LTI configuration guide
+</a> for the complete documentation.</p>
 <p>In the configuration file <code>etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> one or more OAuth
-consumer keys and their secrets can be defined.  Please consult the <a href="../modules/ltimodule/#configure-oauth-authentication">LTI configuration
-guide</a> for the complete documentation.</p>
+consumer keys and their secrets can be defined.  Please consult the <a href="../modules/ltimodule/#configure-oauth-authentication">LTI configuration guide
+</a> for the complete documentation.</p>
               
             </div>
           </div>
