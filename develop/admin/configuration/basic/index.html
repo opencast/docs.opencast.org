@@ -769,9 +769,8 @@
                 <h1 id="basic-configuration">Basic Configuration</h1>
 <p>This guide will help you to change the basic configuration settings which are required or at least strongly recommended
 for each Opencast installation. This is basically what you should do, right after installing Opencast on your machine.</p>
-<p>All settings are made to files, residing in the Opencast configuration directory. In most cases, that should be either
-<code>/etc/opencast/custom.properties</code> or <code>/opt/opencast/etc/custom.properties</code>. Edit the files, using the editor of your
-choice, e.g.:</p>
+<p>All settings are made to files residing in the Opencast configuration directory. In most cases, that should be either
+<code>/etc/opencast/</code> or <code>/opt/opencast/etc/</code>. Edit the files using the editor of your choice, e.g.:</p>
 <pre><code>vim /etc/opencast/custom.properties
 </code></pre>
 <h2 id="step-1-setting-the-server-url">Step 1: Setting the Server URL</h2>
@@ -784,8 +783,8 @@ your own domain name:</p>
 <p><em>Note:</em> This value will be written to all generated mediapackages and thus cannot be changed easily for already
 processed media. At least not without an extra amount of work involving modifications to the database. That is why you
 should think about this setting carefully.</p>
-<p>Second, adjust the binding address in <code>org.ops4j.pax.web.cfg</code>. The binding address can be set to <code>0.0.0.0</code> for general
-network access. The property to modify is:</p>
+<p>Second, adjust the binding address in your <code>org.ops4j.pax.web.cfg</code> configuration file. The binding address can be set to
+<code>0.0.0.0</code> for general network access. The property to modify is:</p>
 <pre><code>org.ops4j.pax.web.listening.addresses=127.0.0.1
 </code></pre>
 <p>It may be necessary to adjust the jetty http connector idleTimeout value for processing large files in some configurations.
