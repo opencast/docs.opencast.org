@@ -770,7 +770,7 @@
               
                 <h1 id="install-from-source-mac-os-x">Install from Source (Mac OS X)</h1>
 <p>These instructions outline how to install an all in one Opencast system on the Mac OS X operating system.
-Tested on OS X 10.13.6 High Sierra.</p>
+Tested on OS X 10.14.1 Mojave.</p>
 <blockquote>
 <p><em>The installation on Mac OS X is not officially supported. Use this at your own risk.</em></p>
 </blockquote>
@@ -804,7 +804,8 @@ ffmpeg &gt;= 3.2.4
 maven &gt;= 3.1
 python &gt;= 2.6, &lt; 3.0
 </code></pre>
-<p>(If you are using <a href="http://www.jenv.be/">jEnv</a> to set up your environment, make sure to <a href="https://stackoverflow.com/a/37466252">enable the maven plugin</a>.)</p>
+<p>(If you are using <a href="http://www.jenv.be/">jEnv</a> to set up your environment, make sure to <a href="https://stackoverflow.com/a/37466252">enable the maven plugin
+</a>.)</p>
 <p>Required (not necessarily on the same machine):</p>
 <pre><code>ActiveMQ &gt;= 5.10 (older versions untested)
 </code></pre>
@@ -832,6 +833,7 @@ brew install apache-activemq
 brew install tesseract
 brew install hunspell
 brew install sox
+brew install synfig
 </code></pre>
 <h4 id="using-pre-built-binaries">Using pre-built binaries</h4>
 <p>Pre-built versions of most dependencies can be downloaded from the respective project website:</p>
@@ -844,7 +846,7 @@ brew install sox
 <p>Switch to the opencast folder. If you downloaded the tarball, this is the folder you just unpacked (called something
 like <code>opencast-community-opencast-[…]</code>). If you chose to download via git, use <code>cd opencast</code>. You can proceed by
 building opencast (depending on the folder permissions, you might need to start the command with <code>sudo</code>):</p>
-<pre><code>mvn clean install
+<pre><code>mvn clean install -Pdev
 </code></pre>
 <blockquote>
 <p><em>Please be patient, as building Opencast for the first time will take quite long.</em></p>
@@ -856,7 +858,11 @@ distribution. For the allinone distribution, this would be
 <code>/your/path/to/opencast/build/opencast-dist-allinone-[…]/etc/</code>, again with <code>[…]</code> representing the selected version.</p>
 <p>As specified in the guide, make sure you replace the default ActiveMQ configuration with the one provided in
 <code>docs/scripts/activemq/activemq.xml</code>. If you installed ActiveMQ using homebrew, you can find the installation path with
-<code>brew info activemq</code>.</p>
+<code>brew info activemq</code>. The configuration is probably located in <code>/usr/local/Cellar/activemq/&lt;version&gt;/libexec/conf/</code>.</p>
+<p>ffprobe is used to analyse new videos. It is installed with ffmpeg but usually not on the path to be automatically
+executed. You have to link the ffprobe to <code>/usr/local/bin/</code>. You can find the ffmpeg install directory with
+<code>brew info ffmpeg</code>. Usually you would link the file with
+<code>ln -s /usr/local/Cellar/ffmpeg/&lt;version&gt;/bin/ffprobe /usr/local/bin/ffprobe</code>.</p>
 <h2 id="running-opencast">Running Opencast</h2>
 <p>Make sure you have ActiveMQ running (unless you're running it on a different machine). Then you can start Opencast using
 the start-opencast script:</p>
