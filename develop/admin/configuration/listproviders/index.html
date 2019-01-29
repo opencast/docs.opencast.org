@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Basic - Opencast - Administration Guide</title>
+  <title>List Providers - Opencast - Administration Guide</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Basic";
-    var mkdocs_page_input_path = "configuration/basic.md";
+    var mkdocs_page_name = "List Providers";
+    var mkdocs_page_input_path = "configuration/listproviders.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -133,31 +133,9 @@
                     
     <a class="" href="../">Overview</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Basic</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#basic-configuration">Basic Configuration</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#step-1-setting-the-server-url">Step 1: Setting the Server URL</a></li>
-        
-            <li><a class="toctree-l4" href="#step-2-setting-the-login-details">Step 2: Setting the Login Details</a></li>
-        
-            <li><a class="toctree-l4" href="#step-3-change-the-default-shutdown-command">Step 3: Change the default shutdown command</a></li>
-        
-            <li><a class="toctree-l4" href="#step-4-setting-up-apache-activemq-message-broker">Step 4: Setting up Apache ActiveMQ Message Broker</a></li>
-        
-            <li><a class="toctree-l4" href="#step-5-database-configuration">Step 5: Database Configuration</a></li>
-        
-            <li><a class="toctree-l4" href="#step-6-setting-the-storage-directory-optional">Step 6: Setting the Storage Directory (optional)</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../basic/">Basic</a>
                 </li>
                 <li class="">
                     
@@ -205,9 +183,21 @@
                     
     <a class="" href="../inbox/">Inbox</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../listproviders/">List Providers</a>
+    <a class="current" href="./">List Providers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#list-providers">List Providers</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#multi-tenancy">Multi-Tenancy</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -757,10 +747,10 @@
         
       
     
-    <li>Basic</li>
+    <li>List Providers</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/basic.md"
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/listproviders.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -770,85 +760,76 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="basic-configuration">Basic Configuration</h1>
-<p>This guide will help you to change the basic configuration settings which are required or at least strongly recommended
-for each Opencast installation. This is basically what you should do, right after installing Opencast on your machine.</p>
-<p>All settings are made to files residing in the Opencast configuration directory. In most cases, that should be either
-<code>/etc/opencast/</code> or <code>/opt/opencast/etc/</code>. Edit the files using the editor of your choice, e.g.:</p>
-<pre><code>vim /etc/opencast/custom.properties
+                <h1 id="list-providers">List Providers</h1>
+<p>Opencast supports fully configurable key-value lists. To add a new list, simply create a file with the extension
+<code>.properties</code> in <code>etc/listproviders</code>. The list will be loaded or updated automatically.</p>
+<p>The Java properties file format is used with the following special keys to configure the list:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+<th>Mandatory</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list.name</td>
+<td>String</td>
+<td>The list's unique identifier within a tenant</td>
+<td>yes</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>list.default</td>
+<td>String</td>
+<td>The name of the default key</td>
+<td>no</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>list.translatable</td>
+<td>Boolean</td>
+<td>Whether the values are supposed to be translatable</td>
+<td>no</td>
+<td>false</td>
+</tr>
+<tr>
+<td>list.org</td>
+<td>String</td>
+<td>The organisation ID</td>
+<td>no</td>
+<td>"*"</td>
+</tr>
+</tbody>
+</table>
+<p>Note that it is up to the client to handle the keys <code>list.default</code> and <code>list.translatable</code>.</p>
+<h2 id="multi-tenancy">Multi-Tenancy</h2>
+<p>The key <code>list.org</code> can be used to configure lists for specific tenants in multi-tenant setups. It defaults to <code>*</code> which
+means that the list is available for all tenants.</p>
+<p>The following logic is used to locate a list with a given list name <em>LISTNAME</em>:</p>
+<ol>
+<li>Return the list <em>LISTNAME</em> specific to the current tenant</li>
+<li>If not found, return the list <em>LISTNAME</em> available for all tenants</li>
+<li>If not found, return no list</li>
+</ol>
+<p>While the filename of the list does not affect the list itself, we recommend to include the organisation identifier
+in the filename.</p>
+<h3 id="example">Example</h3>
+<pre><code>/etc/listproviders/mylist-org-a.properties
+  list.name=MYLIST
+  key=value
+
+/etc/listproviders/mylist-org-b.properties
+  list.name=MYLIST
+  list.org=org-b
+  key-org-b=value-org-b
 </code></pre>
-<h2 id="step-1-setting-the-server-url">Step 1: Setting the Server URL</h2>
-<p>By default, only connections from the local machine are accepted by Opencast.  You want to change this if the system
-should be accessible within a network.</p>
-<p>First, find the property <code>org.opencastproject.server.url</code> in your <code>custom.properties</code> configuration file and set it to
-your own domain name:</p>
-<pre><code>org.opencastproject.server.url=http://example.com:8080
-</code></pre>
-<p><em>Note:</em> This value will be written to all generated mediapackages and thus cannot be changed easily for already
-processed media. At least not without an extra amount of work involving modifications to the database. That is why you
-should think about this setting carefully.</p>
-<p>Second, adjust the binding address in your <code>org.ops4j.pax.web.cfg</code> configuration file. The binding address can be set to
-<code>0.0.0.0</code> for general network access. The property to modify is:</p>
-<pre><code>org.ops4j.pax.web.listening.addresses=127.0.0.1
-</code></pre>
-<p>It may be necessary to adjust the jetty http connector idleTimeout value for processing large files in some configurations.
-To do so, uncomment this line in <code>org.ops4j.pax.web.cfg</code>:</p>
-<pre><code>org.ops4j.pax.web.config.file=${karaf.etc}/jetty-opencast.xml
-</code></pre>
-<p>and modify the host and if necessary port values in <code>jetty-opencast.xml</code> to match the ops4j configuration:</p>
-<pre><code>&lt;Set name="host"&gt;127.0.0.1&lt;/Set&gt;
-</code></pre>
-<h2 id="step-2-setting-the-login-details">Step 2: Setting the Login Details</h2>
-<p>There are two authentication methods for Opencast. HTTP Digest authentication and form-based authentication. Both
-methods need a username and a password. Change the password for both! The important keys for this are:</p>
-<ul>
-<li><code>org.opencastproject.security.admin.user</code><ul>
-<li>The user for the administrative account. This is set to <code>admin</code> by default.</li>
-</ul>
-</li>
-<li><code>org.opencastproject.security.admin.pass</code><ul>
-<li>The password for the administrative account. This is set to <code>opencast</code> by default.</li>
-</ul>
-</li>
-<li><code>org.opencastproject.security.digest.user</code><ul>
-<li>The user for the communication between Opencast nodes, as well as for capture agents. This is set to
-<code>opencast_system_account</code> by default.</li>
-</ul>
-</li>
-<li><code>org.opencastproject.security.digest.pass</code><ul>
-<li>The password for the communication between Opencast nodes and capture agents. This is set to <code>CHANGE_ME</code> by default.</li>
-</ul>
-</li>
-</ul>
-<p><em>Note:</em> The digest credentials are also used for internal communication of Opencast servers. So these keys have to be
-set to the same value on each of you Opencast nodes (Core, Worker, Capture Agent, …)</p>
-<h2 id="step-3-change-the-default-shutdown-command">Step 3: Change the default shutdown command</h2>
-<p>Karaf provides a socket over wich you can send a shutdown command. The socket does not provide any kind of
-authentication. Therefore anyone who obtains write access to this socket is able to shutdown karaf and everything
-that runs on it. There is a default <code>karaf.shutdown.command</code> defined in <code>custom.properties</code>. Change this to something
-secret.</p>
-<h2 id="step-4-setting-up-apache-activemq-message-broker">Step 4: Setting up Apache ActiveMQ Message Broker</h2>
-<p>Since version 2.0, Opencast requires a running Apache ActiveMQ instance with a specific configuration.  The message
-broker is mostly run on the admin server of Opencast but can be run separately. It needs to be started before Opencast.
-For more details about the setup, have a look at the <a href="../message-broker/">Apache ActiveMQ configuration guide</a>.</p>
-<h2 id="step-5-database-configuration">Step 5: Database Configuration</h2>
-<p>Opencast uses an integrated HSQL database by default. While you will find it perfectly functional, it has certain
-drawbacks:</p>
-<ul>
-<li>It is rather slow</li>
-<li>It cannot be used for distributed set-ups</li>
-<li>Upgrading Opencast with this database is not possible</li>
-</ul>
-<p>For testing, it is totally fine to keep the internal database, but you are highly encouraged to switch to a stand-alone
-database for productional use. For more information about database configuration, have a look at the <a href="../database/">Database
-Configuration</a> section.</p>
-<h2 id="step-6-setting-the-storage-directory-optional">Step 6: Setting the Storage Directory (optional)</h2>
-<p>Even though it is not important for all systems – on test setups you can probably omit this – you will often want to set
-the storage directory. This directory is used to store all media, metadata, … Often, an NFS mount is used for this. You
-can set the directory by changing <code>org.opencastproject.storage.dir</code> like:</p>
-<pre><code>org.opencastproject.storage.dir=/media/mhdatamount
-</code></pre>
-<p>Please keep in mind that the user running Opencast must have read/write permissions to the storage directory.</p>
+<p>On <em>org-b</em>, the key-value pair for the list <em>MYLIST</em> is <em>["key-org-b", "value-org-b"]</em> due to the tenant specific
+configuration. On <em>org-a</em>, the key-value pair for the list <em>MYLIST</em> is <em>["key", "value"]</em>. Since there is no tenant
+specific configuration for <em>org-a</em>, the defaults are used.</p>
               
             </div>
           </div>
@@ -856,10 +837,10 @@ can set the directory by changing <code>org.opencastproject.storage.dir</code> l
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../database/" class="btn btn-neutral float-right" title="Database">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../load/" class="btn btn-neutral float-right" title="Load">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../inbox/" class="btn btn-neutral" title="Inbox"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -887,10 +868,10 @@ can set the directory by changing <code>org.opencastproject.storage.dir</code> l
           <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../inbox/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../database/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../load/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
