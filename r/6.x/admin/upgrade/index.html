@@ -71,7 +71,7 @@
         
             <li><a class="toctree-l3" href="#database-migration">Database Migration</a></li>
         
-            <li><a class="toctree-l3" href="#rebuild-elasticsearch-index">Rebuild ElasticSearch Index</a></li>
+            <li><a class="toctree-l3" href="#rebuild-elasticsearch-index">Rebuild Elasticsearch Index</a></li>
         
             <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
         
@@ -759,23 +759,29 @@ versions of Opencast, please refer to the <a href="https://docs.opencast.org">ol
 <p>The new asset manager extensions require a database migration. The migration should be very fast and uncritical but as
 with all database migrations, we recommend to make a database backup before attempting the upgrade regardless.</p>
 <p>You can find the database upgrade script in <code>docs/upgrade/5_to_6/</code>.</p>
-<h2 id="rebuild-elasticsearch-index">Rebuild ElasticSearch Index</h2>
-<p>The update requires an ElasticSearch index rebuild. For that, stop Opencast, delete the index directory at <code>data/index</code>,
-start Opencast and use one of the following methods to recreate the index:</p>
-<ul>
-<li>Make an HTTP POST request to <code>/admin-ng/index/recreateIndex</code> using your browser or an alternative HTTP client.</li>
-<li>Open the REST documentation, which can be found under the “Help” section in the Admin UI (by clicking on the “?”
-  symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
-  <code>/recreateIndex</code>.</li>
-</ul>
-<p>In both cases, the resulting page is empty but should return a HTTP status 200.</p>
-<p>If you are going to use the External API, then the corresponding ElasticSearch index must also be recreated:</p>
-<ul>
-<li>Make an HTTP POST request to <code>/api/recreateIndex</code> using your browser or an alternative HTTP client.</li>
-<li>Open the REST documentation, which can be found under the “Help” section in the Admin UI (by clicking on the “?”
-  symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
-  <code>/recreateIndex</code>.</li>
-</ul>
+<h2 id="rebuild-elasticsearch-index">Rebuild Elasticsearch Index</h2>
+<h3 id="admin-interface">Admin Interface</h3>
+<p>The update requires an Elasticsearch index rebuild. For that, stop Opencast, delete the index directory at <code>data/index</code>,
+restart Opencast and make an HTTP POST request to <code>/admin-ng/index/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/admin-ng/index/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+<code>/recreateIndex</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="external-api">External API</h3>
+<p>If you are using the External API, then also trigger a rebuilt of its index by sending an HTTP POST request to
+<code>/api/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/api/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+<code>/recreateIndex</code>.</p>
+<p>In both cases you should again get a 200 HTTP status.</p>
 <h2 id="configuration-changes">Configuration Changes</h2>
 <p>The Paella Player configuration has been updated for version 6.0.x.</p>
 <h2 id="security-configuration-changes">Security Configuration Changes</h2>
