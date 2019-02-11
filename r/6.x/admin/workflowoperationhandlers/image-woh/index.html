@@ -517,7 +517,7 @@
     <a class="current" href="./">Image</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#imageworkflowoperation">ImageWorkflowOperation</a></li>
+    <li class="toctree-l3"><a href="#image-workflow-operation">Image Workflow Operation</a></li>
     
         <ul>
         
@@ -742,10 +742,11 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="imageworkflowoperation">ImageWorkflowOperation</h1>
+                <h1 id="image-workflow-operation">Image Workflow Operation</h1>
+<p>ID: <code>image</code></p>
 <h2 id="description">Description</h2>
-<p>The ImageWorkflowOperation will extract still images from a video using FFmpeg and a list of given encoding profiles.
-Both absolute and relative positions can be used.</p>
+<p>The image operation will extract still images from a video using FFmpeg and a list of given encoding profiles.  Both
+absolute and relative positions can be used.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -788,8 +789,8 @@ Both absolute and relative positions can be used.</p>
 </tr>
 <tr>
 <td>time</td>
-<td>1</td>
-<td>Comma-separated list of time (in seconds or relative to source track duration) where the image should be taken.</td>
+<td><code>1</code> or <code>5%</code></td>
+<td>Comma-separated list of times in seconds or as percentage of the source track duration where the images should be extracted</td>
 </tr>
 <tr>
 <td>target-base-name-format-second</td>
@@ -813,41 +814,36 @@ Both absolute and relative positions can be used.</p>
 <li>Absolute and relative position may be mixed up in the configuration key <em>time</em></li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<h3 id="basic">Basic</h3>
-<p>Extract one image at position 1 second using the encoding profile <em>search-cover.http</em>.</p>
-<pre><code>&lt;operation
-      id="image"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encoding presenter (camera) to search result preview image"&gt;
-      &lt;configurations&gt;
-            &lt;configuration key="source-flavor"&gt;presenter/trimmed&lt;/configuration&gt;
-            &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-            &lt;configuration key="target-flavor"&gt;presenter/search+preview&lt;/configuration&gt;
-            &lt;configuration key="target-tags"&gt;engage&lt;/configuration&gt;
-            &lt;configuration key="encoding-profile"&gt;search-cover.http&lt;/configuration&gt;
-            &lt;configuration key="time"&gt;1&lt;/configuration&gt;
-      &lt;/configurations&gt;
+<p>Extract one image at position 1 second using the encoding profile <code>search-cover.http</code>.</p>
+<pre><code class="xml">&lt;operation
+    id=&quot;image&quot;
+    description=&quot;Encoding presenter preview image&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/trimmed&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags&quot;&gt;&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/search+preview&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;engage&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profile&quot;&gt;search-cover.http&lt;/configuration&gt;
+    &lt;configuration key=&quot;time&quot;&gt;1&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h3 id="advanced">Advanced</h3>
-<p>In this example, we extract images at three relative positions (<em>1%, 50%, 100%</em>) from the presenter/trimmed track. For
-each position, we extract three images using three different encoding profiles (<em>example.encoding.profile.*</em>). This
-operation therefore generates nine images in total. The target filenames will be formed based on the
-<em>target-base-name-format-*</em> configuration keys (prefix) and the configuration of the encoding profiles (file extension
-and possibly suffix).</p>
-<pre><code>&lt;operation id="image"
-           description="Extract set of thumbnails"
-           fail-on-error="true"
-           exception-handler-workflow="partial-error"&gt;
+
+<p>Extract images at three relative positions (<em>1%, 50%, 100%</em>) from the <code>presenter/trimmed</code> track. For each position, we
+use three different encoding profiles (<code>example.encoding.profile.*</code>). This operation therefore generates nine images in
+total. The target filenames will be formed based on the <code>target-base-name-format-*</code> configuration keys (prefix) and the
+configuration of the encoding profiles (file extension and possibly suffix).</p>
+<pre><code class="xml">&lt;operation
+    id=&quot;image&quot;
+    description=&quot;Extract set of thumbnails&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;presenter/trimmed&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;presenter/thumbnails&lt;/configuration&gt;
-    &lt;configuration key="target-base-name-format-second"&gt;thumbnail_%.3f%s&lt;/configuration&gt;
-    &lt;configuration key="target-base-name-format-percent"&gt;thumbnail_%.0f%s&lt;/configuration&gt;
-    &lt;configuration key="encoding-profile"&gt; example.encoding.profile.small, example.encoding.profile.medium, example.encoding.profile.large&lt;/configuration&gt;
-    &lt;configuration key="time"&gt;1%, 50%, 100%&lt;/configuration&gt;
-    &lt;configuration key="end-margin"&gt;1000&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/trimmed&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/thumbnails&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-base-name-format-second&quot;&gt;thumbnail_%.3f%s&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-base-name-format-percent&quot;&gt;thumbnail_%.0f%s&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profile&quot;&gt; example.encoding.profile.small, example.encoding.profile.medium, example.encoding.profile.large&lt;/configuration&gt;
+    &lt;configuration key=&quot;time&quot;&gt;1%, 50%, 100%&lt;/configuration&gt;
+    &lt;configuration key=&quot;end-margin&quot;&gt;1000&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
