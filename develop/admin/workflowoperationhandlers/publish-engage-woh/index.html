@@ -619,7 +619,7 @@
     <a class="current" href="./">Publish Engage</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#publishengageworkflowoperation">PublishEngageWorkflowOperation</a></li>
+    <li class="toctree-l3"><a href="#publish-engage-workflow-operation">Publish Engage Workflow Operation</a></li>
     
         <ul>
         
@@ -764,9 +764,10 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="publishengageworkflowoperation">PublishEngageWorkflowOperation</h1>
+                <h1 id="publish-engage-workflow-operation">Publish Engage Workflow Operation</h1>
+<p>ID: <code>publish-engage</code></p>
 <h2 id="description">Description</h2>
-<p>The <code>PublishEngageWorkflowOperation</code> will bring your media to the engage distribution channels (streaming, progressive
+<p>The publish-engage operation will bring your media to the engage distribution channels (streaming, progressive
 download, …)</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -779,15 +780,15 @@ download, …)</p>
 <tbody>
 <tr>
 <td>check-availability</td>
-<td>Check if the media if reachable</td>
+<td>Check if the media is reachable</td>
 </tr>
 <tr>
 <td>download-source-flavors</td>
-<td>Specifies which media should be published for download</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) flavors to download</td>
 </tr>
 <tr>
 <td>download-source-tags</td>
-<td>Specifies which media should be published for download</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) tags to download</td>
 </tr>
 <tr>
 <td>download-target-subflavors</td>
@@ -795,7 +796,7 @@ download, …)</p>
 </tr>
 <tr>
 <td>download-target-tags</td>
-<td>Modify tags of published media</td>
+<td>Add tags (comma separated) to published media</td>
 </tr>
 <tr>
 <td>strategy</td>
@@ -819,7 +820,7 @@ download, …)</p>
 </tr>
 <tr>
 <td>streaming-target-tags</td>
-<td>Modify tags of published media</td>
+<td>Add tags (comma separated) to published media</td>
 </tr>
 <tr>
 <td>streaming-target-subflavors</td>
@@ -836,18 +837,18 @@ download, …)</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-    id="publish-engage"
-    max-attempts="2"
-    fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Distribute and publish to engage player"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="download-source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
-        &lt;configuration key="streaming-source-tags"&gt;engage&lt;/configuration&gt;
-        &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
-        &lt;configuration key="strategy"&gt;merge&lt;/configuration&gt;
-    &lt;/configurations&gt;
+<pre><code class="xml">&lt;operation
+    id=&quot;publish-engage&quot;
+    max-attempts=&quot;2&quot;
+    fail-on-error=&quot;true&quot;
+    exception-handler-workflow=&quot;error&quot;
+    description=&quot;Distribute and publish to engage player&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key=&quot;streaming-source-tags&quot;&gt;engage&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
               
