@@ -771,13 +771,15 @@
                 <h1 id="composite-workflow-operation-handler">Composite Workflow Operation Handler</h1>
 <h2 id="description">Description</h2>
 <p>The CompositeWorkflowOperationHandler is used to composite two videos (upper and lower) and an optional watermark into
-one video, including encoding to different formats. The audio track is always taken from the lower video. Everything is
+one video, including encoding to different formats. The audio track is taken from both videos by default. Everything is
 done using FFmpeg. The composition can be done in various layout formats e.g. side by side or picture in picture. The
 layout has to be defined in JSON format and is described in section "Layout Definition". For some general information
 about layouts see Opencast Composer Layout Module.</p>
 <p>The internal ffmpeg command is using the following filters: scale for scaling the videos, pad for defining the output
 dimension including the background color, movie for adding additional videos and images and overlay for aligning the
 videos and images to the output dimension. More info can be found here: https://trac.ffmpeg.org/wiki/FilteringGuide</p>
+<p>If both upper and lower tracks have audio, "source-audio-name" can be set to "upper", "lower" or "both"
+to choose only the audio from one track or both tracks for the composite video.</p>
 <h3 id="sample-complex-composite-filter-command">Sample complex composite filter command</h3>
 <pre><code>-filter:v "[in]scale=640:480,pad=1920:1080:20:20:black[lower];movie=test.mp4,scale=640:480[upper];movie=watermark.jpg[watermark];[lower][upper]overlay=200:200[video];[video][watermark]overlay=main_w-overlay_w-20:20[out]" sidebyside.mp4
 </code></pre>
@@ -794,6 +796,13 @@ videos and images to the output dimension. More info can be found here: https://
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>source-audio-name</td>
+<td>"lower", "upper" or "both"</td>
+<td>upper</td>
+<td>The "name" of track to use as a source audio.</td>
+<td>both</td>
+</tr>
 <tr>
 <td>source-tags-upper</td>
 <td>String , { "," , String }</td>
