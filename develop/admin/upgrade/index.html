@@ -79,6 +79,8 @@
         
             <li><a class="toctree-l3" href="#scheduler-migration">Scheduler Migration</a></li>
         
+            <li><a class="toctree-l3" href="#rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</a></li>
+        
         </ul>
     
 
@@ -778,6 +780,7 @@ versions of Opencast, please refer to the <a href="https://docs.opencast.org">ol
 <li><a href="#activemq-migration">Upgrade the ActiveMQ configuration</a></li>
 <li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
 <li>Migrate the scheduled events</li>
+<li>Rebuild the Elastic Search indexes</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
 <p>As part of performance optimizations, some tables were modified. This requires a database schema update. Also, one table
@@ -822,6 +825,10 @@ automatically. Wait until the migration is complete. Once complete, the opencast
 change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal mode of operation.</p>
 <p>You should avoid running Opencast 7 without migrating the scheduled events first. Otherwise, your capture agents may
 fetch an empty calendar.</p>
+<h2 id="rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</h2>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elastic Search indexes of both
+the Admin UI and the External API have changed.</p>
+<p>Therefore, those indexes both need to be rebuilt.</p>
               
             </div>
           </div>
