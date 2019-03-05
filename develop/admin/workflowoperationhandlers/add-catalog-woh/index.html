@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Series - Opencast - Administration Guide</title>
+  <title>Add Catalog - Opencast - Administration Guide</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Series";
-    var mkdocs_page_input_path = "workflowoperationhandlers/series-woh.md";
+    var mkdocs_page_name = "Add Catalog";
+    var mkdocs_page_input_path = "workflowoperationhandlers/add-catalog-woh.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -426,9 +426,25 @@
                     
     <a class="" href="../retry-strategies/">Retry Strategies</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../add-catalog-woh/">Add Catalog</a>
+    <a class="current" href="./">Add Catalog</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#addcatalogworkflowoperationhandler">AddCatalogWorkflowOperationHandler</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#description">Description</a></li>
+        
+            <li><a class="toctree-l4" href="#parameter-table">Parameter Table</a></li>
+        
+            <li><a class="toctree-l4" href="#operation-example">Operation Example</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -670,27 +686,9 @@
                     
     <a class="" href="../send-email-woh/">Send Email</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Series</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#seriesworkflowoperationhandler">SeriesWorkflowOperationHandler</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#description">Description</a></li>
-        
-            <li><a class="toctree-l4" href="#parameter-table">Parameter Table</a></li>
-        
-            <li><a class="toctree-l4" href="#allowed-namespaces">Allowed Namespaces</a></li>
-        
-            <li><a class="toctree-l4" href="#operation-examples">Operation Examples</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../series-woh/">Series</a>
                 </li>
                 <li class="">
                     
@@ -757,10 +755,10 @@
         
       
     
-    <li>Series</li>
+    <li>Add Catalog</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/series-woh.md"
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/add-catalog-woh.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -770,119 +768,69 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="seriesworkflowoperationhandler">SeriesWorkflowOperationHandler</h1>
+                <h1 id="addcatalogworkflowoperationhandler">AddCatalogWorkflowOperationHandler</h1>
 <h2 id="description">Description</h2>
-<p>The SeriesWorkflowOperation will apply a series to the mediapackage.</p>
+<p>This operation adds a catalog to the media package of the running workflow.
+The catalog to add is specified by path. Additionally the name, flavor and tags of the catalog can be configured.
+If a catalog of the same flavor already exits in the media package,
+the parameter <code>catalog-type-collision-behavior</code> specifies how this case is handled.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th>configuration keys</th>
-<th>example</th>
-<th>description</th>
-<th>default value</th>
+<th>Configuration Key</th>
+<th>Example</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>series</td>
-<td><code>0d06537e-09d3-420c-8314-a21e45c5d032</code></td>
-<td>The optional series identifier. If empty the current series of the medipackage will be taken.</td>
-<td></td>
+<td><code>catalog-path</code></td>
+<td><code>${karaf.etc}/catalogs/default_dublincore.xml</code></td>
+<td>Path to the catalog</td>
 </tr>
 <tr>
-<td>attach</td>
-<td><code>creativecommons/*,dublincore/*</code></td>
-<td>The flavors of the series catalogs to attach to the mediapackage.</td>
-<td></td>
+<td><code>catalog-flavor</code></td>
+<td><code>dublincore/episode</code></td>
+<td>Flavor of the catalog</td>
 </tr>
 <tr>
-<td>apply-acl</td>
-<td><code>true</code></td>
-<td>Whether the ACL should be applied or not.</td>
-<td><code>false</code></td>
+<td><code>catalog-name</code></td>
+<td><code>dublincore.xml</code></td>
+<td>Name of the catalog</td>
 </tr>
 <tr>
-<td>copy-metadata</td>
-<td><code>{http://purl.org/dc/terms/}title, isPartOf</code></td>
-<td>A comma-separated list of metadata fields (possibly "expanded") to be transferred from the series catalog to the episode catalog if they do not exist in the latter.</td>
-<td></td>
+<td><code>catalog-tags</code></td>
+<td><code>archive,dublincore</code></td>
+<td>List of tags, separated by commas</td>
 </tr>
 <tr>
-<td>default-namespace</td>
-<td>http://purl.org/dc/elements/1.1/</td>
-<td>The default namespace to use when the metadata fields in the <code>copy-metadata</code> property are not fully "expanded".</td>
-<td><code>http://purl.org/dc/terms/</code> (DublinCore Term namespace)</td>
+<td><code>catalog-type-collision-behavior</code></td>
+<td><code>keep</code></td>
+<td>How a collision is handled (more information below)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="about-expanded-names">About Expanded Names</h3>
-<p>Expanded names are qualified XML terms where the prefix has been expanded to the full namespace it represents. For
-convention, they are written as:</p>
-<pre><code>{namespace}localname
-</code></pre>
-<p>… where <code>namespace</code> is the full namespace (not a prefix like in XML documents) and <code>localname</code> is the term itself.</p>
-<p>Some examples of expanded names are:</p>
-<ul>
-<li><code>{http://purl.org/dc/terms/}title</code></li>
-<li><code>{http://mediapackage.opencastproject.org}mediapackage</code></li>
-<li><code>{}term-with-an-empty-namespace</code></li>
-</ul>
-<p>The value of the <code>copy-metadata</code> may contain expanded and non-expanded names. In the latter case, the names will be
-expanded using the provided namespace, if any, or the DublinCore namespace by default.</p>
-<p>Please note that:</p>
-<ol>
-<li>An empty namespace (such as in <code>{}example</code>) is still a namespace. That means that the default namespace will not be
-   substituted in this case and the term will be handled "as-is", i.e. with an empty namespace.</li>
-<li>Most of the terms used by Opencast belong to the DublinCore namespace, so using non-expanded names and the default
-   namespace should be sufficient. However, custom metadata fields may be in a different namespace which must be
-   explicitly specified.</li>
-</ol>
-<h2 id="allowed-namespaces">Allowed Namespaces</h2>
-<p>For technical reasons, namespaces need to be pre-registered in Opencast to be used. That is why only a defined set of
-namespaces can be used in this operation. The allowed namespaces are:</p>
-<ul>
-<li>DublinCore Terms: <code>http://purl.org/dc/terms/</code></li>
-<li>DublinCore Elements 1.1: <code>http://purl.org/dc/elements/1.1/</code></li>
-<li>Opencast Properties: <code>http://www.opencastproject.org/</code></li>
-</ul>
-<h2 id="operation-examples">Operation Examples</h2>
-<pre><code class="XML">&lt;operation
-  id=&quot;series&quot;
+<p>All parameters are mandatory except <code>catalog-tags</code>.</p>
+<h3 id="catalog-type-collision-behavior">catalog-type-collision-behavior</h3>
+<p>If the flavor of the new catalog and the flavor of an already existing catalog match,
+the <code>catalog-type-collision-behavior</code> specifies how this situation is handled.
+There are multiple supported options:
+- <code>keep</code>: The new catalog is added despite the collision. This results in two catalogs of the same type coexisting.
+- <code>skip</code>: The addition of the new catalog is skipped, the new catalog is not added.
+- <code>fail</code>: The workflow operation fails with an error, depending on the your configurations the complete workflow is aborted.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="xml">&lt;operation
+  id=&quot;add-catalog&quot;
   fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Applying series to mediapackage&quot;&gt;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;Add catalog to media package&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;series&quot;&gt;0d06537e-09d3-420c-8314-a21e45c5d032&lt;/configuration&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
-
-<pre><code class="XML">&lt;operation
-  id=&quot;series&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Applying series to mediapackage&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;copy-metadata&quot;&gt;contributor, license&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
-
-<pre><code class="XML">&lt;operation
-  id=&quot;series&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Applying series to mediapackage&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;dublincore/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;copy-metadata&quot;&gt;{http://purl.org/dc/terms/}contributor custom1 custom2&lt;/configuration&gt;
-    &lt;configuration key=&quot;default-namespace&quot;&gt;http://www.opencastproject.org/&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-path&quot;&gt;${karaf.etc}/catalogs/default_dublincore.xml&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-flavor&quot;&gt;dublincore/episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-name&quot;&gt;dublincore.xml&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-tags&quot;&gt;archive,dublincore&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-type-collision-behavior&quot;&gt;keep&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -893,10 +841,10 @@ namespaces can be used in this operation. The allowed namespaces are:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../silence-woh/" class="btn btn-neutral float-right" title="Silence">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../analyze-tracks-woh/" class="btn btn-neutral float-right" title="Analyze Tracks">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../send-email-woh/" class="btn btn-neutral" title="Send Email"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../retry-strategies/" class="btn btn-neutral" title="Retry Strategies"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -924,10 +872,10 @@ namespaces can be used in this operation. The allowed namespaces are:</p>
           <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../send-email-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../retry-strategies/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../silence-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../analyze-tracks-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

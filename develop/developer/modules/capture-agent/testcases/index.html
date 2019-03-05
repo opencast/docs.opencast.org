@@ -261,7 +261,13 @@
     <a class="current" href="./">Test Cases</a>
     <ul class="subnav">
             
-    <li class="toctree-l4"><a href="#test-cases-for-a-capture-agent">Test Cases for a Capture Agent</a></li>
+    <li class="toctree-l4"><a href="#test-cases-for-capture-agents">Test Cases for Capture Agents</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#test-servers">Test Servers</a></li>
+        
+        </ul>
     
 
     </ul>
@@ -430,61 +436,78 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="test-cases-for-a-capture-agent">Test Cases for a Capture Agent</h1>
-<p>These test cases can be used to test new capture agents.
+                <h1 id="test-cases-for-capture-agents">Test Cases for Capture Agents</h1>
+<p>This document describes a set of simple test cases which can be used to test new capture agents.
 As a vendor, you might want to use these to test new devices before their release.</p>
 <p>They are meant for a setup where the capture agent is firmly installed in a venue,
-it runs 24/7 and captures scheduled lectures fully automated.</p>
+it runs 24/7 and automatically captures scheduled lectures.</p>
 <table>
 <thead>
 <tr>
-<th align="left">Test</th>
-<th align="center">Expected Result</th>
+<th>Test</th>
+<th>Expected Result</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">Connection to Opencast Server</td>
-<td align="center">Agent shows up at Opencast's admin interface with status online</td>
+<td>Connection to Opencast Server</td>
+<td>Agent shows up at Opencast's admin interface with status online</td>
 </tr>
 <tr>
-<td align="left">Manual recording on agent</td>
-<td align="center">Successfully recording</td>
+<td>Manual recording on agent</td>
+<td>Event successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">Schedule recoring</td>
-<td align="center">Event successfully recorded and uploaded</td>
+<td>Schedule recording</td>
+<td>Event successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">Schedule multiple recordings</td>
-<td align="center">Events successfully recorded and uploaded</td>
+<td>Schedule multiple recordings</td>
+<td>Events successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">Record 6 hours</td>
-<td align="center">Event successfully recorded and uploaded</td>
+<td>Record 6 hours</td>
+<td>Event successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">Network loss before recording starts</td>
-<td align="center">Recording starts and stops without network connection</td>
+<td>Network loss before recording starts</td>
+<td>Recording starts and stops without network connection</td>
 </tr>
 <tr>
-<td align="left">Network loss while recording</td>
-<td align="center">Event successfully recorded and uploaded</td>
+<td>Network loss while recording</td>
+<td>Event successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">Power loss</td>
-<td align="center">Does it start up again</td>
+<td>Power loss</td>
+<td>The capture agent starts up again</td>
 </tr>
 <tr>
-<td align="left">Change input signal during recording</td>
-<td align="center">Event successfully recorded and uploaded</td>
+<td>Change input signal during recording</td>
+<td>Event successfully recorded and uploaded</td>
 </tr>
 <tr>
-<td align="left">HTTPS</td>
-<td align="center">Devices supports HTTPS connections to Opencast</td>
+<td>HTTPS</td>
+<td>Devices supports HTTPS connections to Opencast</td>
 </tr>
 </tbody>
 </table>
+<h2 id="test-servers">Test Servers</h2>
+<p>You can use Opencast's <a href="https://docs.opencast.org/#test-servers">official test servers</a> like <a href="https://stable.opencast.org/">stable.opencast.org
+</a>, but keep in mind that these servers are reset on a daily basis at about 2am
+(Europe/Berlin timezone).</p>
+<p>The default credentials for these servers are:</p>
+<ul>
+<li>User interface<ul>
+<li>user: <code>admin</code></li>
+<li>password: <code>opencast</code></li>
+</ul>
+</li>
+<li>Capture agent<ul>
+<li>user: <code>opencast_system_account</code></li>
+<li>password: <code>CHANGE_ME</code></li>
+</ul>
+</li>
+</ul>
               
             </div>
           </div>
