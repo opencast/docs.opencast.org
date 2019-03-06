@@ -788,27 +788,25 @@ and attached to the media package.</p>
 <li>Media package is republished with captions/transcripts</li>
 </ul>
 <p>IBM Watson Speech-to-Text service documentation, including which languages are currently supported, can be found
- <a href="https://www.ibm.com/watson/developercloud/doc/speech-to-text/index.html">here</a>.</p>
+ <a href="https://cloud.ibm.com/docs/services/speech-to-text/index.html#about">here</a>.</p>
 <h2 id="configuration">Configuration</h2>
 <h3 id="step-1-get-ibm-watson-credentials">Step 1: Get IBM Watson credentials</h3>
 <ul>
-<li><a href="https://console.bluemix.net">Create a 30-day trial acoount in IBM Bluemix</a></li>
+<li><a href="https://console.bluemix.net">Create a 30-day trial acoount in IBM Cloud</a></li>
 <li><a href="https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam">Get service credentials</a></li>
 </ul>
 <p>As of 10/30/2018, the service has migrated to token-based Identity and Access Management (IAM) authentication so user
-and password are not generated anymore. Details can be found
-<a href="https://cloud.ibm.com/docs/services/speech-to-text/release-notes.html#October2018b">here</a>.</p>
-<p>As a temporary workaround, when configuring the transcription service, enter the constant "apikey" as the user name.</p>
-<p>Example:</p>
-<pre><code>ibm.watson.user=apikey
-ibm.watson.password=API_KEY_GOTTEN_ABOVE
-</code></pre>
-
+and password are not generated anymore. Previously created instances can still use user name and password.
+Details can be found <a href="https://cloud.ibm.com/docs/services/speech-to-text/release-notes.html#October2018b">here</a>.</p>
 <h3 id="step-2-configure-ibmwatsontranscriptionservice">Step 2: Configure IBMWatsonTranscriptionService</h3>
 <p>Edit  <em>etc/org.opencastproject.transcription.ibmwatson.IBMWatsonTranscriptionService.cfg</em>:</p>
 <ul>
 <li>Set <em>enabled</em>=true</li>
-<li>Use service credentials obtained above to set <em>ibm.watson.user</em> and <em>ibm.watson.psw</em></li>
+<li>Use service credentials obtained above to set <em>ibm_watson_api_key</em> (<em>ibm.watson.user</em> and <em>ibm.watson.psw</em>
+are
+still supported to be used with instances created previously)</li>
+<li>Enter the IBM Watson Speech-to-Text url in <em>ibm.watson.service.url</em>, if not using the default
+(https://stream.watsonplatform.net/speech-to-text/api)</li>
 <li>Enter the appropriate language model in <em>ibm.watson.model</em>, if not using the default (<em>en-US_BroadbandModel</em>)</li>
 <li>In <em>workflow</em>, enter the workflow definition id of the workflow to be used to attach the generated
 transcripts/captions</li>
@@ -816,46 +814,74 @@ transcripts/captions</li>
 etc/custom.properties (org.opencastproject.admin.email) will be used. Configure the SmtpService.
 If no email address specified in either <em>notification.email</em> or <em>org.opencastproject.admin.email</em>,
 email notifications will be disabled.</li>
+<li>If re-submitting requests is desired in case of failures, configure <em>max-attempts</em> and <em>retry.workflow</em>.
+If <em>max.attempts</em> &gt; 1 and the service receives an error callback, it will start the workflow specified in
+<em>retry_workflow</em> to create a new job. When <em>max.attempts</em> is reached for a track, the service will stop retrying.</li>
 </ul>
 <pre><code># Change enabled to true to enable this service.
-enabled=true
+enabled=false
 
-# User obtained when registering with the IBM Watson Speech-to_text service
-ibm.watson.user=&lt;SERVICE_USER&gt;
+# IBM Watson Speech-to-Text service url
+# Default: https://stream.watsonplatform.net/speech-to-text/api
+# ibm.watson.service.url=https://stream.watsonplatform.net/speech-to-text/api
+
+# APi key obtained when registering with the IBM Watson Speech-to_text service.
+# If empty, user and password below will be used.
+ibm.watson.api.key=&lt;API_KEY&gt;
+
+# User obtained when registering with the IBM Watson Speech-to_text service.
+# Mandatory if ibm.watson.api.key not entered.
+#ibm.watson.user=&lt;SERVICE_USER&gt;
 
 # Password obtained when registering with the IBM Watson Speech-to_text service
-ibm.watson.password=&lt;SERVICE_PSW&gt;
+# Mandatory if ibm.watson.api.key not entered.
+#ibm.watson.password=&lt;SERVICE_PSW&gt;
 
 # Language model to be used. See the IBM Watson Speech-to-Text service documentation
-# for available models. If empty, the default will be used (&quot;en-US_BroadbandModel&quot;).
-#ibm.watson.model=
+# for available models.
+# Default: en-US_BroadbandModel
+#ibm.watson.model=en-US_BroadbandModel
 
 # Workflow to be executed when results are ready to be attached to media package.
-#workflow=attach-watson-transcription
+# Default: attach-watson-transcripts
+#workflow=attach-watson-transcripts
 
 # Interval the workflow dispatcher runs to start workflows to attach transcripts to the media package
-# after the transcription job is completed.
-# (in seconds) Default is 1 minute.
+# after the transcription job is completed. In seconds.
+# Default: 60
 #workflow.dispatch.interval=60
 
 # How long it should wait to check jobs after their start date + track duration has passed.
-# The default is 10 minutes. This is only used if we didn't get a callback from the
-# ibm watson speech-to-text service.
-# (in seconds)
+# This is only used if we didn't get a callback from the ibm watson speech-to-text service.
+# In seconds.
+# Default: 600
 #completion.check.buffer=600
 
 # How long to wait after a transcription is supposed to finish before marking the job as
-# canceled in the database. Default is 2 hours.
-# (in seconds)
+# canceled in the database. In seconds. Default is 2 hours.
+# Default: 7200
 #max.processing.time=7200
 
 # How long to keep result files in the working file repository in days.
-# The default is 7 days.
+# Default: 7
 #cleanup.results.days=7
 
 # Email to send notifications of errors. If not entered, the value from
 # org.opencastproject.admin.email in custom.properties will be used.
 #notification.email=
+
+# Start transcription job load
+# Default: 0.1
+#job.load.start.transcription=0.1
+
+# Number of max attempts. If max attempts &gt; 1 and the service returned an error after the recognitions job was
+# accepted or the job did not return any results, the transcription is re-submitted. Default is to not retry.
+# Default: 1
+#max.attempts=
+
+# If max.attempts &gt; 1, name of workflow to use for retries.
+#retry.workflow=
+
 </code></pre>
 
 <h3 id="step-3-add-encoding-profile-for-extracting-audio">Step 3: Add encoding profile for extracting audio</h3>
@@ -903,6 +929,8 @@ the second workflow can retrieve it from the Asset Manager to attach the caption
 
 <p>Create a workflow that will add the generated caption/transcript to the media package and republish it.
 A sample one can be found in etc/workflows/attach-watson-transcripts.xml</p>
+<p>If re-submitting requests is desired in case of failures, create a workflow that will start a transcription job.
+A sample one can be found in etc/workflows/retry-watson-transcripts.xml</p>
 <h2 id="workflow-operations">Workflow Operations</h2>
 <ul>
 <li><a href="../../workflowoperationhandlers/start-watson-transcription-woh/">start-watson-transcription</a></li>
