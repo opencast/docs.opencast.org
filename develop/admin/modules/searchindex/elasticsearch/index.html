@@ -787,16 +787,14 @@ elasticsearch bundle in the search module</a>.</p>
 <p>For example, to quickly spin up an external Elasticsearch matching the current version using Docker, create a simple
 Elasticsearch configuration file called <code>elasticsearch.yml</code>:</p>
 <pre><code class="yml">cluster.name: opencast
-node.name: opencast-elasticsearch-single-node
-index.max_result_window: 2147483647
 network.host: 0.0.0.0
+discovery.type: single-node
 </code></pre>
 
 <p>…and run</p>
 <pre><code class="sh">% docker run -p 9200:9200 -p 9300:9300 \
-    -e &quot;discovery.type=single-node&quot; \
     -v &quot;$(pwd)/elasticsearch.yml&quot;:/usr/share/elasticsearch/config/elasticsearch.yml \
-    elasticsearch:2.4.6
+    elasticsearch:5.6.15
 </code></pre>
 
 <p>This will already give you a running cluster with the cluster name <code>opencast</code>. Note that the cluster name is important
