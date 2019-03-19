@@ -68,7 +68,7 @@
         
             <li><a class="toctree-l3" href="#configuration-changes">Configuration changes</a></li>
         
-            <li><a class="toctree-l3" href="#additional-notes-about-61">Additional Notes about 6.1</a></li>
+            <li><a class="toctree-l3" href="#api-changes">API changes</a></li>
         
             <li><a class="toctree-l3" href="#additional-notes-about-62">Additional Notes about 6.2</a></li>
         
@@ -808,10 +808,18 @@
 <ul>
 <li>…</li>
 </ul>
-<h2 id="additional-notes-about-61">Additional Notes about 6.1</h2>
-<p>Opencast 6.1 contains a number of bug fixes, some of which are security relevant. The following known vulnerabilities
-within Opencast's <code>com.fasterxml.jackson.core:jackson-databind</code> dependency have been fixed by this release:
-<code>CVE-2018-19361</code>, <code>CVE-2018-19362</code>, <code>CVE-2018-19360</code>.</p>
+<h2 id="api-changes">API changes</h2>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13397">MH-13397</a>:</p>
+<ul>
+<li>Modified GET /recordings/{id}/technical.json: Removed field <code>optOut</code></li>
+<li>Removed GET /recordings/{id}/optOut</li>
+<li>Removed GET /recordings/{id}/reviewStatus</li>
+<li>Removed PUT /recordings/{id}/reviewStatus</li>
+<li>Modified POST /recordings: Removed form parameter <code>optOut</code></li>
+<li>Modified POST /recordings/multiple: Removed form parameter <code>optOut</code></li>
+<li>Modified PUT /recordings/{id}: Removed form parameters <code>optOut</code> and <code>updateOptOut</code></li>
+<li>Removed GET /series/{id}/optOut</li>
+</ul>
 <h2 id="additional-notes-about-62">Additional Notes about 6.2</h2>
 <p>Opencast 6.2 contains a number of bug fixes for the Opencast 6.x line of releases.</p>
 <h2 id="additional-notes-about-63">Additional Notes about 6.3</h2>
