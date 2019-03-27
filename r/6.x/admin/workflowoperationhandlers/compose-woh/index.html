@@ -449,7 +449,7 @@
         
             <li><a class="toctree-l4" href="#parameter-table">Parameter Table</a></li>
         
-            <li><a class="toctree-l4" href="#operation-example">Operation Example</a></li>
+            <li><a class="toctree-l4" href="#operation-examples">Operation Examples</a></li>
         
         </ul>
     
@@ -777,8 +777,13 @@
 </tr>
 <tr>
 <td>encoding-profile</td>
-<td>webm-hd</td>
+<td>mp4-hd.http</td>
 <td>Specifies the encoding profile to use</td>
+</tr>
+<tr>
+<td>encoding-profiles</td>
+<td>mp4-low.http,mp4-hd.http</td>
+<td>Specifies a comma-separated encoding profiles to use</td>
 </tr>
 <tr>
 <td>tags-and-flavors</td>
@@ -787,17 +792,32 @@
 </tr>
 </tbody>
 </table>
-<h2 id="operation-example">Operation Example</h2>
+<h2 id="operation-examples">Operation Examples</h2>
+<p>Encoding presenter (camera) video to MP4 medium quality:</p>
 <pre><code>&lt;operation
     id="compose"
     fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Encoding presenter (camera) video to Flash download"&gt;
+    exception-handler-workflow="partial-error"
+    description="Encoding presenter (camera) video to MP4 medium quality"&gt;
     &lt;configurations&gt;
         &lt;configuration key="source-flavor"&gt;presenter/trimmed&lt;/configuration&gt;
         &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;engage&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;flash.http&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;engage-download&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;mp4-medium.http&lt;/configuration&gt;
+    &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>Encoding 480p, 720p and 1080p video to MP4 adaptive streaming:</p>
+<pre><code>&lt;operation
+    id="compose"
+    fail-on-error="true"
+    exception-handler-workflow="partial-error"
+    description="Encoding 480p, 720p and 1080p video to MP4 streaming"&gt;
+    &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;*/work&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;*/delivery&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
+        &lt;configuration key="encoding-profiles"&gt;adaptive-480p.http,adaptive-720p.http,adaptive-1080p.http&lt;/configuration&gt;
     &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
