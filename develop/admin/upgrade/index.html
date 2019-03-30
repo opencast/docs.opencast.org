@@ -79,6 +79,8 @@
         
             <li><a class="toctree-l3" href="#scheduler-migration">Scheduler Migration</a></li>
         
+            <li><a class="toctree-l3" href="#update-player-links">Update Player Links</a></li>
+        
             <li><a class="toctree-l3" href="#rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</a></li>
         
         </ul>
@@ -784,6 +786,7 @@ versions of Opencast, please refer to the <a href="https://docs.opencast.org">ol
 <li><a href="#activemq-migration">Upgrade the ActiveMQ configuration</a></li>
 <li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
 <li>Migrate the scheduled events</li>
+<li><a href="#update-player-links">Optionally update the player links</a></li>
 <li>Rebuild the Elastic Search indexes</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
@@ -829,6 +832,52 @@ automatically. Wait until the migration is complete. Once complete, the opencast
 change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal mode of operation.</p>
 <p>You should avoid running Opencast 7 without migrating the scheduled events first. Otherwise, your capture agents may
 fetch an empty calendar.</p>
+<h2 id="update-player-links">Update Player Links</h2>
+<blockquote>
+<p>This step is optional</p>
+</blockquote>
+<p>Opencast 7 comes with the capability of dynamically switching the configured player without requiring the republication
+of all published material by providing the dynamic target <code>https://example.opencast.org/play/&lt;id&gt;</code>. This new target
+will be used for all new engage publications.</p>
+<p>But old publications still reference the players directly in the admin interface and the external API. This does not
+pose any immediate problem unless you actually want to switch players in which case you would need to republish the
+material once to update the publication links.</p>
+<p>Alternatively, you can rewrite the old links all at once without re-publication using the following method:</p>
+<ol>
+<li>
+<p>Find the archive directory and run the following command (replacing <code>&lt;playerlink&gt;</code>):</p>
+<pre><code>sed -i 's_&lt;playerlink&gt;_/play/_g' .../archive/*/*/*/manifest.xml
+</code></pre>
+<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
+<pre><code>sed -i 's_/engage/theodul/ui/core.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+sed -i 's_/paella/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+sed -i 's_/engage/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+</code></pre>
+</li>
+<li>
+<p>Run the following SQL commands on your opencast database (replacing <code>&lt;playerlink&gt;</code>):</p>
+<pre><code>UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '&lt;playerlink&gt;', '/play/')
+  WHERE INSTR(mediapackage_xml, '&lt;playerlink&gt;') &gt; 0;
+</code></pre>
+<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
+<pre><code>UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/engage/theodul/ui/core.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/engage/theodul/ui/core.html?id=') &gt; 0;
+UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/paella/ui/watch.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/paella/ui/watch.html?id=') &gt; 0;
+UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/engage/ui/watch.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/engage/ui/watch.html?id=') &gt; 0;
+</code></pre>
+</li>
+</ol>
+<p>Please ensure to execute these steps before rebuilding the index.</p>
 <h2 id="rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</h2>
 <p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elastic Search indexes of both
 the Admin UI and the External API have changed.</p>

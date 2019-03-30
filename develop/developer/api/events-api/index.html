@@ -1871,6 +1871,8 @@ configuration of series metadata catalogs. For more details about this mechanism
 <th align="left">Form Parameters</th>
 <th align="left">Type</th>
 <th align="left">Description</th>
+<th align="left">Default</th>
+<th align="left">Version</th>
 </tr>
 </thead>
 <tbody>
@@ -1878,6 +1880,15 @@ configuration of series metadata catalogs. For more details about this mechanism
 <td align="left"><code>scheduling</code></td>
 <td align="left"><code>string</code></td>
 <td align="left">The scheduling information.</td>
+<td align="left"><span class="required">Required</span></td>
+<td align="left">1.1.0</td>
+</tr>
+<tr>
+<td align="left"><code>allowConflict</code></td>
+<td align="left"><code>boolean</code></td>
+<td align="left">Allow conflicts when updating scheduling.</td>
+<td align="left">false</td>
+<td align="left">1.2.0</td>
 </tr>
 </tbody>
 </table>
@@ -1905,6 +1916,14 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
+
+<p><code>allowConflict</code> allows the schedule to be updated without checking for conflicts.
+To allow conflicts (<code>true</code>) the call <strong>MUST</strong> be made with a user that has an <em>Administrative Role</em>.</p>
+<p>If not handled properly this will likely cause two or more events to be
+scheduled on a particular capture agent at the same time, which will then
+cause a capture failure for all but one of the events.</p>
+<p>The person making this call and allowing conflicts to exist, will bear the
+responsibility of resolving the conflicts that might result.</p>
               
             </div>
           </div>
