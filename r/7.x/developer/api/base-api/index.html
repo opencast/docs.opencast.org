@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Base API - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Base API";
+    var mkdocs_page_input_path = "api/base-api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/source-linux/">Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Capture Agent</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/testcases/">Test Cases</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authorization/">Authorization</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Base API</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#information">Information</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#get-api">GET /api</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#user-and-organization">User and Organization</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#get-apiinfome">GET /api/info/me</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apiinfomeroles">GET /api/info/me/roles</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apiinfoorganization">GET /api/info/organization</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apiinfoorganizationproperties">GET /api/info/organization/properties</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#versions">Versions</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#get-apiversion">GET /api/version</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apiversiondefault">GET /api/version/default</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../agents-api/">Agents API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow-api/">Workflow API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>External API &raquo;</li>
+        
+      
+    
+    <li>Base API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/base-api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="toc">
+<ul>
+<li><a href="#information">Information</a><ul>
+<li><a href="#get-api">GET /api</a></li>
+</ul>
+</li>
+<li><a href="#user-and-organization">User and Organization</a><ul>
+<li><a href="#get-apiinfome">GET /api/info/me</a></li>
+<li><a href="#get-apiinfomeroles">GET /api/info/me/roles</a></li>
+<li><a href="#get-apiinfoorganization">GET /api/info/organization</a></li>
+<li><a href="#get-apiinfoorganizationproperties">GET /api/info/organization/properties</a></li>
+</ul>
+</li>
+<li><a href="#versions">Versions</a><ul>
+<li><a href="#get-apiversion">GET /api/version</a></li>
+<li><a href="#get-apiversiondefault">GET /api/version/default</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="information">Information</h1>
+<p>In order to assess key characteristics of the External API and to test general connectivity, the External API’s root
+url is not protected through authentication:</p>
+<h3 id="get-api">GET /api</h3>
+<p>Returns key characteristics of the External API such as the API base URL and the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The api information is returned as a JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>version</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Default version of the External API</td>
+</tr>
+<tr>
+<td align="left"><code>url</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Base URL clients shall use to communicate with the External API</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;url&quot;: &quot;https:\/\/api.opencast.org\/api&quot;,
+  &quot;version&quot;: &quot;v1.0.1&quot;
+}
+</code></pre>
+
+<h1 id="user-and-organization">User and Organization</h1>
+<h3 id="get-apiinfome">GET /api/info/me</h3>
+<p>Returns information on the logged in user.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The user information is returned as a JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The Opencast user provider that manages this user</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Displayable name of the user</td>
+</tr>
+<tr>
+<td align="left"><code>username</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The username</td>
+</tr>
+<tr>
+<td align="left"><code>userrole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role uniquly identifying the user</td>
+</tr>
+<tr>
+<td align="left"><code>email</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The e-mail address of the user</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;provider&quot;: &quot;opencast&quot;,
+  &quot;name&quot;: &quot;Opencast Student&quot;,
+  &quot;userrole&quot;: &quot;ROLE_USER_92623987_OPENCAST_ORG&quot;,
+  &quot;email&quot;: &quot;nowhere@opencast.org&quot;,
+  &quot;username&quot;: &quot;92623987@opencast.org&quot;
+}
+</code></pre>
+
+<h3 id="get-apiinfomeroles">GET /api/info/me/roles</h3>
+<p>Returns current user's roles.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The set of roles is returned as <a href="../types/#array"><code>array[string]</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  &quot;ROLE_USER_92623987@opencast.org&quot;,
+  &quot;ROLE_STUDENT&quot;
+]
+</code></pre>
+
+<h3 id="get-apiinfoorganization">GET /api/info/organization</h3>
+<p>Returns the current organization.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The organization details are returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>adminRole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role administrator users have</td>
+</tr>
+<tr>
+<td align="left"><code>anonymousRole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role unauthenticated users have</td>
+</tr>
+<tr>
+<td align="left"><code>id</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant name</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;adminRole&quot;: &quot;ROLE_ADMIN&quot;,
+  &quot;anonymousRole&quot;: &quot;ROLE_ANONYMOUS&quot;,
+  &quot;id&quot;: &quot;mh_default_org&quot;,
+  &quot;name&quot;: &quot;Opencast&quot;
+}
+</code></pre>
+
+<h3 id="get-apiinfoorganizationproperties">GET /api/info/organization/properties</h3>
+<p>Returns the current organization's properties. The set of properties is a key-value set that depends on the
+configuration of Opencast.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The organization properties are returned as <a href="../types/#property"><code>property</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;org.opencastproject.feed.url&quot;: &quot;http://feeds.opencast.org&quot;,
+  &quot;org.opencastproject.admin.documentation.url&quot;: &quot;http://documentation.opencast.org&quot;,
+  &quot;org.opencastproject.external.api.url&quot;: &quot;http://api.opencast.org&quot;
+}
+</code></pre>
+
+<h1 id="versions">Versions</h1>
+<h3 id="get-apiversion">GET /api/version</h3>
+<p>Returns a list of available version as well as the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The version information is returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>versions</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">All External API versions supported by this server</td>
+</tr>
+<tr>
+<td align="left"><code>default</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The default External API version used by this server</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;versions&quot;: [
+    &quot;v1.0.0&quot;,
+    &quot;v1.1.0&quot;
+  ],
+  &quot;default&quot;: &quot;v1.1.0&quot;
+}
+</code></pre>
+
+<h3 id="get-apiversiondefault">GET /api/version/default</h3>
+<p>Returns the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The default version is returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>default</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The default External API version used by this server</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;default&quot;: &quot;v1.1.0&quot;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../agents-api/" class="btn btn-neutral float-right" title="Agents API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../authorization/" class="btn btn-neutral" title="Authorization"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../authorization/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../agents-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

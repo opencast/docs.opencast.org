@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Architecture - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Architecture";
+    var mkdocs_page_input_path = "modules/player/architecture.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../installation/source-linux/">Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Capture Agent</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../capture-agent/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../capture-agent/testcases/">Test Cases</a>
+                </li>
+    </ul>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Architecture</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#architecture">Architecture</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l5" href="#plugin-manager">Plugin Manager</a></li>
+        
+            <li><a class="toctree-l5" href="#ui-core">UI Core</a></li>
+        
+            <li><a class="toctree-l5" href="#plugins">Plugins</a></li>
+        
+            <li><a class="toctree-l5" href="#model-view-controller-support">Model View Controller Support</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/agents-api/">Agents API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/workflow-api/">Workflow API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api/glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Player &raquo;</li>
+        
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Architecture</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/modules/player/architecture.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="architecture">Architecture</h1>
+<h2 id="overview">Overview</h2>
+<p>The architecture of the theodul player has a plugin based structure based around a core. The core and the plugins have
+been realized as OSGi modules. Each plugin can be separately build.</p>
+<p>The following figure shows the OSGi architecture of the player.</p>
+<p><img alt="Architecture" src="../architecture.png" /></p>
+<p>All Theodul OSGi modules are stored under:</p>
+<pre><code>modules/engage-theodul-*
+#Core module
+modules/engage-theodul-api/
+modules/engage-theodul-core/
+#A plugin module
+modules/engage-theodul-plugin-*
+modules/engage-theodul-plugin-tab-description/
+</code></pre>
+<h2 id="plugin-manager">Plugin Manager</h2>
+<p>The main workflow is implemented by the core, which recognizes new plugins, collects information about the plugin type
+and resources, runs the JavaScript logic and inserts the first compiled templates into the HTML DOM.</p>
+<p>The Plugin Manager Endpoint recognizes the OSGi modules. Each plugin has some information about its name and its
+resources. The Plugin Manager collects these information and publishes them via a REST endpoint. The following URL links
+to an example REST endpoint:</p>
+<pre><code>http://localhost:8080/engage/theodul/manager/list.json
+</code></pre>
+<p>The documentation and test forms of the endpoint can be found on the Opencast start page. The following data in JSON
+shows an example list of plugins, which are used by the player and provided by the Plugin Manager Endpoint.</p>
+<pre><code>{
+  "pluginlist":{
+    "plugins":[
+    {
+      "name":"EngagePluginTabSlidetext",
+      "id":"6",
+      "description":"Simple implementation of a tab with the text of the slides",
+      "static-path":"6\/static"
+    },
+    {
+      "name":"EngagePluginControlsMockup",
+      "id":"5",
+      "description":"Simple implementation of a control bar",
+      "static-path":"5\/static"
+    }]
+  }
+}
+</code></pre>
+<p>Next to the Plugin Manager there is the Theodul Core module, which publishes the main HTML page, core.html.</p>
+<h2 id="ui-core">UI Core</h2>
+<p>The <strong>core.html</strong> is the main entry point and starts the Javascript core logic. Following listing shows the directory
+structure of core in the <strong>engage-theodul-core OSGi</strong> module.</p>
+<pre><code>|-src
+|---main
+|-----java          #Java impl of the plugin manager
+|-----resources
+|-------ui          #UI of the core, core.html and engage_init.js
+|---------css       #Global CSS Styles
+|---------js        #JavaScript logic
+|-----------engage  #Core logic, engage_core.js and engage_model.js
+|-----------lib     #External libraries, backbone.js, jquery.js, require.js and underscore.js
+|---test            #Unit Tests
+|-----resources
+|-------ui          #JavaScript Unit Tests
+|---------js
+|-----------spec
+</code></pre>
+<p>All Theodul JavaScript components are defined as a RequireJS module. The file <code>engage_init.js</code> is loaded firstly and
+contains the configuration of RequireJS. This init script additionally loads the core module, which is defined in the
+<code>engage_core.js</code>.</p>
+<p>The core module initializes the main HTML view. This view is realized as a BackboneJS view and is linked to a global
+Backbone model, which is stored in the model module in <code>engage_model.js</code>. The view is returned by the core module, so
+every other module, which has a dependency to the core module, has a reference to the view (simply called <em>Engage</em> in
+the plugins) and its functions. See the Core Reference for more information about the functions of the core view.</p>
+<h2 id="plugins">Plugins</h2>
+<p>Plugins in the Theodul player are developed and distributed in own OSGi modules. Every plugin has a special UI type. In
+dependency of this type the core injects the plugin to the right position of the player. The following plugin types are
+possible:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin Type</th>
+<th>Description</th>
+<th>Characteristics</th>
+<th>Module Name</th>
+<th>JS Plugin Type Name</th>
+<th>Maven Plugin Type Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controls</td>
+<td>Implements the main controls of the top of the player</td>
+<td>Only one plugin per player possible.</td>
+<td>engage-theodul-plugin-controls</td>
+<td>engage_controls</td>
+<td>controls</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>Timeline information below the main controls.</td>
+<td>Good for processing time-based data like user tracking, slide previews or annotations.</td>
+<td>Optional plugin, more than one possible.    engage-theodul-plugin-timeline-<pluginName></td>
+<td>engage_timeline</td>
+<td>timeline</td>
+</tr>
+<tr>
+<td>Videodisplay</td>
+<td>Implementation of the video display.</td>
+<td>Currently only one plugin per player possible, but in the future more video displays should be possible.</td>
+<td>engage-theodul-plugin-video-<pluginName></td>
+<td>engage_video</td>
+<td>video</td>
+</tr>
+<tr>
+<td>Description/Label</td>
+<td>A plugin below the video display, good to show simple information about the video, like a title and the creator.</td>
+<td>Only one plugin per player possible.</td>
+<td>engage-theodul-plugin-description</td>
+<td>engage_description</td>
+<td>description</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>Shows a tab in the tab view at the bottom of the player.</td>
+<td>Optional plugin, more than one possible.</td>
+<td>engage-theodul-plugin-tab-<pluginName></td>
+<td>engage_tab</td>
+<td>tab</td>
+</tr>
+<tr>
+<td>Custom</td>
+<td>A custom plugin without a relationship to an UI element.</td>
+<td>Good for a custom REST endpoint, global data representation or to load custom JS code or libraries.</td>
+<td>Optional plugin, more than one possible.</td>
+<td>No connection to a preserved UI element.</td>
+<td>engage-theodul-plugin-custom-<pluginName></td>
+</tr>
+</tbody>
+</table>
+<p>The following listing shows the directory structure of a plugin module:</p>
+<pre><code>|-src
+|---main
+|-----java
+|-------org
+|---------opencastproject
+|-----------engage
+|-------------theodul
+|---------------plugin
+|-----------------controls  #Simple Java class, and optional REST endpoint
+|-----resources
+|-------OSGI-INF            #OSGi information about the plugin
+|-------static              #web ressources, contains the main.js entry point of the plugin
+|---------images            #plugin ressources
+|---------js                #plugin js libs
+|-----------bootstrap
+|-----------jqueryui
+|---test                    #Jasmine test ressources
+|-----resources
+|-------js
+|---------engage            #Test Wrapper of the core
+|---------lib               #Required test libs
+|---------spec              #Jasmine test specs
+</code></pre>
+<p>The main JavaScript entry point of the plugin is main.js in the static folder. This contains the RequireJS module
+definition of the plugin and the main logic. All other plugin logic can be implemented as a RequireJS module and loaded
+in the main module. The main module should have a dependency to the core, the Engage object. With this object you have
+access to main features of the core. See the Core Reference for more information about that.</p>
+<p>After the initialization process of the plugin, the plugin returns a plugin object with information about the plugin,
+like the type, the name, the ui template etc. This object is used by the core to decide about the UI type/location of
+plugin. The Core Reference describes the plugin object, before and after it is being processed by the core.</p>
+<p>Have a look to the code of a plugin to get an impression about the plugin implementation.</p>
+<h2 id="model-view-controller-support">Model View Controller Support</h2>
+<p>The Theodul player supports MVC design patterns for each plugin based on methods and objects of the BackboneJS library.
+It is not necessary to design a plugin in MVC style but it is highly recommended. An overview of the methods and objects
+of the BackboneJS library is listed on the official website of BackboneJS.</p>
+<p>Each plugin with a visual component has a reference to its view container and its template to fill the view container.
+Have a look at the Core Reference how to access the container and the template data. With this information the plugin
+can create a Backbone view with a reference to the to div container and a render function to compile the template.</p>
+<p>The next step is the creation of a model, which is being bound to the view. An usual way is to create a Backbone model,
+which is being passed by the view. In the initialization function of the view, the view binds the model change event to
+his render function:</p>
+<p><em>Bind the "change" event always to the render function of a view</em></p>
+<pre><code>// bind the render function always to the view
+_.bindAll(this, "render");
+// listen for changes of the model and bind the render function to this
+this.model.bind("change", this.render);
+</code></pre>
+<p>The model can only be visible by the plugin itself or it can be added to the global Engage model of the core. Adding the
+model to the Engage model has the advantage, that on the one hand data can be used by other plugins and on the other
+hand it is able to listen to change- or add-events. So other plugins are able to listen to a change of data in another
+model and can react to it by e.g. re-render its view. This feature is e.g. used by the "mhConnection" custom plugin. The
+plugin receives data of Opencast endpoints and saves them to a model, which is being added to the Engage Model. Each
+time the plugin gets newer endpoint data and updates its model's data, each plugin gets a notification and can re-render
+its view.</p>
+<p>A typical way to add a model to the Engage model is to add the model in the initialization function of the plugin after
+all other initializations. Here is an example of the video plugin:</p>
+<h3 id="add-a-custom-model-to-the-engage-model">Add a custom model to the Engage Model</h3>
+<pre><code>Engage.model.set("videoDataModel", new VideoDataModel(videoDisplays, videoSources, duration));
+</code></pre>
+<p>In the same initialization function an event handler should be added to notice the addition of the model. Has the model
+successfully been added, a view with this model and other data can be created:</p>
+<p><em>Model Event Handler</em></p>
+<pre><code>Engage.model.on("change:videoDataModel", function() {
+   new VideoDataView(this.get("videoDataModel"), plugin.template, videojs_swf);
+});
+</code></pre>
+<p>If another plugin wants to use the defined "videoDataModel" model, it has to list it in its own initialization process:</p>
+<pre><code>Engage.model.on("change:videoDataModel", function() {
+   initCount -= 1;
+   if (initCount === 0) {
+      initPlugin();
+   }
+});
+</code></pre>
+<p>Have a look at the full implementation of the VideoJS Plugin and the Controls Plugin to get an idea how the Backbone MVC
+design works. For completeness' sake, the "Controller" does not have an extra Object in the Backbone MVC design. The
+"Controller" is usually used as the render function in the view. This function can be very complex and should link to
+other functions, which are short and easy to be tested by the Jasmine Test Framework.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../core.reference/" class="btn btn-neutral float-right" title="Core Reference">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../capture-agent/testcases/" class="btn btn-neutral" title="Test Cases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../capture-agent/testcases/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../core.reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+
+</body>
+</html>

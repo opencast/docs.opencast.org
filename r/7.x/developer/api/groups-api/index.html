@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Groups API - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Groups API";
+    var mkdocs_page_input_path = "api/groups-api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/source-linux/">Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Capture Agent</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/testcases/">Test Cases</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../agents-api/">Agents API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-api/">Series API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Groups API</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#general">General</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#get-apigroups">GET /api/groups</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apigroupsgroup_id">GET /api/groups/{group_id}</a></li>
+        
+            <li><a class="toctree-l4" href="#post-apigroups">POST /api/groups</a></li>
+        
+            <li><a class="toctree-l4" href="#put-apigroupsgroup_id">PUT /api/groups/{group_id}</a></li>
+        
+            <li><a class="toctree-l4" href="#delete-apigroupsgroup_id">DELETE /api/groups/{group_id}</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#members">Members</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#post-apigroupsgroup_idmembers">POST /api/groups/{group_id}/members</a></li>
+        
+            <li><a class="toctree-l4" href="#delete-apigroupsgroup_idmembersmember_id">DELETE /api/groups/{group_id}/members/{member_id}</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow-api/">Workflow API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>External API &raquo;</li>
+        
+      
+    
+    <li>Groups API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/groups-api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apigroups">GET /api/groups</a></li>
+<li><a href="#get-apigroupsgroup_id">GET /api/groups/{group_id}</a></li>
+<li><a href="#post-apigroups">POST /api/groups</a></li>
+<li><a href="#put-apigroupsgroup_id">PUT /api/groups/{group_id}</a></li>
+<li><a href="#delete-apigroupsgroup_id">DELETE /api/groups/{group_id}</a></li>
+</ul>
+</li>
+<li><a href="#members">Members</a><ul>
+<li><a href="#post-apigroupsgroup_idmembers">POST /api/groups/{group_id}/members</a></li>
+<li><a href="#delete-apigroupsgroup_idmembersmember_id">DELETE /api/groups/{group_id}/members/{member_id}</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<h3 id="get-apigroups">GET /api/groups</h3>
+<p>Returns a list of groups.</p>
+<p>The following query string parameters can be used to filter, sort and paginate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="../usage/#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">Groups where the name specified in the metadata field match</td>
+</tr>
+</tbody>
+</table>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">By the group name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">By the group description</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left">By the group role</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">By the group members</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">By the group roles</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="xml">https://opencast.domain.com/api/groups?sort=name:ASC&amp;limit=2&amp;offset=1
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of groups as JSON array of groups wheres the JSON objects representing groups
+have the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The identifier of the group</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role of the group</td>
+</tr>
+<tr>
+<td align="left"><code>organization</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The roles assigned to the group (comma-separated list)</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The list of users that belong to this group (comma-separated list of usernames)</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the group</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the group</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+    &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;roles&quot;: &quot;ROLE_OAUTH_USER,ROLE_SUDO,ROLE_ADMIN,ROLE_ANONYMOUS&quot;,
+    &quot;members&quot;: &quot;admin,admin2&quot;,
+    &quot;name&quot;: &quot;Opencast Project System Administrators&quot;,
+    &quot;description&quot;: &quot;System administrators of 'Opencast Project'&quot;
+  },
+  {
+    &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_EXTERNAL_APPLICATIONS&quot;,
+    &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_EXTERNAL_APPLICATIONS&quot;,
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;roles&quot;: &quot;ROLE_EXAMPLE1,ROLE_EXAMPLE2,ROLE_EXAMPLE3&quot;,
+    &quot;members&quot;: &quot;apiuser&quot;,
+    &quot;name&quot;: &quot;Opencast Project External Applications&quot;,
+    &quot;description&quot;: &quot;External application users of 'Opencast Project'&quot;
+  }
+]
+</code></pre>
+
+<h3 id="get-apigroupsgroup_id">GET /api/groups/{group_id}</h3>
+<p>Returns a single group.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The group is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The identifier of the group</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role of the group</td>
+</tr>
+<tr>
+<td align="left"><code>organization</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The roles assigned to the group (comma-separated list)</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The list of users that belong to this group (comma-separated list of usernames)</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the group</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the group</td>
+</tr>
+</tbody>
+</table>
+<p><code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+  &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+  &quot;organization&quot;: &quot;mh_default_org&quot;,
+  &quot;roles&quot;: &quot;ROLE_OAUTH_USER,ROLE_SUDO,ROLE_ADMIN,ROLE_ANONYMOUS&quot;,
+  &quot;members&quot;: &quot;admin,admin2&quot;,
+  &quot;name&quot;: &quot;Opencast Project System Administrators&quot;,
+  &quot;description&quot;: &quot;System administrators of 'Opencast Project'&quot;
+}
+</code></pre>
+
+<h3 id="post-apigroups">POST /api/groups</h3>
+<p>Creates a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Group Name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Group Description</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of roles</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of members</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>201 (CREATED)</code>: A new group is created.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>409 (CONFLICT)</code>: The group could not be created because a group with the same name already exists.</p>
+<h3 id="put-apigroupsgroup_id">PUT /api/groups/{group_id}</h3>
+<p>Updates a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Group Name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Group Description</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of roles</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of members</td>
+</tr>
+</tbody>
+</table>
+<p>If any of form parameters are ommited, the respective fields of the group will not be changed.</p>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>200 (OK)</code>: The group has been updated.<br/>
+<code>404 (NOT FOUND)</code>: The specified group does not exist.<br/></p>
+<h3 id="delete-apigroupsgroup_id">DELETE /api/groups/{group_id}</h3>
+<p>Deletes a group.</p>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>204 (NO CONTENT)</code>: The group has been deleted.<br/>
+<code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<h1 id="members">Members</h1>
+<h3 id="post-apigroupsgroup_idmembers">POST /api/groups/{group_id}/members</h3>
+<p>Adds a member to a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>member</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The username of the member to be added</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The member has been added or was already member of the group.<br/></p>
+<p>If the member has been added, the request does not return data.
+In case that the member already was in the group, the following message is returned as string:</p>
+<pre><code>Member is already member of group
+</code></pre>
+
+<p><code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<h3 id="delete-apigroupsgroup_idmembersmember_id">DELETE /api/groups/{group_id}/members/{member_id}</h3>
+<p>Removes a member from a group</p>
+<p><strong>Response</strong></p>
+<p><code>200 (NO CONTENT)</code>: The member has been removed.<br/>
+<code>404 (NOT FOUND)</code>: The specified group or member does not exist.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../security-api/" class="btn btn-neutral float-right" title="Security API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../series-api/" class="btn btn-neutral" title="Series API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../series-api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../security-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

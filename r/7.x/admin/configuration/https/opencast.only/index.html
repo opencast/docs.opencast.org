@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Internal HTTPS - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Internal HTTPS";
+    var mkdocs_page_input_path = "configuration/https/opencast.only.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../database/">Database</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Internal HTTPS</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#port-forwarding-required">Port-Forwarding required</a></li>
+        
+            <li><a class="toctree-l5" href="#creating-the-keystore">Creating the keystore</a></li>
+        
+            <li><a class="toctree-l5" href="#default-to-https">Default to HTTPS</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../inbox/">Inbox</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../listproviders/">List Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Search Index</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/solr/">Solr</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/elasticsearch/">Elasticsearch</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/timelinepreviews/">Timeline Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/add-catalog-woh/">Add Catalog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>HTTPS &raquo;</li>
+        
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Internal HTTPS</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/https/opencast.only.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</h1>
+<p>In <code>opencast/etc/</code>, use the <code>org.ops4j.pax.web.cfg</code> file for
+configuration:</p>
+<pre><code># ...
+
+# Whether Opencast itself should handle HTTPS traffic.
+# Even if you set this to 'false',you can still use an HTTP proxy to handle SSL.
+org.osgi.service.http.secure.enabled=true
+
+# The secure server port to use if running Opencast with HTTPS (as opposed to
+# a proxy handling HTTPS).
+# Note that we use the docker proxy for the port-mapping from 8843 from within
+# the container to 443 at the host
+# Don't run Opencast with root privileges, which is a security issue
+org.osgi.service.http.port.secure=8443
+
+# Path to the keystore file.
+# Use the Java `keytool` to generate this file.
+# Example:
+#   keytool -genkey -keyalg RSA -validity 365 -alias serverkey \
+#     -keypass password -storepass password -keystore keystore.jks
+org.ops4j.pax.web.ssl.keystore=&lt;path_to_keystore&gt;
+
+# Password used for keystore integrity check.
+org.ops4j.pax.web.ssl.password=&lt;the_keystore_password&gt;
+
+# Password used for keystore.
+org.ops4j.pax.web.ssl.keypassword=&lt;the_key_password&gt;
+</code></pre>
+
+<h2 id="port-forwarding-required">Port-Forwarding required</h2>
+<p>Note that Opencast most likely can't bind to port 443. That's why you still
+need to reverse-proxy or port-forward if you want to avoid URLs with port
+specified like <code>https://host:8443/</code> which is technically perfectly okay but may
+confuse users or may be perceived as "ugly".</p>
+<p>Here is a non-comprehensive lists of tools and methods which can be used for
+port forwarding:</p>
+<h3 id="port-forwarding-with-iptables">Port-Forwarding with iptables</h3>
+<p>A rule like</p>
+<pre><code class="sh">iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8443
+# Allow also localhost traffic to use :443
+# iptables -A OUTPUT -t nat -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
+</code></pre>
+
+<p>should do the job after replacing <code>eth0</code> with the network interface your
+Opencast consumers will connect on. Note that you usually want to persist the
+rule.</p>
+<h3 id="port-forwarding-with-docker-proxy">Port-Forwarding with docker(-proxy)</h3>
+<p>When starting a container from an Opencast image, either insert a
+command line argument to docker run: <code>-p 443:8443</code> or add a <code>ports:</code>
+in <code>docker-compose.yaml</code>.</p>
+<h3 id="port-forwarding-with-sniproxy">Port-Forwarding with sniproxy</h3>
+<p><a href="https://github.com/dlundquist/sniproxy">Sniproxy</a> can be used as well,
+especially if you have multiple servers running on the same machine that handle
+HTTPS individually (no termination proxy).</p>
+<pre><code>user, pidfile, error_log ...
+
+listen 443 {
+    proto tls
+    table https_hosts
+    fallback 127.0.0.1:8443
+
+    access_log {
+        filename /var/log/sniproxy/https_access.log
+        priority notice
+    }
+}
+
+table https_hosts {
+    .*\.opencast\.example\.org 127.0.0.1:8443
+}
+</code></pre>
+
+<h2 id="creating-the-keystore">Creating the keystore</h2>
+<p>What you need, is the TLS private key and the certificate including the
+whole chain between the root certificate, all intermediates and the
+certificate itself.</p>
+<h3 id="obtaining-the-certificate-chain">Obtaining the certificate chain</h3>
+<p>If you only have the key and the certificate, I recommend
+<a href="https://certificatechain.io/">certificatechain.io</a> or
+<a href="https://github.com/zakjan/cert-chain-resolver">cert-chain-resolver</a>.
+The latter can be used as follows:</p>
+<pre><code class="bash"># Obtain the chain for cert.pem and save it at opencast.chain.pem.tmp
+# The -s command switch includes the root certificate; this is not
+# mandatory and might add some overhead
+cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+
+# Verify the certificate using the chain
+openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+</code></pre>
+
+<h3 id="create-the-p12-keystore">Create the p12 keystore</h3>
+<p>If the private key (assumed to be <code>key.pem</code>) is encrypted
+(password protected), issue the following command. Note that there
+are safer ways supplying the key's password to OpenSSL.</p>
+<pre><code class="bash">openssl pkcs12 \
+        -export \
+        -inkey &quot;key.pem&quot; \
+        -passin &quot;pass:&lt;the_keys_password&gt;&quot; \
+        -in &quot;opencast.chain.pem.tmp&quot; \
+        -name &quot;serverkey&quot; \
+        -out &quot;opencast.p12&quot; \
+        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+</code></pre>
+
+<p>In case the private key is not protected by password:</p>
+<pre><code class="bash">openssl pkcs12 \
+        -export \
+        -inkey &quot;key.pem&quot; \
+        -in &quot;opencast.chain.pem.tmp&quot; \
+        -name &quot;serverkey&quot; \
+        -out &quot;opencast.p12&quot; \
+        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+</code></pre>
+
+<h3 id="import-the-p12-keystore-into-a-java-keystore">Import the p12 keystore into a Java keystore:</h3>
+<pre><code class="bash">keytool \
+        -importkeystore \
+        -srckeystore &quot;opencast.p12&quot; \
+        -srcstoretype &quot;pkcs12&quot; \
+        -srcstorepass &quot;&lt;the_keystore_password&gt;&quot; \
+        -destkeystore &quot;keystore.jks&quot; \
+        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+# print out details about the JKS built
+keytool \
+        -keystore &quot;keystore.jks&quot; \
+        -list \
+        -destalias serverkey \
+        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+</code></pre>
+
+<p><a href="https://gist.github.com/pawohl/dd92ff4909e3e2704e36dec747ea238e">There exists a shell script automating that task
+</a>.</p>
+<h2 id="default-to-https">Default to HTTPS</h2>
+<p>When finished, restarted and verified that HTTPS works as expected,
+you can change Opencast's default URL to the HTTPS one.</p>
+<p>Set <code>org.opencastproject.server.url</code> to the  HTTPS-URL in
+<code>etc/custom.properties</code>.</p>
+<pre><code class="ini">org.opencastproject.server.url=https://opencast.example.com
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../migration/" class="btn btn-neutral float-right" title="Migrating old content to HTTPS">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../nginx/" class="btn btn-neutral" title="Using Nginx"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../nginx/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../migration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+
+</body>
+</html>

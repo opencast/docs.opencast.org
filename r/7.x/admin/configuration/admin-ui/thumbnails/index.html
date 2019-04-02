@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Thumbnails - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Thumbnails";
+    var mkdocs_page_input_path = "configuration/admin-ui/thumbnails.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../inbox/">Inbox</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../listproviders/">List Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../oaipmh/">OAI-PMH</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../languages/">Languages</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Thumbnails</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#overview">Overview</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#thumbnail-preview">Thumbnail Preview</a></li>
+        
+            <li><a class="toctree-l5" href="#default-thumbnail">Default Thumbnail</a></li>
+        
+            <li><a class="toctree-l5" href="#snapshot-thumbnail">Snapshot Thumbnail</a></li>
+        
+            <li><a class="toctree-l5" href="#uploaded-thumbnail">Uploaded Thumbnail</a></li>
+        
+            <li><a class="toctree-l5" href="#automatic-distribution">Automatic Distribution</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Search Index</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/solr/">Solr</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/searchindex/elasticsearch/">Elasticsearch</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/timelinepreviews/">Timeline Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/add-catalog-woh/">Add Catalog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Admin UI Configuration &raquo;</li>
+        
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Thumbnails</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/thumbnails.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="overview">Overview</h1>
+<p>Video content is often represented visually by using thumbnail images and metadata. Think of, for example, of list
+of videos displayed as a thumbnail image together with the title and description for each video.</p>
+<p>On this page, this is the image that we refer to as thumbnail.</p>
+<p>Since having high quality thumbnails is important, the Opencast video editor comes with built-in support for
+thumbnails. We distinguish between three kinds of thumbnails:</p>
+<ol>
+<li>The <strong>Thumbnail Preview</strong> is a preview of the thumbnail shown in the video editor only</li>
+<li>The <strong>Default Thumbnail</strong> is automatically generated</li>
+<li>A <strong>Snapshot Thumbnail</strong> can be extracted from the video by the user</li>
+<li>An <strong>Uploaded Thumbnail</strong> is uploaded by the user</li>
+</ol>
+<p>As both the video editor and your workflows need to work together to enable full support of this feature,
+the Admin UI comes with a number of configuration options that allows this feature to be integrated into
+your workflow configuration.</p>
+<p>This page describes the configuration options of the Admin UI relevant for the thumbnail support of the video editor.
+These options can be adjusted in the configuration file <code>etc/org.opencastproject.adminui.cfg</code>.</p>
+<h2 id="thumbnail-preview">Thumbnail Preview</h2>
+<p>The video editor displays a preview of the actual thumbnail at any time. This preview image is expected to be published
+in the publication channel <code>internal</code> as attachment with the flavor as specified in the Admin UI configuration:</p>
+<pre><code># Default: thumbnail/preview
+#thumbnail.preview.flavor=thumbnail/preview
+</code></pre>
+<p>The initial thumbnail preview image is generated by the workflow that creates and publishes the distribution
+artefacts required by the video editor (e.g. <code>etc/workflows/partial-preview.xml</code>).</p>
+<p>If the user uploads a thumbnail in the video editor, the thumbnail preview is created by converting the uploaded
+thumbnail using the following encoding profile:</p>
+<pre><code># Default: editor.thumbnail.preview.downscale
+#thumbnail.preview.profile.downscale=editor.thumbnail.preview.downscale
+</code></pre>
+<p>If the user selects the default thumbnail or a snapshot thumbnail in the video editor, the update of the thumbnail
+preview is done differently depending on whether automatic distribution is enabled or not.</p>
+<p>In case that automatic distribution is disabled, the thumbnail preview is extracted from the source track using the
+following encoding profile:</p>
+<pre><code># Default: editor.thumbnail.preview
+#thumbnail.preview.profile=editor.thumbnail.preview
+</code></pre>
+<p>In case that automatic distribution is enabled, a master thumbnail image is extracted. The thumbnail preview
+image is then created by downscaling this master thumbnail image using the following encoding profile:</p>
+<pre><code># Default: editor.thumbnail.preview.downscale
+#thumbnail.preview.profile.downscale=editor.thumbnail.preview.downscale
+</code></pre>
+<p>Note that the thumbnail preview image is supposed to be used by the Admin UI only.</p>
+<h2 id="default-thumbnail">Default Thumbnail</h2>
+<p>This thumbnail is supposed to be automatically generated without user interaction.</p>
+<p>When the user chooses the default thumbnail in the video editor, Opencast will automatically generate and publish
+an updated thumbnail preview image.</p>
+<p>The default thumbnail image is extracted from a track identified by the following configuration:</p>
+<pre><code># Default: presenter
+#thumbnail.source.flavor.type.primary=presenter
+
+# Default: presentation
+#thumbnail.source.flavor.type.secondary=presentation
+
+# Default: source
+#thumbnail.source.flavor.subtype=source
+</code></pre>
+<p>In this example, the default thumbnail would be extracted from the track with the flavor <code>presenter/source</code> or, if
+no such track is available, a track with the flavor <code>presentation/source</code>.</p>
+<p>The relative position within the edited video where the default thumbnail is extracted can be configured:</p>
+<pre><code># Default: 1.0
+#thumbnail.default.position=1.0
+</code></pre>
+<p>Opencast will set the following processing settings for the event being edited:</p>
+<pre><code>- `thumbnailType` is set to `0` to indicate that the default thumbnail is used
+- `thumbnailPosition` is set to the absolute position of the video where the default thumbnail should be extracted
+</code></pre>
+<h2 id="snapshot-thumbnail">Snapshot Thumbnail</h2>
+<p>In case the user is not happy with the automatically generated default thumbnail, the user can extract a thumbnail
+at an arbitrary position within the video.</p>
+<p>The snapshot thumbnail will be extracted from tracks identified by the following configuration properties:</p>
+<pre><code># Default: presenter/source
+#sourcetrack.left.flavor=presenter/source
+
+# Default: presentation/source
+#sourcetrack.right.flavor=presentation/source
+</code></pre>
+<p>Note that the user can choose between "Extract from video", "Extract from left video" and "Extract from right video".
+In any case, the video editor ensures that the correct source track flavor is used.</p>
+<p>Opencast will set the following processing settings for the event being edited:</p>
+<pre><code>- `thumbnailType` is set to `1` to indicate that a snapshot thumbnail is used
+- `thumbnailPosition` is set to the absolute position of the video where the snapshot thumbnail should be extracted
+- `thumbnailTrack` is set to the type of the flavor of the source track which is `presenter` or `presentation`
+</code></pre>
+<h2 id="uploaded-thumbnail">Uploaded Thumbnail</h2>
+<p>The most flexible option is to upload an image to be used as thumbnail.</p>
+<p>When the user uploads an image in the video editor, Opencast will automatically generate and publish the thumbnail
+preview and creates a new media package snapshot after adding the uploaded image as attachment to the media package.</p>
+<p>This attachment will have the following flavor:</p>
+<pre><code># Default: thumbnail/source
+#thumbnail.uploaded.flavor=thumbnail/source
+</code></pre>
+<p>Additionally, the following tags are added to the attachment:</p>
+<pre><code># Default: archive
+#thumbnail.uploaded.tags=archive
+</code></pre>
+<p><strong>IMPORTANT:</strong> Please ensure that all workflows in your setup will always include this attachment when taking
+snapshots using the workflow operation <a href="../../../workflowoperationhandlers/snapshot-woh/">snapshot</a> by setting its
+configuration key <code>source-tags</code> and/or <code>source-flavor</code> appropriately.</p>
+<p>Opencast will set the following processing settings for the event being edited:</p>
+<pre><code>- `thumbnailType` is set to `2` to indicate that an uploaded thumbnail is used
+</code></pre>
+<h2 id="automatic-distribution">Automatic Distribution</h2>
+<p>To avoid the situation that a user needs to start a workflow just to update the thumbnail on the publication channels,
+Opencast supports automatic distribution of thumbnail images for publication channels that support incremental
+publication.</p>
+<p>This is currently supported by the following kinds of publication channels:</p>
+<ul>
+<li>Configurable publication channels (used by the External API)</li>
+<li>OAI-PMH publication channels</li>
+</ul>
+<p>Note that this mechanism is currently limited to at most one publication channel per kind.</p>
+<p>The automatic distribution of thumbnail images can be enabled in the configuration:</p>
+<pre><code># Default: false
+#thumbnail.distribution.auto=false
+</code></pre>
+<p>If automatic distribution is enabled, Opencast will automatically create and publish the thumbnail. Note that the
+generation of multiple thumbnails is based on a master image that will be extracted using the following encoding
+profile:</p>
+<pre><code># Default: editor.thumbnail.master
+#thumbnail.master.profile=editor.thumbnail.master
+</code></pre>
+<p>This master image will be converted into all the different formats required.</p>
+<p>For the automatic distribution to the OAI-PMH publication channel, the following settings are available:</p>
+<pre><code># The ID of the OAI-PMH publication channel
+# Default: oaipmh-default
+#thumbnail.distribution.oaipmh.channel=oaipmh-default
+
+# The flavor of the attachment
+# Default: */search+preview
+#thumbnail.distribution.oaipmh.flavor=*/search+preview
+
+# Comma-separated list of tags
+# Default:engage-download
+#thumbnail.distribution.oaipmh.tags=engage-download
+
+# Comma-separated list of encoding profiles
+# Default: search-cover.http.downscale
+#thumbnail.distribution.oaipmh.profiles=search-cover.http.downscale
+</code></pre>
+<p>To enable automatic distribution to the OAI-PMH channel, <code>thumbnail.distribution.auto</code> must be set to <code>true</code> and
+<code>thumbnail.distribution.oaipmh.channel</code> must be set to a non-empty string.</p>
+<p>For the automatic distribution to the configurable publication channel, the following settings are available:</p>
+<pre><code># The ID of the configurable publication channel
+# Default: api
+#thumbnail.distribution.configurable.channel=api
+
+# The flavor of the attachment
+# Default: */search+preview
+#thumbnail.distribution.configurable.flavor=*/search+preview
+
+# Comma-separated list of tags
+# Default:engage-download
+#thumbnail.distribution.configurable.tags=engage-download
+
+# Comma-separated list of encoding profiles
+# Default: search-cover.http.downscale
+#thumbnail.distribution.configurable.profiles=search-cover.http.downscale
+</code></pre>
+<p>To enable automatic distribution to the configurable publication channel, <code>thumbnail.distribution.auto</code> must be set to
+<code>true</code> and <code>thumbnail.distribution.configurable.channel</code> must be set to a non-empty string.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../../version-support/" class="btn btn-neutral float-right" title="Version Support">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../languages/" class="btn btn-neutral" title="Languages"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../languages/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../../version-support/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+
+</body>
+</html>

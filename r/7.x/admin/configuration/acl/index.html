@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Access Control Lists - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Access Control Lists";
+    var mkdocs_page_input_path = "configuration/acl.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../inbox/">Inbox</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../listproviders/">List Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Access Control Lists</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#access-control-list-configuration">Access Control List Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#access-control-lists">Access Control Lists</a></li>
+        
+            <li><a class="toctree-l5" href="#global-rules">Global Rules</a></li>
+        
+            <li><a class="toctree-l5" href="#series-and-episode-rules">Series and Episode Rules</a></li>
+        
+            <li><a class="toctree-l5" href="#updating-series-permissions">Updating Series Permissions</a></li>
+        
+            <li><a class="toctree-l5" href="#templates">Templates</a></li>
+        
+            <li><a class="toctree-l5" href="#additional-actions">Additional Actions</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Search Index</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/solr/">Solr</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/elasticsearch/">Elasticsearch</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/timelinepreviews/">Timeline Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/add-catalog-woh/">Add Catalog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Authentication, Autorization and User Management &raquo;</li>
+        
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Access Control Lists</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/acl.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="access-control-list-configuration">Access Control List Configuration</h1>
+<p>This document describes how Opencast stores and handles access control settings for series and episodes and what
+configuration options related to this are available.</p>
+<h2 id="access-control-lists">Access Control Lists</h2>
+<p>An access control list (ACL) in the context of Opencast consists of a global deny rule (no one is allowed access) and a
+set of roles with rules attached to define access. Hence, it is effectively a white-listing of roles to grant access and
+it means that all roles and/or actions not defined in an access control list are denied access.</p>
+<p>For example, the following rule defines read access for role 1 and read/write access for role 2:</p>
+<table>
+<thead>
+<tr>
+<th>role</th>
+<th>action</th>
+<th>access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE1</td>
+<td>read</td>
+<td>true</td>
+</tr>
+<tr>
+<td>ROLE2</td>
+<td>read</td>
+<td>true</td>
+</tr>
+<tr>
+<td></td>
+<td>write</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>Opencast can also deny access locally (e.g. deny write access for role 1) which can be interesting if merging of ACLs is
+used. But this is not handled in the user interface and using this should therefore be avoided.</p>
+<p>System administrators are an exception to these rules. A user with <code>ROLE_ADMIN</code> will always be granted access,
+regardless of the rule-set attached to an event. Organizational administrators are also granted access in some cases.</p>
+<h2 id="global-rules">Global Rules</h2>
+<p>In case an event has no custom access control list defined, a global rule set is associated with the event. The global
+rules consist only of the general deny rule. Hence, no access is allowed to anyone except administrators..</p>
+<h2 id="series-and-episode-rules">Series and Episode Rules</h2>
+<p>Access control lists can be specified both on series and on episode level. This means that multiple rule sets can be
+attached to an episode which is part of a series. Opencast can handle this in multiple ways.</p>
+<p>The handling is specified by the merge mode configured in 
+<code>etc/org.opencastproject.authorization.xacml.XACMLAuthorizationService.cfg</code>. It
+defines the relationship between series and episode access control lists, if both are attached to an event. If only one
+list is attached, its rules are always active. If multiple lists are attached, the following modes define Opencast's
+behavior:</p>
+<h3 id="merge-mode-override-default">Merge Mode “override” (Default)</h3>
+<p>The episode ACL takes precedence over the series ACL. This means that the series ACL will be completely ignored as soon
+as the episode has an ACL, no matter what rules are set in either. This allows users to define general rules for a
+series which can be completely redefined on an episode and which are not influenced by changes later made to the series.
+This is also a very simple rule and thus easy to understand.</p>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ROLE1</th>
+<th></th>
+<th>ROLE2</th>
+<th></th>
+<th>ROLE3</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+</tr>
+<tr>
+<td><em>series</em></td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>episode</em></td>
+<td></td>
+<td></td>
+<td>allow</td>
+<td></td>
+<td>allow</td>
+<td></td>
+</tr>
+<tr>
+<td><em>active</em></td>
+<td></td>
+<td></td>
+<td>allow</td>
+<td></td>
+<td>allow</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="merge-mode-roles">Merge Mode “roles”</h3>
+<p>Series and episode ACLs are merged based on the roles defined within. If both the series and the episode define a rule
+for a specific role (user or group), the episode's rule takes precedence. Rules for roles defined in one ACL only are
+always part of the resulting active ACL.</p>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ROLE1</th>
+<th></th>
+<th>ROLE2</th>
+<th></th>
+<th>ROLE3</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+</tr>
+<tr>
+<td><em>series</em></td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>episode</em></td>
+<td></td>
+<td></td>
+<td>allow</td>
+<td></td>
+<td>allow</td>
+<td></td>
+</tr>
+<tr>
+<td><em>active</em></td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td></td>
+<td>allow</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="merge-mode-actions">Merge Mode “actions”</h3>
+<p>ACLs are merged based on the actions (read, write, …) contained within both ACLs. If a rule is specified for a tuple of
+role and action in both ACLs, the rule specified in the episode ACL takes precedence.</p>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ROLE1</th>
+<th></th>
+<th>ROLE2</th>
+<th></th>
+<th>ROLE3</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+<td><em>read</em></td>
+<td><em>write</em></td>
+</tr>
+<tr>
+<td><em>series</em></td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>episode</em></td>
+<td></td>
+<td></td>
+<td>allow</td>
+<td></td>
+<td>allow</td>
+<td></td>
+</tr>
+<tr>
+<td><em>active</em></td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td>allow</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="switching-modes">Switching Modes</h3>
+<p>Switching modes is not necessarily simple since access control lists are cached at several places. Hence, while changing
+this value will have an immediate effect on newly processed videos, an index rebuild is inevitable to update cached data
+and republications to update old events may be necessary.</p>
+<h2 id="updating-series-permissions">Updating Series Permissions</h2>
+<p>Depending on the admin interface configuration in <code>etc/org.opencastproject.organization-mh_default_org.cfg</code>, the admin
+interface behaves differently when series access control lists are modified and may also overwrite episode rules of that
+series. Possible modes of operation are:</p>
+<ul>
+<li><em>always:</em>
+  When modifying series permissions, automatically remove all permission rules specific to single episodes belonging to
+  the series. This enforces that every episode has the rules of the series in effect as soon as they are changed.</li>
+<li><em>never:</em>
+  Only update the series permissions but never replace permissions set on event level. This may mean that updated rules
+  have no effect on already existing events.</li>
+<li><em>optional (default):</em>
+  Like <code>never</code> but present users with a button in the series permission dialog which allows them to replace the event
+  specific permissions easily if they want to.</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<p>Templates of access control lists can be specified for the administrative user interface. They are a convenient way to
+apply a defined set of rules all at once instead of applying each rule one after another. Templates stored in <code>etc/acl/</code>
+are loaded at start-up for all organizations. Templates can also be created and managed in the admin interface.</p>
+<h2 id="additional-actions">Additional Actions</h2>
+<p>Opencast uses two default actions for access authorization on events:</p>
+<ul>
+<li><code>read</code> allows a role to access (read the value of) objects</li>
+<li><code>write</code> allows a role to modify (write to) objects</li>
+</ul>
+<p>More actions can be added but are usually ignored by Opencast. Though they may be handy to specify rules for external
+applications.</p>
+<p>In case you need other actions, you can configure the admin interface to allow adding additional ones. These are
+configured in <code>etc/listprovides/acl.additional.actions.properties</code>. For example, this would configure the two actions,
+<code>Upload</code> and <code>Download</code>, to be available in the permission editor of the admin interface:</p>
+<pre><code class="properties">list.name=ACL.ACTIONS
+# This list provider allows you to configure custom actions that can be added
+# to ACLs. The default actions are read and write.
+# The pattern for adding them is
+# UI_LABEL=actionId
+#
+Upload=myorg_upload
+Download=myorg_downlaod
+</code></pre>
+
+<p>Using a unique prefix for your custom actions like this example did with <code>myorg_</code> is recommended to make it unlikely
+that later Opencast versions introduce the same action in a different context.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../security.aai/" class="btn btn-neutral float-right" title="Authentication and Authorization Infrastructure (AAI)">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../security/" class="btn btn-neutral" title="General Security"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../security/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../security.aai/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

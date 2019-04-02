@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Send Email - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Send Email";
+    var mkdocs_page_input_path = "workflowoperationhandlers/send-email-woh.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/inbox/">Inbox</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/listproviders/">List Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/awss3distribution/">Amazon S3 Distribution</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Search Index</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/solr/">Solr</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/searchindex/elasticsearch/">Elasticsearch</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/timelinepreviews/">Timeline Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../add-catalog-woh/">Add Catalog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../select-streams-woh/">Select Streams</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Send Email</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#emailworkflowoperation">EmailWorkflowOperation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#description">Description</a></li>
+        
+            <li><a class="toctree-l4" href="#parameter-table">Parameter Table</a></li>
+        
+            <li><a class="toctree-l4" href="#variable-substitution">Variable Substitution</a></li>
+        
+            <li><a class="toctree-l4" href="#examples_3">Examples</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workflow Operation Handler &raquo;</li>
+        
+      
+    
+    <li>Send Email</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/send-email-woh.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="emailworkflowoperation">EmailWorkflowOperation</h1>
+<h2 id="description">Description</h2>
+<p>The EmailWorkflowOperationHandler invokes the SMTP Service to send an email with the parameters provided. It is useful
+to send email notifications when some operation(s) have been completed or some error(s) have occurred in a workflow.</p>
+<p>The email body, if not specified by body or body-template-file, will consist of a single line of the form:
+<code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code>.</p>
+<p>Freemarker templates can be used in the following fields to allow replacement with values obtained from the workflow or
+media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker template
+file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body.</p>
+<p>User names can be provided in <code>to</code>, <code>cc</code>, or <code>bcc</code> in lieu of email addresses so that the user directory is searched
+and that user's email address is used (see Example 5).</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>description</th>
+<th>default value</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>Email body content.<br>Takes precedence over body-template-file.</td>
+<td><code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code></td>
+<td>Lecture 1 (4bf316fc-ea78-4903-b00e-9976b0912e4d)</td>
+</tr>
+<tr>
+<td>body-template-file</td>
+<td>Name of file that will be used as a template for the content of the email body.</td>
+<td>EMPTY</td>
+<td>templateName</td>
+</tr>
+<tr>
+<td>subject</td>
+<td>Email subject.</td>
+<td>EMPTY</td>
+<td>Operation has been completed</td>
+</tr>
+<tr>
+<td>to</td>
+<td>The field <code>to</code> of the email<br>i.e. the comma separated list of email accounts the email will be sent to.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>cc</td>
+<td>The field <code>cc</code> of the email<br>i.e. the comma separated list of email accounts that will receive a carbon copy of the email.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>bcc</td>
+<td>The field <code>bcc</code> of the email<br>i.e. the comma separated list of email accounts that will receive a blind carbon copy of the email.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>use-html</td>
+<td>Flag to indicate that the email content should be displayed as 'text/html'</td>
+<td>false</td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Some other email parameters can be customized in the SMTP Service configuration</strong></p>
+<h2 id="variable-substitution">Variable Substitution</h2>
+<p>The template will have access to the media package, workflow instance (including its configuration properties and last
+failed operation), catalogs, and any incidents. Fields should be tested for null/empty values before being used.</p>
+<h3 id="media-package-information">Media Package Information</h3>
+<p>Use <code>${mediaPackage.FIELD}</code></p>
+<h4 id="examples">Examples</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>media package id</td>
+<td>${mediaPackage.identifier}</td>
+</tr>
+<tr>
+<td>recording title</td>
+<td>${mediaPackage.title}</td>
+</tr>
+<tr>
+<td>recording date and time</td>
+<td>${mediaPackage.date?datetime?iso_utc} - See Freemarker manual for date manipulation <br>(extract date only, time only, format, etc)</td>
+</tr>
+<tr>
+<td>series title</td>
+<td>${mediaPackage.seriesTitle}</td>
+</tr>
+<tr>
+<td>series id</td>
+<td>${mediaPackage.series}</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow-information">Workflow Information</h3>
+<p>Use <code>${workflow.FIELD}</code></p>
+<h4 id="examples_1">Examples</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>workflow id</td>
+<td>${workflow.id}</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td>${workflow.template}</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow-configuration-properties">Workflow Configuration Properties</h3>
+<p>Use <code>${workflowConfig['PROPERTY']}</code></p>
+<h3 id="last-failed-operation">Last Failed Operation</h3>
+<p>Operation that caused the workflow to fail. Should be tested before accessing any of its fields:</p>
+<pre><code>&lt;#if failedOperation?has_content&gt;Workflow failed in operation: ${failedOperation.template}&lt;/#if&gt;
+</code></pre>
+<h3 id="incidents">Incidents</h3>
+<p>In your email template:</p>
+<pre><code>&lt;#if incident?has_content&gt;
+  &lt;#list incident as inc&gt;
+    &lt;#list inc.details as dets&gt;${dets.b}&lt;/#list&gt;
+  &lt;/#list&gt;
+&lt;/#if&gt;
+</code></pre>
+
+<h3 id="catalog-fields">Catalog fields</h3>
+<p>Use <code>${catalogs['SUBTYPE']['FIELD']}</code></p>
+<h4 id="examples_2">Examples</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>episode creator</td>
+<td>${catalogs['episode']['creator']}</td>
+</tr>
+<tr>
+<td>episode title</td>
+<td>${catalogs['episode']['title']}</td>
+</tr>
+<tr>
+<td>series creator</td>
+<td>${catalogs['series']['creator']}</td>
+</tr>
+<tr>
+<td>series title</td>
+<td>${catalogs['series']['title']}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples_3">Examples</h2>
+<h3 id="example-1">Example 1</h3>
+<p>Media package title in subject field, default email body.</p>
+<pre><code class="xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sending email to user after media package is published&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;to&quot;&gt;email-account@email-domain.org&lt;/configuration&gt;
+    &lt;!-- This is going to be replaced with the media package title --&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${mediaPackage.title} has been published&lt;/configuration&gt;
+    &lt;!-- Neither body or body-template-file specified so default body &lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)&lt;br&gt;is sent --&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<h3 id="example-2">Example 2</h3>
+<p>To and subject are inline templates; the email body uses a template file named sample stored in<code>…/etc/email</code>:</p>
+<pre><code class="xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sending email to user before holding for edit&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- This is going to be replaced with the episode catalog publisher field, which in this example it is assumed
+    it contains a notification email address --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${catalogs['episode']['publisher']}&lt;/configuration&gt;
+    &lt;!-- This is going to be replaced with the episode catalog title field --&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${catalogs['episode']['title']} is ready for EDIT&lt;/configuration&gt;
+    &lt;!-- Email body is going to be built using the sample template found in &lt;config_dir&gt;/etc/email --&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;sample&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<h4 id="template-sample">Template: sample</h4>
+<p>The contents of the <code>…/etc/email/sample</code> email template:</p>
+<pre><code>Event Details
+&lt;#if catalogs['series']?has_content&gt;
+Series Title: ${catalogs['series']['title']}
+Instructor: ${catalogs['series']['contributor']}
+&lt;/#if&gt;
+Media Package Id: ${mediaPackage.identifier}
+Title: ${mediaPackage.title}
+Workflow Id: ${workflow.id}
+Event Date: ${mediaPackage.date?datetime?iso_local}
+</code></pre>
+
+<h3 id="example-3">Example 3</h3>
+<p>Email address entered via admin UI as a workflow configuration parameter:</p>
+<pre><code class="xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sends email&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${workflowConfig['emailAddress']}&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;Media package has been published&lt;/configuration&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;sample&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<p>Workflow Configuration Panel:</p>
+<pre><code class="xml">&lt;configuration_panel&gt;
+&lt;![CDATA[
+   &lt;!-- Add after the other configuration fields (Holds, Archive, etc) --&gt;
+   &lt;fieldset&gt;
+      &lt;legend&gt;Notification&lt;/legend&gt;
+      &lt;ul class=&quot;oc-ui-form-list&quot;&gt;
+        &lt;li class=&quot;ui-helper-clearfix&quot;&gt;
+          &lt;label class=&quot;scheduler-label&quot;&gt;
+            &lt;span class=&quot;color-red&quot;&gt;* &lt;/span&gt;&lt;span id=&quot;i18n_email_label&quot;&gt;Email Address&lt;/span&gt;:
+          &lt;/label&gt;
+          &lt;span id=&quot;emailconfig&quot;&gt;
+            &lt;input id=&quot;emailAddress&quot; name=&quot;emailAddress&quot; type=&quot;text&quot; class=&quot;configField&quot;
+                   value=&quot;my-email-account@my-email-domain.org&quot;/&gt;
+          &lt;/span&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/fieldset&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+
+      // Add email variable
+      var emailAddress = $('input#emailAddress');
+
+      // Register email configuration property
+      ocWorkflowPanel.registerComponents = function(components){
+        /* components with keys that begin with 'org.opencastproject.workflow.config' will be passed
+         * into the workflow. The component's nodeKey must match the components array key.
+         *
+         * Example:'org.opencastproject.workflow.config.myProperty' will be availible at ${my.property}
+         */
+        // After the other components (Hold, Archive, etc), add:
+        components['org.opencastproject.workflow.config.emailAddress'] = new ocAdmin.Component(
+          ['emailAddress'],
+          {key: 'org.opencastproject.workflow.config.emailAddress'},
+          {getValue: function(){ return this.fields.emailAddress.value;}
+          });
+
+          //etc...
+      }
+      ocWorkflowPanel.setComponentValues = function(values, components){
+        // After the other components (Hold, Archive, etc), add:
+        components['org.opencastproject.workflow.config.emailAddress'].setValue(
+          values['org.opencastproject.workflow.config.emailAddress']);
+      }
+    &lt;/script&gt;
+]]&gt;
+&lt;/configuration_panel&gt;
+</code></pre>
+
+<h3 id="example-4">Example 4</h3>
+<p>In error handling workflow (email-error):</p>
+<pre><code class="xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;error&quot;
+  description=&quot;Sends email&quot;&gt;
+    &lt;configurations&gt;
+    &lt;!-- Note that you can use variable substitution in to, subject, body
+         e.g. ${(catalogs['episode']['FIELD']!'root@localhost'}  --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;root@localhost&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;Failure processing a mediapackage&lt;/configuration&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;errorDetails&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<h4 id="template-errordetails">Template: errorDetails</h4>
+<p>The contents of the <config_dir>/etc/email/errorDetails email template:</p>
+<pre><code>Error Details
+
+&lt;#if catalogs['series']?has_content&gt;
+Course: ${catalogs['series']['subject']!'series subject missing'}-${catalogs['series']['title']!'series title missing'}
+Instructor: ${catalogs['series']['contributor']!'instructor missing'}
+&lt;/#if&gt;
+Title: ${catalogs['episode']['title']!'title missing'}
+Event Date: ${mediaPackage.date?datetime?iso_local}
+
+&lt;#if failedOperation?has_content&gt;
+  Workflow failed in operation: ${failedOperation.position}-${failedOperation.template}
+  Started: ${failedOperation.dateStarted?datetime?iso_local}
+  Ended: ${failedOperation.dateCompleted?datetime?iso_local}
+  Execution Host: ${failedOperation.executionHost}
+&lt;/#if&gt;
+
+Logged incident of the error looks like this:
+
+&lt;#if incident?has_content&gt;
+  &lt;#list incident as inc&gt;
+    &lt;#list inc.details as dets&gt;${dets.b} &lt;/#list&gt;
+  &lt;/#list&gt;
+&lt;/#if&gt;
+</code></pre>
+
+<h3 id="example-5">Example 5</h3>
+<p>The user name is stored in the episode dublin core <code>contributor</code> field. There's a user <code>jharvard</code> with email
+<code>jharvard@harvard.edu</code> defined in the system. The message will be sent to <code>jharvard@harvard.edu</code>:</p>
+<pre><code class="xml">   &lt;operation
+      id=&quot;send-email&quot;
+      fail-on-error=&quot;false&quot;
+      description=&quot;Notify user associated to this recording that it is ready to be trimmed&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;to&quot;&gt;${(catalogs['episode']['contributor'])}&lt;/configuration&gt;
+        &lt;configuration key=&quot;subject&quot;&gt;Recording is ready for EDIT&lt;/configuration&gt;
+        &lt;configuration key=&quot;body-template-file&quot;&gt;eventDetails&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+
+<h4 id="episode-dublin-core">Episode Dublin Core</h4>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;dublincore xmlns=&quot;http://www.opencastproject.org/xsd/1.0/dublincore/&quot;
+    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+    &lt;dcterms:contributor&gt;jharvard&lt;/dcterms:contributor&gt;
+    &lt;dcterms:created&gt;2018-05-01T16:14:00Z&lt;/dcterms:created&gt;
+    &lt;dcterms:extent xsi:type=&quot;dcterms:ISO8601&quot;&gt;PT17M1.933S&lt;/dcterms:extent&gt;
+    &lt;dcterms:isPartOf&gt;20180229999&lt;/dcterms:isPartOf&gt;
+    &lt;dcterms:spatial&gt;classroom-20&lt;/dcterms:spatial&gt;
+    &lt;dcterms:temporal&gt;start=2018-05-01T16:14:00Z; end=2018-05-01T16:31:00Z;
+        scheme=W3C-DTF;&lt;/dcterms:temporal&gt;
+    &lt;dcterms:title&gt;Test Lecture&lt;/dcterms:title&gt;
+&lt;/dublincore&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../series-woh/" class="btn btn-neutral float-right" title="Series">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../select-streams-woh/" class="btn btn-neutral" title="Select Streams"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../select-streams-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../series-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

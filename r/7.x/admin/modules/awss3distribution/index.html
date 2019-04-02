@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Amazon S3 Distribution - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Amazon S3 Distribution";
+    var mkdocs_page_input_path = "modules/awss3distribution.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">HTTPS</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/inbox/">Inbox</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/listproviders/">List Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/log/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Authentication, Autorization and User Management</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/oaipmh/">OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI Configuration</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/event-filters/">Event Filters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/asset-upload/">Manual Asset Upload</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/languages/">Languages</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/admin-ui/thumbnails/">Thumbnails</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Amazon Services</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../awss3archive/">Amazon S3 Archive Storage</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Amazon S3 Distribution</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#aws-s3-distribution-configuration">AWS S3 Distribution Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#amazon-user-configuration">Amazon User Configuration</a></li>
+        
+            <li><a class="toctree-l5" href="#amazon-service-configuration">Amazon Service Configuration</a></li>
+        
+            <li><a class="toctree-l5" href="#amazon-cloudfront">Amazon CloudFront</a></li>
+        
+            <li><a class="toctree-l5" href="#opencast-service-configuration">Opencast Service Configuration</a></li>
+        
+            <li><a class="toctree-l5" href="#using-s3-distribution">Using S3 Distribution</a></li>
+        
+            <li><a class="toctree-l5" href="#publishing-to-multiple-distribution-services">Publishing to multiple distribution services</a></li>
+        
+            <li><a class="toctree-l5" href="#using-this-handler-in-custom-workflows">Using this handler in custom workflows</a></li>
+        
+            <li><a class="toctree-l5" href="#migrating-to-s3-distribution-with-pre-existing-data">Migrating to S3 Distribution with Pre-Existing Data</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../liveschedule/">Live Schedule</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../paella.player/">Paella player</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Search Index</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../searchindex/">Overview</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../searchindex/solr/">Solr</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../searchindex/elasticsearch/">Elasticsearch</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../timelinepreviews/">Timeline Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/add-catalog-woh/">Add Catalog</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/animate-woh/">Animate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/clone-woh/">Clone</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/demux-woh/">Demux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-convert-woh/">Image convert</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/log-woh/">Log</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/notification/">Mattermost Notification Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/move-storage-woh/">Move Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/multiencode-woh/">Multiencode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/process-smil-woh/">Process Smil</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/select-streams-woh/">Select Streams</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-workflow-woh/">Start Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Amazon Services &raquo;</li>
+        
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Amazon S3 Distribution</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/awss3distribution.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="aws-s3-distribution-configuration">AWS S3 Distribution Configuration</h1>
+<p>This page documents the configuration for Opencast module <strong>distribution-service-aws-s3</strong>.  This
+configuration is only required on the presentation node, and only if you are using Amazon S3 and/or Cloudfront for
+distributing media to end users.</p>
+<h2 id="amazon-user-configuration">Amazon User Configuration</h2>
+<p>Configuration of Amazon users is beyond the scope of this documentation, instead we suggest referring to
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">Amazon's documentation</a>.
+You will, however, require to set up proper credentials by either:</p>
+<ul>
+<li>Creating an <a href="https://aws.amazon.com/developers/access-keys/">Access Key ID and a Secret Access Key</a> or</li>
+<li>Using <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-roles.html">Instance Profile Credentials</a>
+  (recommended when running Opencast on EC2 instances)</li>
+</ul>
+<p><em>AmazonS3FullAccess</em> permission is <em>required</em>, which can be granted using
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_inline-using.html">these instructions</a>.</p>
+<p><strong>A <a href="https://aws.amazon.com/free/">free Amazon account</a> will work for small scale testing, but be aware that S3
+distribution can cost you a lot of money very quickly.  Be aware of how much data and how many requests you are making,
+and be sure to <a href="http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-alarms.html">set alarms</a> to
+notify you of cost overruns.</strong></p>
+<h2 id="amazon-service-configuration">Amazon Service Configuration</h2>
+<p>The development and testing it is generally safe to allow the Opencast AWS S3 Distribution service to create the S3
+bucket for you.  It will create the bucket per its configuration, with public read-only access to the files, and no
+versioning.  For production use we suggest using Amazon CloudFront, which requires additional configuration.</p>
+<h2 id="amazon-cloudfront">Amazon CloudFront</h2>
+<p>Amazon CloudFront provides an <em>optional</em> way to better handle distributing your media to end users.  While fully
+configuring CloudFront is outside the scope of this documentation, we wish to note that this does affect one of the keys
+described below.  Please ensure you use the correct distribution base format depending on which service you are using!</p>
+<h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
+<p>The Opencast AWS S3 Distribution service has five configuration keys, which can be found in the
+<code>org.opencastproject.distribution.aws.s3.AwsS3DistributionServiceImpl.cfg</code> configuration file.</p>
+<table>
+<thead>
+<tr>
+<th>Key name</th>
+<th>Value</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.distribution.enable</td>
+<td>True to enable S3 distribution, false otherwise</td>
+<td>true</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.region</td>
+<td>The AWS region to set</td>
+<td>us-west-2</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.bucket</td>
+<td>The S3 bucket name</td>
+<td>example-org-dist</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.distribution.base</td>
+<td>Where the S3 files are available from.  This value can be derived from the bucket and region values, or is set by CloudFront.</td>
+<td>http://s3-us-west-2.amazonaws.com/example-org-dist, or DOMAIN_NAME.cloudfront.net</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.access.id</td>
+<td>Your access ID</td>
+<td>20 alphanumeric characters</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.secret.key</td>
+<td>Your secret key</td>
+<td>40 characters</td>
+</tr>
+</tbody>
+</table>
+<p>If <em>org.opencastproject.distribution.aws.s3.access.id</em> and <em>org.opencastproject.distribution.aws.s3.secret.key</em> are
+ not <em>explicitly</em> provided, search for credentials will be performed in the order specified by the
+ <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html">Default Credentials Provider Chain</a>.</p>
+<h2 id="using-s3-distribution">Using S3 Distribution</h2>
+<p>Amazon S3 distribution is already included in the default Opencast workflows, however it must first be enabled.  The
+<code>schedule-and-upload.xml</code> and <code>publish.xml</code> workflow configuration files both contain lines containing the string
+"Remove this line if you wish to publish to AWS S3".  Both of these lines must be removed before publishing to AWS S3
+will function correctly.</p>
+<p>If you wish to use AWS S3 publishing with your own custom workflow, you must add the <code>publish-aws</code> workflow operation to
+your workflow.  The operation documentation can be found <a href="../../workflowoperationhandlers/publish-aws-woh/">here</a>.</p>
+<h2 id="publishing-to-multiple-distribution-services">Publishing to multiple distribution services</h2>
+<p>Currently we do not support publication to multiple distribution services simultaneously.  This means that whichever
+workflow operation is <em>last</em> in the workflow will be the final publication.</p>
+<h2 id="using-this-handler-in-custom-workflows">Using this handler in custom workflows</h2>
+<p>If your workflow contains both <code>publish-engage</code> and <code>publish-aws</code>, in that order, and without a
+<a href="../../configuration/workflow/">conditional</a> you would have publication files stored both locally <em>and</em> in AWS.  This is
+likely not what you want, so protect your workflow operations appropriately.  If you really do need these files stored
+in both places (for example, in cases where you need to make the files available immediately, and only push to AWS in
+some cases) then remember to add a <a href="../../workflowoperationhandlers/retract-engage-woh/">retract-engage</a> in between the
+publication operations.  Note that if this step is omitted the files will remain available locally, but will not be
+used.  Of further note, if you retract after publication to AWS then your workflow <em>will not be available</em> to users.
+To summarize, this table presents a subset of the various situations that are possible</p>
+<p>|Workflow Operations|Files present in the Media Module|Files present in AWS|Files served from|
+|publish-engage | Yes | No | Opencast Media Module |
+|publish-aws| No | Yes | AWS |
+|publish-engage, publish-aws| Yes | Yes | AWS |
+|publish-aws, publish-engage| Yes | Yes | Opencast Media Module|
+|publish-engage, retract-engage, publish-aws | Temporary | Yes | AWS |
+|publish-engage, publish-aws, retract-engage | No | Yes | Not available |</p>
+<h2 id="migrating-to-s3-distribution-with-pre-existing-data">Migrating to S3 Distribution with Pre-Existing Data</h2>
+<p>If you already have data published to your local Opencast install, you should be able to republish the media selecting
+AWS S3 as the distribution service to use.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../execute/" class="btn btn-neutral float-right" title="Execute Service">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../awss3archive/" class="btn btn-neutral" title="Amazon S3 Archive Storage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../awss3archive/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../execute/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
