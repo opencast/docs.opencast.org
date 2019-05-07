@@ -174,6 +174,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../../statistics/">Statistics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <span class="caption-text">Modules</span>
     <ul class="subnav">
                 <li class="">
@@ -360,6 +365,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../statistics-api/">Statistics API</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../groups-api/">Groups API</a>
                 </li>
                 <li class="">
@@ -392,6 +401,8 @@
             <li><a class="toctree-l4" href="#access-control-lists">Access Control Lists</a></li>
         
             <li><a class="toctree-l4" href="#workflow">Workflow</a></li>
+        
+            <li><a class="toctree-l4" href="#statistics">Statistics</a></li>
         
         </ul>
     
@@ -453,6 +464,7 @@ sections that start with general information about how the types are supposed to
 <li><a href="#basic">Basic</a></li>
 <li><a href="#extended">Extended</a><ul>
 <li><a href="#array">array</a></li>
+<li><a href="#object">object</a></li>
 <li><a href="#file">file</a></li>
 <li><a href="#flavor">flavor</a></li>
 <li><a href="#property">property</a></li>
@@ -478,6 +490,10 @@ sections that start with general information about how the types are supposed to
 <li><a href="#workflow_operation_state">workflow_operation_state</a></li>
 <li><a href="#operation_definition">operation_definition</a></li>
 <li><a href="#operation_instance">operation_instance</a></li>
+</ul>
+</li>
+<li><a href="#statistics">Statistics</a><ul>
+<li><a href="#parameters">parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -519,6 +535,24 @@ sections that start with general information about how the types are supposed to
 </code></pre>
 
 <pre><code>[]
+</code></pre>
+
+<h3 id="object">object</h3>
+<p>The External API makes use of JSON objects.</p>
+<p>The empty object {} might be allowed.</p>
+<p><strong>Examples</strong></p>
+<pre><code>{
+  &quot;myObject1&quot;: {
+    &quot;key&quot;: &quot;value&quot;;
+  },
+  &quot;myObject2&quot;: {
+    &quot;array&quot;: [1, 2, 3]
+  },
+  &quot;valid&quot;: false
+}
+</code></pre>
+
+<pre><code>{}
 </code></pre>
 
 <h3 id="file">file</h3>
@@ -1169,6 +1203,76 @@ The access control entries are a list of triples &lt;<code>role</code>, <code>ac
 <td align="left"><code>failed_attempts</code></td>
 <td align="left"><a href="#basic"><code>integer</code></a></td>
 <td align="left">The number of failed attempts to execute this workflow operation instance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="statistics">Statistics</h2>
+<h3 id="parameters">parameters</h3>
+<p>The Statistics endpoint can list the available statistics providers. Optionally, the endpoint provides information
+about supported data query parameters using this JSON object.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The name of the parameter to be used in requests</td>
+</tr>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The type of this parameter to be used in requests</td>
+</tr>
+<tr>
+<td align="left"><code>optional</code></td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether the parameter must be specified in queries</td>
+</tr>
+<tr>
+<td align="left"><code>values</code></td>
+<td align="left"><a href="#basic"><code>array</code></a></td>
+<td align="left">Values to be used for enumeration types (only for type <code>enumeration</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following types are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code></td>
+<td align="left">UTF-8 encoded string</td>
+</tr>
+<tr>
+<td align="left"><code>date</code></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> encoded date</td>
+</tr>
+<tr>
+<td align="left"><code>datetime</code></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> encoded date and time</td>
+</tr>
+<tr>
+<td align="left"><code>integer</code></td>
+<td align="left">An integer number, i.e. [-][0-9]+[0-9]*</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="left"><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>enumeration</code></td>
+<td align="left">One of the values provided by the field <code>values</code></td>
 </tr>
 </tbody>
 </table>

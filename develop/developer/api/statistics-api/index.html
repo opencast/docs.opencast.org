@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Statistics API - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Statistics API";
+    var mkdocs_page_input_path = "api/statistics-api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/source-linux/">Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../release-manager/">Release Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../qa-coordinator/">QA Coordinator</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../security/">Security Issues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../code-style/">Code Style</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../documentation/">Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Environment</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development-environment/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../development-environment-docker/">With Docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../committer/">Committers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../governance/">Governance</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../asset-manager/">Asset Manager</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scheduler/">Scheduler</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../statistics/">Statistics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Administrative user Interface</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Capture Agent</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/capture-agent/">Capture Agent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/capture-agent/testcases/">Test Cases</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../infrastructure/maven-repository/">Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">External API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../agents-api/">Agents API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-api/">Series API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Statistics API</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#general">General</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#get-apistatisticsproviders">GET /api/statistics/providers</a></li>
+        
+            <li><a class="toctree-l4" href="#get-apistatisticsprovidersproviderid">GET /api/statistics/providers/{providerId}</a></li>
+        
+            <li><a class="toctree-l4" href="#post-apistatisticsdataquery">POST /api/statistics/data/query</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security-api/">Security API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow-api/">Workflow API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../types/">Data Types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../glossary/">Glossary</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>External API &raquo;</li>
+        
+      
+    
+    <li>Statistics API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/statistics-api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apistatisticsproviders">GET /api/statistics/providers</a></li>
+<li><a href="#get-apistatisticsprovidersproviderid">GET /api/statistics/providers/{providerId}</a></li>
+<li><a href="#post-apistatisticsdataquery">POST /api/statistics/data/query</a><ul>
+<li><a href="#time-series-statistics-provider">Time Series Statistics Provider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<p>The Statistics API is available since API version 1.3.0.</p>
+<h3 id="get-apistatisticsproviders">GET /api/statistics/providers</h3>
+<p>Returns a list of statistics providers.</p>
+<p>The following query string parameters are supported to filter the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left">Filter statistics provider by resource type (either <code>episode</code>, <code>series</code> or <code>organization</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withparameters</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether support parameters should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="xml">https://opencast.domain.com/api/statistics/providers?filter=resourceType:episode
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of providers is returned as a JSON array containing JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="../types/#statistics"><code>array[parameter]</code></a></td>
+<td align="left">Supported query parameters (optional)</td>
+</tr>
+</tbody>
+</table>
+<p>* Currently, only the <code>timeseries</code> type is supported</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;influxdb-episode-views-provider&quot;,
+    &quot;title&quot;: &quot;Episode Views&quot;,
+    &quot;description&quot;: &quot;Episode Views, Lorem Ipsum&quot;,
+    &quot;type&quot;: &quot;timeSeries&quot;,
+    &quot;resourceType&quot;: &quot;episode&quot;
+  }
+]
+</code></pre>
+
+<h3 id="get-apistatisticsprovidersproviderid">GET /api/statistics/providers/{providerId}</h3>
+<p>Returns a statistics provider.</p>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withparameters</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether support parameters should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="xml">https://opencast.domain.com/api/statistics/providers/a-timeseries-provider?withparameters=true
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of providers is returned as a JSON array containing JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="../types/#statistics"><code>array[parameter]</code></a></td>
+<td align="left">Supported query parameters (optional)</td>
+</tr>
+</tbody>
+</table>
+<p>* Currently, only the <code>timeSeries</code> type is supported</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;a-timeseries-provider&quot;,
+  &quot;title&quot;: &quot;Episode Views&quot;,
+  &quot;description&quot;: &quot;Episode Views, Lorem Ipsum&quot;,
+  &quot;type&quot;: &quot;timeseries&quot;,
+  &quot;resourceType&quot;: &quot;episode&quot;,
+  &quot;parameters&quot;: [
+    {
+      &quot;name&quot;: &quot;resourceId&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;name&quot;: &quot;from&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;datetime&quot;
+    },
+    {
+      &quot;name&quot;: &quot;to&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;datetime&quot;
+    },
+    {
+      &quot;values&quot;: [
+        &quot;daily&quot;,
+        &quot;weekly&quot;,
+        &quot;monthly&quot;,
+        &quot;yearly&quot;
+      ],
+      &quot;name&quot;: &quot;dataResolution&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;enumeration&quot;
+    }
+  ]
+}
+</code></pre>
+
+<h3 id="post-apistatisticsdataquery">POST /api/statistics/data/query</h3>
+<p>Retrieves statistical data from one or more providers</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>data</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#extended"><code>array[object]</code></a></td>
+<td align="left">A JSON array describing the statistics queries to request (see below)</td>
+</tr>
+</tbody>
+</table>
+<p>The JSON array consists of query JSON objects. A query JSON object contains information about a statistics query to be executed:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object with information about the statistics provider to be queried</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object containing the parameters</td>
+</tr>
+</tbody>
+</table>
+<p>The JSON object <code>provider</code> has the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">A JSON object with information about the statistics provider to be queried</td>
+</tr>
+</tbody>
+</table>
+<p>The format of the JSON object <code>parameters</code> depends on the provider type that is queried, and is described separately for
+each provider in the next section.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    "provider": {
+      "identifier": "a-statistics-provider"
+    },
+    "parameters": {
+      "resourceId": "93213324-5d29-428d-bbfd-369a2bae6700"
+    }
+  },
+  {
+    "provider": {
+      "identifier": "a-timeseries-provider"
+    },
+    "parameters": {
+      "resourceId": "23413432-5a15-328e-aafe-562a2bae6800",
+      "from": "2019-04-10T13:45:32Z",
+      "to": "2019-04-12T00:00:00Z",
+      "dataResolution": "daily"
+    }
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of query results is returned as a JSON array containing JSON objects
+<code>400 (BAD REQUEST)</code>: The request was not valid</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object describing the statistics provider as described below</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object describing the query parameters</td>
+</tr>
+<tr>
+<td align="left"><code>data</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object containing the query result</td>
+</tr>
+</tbody>
+</table>
+<p>Here, a statistics provider JSON object has the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the format of data is implied by the type of the statistics provider.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    "provider": {
+      "identifier": "a-statistics-provider",
+      "type": "someType",
+      "resourceType": "episode",
+    },
+    "parameters": {
+      "resourceId": "93213324-5d29-428d-bbfd-369a2bae6700"
+    },
+    "data": {
+      "value": "1"
+    },
+  {
+    "provider": {
+      "identifier": "a-timeseries-provider",
+      "type": "timeseries",
+      "resourceType": "episode",
+    },
+    "parameters": {
+      "resourceId": "23413432-5a15-328e-aafe-562a2bae6800",
+      "from": "2019-04-10T13:45:32Z",
+      "to": "2019-04-12T00:00:00Z",
+      "dataResolution": "daily"
+    },
+    "data": {
+      "labels": ["2019-04-10T13:45:32Z", "2019-04-11T00:00:00Z", "2019-04-12T00:00:00Z"],
+      "values": [20, 100, 300],
+      "total": 420
+    }
+]
+</code></pre>
+<h4 id="time-series-statistics-provider">Time Series Statistics Provider</h4>
+<p>Time Series Statistics Providers (type = timeseries) support some well-defined parameters and deliver a well-defined
+data format.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>resourceId</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The technical identifier of the resource the data relates to</td>
+</tr>
+<tr>
+<td align="left"><code>from</code></td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">Start of time period this query relates to</td>
+</tr>
+<tr>
+<td align="left"><code>to</code></td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">End of time period this query relates to</td>
+</tr>
+<tr>
+<td align="left"><code>dataResolution</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left"><code>daily</code>, <code>monthly</code> or <code>yearly</code> (as described by provider)</td>
+</tr>
+</tbody>
+</table>
+<p>Query Result Data Field:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>labels</code></td>
+<td align="left"><a href="#extended"><code>array[datetime]</code></a></td>
+<td align="left">The dates of the measurement points</td>
+</tr>
+<tr>
+<td align="left"><code>values</code></td>
+<td align="left"><a href="#extended"><code>array[integer]</code></a></td>
+<td align="left">The values of the measurement points</td>
+</tr>
+<tr>
+<td align="left"><code>total</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The sum of all values</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../groups-api/" class="btn btn-neutral float-right" title="Groups API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../series-api/" class="btn btn-neutral" title="Series API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../series-api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../groups-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
