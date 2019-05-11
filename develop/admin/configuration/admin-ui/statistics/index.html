@@ -832,27 +832,21 @@ configurations have to be in json format. So e.g. <em>influx.views.episode.sum.j
 <li><strong><code>description</code></strong> is the description to be displayed with the chart. This can be a translation key.</li>
 <li><strong><code>resourceType</code></strong> tells Opencast to which type of entity the chart refers to. Valid values are <code>EPISODE</code>, <code>SERIES</code>,
   and<code>ORGANIZATION</code>. This is used by Opencast to decide where to display the chart.</li>
+<li><strong><code>sources</code></strong> is list of JSON objects, each containing the following fields:<ul>
+<li><strong><code>measurement</code></strong>, e.g. <code>infinite.impressions_daily</code> tells Opencast that your InfluxDB data retention policy is
+  named <code>infinite</code> and your InfluxDB measurement name is <code>impressions_daily</code>.</li>
+<li><strong><code>aggregation</code></strong>, e.g. <code>SUM</code> tells Opencast that InfluxDB's <code>SUM()</code> function should be used to calculate the
+  values to display in the chart.</li>
+<li>**<code>aggregationVariable**, e.g.</code>value<code>tells Opencast that the InfluxDB field which should be summed is named</code>value`.</li>
+<li><strong><code>resourceIdName</code></strong>, e.g. <code>episodeId</code> tells Opencast that the InfluxDB tag identifying the resource type this
+   provider refers to is named <code>episodeId</code>.</li>
 <li><strong><code>resolutions</code></strong> is a list of resolutions supported by this provider. Opencast allows the user to select a
-  <em>resolution</em> with which the data is displayed. Valid values are <code>DAILY</code>, <code>WEEKLY</code>, <code>MONTHLY</code> and <code>YEARLY</code>. E.g. when a
-  chart shows data of two years, a <code>DAILY</code> resolution will lead to 2x365=730 values to be plotted while a <code>MONTHLY</code>
-  resolution would leave us with 24 values being plotted in the chart.</li>
-<li>
-<p><strong><code>source</code></strong> is a composite string which holds information about your data schema and how to calculate the
-  actual data to be displayed in the Admin UI. For InfluxDB, the <code>source</code> string consists of 5 parts, separated by
-  colons (:). A valid <code>source</code> string would be <code>influx:infinite.impressions_daily:SUM:value:episodeId</code> which has the
-  following meaning:</p>
-<ol>
-<li><code>influx</code> tells Opencast that InfluxDB is the data source.</li>
-<li><code>infinite.impressions_daily</code> tells Opencast that your InfluxDB data retention policy is named <code>infinite</code> and your
-    InfluxDB measurement name is <code>impressions_daily</code>.</li>
-<li><code>SUM</code> tells Opencast that InfluxDB's <code>SUM()</code> function should be used to calculate the values to display in the
-    chart.</li>
-<li><code>value</code> tells Opencast that the InfluxDB field which should be summed is named <code>value</code>.</li>
-<li><code>episodeId</code> tells Opencast that the InfluxDB tag identifying the resource type this provider refers to is named
-   <code>episodeId</code>.</li>
-<li><strong><code>type</code></strong> defines the structure of the data provided by this provider. Currently, only <code>timeseries</code> is supported.</li>
-</ol>
+  <em>resolution</em> with which the data is displayed. Valid values are <code>HOURLY</code>, <code>DAILY</code>, <code>WEEKLY</code>, <code>MONTHLY</code> and
+  <code>YEARLY</code>. E.g. when a chart shows data of two years, a <code>DAILY</code> resolution will lead to 2x365=730 values to be
+  plotted while a <code>MONTHLY</code> resolution would leave us with 24 values being plotted in the chart.</li>
+</ul>
 </li>
+<li><strong><code>type</code></strong> defines the structure of the data provided by this provider. Currently, only <code>timeseries</code> is supported.</li>
 </ul>
 <p>Here is an example json configuration for a provider which generates charts for episodes showing the number of views:</p>
 <p><code>etc/statistics/influx.views.episode.sum.json</code></p>
@@ -861,13 +855,18 @@ configurations have to be in json format. So e.g. <em>influx.views.episode.sum.j
   &quot;title&quot;: &quot;STATISTICS.TITLE.VIEWS_SUM&quot;,
   &quot;description&quot;: &quot;STATISTICS.DESCRIPTION.VIEWS_SUM&quot;,
   &quot;resourceType&quot;: &quot;EPISODE&quot;,
-  &quot;resolutions&quot;: [
-    &quot;DAILY&quot;,
-    &quot;WEEKLY&quot;,
-    &quot;MONTHLY&quot;,
-    &quot;YEARLY&quot;
-  ],
-  &quot;source&quot;: &quot;influx:infinite.impressions_daily:SUM:value:episodeId&quot;,
+  &quot;sources&quot;: [{
+    &quot;measurement&quot;: &quot;infinite.impressions_daily&quot;,
+    &quot;aggregation&quot;: &quot;SUM&quot;,
+    &quot;aggregationVariable&quot;: &quot;value&quot;,
+    &quot;resourceIdName&quot;: &quot;episodeId&quot;,
+    &quot;resolutions&quot;: [
+      &quot;DAILY&quot;,
+      &quot;WEEKLY&quot;,
+      &quot;MONTHLY&quot;,
+      &quot;YEARLY&quot;
+    ]
+  }],
   &quot;type&quot;: &quot;timeseries&quot;
 }
 </code></pre>
