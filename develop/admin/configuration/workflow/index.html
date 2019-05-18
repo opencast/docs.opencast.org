@@ -1039,17 +1039,38 @@ operation should be executed. This so-called execution condition is a boolean ex
 &lt;term&gt; ::= &lt;value&gt; ["AND" &lt;term&gt;]
 &lt;value&gt; ::= ["NOT"]* ( "(" &lt;expression&gt; ")" | &lt;relation&gt; | &lt;bool-literal&gt; )
 &lt;relation&gt; ::= &lt;relation-factor&gt; &lt;rel-literal&gt; &lt;relation-factor&gt;
-&lt;relation-factor&gt; ::= &lt;operation&gt; | &lt;number&gt;
-&lt;operation&gt; ::= &lt;number&gt; &lt;op-literal&gt; &lt;number&gt;
+&lt;relation-factor&gt; ::= &lt;operation&gt; | &lt;atom&gt;
+&lt;operation&gt; ::= &lt;atom&gt; &lt;op-literal&gt; &lt;atom&gt;
 &lt;rel-literal&gt; ::= "&gt;=" | "&gt;" | "&lt;=" | "&lt;" | "==" | "!="
 &lt;op-literal&gt; ::= "+" | "-" | "*" | "/"
 &lt;bool-literal&gt; ::= "true" | "false"
+&lt;atom&gt; ::= &lt;number&gt; | &lt;string&gt;
 </code></pre>
-<p>As the formal description above explains, such boolean expressions may contain the booelan constants (<code>true</code> and
-<code>false</code>) and numbers, as well as references to the variables of the workflow instance that contain these data types.
-Workflow instance variables can be accessed by using <code>${variableName}</code>.</p>
-<p>Example:</p>
+<p>As the formal description above explains, such boolean expressions may contain…</p>
+<ul>
+<li>…the boolean constants <code>true</code> and <code>false</code>.</li>
+<li>…numbers, which may contain a decimal point.</li>
+<li>…strings, which must be surrounded by single-quotes. Escaping of single quotes is supported, just use two single
+  quotes next to each other: <code>'foo''bar'</code></li>
+<li>…as well as references to the variables of the workflow instance that contain these data types. Variables
+  are enclosed in in <code>${}</code>, as shown below. A default value may be specified for a variable, after the name, 
+  separated by a colon, as such: <code>${foo:1}</code>. The default value will be used in case the variable doesn’t exist. 
+  If no default value is specified, <code>false</code> will be used. This, of course, only makes sense in boolean contexts. Be
+  aware to specify a default value in relations such as <code>${foo} &lt; ${bar}</code>.</li>
+</ul>
+<p>Example for simple boolean expressions:</p>
 <pre><code>&lt;operation id="..." if="${variableName1} AND NOT (${variableName2} OR ${variableName3})"&gt;
+  …
+&lt;/operation&gt;
+</code></pre>
+<p>Example for string comparisons:</p>
+<pre><code>&lt;operation id="..." if="${captureAgentVendor} == 'ACME Corporation'"&gt;
+  …
+&lt;/operation&gt;
+</code></pre>
+<p>Note that operations containing strings and numbers are somewhat well-behaved, for example, the following operation
+gets executed because <code>3</code> is converted to a string and then added to the string <code>'4'</code>:</p>
+<pre><code>&lt;operation id="..." if="3+'4' == '34'"&gt;
   …
 &lt;/operation&gt;
 </code></pre>
