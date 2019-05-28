@@ -812,9 +812,11 @@ settings for separate distributions (i.e. download or streaming servers, service
 <ul>
 <li><strong>Key ID:</strong> Key identifier, e.g. <code>demoKeyOne</code></li>
 <li><strong>Key secret:</strong> Key value, e.g. <code>25DA2BA549CB62EF297977845259A</code>. The key-length is not predefined, but a key length of
-  at least 128 bit is recommended. Any larger value will not increase security of the underlying algorithm.</li>
+  at least 128 bit is recommended. Any larger value will not increase security of the underlying algorithm</li>
 <li><strong>URL prefix:</strong> The URL signing provider will only sign URLs that start with this value. This allows to support
-  multiple distributions and different key pairs.</li>
+  multiple distributions and different key pairs</li>
+<li><strong>Organization:</strong> Keys can be restricted to organizations so that different organizations use different keys.
+  This attribute is optional. If not specified, the key can be used by all organizations</li>
 </ul>
 <p>A typical configuration looks like this:</p>
 <pre><code>key.demoKeyOne.secret=6EDB5EDDCF994B7432C371D7C274F
@@ -822,6 +824,14 @@ key.demoKeyOne.url=http://download.opencast.org/engage
 
 key.demoKeyTwo.secret=6EDB5EDDCF994B7432C371D7C274F
 key.demoKeyTwo.url=http://download.opencast.org/custom
+key.demoKeyTwo.organization=mh_default_org
+</code></pre>
+<p>It is also possible to use one key for multiple URL prefixes:</p>
+<pre><code>key.demoKeyThree.secret=6EDB5EDDCF994B7432C371D7C274F
+key.demoKeyThree.url.http=http://download.opencast.org/custom
+key.demoKeyThree.url.https=https://download.opencast.org/custom
+key.demoKeyThree.url.streaming=http://streaming.opencast.org/custom
+key.demoKeyThree.organization=mh_default_org
 </code></pre>
 <h2 id="configuration-of-url-signing-timeout-values">Configuration of URL Signing Timeout Values</h2>
 <p>Once stream security is turned on by configuring the signing providers, multiple different services within Opencast will
