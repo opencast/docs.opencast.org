@@ -58,7 +58,7 @@
     <a class="current" href="./">Release Notes</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#opencast-7-release-notes">Opencast 7: Release Notes</a></li>
+    <li class="toctree-l2"><a href="#opencast-8-release-notes">Opencast 8: Release Notes</a></li>
     
         <ul>
         
@@ -69,10 +69,6 @@
             <li><a class="toctree-l3" href="#configuration-changes">Configuration changes</a></li>
         
             <li><a class="toctree-l3" href="#api-changes">API changes</a></li>
-        
-            <li><a class="toctree-l3" href="#additional-notes-about-64">Additional Notes about 6.4</a></li>
-        
-            <li><a class="toctree-l3" href="#additional-notes-about-65">Additional Notes about 6.5</a></li>
         
             <li><a class="toctree-l3" href="#release-schedule">Release Schedule</a></li>
         
@@ -778,96 +774,18 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="opencast-7-release-notes">Opencast 7: Release Notes</h1>
+                <h1 id="opencast-8-release-notes">Opencast 8: Release Notes</h1>
 <h2 id="new-features">New Features</h2>
-<ul>
-<li>Overhaul of the permission management with the newly added possibility to define how access control lists are
-  evaluated and how series permission changes are populated to episodes. For more details take a look at the <a href="../configuration/acl/">access
-  control configuration guide</a>.</li>
-<li>Update Elasticsearch and make is possible to run Elasticsearch as an external service.</li>
-<li>Per-Tenant Capture Agent Users</li>
-<li>Asset manager snaphots clean-up to remove older snapshots for a given media package. In some cases, this can
-  drastically reduce Opencast's storage consumption. This feature is implemented as an option for the <a href="../workflowoperationhandlers/asset-delete-woh/">asset-delete workflow
-  operation handler</a>.</li>
-<li>Allow the workflow to select the audio track for composite video</li>
-<li>Add multi-tenant support for all list providers</li>
-<li>Make waveform size configurable</li>
-<li>Create a generic user interface configuration service</li>
-<li>Add link to series details to the events table</li>
-<li>Add Internationalization support for series LTI tools</li>
-<li>Display responsible person for workflows</li>
-<li>Allow the Ingest Service to make authenticated requests to other servers</li>
-<li>Some modules are now plugins. These are not started by default to reduce the amount of code running unnecessarily.
-  They can easily be enabled in <code>etc/org.apache.karaf.features.cfg</code>. Modified modules are:<ul>
-<li>Moodle user directory</li>
-<li>Sakai user directory</li>
-</ul>
-</li>
-</ul>
 <h2 id="improvements">Improvements</h2>
-<p>A non-comprehensive list of improvements:</p>
-<ul>
-<li>Improvement of performance when scheduling new events or checking for conflicts, reducing the time for adding
-multiple schedules by up to 90% compared to the previous implementation. Please read the <a href="../upgrade/">upgrade guide</a>
-to make sure you migrate your data properly.</li>
-</ul>
 <h2 id="configuration-changes">Configuration changes</h2>
-<ul>
-<li><code>KARAF_NOROOT</code> is now set to <code>true</code> by default, preventing Opencast to be started as root user unless the
-  configuration is changed.</li>
-<li>The default configuration for the Paella player has been moved to <code>etc/ui-config/mh_default_org/paella/config.json</code></li>
-<li>By default, metadata catalogs and attachments sent by capture agents are discarded since this data is usually
-  controlled by Opencast and the routing through capture agents which existed for historical reasons was just an
-  additional source for errors. If you rely on the old behavior, it can be configured in
-  <code>etc/org.opencastproject.ingest.impl.IngestServiceImpl.cfg</code>.</li>
-<li>By default, the Paella player now respects all tracks published to engage instead of having a hard-coded filter for
-  tracks with the sub-flavor <code>delivery</code> only.</li>
-<li>The structure of the configuration files concerning URL signing has changed.
-  See <a href="../configuration/stream-security/">here</a>. The affected files are:<ul>
-<li><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.provider.impl.WowzaUrlSigningProvider.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg</code></li>
-</ul>
-</li>
-<li>The configuration for the media module has been moved into the user interface configuration directory at
-  <code>etc/ui-config</code>.</li>
-</ul>
 <h2 id="api-changes">API changes</h2>
-<p>Due to <a href="https://opencast.jira.com/browse/MH-13397">MH-13397</a>:</p>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13530">MH-13530</a>:</p>
 <ul>
-<li>Modified GET /recordings/{id}/technical.json: Removed field <code>optOut</code></li>
-<li>Removed GET /recordings/{id}/optOut</li>
-<li>Removed GET /recordings/{id}/reviewStatus</li>
-<li>Removed PUT /recordings/{id}/reviewStatus</li>
-<li>Modified POST /recordings: Removed form parameter <code>optOut</code></li>
-<li>Modified POST /recordings/multiple: Removed form parameter <code>optOut</code></li>
-<li>Modified PUT /recordings/{id}: Removed form parameters <code>optOut</code> and <code>updateOptOut</code></li>
-<li>Removed GET /series/{id}/optOut</li>
+<li>Removed DELETE /workflow/definition/{id}</li>
+<li>Removed PUT /workflow/definition</li>
 </ul>
-<p>Due to <a href="https://opencast.jira.com/browse/MH-13446">MH-13446</a>:</p>
-<ul>
-<li>Removed GET /acl-manager/transitions.json</li>
-<li>Removed GET /acl-manager/transitionsfor.json</li>
-<li>Removed POST /acl-manager/episode/{id}</li>
-<li>Removed POST /acl-manager/series/{id}</li>
-<li>Modified POST /acl-manager/apply/episode/{id}: Removed form parameters workflowDefinitionId and workflowParams</li>
-<li>Modified POST /acl-manager/apply/series/{id}: Removed form parameters workflowDefinitionId and workflowParams</li>
-<li>Removed DELETE /acl-manager/episode/{transitionId}</li>
-<li>Removed DELETE /acl-manager/series/{transitionId}</li>
-<li>Removed PUT /acl-manager/episode/{transitionId}</li>
-<li>Removed PUT /acl-manager/series/{transitionId}</li>
-</ul>
-<h2 id="additional-notes-about-64">Additional Notes about 6.4</h2>
-<p>Opencast 6.4 contains a number of bug fixes, some of which are security relevant. The following known vulnerability
-within Opencast's <code>org.springframework.security.oauth:spring-security-oauth</code> dependency have been fixed by this release:
-<code>CVE-2019-3778</code>.</p>
-<h2 id="additional-notes-about-65">Additional Notes about 6.5</h2>
-<p>Opencast 6.5 contains a change to the job dispatching logic, which will change how your cluster dispatches jobs to its
-workers.  This change means that workers with a higher maximum load will absorb more work before workers with lower
-maximum loads will accept heavy workloads.  This change does not require any configuration changes, however you may
-notice large changes in processing load distribution depending on your cluster configuration.</p>
 <h2 id="release-schedule">Release Schedule</h2>
+<p>TBD</p>
 <table>
 <thead>
 <tr>
@@ -895,10 +813,7 @@ notice large changes in processing load distribution depending on your cluster c
 </tbody>
 </table>
 <h2 id="release-managers">Release Managers</h2>
-<ul>
-<li>Maximiliano Lira Del Canto (University of Cologne)</li>
-<li>Katrin Ihler (ELAN e.V.)</li>
-</ul>
+<p>TBD</p>
               
             </div>
           </div>

@@ -288,6 +288,8 @@
         
             <li><a class="toctree-l5" href="#statistics-providers">Statistics Providers</a></li>
         
+            <li><a class="toctree-l5" href="#csv-exports">CSV Exports</a></li>
+        
         </ul>
     
 
@@ -872,6 +874,12 @@ configurations have to be in json format. So e.g. <em>influx.views.episode.sum.j
 }
 </code></pre>
 
+<h2 id="csv-exports">CSV Exports</h2>
+<p>Statistics can be exported to CSV files by clicking the "download" button in the top right corner of a graph. Per default,
+the export will contain the data which the graph currently displays. For series statistics, it is possible to change this
+behavior in the way that exported series statistics contain the data of all events of a series instead of just the top
+level series data. To enable this, it is necessary to specify which Statistics Provider should be used to get the episode
+data. See the configuration file <code>org.opencastproject.statistics.export.impl.StatisticsExportServiceImpl.cfg</code> for details.</p>
 <h1 id="verifying-your-setup">Verifying Your Setup<a name="verify"></a></h1>
 <p>If you want to test your setup, you can put the following test data into InfluxDB and check if Opencast displays all
 charts correctly. First, create a series and an event as part of that series using the Opencast Admin UI. Second, copy
