@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Timelinepreviews - Opencast - Administration Guide</title>
+  <title>Transfer Metadata - Opencast - Administration Guide</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Timelinepreviews";
-    var mkdocs_page_input_path = "workflowoperationhandlers/timelinepreviews-woh.md";
+    var mkdocs_page_name = "Transfer Metadata";
+    var mkdocs_page_input_path = "workflowoperationhandlers/transfer-metadata-woh.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -698,12 +698,16 @@
                     
     <a class="" href="../tag-by-dcterm-woh/">Tag-By-DCTerm</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Timelinepreviews</a>
+    <a class="current" href="./">Transfer Metadata</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#timelinepreviewsworkflowoperationhandler">TimelinePreviewsWorkflowOperationHandler</a></li>
+    <li class="toctree-l3"><a href="#transfer-metadata-workflow-operation">Transfer Metadata Workflow Operation</a></li>
     
         <ul>
         
@@ -717,10 +721,6 @@
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../transfer-metadata-woh/">Transfer Metadata</a>
                 </li>
                 <li class="">
                     
@@ -763,10 +763,10 @@
         
       
     
-    <li>Timelinepreviews</li>
+    <li>Transfer Metadata</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/timelinepreviews-woh.md"
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/transfer-metadata-woh.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -776,59 +776,77 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="timelinepreviewsworkflowoperationhandler">TimelinePreviewsWorkflowOperationHandler</h1>
+                <h1 id="transfer-metadata-workflow-operation">Transfer Metadata Workflow Operation</h1>
 <h2 id="description">Description</h2>
-<p>The timeline previews operation creates preview images for the given track that can be shown when hovering above the
-timeline. It will generate the in <code>image-count</code> specified number of preview images, that will all be saved in one large
-image file. You can use the <code>source-flavor</code> to specify for which video the preview images will be generated. In the
-engage player only the preview images of one video are shown (the first that is found), so to make sure the correct
-preview images are shown, better generate them only for one video.</p>
+<p>The transfer metadata operation allows to transfer arbitrary metadata fields from one metadata catalog to another one.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th>configuration keys</th>
+<th>configuration key</th>
 <th>example</th>
 <th>description</th>
-<th>default value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>source-flavors</td>
-<td>*/trimmed</td>
-<td>Specifies which media should be processed. The *-operator can be used if the preview images should be created for all flavors with a certain subtype (like "trimmed" in the example) Hereby you can for example choose whether you want to create the timeline preview images from a presenter or a presentation video.</td>
-<td>EMPTY</td>
+<td>source-flavor</td>
+<td>dublincore/episode</td>
+<td>The catalog from which the metadata is copied</td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>*/timeline+preview</td>
-<td>Specifies the flavor the new files will get. This should use the *-operator if it was used in the source-flavor too. This flavor has to contain the words "timeline" and "preview" for the file to be found by the player.</td>
-<td>EMPTY</td>
+<td>myterms/episode</td>
+<td>The catalog to which the data is copied</td>
 </tr>
 <tr>
-<td>target-tags</td>
-<td>engage-download</td>
-<td>Specifies the tags the new files will get.</td>
-<td>EMPTY</td>
+<td>source-element</td>
+<td>{http://purl.org/dc/terms/}creator</td>
+<td>The XML element to copy</td>
 </tr>
 <tr>
-<td>image-count</td>
-<td>100</td>
-<td>Specifies the number of generated timeline preview images. In the example 100 timeline preview images will be generated and stored in a 10x10 grid in the output image</td>
-<td>100</td>
+<td>target-element</td>
+<td>{http://purl.org/dc/terms/}creator</td>
+<td>The XML element to which the values are copied</td>
+</tr>
+<tr>
+<td>force</td>
+<td>false</td>
+<td>Overwrite existing targets</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>,</td>
+<td>Join multiple values by set delimiter</td>
+</tr>
+<tr>
+<td>target-prefix</td>
+<td>dcterms</td>
+<td>Prefix to use for the given namespace</td>
 </tr>
 </tbody>
 </table>
+<h3 id="force">force</h3>
+<p>By default, the operation will fail if a target element already exists at the specified location. If <code>force</code> is set, all
+existing target elements will be removed before copying the new elements.</p>
+<h3 id="concat">concat</h3>
+<p>If multiple source elements are selected (e.g. the title in multiple languages), by default, all elements are copied to
+the destination. The language information are preserved in this operation. If <code>concat</code> is defined, the value of this
+option will be used as a delimiter for joining all selected source elements and only ever one element will be written.
+All language information for this combined element will be discarded in the process.</p>
+<h3 id="target-prefix">target-prefix</h3>
+<p>This option lets you specify the XML namespace identifier for the target elements namespace. For example, Opencast
+usually uses <code>dcterms</code> for elements from the set of DublinCore terms, resulting in elements like <code>&lt;dcterms:creator&gt;</code>.</p>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="xml">&lt;operation
-  id=&quot;timelinepreviews&quot;
-  description=&quot;Creating presentation timeline preview images&quot;&gt;
+  id=&quot;transfer-metadata&quot;
+  description=&quot;Transfer dcterms:creator to myterms:owner&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/trimmed&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/timeline+preview&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;engage-download&lt;/configuration&gt;
-    &lt;configuration key=&quot;image-count&quot;&gt;100&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;dublincore/episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;myterms/episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-element&quot;&gt;{http://purl.org/dc/terms/}creator&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-element&quot;&gt;{http://my-institution.edu/metadata}owner&lt;/configuration&gt;
+    &lt;configuration key=&quot;force&quot;&gt;true&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -839,10 +857,10 @@ preview images are shown, better generate them only for one video.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../transfer-metadata-woh/" class="btn btn-neutral float-right" title="Transfer Metadata">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../theme-woh/" class="btn btn-neutral float-right" title="Theme">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../tag-by-dcterm-woh/" class="btn btn-neutral" title="Tag-By-DCTerm"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../timelinepreviews-woh/" class="btn btn-neutral" title="Timelinepreviews"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -870,10 +888,10 @@ preview images are shown, better generate them only for one video.</p>
           <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../tag-by-dcterm-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../timelinepreviews-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../transfer-metadata-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../theme-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
