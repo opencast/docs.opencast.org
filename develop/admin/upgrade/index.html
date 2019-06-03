@@ -63,25 +63,13 @@
     <a class="current" href="./">Upgrade</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#upgrading-opencast-from-6x-to-7x">Upgrading Opencast from 6.x to 7.x</a></li>
+    <li class="toctree-l2"><a href="#upgrading-opencast-from-7x-to-8x">Upgrading Opencast from 7.x to 8.x</a></li>
     
         <ul>
         
             <li><a class="toctree-l3" href="#how-to-upgrade">How to Upgrade</a></li>
         
             <li><a class="toctree-l3" href="#database-migration">Database Migration</a></li>
-        
-            <li><a class="toctree-l3" href="#activemq-migration">ActiveMQ Migration</a></li>
-        
-            <li><a class="toctree-l3" href="#removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</a></li>
-        
-            <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
-        
-            <li><a class="toctree-l3" href="#scheduler-migration">Scheduler Migration</a></li>
-        
-            <li><a class="toctree-l3" href="#update-player-links">Update Player Links</a></li>
-        
-            <li><a class="toctree-l3" href="#rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</a></li>
         
         </ul>
     
@@ -782,114 +770,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="upgrading-opencast-from-6x-to-7x">Upgrading Opencast from 6.x to 7.x</h1>
-<p>This guide describes how to upgrade Opencast 6.x to 7.x. In case you need information about how to upgrade older
-versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
+                <h1 id="upgrading-opencast-from-7x-to-8x">Upgrading Opencast from 7.x to 8.x</h1>
+<p>This guide describes how to upgrade Opencast 7.x to 8.x. In case you need information about how to upgrade older
+versions of Opencast, please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <h2 id="how-to-upgrade">How to Upgrade</h2>
 <ol>
 <li>Stop your current Opencast instance</li>
-<li>Replace Opencast 6.x with 7.x</li>
+<li>Replace Opencast with the new version</li>
 <li>Back-up Opencast files and database (optional)</li>
 <li><a href="#database-migration">Upgrade the database</a></li>
-<li><a href="#activemq-migration">Upgrade the ActiveMQ configuration</a></li>
-<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
-<li>Migrate the scheduled events</li>
-<li><a href="#update-player-links">Optionally update the player links</a></li>
-<li>Rebuild the Elastic Search indexes</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
-<p>As part of performance optimizations, some tables were modified. This requires a database schema update. Also, one table
-is no longer needed and can be dropped. As with all database migrations, we strongly recommend to create a database
-backup before attempting the upgrade.</p>
-<p>You can find the database upgrade script in <code>docs/upgrade/6_to_7/</code>. This script is suitable for both, MariaDB and
-MySQL.</p>
-<h2 id="activemq-migration">ActiveMQ Migration</h2>
-<p><em>So far, this is not required</em></p>
-<h2 id="removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</h2>
-<p>Opencast 7 finally removes the long-since deprecated <code>security/xacml</code> flavor for access control lists. This had not been
-used since before Opencast 1.2 (we could not track down its exact deprecation date due to its age). Additionally, all
-rule-sets which had been modified since had also been automnatically been updated to <code>security/xacml+series</code> which
-serves as replacement for the old flavor.</p>
-<p>In case Opencast still encounters such a rule set, it will now be ignored and access will be denied by default. A simple
-update of the permissions would fix this if that is required.</p>
-<p>Due to the extreme unlikeliness of anyone encountering this problem, there is no automatic migration. In case you run a
-system migrated from a pre-1.2 Matterhorn, you can make sure that there are no old rule-sets left using the following
-SQL queries:</p>
-<pre><code class="sql">-- Check OAI-PMH publications:
-select * from oc_oaipmh_elements where flavor = 'security/xacml';
--- Check engage publications:
-select * from oc_search where mediapackage_xml like '%&quot;security/xacml&quot;%';
--- Check asset manager:
-select * from oc_assets_snapshot where mediapackage_xml like '%&quot;security/xacml&quot;%';
-</code></pre>
-
-<h2 id="configuration-changes">Configuration Changes</h2>
-<ul>
-<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> no longer needs the <code>transaction_cleanup_offset</code>
-  option.</li>
-<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> has a new option <code>maintenance</code> which temporarily
-  disables the scheduler if set to <code>true</code>.</li>
-</ul>
-<h2 id="scheduler-migration">Scheduler Migration</h2>
-<p>The way the Scheduler stores its data was changed in Opencast 7 to improve performance when checking for conflicts.</p>
-<p>The necessary database schema changes are part of the upgrade script in <code>docs/upgrade/6_to_7/</code>.</p>
-<p>To actually migrate the data, set the <code>maintenance</code> configuration option of
-<code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> to <code>true</code> and start opencast. The migration will start
-automatically. Wait until the migration is complete. Once complete, the opencast log will contain a line saying
-<code>Finished migrating scheduled events</code>. Check if there were any errors during the migration. If not, stop opencast and
-change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal mode of operation.</p>
-<p>You should avoid running Opencast 7 without migrating the scheduled events first. Otherwise, your capture agents may
-fetch an empty calendar.</p>
-<h2 id="update-player-links">Update Player Links</h2>
-<blockquote>
-<p>This step is optional</p>
-</blockquote>
-<p>Opencast 7 comes with the capability of dynamically switching the configured player without requiring the republication
-of all published material by providing the dynamic target <code>https://example.opencast.org/play/&lt;id&gt;</code>. This new target
-will be used for all new engage publications.</p>
-<p>But old publications still reference the players directly in the admin interface and the external API. This does not
-pose any immediate problem unless you actually want to switch players in which case you would need to republish the
-material once to update the publication links.</p>
-<p>Alternatively, you can rewrite the old links all at once without re-publication using the following method:</p>
-<ol>
-<li>
-<p>Find the archive directory and run the following command (replacing <code>&lt;playerlink&gt;</code>):</p>
-<pre><code>sed -i 's_&lt;playerlink&gt;_/play/_g' .../archive/*/*/*/manifest.xml
-</code></pre>
-<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
-<pre><code>sed -i 's_/engage/theodul/ui/core.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
-sed -i 's_/paella/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
-sed -i 's_/engage/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
-</code></pre>
-</li>
-<li>
-<p>Run the following SQL commands on your opencast database (replacing <code>&lt;playerlink&gt;</code>):</p>
-<pre><code>UPDATE oc_assets_snapshot
-  SET mediapackage_xml =
-  REPLACE(mediapackage_xml, '&lt;playerlink&gt;', '/play/')
-  WHERE INSTR(mediapackage_xml, '&lt;playerlink&gt;') &gt; 0;
-</code></pre>
-<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
-<pre><code>UPDATE oc_assets_snapshot
-  SET mediapackage_xml =
-  REPLACE(mediapackage_xml, '/engage/theodul/ui/core.html?id=', '/play/')
-  WHERE INSTR(mediapackage_xml, '/engage/theodul/ui/core.html?id=') &gt; 0;
-UPDATE oc_assets_snapshot
-  SET mediapackage_xml =
-  REPLACE(mediapackage_xml, '/paella/ui/watch.html?id=', '/play/')
-  WHERE INSTR(mediapackage_xml, '/paella/ui/watch.html?id=') &gt; 0;
-UPDATE oc_assets_snapshot
-  SET mediapackage_xml =
-  REPLACE(mediapackage_xml, '/engage/ui/watch.html?id=', '/play/')
-  WHERE INSTR(mediapackage_xml, '/engage/ui/watch.html?id=') &gt; 0;
-</code></pre>
-</li>
-</ol>
-<p>Please ensure to execute these steps before rebuilding the index.</p>
-<h2 id="rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</h2>
-<p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elastic Search indexes of both
-the Admin UI and the External API have changed.</p>
-<p>Therefore, those indexes both need to be rebuilt.</p>
+<p>As part of performance optimizations, some tables were modified. This requires a database schema update. As with all
+database migrations, we strongly recommend to create a database backup before attempting the upgrade.</p>
+<p>You can find the database upgrade script in <code>docs/upgrade/7_to_8/</code>.</p>
               
             </div>
           </div>
