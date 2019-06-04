@@ -435,6 +435,8 @@
         
             <li><a class="toctree-l4" href="#default-workflow-operations">Default Workflow Operations</a></li>
         
+            <li><a class="toctree-l4" href="#state-mappings">State Mappings</a></li>
+        
         </ul>
     
 
@@ -1153,6 +1155,69 @@ definitions consist of a list of workflow operations, which basically map a piec
 </tr>
 </tbody>
 </table>
+<h2 id="state-mappings">State Mappings</h2>
+<p>Technically, a workflow can be in one of the following states:</p>
+<table>
+<thead>
+<tr>
+<th>Technical State</th>
+<th>Description</th>
+<th>What the Admin UI displays in the events table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>instantiated</strong></td>
+<td>The workflow is queued and will be started as soon as possible</td>
+<td>"Pending"</td>
+</tr>
+<tr>
+<td><strong>running</strong></td>
+<td>The workflow is running, no problems so far</td>
+<td>"Running"</td>
+</tr>
+<tr>
+<td><strong>stopped</strong></td>
+<td>The workflow was aborted by the user</td>
+<td>"Processing canceled"</td>
+</tr>
+<tr>
+<td><strong>paused</strong></td>
+<td>The workflow was paused and can be continued</td>
+<td>"Paused"</td>
+</tr>
+<tr>
+<td><strong>succeeded</strong></td>
+<td>The workflow has completed successfully</td>
+<td>"Finished"</td>
+</tr>
+<tr>
+<td><strong>failed</strong></td>
+<td>The workflow failed due to an error</td>
+<td>"Processing failure"</td>
+</tr>
+<tr>
+<td><strong>failing</strong></td>
+<td>The workflow is still running, but there were errors. It will fail.</td>
+<td>"Running"</td>
+</tr>
+</tbody>
+</table>
+<p>Using state mappings, it is possible to refine the labels displayed in the Admin UI events table for a particular
+workflow.</p>
+<p>Here is an example which displays "Retracting" instead of "Running" for the retract workflow:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+  &lt;id&gt;retract&lt;/id&gt;
+  ...
+  &lt;state-mappings&gt;
+    &lt;state-mapping state=&quot;running&quot;&gt;retracting&lt;/state-mapping&gt;
+    &lt;state-mapping state=&quot;failing&quot;&gt;retracting&lt;/state-mapping&gt;
+  &lt;/state-mappings&gt;
+</code></pre>
+
+<p>When no state mappings are configured for a workflow, the generic default labels will be displayed.</p>
+<p>When a workflow includes other workflows, the event table only shows the state of the including workflow.</p>
               
             </div>
           </div>
