@@ -70,10 +70,6 @@
         
             <li><a class="toctree-l3" href="#api-changes">API changes</a></li>
         
-            <li><a class="toctree-l3" href="#additional-notes-about-64">Additional Notes about 6.4</a></li>
-        
-            <li><a class="toctree-l3" href="#additional-notes-about-65">Additional Notes about 6.5</a></li>
-        
             <li><a class="toctree-l3" href="#release-schedule">Release Schedule</a></li>
         
             <li><a class="toctree-l3" href="#release-managers">Release Managers</a></li>
@@ -783,16 +779,16 @@
 <li>Update Elasticsearch and make it possible to run Elasticsearch as an external service.</li>
 <li>Per-Tenant Capture Agent Users</li>
 <li>Asset manager snaphots clean-up to remove older snapshots for a given media package. In some cases, this can
-  drastically reduce Opencast's storage consumption. This feature is implemented as an option for the <a href="../workflowoperationhandlers/asset-delete-woh/">asset-delete workflow
-  operation handler</a>.</li>
+  drastically reduce Opencast's storage consumption. This feature is implemented as an option for the
+  <a href="../workflowoperationhandlers/asset-delete-woh/">asset-delete workflow operation handler</a>.</li>
 <li>Allow the workflow to select the audio track for composite video</li>
 <li>Add multi-tenant support for all list providers</li>
 <li>Make waveform size configurable</li>
 <li>Create a generic user interface configuration service</li>
-<li>Add link to series details to the events table</li>
-<li>Add Internationalization support for series LTI tools</li>
-<li>Display responsible person for workflows</li>
-<li>Allow the Ingest Service to make authenticated requests to other servers</li>
+<li>In the events table add a link to the series details</li>
+<li>Add internationalization support for series LTI tools</li>
+<li>Display creator of workflow</li>
+<li>Allow the ingest service to make authenticated requests to other servers</li>
 <li>Some modules are now plugins. These are not started by default to reduce the amount of code running unnecessarily.
   They can easily be enabled in <code>etc/org.apache.karaf.features.cfg</code>. Modified modules are:<ul>
 <li>Moodle user directory</li>
@@ -801,14 +797,14 @@
 </li>
 </ul>
 <h2 id="improvements">Improvements</h2>
-<p>A non-comprehensive list of improvements:</p>
 <ul>
-<li>Improvement of performance when scheduling new events or checking for conflicts, reducing the time for adding
-multiple schedules by up to 90% compared to the previous implementation. Please read the <a href="../upgrade/">upgrade guide</a>
-to make sure you migrate your data properly.</li>
+<li>Improved performance when scheduling new events or checking for conflicts (reducing the time for adding
+multiple schedules by up to 90%).</li>
 </ul>
 <h2 id="configuration-changes">Configuration changes</h2>
 <ul>
+<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> has a new option <code>maintenance</code> which temporarily
+  disables the scheduler if set to <code>true</code>.</li>
 <li><code>KARAF_NOROOT</code> is now set to <code>true</code> by default, preventing Opencast to be started as root user unless the
   configuration is changed.</li>
 <li>The default configuration for the Paella player has been moved to <code>etc/ui-config/mh_default_org/paella/config.json</code></li>
@@ -818,14 +814,8 @@ to make sure you migrate your data properly.</li>
   <code>etc/org.opencastproject.ingest.impl.IngestServiceImpl.cfg</code>.</li>
 <li>By default, the Paella player now respects all tracks published to engage instead of having a hard-coded filter for
   tracks with the sub-flavor <code>delivery</code> only.</li>
-<li>The structure of the configuration files concerning URL signing has changed.
-  See <a href="../configuration/stream-security/">here</a>. The affected files are:<ul>
-<li><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.provider.impl.WowzaUrlSigningProvider.cfg</code></li>
-<li><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg</code></li>
-</ul>
-</li>
+<li>The structure of the configuration files concerning URL signing has changed. See the
+<a href="../configuration/stream-security/">stream security configuration</a> for more details.</li>
 </ul>
 <h2 id="api-changes">API changes</h2>
 <p>Due to <a href="https://opencast.jira.com/browse/MH-13397">MH-13397</a>:</p>
@@ -852,15 +842,6 @@ to make sure you migrate your data properly.</li>
 <li>Removed PUT /acl-manager/episode/{transitionId}</li>
 <li>Removed PUT /acl-manager/series/{transitionId}</li>
 </ul>
-<h2 id="additional-notes-about-64">Additional Notes about 6.4</h2>
-<p>Opencast 6.4 contains a number of bug fixes, some of which are security relevant. The following known vulnerability
-within Opencast's <code>org.springframework.security.oauth:spring-security-oauth</code> dependency have been fixed by this release:
-<code>CVE-2019-3778</code>.</p>
-<h2 id="additional-notes-about-65">Additional Notes about 6.5</h2>
-<p>Opencast 6.5 contains a change to the job dispatching logic, which will change how your cluster dispatches jobs to its
-workers.  This change means that workers with a higher maximum load will absorb more work before workers with lower
-maximum loads will accept heavy workloads.  This change does not require any configuration changes, however you may
-notice large changes in processing load distribution depending on your cluster configuration.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>

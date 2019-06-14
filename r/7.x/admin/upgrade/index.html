@@ -71,17 +71,13 @@
         
             <li><a class="toctree-l3" href="#database-migration">Database Migration</a></li>
         
-            <li><a class="toctree-l3" href="#activemq-migration">ActiveMQ Migration</a></li>
-        
-            <li><a class="toctree-l3" href="#removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</a></li>
-        
-            <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
+            <li><a class="toctree-l3" href="#removal-of-deprecated-access-control-rules-set">Removal of Deprecated Access Control Rules Set</a></li>
         
             <li><a class="toctree-l3" href="#scheduler-migration">Scheduler Migration</a></li>
         
             <li><a class="toctree-l3" href="#update-player-links">Update Player Links</a></li>
         
-            <li><a class="toctree-l3" href="#rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</a></li>
+            <li><a class="toctree-l3" href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</a></li>
         
         </ul>
     
@@ -781,13 +777,13 @@ versions of Opencast, please refer to the <a href="https://docs.opencast.org">ol
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast 6.x with 7.x</li>
-<li>Back-up Opencast files and database (optional)</li>
+<li>Optionally back-up Opencast files and database</li>
 <li><a href="#database-migration">Upgrade the database</a></li>
-<li><a href="#activemq-migration">Upgrade the ActiveMQ configuration</a></li>
-<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
-<li>Migrate the scheduled events</li>
-<li><a href="#update-player-links">Optionally update the player links</a></li>
-<li>Rebuild the Elastic Search indexes</li>
+<li>Optionally <a href="#removal-of-deprecated-access-control-rule-set">check for old ACL rule sets</a></li>
+<li>Optionally <a href="#scheduler-migration">migrate the scheduled events</a></li>
+<li>Optionally <a href="#update-player-links">update the player links</a></li>
+<li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
+<li>Review the configuration changes and adjust your configuration accordingly</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
 <p>As part of performance optimizations, some tables were modified. This requires a database schema update. Also, one table
@@ -795,12 +791,10 @@ is no longer needed and can be dropped. As with all database migrations, we stro
 backup before attempting the upgrade.</p>
 <p>You can find the database upgrade script in <code>docs/upgrade/6_to_7/</code>. This script is suitable for both, MariaDB and
 MySQL.</p>
-<h2 id="activemq-migration">ActiveMQ Migration</h2>
-<p><em>So far, this is not required</em></p>
-<h2 id="removal-of-deprecated-access-control-ruleset">Removal of Deprecated Access Control Ruleset</h2>
+<h2 id="removal-of-deprecated-access-control-rules-set">Removal of Deprecated Access Control Rules Set</h2>
 <p>Opencast 7 finally removes the long-since deprecated <code>security/xacml</code> flavor for access control lists. This had not been
 used since before Opencast 1.2 (we could not track down its exact deprecation date due to its age). Additionally, all
-rule-sets which had been modified since had also been automnatically been updated to <code>security/xacml+series</code> which
+rule-sets which had been modified since had also been automatically been updated to <code>security/xacml+series</code> which
 serves as replacement for the old flavor.</p>
 <p>In case Opencast still encounters such a rule set, it will now be ignored and access will be denied by default. A simple
 update of the permissions would fix this if that is required.</p>
@@ -815,21 +809,14 @@ select * from oc_search where mediapackage_xml like '%&quot;security/xacml&quot;
 select * from oc_assets_snapshot where mediapackage_xml like '%&quot;security/xacml&quot;%';
 </code></pre>
 
-<h2 id="configuration-changes">Configuration Changes</h2>
-<ul>
-<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> no longer needs the <code>transaction_cleanup_offset</code>
-  option.</li>
-<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> has a new option <code>maintenance</code> which temporarily
-  disables the scheduler if set to <code>true</code>.</li>
-</ul>
 <h2 id="scheduler-migration">Scheduler Migration</h2>
-<p>The way the Scheduler stores its data was changed in Opencast 7 to improve performance when checking for conflicts.</p>
-<p>The necessary database schema changes are part of the upgrade script in <code>docs/upgrade/6_to_7/</code>.</p>
-<p>To actually migrate the data, set the <code>maintenance</code> configuration option of
-<code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> to <code>true</code> and start opencast. The migration will start
-automatically. Wait until the migration is complete. Once complete, the opencast log will contain a line saying
-<code>Finished migrating scheduled events</code>. Check if there were any errors during the migration. If not, stop opencast and
-change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal mode of operation.</p>
+<p>The way the scheduler stores its data was changed in Opencast 7 to improve performance when checking for conflicts.
+The necessary database schema changes are part of the upgrade script in <code>docs/upgrade/6_to_7/</code>.</p>
+<p>This migration is only necessary if you have scheduled events in your system. For this, set the <code>maintenance</code>
+configuration option of <code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> to <code>true</code> and start opencast.
+The migration will start automatically. Wait until the migration is complete. Once complete, the opencast log will
+contain a line saying <code>Finished migrating scheduled events</code>. Check if there were any errors during the migration. If
+not, stop opencast and change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal mode of operation.</p>
 <p>You should avoid running Opencast 7 without migrating the scheduled events first. Otherwise, your capture agents may
 fetch an empty calendar.</p>
 <h2 id="update-player-links">Update Player Links</h2>
@@ -878,10 +865,31 @@ UPDATE oc_assets_snapshot
 </li>
 </ol>
 <p>Please ensure to execute these steps before rebuilding the index.</p>
-<h2 id="rebuild-the-elastic-search-indexes">Rebuild the Elastic Search Indexes</h2>
-<p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elastic Search indexes of both
-the Admin UI and the External API have changed.</p>
-<p>Therefore, those indexes both need to be rebuilt.</p>
+<h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elasticsearch indexes of both
+the admin ui and the external API have changed. Therefore, those indexes both need to be rebuilt.</p>
+<h3 id="admin-interface">Admin Interface</h3>
+<p>Stop Opencast, delete the index directory at <code>data/index</code>, restart Opencast and make an HTTP POST request to
+<code>/admin-ng/index/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/admin-ng/index/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+<code>/recreateIndex</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="external-api">External API</h3>
+<p>If you are using the External API, then also trigger a rebuilt of its index by sending an HTTP POST request to
+<code>/api/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/api/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+<code>/recreateIndex</code>.</p>
+<p>In both cases you should again get a 200 HTTP status.</p>
               
             </div>
           </div>
