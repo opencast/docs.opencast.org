@@ -8,3 +8,13 @@ Scripts to automatically build and publish the Opencast documentation.
 
 - Build are run daily on Travis
 - Files are deployed into the `gh-pages` branch
+
+
+Manually Trigger Update
+-----------------------
+
+Updates happen automatically once a day. If you need an update right now (and
+you are a committer):
+
+- Login to [Travis](https://travis-ci.org/opencast/docs.opencast.org)
+- Hit “Restart build” (top-right corner) on the last build
