@@ -10,8 +10,8 @@ Scripts to automatically build and publish the Opencast documentation.
 - Files are deployed into the `gh-pages` branch
 
 
-Manually Trigger Update
------------------------
+Trigger Updates Manually
+------------------------
 
 Updates happen automatically once a day. If you need an update right now (and
 you are a committer):
