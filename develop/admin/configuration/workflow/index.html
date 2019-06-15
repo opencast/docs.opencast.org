@@ -826,6 +826,8 @@ thumbnail images for the videos.</p>
 
   &lt;!-- Description --&gt;
   &lt;id&gt;example&lt;/id&gt;
+  &lt;!-- Optionally specify an organization --&gt;
+  &lt;organization&gt;mh_default_org&lt;/organization&gt;
   &lt;title&gt;Encode Mp4, Distribute and Publish&lt;/title&gt;
   &lt;tags&gt;
     &lt;!-- Tell the UI where to show this workflow --&gt;
@@ -849,7 +851,11 @@ thumbnail images for the videos.</p>
 </code></pre>
 <ul>
 <li>The <code>id</code> is used in several Opencast endpoints to identify and select this workflow. Make sure that this identifier
-  is unique among all endpoints in the system.</li>
+  is unique among all endpoints in the system (except in multitenant workflows, see <code>organization</code> below).</li>
+<li>The <code>organization</code> specifies the organization this workflow is valid for (thus, it only makes sense in multitenant
+  installations). If there are two workflows with the same id, the one corresponding to the user’s organization is
+  always chosen. This pertains workflow dropdowns (for example, the “Add new event” dropdown) as well as workflows
+  included in other workflows via the <code>include</code> workflow operation handler.</li>
 <li>The <code>tags</code> define where the user interfaces may use these workflows. Useful tags are:<ul>
 <li><em>upload</em>: Usable for uploaded media</li>
 <li><em>schedule</em>: Usable for scheduled events</li>
