@@ -828,6 +828,10 @@ thumbnail images for the videos.</p>
   &lt;id&gt;example&lt;/id&gt;
   &lt;!-- Optionally specify an organization --&gt;
   &lt;organization&gt;mh_default_org&lt;/organization&gt;
+  &lt;!-- optionally specify roles for this workflow --&gt;
+  &lt;roles&gt;
+    &lt;role&gt;ROLE_ADMIN&lt;/role&gt;
+  &lt;/roles&gt;
   &lt;title&gt;Encode Mp4, Distribute and Publish&lt;/title&gt;
   &lt;tags&gt;
     &lt;!-- Tell the UI where to show this workflow --&gt;
@@ -856,6 +860,10 @@ thumbnail images for the videos.</p>
   installations). If there are two workflows with the same id, the one corresponding to the user’s organization is
   always chosen. This pertains workflow dropdowns (for example, the “Add new event” dropdown) as well as workflows
   included in other workflows via the <code>include</code> workflow operation handler.</li>
+<li>The <code>roles</code> define which user roles are allowed to see and start this workflow (a user needs one of the roles provided
+  in the definition). If this is omitted or no roles are specified, everyone can see and start the workflow (provided
+  the <code>organization</code> constraints are satisfied). Also, users with <code>ROLE_ADMIN</code> can see and start every workflow. Note
+  that the workflows included in Opencast do not set roles.</li>
 <li>The <code>tags</code> define where the user interfaces may use these workflows. Useful tags are:<ul>
 <li><em>upload</em>: Usable for uploaded media</li>
 <li><em>schedule</em>: Usable for scheduled events</li>
