@@ -500,13 +500,11 @@ git push &lt;remote&gt; r/7.x
 <li>
 <p>That is it for the release branch. Now update the versions in <code>develop</code> in preparation for the next release:</p>
 <pre><code>git checkout develop
-for i in `find . -name pom.xml`; do \
-  sed -i 's/&lt;version&gt;7-SNAPSHOT&lt;/&lt;version&gt;8-SNAPSHOT&lt;/' $i; done
+mvn versions:set -DnewVersion=8-SNAPSHOT versions:commit
 </code></pre>
 </li>
 <li>
-<p>Have a look at the changes. Make sure no library version we use has the version <code>6-SNAPSHOT</code> and was accidentally
-   changed. Also make sure that nothing else was modified:</p>
+<p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
 git status | grep modified: | grep -v pom.xml   # this should have no output
 </code></pre>
@@ -715,15 +713,12 @@ git push &lt;remote&gt; r/6.x
 </code></pre>
 </li>
 <li>
-<p>Make the version changes for the release. You can use <code>sed</code> to make things easier but please make sure that the
-   changes are correct:</p>
-<pre><code>for i in `find . -name pom.xml`; do \
-  sed -i 's/&lt;version&gt;6-SNAPSHOT&lt;/&lt;version&gt;6.0&lt;/' $i; done
+<p>Make the version changes for the release:</p>
+<pre><code>mvn versions:set -DnewVersion=6.0 versions:commit
 </code></pre>
 </li>
 <li>
-<p>Have a look at the changes. Make sure no library version we use had the version <code>6-SNAPSHOT</code> and was accidentally
-   changed. Also make sure that nothing else was modified:</p>
+<p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
 git status | grep modified: | grep -v pom.xml   # this should yield no output
 </code></pre>
