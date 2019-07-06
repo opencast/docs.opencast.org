@@ -32,6 +32,7 @@ do
     else
         pip -q install mkdocs
     fi
+    pip -q install markdown_inline_graphviz_extension
 
     [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
     git reset --hard HEAD
@@ -44,7 +45,7 @@ do
         (
             set -eu
             cd ~/opencast/docs/guides/"${target}"
-            mkdocs build
+            python -m mkdocs build
             mkdir -p "${OUTDIR}/${branch}"
             mv site "${OUTDIR}/${branch}/${target}"
         )
