@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Workflow - Opencast - Administration Guide</title>
+  <title>External Monitoring - Opencast - Administration Guide</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Workflow";
-    var mkdocs_page_input_path = "configuration/workflow.md";
+    var mkdocs_page_name = "External Monitoring";
+    var mkdocs_page_input_path = "configuration/monitoring.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -241,31 +241,9 @@
                     
     <a class="" href="../stream-security/">Stream Security</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Workflow</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#create-a-custom-workflow">Create a Custom Workflow</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#overview">Overview</a></li>
-        
-            <li><a class="toctree-l4" href="#create-a-workflow">Create a Workflow</a></li>
-        
-            <li><a class="toctree-l4" href="#accept-user-input">Accept User Input</a></li>
-        
-            <li><a class="toctree-l4" href="#conditional-execution">Conditional Execution</a></li>
-        
-            <li><a class="toctree-l4" href="#thumbnail-support">Thumbnail Support</a></li>
-        
-            <li><a class="toctree-l4" href="#test-the-workflow">Test the Workflow</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../workflow/">Workflow</a>
                 </li>
                 <li class="">
                     
@@ -275,9 +253,21 @@
                     
     <a class="" href="../oaipmh/">OAI-PMH</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../monitoring/">External Monitoring</a>
+    <a class="current" href="./">External Monitoring</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#monitoring">Monitoring</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#calling-the-health-check">Calling the Health-Check</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -777,10 +767,10 @@
         
       
     
-    <li>Workflow</li>
+    <li>External Monitoring</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/workflow.md"
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/monitoring.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -790,384 +780,107 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="create-a-custom-workflow">Create a Custom Workflow</h1>
-<p>This document will help you get started with creating your own Opencast workflows. For a list of available workflow
-operations, see:</p>
-<blockquote>
-<p><a href="../../workflowoperationhandlers/">List of Workflow Operation Handler</a></p>
-</blockquote>
-<h2 id="overview">Overview</h2>
-<p>A Opencast workflow is an ordered list of operations. There is no limit to the number of operations or their
-repetition in a given workflow.</p>
-<p>Workflow operations can be configured using configuration elements. The use of string replacement in configuration
-values allows workflows to dynamically adapt to a given input or user decision.</p>
-<h3 id="document">Document</h3>
-<p>Opencast workflows are defined in XML.  The structure of a Opencast workflow looks like this:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-
-  &lt;!-- Description --&gt;
-  &lt;id&gt;&lt;/id&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;tags&gt;&lt;/tags&gt;
-  &lt;description&gt;&lt;/description&gt;
-  &lt;displayOrder&gt;&lt;/displayOrder&gt;
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
-    &lt;operation&gt;&lt;/operation&gt;
-    ...
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+                <h1 id="monitoring">Monitoring</h1>
+<p>To assist in the operation of Opencast an application health-check is available. This will quickly
+return the state of the specific node, whether it is running properly, has minor issues or is unavailable
+for some reason e.g. in maintenance mode. Regular calls to the health-check from whatever monitoring
+software you choose to use will give you confidence that the Opencast nodes are running correctly and alert
+you when they are not.</p>
+<p>For larger deployments the health-check can be used by load-balancers* and trigger fail-overs if one of the
+nodes goes down.</p>
+<p>* The only nodes that make sense to load-balance are the externally facing ones, <em>ingest</em> and <em>presentation</em>.</p>
+<h2 id="calling-the-health-check">Calling the Health-Check</h2>
+<p>The Runtime module provides the health-check endpoint at <code>/info/health</code> and a simple HTTP GET request
+will return a HTTP status code indicating the health of the node and response in JSON providing further details.</p>
+<pre><code>curl "http://oc-admin.example.com/info/health"
 </code></pre>
-<h2 id="create-a-workflow">Create a Workflow</h2>
-<p>This sections will walk you through creating a custom workflow, which will encode ingested tracks to defined output
-format.</p>
-<h3 id="encoding-profiles">Encoding Profiles</h3>
-<p>First create or select the encoding profiles you want to use. For more details on this, have a look at the <a href="../encoding/">Encoding
-Profile Configuration Guide</a>. For this guide we assume that we have an encoding profile <code>mov-low.http</code>
-which creates a distribution format definition for mp4 video and a <code>feed-cover.http</code> encoding profile to create
-thumbnail images for the videos.</p>
-<h3 id="describe-the-workflow">Describe the Workflow</h3>
-<p>Start by naming the workflow and giving it a meaningful description:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-
-  &lt;!-- Description --&gt;
-  &lt;id&gt;example&lt;/id&gt;
-  &lt;!-- Optionally specify an organization --&gt;
-  &lt;organization&gt;mh_default_org&lt;/organization&gt;
-  &lt;!-- optionally specify roles for this workflow --&gt;
-  &lt;roles&gt;
-    &lt;role&gt;ROLE_ADMIN&lt;/role&gt;
-  &lt;/roles&gt;
-  &lt;title&gt;Encode Mp4, Distribute and Publish&lt;/title&gt;
-  &lt;tags&gt;
-    &lt;!-- Tell the UI where to show this workflow --&gt;
-    &lt;tag&gt;upload&lt;/tag&gt;
-    &lt;tag&gt;schedule&lt;/tag&gt;
-    &lt;tag&gt;archive&lt;/tag&gt;
-  &lt;/tags&gt;
-  &lt;description&gt;
-    1. Encode to Mp4 and thumbnail.
-
-    2. Distribute to local repository.
-
-    3. Publish to search index.
-  &lt;/description&gt;
-  &lt;displayOrder&gt;10&lt;/displayOrder&gt;
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;&lt;/operations&gt;
-
-&lt;/definition&gt;
-</code></pre>
-<ul>
-<li>The <code>id</code> is used in several Opencast endpoints to identify and select this workflow. Make sure that this identifier
-  is unique among all endpoints in the system (except in multitenant workflows, see <code>organization</code> below).</li>
-<li>The <code>organization</code> specifies the organization this workflow is valid for (thus, it only makes sense in multitenant
-  installations). If there are two workflows with the same id, the one corresponding to the user’s organization is
-  always chosen. This pertains workflow dropdowns (for example, the “Add new event” dropdown) as well as workflows
-  included in other workflows via the <code>include</code> workflow operation handler.</li>
-<li>The <code>roles</code> define which user roles are allowed to see and start this workflow (a user needs one of the roles provided
-  in the definition). If this is omitted or no roles are specified, everyone can see and start the workflow (provided
-  the <code>organization</code> constraints are satisfied). Also, users with <code>ROLE_ADMIN</code> can see and start every workflow. Note
-  that the workflows included in Opencast do not set roles.</li>
-<li>The <code>tags</code> define where the user interfaces may use these workflows. Useful tags are:<ul>
-<li><em>upload</em>: Usable for uploaded media</li>
-<li><em>schedule</em>: Usable for scheduled events</li>
-<li><em>archive</em>: Usable for archived media</li>
-<li><em>delete</em>: Usable for deletion of events with publications</li>
-<li><em>editor</em>: Usable from the video editor</li>
-</ul>
-</li>
-<li>The <code>displayOrder</code> is an integer that indicates in what order workflow definitions shall be displayed by clients.
-  If ommitted, the <code>displayOrder</code> defaults to <code>0</code>. Clients are expected to list workflow definitions in descending order.</li>
-<li>The <code>description</code> allows you to describe the workflow in detail. Blank lines are formatted as newlines, while single
-  line breaks are ignored so that the XML remains compact and readable even with long paragraphs.</li>
-</ul>
-<h3 id="inspect-the-media">Inspect the Media</h3>
-<p>The first operation will be to inspect the media for technical metadata, such as format and length:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-
-  &lt;!-- Description --&gt;
-  ...
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
-
-    &lt;!-- inspect media --&gt;
-    &lt;operation
-      id="inspect"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Inspect media package"&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
-</code></pre>
-<p>The <em>fail-on-error</em> attribute is a boolean determining whether the workflow will throw an error to the
-exception-handler-workflow or simply proceed with the remaining operations.</p>
-<h3 id="encoding">Encoding</h3>
-<p>The next operations will encode the media to the Mp4 format:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-
-  &lt;!-- Description --&gt;
-  ...
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
-
-    &lt;!-- inspect media --&gt;
-    ...
-
-    &lt;!-- encode: mp4 --&gt;
-    &lt;operation
-      id="compose"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode camera to mp4"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;operation
-      id="compose"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode screen to mp4"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;presentation/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
-</code></pre>
-<ul>
-<li>The <code>target-tags</code> attribute causes the resulting media to be tagged. For example, this could be used to define these
-  media as input for other operations, using their <code>source-tags</code> attribute.</li>
-<li>The <code>encoding-profile</code> attribute refers to an encoding profile defined in <code>etc/encoding</code>.</li>
-</ul>
-<h3 id="encode-to-thumbnail">Encode to Thumbnail</h3>
-<p>The next operations will create thumbnails from the media:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-  ...
-  &lt;operations&gt;
-    ...
-    &lt;!-- encode: images --&gt;
-    &lt;operation
-      id="image"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode camera to thumbnail"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
-        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
-        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;operation
-      id="image"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode screen to thumbnail"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
-        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
-        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
-</code></pre>
-<ul>
-<li>The time attribute determines the approximate frame of the source media is used. The time unit is in seconds.</li>
-</ul>
-<h3 id="distribute-the-media">Distribute the Media</h3>
-<p>The next operation copies the encoded media to the Opencast distribution channel:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-  ...
-  &lt;operations&gt;
-
-    &lt;!-- distribute: local --&gt;
-    &lt;operation
-      id="publish-engage"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Distribute media to the local distribution channel"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="download-source-tags"&gt;publish,rss,atom&lt;/configuration&gt;
-        &lt;configuration key="streaming-source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
-</code></pre>
-<ul>
-<li>The publish-engage operation uses all media tagged as <em>rss</em> or <em>atom</em> as input.</li>
-</ul>
-<h2 id="accept-user-input">Accept User Input</h2>
-<p>Workflow definitions may optionally include variables to be replaced by user input. For instance, this may be used to
-select optional parts of a workflow. To enable user control of individual workflow instances, the workflow definition
-must:</p>
-<ul>
-<li>use the <code>${variable}</code> notation in the workflow definition</li>
-<li>contain a custom configuration panel.</li>
-</ul>
-<p>Here is an example of a configurable operation:</p>
-<pre><code>&lt;operation id="..." if="${somevar}"&gt;
-  ...
-&lt;/operation&gt;
-</code></pre>
-<p>The attribute <code>if</code> specifies the execution condition in means of the operation only being executed if that condition
-evaluates to true. You can find more details on conditional execution in the next section.</p>
-<p>Once the operation is configured to accept a variable, we need to describe how to gather the value from the
-administrative user. The <code>&lt;configuration_panel&gt;</code> element of a workflow definitions describes this user interface
-snippet.  A simple configuration panel could look like this:</p>
-<pre><code>&lt;configuration_panel&gt;
-  &lt;![CDATA[
-    &lt;input id="someaction" name="someaction" type="checkbox" value="true" /&gt;
-    &lt;label for="someaction"&gt;Execute some operation?&lt;/label&gt;
-  ]]&gt;
-&lt;/configuration_panel&gt;
-</code></pre>
-<p>The checkbox in this <code>&lt;configuration_panel&gt;</code> will now be displayed in the administrative tools, and the user's
-selection will be used to replace the <code>${someaction}</code> variable in the workflow.</p>
-<p>This input can also be sent by capture agents, using the ingest endpoints. Please note that capture agents usually do
-not load the configuration panel. Hence defaults set in the user interface will not apply to ingests. To circumvent
-this, the <a href="../../workflowoperationhandlers/defaults-woh/">defaults operation</a> can be used.</p>
-<h2 id="conditional-execution">Conditional Execution</h2>
-<p>The attribute <code>if</code> of the <code>operation</code> element can be used to specify a condition to control whether the workflow
-operation should be executed. This so-called execution condition is a boolean expression of the following form:</p>
-<pre><code>&lt;expression&gt; ::= &lt;term&gt; ["OR" &lt;expression&gt;]
-&lt;term&gt; ::= &lt;value&gt; ["AND" &lt;term&gt;]
-&lt;value&gt; ::= ["NOT"]* ( "(" &lt;expression&gt; ")" | &lt;relation&gt; | &lt;bool-literal&gt; )
-&lt;relation&gt; ::= &lt;relation-factor&gt; &lt;rel-literal&gt; &lt;relation-factor&gt;
-&lt;relation-factor&gt; ::= &lt;operation&gt; | &lt;atom&gt;
-&lt;operation&gt; ::= &lt;atom&gt; &lt;op-literal&gt; &lt;atom&gt;
-&lt;rel-literal&gt; ::= "&gt;=" | "&gt;" | "&lt;=" | "&lt;" | "==" | "!="
-&lt;op-literal&gt; ::= "+" | "-" | "*" | "/"
-&lt;bool-literal&gt; ::= "true" | "false"
-&lt;atom&gt; ::= &lt;number&gt; | &lt;string&gt;
-</code></pre>
-<p>As the formal description above explains, such boolean expressions may contain…</p>
-<ul>
-<li>…the boolean constants <code>true</code> and <code>false</code>.</li>
-<li>…numbers, which may contain a decimal point.</li>
-<li>…strings, which must be surrounded by single-quotes. Escaping of single quotes is supported, just use two single
-  quotes next to each other: <code>'foo''bar'</code></li>
-<li>…as well as references to the variables of the workflow instance that contain these data types. Variables
-  are enclosed in in <code>${}</code>, as shown below. A default value may be specified for a variable, after the name, 
-  separated by a colon, as such: <code>${foo:1}</code>. The default value will be used in case the variable doesn’t exist. 
-  If no default value is specified, <code>false</code> will be used. This, of course, only makes sense in boolean contexts. Be
-  aware to specify a default value in relations such as <code>${foo} &lt; ${bar}</code>.</li>
-</ul>
-<p>Example for simple boolean expressions:</p>
-<pre><code>&lt;operation id="..." if="${variableName1} AND NOT (${variableName2} OR ${variableName3})"&gt;
-  …
-&lt;/operation&gt;
-</code></pre>
-<p>Example for string comparisons:</p>
-<pre><code>&lt;operation id="..." if="${captureAgentVendor} == 'ACME Corporation'"&gt;
-  …
-&lt;/operation&gt;
-</code></pre>
-<p>Note that operations containing strings and numbers are somewhat well-behaved, for example, the following operation
-gets executed because <code>3</code> is converted to a string and then added to the string <code>'4'</code>:</p>
-<pre><code>&lt;operation id="..." if="3+'4' == '34'"&gt;
-  …
-&lt;/operation&gt;
-</code></pre>
-<p>Note that XML requires certain characters like the <code>&lt;</code> and <code>&gt;</code> operators to be written as XML entities. Even if they are
-used quoted in attributes. The following table shows all those characters:</p>
-<pre><code class="no-highlight">&quot;  →  &amp;quot;
-'  →  &amp;apos;
-&lt;  →  &amp;lt;
-&gt;  →  &amp;gt;
-&amp;  →  &amp;amp;
-</code></pre>
-
-<p>Example:</p>
-<pre><code>&lt;operation id="..." if="${yresolution} &amp;gt; 720"&gt;
-  …
-&lt;/operation&gt;
-</code></pre>
-<h2 id="thumbnail-support">Thumbnail Support</h2>
-<p>The Admin UI comes with explicit support for thumbnails that are supposed to represent events visually, e.g. in lists
-of events as commonly used in video portals and other similar systems.
-To make it possible to implement the required processing and retain flexibility, the Admin UI will store the following
-information in variables of workflow instances:</p>
+<p>The HTTP status code will just indicate whether the node is running or not, the response contains a <em>status</em> field
+that indicates the actual health of the node. The status can have the values <strong>pass</strong>, <strong>warn</strong> and <strong>fail</strong>. The response
+ implements the health-check format proposed here <a href="https://inadarei.github.io/rfc-healthcheck">https://inadarei.github.io/rfc-healthcheck</a>.</p>
+<p>The table below shows the HTTP status codes the health-check status and the conditions for which they can occur.</p>
 <table>
 <thead>
 <tr>
-<th align="left">Variable</th>
-<th align="left">Description</th>
+<th><em>status</em></th>
+<th><em>notes</em></th>
+<th>HTTP code</th>
+<th>meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">thumbnailType</td>
-<td align="left">The type of the thumbnail as number (see table below)</td>
+<td>pass</td>
+<td>n/a</td>
+<td>200</td>
+<td>All is OK</td>
 </tr>
 <tr>
-<td align="left">thumbnailPosition</td>
-<td align="left">The time position in case of snapshot thumbnails</td>
+<td>warn</td>
+<td>service(s) in WARN state</td>
+<td>200</td>
+<td>Partially working service here</td>
 </tr>
 <tr>
-<td align="left">thumbnailTrack</td>
-<td align="left">The source track in case of snapshot thumbnails</td>
+<td>warn</td>
+<td>services(s) in ERROR state</td>
+<td>200</td>
+<td>Look for service on another node</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>maintenance</td>
+<td>503</td>
+<td>Node not available, try again later</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>disabled</td>
+<td>503</td>
+<td>Node not available, try another node</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>offline</td>
+<td>503</td>
+<td>Node not running, try another node</td>
 </tr>
 </tbody>
 </table>
-<table>
-<thead>
-<tr>
-<th align="left">Thumbnail Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">0</td>
-<td align="left">The default thumbnail shall be extracted at a configured time position</td>
-</tr>
-<tr>
-<td align="left">1</td>
-<td align="left">The thumbnail has been uploaded and is stored in the asset manager as media package attachment</td>
-</tr>
-<tr>
-<td align="left">2</td>
-<td align="left">The thumbnail shall be extracted at a given time position from a given track</td>
-</tr>
-</tbody>
-</table>
-<p>To fully support the thumbnail feature, your workflows should take care of creating the different types of thumbnails
-and be consistent to the Admin UI thumbnail configuration (see <a href="../admin-ui/thumbnails/">Thumbnail Configuration</a>)</p>
-<h2 id="test-the-workflow">Test the Workflow</h2>
-<p>The easiest way to test a workflow is to just put it into the workflow folder where it will be picked up by Opencast
-automatically and will be available in Opencast a few seconds later.</p>
+<p>In all cases where the health-check status is not <strong>pass</strong> the JSON response provides more details.
+A summary of the problem(s) are list in the <em>notes</em> field. In the case of services in non <strong>NORMAL</strong>
+states these are listing the <em>checks</em> field. An example response for a <strong>warn</strong> status is shown below</p>
+<pre><code>{
+    "description" : "Opencast node's health status",
+    "releaseId" : "8",
+    "serviceId" : "http://oc-admin.example.com",
+    "version" : "1",
+    "status" : "warn",
+    "notes" : [
+       "service(s) in WARN state",
+       "service(s) in ERROR state"
+    ],
+    "checks" : {
+       "service:states" : [
+          {
+             "changed" : "Tue Jun 04 11:10:12 BST 2019",
+             "links" : {
+                "path" : "service1"
+             },
+             "observedValue" : "WARNING",
+             "componentId" : "service1"
+          },
+          {
+             "changed" : "Tue Jun 04 11:15:27 BST 2019",
+             "links" : {
+                "path" : "service2"
+             },
+             "observedValue" : "ERROR",
+             "componentId" : "service2"
+          }
+       ]
+    }
+}
+</code></pre>
               
             </div>
           </div>
@@ -1175,10 +888,10 @@ automatically and will be available in Opencast a few seconds later.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../external-api/" class="btn btn-neutral float-right" title="External API">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../admin-ui/event-filters/" class="btn btn-neutral float-right" title="Event Filters">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../stream-security/" class="btn btn-neutral" title="Stream Security"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../oaipmh/" class="btn btn-neutral" title="OAI-PMH"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1206,10 +919,10 @@ automatically and will be available in Opencast a few seconds later.</p>
           <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../stream-security/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../oaipmh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../external-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../admin-ui/event-filters/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -253,6 +253,10 @@
                     
     <a class="" href="../../oaipmh/">OAI-PMH</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../../monitoring/">External Monitoring</a>
+                </li>
                 <li class=" current">
                     
     <span class="caption-text">Admin UI Configuration</span>
@@ -289,6 +293,8 @@
             <li><a class="toctree-l5" href="#statistics-providers">Statistics Providers</a></li>
         
             <li><a class="toctree-l5" href="#csv-exports">CSV Exports</a></li>
+        
+            <li><a class="toctree-l5" href="#using-the-runningtotal-provider">Using the runningtotal provider</a></li>
         
         </ul>
     
@@ -717,6 +723,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../../../workflowoperationhandlers/statistics-writer/">Statistics Writer</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../../workflowoperationhandlers/tag-woh/">Tag</a>
                 </li>
                 <li class="">
@@ -853,7 +863,8 @@ configurations have to be in json format. So e.g. <em>influx.views.episode.sum.j
   plotted while a <code>MONTHLY</code> resolution would leave us with 24 values being plotted in the chart.</li>
 </ul>
 </li>
-<li><strong><code>type</code></strong> defines the structure of the data provided by this provider. Currently, only <code>timeseries</code> is supported.</li>
+<li><strong><code>type</code></strong> defines the structure of the data provided by this provider. Currently, <code>timeseries</code> and <code>runningtotal</code>
+  are supported.</li>
 </ul>
 <p>Here is an example json configuration for a provider which generates charts for episodes showing the number of views:</p>
 <p><code>etc/statistics/influx.views.episode.sum.json</code></p>
@@ -884,6 +895,57 @@ the export will contain the data which the graph currently displays. For series 
 behavior in the way that exported series statistics contain the data of all events of a series instead of just the top
 level series data. To enable this, it is necessary to specify which Statistics Provider should be used to get the episode
 data. See the configuration file <code>org.opencastproject.statistics.export.impl.StatisticsExportServiceImpl.cfg</code> for details.</p>
+<h2 id="using-the-runningtotal-provider">Using the <code>runningtotal</code> provider</h2>
+<p>The <code>runningtotal</code> statistics provider is a special type of time series statistics provider. To illustrate what it
+can be used for, let’s assume we want to track the number of hours of videos per organization (this is actually
+what the provider was initially designed for). We create a JSON file for the provider as such:</p>
+<pre><code class="json">{
+  &quot;id&quot;: &quot;organization.publishedhours.influx&quot;,
+  &quot;title&quot;: &quot;STATISTICS.TITLE.PUBLISHEDHOURS&quot;,
+  &quot;description&quot;: &quot;STATISTICS.DESCRIPTION.PUBLISHEDHOURS&quot;,
+  &quot;resourceType&quot;: &quot;ORGANIZATION&quot;,
+  &quot;sources&quot;: [{
+    &quot;measurement&quot;: &quot;infinite.publishedhours&quot;,
+    &quot;aggregation&quot;: &quot;SUM&quot;,
+    &quot;aggregationVariable&quot;: &quot;hours&quot;,
+    &quot;resourceIdName&quot;: &quot;organizationId&quot;,
+    &quot;resolutions&quot;: [
+      &quot;DAILY&quot;,
+      &quot;WEEKLY&quot;,
+      &quot;MONTHLY&quot;,
+      &quot;YEARLY&quot;
+    ]
+  }],
+  &quot;type&quot;: &quot;runningtotal&quot;
+}
+</code></pre>
+
+<p>Note that the published hours entries can be negative, in case we retract a video.</p>
+<p>When the <code>runningtotal</code> provider is asked to report on, for example, the monthly hours of video for a specific year,
+it will first take the sum of all video lengths <em>up until</em> that year. Then, for each month, it will take the sum of
+all the entries in that month, and add it to the previous value. And so on for the next months.</p>
+<p>To actually <em>write</em> these hours to the statistics data base, you have to add the <code>statistics-writer</code> workflow
+operation handler to your workflows. Specifically, somewhere in your publishing workflow, you have to add an entry
+such as this:</p>
+<pre><code class="XML">&lt;operation
+  id=&quot;statistics-writer&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;Collect video statistics&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;flavor&quot;&gt;presenter/video&lt;/configuration&gt;
+    &lt;configuration key=&quot;retract&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;measurement-name&quot;&gt;publishedhours&lt;/configuration&gt;
+    &lt;configuration key=&quot;organization-resource-id-name&quot;&gt;organizationId&lt;/configuration&gt;
+    &lt;configuration key=&quot;length-field-name&quot;&gt;hours&lt;/configuration&gt;
+    &lt;configuration key=&quot;temporal-resolution&quot;&gt;hours&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<p>To <em>decrement</em> the running total of hours in the case of retractions, set the <code>retract</code> property to <code>true</code>.
+In the default case, or when the <code>retract</code> property is <code>false</code> the running total is not decremented when a
+retraction occurs.</p>
 <h1 id="verifying-your-setup">Verifying Your Setup<a name="verify"></a></h1>
 <p>If you want to test your setup, you can put the following test data into InfluxDB and check if Opencast displays all
 charts correctly. First, create a series and an event as part of that series using the Opencast Admin UI. Second, copy
