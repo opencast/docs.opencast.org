@@ -72,6 +72,8 @@
         
             <li><a class="toctree-l3" href="#additional-notes-about-71">Additional Notes About 7.1</a></li>
         
+            <li><a class="toctree-l3" href="#additional-notes-about-72">Additional Notes About 7.2</a></li>
+        
             <li><a class="toctree-l3" href="#release-schedule">Release Schedule</a></li>
         
             <li><a class="toctree-l3" href="#release-managers">Release Managers</a></li>
@@ -848,6 +850,16 @@ multiple schedules by up to 90%).</li>
 <p>Opencast 7.1 is the first maintenance release for Opencast 7. It fixes a bug with the scheduler migration which may have
 caused minor issues for old, process events which were missing some meta-data. If you have already migrated to Opencast
 7.0 and experience this problem, simply re-start the scheduler migration and re-build the index once more.</p>
+<h2 id="additional-notes-about-72">Additional Notes About 7.2</h2>
+<p>Opencast 7.2 fixes a bug in the video editor configuration present in Opencast 7.0 to 7.1 which will cause Opencast to
+always silently skip the video editor and publish the whole video. The problem was introduced by <a href="https://github.com/opencast/opencast/pull/944">a fix in the default
+workflows</a> and later fixed again by a <a href="https://github.com/opencast/opencast/pull/1013">configuration change therein
+</a>. If you use the default workflows, please make sure to update to the
+latest state of the workflows.</p>
+<p>If you use your own workflow and did not adapt the first patch, you should not be affected by this problem at all. If
+you are, just make sure that source and target smil flavor for the editor workflow operation are identical like it is
+ensured <a href="https://github.com/opencast/opencast/pull/1013">by the official fix</a>. A proper solution not relying on specific
+configurations and less error prone is in work and will be added to the upcoming major Opencast release.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>

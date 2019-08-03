@@ -487,7 +487,7 @@
     <a class="current" href="./">Clone</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#cloneworkflowoperationhandler">CloneWorkflowOperationHandler</a></li>
+    <li class="toctree-l3"><a href="#clone-workflow-operation">Clone Workflow Operation</a></li>
     
         <ul>
         
@@ -772,9 +772,10 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="cloneworkflowoperationhandler">CloneWorkflowOperationHandler</h1>
+                <h1 id="clone-workflow-operation">Clone Workflow Operation</h1>
+<p>ID: <code>clone</code></p>
 <h2 id="description">Description</h2>
-<p>The CloneWorkflowOperationHandler can be used to clone media package elements.</p>
+<p>The clone workflow operation can be used to clone media package elements.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -806,29 +807,27 @@
 <p>Notes:</p>
 <ul>
 <li><em>source-flavor</em> and <em>source-tags</em> may be used both together to select media package elements based on both flavors and
-  tags</li>
-<li>If <em>source-flavor</em> is not specified, all media package elements matching <em>source-tags</em> will be selected</li>
+  tags If <em>source-flavor</em> is not specified, all media package elements matching <em>source-tags</em> will be selected</li>
 <li>In case that neither <em>source-flavor</em> nor <em>source-tags</em> are specified, the operation will be skipped</li>
 <li>In case no media package elements match <em>source-flavor</em> and <em>source-tags</em>, the operation will be skipped</li>
 </ul>
 <h2 id="source-flavor">Source Flavor</h2>
-<p>If <em>source-flavor</em> is specified as e.g. <em>*/source</em>, all matching media package elements will be cloned and have the new
-flavor <em><original-flavor>/target</em>.</p>
+<p>If <em>source-flavor</em> is specified as e.g. <code>*/source</code>, all matching media package elements will be cloned and have the new
+flavor <code>&lt;original-flavor&gt;/target</code>.</p>
 <h2 id="target-flavor">Target Flavor</h2>
-<p>If <em>target-flavor</em> is specified as e.g. <em>*/target</em>, the target flavors will have the subtype <em>target</em> and the type from
-the source If <em>target-flavor</em> is specified as e.g. <em>target/*</em>, the target flavors will have the type <em>target</em> and the
-subtype from the source</p>
+<p>If <em>target-flavor</em> is specified as e.g. <code>*/target</code>, the target flavors will have the subtype <em>target</em> and the type from
+the source If <em>target-flavor</em> is specified as e.g. <code>target/*</code>, the target flavors will have the type <em>target</em> and the
+subtype from the source.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>    &lt;operation
-            id="clone"
-            fail-on-error="true"
-            exception-handler-workflow="ng-partial-error"&gt;
-            &lt;configurations&gt;
-                    &lt;configuration key="source-flavor"&gt;*/source&lt;/configuration&gt;
-                    &lt;configuration key="source-tags"&gt;archive&lt;/configuration&gt;
-                    &lt;configuration key="target-flavor"&gt;*/target&lt;/configuration&gt;
-            &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code class="xml">&lt;operation
+    id=&quot;clone&quot;
+    exception-handler-workflow=&quot;partial-error&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;*/target&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
               
             </div>
