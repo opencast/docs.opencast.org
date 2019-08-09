@@ -252,6 +252,8 @@
         
             <li><a class="toctree-l4" href="#url-signing-service-installation">URL Signing Service Installation</a></li>
         
+            <li><a class="toctree-l4" href="#minimal-configuration-example">Minimal Configuration Example</a></li>
+        
             <li><a class="toctree-l4" href="#configuration-of-signing-providers">Configuration of Signing Providers</a></li>
         
             <li><a class="toctree-l4" href="#configuration-of-url-signing-timeout-values">Configuration of URL Signing Timeout Values</a></li>
@@ -844,6 +846,22 @@ signing:</p>
 </ul>
 <p>If these modules are present, the URL signing service will be available, to which the URL signing providers can then
 register themselves.</p>
+<h2 id="minimal-configuration-example">Minimal Configuration Example</h2>
+<p>This is a minimal configuration example which requires valid tokens for all static file downloads:</p>
+<p><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg</code>:</p>
+<pre><code class="properties">enabled=true
+url.regex.files=.*localhost:8080/static/.*
+</code></pre>
+
+<p><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg</code></p>
+<pre><code class="properties">key.default.secret=THISISNOSECUREKEY
+key.default.url=http://localhost:8080/static/
+</code></pre>
+
+<p><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg</code>:</p>
+<pre><code class="properties">key.default=THISISNOSECUREKEY
+</code></pre>
+
 <h2 id="configuration-of-signing-providers">Configuration of Signing Providers</h2>
 <p>The GenericUrlSigningProvider that comes with Opencast has its own configuration file:</p>
 <pre><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg
