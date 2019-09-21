@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Asset Manager - Opencast - Administration Guide</title>
+  <title>Ansible - Opencast - Administration Guide</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Asset Manager";
-    var mkdocs_page_input_path = "configuration/asset-manager.md";
+    var mkdocs_page_name = "Ansible";
+    var mkdocs_page_input_path = "installation/ansible.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -74,11 +74,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../installation/">Overview</a>
+    <a class="" href="../">Overview</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+    <a class="" href="../multiple-servers/">Multiple Servers</a>
                 </li>
                 <li class="">
                     
@@ -86,11 +86,11 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/source-linux/">Linux</a>
+    <a class="" href="../source-linux/">Linux</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+    <a class="" href="../source-macosx/">MacOS X</a>
                 </li>
     </ul>
                 </li>
@@ -100,25 +100,43 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+    <a class="" href="../debs/">Debian/Ubuntu</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+    <a class="" href="../rpm-fedora/">Fedora</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+    <a class="" href="../rpm-rhel-sl-centos/">RHEL/CentOS</a>
                 </li>
     </ul>
                 </li>
-                <li class="">
+                <li class=" current">
                     
     <span class="caption-text">Installation via script</span>
     <ul class="subnav">
-                <li class="toctree-l3">
+                <li class="toctree-l3 current">
                     
-    <a class="" href="../../installation/ansible/">Ansible</a>
+    <a class="current" href="./">Ansible</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#install-from-repository-via-ansible-debian-and-redhat-based-distros">Install from Repository via Ansible (Debian, and RedHat based distros)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#registration">Registration</a></li>
+        
+            <li><a class="toctree-l5" href="#install-ansible">Install Ansible</a></li>
+        
+            <li><a class="toctree-l5" href="#script-setup">Script Setup</a></li>
+        
+            <li><a class="toctree-l5" href="#install-opencast">Install Opencast</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
                 </li>
@@ -128,7 +146,7 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+    <a class="" href="../docker-local/">Testing Locally</a>
                 </li>
     </ul>
                 </li>
@@ -141,15 +159,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../">Overview</a>
+    <a class="" href="../../configuration/">Overview</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../basic/">Basic</a>
+    <a class="" href="../../configuration/basic/">Basic</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../database/">Database</a>
+    <a class="" href="../../configuration/database/">Database</a>
                 </li>
                 <li class="">
                     
@@ -157,77 +175,61 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../https/">Overview</a>
+    <a class="" href="../../configuration/https/">Overview</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../https/nginx/">Using Nginx</a>
+    <a class="" href="../../configuration/https/nginx/">Using Nginx</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../https/opencast.only/">Internal HTTPS</a>
+    <a class="" href="../../configuration/https/opencast.only/">Internal HTTPS</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../https/migration/">Migrating old content to HTTPS</a>
+    <a class="" href="../../configuration/https/migration/">Migrating old content to HTTPS</a>
                 </li>
-    </ul>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Asset Manager</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#asset-manager-configuration">Asset Manager Configuration</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#how-can-i-use-a-different-storage-backend">How can I use a different storage backend?</a></li>
-        
-            <li><a class="toctree-l4" href="#rest-endpoints">REST Endpoints</a></li>
-        
-            <li><a class="toctree-l4" href="#config-options">Config Options</a></li>
-        
-        </ul>
-    
-
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../message-broker/">Message Broker</a>
+    <a class="" href="../../configuration/asset-manager/">Asset Manager</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../metadata/">Metadata</a>
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../encoding/">Encoding</a>
+    <a class="" href="../../configuration/metadata/">Metadata</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../inbox/">Inbox</a>
+    <a class="" href="../../configuration/encoding/">Encoding</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../listproviders/">List Providers</a>
+    <a class="" href="../../configuration/inbox/">Inbox</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../load/">Load</a>
+    <a class="" href="../../configuration/listproviders/">List Providers</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../log/">Log</a>
+    <a class="" href="../../configuration/load/">Load</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+    <a class="" href="../../configuration/log/">Log</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+    <a class="" href="../../configuration/user-statistics.and.privacy/">User Statistics and Privacy Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
                 </li>
                 <li class="">
                     
@@ -235,57 +237,57 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../security/">General Security</a>
+    <a class="" href="../../configuration/security/">General Security</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../acl/">Access Control Lists</a>
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+    <a class="" href="../../configuration/security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.user.moodle/">Moodle User Provider</a>
+    <a class="" href="../../configuration/security.user.moodle/">Moodle User Provider</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+    <a class="" href="../../configuration/security.user.sakai/">Sakai User Provider</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../security.user.brightspace/">Brightspace User Provider</a>
+    <a class="" href="../../configuration/security.user.brightspace/">Brightspace User Provider</a>
                 </li>
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../stream-security/">Stream Security</a>
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../workflow/">Workflow</a>
+    <a class="" href="../../configuration/workflow/">Workflow</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../external-api/">External API</a>
+    <a class="" href="../../configuration/external-api/">External API</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../oaipmh/">OAI-PMH</a>
+    <a class="" href="../../configuration/oaipmh/">OAI-PMH</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../monitoring/">External Monitoring</a>
+    <a class="" href="../../configuration/monitoring/">External Monitoring</a>
                 </li>
                 <li class="">
                     
@@ -293,23 +295,23 @@
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../admin-ui/event-filters/">Event Filters</a>
+    <a class="" href="../../configuration/admin-ui/event-filters/">Event Filters</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../admin-ui/asset-upload/">Manual Asset Upload</a>
+    <a class="" href="../../configuration/admin-ui/asset-upload/">Manual Asset Upload</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../admin-ui/languages/">Languages</a>
+    <a class="" href="../../configuration/admin-ui/languages/">Languages</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../admin-ui/statistics/">Statistics</a>
+    <a class="" href="../../configuration/admin-ui/statistics/">Statistics</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../admin-ui/thumbnails/">Thumbnails</a>
+    <a class="" href="../../configuration/admin-ui/thumbnails/">Thumbnails</a>
                 </li>
     </ul>
                 </li>
@@ -859,14 +861,18 @@
     
       
         
-          <li>Configuration &raquo;</li>
+          <li>Installation via script &raquo;</li>
+        
+      
+        
+          <li>Installation &raquo;</li>
         
       
     
-    <li>Asset Manager</li>
+    <li>Ansible</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/asset-manager.md"
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/ansible.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -876,26 +882,34 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="asset-manager-configuration">Asset Manager Configuration</h1>
-<h3 id="how-can-i-use-a-different-storage-backend">How can I use a different storage backend?</h3>
-<p>Configure an alternate storage backend, and then either use the REST endpoints or the
-<a href="../../workflowoperationhandlers/move-storage-woh/">Move Storage</a> workflow operation as part of a workflow.  Note that
-the REST endpoints trigger workflows, the workflow operation handlers are generally only useful as part of an automated
-storage tiering system.</p>
-<h3 id="rest-endpoints">REST Endpoints</h3>
-<p>The REST endpoints can be accessed from <code>$server_url/assets/docs</code>. The value of <code>$server_url</code> is set during
-<a href="../basic/">basic configuration</a>. There is no other current user interface for storage tiering at this time.</p>
-<h2 id="config-options">Config Options</h2>
-<h3 id="file-system-based-asset-store">File System Based Asset Store</h3>
-<p>Configure the file system based asset store in <code>custom.properties</code>.</p>
-<ul>
-<li><code>org.opencastproject.episode.rootdir</code>
-   The path where the file system based asset store of the default implementation stores the assets. This key is optional.</li>
-<li><code>org.opencastproject.storage.dir</code>
-  This is Opencast’s general config key to configure the base path of everything storage related.
-  If no storage directory is configured explicitely, the file system based asset store will use
-  <code>${org.opencastproject.storage.dir}/archive</code> as its base path.</li>
-</ul>
+                <h1 id="install-from-repository-via-ansible-debian-and-redhat-based-distros">Install from Repository via Ansible (Debian, and RedHat based distros)</h1>
+<p>We provide <a href="https://ansible.com">Ansible</a> installation and configuration scripts which drastically reduce the time
+required to set up an Opencast installation, and help you manage the configuration across your entire cluster.  Whether
+you are installing a single machine, or dozens, these scripts should do the basic setup of your Opencast install.  These
+scripts use the package repository, so the first step is to register.</p>
+<p>Note that these scripts are meant as a basis to get you started and you will likely need to adjust and extend them to
+fit your local environment for which you need to have some basic knowledge of Ansible. Please review the scripts before
+using them to make sure they fit your needs.</p>
+<p>Examples in this document refer to <code>7.x</code> and <code>r/7.x</code>.  You should replace those with the version you want to install!</p>
+<h2 id="registration">Registration</h2>
+<p>Before you can start you need to get an account for the repository. You will need the credentials that you get by mail
+after the registration to successfully complete this manual. The placeholders <code>[your_username]</code> and <code>[your_password]</code>
+are used in this manual wherever the credentials are needed.</p>
+<p><a href="https://pkg.opencast.org">Please visit pkg.opencast.org</a></p>
+<h2 id="install-ansible">Install Ansible</h2>
+<p>Ansible may be available from your distribution's packaging manager, or you may need to install it manually. See the
+<a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">Ansible installation documentation</a>
+for more details.</p>
+<h2 id="script-setup">Script Setup</h2>
+<p>The next step is getting the scripts themselves.  Go to the <a href="https://github.com/opencast/oc-config-management/branches">list of branches</a>
+and then click on the branch version you want.  This <em>must</em> match the desired Opencast version, so if you want the
+latest Opencast 7 release click on <code>r/7.x</code>.  Then click on <code>Clone or download</code>, then <code>Download Zip</code>.  You will need
+to decompress this file someplace handy, and then run terminal commands from inside that directory.</p>
+<p>Alternatively, if you familiar with <code>git</code> you can just clone the repository like this</p>
+<pre><code>git clone -b r/7.x https://github.com/opencast/oc-config-management
+</code></pre>
+<h2 id="install-opencast">Install Opencast</h2>
+<p>To complete your install, please follow the instructions in the README.md documentation included in the scripts.</p>
               
             </div>
           </div>
@@ -903,10 +917,10 @@ storage tiering system.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../message-broker/" class="btn btn-neutral float-right" title="Message Broker">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../docker-local/" class="btn btn-neutral float-right" title="Testing Locally">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../https/migration/" class="btn btn-neutral" title="Migrating old content to HTTPS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../rpm-rhel-sl-centos/" class="btn btn-neutral" title="RHEL/CentOS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -934,10 +948,10 @@ storage tiering system.</p>
           <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../https/migration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../rpm-rhel-sl-centos/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../message-broker/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../docker-local/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
