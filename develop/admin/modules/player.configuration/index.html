@@ -362,8 +362,6 @@
         
             <li><a class="toctree-l5" href="#select-the-opencast-player">Select the Opencast Player</a></li>
         
-            <li><a class="toctree-l5" href="#configuration">Configuration</a></li>
-        
         </ul>
     
 
@@ -880,62 +878,12 @@
               
                 <h1 id="opencast-player-configuration">Opencast Player - Configuration</h1>
 <p>The configurations for the player are done for each tenant. So the configuration keys are located in
-<code>.../etc/org.opencastproject.organization-mh_default_org.cfg</code>.</p>
+<code>.../etc/ui-config/&lt;tenant&gt;/theodul/config.yml</code></p>
+<p>The default tenant for opencast is <code>mh_default_org</code></p>
 <h2 id="select-the-opencast-player">Select the Opencast Player</h2>
-<p>To activate the player set:</p>
-<pre><code>prop.player=/engage/theodul/ui/core.html
+<p>To activate the player set in each tenant this line in the file <code>.../etc/org.opencastproject.organization-&lt;tenant&gt;.cfg</code>.</p>
+<pre><code>prop.player=/engage/theodul/ui/core.html?id=#{id}
 </code></pre>
-<h2 id="configuration">Configuration</h2>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-<th>Options</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>prop.logo_player</code></td>
-<td>Logo in the top right corner</td>
-<td>Any URL or local path to an image file</td>
-</tr>
-<tr>
-<td><code>prop.player.positioncontrols</code></td>
-<td>Position of player controls</td>
-<td><code>top</code>, <code>bottom</code> (default)</td>
-</tr>
-<tr>
-<td><code>prop.player.mastervideotype</code></td>
-<td>Default flavor of the master video *</td>
-<td>Any flavor or nothing</td>
-</tr>
-<tr>
-<td><code>prop.player.hide_video_context_menu</code></td>
-<td>Hide browser context menu for videos</td>
-<td><code>true</code>, <code>false</code></td>
-</tr>
-<tr>
-<td><code>prop.show_embed_links</code></td>
-<td>Show player embed code</td>
-<td><code>true</code>, <code>false</code></td>
-</tr>
-<tr>
-<td><code>prop.link_mediamodule</code></td>
-<td>If to link to the media module</td>
-<td><code>true</code>, <code>false</code></td>
-</tr>
-<tr>
-<td><code>prop.player.shortcut.*</code></td>
-<td>Keyboard shortcut specifications</td>
-<td>Any key</td>
-</tr>
-</tbody>
-</table>
-<h3 id="master-video-flavor">Master Video Flavor</h3>
-<p>This specifies the flavor used to select the master video (the video on the left side in the video display). This video
-file also provides the audio. If not set or no video of the specified type is available, the videos are taken in their
-sequence within the media package.</p>
               
             </div>
           </div>

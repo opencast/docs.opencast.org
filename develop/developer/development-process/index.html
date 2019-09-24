@@ -452,7 +452,7 @@
 <ul>
 <li><a href="#development-process">Development Process</a><ul>
 <li><a href="#contributing-code">Contributing Code</a><ul>
-<li><a href="#jira-and-github">Jira and GitHub</a></li>
+<li><a href="#github">GitHub</a></li>
 <li><a href="#bugfix-vs-feature">Bugfix vs Feature</a></li>
 <li><a href="#reviews">Reviews</a><ul>
 <li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
@@ -497,12 +497,14 @@ contributed, how they are merged and how releases are done.</p>
 <p>Opencast sources can be found on <a href="https://github.com/opencast">GitHub</a>. The easiest way to contribute code to the
 project is by creating a pull request against the project's official repository. More details about the structure of
 this repository are explained later in this guide.</p>
-<h3 id="jira-and-github">Jira and GitHub</h3>
+<h3 id="github">GitHub</h3>
 <ul>
 <li>
-<p>Opencast uses <a href="https://opencast.jira.com">Jira</a> for tracking issues. Each pull request should be accompanied by a
-  ticket in Jira. The issue identifier should also be used in the title of the pull request and the commits. E.g.:
-  <code>MH-12345, Fixing Something Somewhere</code>. Creating a Jira ticket is usually the first step when fixing something.</p>
+<p>Opencast uses <a href="https://github.com/opencast/opencast/issues">GitHub</a> for tracking issues. Each pull request should be
+  accompanied by a ticket in GitHub unless it is a very small fix. The issue identifier should also be in the
+  description of the pull request, which will automatically close the issue (if any) when the PR is merged.  See
+  <a href="https://help.github.com/en/articles/closing-issues-using-keywords">here</a> for more details. Creating a GitHub issue
+  is usually the first step when fixing something.</p>
 </li>
 <li>
 <p>Opencast uses <a href="https://github.com/opencast">GitHub</a> for code hosting. Please
@@ -516,13 +518,10 @@ this repository are explained later in this guide.</p>
 <ul>
 <li>
 <p>Features are <em>only</em> allowed to be merged into <code>develop</code>, which will let them automatically become part of the next
-  major/minor release, given that the release branch for the next release has not been cut yet. If possible, please name
-  branches containing features according to the pattern <code>f/MH-XXXXX-short-description</code>, where MH-XXXXX is the relevant
-  Jira ticket.</p>
+  major/minor release, given that the release branch for the next release has not been cut yet.</p>
 </li>
 <li>
-<p>Bug fixes can be merged both into <code>develop</code> and into release branches. If possible, please name branches containing
-  bug fixes according to the pattern <code>t/MH-XXXXX-short-description</code>, where MH-XXXXX is the relevant Jira ticket.</p>
+<p>Bug fixes can be merged both into <code>develop</code> and into release branches.</p>
 </li>
 </ul>
 <h3 id="reviews">Reviews</h3>
@@ -536,10 +535,9 @@ Requests</a>.</p>
 <p>When reviewing a pull request, it is always easier if the reviewer knows what the ticket is about, and has a rough idea
 of what work has been done. To this end, there are a few expectations for all pull requests:</p>
 <ul>
-<li>For each pull request a JIRA ticket should be created</li>
-<li>The JIRA ticket and JIRA ticket title should be the pull request title</li>
+<li>The GitHub issue  title should match the pull request title</li>
 <li>The pull request description should contain a summary of the work done, along with reasoning for any major change<ul>
-<li>The JIRA ticket should contain the same information</li>
+<li>The GitHub issue should contain the same information</li>
 </ul>
 </li>
 <li>For feature pull requests, accompanying documentation should be included</li>
@@ -1171,11 +1169,9 @@ report them and possibly fix them to improve Opencast as product.</p>
 coordinate test phases dedicated to new releases in order to identify possible problems ahead of time. The whole
 community will be requested to participate in this testing.</p>
 <h3 id="reporting-bugs">Reporting Bugs</h3>
-<p>If you identify any bugs, please report them! To do that, register yourself in the <a href="https://opencast.jira.com">Opencast
-Jira</a> and create a new ticket. Please describe in detail how to reproduce the problem and
-especially set the <em>Affects Version</em> and "Fix Version", where <em>Fix Version</em> should be the next Opencast release.</p>
-<p>If in doubt of any items in the ticket, please assign it for review to either the current release manager or to the
-quality assurance manager. They will check the issue fields and adjust <em>fix version</em>, <em>severity</em>, etc. if necessary.</p>
+<p>If you identify any bugs, please <a href="https://github.com/opencast/opencast/issues">report them on Github</a>!. Please make
+sure to  describe in detail how to reproduce the problem, and which version of Opencast you are experiencing the issue
+on.</p>
 <h4 id="security-issues">Security Issues</h4>
 <p>If you discover a problem that has severe implications for system security, please do not publish this information on
 list. Instead, send a report of the problem to <em>security@opencast.org</em>. The message will be forwarded to the private
