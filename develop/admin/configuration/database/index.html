@@ -598,6 +598,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../../workflowoperationhandlers/cropvideo-woh/">Crop Video</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
                 </li>
                 <li class="">
@@ -950,15 +954,15 @@ wildcard for "anything". For more details on MariaDB/MySQL user creation have a 
 <p>To set up the database structure you can (and should!) use the Opencast ddl scripts. You can find them in
 <code>…/docs/scripts/ddl/mysql5.sql</code> or download them from GitHub.</p>
 <p>To import the database structure using the MariaDB client, switch to the directory that contains the <code>mysql5.sql</code> file,
-run the client with the user you created in the previous step (<code>-u opencast</code>) and switch to the database you want to use
+run the client with a user priviledged to create the database structure and switch to the database you want to use
 (e.g. <code>opencast</code>):</p>
-<pre><code>mysql -u opencast -p opencast
+<pre><code>mysql -u root -p opencast
 </code></pre>
 <p>Run the ddl script:</p>
 <pre><code>mysql&gt; source mysql5.sql;
 </code></pre>
 <p>Alternatively, you can import the script directly from the command line:</p>
-<pre><code>mysql -u opencast -p opencast &lt; …/docs/scripts/ddl/mysql5.sql
+<pre><code>mysql -u root -p opencast &lt; …/docs/scripts/ddl/mysql5.sql
 </code></pre>
 <p>Now, ensure the MariaDB <a href="https://mariadb.com/kb/en/library/server-system-variables/"><code>wait_timeout</code></a> in <code>mariadb.cnf</code>
 or <code>mysql.cnf</code> is bigger than <code>org.opencastproject.db.jdbc.pool.max.idle.time</code> in Opencast's <code>custom.properties</code>.
