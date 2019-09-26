@@ -1,430 +1,92 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Notes - Opencast - Developer Guide</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Notes - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
-  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-  <link href="../../css/font-awesome.min.css" rel="stylesheet">
-  <link href="../../css/style-guide.css" rel="stylesheet">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Notes";
-    var mkdocs_page_input_path = "infrastructure/notes.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Infrastructure Notes", url: "#_top", children: [
+              {title: "Harvard DCE", url: "#harvard-dce" },
+              {title: "ETH", url: "#eth" },
+              {title: "University of Cologne", url: "#university-of-cologne" },
+              {title: "University of Osnabr\u00fcck", url: "#university-of-osnabruck" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
 
-  <div class="wy-grid-for-nav">
 
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development Process</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../development-process/">Development</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../release-manager/">Release Manager</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../qa-coordinator/">QA Coordinator</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../security/">Security Issues</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../code-style/">Code Style</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../documentation/">Documentation</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Decision Making</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../decision-making/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../decision-making/consensus-building/">Consensus Building</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../decision-making/voting/">Voting</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development Environment</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../development-environment/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../development-environment-docker/">With Docker</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../committer/">Committers</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../license/">Licenses and Legal Matters</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../governance/">Governance</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../localization/">Localization</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../packaging/">Packaging</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../proposal-log/">Proposal Log</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../asset-manager/">Asset Manager</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../scheduler/">Scheduler</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Modules</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../modules/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <span class="caption-text">Administrative user Interface</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/admin-ui/development/">Development</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <span class="caption-text">Style Guide</span>
-    <ul class="subnav">
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/">Overview</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/color-palette/">Color Palette</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/typeface/">Typeface</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/view-structure/">View Structure</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/spacing/">Logo</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/navigation/">Navigation</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/modals/">Modals</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/forms/">Forms</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/icons/">Icons</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/buttons/">Buttons</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/dropdowns/">Dropdowns</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="../../modules/admin-ui/style/references/">References</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../modules/capture-agent/">Capture Agent</a>
-                </li>
-                <li class="">
-                    
-    <span class="caption-text">Player</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/architecture/">Architecture</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/core.reference/">Core Reference</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/events/">Events</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/storage/">Storage</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/plugin.development/">Plugin Development</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../../modules/player/testing/">Testing</a>
-                </li>
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../modules/stream-security/">Stream Security</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../modules/oaipmh/">OAI-PMH</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Infrastructure</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../">Overview</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Notes</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#infrastructure-notes">Infrastructure Notes</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#harvard-dce">Harvard DCE</a></li>
-        
-            <li><a class="toctree-l4" href="#eth">ETH</a></li>
-        
-            <li><a class="toctree-l4" href="#university-of-cologne">University of Cologne</a></li>
-        
-            <li><a class="toctree-l4" href="#university-of-osnabruck">University of Osnabrück</a></li>
-        
-        </ul>
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
     
 
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../maven-repository/">Maven Repository</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">External API</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../api/">Introduction</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/usage/">Usage</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/authentication/">Authentication</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/authorization/">Authorization</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/base-api/">Base API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/agents-api/">Agents API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/events-api/">Events API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/series-api/">Series API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/groups-api/">Groups API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/security-api/">Security API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/workflow-api/">Workflow API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/types/">Data Types</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../api/glossary/">Glossary</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
-      </div>
-      &nbsp;
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">Opencast - Developer Guide</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
+    
     
       
-        
-          <li>Infrastructure &raquo;</li>
-        
-      
     
-    <li>Notes</li>
-    <li class="wy-breadcrumbs-aside">
-      
-        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/infrastructure/notes.md"
-          class="icon icon-github"> Edit on GitHub</a>
-      
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
-              
-                <h1 id="infrastructure-notes">Infrastructure Notes</h1>
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../maven-repository/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../maven-repository/" class="btn btn-xs btn-link">
+        Maven Repository
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="infrastructure-notes">Infrastructure Notes</h1>
 <p>This page contains notes about the current configuration of the Opencast servers around the world</p>
 <h2 id="harvard-dce">Harvard DCE</h2>
 <h3 id="common-configuration-choices">Common Configuration Choices</h3>
@@ -476,54 +138,47 @@
 <ul>
 <li>Same server</li>
 </ul>
-              
-            </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+  <br>
+    
+
+    
+    
       
-        <a href="../maven-repository/" class="btn btn-neutral float-right" title="Maven Repository">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../maven-repository/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../maven-repository/" class="btn btn-xs btn-link">
+        Maven Repository
+      </a>
     </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-      
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../maven-repository/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+    <br>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/infrastructure/notes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
 
 </body>
 </html>
