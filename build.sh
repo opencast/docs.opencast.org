@@ -30,9 +30,8 @@ do
         # deliberately install an old version for the old docs
         pip -q install mkdocs==0.16.3
     else
-        pip -q install mkdocs
+        pip -q install mkdocs mkdocs-windmill markdown_inline_graphviz_extension
     fi
-    pip -q install markdown_inline_graphviz_extension
 
     [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
     git reset --hard HEAD
