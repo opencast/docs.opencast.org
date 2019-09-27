@@ -1,437 +1,346 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="None">
   
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <title>Home - Opencast - Developer Guide</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Developer Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/style-guide.css" rel="stylesheet">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Home";
-    var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="js/jquery-2.1.1.min.js" defer></script>
-  <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Opencast Development Guides", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
 
-  <div class="wy-grid-for-nav">
-
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> Opencast - Developer Guide</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href=".">Home</a>
-    <ul class="subnav">
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
             
-    <li class="toctree-l2"><a href="#opencast-development-guides">Opencast Development Guides</a></li>
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
     
 
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development Process</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="installation/source-linux/">Installation</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="development-process/">Development</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="release-manager/">Release Manager</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="qa-coordinator/">QA Coordinator</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="security/">Security Issues</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="code-style/">Code Style</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="documentation/">Documentation</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Decision Making</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="decision-making/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="decision-making/lazy-consensus/">Lazy Consensus</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="decision-making/consensus-building/">Consensus Building</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="decision-making/voting/">Voting</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development Environment</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="development-environment/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="development-environment-docker/">With Docker</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="committer/">Committers</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="license/">Licenses and Legal Matters</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="governance/">Governance</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="localization/">Localization</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="packaging/">Packaging</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="proposal-log/">Proposal Log</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="asset-manager/">Asset Manager</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="scheduler/">Scheduler</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="statistics/">Statistics</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Modules</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="modules/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <span class="caption-text">Administrative user Interface</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/admin-ui/development/">Development</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <span class="caption-text">Style Guide</span>
-    <ul class="subnav">
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/">Overview</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/color-palette/">Color Palette</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/typeface/">Typeface</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/view-structure/">View Structure</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/spacing/">Logo</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/navigation/">Navigation</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/modals/">Modals</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/forms/">Forms</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/icons/">Icons</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/buttons/">Buttons</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/dropdowns/">Dropdowns</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
-                </li>
-                <li class="toctree-l4">
-                    
-    <a class="" href="modules/admin-ui/style/references/">References</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                </li>
-                <li class="">
-                    
-    <span class="caption-text">Capture Agent</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/capture-agent/capture-agent/">Capture Agent</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/capture-agent/testcases/">Test Cases</a>
-                </li>
-    </ul>
-                </li>
-                <li class="">
-                    
-    <span class="caption-text">Player</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/architecture/">Architecture</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/core.reference/">Core Reference</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/events/">Events</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/storage/">Storage</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/plugin.development/">Plugin Development</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="modules/player/testing/">Testing</a>
-                </li>
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="modules/stream-security/">Stream Security</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="modules/oaipmh/">OAI-PMH</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Infrastructure</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="infrastructure/">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="infrastructure/notes/">Notes</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="infrastructure/maven-repository/">Maven Repository</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">External API</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="api/">Introduction</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/usage/">Usage</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/authentication/">Authentication</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/authorization/">Authorization</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/base-api/">Base API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/agents-api/">Agents API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/events-api/">Events API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/series-api/">Series API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/statistics-api/">Statistics API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/groups-api/">Groups API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/security-api/">Security API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/workflow-api/">Workflow API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/types/">Data Types</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="api/glossary/">Glossary</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+        <img class="wm-top-logo" src="./opencast-white.svg"/>
+      
+      <div class="wm-top-title">
+        Developer Guide<br>
+        
       </div>
-      &nbsp;
-    </nav>
+    </a>
+  </div>
+</nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">Opencast - Developer Guide</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".">Docs</a> &raquo;</li>
+  <div id="main-content" class="wm-page-top-frame">
     
-      
-    
-    <li>Home</li>
-    <li class="wy-breadcrumbs-aside">
-      
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/index.md"
-          class="icon icon-github"> Edit on GitHub</a>
-      
-    </li>
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/opencast/opencast/">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Development Process</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="installation/source-linux/" class="wm-article-link wm-toc-text">Installation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="development-process/" class="wm-article-link wm-toc-text">Development</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="reviewing-and-merging/" class="wm-article-link wm-toc-text">Reviewing, Merging and Declining Pull Requests</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="release-manager/" class="wm-article-link wm-toc-text">Release Manager</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="qa-coordinator/" class="wm-article-link wm-toc-text">QA Coordinator</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="security/" class="wm-article-link wm-toc-text">Security Issues</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="code-style/" class="wm-article-link wm-toc-text">Code Style</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="documentation/" class="wm-article-link wm-toc-text">Documentation</a>
+</li>
   </ul>
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
-              
-                <h1 id="opencast-development-guides">Opencast Development Guides</h1>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Decision Making</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="decision-making/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="decision-making/lazy-consensus/" class="wm-article-link wm-toc-text">Lazy Consensus</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="decision-making/consensus-building/" class="wm-article-link wm-toc-text">Consensus Building</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="decision-making/voting/" class="wm-article-link wm-toc-text">Voting</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Development Environment</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="development-environment/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="development-environment-docker/" class="wm-article-link wm-toc-text">With Docker</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 "><a href="committer/" class="wm-article-link wm-toc-text">Committers</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="license/" class="wm-article-link wm-toc-text">Licenses and Legal Matters</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="governance/" class="wm-article-link wm-toc-text">Governance</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="localization/" class="wm-article-link wm-toc-text">Localization</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="packaging/" class="wm-article-link wm-toc-text">Packaging</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="proposal-log/" class="wm-article-link wm-toc-text">Proposal Log</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="asset-manager/" class="wm-article-link wm-toc-text">Asset Manager</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="scheduler/" class="wm-article-link wm-toc-text">Scheduler</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="statistics/" class="wm-article-link wm-toc-text">Statistics</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Modules</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Administrative user Interface</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/admin-ui/development/" class="wm-article-link wm-toc-text">Development</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Style Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/color-palette/" class="wm-article-link wm-toc-text">Color Palette</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/typeface/" class="wm-article-link wm-toc-text">Typeface</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/view-structure/" class="wm-article-link wm-toc-text">View Structure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/spacing/" class="wm-article-link wm-toc-text">Logo</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/navigation/" class="wm-article-link wm-toc-text">Navigation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/modals/" class="wm-article-link wm-toc-text">Modals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/forms/" class="wm-article-link wm-toc-text">Forms</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/icons/" class="wm-article-link wm-toc-text">Icons</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/buttons/" class="wm-article-link wm-toc-text">Buttons</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/dropdowns/" class="wm-article-link wm-toc-text">Dropdowns</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/alerts-indicators/" class="wm-article-link wm-toc-text">Alerts and Indicators</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/admin-ui/style/references/" class="wm-article-link wm-toc-text">References</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Capture Agent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/capture-agent/capture-agent/" class="wm-article-link wm-toc-text">Capture Agent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/capture-agent/testcases/" class="wm-article-link wm-toc-text">Test Cases</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Player</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/architecture/" class="wm-article-link wm-toc-text">Architecture</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/core.reference/" class="wm-article-link wm-toc-text">Core Reference</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/events/" class="wm-article-link wm-toc-text">Events</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/storage/" class="wm-article-link wm-toc-text">Storage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/plugin.development/" class="wm-article-link wm-toc-text">Plugin Development</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player/testing/" class="wm-article-link wm-toc-text">Testing</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/stream-security/" class="wm-article-link wm-toc-text">Stream Security</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/oaipmh/" class="wm-article-link wm-toc-text">OAI-PMH</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Infrastructure</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="infrastructure/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="infrastructure/notes/" class="wm-article-link wm-toc-text">Notes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="infrastructure/maven-repository/" class="wm-article-link wm-toc-text">Maven Repository</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">External API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/" class="wm-article-link wm-toc-text">Introduction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/usage/" class="wm-article-link wm-toc-text">Usage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/authentication/" class="wm-article-link wm-toc-text">Authentication</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/authorization/" class="wm-article-link wm-toc-text">Authorization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/base-api/" class="wm-article-link wm-toc-text">Base API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/agents-api/" class="wm-article-link wm-toc-text">Agents API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/events-api/" class="wm-article-link wm-toc-text">Events API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/series-api/" class="wm-article-link wm-toc-text">Series API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/statistics-api/" class="wm-article-link wm-toc-text">Statistics API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/groups-api/" class="wm-article-link wm-toc-text">Groups API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/security-api/" class="wm-article-link wm-toc-text">Security API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/workflow-api/" class="wm-article-link wm-toc-text">Workflow API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/types/" class="wm-article-link wm-toc-text">Data Types</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="api/glossary/" class="wm-article-link wm-toc-text">Glossary</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="installation/source-linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="installation/source-linux/" class="btn btn-xs btn-link">
+        Installation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-development-guides">Opencast Development Guides</h1>
 <p>These guides will help you if you want to participate in Opencast development.</p>
 <ul>
 <li><a href="development-process/">Development Process</a></li>
@@ -468,55 +377,43 @@
 </ul>
 </li>
 </ul>
-              
-            </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+  <br>
+    
+
+    
+    
       
-        <a href="installation/source-linux/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="installation/source-linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="installation/source-linux/" class="btn btn-xs btn-link">
+        Installation
+      </a>
     </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-      
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/opencast/opencast/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-      
-        <span style="margin-left: 15px"><a href="installation/source-linux/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+    <br>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
 
 </body>
 </html>
-
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-09-26 19:56:46
+Build Date UTC : 2019-09-27 00:04:29
 -->
