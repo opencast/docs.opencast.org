@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>AWS AutoScaling - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AWS Auto-Scaling Termination State Service", url: "#_top", children: [
+              {title: "Amazon User Configuration", url: "#amazon-user-configuration" },
+              {title: "Amazon AutoScaling Configuration", url: "#amazon-autoscaling-configuration" },
+              {title: "Opencast Service Configuration", url: "#opencast-service-configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../textextraction/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../textextraction/" class="btn btn-xs btn-link">
+        Text Extraction
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../terminationstate/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../terminationstate/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="aws-auto-scaling-termination-state-service">AWS Auto-Scaling Termination State Service</h1>
+<p>This page documents the configuration for Opencast module <strong>terminationstate-aws</strong>.  This
+configuration is only required on nodes that are part of an <a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html">AWS Auto Scaling</a>
+group.</p>
+<p>The purpose of this module to manage the termination of an AWS EC2 instance, triggered
+when an Auto Scaling Group "scales in", as the Opencast process may still be processing jobs
+which we want to complete. This is special implementation of the basic <a href="../terminationstate/">Termination State Service</a></p>
+<p><strong>It does not terminate the Opencast process or the instance itself</strong>.</p>
+<p>Auto Scaling Groups can trigger a <a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html">Lifecycle Hook</a>
+when an instance is created or terminated which allow events to occur before the creation or termination
+is completed. The service can poll if the termination hook has been triggered, at which point it will:</p>
+<ul>
+<li>put the node in maintenance mode, to stop accepting new jobs</li>
+<li>periodically check for running jobs and if so emit a <em>heartbeat</em></li>
+<li>when no jobs are running it will tell the Auto Scaling group to complete the Terminate life-cycle action</li>
+</ul>
+<p>Alternatively you can disable the Lifecycle state polling and call the REST endpoint
+(termination/aws/autoscaling) to signal that the instance is now terminating. The details of how to achieve
+this are beyond the scope of this document, but using a CloudWatch Alarm to trigger a Lambda function
+is a suggested route.</p>
+<h2 id="amazon-user-configuration">Amazon User Configuration</h2>
+<p>Configuration of Amazon users is beyond the scope of this documentation, instead we suggest referring to
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">Amazon's documentation</a>.
+You will, however, require to set up proper credentials by either:</p>
+<ul>
+<li>Creating an <a href="https://aws.amazon.com/developers/access-keys/">Access Key ID and a Secret Access Key</a> or</li>
+<li>Using <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-roles.html">Instance Profile Credentials</a>
+  (recommended when running Opencast on EC2 instances)</li>
+</ul>
+<p>The termination state service requires a number of permissions to query and respond to changes in the
+instance's lifecycle. You should follow <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_inline-using.html">these instructions</a>
+to create a new policy that is assigned to the IAM profile or user account. The following policy contains
+all the necessary permissions. You will need to change the <em>region</em>  and <em>account</em> number in the Resource
+ARN with your own.</p>
+<pre><code class="json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;ReadInstanceLifcycle&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;autoscaling:DescribeAutoScalingInstances&quot;,
+                &quot;autoscaling:DescribeAutoScalingGroups&quot;,
+                &quot;autoscaling:DescribeLifecycleHooks&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        },
+        {
+            &quot;Sid&quot;: &quot;UpdateLifcycle&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;autoscaling:CompleteLifecycleAction&quot;,
+                &quot;autoscaling:RecordLifecycleActionHeartbeat&quot;
+            ],
+            &quot;Resource&quot;: &quot;arn:aws:autoscaling:&lt;region&gt;:&lt;account&gt;:autoScalingGroup:*:autoScalingGroupName/*&quot;
+        }
+    ]
+}
+</code></pre>
+
+<p><strong>A <a href="https://aws.amazon.com/free/">free Amazon account</a> will work for small scale testing, but be aware
+that AutoScaling can incur costs if not correctly setup.</strong></p>
+<h2 id="amazon-autoscaling-configuration">Amazon AutoScaling Configuration</h2>
+<p>Please consult the AWS documentation to create an <a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/GettingStartedTutorial.html">AutoScaling Group</a>.
+ You will need to explicitly add a <a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html">Lifecycle Hook</a>
+for the "autoscaling:EC2_INSTANCE_TERMINATING" Lifecycle transition. The 'Heartbeat Timeout' should be set to something
+appropriate. The default 3600 seconds is fine for production but quite long when developing your
+deployment. NOTE: the service will tell the AutoScaling Group to complete termination even if the timeout
+hasn't expired once there are no jobs running.</p>
+<h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
+<p>The Opencast AWS Autoscaling Termination State Service configuration can be found in the file
+<code>org.opencastproject.terminationstate.aws.AutoScalingTerminationStateService.cfg</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Key name</th>
+<th>Value</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enable</td>
+<td>true to enable the service, false (default) otherwise</td>
+<td>true</td>
+</tr>
+<tr>
+<td>lifecycle.polling.enabled</td>
+<td>true to poll the Lifecycle for the termination state</td>
+<td>true</td>
+</tr>
+<tr>
+<td>lifecycle.polling.period</td>
+<td>frequency which to poll the Lifecycle in seconds</td>
+<td>300</td>
+</tr>
+<tr>
+<td>lifecycle.heartbeat.period</td>
+<td>frequency which to check if if jobs are running and emit Lifecycle heartbeat</td>
+<td>300</td>
+</tr>
+<tr>
+<td>access.id</td>
+<td>AWS user's access ID</td>
+<td>20 alphanumeric characters</td>
+</tr>
+<tr>
+<td>access.secret</td>
+<td>AWS user's secret key</td>
+<td>40 characters</td>
+</tr>
+</tbody>
+</table>
+<p>If <em>access.id</em> and <em>access.secret</em> are not <em>explicitly</em> provided, search for credentials will be performed in the order specified by the
+<a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html">Default Credentials Provider Chain</a>.</p>
+<p><em>NOTE</em>: both the <em>lifecycle.polling.period</em> and <em>lifecycle.heartbeat.period</em> should
+be less than the 'Heartbeat Timeout' of the Lifecycle Hook or else the instance
+could be terminated before the service can respond.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../textextraction/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../textextraction/" class="btn btn-xs btn-link">
+        Text Extraction
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../terminationstate/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../terminationstate/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/terminationstate.aws.autoscaling.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

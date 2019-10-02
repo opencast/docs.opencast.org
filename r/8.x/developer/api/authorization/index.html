@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Authorization - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "External API", url: "#_top", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Delegation of Authorization", url: "#delegation-of-authorization" },
+              {title: "Best practice", url: "#best-practice" },
+              {title: "Access Control", url: "#access-control" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../base-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../base-api/" class="btn btn-xs btn-link">
+        Base API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../authentication/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../authentication/" class="btn btn-xs btn-link">
+        Authentication
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="external-api">External API</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The External API can be accessed in two different ways: Either using a single dedicated user with access to
+everything (“super user”) or by implementing more fine grained access through user and role switching upon every request
+(“user switching” or “sudo” execution mode), where the request is executed in the name and using the roles of the
+specified user.</p>
+<p>The first method is ideal for scenarios where the end users of the external application are not managed in Opencast. The
+downside of this approach is a potential security risk as well as the inability to audit and track changes made by the
+external applications back to the actual user who actually triggered the changes. The second method is more cumbersome
+to implement but leads a much improved control and assessment of security.</p>
+<h2 id="delegation-of-authorization">Delegation of Authorization</h2>
+<p>In situations where the provider of the External API offers a super user who is allowed “sudo” requests that are
+executed on behalf of another user, the External API is actually delegating authorization to the client application. In
+this cause authorization is performed upon login of the super user, but then the super user can switch to any other user
+or any set of roles (with a few exceptions for security reasons).</p>
+<p>Note that in order to allow for user switching, a specific role needs to be assigned to the super user, and that role
+cannot be obtained by manipulating the role set (see <a href="#role-switching">Role switching</a>).</p>
+<h3 id="user-switching">User switching</h3>
+<p>When working with a super user, it is considered a best practice to specify a dedicated execution user upon each request
+whenever possible and reasonable. This way, creation or modification of resources can later be audited and mapped back
+to that user if needed.</p>
+<p>The execution user can be specified by setting the <code>X-RUN-AS-USER</code> request header with the user name as its value, as
+seen in this sample request:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Request</th>
+<th align="left">Headers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>GET /api</code></td>
+<td align="left"><code>X-RUN-AS-USER: john.doe</code></td>
+</tr>
+</tbody>
+</table>
+<p>Switching to another user can potentially fail for various reasons: The user might not exist or may not be allowed to
+switch to due to potential privilege escalation, or the current user might not be allowed to switch users at all.</p>
+<p>If the request to switch to another user fails, the following response codes are returned:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Response code</th>
+<th align="left">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>403 (FORBIDDEN)</code></td>
+<td align="left">The current user is not allowed to switch users</td>
+</tr>
+<tr>
+<td align="left"><code>403 (FORBIDDEN)</code></td>
+<td align="left">The user cannot be switched to due to potential escalation of privileges</td>
+</tr>
+<tr>
+<td align="left"><code>412 Precondition failed</code></td>
+<td align="left">The user specified in the X-RUN-AS-USER header does not exist</td>
+</tr>
+</tbody>
+</table>
+<h3 id="role-switching">Role switching</h3>
+<p>Rather than specifying an execution user, the client might choose to specify a set of roles that should be used when
+executing the request. This technique is recommended in cases where the users are not managed by the External API. By
+specifying a set of roles, the corresponding request will be executed using the API’s anonymous user but equipped
+with the specified set of roles.</p>
+<p>The execution user’s roles can be specified by setting the <code>X-RUN-WITH-ROLES</code> request header with the set of roles as
+its value and with individual roles separated by comma, as seen in this sample request:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Request</th>
+<th align="left">Headers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>GET /api</code></td>
+<td align="left"><code>X-RUN-WITH-ROLES: ROLE_A,ROLE_B</code></td>
+</tr>
+</tbody>
+</table>
+<p>Switching to a set of roles can potentially fail for various reasons: The role may not be granted to due to potential
+privilege escalation, or the current user might not be allowed to switch roles at all. If the request to apply a set of
+roles fails, the following response codes are returned:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Response code</th>
+<th align="left">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>403 (FORBIDDEN)</code></td>
+<td align="left">The current user is not allowed to switch roles</td>
+</tr>
+<tr>
+<td align="left"><code>403 (FORBIDDEN)</code></td>
+<td align="left">The roles cannot be granted to due to potential escalation of privileges</td>
+</tr>
+</tbody>
+</table>
+<h2 id="best-practice">Best practice</h2>
+<h3 id="one-user-per-external-application">One user per external application</h3>
+<p>As a best practice, the External API provider should create one super user per external application and tenant, so that
+access through that super user can be controlled, limited and turned off individually for each external application and
+tenant.</p>
+<h3 id="preference-for-user-and-role-switching">Preference for user and role switching</h3>
+<p>Client implementations accessing the External API through a super user are urged to implement and enforce user and role
+switching as much as possible, since it allows for auditing of user activity on the External API and introduces less
+risk by running requests with a limited set of privileges.</p>
+<p>Obviously, if all requests are executed using the super user directly, it is not possible to track which user initiated
+a given action.</p>
+<h2 id="access-control">Access Control</h2>
+<p>Most events in Opencast come with an access control list (ACL), containing entries that map actions to roles, either
+allowing or denying that action. Opencast currently only supports the ability to explicitly allow an action and consider
+everything else to be denied.</p>
+<h3 id="roles">Roles</h3>
+<p>When a user authenticates against Opencast, it is assigned its set of roles that determine the user's access to Opencast
+data entities. There are multiple ways to associate roles with a user:</p>
+<ol>
+<li>Explicit assignment directly to the user</li>
+<li>Directly through membership in groups (ROLE_GROUP_&lt;group name&gt;)</li>
+<li>Indirectly through membership in groups (whatever roles have been assigned to the group)</li>
+</ol>
+<p>In addition, a special role is assigned that uniquely identifies a user ("user role"). The user role can be determined by
+evaluating the <code>userrole</code> attribute in the Base API's call to <a href="base-api/#get-apiinfome">/info/me</a>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../base-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../base-api/" class="btn btn-xs btn-link">
+        Base API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../authentication/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../authentication/" class="btn btn-xs btn-link">
+        Authentication
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/authorization.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Publish Engage - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Publish Engage Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../publish-oaipmh-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../publish-oaipmh-woh/" class="btn btn-xs btn-link">
+        Publish OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../publish-configure-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../publish-configure-woh/" class="btn btn-xs btn-link">
+        Publish Configure
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="publish-engage-workflow-operation">Publish Engage Workflow Operation</h1>
+<p>ID: <code>publish-engage</code></p>
+<h2 id="description">Description</h2>
+<p>The publish-engage operation will bring your media to the engage distribution channels (streaming, progressive
+download, …)</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>check-availability</td>
+<td>Check if the media is reachable</td>
+</tr>
+<tr>
+<td>download-source-flavors</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) flavors to download</td>
+</tr>
+<tr>
+<td>download-source-tags</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) tags to download</td>
+</tr>
+<tr>
+<td>download-target-subflavors</td>
+<td>Subflavor to use for distributed material</td>
+</tr>
+<tr>
+<td>download-target-tags</td>
+<td>Add tags (comma separated) to published media</td>
+</tr>
+<tr>
+<td>strategy</td>
+<td>If there is no key, published media would be retracted before publishing</td>
+</tr>
+<tr>
+<td></td>
+<td><code>&lt;configuration key="strategy"&gt;merge&lt;/configuration&gt;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>merges new publication with existing publication</td>
+</tr>
+<tr>
+<td>streaming-source-flavors</td>
+<td>Specifies which media should be published to the streaming server</td>
+</tr>
+<tr>
+<td>streaming-source-tags</td>
+<td>Specifies which media should be published to the streaming server</td>
+</tr>
+<tr>
+<td>streaming-target-tags</td>
+<td>Add tags (comma separated) to published media</td>
+</tr>
+<tr>
+<td>streaming-target-subflavors</td>
+<td>Subflavor to use for distributed material</td>
+</tr>
+<tr>
+<td>merge-force-flavors</td>
+<td>Flavors of elements for which an update is enforced when mergeing catalogs.</td>
+</tr>
+<tr>
+<td></td>
+<td>Defaults to <code>dublincore/*,security/*</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="xml">&lt;operation
+    id=&quot;publish-engage&quot;
+    max-attempts=&quot;2&quot;
+    fail-on-error=&quot;true&quot;
+    exception-handler-workflow=&quot;error&quot;
+    description=&quot;Distribute and publish to engage player&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key=&quot;streaming-source-tags&quot;&gt;engage&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../publish-oaipmh-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../publish-oaipmh-woh/" class="btn btn-xs btn-link">
+        Publish OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../publish-configure-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../publish-configure-woh/" class="btn btn-xs btn-link">
+        Publish Configure
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/publish-engage-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

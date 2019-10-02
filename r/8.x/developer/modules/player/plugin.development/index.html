@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Plugin Development - Developer Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "How To Create A New Plugin", url: "#_top", children: [
+              {title: "Plugin Archetype", url: "#plugin-archetype" },
+              {title: "Example Plugin", url: "#example-plugin" },
+              {title: "Debugging", url: "#debugging" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../testing/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../testing/" class="btn btn-xs btn-link">
+        Testing
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../storage/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../storage/" class="btn btn-xs btn-link">
+        Storage
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="how-to-create-a-new-plugin">How To Create A New Plugin</h1>
+<h2 id="plugin-archetype">Plugin Archetype</h2>
+<p>The <a href="http://maven.apache.org/archetype/maven-archetype-plugin/">Maven Archetype Plugin</a> provides a convenient mechanism
+for automatically generating projects. Project templates are called Archetypes and they are basically maven artifacts of
+a special kind of packaging, ‘maven-archetype’.</p>
+<p>With the Theodul Plugin Archetype you can create a new plugin project in no time and start writing the plugin’s business
+logic right away, without caring about the POM or SCR component declarations.</p>
+<h3 id="installation">Installation</h3>
+<p>The Theodul Plugin Archetype is included in the Opencast source code (Theodul Player branch) in the modules directory.
+To make the artifact available on your system you need to install it like any other atrifacts. In the Opencast source
+directory type:</p>
+<pre><code>&gt; cd modules/engage-theodul-plugin-archetype
+&gt; mvn install
+</code></pre>
+<p>After successful build and installation the archetype is available in your system.</p>
+<h3 id="generating-a-new-plugin">Generating a new plugin</h3>
+<p>To generate a new plugin project simply go to the modules directory inside the Opencast source directory and type:</p>
+<pre><code>&gt; mvn archetype:generate -DarchetypeGroupId=org.opencastproject -DarchetypeArtifactId=theodul-plugin
+</code></pre>
+<p>Provided the archetype is installed maven will now ask you for the properties configuration for the new project:</p>
+<pre><code>[INFO] Generating project in Interactive mode
+[INFO] Archetype [org.opencastproject:theodul-plugin:1.5-SNAPSHOT] found in catalog local
+Define value for property 'groupId': : org.opencastproject
+Define value for property 'artifactId': : engage-theodul-plugin-test
+Define value for property 'version': 1.0-SNAPSHOT: : 1.5-SNAPSHOT
+Define value for property 'package': org.opencastproject: : org.opencastproject.engage.theodul.plugin.custom.test
+Define value for property 'plugin_description': : A test plugin
+Define value for property 'plugin_name': : testName
+Define value for property 'plugin_type': : custom
+Define value for property 'plugin_version': : 0.1
+Define value for property 'plugin_rest': : false
+Confirm properties configuration:
+groupId: org.opencastproject
+artifactId: engage-theodul-plugin-test
+version: 1.5-SNAPSHOT
+package: org.opencastproject.engage.theodul.plugin.test
+plugin_description: A test plugin
+plugin_name: test
+plugin_rest: true
+ Y: : y
+[INFO] ----------------------------------------------------------------------------
+[INFO] Using following parameters for creating project from Archetype: theodul-plugin:1.5-SNAPSHOT
+[INFO] ----------------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: org.opencastproject
+[INFO] Parameter: artifactId, Value: engage-theodul-plugin-test
+[INFO] Parameter: version, Value: 1.5-SNAPSHOT
+[INFO] Parameter: package, Value: org.opencastproject.engage.theodul.plugin.test
+[INFO] Parameter: packageInPathFormat, Value: org/opencastproject/engage/theodul/plugin/test
+[INFO] Parameter: package, Value: org.opencastproject.engage.theodul.plugin.test
+[INFO] Parameter: version, Value: 1.5-SNAPSHOT
+[INFO] Parameter: plugin_description, Value: A test plugin
+[INFO] Parameter: plugin_name, Value: test
+[INFO] Parameter: groupId, Value: org.opencastproject
+[INFO] Parameter: plugin_rest, Value: true
+[INFO] Parameter: artifactId, Value: engage-theodul-plugin-test
+[INFO] project created from Archetype in dir: /home/wulff/code/UOS/plugin-archetype/test/engage-theodul-plugin-test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3:39.195s
+[INFO] Finished at: Thu Jan 23 15:48:37 CET 2014
+[INFO] Final Memory: 15M/308M
+[INFO] ------------------------------------------------------------------------
+</code></pre>
+<p>There you go, the newly created plugin project is waiting to be filled with life in the directory that is named after
+the atrifactId you entered before.</p>
+<h3 id="project-properties">Project Properties</h3>
+<p>In addition to the above explanation, here is a description of the properties you have to specify when generating a new
+project with the Theodul Plugin Archetype:</p>
+<h4 id="groupid">groupId</h4>
+<p>Maven group ID. For the Opencast developers this is</p>
+<pre><code>org.opencastproject
+</code></pre>
+<h4 id="artifactid">artifactId</h4>
+<p>Maven artifact ID. Name by which your project is identified as an artifact by maven. Think of it as the project name. It
+will also be used as the name for your projects root directory. During the course of the Theodul project the following
+naming scheme came up:</p>
+<pre><code>engage-theodul-plugin-&lt;plugin type&gt;-&lt;plugin name&gt;
+</code></pre>
+<h4 id="version">version</h4>
+<p>The project version. For Opencast developers: simply put in the version of the Opencast source tree your are working
+on.</p>
+<h4 id="package">package</h4>
+<p>The Java package in which the source for the back end part of your plugin will live. The following scheme is used by the
+Theodul developers:</p>
+<pre><code>org.opencastproject.engage.theodul.plugin.&lt;plugin type&gt;.&lt;plugin name&gt;
+</code></pre>
+<h4 id="plugin_version">plugin_version</h4>
+<p>The version of the plugin itself. This is not to be confused with the maven project version which will, for instance, be
+updated when the Opencast version changes.</p>
+<h4 id="plugin_type">plugin_type</h4>
+<p>The type of the plugin to be created. See https://opencast.jira.com/wiki/display/MH/Architecture
+Possible types are: custom, controls, timeline, video, description, tab</p>
+<h4 id="plugin_name">plugin_name</h4>
+<p>The name by which your plugin will be registered by the plugin manager when running.</p>
+<h4 id="plugin_description">plugin_description</h4>
+<p>(optional) A short description of the plugin. The description will be provided by the <a href="https://engagedevcamp.wordpress.com/2013/04/15/plugin-infrastructure/">plugin list endpoint
+</a> together with the other plugin data.</p>
+<h4 id="plugin_rest">plugin_rest</h4>
+<p>(boolean) Whether or not the plugin should provide a Opencast Rest endpoint. If set to true, the Java class that makes
+up the back end part of your plugin will be augmented with the annotations necessary to work as a Rest endpoint provider
+in Opencast. Also an example endpoint (GET:sayHello) will be generated.</p>
+<h2 id="example-plugin">Example Plugin</h2>
+<p>Have a look at the <a href="https://bitbucket.org/CallToPower/theodul-snowshowcase-plugin">snow showcase example plugin (custom)</a>.</p>
+<h2 id="debugging">Debugging</h2>
+<p>To display debug information in the developer console, add the following parameters to the URL:</p>
+<p><strong>Display debug information</strong></p>
+<pre><code>&amp;debug=true
+</code></pre>
+<p><strong>Display event debug information</strong></p>
+<pre><code>&amp;debugEvents=true
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../testing/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../testing/" class="btn btn-xs btn-link">
+        Testing
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../storage/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../storage/" class="btn btn-xs btn-link">
+        Storage
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/modules/player/plugin.development.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

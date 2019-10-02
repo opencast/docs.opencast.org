@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>List Providers - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "List Providers", url: "#_top", children: [
+              {title: "Multi-Tenancy", url: "#multi-tenancy" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../load/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../load/" class="btn btn-xs btn-link">
+        Load
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../inbox/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../inbox/" class="btn btn-xs btn-link">
+        Inbox
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="list-providers">List Providers</h1>
+<p>Opencast supports fully configurable key-value lists. To add a new list, simply create a file with the extension
+<code>.properties</code> in <code>etc/listproviders</code>. The list will be loaded or updated automatically.</p>
+<p>The Java properties file format is used with the following special keys to configure the list:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+<th>Mandatory</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list.name</td>
+<td>String</td>
+<td>The list's unique identifier within a tenant</td>
+<td>yes</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>list.default</td>
+<td>String</td>
+<td>The name of the default key</td>
+<td>no</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>list.translatable</td>
+<td>Boolean</td>
+<td>Whether the values are supposed to be translatable</td>
+<td>no</td>
+<td>false</td>
+</tr>
+<tr>
+<td>list.org</td>
+<td>String</td>
+<td>The organisation ID</td>
+<td>no</td>
+<td>"*"</td>
+</tr>
+</tbody>
+</table>
+<p>Note that it is up to the client to handle the keys <code>list.default</code> and <code>list.translatable</code>.</p>
+<h2 id="multi-tenancy">Multi-Tenancy</h2>
+<p>The key <code>list.org</code> can be used to configure lists for specific tenants in multi-tenant setups. It defaults to <code>*</code> which
+means that the list is available for all tenants.</p>
+<p>The following logic is used to locate a list with a given list name <em>LISTNAME</em>:</p>
+<ol>
+<li>Return the list <em>LISTNAME</em> specific to the current tenant</li>
+<li>If not found, return the list <em>LISTNAME</em> available for all tenants</li>
+<li>If not found, return no list</li>
+</ol>
+<p>While the filename of the list does not affect the list itself, we recommend to include the organisation identifier
+in the filename.</p>
+<h3 id="example">Example</h3>
+<pre><code>/etc/listproviders/mylist-org-a.properties
+  list.name=MYLIST
+  key=value
+
+/etc/listproviders/mylist-org-b.properties
+  list.name=MYLIST
+  list.org=org-b
+  key-org-b=value-org-b
+</code></pre>
+<p>On <em>org-b</em>, the key-value pair for the list <em>MYLIST</em> is <em>["key-org-b", "value-org-b"]</em> due to the tenant specific
+configuration. On <em>org-a</em>, the key-value pair for the list <em>MYLIST</em> is <em>["key", "value"]</em>. Since there is no tenant
+specific configuration for <em>org-a</em>, the defaults are used.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../load/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../load/" class="btn btn-xs btn-link">
+        Load
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../inbox/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../inbox/" class="btn btn-xs btn-link">
+        Inbox
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/listproviders.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

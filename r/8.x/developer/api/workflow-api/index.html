@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Workflow API - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "General", url: "#_top", children: [
+          ]},
+          {title: "Workflow instances", url: "#workflow-instances", children: [
+              {title: "GET /api/workflows", url: "#get-apiworkflows" },
+              {title: "POST /api/workflows", url: "#post-apiworkflows" },
+              {title: "GET /api/workflows/{workflow_instance_id}", url: "#get-apiworkflowsworkflow_instance_id" },
+              {title: "PUT /api/workflows/{workflow_instance_id}", url: "#put-apiworkflowsworkflow_instance_id" },
+              {title: "DELETE /api/workflows/{workflow_instance_id}", url: "#delete-apiworkflowsworkflow_instance_id" },
+          ]},
+          {title: "Workflow definitions", url: "#workflow-definitions", children: [
+              {title: "GET /api/workflow-definitions", url: "#get-apiworkflow-definitions" },
+              {title: "GET /api/workflow-definitions/{workflow_definition_id}", url: "#get-apiworkflow-definitionsworkflow_definition_id" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../types/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../types/" class="btn btn-xs btn-link">
+        Data Types
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security-api/" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#general">General</a></li>
+<li><a href="#workflow-instances">Workflow instances</a><ul>
+<li><a href="#get-apiworkflows">GET /api/workflows</a></li>
+<li><a href="#post-apiworkflows">POST /api/workflows</a></li>
+<li><a href="#get-apiworkflowsworkflow_instance_id">GET /api/workflows/{workflow_instance_id}</a></li>
+<li><a href="#put-apiworkflowsworkflow_instance_id">PUT /api/workflows/{workflow_instance_id}</a></li>
+<li><a href="#delete-apiworkflowsworkflow_instance_id">DELETE /api/workflows/{workflow_instance_id}</a></li>
+</ul>
+</li>
+<li><a href="#workflow-definitions">Workflow definitions</a><ul>
+<li><a href="#get-apiworkflow-definitions">GET /api/workflow-definitions</a></li>
+<li><a href="#get-apiworkflow-definitionsworkflow_definition_id">GET /api/workflow-definitions/{workflow_definition_id}</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<p>The Workflow API is available since API version 1.1.0.</p>
+<h1 id="workflow-instances">Workflow instances</h1>
+<h3 id="get-apiworkflows">GET /api/workflows</h3>
+<p>Returns a list of workflow instances.</p>
+<p>The following query string parameters are supported to filter, sort and pagingate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="../usage/#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>state</code></td>
+<td align="left">Workflow instances that are in this state. Can be included multiple times (inclusive or).</td>
+</tr>
+<tr>
+<td align="left"><code>state_not</code></td>
+<td align="left">Workflow instances that are not in this state. Can be included multiple times (inclusive or).</td>
+</tr>
+<tr>
+<td align="left"><code>current_operation</code></td>
+<td align="left">Workflow instances that are currently executing this operation. Can be included multiple times (inclusive or).</td>
+</tr>
+<tr>
+<td align="left"><code>current_operation_not</code></td>
+<td align="left">Workflow instances that are currently not executing this operation. Can be included multiple times (inclusive or).</td>
+</tr>
+<tr>
+<td align="left"><code>workflow_definition_identifier</code></td>
+<td align="left">Workflow instances that use this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>event_identifier</code></td>
+<td align="left">Workflow instances where the identifier of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_title</code></td>
+<td align="left">Workflow instances where the title of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_created</code></td>
+<td align="left">Workflow instances where the processed event was created between two dates</td>
+</tr>
+<tr>
+<td align="left"><code>event_creator</code></td>
+<td align="left">Workflow instances where the creator of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_contributor</code></td>
+<td align="left">Workflow instances where the contributor of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_language</code></td>
+<td align="left">Workflow instances where the language of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_license</code></td>
+<td align="left">Workflow instances where the license of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>event_subject</code></td>
+<td align="left">Workflow instances where the subject of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>series_identifier</code></td>
+<td align="left">Workflow instances where the identifier of series of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>series_title</code></td>
+<td align="left">Workflow instances where the title of series of the processed event matches</td>
+</tr>
+<tr>
+<td align="left"><code>textFilter</code></td>
+<td align="left">Workflow instances where any part of the Workflow definition's metadata fields match this value</td>
+</tr>
+</tbody>
+</table>
+<p>Note:</p>
+<p>The filters <code>event_created</code> expect the following value:
+<a href="../types/#date-and-time"><code>datetime</code></a> + '/' + <a href="../types/#date-and-time"><code>datetime</code></a></p>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>event_identifier</code></td>
+<td align="left">By the event identifier of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_title</code></td>
+<td align="left">By the event title of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_created</code></td>
+<td align="left">By the event creation date of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_creator</code></td>
+<td align="left">By the event creator of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_contributor</code></td>
+<td align="left">By the event contributor of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_language</code></td>
+<td align="left">By the event language of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_license</code></td>
+<td align="left">By the event license of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>event_subject</code></td>
+<td align="left">By the event subject of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>series_identifier</code></td>
+<td align="left">By the series identifier of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>series_title</code></td>
+<td align="left">By the series title of the workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>workflow_definition_identifier</code></td>
+<td align="left">By the workflow definition identifier of the workflow instance</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfiguration</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="xml">https://opencast.example.org/api/workflow-definitions?sort=event_created:DESC&amp;limit=5&amp;offset=1&amp;filter=workflow_definition_identifier:fast
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of workflow instances is returned. The list is represented as JSON array where
+each element is a JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The unique identifier of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>state</code></td>
+<td align="left"><a href="../types/#workflow_state"><code>workflow_state</code></a></td>
+<td align="left">The state of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_instance"><code>array[operation_instance]</code></a></td>
+<td align="left">The list of operations of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>configuration</code></td>
+<td align="left"><a href="../types/#property"><code>property</code></a></td>
+<td align="left">The configuration for this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>workflow_definition_identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The template of this workflow instance (i.e. the unique identifier of the workflow definition)</td>
+</tr>
+<tr>
+<td align="left"><code>event_identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The id of the event this workflow instance belongs to</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the creator of this workflow instance</td>
+</tr>
+</tbody>
+</table>
+<p><code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;workflow_definition_identifier&quot;: &quot;fast&quot;,
+    &quot;identifier&quot;: 1603,
+    &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+    &quot;operations&quot;: [
+      {
+        &quot;identifier&quot;: 1604,
+        &quot;completion&quot;: &quot;2018-08-08T08:46:57.3Z&quot;,
+        &quot;configuration&quot;: {
+          &quot;publishLive&quot;: &quot;false&quot;,
+          &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+          &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+          &quot;comment&quot;: &quot;false&quot;,
+          &quot;publishToMediaModule&quot;: &quot;true&quot;
+        },
+        &quot;time_in_queue&quot;: 0,
+        &quot;failed_attempts&quot;: 0,
+        &quot;start&quot;: &quot;2018-08-08T08:46:57.201Z&quot;,
+        &quot;description&quot;: &quot;Applying default configuration values&quot;,
+        &quot;fail_workflow_on_error&quot;: true,
+        &quot;unless&quot;: &quot;&quot;,
+        &quot;max_attempts&quot;: 1,
+        &quot;host&quot;: &quot;http:\/\/localhost:8080&quot;,
+        &quot;state&quot;: &quot;succeeded&quot;,
+        &quot;operation&quot;: &quot;defaults&quot;,
+        &quot;if&quot;: &quot;&quot;,
+        &quot;retry_strategy&quot;: &quot;none&quot;,
+        &quot;error_handler_workflow&quot;: &quot;&quot;
+      },
+      {
+        &quot;identifier&quot;: 1605,
+        &quot;completion&quot;: &quot;&quot;,
+        &quot;configuration&quot;: {
+          &quot;apply-acl&quot;: &quot;true&quot;
+        },
+        &quot;time_in_queue&quot;: 0,
+        &quot;failed_attempts&quot;: 0,
+        &quot;start&quot;: &quot;2018-08-08T08:47:02.209Z&quot;,
+        &quot;description&quot;: &quot;Applying access control entries from series&quot;,
+        &quot;fail_workflow_on_error&quot;: true,
+        &quot;unless&quot;: &quot;&quot;,
+        &quot;max_attempts&quot;: 1,
+        &quot;host&quot;: &quot;http:\/\/localhost:8080&quot;,
+        &quot;state&quot;: &quot;skipped&quot;,
+        &quot;operation&quot;: &quot;series&quot;,
+        &quot;if&quot;: &quot;&quot;,
+        &quot;retry_strategy&quot;: &quot;none&quot;,
+        &quot;error_handler_workflow&quot;: &quot;partial-error&quot;
+      }
+      ...
+    ],
+    &quot;configuration&quot;: {
+      &quot;publishLive&quot;: &quot;false&quot;,
+      &quot;workflowDefinitionId&quot;: &quot;fast&quot;,
+      &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+      &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+      &quot;comment&quot;: &quot;false&quot;,
+      &quot;publishToMediaModule&quot;: &quot;true&quot;
+    },
+    &quot;description&quot;: &quot;\n    A minimal workflow that transcodes the media into distribution formats, then\n    sends the resulting distribution files, along with their associated metadata,\n    to the distribution channels.\n  &quot;,
+    &quot;state&quot;: &quot;succeeded&quot;,
+    &quot;title&quot;: &quot;Fast Testing Workflow&quot;,
+    &quot;event_identifier&quot;: &quot;f41e4417-b841-4d20-a466-f98ddfbe4c2a&quot;
+  }
+]
+</code></pre>
+
+<h3 id="post-apiworkflows">POST /api/workflows</h3>
+<p>Creates a workflow instance.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>event_identifier</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The event identifier this workflow should run against</td>
+</tr>
+<tr>
+<td align="left"><code>workflow_definition_identifier</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The identifier of the workflow definition to use</td>
+</tr>
+<tr>
+<td align="left"><code>configuration</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#property"><code>property</code></a></td>
+<td align="left">The optional configuration for this workflow</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfiguration</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<p>event_identifier:</p>
+<pre><code>f41e4417-b841-4d20-a466-f98ddfbe4c2a
+</code></pre>
+
+<p>workflow_definition_identifier:</p>
+<pre><code>fast
+</code></pre>
+
+<p>configuration:</p>
+<pre><code>{
+  &quot;publishLive&quot;: &quot;false&quot;,
+  &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+  &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+  &quot;comment&quot;: &quot;false&quot;,
+  &quot;publishToMediaModule&quot;: &quot;true&quot;
+}
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>201 (CREATED)</code>: A new workflow is created and its identifier is returned in the Location header.</p>
+<pre><code class="xml">Location: http://api.opencast.org/api/workflows/3170
+</code></pre>
+
+<p>The workflow instance is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The (potentially empty) list of workflow tags of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>configuration_panel</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The configuration panel of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_instance"><code>array[operation_instance]</code></a></td>
+<td align="left">The list of operations of this workflow instance</td>
+</tr>
+</tbody>
+</table>
+<p><code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>404 (NOT FOUND)</code>: The specified workflow instance does not exist.</p>
+<h3 id="get-apiworkflowsworkflow_instance_id">GET /api/workflows/{workflow_instance_id}</h3>
+<p>Returns a single workflow instance.</p>
+<p>This request supports the following query string parameters to include additional information directly in the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfiguration</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The workflow instance is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The (potentially empty) list of workflow tags of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>configuration_panel</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The configuration panel of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_instance"><code>array[operation_instance]</code></a></td>
+<td align="left">The list of operations of this workflow instance</td>
+</tr>
+</tbody>
+</table>
+<p><code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br/>
+<code>404 (NOT FOUND)</code>: The event or workflow definition could not be found.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;workflow_definition_identifier&quot;: &quot;fast&quot;,
+  &quot;identifier&quot;: 1603,
+  &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+  &quot;operations&quot;: [
+    {
+      &quot;identifier&quot;: 1604,
+      &quot;completion&quot;: &quot;2018-08-08T08:46:57.3Z&quot;,
+      &quot;configuration&quot;: {
+        &quot;publishLive&quot;: &quot;false&quot;,
+        &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+        &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+        &quot;comment&quot;: &quot;false&quot;,
+        &quot;publishToMediaModule&quot;: &quot;true&quot;
+      },
+      &quot;time_in_queue&quot;: 0,
+      &quot;failed_attempts&quot;: 0,
+      &quot;start&quot;: &quot;2018-08-08T08:46:57.201Z&quot;,
+      &quot;description&quot;: &quot;Applying default configuration values&quot;,
+      &quot;fail_workflow_on_error&quot;: true,
+      &quot;unless&quot;: &quot;&quot;,
+      &quot;max_attempts&quot;: 1,
+      &quot;host&quot;: &quot;http:\/\/localhost:8080&quot;,
+      &quot;state&quot;: &quot;succeeded&quot;,
+      &quot;operation&quot;: &quot;defaults&quot;,
+      &quot;if&quot;: &quot;&quot;,
+      &quot;retry_strategy&quot;: &quot;none&quot;,
+      &quot;error_handler_workflow&quot;: &quot;&quot;
+    },
+    {
+      &quot;identifier&quot;: 1605,
+      &quot;completion&quot;: &quot;&quot;,
+      &quot;configuration&quot;: {
+        &quot;apply-acl&quot;: &quot;true&quot;
+      },
+      &quot;time_in_queue&quot;: 0,
+      &quot;failed_attempts&quot;: 0,
+      &quot;start&quot;: &quot;2018-08-08T08:47:02.209Z&quot;,
+      &quot;description&quot;: &quot;Applying access control entries from series&quot;,
+      &quot;fail_workflow_on_error&quot;: true,
+      &quot;unless&quot;: &quot;&quot;,
+      &quot;max_attempts&quot;: 1,
+      &quot;host&quot;: &quot;http:\/\/localhost:8080&quot;,
+      &quot;state&quot;: &quot;skipped&quot;,
+      &quot;operation&quot;: &quot;series&quot;,
+      &quot;if&quot;: &quot;&quot;,
+      &quot;retry_strategy&quot;: &quot;none&quot;,
+      &quot;error_handler_workflow&quot;: &quot;partial-error&quot;
+    }
+    ...
+  ],
+  &quot;configuration&quot;: {
+    &quot;publishLive&quot;: &quot;false&quot;,
+    &quot;workflowDefinitionId&quot;: &quot;fast&quot;,
+    &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+    &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+    &quot;comment&quot;: &quot;false&quot;,
+    &quot;publishToMediaModule&quot;: &quot;true&quot;
+  },
+  &quot;description&quot;: &quot;\n    A minimal workflow that transcodes the media into distribution formats, then\n    sends the resulting distribution files, along with their associated metadata,\n    to the distribution channels.\n  &quot;,
+  &quot;state&quot;: &quot;running&quot;,
+  &quot;title&quot;: &quot;Fast Testing Workflow&quot;,
+  &quot;event_identifier&quot;: &quot;f41e4417-b841-4d20-a466-f98ddfbe4c2a&quot;
+}
+</code></pre>
+
+<h3 id="put-apiworkflowsworkflow_instance_id">PUT /api/workflows/{workflow_instance_id}</h3>
+<p>Updates a workflow instance.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>state</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#workflow_state"><code>workflow_state</code></a></td>
+<td align="left">The optional state transition for this workflow</td>
+</tr>
+<tr>
+<td align="left"><code>configuration</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#property"><code>property</code></a></td>
+<td align="left">The optional configuration for this workflow</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfiguration</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<p>state:</p>
+<pre><code>paused
+</code></pre>
+
+<p>configuration:</p>
+<pre><code>{
+  &quot;publishLive&quot;: &quot;false&quot;,
+  &quot;uploadedSearchPreview&quot;: &quot;false&quot;,
+  &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+  &quot;comment&quot;: &quot;false&quot;,
+  &quot;publishToMediaModule&quot;: &quot;true&quot;
+}
+</code></pre>
+
+<p><strong>Allowed workflow state transitions</strong></p>
+<p>The following workflow state transitions are allowed:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Current state</th>
+<th align="left">Allowed new state</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>instantiated</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code>, <code>running</code></td>
+</tr>
+<tr>
+<td align="left"><code>running</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code></td>
+</tr>
+<tr>
+<td align="left"><code>failing</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code></td>
+</tr>
+<tr>
+<td align="left"><code>paused</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code>, <code>running</code></td>
+</tr>
+<tr>
+<td align="left"><code>succeeded</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code></td>
+</tr>
+<tr>
+<td align="left"><code>stopped</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code></td>
+</tr>
+<tr>
+<td align="left"><code>failed</code></td>
+<td align="left"><code>paused</code>, <code>stopped</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The workflow instance is updated and returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The (potentially empty) list of workflow tags of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>configuration_panel</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The configuration panel of this workflow instance</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_instance"><code>array[operation_instance]</code></a></td>
+<td align="left">The list of operations of this workflow instance</td>
+</tr>
+</tbody>
+</table>
+<p><code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br/>
+<code>404 (NOT FOUND)</code>: The workflow instance could not be found.<br/>
+<code>409 (CONFLICT)</code>: The workflow instance cannot transition to this state.</p>
+<h3 id="delete-apiworkflowsworkflow_instance_id">DELETE /api/workflows/{workflow_instance_id}</h3>
+<p>Deletes a workflow instance.</p>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The workflow instance has been deleted.<br/>
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br/>
+<code>404 (NOT FOUND)</code>: The specified workflow instance does not exist.<br/>
+<code>409 (CONFLICT)</code>: The workflow instance cannot be deleted in this state.</p>
+<h1 id="workflow-definitions">Workflow definitions</h1>
+<h3 id="get-apiworkflow-definitions">GET /api/workflow-definitions</h3>
+<p>Returns a list of workflow definitions.</p>
+<p>The following query string parameters are supported to filter, sort and pagingate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="../usage/#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>tag</code></td>
+<td align="left">Workflow definitions where the tag is included</td>
+</tr>
+</tbody>
+</table>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left">By the identifier of the workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">By the title of the workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>displayorder</code></td>
+<td align="left">By the display order of the workflow definition</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfigurationpanel</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration panel should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="xml">https://opencast.example.org/api/workflow-definitions?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=tag:archive
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of workflow definitions is returned. The list is represented as JSON array where
+each element is a JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The (potentially empty) list of workflow tags of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>configuration_panel</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The configuration panel of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_definition"><code>array[operation_definition]</code></a></td>
+<td align="left">The list of operations of this workflow definition</td>
+</tr>
+</tbody>
+</table>
+<p><code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;fast&quot;,
+    &quot;title&quot;: &quot;Fast Testing Workflow&quot;,
+    &quot;description&quot;: &quot;\n    A minimal workflow that transcodes the media into distribution formats, then\n    sends the resulting distribution files, along with their associated metadata,\n    to the distribution channels.\n  &quot;,
+    &quot;tags&quot;: [
+      &quot;schedule&quot;,
+      &quot;upload&quot;
+    ],
+    &quot;configuration_panel&quot;: &quot;\n    \n      &lt;div id=\&quot;workflow-configuration\&quot;&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Add a comment that the recording needs:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;comment\&quot; name=\&quot;comment\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; /&gt;\n              &lt;label for=\&quot;comment\&quot;&gt;Review / Cutting&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Immediately distribute the recording to:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToMediaModule\&quot; name=\&quot;publishToMediaModule\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToMediaModule\&quot;&gt;Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToOaiPmh\&quot; name=\&quot;publishToOaiPmh\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToOaiPmh\&quot;&gt;Default OAI-PMH Repository&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Publish live stream:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishLive\&quot; name=\&quot;publishLive\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;false\&quot; /&gt;\n              &lt;label for=\&quot;publishLive\&quot;&gt;Add live event to Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n      &lt;/div&gt;\n    \n  &quot;,
+    &quot;operations&quot;: [
+      {
+        &quot;id&quot;: &quot;defaults&quot;,
+        &quot;description&quot;: &quot;Applying default configuration values&quot;,
+        &quot;configuration&quot;: {
+          &quot;publishLive&quot;: &quot;false&quot;,
+          &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+          &quot;comment&quot;: &quot;false&quot;,
+          &quot;publishToMediaModule&quot;: &quot;true&quot;,
+          &quot;uploadedSearchPreview&quot;: &quot;false&quot;
+        },
+        &quot;unless&quot;: &quot;&quot;,
+        &quot;if&quot;: &quot;&quot;,
+        &quot;fail_workflow_on_error&quot;: &quot;true&quot;,
+        &quot;error_handler_workflow&quot;: &quot;&quot;,
+        &quot;retry_strategy&quot;: &quot;none&quot;,
+        &quot;max_attempts&quot;: &quot;1&quot;
+      },
+      {
+        &quot;id&quot;: &quot;series&quot;,
+        &quot;description&quot;: &quot;Applying access control entries from series&quot;,
+        &quot;configuration&quot;: {
+          &quot;apply-acl&quot;: &quot;true&quot;
+        },
+        &quot;unless&quot;: &quot;&quot;,
+        &quot;if&quot;: &quot;&quot;,
+        &quot;fail_workflow_on_error&quot;: &quot;true&quot;,
+        &quot;error_handler_workflow&quot;: &quot;partial_error&quot;,
+        &quot;retry_strategy&quot;: &quot;none&quot;,
+        &quot;max_attempts&quot;: &quot;1&quot;
+      }
+      ...
+    ]
+  }
+]
+</code></pre>
+
+<h3 id="get-apiworkflow-definitionsworkflow_definition_id">GET /api/workflow-definitions/{workflow_definition_id}</h3>
+<p>Returns a single workflow definition.</p>
+<p>This request supports the following query string parameters to include additional information directly in the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withoperations</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow operations should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withconfigurationpanel</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the workflow configuration panel should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The workflow definition is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The (potentially empty) list of workflow tags of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>configuration_panel</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The configuration panel of this workflow definition</td>
+</tr>
+<tr>
+<td align="left"><code>operations</code></td>
+<td align="left"><a href="../types/#operation_definition"><code>array[operation_definition]</code></a></td>
+<td align="left">The list of operations of this workflow definition</td>
+</tr>
+</tbody>
+</table>
+<p><code>404 (NOT FOUND)</code>: The specified workflow definition does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;id&quot;: &quot;fast&quot;,
+  &quot;title&quot;: &quot;Fast Testing Workflow&quot;,
+  &quot;description&quot;: &quot;\n    A minimal workflow that transcodes the media into distribution formats, then\n    sends the resulting distribution files, along with their associated metadata,\n    to the distribution channels.\n  &quot;,
+  &quot;tags&quot;: [
+    &quot;schedule&quot;,
+    &quot;upload&quot;
+  ],
+  &quot;configuration_panel&quot;: &quot;\n    \n      &lt;div id=\&quot;workflow-configuration\&quot;&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Add a comment that the recording needs:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;comment\&quot; name=\&quot;comment\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; /&gt;\n              &lt;label for=\&quot;comment\&quot;&gt;Review / Cutting&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Immediately distribute the recording to:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToMediaModule\&quot; name=\&quot;publishToMediaModule\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToMediaModule\&quot;&gt;Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToOaiPmh\&quot; name=\&quot;publishToOaiPmh\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToOaiPmh\&quot;&gt;Default OAI-PMH Repository&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Publish live stream:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishLive\&quot; name=\&quot;publishLive\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;false\&quot; /&gt;\n              &lt;label for=\&quot;publishLive\&quot;&gt;Add live event to Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n      &lt;/div&gt;\n    \n  &quot;,
+  &quot;operations&quot;: [
+    {
+      &quot;id&quot;: &quot;defaults&quot;,
+      &quot;description&quot;: &quot;Applying default configuration values&quot;,
+      &quot;configuration&quot;: {
+        &quot;publishLive&quot;: &quot;false&quot;,
+        &quot;publishToOaiPmh&quot;: &quot;true&quot;,
+        &quot;comment&quot;: &quot;false&quot;,
+        &quot;publishToMediaModule&quot;: &quot;true&quot;,
+        &quot;uploadedSearchPreview&quot;: &quot;false&quot;
+      },
+      &quot;unless&quot;: &quot;&quot;,
+      &quot;if&quot;: &quot;&quot;,
+      &quot;fail_workflow_on_error&quot;: &quot;true&quot;,
+      &quot;error_handler_workflow&quot;: &quot;&quot;,
+      &quot;retry_strategy&quot;: &quot;none&quot;,
+      &quot;max_attempts&quot;: &quot;1&quot;
+    },
+    {
+      &quot;id&quot;: &quot;series&quot;,
+      &quot;description&quot;: &quot;Applying access control entries from series&quot;,
+      &quot;configuration&quot;: {
+        &quot;apply-acl&quot;: &quot;true&quot;
+      },
+      &quot;unless&quot;: &quot;&quot;,
+      &quot;if&quot;: &quot;&quot;,
+      &quot;fail_workflow_on_error&quot;: &quot;true&quot;,
+      &quot;error_handler_workflow&quot;: &quot;partial_error&quot;,
+      &quot;retry_strategy&quot;: &quot;none&quot;,
+      &quot;max_attempts&quot;: &quot;1&quot;
+    }
+    ...
+  ]
+}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../types/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../types/" class="btn btn-xs btn-link">
+        Data Types
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security-api/" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/workflow-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
