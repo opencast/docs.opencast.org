@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>RHEL/CentOS - Administration Guide</title>
+    <title>RHEL/CentOS 7 - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Install from Repository (RedHat Enterprise Linux, CentOS, Scientific Linux)", url: "#_top", children: [
+          {title: "Install from Repository (Red Hat Enterprise Linux 7.x, CentOS 7.x, Scientific Linux 7.x)", url: "#_top", children: [
               {title: "Availability", url: "#availability" },
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Registration", url: "#registration" },
@@ -41,7 +41,6 @@
               {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Opencast", url: "#install-opencast" },
               {title: "Advanced Installation", url: "#advanced-installation" },
-              {title: "Install 3rd-party-tools", url: "#install-3rd-party-tools" },
               {title: "Upgrading Major Versions", url: "#upgrading-major-versions" },
               {title: "Uninstall Opencast", url: "#uninstall-opencast" },
               {title: "Troubleshooting", url: "#troubleshooting" },
@@ -72,12 +71,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../ansible/" class="btn btn-xs btn-default pull-right">
+      <a href="../rpm-el8/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../ansible/" class="btn btn-xs btn-link">
-        Ansible
+      <a href="../rpm-el8/" class="btn btn-xs btn-link">
+        RHEL/CentOS 8
       </a>
     </div>
     
@@ -93,15 +92,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="install-from-repository-redhat-enterprise-linux-centos-scientific-linux">Install from Repository (RedHat Enterprise Linux, CentOS, Scientific Linux)</h1>
-<p>There is an RPM software repository available for Red Hat-based Linux distributions provided by the University of
-Osnabrück. This repository provides preconfigured Opencast installations, including all 3rd-Party-Tools. Using this
+    <h1 id="install-from-repository-red-hat-enterprise-linux-7x-centos-7x-scientific-linux-7x">Install from Repository (Red Hat Enterprise Linux 7.x, CentOS 7.x, Scientific Linux 7.x)</h1>
+<blockquote>
+<p><em>This guide is for EL7 only. There is a separate <a href="../rpm-el8/">CentOS 8 and Red Hat Enterprise Linux 8 guide</a>.</em></p>
+</blockquote>
+<p>This guide is based on a RPM software repository available for Red Hat-based Linux distributions provided by Osnabrück
+University. This repository provides preconfigured Opencast installations and all necessary 3rd-Party-Tools. Using this
 method, you do not have to compile the software by yourself.</p>
-<p>It may also be interesting for developers as all dependencies for Opencast usage, testing and development are provided
-by the RPM repository.</p>
 <h2 id="availability">Availability</h2>
 <p>Note that it may take some time (usually about two weeks after a new release is out) before the RPMs are available.
-Watch for announcements on list or just check which versions are available in the repository.</p>
+Watch for announcements on <a href="https://docs.opencast.org/#mailing-lists">the users list</a> or just check which versions are
+available in the repository.</p>
 <h2 id="currently-supported">Currently Supported</h2>
 <ul>
 <li>CentOS 7.x (x86_64)</li>
@@ -112,10 +113,9 @@ Watch for announcements on list or just check which versions are available in th
 <p><em>Other architectures like i386, i686, arm, … are not supported!</em></p>
 </blockquote>
 <h2 id="registration">Registration</h2>
-<p>Before you can start you need to get an account for the repository. You will need the credentials that you get by mail
-after the registration to successfully complete this manual. The placeholders <code>[your_username]</code> and <code>[your_password]</code>
-are used in this manual wherever the credentials are needed.</p>
-<p><a href="https://pkg.opencast.org">Please visit https://pkg.opencast.org</a></p>
+<p>Before you can start you need to get an account for the repository. You will need the credentials that you got via
+e-mail after the registration to successfully complete this guide.</p>
+<p>Get your account on <a href="https://pkg.opencast.org">pkg.opencast.org</a>.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories so that your package manager can access them:</p>
 <ol>
@@ -127,7 +127,7 @@ curl -O https://pkg.opencast.org/opencast.repo \
 </code></pre>
 <p>You will be asked for your password.</p>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable
-repository. Until then, you can use <code>.../opencast-testing.repo</code> instead to get the latest version. Note that the
+repository. Until then, you can use <code>…/opencast-testing.repo</code> instead to get the latest version. Note that the
 testing repository is an additional repository and still requires the stable repository to be active.</p>
 </li>
 <li>
@@ -135,13 +135,14 @@ testing repository is an additional repository and still requires the stable rep
 <pre><code>yum install epel-release
 </code></pre>
 <p>If this package is not available, please enable this repository manually. For that, follow the <a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F">instructions in the
-EPEL documentation</a>.</p>
+EPEL documentation</a>. You can check if the
+repository was sucessfully enabled using:</p>
+<p>yum repolist enabled</p>
 </li>
 </ol>
 <h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
-<p>The Apache ActiveMQ message broker is required by Opencast since version 2.0. It does not necessarily have to be
-installed on the same machine as Opencast but would commonly for an all-in-one system. ActiveMQ is available from the
-Opencast RPM repository as well and can be installed by running:</p>
+<p>The Apache ActiveMQ message broker is required by Opencast. It can be installed on the same machine as Opencast.
+ActiveMQ can be installed by running:</p>
 <pre><code>yum install activemq-dist
 </code></pre>
 <p>A prepared configuration file for ActiveMQ can be found at <code>/usr/share/opencast/docs/scripts/activemq/activemq.xml</code>
@@ -153,88 +154,59 @@ installation the following command should suffice:</p>
 <p>More information about how to properly set up ActiveMQ for Opencast can be found in the <a href="../../configuration/message-broker/">message broker configuration
 documentation</a>.</p>
 <h2 id="install-opencast">Install Opencast</h2>
-<p>This describes a simple, single-node installation. A more complex, multi-node installation guide can be found in the
-<a href="#advanced-installation">Advanced Installation</a> section below and in the guide <a href="../multiple-servers/">Install Across Multiple Servers
-</a>.</p>
 <h3 id="basic-installation">Basic Installation</h3>
 <p>For a basic installation (All-In-One) just run:</p>
 <pre><code>yum install opencast&lt;version&gt;-allinone
 </code></pre>
-<p>Where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install.</p>
-<p>This will install the default distribution of Opencast and all its dependencies, including 3rd-Party-Tools.</p>
-<p>Now you can start Opencast:</p>
-<ul>
-<li>
+<p>…where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install, e.g. <code>opencast8-allinone</code>.
+This will install the default distribution of Opencast and all its dependencies.</p>
 <p>Don't forget to start configure and start ActiveMQ first as <a href="#install-apache-activemq">described in the ActiveMQ installation section
-  </a>.</p>
-</li>
-<li>
-<p>On a SysV-init based system</p>
-<pre><code>service opencast start
-</code></pre>
-</li>
-<li>
-<p>On a systemd based system</p>
+</a>.</p>
+<p>Then start Opencast by running:</p>
 <pre><code>systemctl start opencast.service
 </code></pre>
-</li>
-</ul>
-<p>While Opencast is preconfigured, it is strongly recommended to follow at least the <a href="../../configuration/basic/">Basic Configuration
-guide</a>. It will help you to set your hostname, login information, …</p>
+<p>While Opencast is preconfigured, it is strongly recommended to follow at least the <a href="../../configuration/basic/">Basic Configuration guide
+</a>. It will help you to set your hostname, login information, …</p>
 <h2 id="advanced-installation">Advanced Installation</h2>
-<p>While the basic installation will give you an all-in-one Opencast distribution which is nice for testing, you might
-want to have more control over your system and deploy it over several machines by choosing which parts of Opencast you
-want to install. You can list all Opencast packages with:</p>
+<p>The basic installation will give you an all-in-one Opencast distribution on a single server.  For productions, most
+users prefer deploying Opencast over several machines, which allows for a better workload distribution.  You can list
+all available Opencast packages with:</p>
 <pre><code>yum search opencast
 </code></pre>
-<p>This will list all available Opencast distributions in the form <code>opencast&lt;version&gt;-&lt;dist-type&gt;</code></p>
-<p>Some available distributions are:</p>
+<p>This will list all available Opencast distributions in the form <code>opencast&lt;version&gt;-&lt;dist-type&gt;</code>. Some commonly used
+distributions are:</p>
 <ul>
-<li>opencastX-allinone</li>
-<li>opencastX-admin</li>
-<li>opencastX-presentation</li>
-<li>opencastX-worker</li>
+<li><code>opencast&lt;version&gt;-allinone</code></li>
+<li><code>opencast&lt;version&gt;-admin</code></li>
+<li><code>opencast&lt;version&gt;-presentation</code></li>
+<li><code>opencast&lt;version&gt;-worker</code></li>
 </ul>
-<p>…where <code>X</code> stands for a specific Opencast version.</p>
-<h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
-<p>This step is optional and only recommended for those who want to build Opencast from source. If you install Opencast
-from the repository, all necessary dependencies will be installed automatically.</p>
-<p>You can install all necessary 3rd-Party-Tools for Opencast like this:</p>
-<pre><code>yum install ffmpeg tesseract hunspell sox synfig nmap-ncat
-</code></pre>
 <h2 id="upgrading-major-versions">Upgrading Major Versions</h2>
-<p>While these packages will automatically upgrade you to the latest point version in a release series, they do not
-automatically upgrade you to the latest major version. In other words, if you install <code>opencast3-admin</code> you get the
-latest 3.x release, not the latest 4.x release. To upgrade from one version to another you first stop Opencast:</p>
-<ul>
-<li>
-<p>On a SysV-init based system</p>
-<pre><code>service opencast stop
-</code></pre>
-</li>
-<li>
-<p>On a systemd based system</p>
+<p>Packages will automatically upgrade to the latest minor version in a release series. They do not automatically upgrade
+the latest major version. This is intentional since additional migration steps might be necessary for that. For example,
+if you install <code>opencast7-admin</code> you get the latest 7.x release, not the latest 8.x release. To upgrade from one major
+version to another, please consult the upgrade guide for each major version. Still, here is a short overview of the
+required steps:</p>
+<p>First, stop Opencast:</p>
 <pre><code>systemctl stop opencast.service
 </code></pre>
-</li>
-</ul>
-<p>As a reminder, these instructions will change your Opencast installation, and files to a new version which is likely
-incompatible with older versions. If you are performing this on a production system, please ensure you have valid
-backups prior to taking the next steps.</p>
-<p>Uninstall your current Opencast packaging (using Opencast 3 as an example):</p>
-<pre><code>yum remove opencast3-*
+<p>As a reminder, these instructions will upgrade your Opencast installation to a new version which is likely incompatible
+with older versions, and cannot be rolled back. If you are performing this on a production system, please ensure you
+have valid backups prior to taking the next steps.</p>
+<p>Uninstall your current Opencast package:</p>
+<pre><code>yum remove opencast
 </code></pre>
-<p>Then install the new version (using Opencast 4 as an example):</p>
-<pre><code>yum install opencast4-allinone
+<p>Then install the new version:</p>
+<pre><code>yum install opencast&lt;version&gt;-&lt;distribution&gt;
 </code></pre>
-<p>At this point you must follow the relevant <a href="../../upgrade/">upgrade</a> instructions, prior to starting Opencast again.</p>
+<p>At this point you must follow the relevant <a href="../../upgrade/">upgrade instructions</a>, prior to starting Opencast again.</p>
 <h2 id="uninstall-opencast">Uninstall Opencast</h2>
 <p>To uninstall Opencast, you can run:</p>
-<pre><code>yum remove 'opencast*'
+<pre><code>yum remove opencast
 </code></pre>
-<p>This will not touch your created media files or modified configuration files.  If you want to remove them as well, you
+<p>This will not touch your created media files or <em>modified</em> configuration files.  If you want to remove them as well, you
 have to do that by yourself.</p>
-<pre><code># Remove media files
+<pre><code># Remove media files (default location)
 sudo rm -rf /srv/opencast
 
 # Remove local db, search indexes and working files
@@ -250,9 +222,9 @@ sudo rm -rf /var/log/opencast
 <h3 id="missing-dependencies">Missing Dependencies</h3>
 <p>If you try to install Opencast but yum is complaining about missing dependencies, please check if the epel repository is
 really activated on your system. Some distributions come with epel preinstalled but disabled. The installation of the
-epel-release package will not fix this. You can check what repositories are installed and enabled by executing <code>yum
-repolist enabled</code> which should give you a list with epel, opencast and opencast-noarch in it. To enable a repository,
-edit the configuration file in <code>/etc/yum.repos.d/</code>.</p>
+epel-release package will not fix this. You can check what repositories are installed and enabled by executing
+<code>yum repolist enabled</code> which should give you a list with epel, opencast and opencast-noarch in it. To enable a
+repository, edit the configuration file in <code>/etc/yum.repos.d/</code>.</p>
 
   <br>
     
@@ -265,12 +237,12 @@ edit the configuration file in <code>/etc/yum.repos.d/</code>.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../ansible/" class="btn btn-xs btn-default pull-right">
+      <a href="../rpm-el8/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../ansible/" class="btn btn-xs btn-link">
-        Ansible
+      <a href="../rpm-el8/" class="btn btn-xs btn-link">
+        RHEL/CentOS 8
       </a>
     </div>
     
@@ -289,7 +261,7 @@ edit the configuration file in <code>/etc/yum.repos.d/</code>.</p>
 
 <footer class="col-md-12 wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/rpm-rhel-sl-centos.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/rpm-el7.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
