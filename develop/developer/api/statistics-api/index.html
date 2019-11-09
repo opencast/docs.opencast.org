@@ -37,6 +37,7 @@
               {title: "GET /api/statistics/providers", url: "#get-apistatisticsproviders" },
               {title: "GET /api/statistics/providers/{providerId}", url: "#get-apistatisticsprovidersproviderid" },
               {title: "POST /api/statistics/data/query", url: "#post-apistatisticsdataquery" },
+              {title: "POST /api/statistics/data/export.csv", url: "#post-apistatisticsdataexportcsv" },
           ]},
         ];
 
@@ -94,6 +95,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#time-series-statistics-provider">Time Series Statistics Provider</a></li>
 </ul>
 </li>
+<li><a href="#post-apistatisticsdataexportcsv">POST /api/statistics/data/export.csv</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +560,134 @@ data format.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="post-apistatisticsdataexportcsv">POST /api/statistics/data/export.csv</h3>
+<p>Retrieves statistical data in csv format.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>data</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#extended"><code>array[object]</code></a></td>
+<td align="left">A JSON object describing the statistics query to request (see below)</td>
+</tr>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). All standard dublin core meta data fields are filterable.</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of resources to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The index of the first resource to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Note that limit and offset relate to the resource here, not CSV lines. There can be multiple lines in a CSV for a resource,
+e.g. an event. However, you cannot limit by lines, but only by e.g. events.</p>
+<p>A query JSON object contains information about a statistics query to be executed:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object with information about the statistics provider to be queried</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object containing the parameters</td>
+</tr>
+</tbody>
+</table>
+<p>Here, a statistics provider JSON object has the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+</tbody>
+</table>
+<p>There parameters are the same as described <a href="#time-series-statistics-provider">above</a>, but with one additional field:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>detailLevel</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left"><code>EPISODE</code>, <code>SERIES</code>, or <code>ORGANIZATION</code> (only available for CSV exports)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<p>data:</p>
+<pre><code>    {
+      &quot;parameters&quot;: {
+        &quot;resourceId&quot;: &quot;mh_default_org&quot;,
+        &quot;detailLevel&quot;: &quot;EPISODE&quot;,
+        &quot;from&quot;: &quot;2018-12-31T23:00:00.000Z&quot;,
+        &quot;to&quot;: &quot;2019-12-31T22:59:59.999Z&quot;,
+        &quot;dataResolution&quot;: &quot;YEARLY&quot;
+      },
+      &quot;provider&quot;: {
+        &quot;identifier&quot;: &quot;organization.views.sum.influx&quot;,
+        &quot;resourceType&quot;: &quot;organization&quot;
+      }
+    }
+</code></pre>
+
+<p>filter:</p>
+<pre><code>    presenters:Hans Dampf
+</code></pre>
+
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) CSV file containing the resource statistics with all available meta data
+<code>400 (BAD REQUEST)</code>: The request was not valid</p>
 
   <br>
     
