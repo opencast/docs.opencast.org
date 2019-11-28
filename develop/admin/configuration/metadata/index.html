@@ -87,15 +87,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="overview">Overview</h1>
-<p>In Opencast, metadata is stored in so-called metadata catalogs. For each event or series, an arbiraty number of
-such configurable metadata catalog can be managed. A common set of metadata has been standarized to form a
+<p>In Opencast, metadata is stored in so-called metadata catalogs. For each event or series, an arbitrary number of
+such configurable metadata catalogs can be managed. A common set of metadata has been standardized to form a
 common basis (standard metadata), whereas administrators can configure Opencast to support other metadata sets
 (extended metadata).</p>
-<p>This document provides an overview over Opencast's metadata capabilities and its configuration.</p>
+<p>This document provides an overview of Opencast's metadata capabilities and its configuration.</p>
 <h2 id="standard-metadata">Standard Metadata</h2>
-<p>For both events and series, a common set of metadata is supported by Opencast out-of-the box. Since metadata catalogs
+<p>For both events and series, a common set of metadata is supported by Opencast out of the box. Since metadata catalogs
 are referenced from within media package, flavors can be used to identify a specific metadata catalog. The following
-flavors are treated by Opencast as standard metadata in means of Opencast expects them to be present:</p>
+flavors are treated by Opencast as standard metadata, meaning Opencast expects them to be present:</p>
 <ul>
 <li><code>dublincore/episode</code> holds the standard metadata of an event</li>
 <li><code>dublincore/series</code> holds the standard metadata of a series</li>
@@ -103,17 +103,17 @@ flavors are treated by Opencast as standard metadata in means of Opencast expect
 <p>Opencast assumes specific metadata fields to be present in the standard metadata in means of defining hard-coded
 filters, table columns and search indices.</p>
 <p>To adjust the standard metadata to your specific needs, you can configure them in
-<code>/opt/opencast/etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-episode-common.cfg</code> and
-<code>/opt/opencast/etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-series-common.cfg</code>.</p>
-<p>For details on how to configure metadata catalogs, see section Configuring Metadata Catalogs.</p>
-<p>As mentioned above, however, Opencast expects specific metafields to be present to work correctly. In case you want
-to map metadata specific to your use case, you might consider to use the extended metadata capbilities of Opencast
+<code>etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-episode-common.cfg</code> and
+<code>etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-series-common.cfg</code>.</p>
+<p>For details on how to configure metadata catalogs, see the section Metadata Catalog Configuration.</p>
+<p>As mentioned above, however, Opencast expects specific metadata fields to be present to work correctly. In case you want
+to map metadata specific to your use case, you might consider using the extended metadata capbilities of Opencast
 described in the next section.</p>
 <h2 id="extended-metadata">Extended Metadata</h2>
 <p>For both events and series, Opencast support an arbitrary number of customized metadata catalogs.</p>
 <p>To add extended metadata catalogs, create a configuration file with a valid filename of the form
-<code>org.opencastproject.ui.metadata.CatalogUIAdapterFactory-&lt;name&gt;.cfg</code> in <code>/opt/opencast/etc.</code> on the admin node.</p>
-<p>For details on how to configure metadata catalogs, see section Configuring Metadata Catalogs.</p>
+<code>org.opencastproject.ui.metadata.CatalogUIAdapterFactory-&lt;name&gt;.cfg</code> in <code>etc/</code>. on the admin node.</p>
+<p>For details on how to configure metadata catalogs, see the section Metadata Catalog Configuration.</p>
 <p>Limitations:</p>
 <ul>
 <li>Cannot be sorted, searched or filtered</li>
@@ -214,7 +214,7 @@ output id to make it easy to find.</p>
 </thead>
 <tbody>
 <tr>
-<td>property.{field-id}.inputID*</td>
+<td>property.{field-id}.inputID¹</td>
 <td>title</td>
 <td>The id used to identify this property in the catalog e.g. The name of the property inside the xml file of a Dublin Core catalog. If an outputID is not specified then this inputID is used for both the catalog and the front end id. This value is mandatory.</td>
 </tr>
@@ -229,19 +229,19 @@ output id to make it easy to find.</p>
 <td>The URL that represents the namespace for this property. Different properties in the same catalog can have different namespaces.</td>
 </tr>
 <tr>
-<td>property.{field-id}.label</td>
+<td>property.{field-id}.label¹</td>
 <td>"EVENTS.EVENTS.DETAILS.METADATA.TITLE" or "Event Title"</td>
 <td>The label to show for this property in the UI. If there is a i18n support for a label that should be the value used so that it will be translated, if you don't mind it being locked to one translation just put that single value in.</td>
 </tr>
 <tr>
-<td>property.{field-id}.type</td>
+<td>property.{field-id}.type¹</td>
 <td>text</td>
 <td>The type of the metadata field.</td>
 </tr>
 <tr>
 <td>property.{field-id}.pattern</td>
 <td>yyyy-MM-dd</td>
-<td>Applies to date and time types for now. It is used to format their values using the java DateTimeFormatter values**</td>
+<td>Applies to date and time types for now. It is used to format their values using the java DateTimeFormatter values²</td>
 </tr>
 <tr>
 <td>property.{field-id}.delimiter</td>
@@ -249,12 +249,12 @@ output id to make it easy to find.</p>
 <td>For mixed_text and iterable_text type fields, a string at which inputs into the corresponding fields are split into individual values for easier bulk entry of lists. The default is no delimiter, in which case no splitting takes place.</td>
 </tr>
 <tr>
-<td>property.{field-id}.readOnly</td>
+<td>property.{field-id}.readOnly¹</td>
 <td>false</td>
 <td>If the property can be edited in the UI or if it should only be displayed.</td>
 </tr>
 <tr>
-<td>property.{field-id}.required</td>
+<td>property.{field-id}.required¹</td>
 <td>true</td>
 <td>If the property has to have a value before the metadata can be saved (the UI's save button will be disabled until all of the required fields are entered)</td>
 </tr>
@@ -275,8 +275,8 @@ output id to make it easy to find.</p>
 </tr>
 </tbody>
 </table>
-<p>* Mandatory field attribute</p>
-<p>** See https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html</p>
+<p>¹ Mandatory field attribute</p>
+<p>² See <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></p>
 <p><strong>Field types</strong></p>
 <table>
 <thead>
