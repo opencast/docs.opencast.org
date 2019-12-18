@@ -38,9 +38,8 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Configuration changes", url: "#configuration-changes" },
               {title: "API changes", url: "#api-changes" },
-              {title: "Aditional Notes About 7.4", url: "#aditional-notes-about-74" },
-              {title: "Aditional Notes About 7.5", url: "#aditional-notes-about-75" },
               {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release managers", url: "#release-managers" },
           ]},
         ];
 
@@ -92,12 +91,65 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="opencast-8-release-notes">Opencast 8: Release Notes</h1>
 <h2 id="features">Features</h2>
 <ul>
-<li>The <code>adminworker</code> distribution is no longer available.</li>
+<li>Improved integration of external statistics providers (InfluxDB)<ul>
+<li>Hourly scale for data exports</li>
+<li>Visualization of statistics in the Admin UI</li>
+</ul>
+</li>
+<li>Limit accepted file types when uploading assets</li>
+<li>Support for exclusion pattern for URL signing</li>
+<li>Add option to configure state mappings for workflows</li>
+<li>Assembly configuration</li>
+<li>Multi-tenancy support for workflows</li>
+<li>Role support for workflows</li>
+<li>Video-crop service</li>
+<li>Paella Player 6.2.4</li>
+<li>Multiple audio tracks support on Paella Player</li>
+<li>Feeds-tab: adds a new tab in series properties for ATOM and RSS Feeds</li>
+<li>Custom LTI series tool styles</li>
+<li>Show only events with write access in the Admin UI</li>
+<li>Access org properties from publish-configure WOH</li>
+<li>Resolution based, conditional encoding</li>
+<li>Termination State Service to integrate with AWS AutoScaling Lifecycle</li>
+<li>Health check endpoint</li>
+<li>Officially support URL signing keys that handle multiple URL prefixes</li>
+<li>Support for exclusion pattern for URL signing</li>
+<li>User-provider for the d2l Brightspace LMS</li>
+<li>Provide access to file contents in the Working File Repository</li>
+<li>Automatic caption using Google speech to text API</li>
+<li>Admin UI: new event media upload progress bar</li>
+<li>Opencast Plug-in features for Karaf</li>
+<li>Single step delete of events</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
-<li>Media package elements retrieved from the asset manager (e.g. using “start task”) now always get tagged <code>archive</code> even
-  when they have not been tagged thus before.</li>
+<li>Resume on past table page when leaving video editor</li>
+<li>JavaScript dependency management</li>
+<li>Highlight main table rows on hover</li>
+<li>Reduces job payload size in database</li>
+<li>Improved URL signing performance</li>
+<li>ingest-download operation moved to worker</li>
+<li>Media Module configuration now in the organization configuration file</li>
+<li>Sensible names for hosts instead of URLs</li>
+<li>Improved icons and wording in video editor</li>
+<li>Improved delete-event submit button</li>
+<li>Extended the ingest-download-woh</li>
+<li>Tag elements retrieved from asset manager</li>
+<li>Improve navigation in video editor when zoom is active</li>
+<li>Switch to compatible file type filter definitions</li>
+<li>Improved setting values from Dublin Core catalog</li>
+<li>Don't start Opencast on a used port</li>
+<li>ESLint used in Theodul Core</li>
+<li>Theodul Player scroll/zoom overlay to use shift + scroll wheel zoom</li>
+<li>Removed State Mapping "Importing"</li>
+<li>Hide column "Stop" by default</li>
+<li>Fixed Workflow Index rebuild ACL handling</li>
+<li>Reduced memory needed for Workflow Index rebuild</li>
+<li>Ansible script documentation</li>
+<li>Automatic publication of streaming URLs</li>
+<li>S3 compatibility - Endpoint configuration for Amazon S3 alternatives added  </li>
+<li>Theodul player ui config</li>
+<li>Re-introduce ability to avoid data loss during ingest</li>
 </ul>
 <h2 id="configuration-changes">Configuration changes</h2>
 <ul>
@@ -112,16 +164,38 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 </ul>
-<h2 id="aditional-notes-about-74">Aditional Notes About 7.4</h2>
-<p>Opencast 7.4 brings a performance fix for some queries in the search API that can cause Opencast to run out of memory.</p>
-<p>This release also gives back a patch that was in version 6.x that allows to filter capture agent roles for ACLs and
-fixes the date cell of the events overview table in the admin UI.</p>
-<p>Finally, Opencast 7.4 also brings an update to the CAS security example that was out of date.</p>
-<h2 id="aditional-notes-about-75">Aditional Notes About 7.5</h2>
-<p>Opencast 7.5 fixes behaviour where the bibliographic date was not changed when changing the technical date via Rest.
-Also an option was added to disable thumbnail generation in the video editor because it can lead to performance issues.</p>
 <h2 id="release-schedule">Release Schedule</h2>
-<p>TBD</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>October 1st 2019</td>
+<td>Feature Freeze</td>
+</tr>
+<tr>
+<td>Nov 4th - Nov 10th 2019</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>Nov 11th - Nov 24th 2019</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>December 17th 2019</td>
+<td>Release of Opencast 8.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release managers</h2>
+<ul>
+<li>Karen Dolan (Harvard University DCE)</li>
+<li>Rüdiger Rolf (Osnabrück University)</li>
+</ul>
 
   <br>
     
