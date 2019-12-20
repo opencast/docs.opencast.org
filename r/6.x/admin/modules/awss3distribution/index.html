@@ -183,13 +183,54 @@ some cases) then remember to add a <a href="../../workflowoperationhandlers/retr
 publication operations.  Note that if this step is omitted the files will remain available locally, but will not be
 used.  Of further note, if you retract after publication to AWS then your workflow <em>will not be available</em> to users.
 To summarize, this table presents a subset of the various situations that are possible</p>
-<p>|Workflow Operations|Files present in the Media Module|Files present in AWS|Files served from|
-|publish-engage | Yes | No | Opencast Media Module |
-|publish-aws| No | Yes | AWS |
-|publish-engage, publish-aws| Yes | Yes | AWS |
-|publish-aws, publish-engage| Yes | Yes | Opencast Media Module|
-|publish-engage, retract-engage, publish-aws | Temporary | Yes | AWS |
-|publish-engage, publish-aws, retract-engage | No | Yes | Not available |</p>
+<table>
+<thead>
+<tr>
+<th>Workflow Operations</th>
+<th>Files present in the Media Module</th>
+<th>Files present in AWS</th>
+<th>Files served from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>publish-engage</td>
+<td>Yes</td>
+<td>No</td>
+<td>Opencast Media Module</td>
+</tr>
+<tr>
+<td>publish-aws</td>
+<td>No</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-engage, publish-aws</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-aws, publish-engage</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Opencast Media Module</td>
+</tr>
+<tr>
+<td>publish-engage, retract-engage, publish-aws</td>
+<td>Temporary</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-engage, publish-aws, retract-engage</td>
+<td>No</td>
+<td>Yes</td>
+<td>Not available</td>
+</tr>
+</tbody>
+</table>
 <h2 id="migrating-to-s3-distribution-with-pre-existing-data">Migrating to S3 Distribution with Pre-Existing Data</h2>
 <p>If you already have data published to your local Opencast install, you should be able to republish the media selecting
 AWS S3 as the distribution service to use.</p>
