@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Execute Many Workflow Operation", url: "#_top", children: [
               {title: "Parameter table", url: "#parameter-table" },
-              {title: "Operation Example", url: "#operation-example" },
+              {title: "Operation Examples", url: "#operation-examples" },
           ]},
         ];
 
@@ -85,8 +85,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h2 id="execute-many-workflow-operation">Execute Many Workflow Operation</h2>
-<p>This operation handler filters a set of MediaPackageElements that match certain input conditions and runs a command on
-each of them.</p>
+<p>This operation handler filters a set of MediaPackageElements that match certain input conditions
+and runs a command on each of them. The command may be used to create a new mediapackage element,
+or to add configuration properties to the running workflow.</p>
 <p>To run a command only once for the whole mediapackage, use the <a href="../execute-once-woh/">Execute Once</a> operation.</p>
 <p>Commands run by this operation handler must first be included in the <code>commands.allowed</code> list in the
 <a href="../../modules/execute/#service-configuration">Execute Service</a> configuration.</p>
@@ -122,6 +123,12 @@ in <a href="../../modules/execute/#parameter-substitution">Execute Service: Para
 <td>No</td>
 </tr>
 <tr>
+<td>set-workflow-properties</td>
+<td>true / false</td>
+<td>Import workflow properties from the output file</td>
+<td>No</td>
+</tr>
+<tr>
 <td>source-flavor</td>
 <td>presentation/source</td>
 <td>Run the command for any MediaPackage elements with this flavor. Elements must also match the source-tags condition, if present</td>
@@ -131,6 +138,18 @@ in <a href="../../modules/execute/#parameter-substitution">Execute Service: Para
 <td>source-tag</td>
 <td>rss, trim, -engage</td>
 <td>Run the command for any MediaPackage elements with one of these (comma- separated) tags. If any of them starts with '-', MediaPackage elements containing this tag will be excluded. Elements must also match the source-flavor condition, if present</td>
+<td>No</td>
+</tr>
+<tr>
+<td>source-audio</td>
+<td>true</td>
+<td>If present, require the element either to have an audio stream (true) or no audio stream (false), in addition to any source-flavor or source-tag conditions.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>source-video</td>
+<td>true</td>
+<td>If present, require the element either to have a video stream (true) or no video stream (false), in addition to any source-flavor or source-tag conditions.</td>
 <td>No</td>
 </tr>
 <tr>
@@ -159,7 +178,15 @@ in <a href="../../modules/execute/#parameter-substitution">Execute Service: Para
 </tr>
 </tbody>
 </table>
-<h3 id="operation-example">Operation Example</h3>
+<p>If <code>set-workflow-properties</code> is true, the command should write a plain-text properties file to the
+location specified by #{out} in the key-value format supported by the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java Properties</a>
+class, for example:</p>
+<pre><code>key1=value1
+key2=value2
+</code></pre>
+
+<h3 id="operation-examples">Operation Examples</h3>
+<p>Run a command which creates a new version of a track:</p>
 <pre><code>&lt;operation
   id=&quot;execute-many&quot;
   fail-on-error=&quot;true&quot;
@@ -174,6 +201,25 @@ in <a href="../../modules/execute/#parameter-substitution">Execute Service: Para
     &lt;configuration key=&quot;target-flavor&quot;&gt;output/processed&lt;/configuration&gt;
     &lt;configuration key=&quot;target-tags&quot;&gt;copied, -copy&lt;/configuration&gt;
     &lt;configuration key=&quot;expected-type&quot;&gt;Track&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+<p>Run a command which inspects any track with a <code>presenter/source</code> flavor and an audio stream,
+and adds new configuration properties to the running workflow, leaving the mediapackage unchanged:</p>
+<pre><code>&lt;operation
+  id=&quot;execute-many&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;error&quot;
+  description=&quot;Inspect track and update workflow properties&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;exec&quot;&gt;/usr/local/bin/oc-track-inspect-audio.sh&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-audio&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;params&quot;&gt;#{in} #{out}&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-workflow-properties&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;output-filename&quot;&gt;wf.properties&lt;/configuration&gt;
+    &lt;configuration key=&quot;expected-type&quot;&gt;Attachment&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
