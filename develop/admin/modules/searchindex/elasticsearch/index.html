@@ -85,47 +85,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="elasticsearch-configuration">Elasticsearch Configuration</h1>
-<p>Elasticsearch is powering the external API as well as the administrative user interface of Opencast. By default,
-Opencast will start its own, internal Elasticsearch node as part of the admin distribution and no special configuration
-or deployment is required.</p>
-<p>Nevertheless, it is possible to connect Opencast to an external Elasticsearch instead. Reasons for this may be:</p>
-<ul>
-<li>Ability for redundant services</li>
-<li>Lightweight admin distributions</li>
-<li>Cluster set-ups</li>
-</ul>
+<p>Elasticsearch is powering the external API as well as the administrative user interface of Opencast.</p>
 <h2 id="running-elasticsearch">Running Elasticsearch</h2>
-<p>When running Elasticsearch, it is recommended to deploy the same version Opencast includes as the client commands may
-otherwise not match the server. To check the version, take a look at <a href="https://github.com/opencast/opencast/blob/develop/modules/search/pom.xml">the maven dependency declaration for the
-elasticsearch bundle in the search module</a>.</p>
-<p>For example, to quickly spin up an external Elasticsearch matching the current version using Docker, create a simple
-Elasticsearch configuration file called <code>elasticsearch.yml</code>:</p>
-<pre><code class="yml">cluster.name: opencast
-network.host: 0.0.0.0
-discovery.type: single-node
+<p>When running Elasticsearch, it is mandatory to deploy the same major version as the client library used by Opencast has,
+since the client commands will otherwise not match the server. To check the version, take a look at
+<a href="https://github.com/opencast/opencast/blob/develop/modules/search/pom.xml">the maven dependency declaration for the elasticsearch bundle in the search module</a>.</p>
+<p>For example, to quickly spin up an external Elasticsearch matching the current version using Docker, run</p>
+<pre><code class="sh">% docker run -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; elasticsearch:7.4.2
 </code></pre>
 
-<p>…and run</p>
-<pre><code class="sh">% docker run -p 9200:9200 -p 9300:9300 \
-    -v &quot;$(pwd)/elasticsearch.yml&quot;:/usr/share/elasticsearch/config/elasticsearch.yml \
-    elasticsearch:5.6.15
-</code></pre>
-
-<p>This will already give you a running cluster with the cluster name <code>opencast</code>. Note that the cluster name is important
-and you will need this to match Opencast's configuration.</p>
 <h2 id="configuring-external-nodes">Configuring External Nodes</h2>
 <p>To configure an external node, set the server's address in <code>etc/custom.properties</code>:</p>
-<pre><code class="properties">org.opencastproject.elasticsearch.server.address=127.0.0.1
+<pre><code class="properties">org.opencastproject.elasticsearch.server.hostname=localhost
+org.opencastproject.elasticsearch.server.scheme=http
+org.opencastproject.elasticsearch.server.port=9200
 </code></pre>
 
-<p>Once this is set, Opencast will not launch its own internal Elasticsearch anymore. If necessary, you can also specify a
-custom port in this configuration file.</p>
-<p>Next, configure the correct cluster name in <code>etc/elasticsearch.yml</code>. Make sure that the correct cluster name is set in
-the configuration file of each index:</p>
-<pre><code class="yml">cluster.name: opencast
-</code></pre>
-
-<p>Opencast will now use the external Elasticsearch.</p>
+<p>Opencast will now use your Elasticsearch instance.</p>
 
   <br>
     
