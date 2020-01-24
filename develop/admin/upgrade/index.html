@@ -34,8 +34,6 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 8.x to 9.x", url: "#_top", children: [
-              {title: "Configuration Changes", url: "#configuration-changes" },
-              {title: "How to Upgrade", url: "#how-to-upgrade" },
               {title: "Install and configure a standalone Elasticsearch node", url: "#install-and-configure-a-standalone-elasticsearch-node" },
               {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
           ]},
@@ -89,19 +87,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="upgrading-opencast-from-8x-to-9x">Upgrading Opencast from 8.x to 9.x</h1>
 <p>This guide describes how to upgrade Opencast 8.x to 9.x. In case you need information about how to upgrade older
 versions of Opencast, please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
-<h2 id="configuration-changes">Configuration Changes</h2>
-<ol>
-<li>The dispatch interval property is now called <code>dispatch.interval</code> and expects seconds instead of milliseconds
-   <code>etc/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg</code>.</li>
-<li>The file <code>etc/elasticsearch.yml</code> was removed as it is no longer required due to the removal of the embedded
-   Elasticsearch node.</li>
-<li>The file <code>etc/custom.properties</code> was changed:</li>
-<li>The property <code>org.opencastproject.elasticsearch.server.address</code> was renamed
-   to <code>org.opencastproject.elasticsearch.server.hostname</code> and now defaults to <code>localhost</code> (was: <code>127.0.0.1</code>).</li>
-<li>The property <code>org.opencastproject.elasticsearch.server.port</code> now defaults to <code>9200</code> (was: <code>9300</code>).</li>
-<li>A new property <code>org.opencastproject.elasticsearch.server.scheme</code> was added and defaults to <code>http</code>.</li>
-</ol>
-<h2 id="how-to-upgrade">How to Upgrade</h2>
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
