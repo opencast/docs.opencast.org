@@ -39,7 +39,7 @@ do
     git checkout "origin/${branch}"
 
     echo "Building documentation for ${branch}"
-    for target in admin developer user
+    for target in admin developer
     do
         (
             set -eu
