@@ -43,6 +43,7 @@
               {title: "Additional Notes About 7.3", url: "#additional-notes-about-73" },
               {title: "Aditional Notes About 7.4", url: "#aditional-notes-about-74" },
               {title: "Aditional Notes About 7.5", url: "#aditional-notes-about-75" },
+              {title: "Aditional Notes About 7.6", url: "#aditional-notes-about-76" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
           ]},
@@ -201,6 +202,24 @@ fixes the date cell of the events overview table in the admin UI.</p>
 <h2 id="aditional-notes-about-75">Aditional Notes About 7.5</h2>
 <p>Opencast 7.5 fixes behaviour where the bibliographic date was not changed when changing the technical date via Rest.
 Also an option was added to disable thumbnail generation in the video editor because it can lead to performance issues.</p>
+<h2 id="aditional-notes-about-76">Aditional Notes About 7.6</h2>
+<p>Opencast 7.6 fixes a number of security issues. Upgrading is strongly recommended.
+Take a look at the <a href="https://github.com/opencast/opencast/security/advisories">security advisories</a> for more details.</p>
+<p>One change is that the OAI-PMH endpoint is no longer publically accessible by default.
+If you need it to be, you can easily change that in the security configuration at <code>etc/security/mh_default_org.xml</code>.</p>
+<h3 id="fixed-security-issues">Fixed Security Issues</h3>
+<ul>
+<li>CVE-2020-5231 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-94qw-r73x-j7hg">Users with ROLE_COURSE_ADMIN can create new users
+  </a></li>
+<li>CVE-2020-5206 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-vmm6-w4cf-7f3x">Authentication Bypass For Endpoints With Anonymous Access
+  </a></li>
+<li>CVE-2020-5222 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-mh8g-hprg-8363">Hard-Coded Key Used For Remember-me Token
+  </a></li>
+<li>CVE-2020-5230 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-w29m-fjp4-qhmq">Unsafe Identifiers
+  </a></li>
+<li>CVE-2020-5228 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-6f54-3qr9-pjgj">Public Access Via OAI-PMH
+  </a></li>
+</ul>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>

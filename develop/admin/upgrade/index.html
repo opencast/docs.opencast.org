@@ -36,6 +36,7 @@
           {title: "Upgrading Opencast from 8.x to 9.x", url: "#_top", children: [
               {title: "Install and configure a standalone Elasticsearch node", url: "#install-and-configure-a-standalone-elasticsearch-node" },
               {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
+              {title: "Check Passwords", url: "#check-passwords" },
           ]},
         ];
 
@@ -97,6 +98,7 @@ versions of Opencast, please refer to <a href="https://docs.opencast.org">older 
 <li>Remove search index data folder</li>
 <li>Start Opencast</li>
 <li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
+<li><a href="#check-passwords">Check passwords</a></li>
 </ol>
 <h2 id="install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</h2>
 <p>In the past, Opencast came with its own integrated Elasticsearch node. However, recent versions of Elasticsearch no longer
@@ -130,6 +132,12 @@ schema has changed, you will need to drop you indices and <a href="#rebuild-the-
 “?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
 <code>/recreateIndex</code>.</p>
 <p>In both cases you should again get a 200 HTTP status.</p>
+<h2 id="check-passwords">Check Passwords</h2>
+<p>Since Opencast 8.1 <a href="https://github.com/opencast/opencast/security/advisories/GHSA-h362-m8f2-5x7c">passwords are stored in a much safer way than before
+</a>
+but to benefit from this mechanism, users have to reset their password.</p>
+<p>You can use the endpoint <code>/user-utils/users/md5.json</code> to find out which users are still using MD5-hashed passwords and
+suggest to them that they update their passwords.</p>
 
   <br>
     
