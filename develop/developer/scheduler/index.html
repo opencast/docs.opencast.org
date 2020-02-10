@@ -36,8 +36,6 @@
           {title: "Scheduler", url: "#_top", children: [
               {title: "Modules", url: "#modules" },
               {title: "Database", url: "#database" },
-              {title: "Conflict Handler", url: "#conflict-handler" },
-              {title: "Conflict Notifier", url: "#conflict-notifier" },
               {title: "API", url: "#api" },
           ]},
         ];
@@ -97,12 +95,6 @@ An API module defining the core scheduler functions and properties.</li>
 The default implementation of the scheduler service as an OSGi service.</li>
 <li><code>scheduler-remote</code>
 The remote implementation of the scheduler service as an OSGi service.</li>
-<li><code>scheduler-conflict-handler</code>
-The default implementation of a conflict handler strategy.</li>
-<li><code>scheduler-conflict-notifier-comment</code>
-A conflict notifier implementation adding comments on the conflicting events.</li>
-<li><code>scheduler-conflict-notifier-email</code>
-A conflict notifier implementation sending an email including all conflicting events.</li>
 </ul>
 <h2 id="database">Database</h2>
 <p>The scheduler service stores snapshots using the AssetManager and additionally uses two tables:</p>
@@ -111,15 +103,6 @@ A conflict notifier implementation sending an email including all conflicting ev
   Manages scheduled event meta data such as start date, end date, capture agent ID, and so on.</li>
 <li><code>oc_scheduled_last_modified</code>
   Manages the last recording modification date of a status change on an event sent by the capture agent.</li>
-</ul>
-<h2 id="conflict-handler">Conflict Handler</h2>
-<p>The conflict handler implements a strategy to resolve conflicts by either using the new or the old schedule according the
-configuration.</p>
-<h2 id="conflict-notifier">Conflict Notifier</h2>
-<p>There are two implementations of a conflict notifier available and activated by default.</p>
-<ul>
-<li>The <em>Email conflict notifier</em> will send an email including all conflicting events to a configured recipient.</li>
-<li>The <em>Comment conflict notifier</em> will add a comment on the conflicting event describing the conflict.</li>
 </ul>
 <h2 id="api">API</h2>
 <p>Here is a sample to create a single event with the scheduler Java API.</p>
