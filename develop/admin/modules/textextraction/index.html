@@ -120,13 +120,19 @@ analysis.</p>
   you want to use on every worker (E.g. <code>yum install tesseract-langpack-deu</code>).</li>
 <li>Finally <code>--psm 3</code> specifies the layout analysis for Tesseract. The value <code>3</code> means <em>Fully automatic page segmentation,
   but no orientation and script detection</em> which is actually the default. Hence in this case, the argument could simply
-  be omitted. If you know more about your input videos, you might want to use different options here (not likely).</li>
+  be omitted. If you know more about your input videos, you might want to use different options here (not likely).
+  This option might be just <code>-psm</code> with only one dash in your system.</li>
 </ul>
 <p>In Opencast, you can modify this options in the <code>custom.properties</code> file by setting the following option:</p>
 <pre><code>org.opencastproject.textanalyzer.tesseract.options=-l deu --psm 3
 </code></pre>
 <p>It is highly recommended to configure Tesseract to use your local language. It will improve the recognition a lot and
 only this will enable the recognition of special characters specific to your local language.</p>
+<p>If you supply a reference to a list of additional words using <code>--user-words</code>, the path to that file must not be enclosed
+in quotation marks.</p>
+<p>Newer versions of Tesseract come with additional neural nets LSTM. Its performance might be significiantly different
+from the previous Tesseract engine. Its usage might be specified using <code>--oem N</code> with <code>N</code> being a number documented in
+your Tesseract manual.</p>
 <h3 id="encoding-image-preprocessing">Encoding (Image Preprocessing)</h3>
 <p>The text extraction works best if there is a high contrast between text and background and additionally, the text is not
 too thin. Ideally, this means that you have black and white images with a clear, bold font.</p>
