@@ -89,22 +89,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="authentication">Authentication</h2>
 <p>Many campuses use some kind of single sign on, such as JASIG's Central Authentication Service, or CAS. This guide
 describes how to integrate Opencast into such a system.</p>
-<h3 id="step-1">Step 1</h3>
+<h3 id="enable-opencast-cas-feature">Enable Opencast CAS feature</h3>
 <p>First, you need to edit the file <code>etc/org.apache.karaf.features.cfg</code> and add the <code>opencast-security-cas</code> to the
 <code>featuresBoot</code> variable.</p>
 <pre><code>featuresBoot = ..., opencast-security-cas
 </code></pre>
-<h3 id="step-2">Step 2</h3>
-<p>In a single-tenant deployment, your <code>security.xml</code> file is under <code>OPENCAST_HOME/etc/security/mh_default_org.xml</code>. In an
-RPM/DEB based installation, it is located in <code>/etc/opencast/security/mh_default_org.xml</code>. You should make a backup copy
-of the file and substitute it by the sample file named <code>security_sample_cas.xml-example</code>. In other words:</p>
-<pre><code>$&gt; cd etc/security
-$&gt; mv mh_default_org.xml mh_default_org.xml.old
-$&gt; cp security_sample_cas.xml-example mh_default_org.xml
-</code></pre>
-<p>The sample file should be exactly the same as the default security file, except for the parts only relevant to the
-CAS. If you have done custom modifications to your security file, make sure to incorporate them to the new file, too.</p>
-<h3 id="step-3">Step 3</h3>
+<h3 id="security-configuration">Security Configuration</h3>
+<p>Edit the security configuration file at <code>etc/security/mh_default_org.xml</code>. In a multi-tenant set-up, you will have one
+configuration file for each tenant at <code>etc/security/&lt;organization_id&gt;.xml</code>.</p>
+<p>You need to comment or uncomment some sections in this file.
+All necessary changes are marked with a <code>CAS Auth:</code> tag. You can use the find function of your editor to
+find the parts of the file you need to modify.</p>
 <p>Add the necessary configuration values to the CAS section of the new security file. The comments should be
 self-explanatory.</p>
 <p>You must modify several settings in the sample to point to your CAS server:</p>
@@ -133,10 +128,12 @@ self-explanatory.</p>
 <h2 id="authorization">Authorization</h2>
 <p>Now the system knows all the information necessary to authenticate users against CAS, but also need some authorization
 information, to tell which services the user is allowed to use and which resources is allowed to see and/or modify.</p>
-<p>You will need to configure a UserProvider to look up users as identified by CAS.</p>
+<p>You will need to configure a <a href="../security/">UserProvider</a> to look up users as identified by CAS.</p>
 <ul>
+<li>LDAP User Provider, described in <a href="../security.ldap/">LDAP Security and Authorization</a></li>
 <li><a href="../security.user.sakai/">Sakai User Provider</a></li>
-<li><a href="../security.ldap/">LDAP User Provider</a> (Section <code>Authorization/Step 2</code>)</li>
+<li><a href="../security.user.moodle/">Moodle User Provider</a></li>
+<li><a href="../security.user.brightspace/">Brightspace D2L User Provider</a></li>
 </ul>
 <h2 id="original-documentation-from-university-of-saskatchewan">Original documentation from University of Saskatchewan</h2>
 <p><a href="https://opencast.jira.com/wiki/display/MH/University+of+Saskatchewan+CAS+and+LDAP+integration">University of Saskatchewan CAS and LDAP
