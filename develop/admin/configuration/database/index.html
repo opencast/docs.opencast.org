@@ -136,7 +136,7 @@ create a database called <code>opencast</code> by executing:</p>
 <pre><code>GRANT SELECT,INSERT,UPDATE,DELETE,CREATE TEMPORARY TABLES ON opencast.*
   TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
 </code></pre>
-<p>The rights granted here are all that is needed to <em>run</em> Opencast. To execute the migration scripts
+<p>The rights granted here are all that is needed to run Opencast. To execute the migration scripts
 used to initialize (see next section) and upgrade the database schema upon releases of new versions
 of Opencast, you need more. If you don't want to do this using the <code>root</code> user (which normally
 can do anything), but with a dedicated user called <code>admin</code> for the sake of the example,
@@ -144,7 +144,7 @@ you should grant that user the following rights:</p>
 <pre><code>GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
   TO 'admin'@'localhost' IDENTIFIED BY 'opencast_admin_password';
 </code></pre>
-<p>You can choose other names for the users and the database, and you <strong>should</strong> use a different password.</p>
+<p>You can choose other names for the users and the database, and you should use a different password.</p>
 <p>In a distributed system, apart from <code>'username'@'localhost'</code> (which would allow access from the local machine only),
 you should grant a external user access to the database by running the same command for a user like
 <code>'username'@'10.0.1.%'</code>, where the <code>10.0.1.%</code> specifies the IP range allowed to access the server with <code>%</code> being a
@@ -182,19 +182,14 @@ configuration.</p>
 installation).</p>
 <ol>
 <li>
-<p>Configure Opencast to use MariaDB/MySQL:</p>
-<pre><code>org.opencastproject.db.vendor=MySQL
-</code></pre>
-</li>
-<li>
-<p>Configure Opencast to use the JDBC driver for MariaDB/MySQL:</p>
-<pre><code>org.opencastproject.db.jdbc.driver=com.mysql.jdbc.Driver
+<p>Configure Opencast to use the JDBC driver for MariaDB:</p>
+<pre><code>org.opencastproject.db.jdbc.driver=org.mariadb.jdbc.Driver
 </code></pre>
 </li>
 <li>
 <p>Configure the host where Opencast should find the database (<code>localhost</code>) and the database name (<code>opencast</code>). Adjust
-the names in this example to match your configuration:</p>
-<pre><code>org.opencastproject.db.jdbc.url=jdbc:mysql://localhost/opencast
+   the names in this example to match your configuration:</p>
+<pre><code>org.opencastproject.db.jdbc.url=jdbc:mysql://localhost/opencast?useMysqlMetadata=true
 </code></pre>
 </li>
 <li>
