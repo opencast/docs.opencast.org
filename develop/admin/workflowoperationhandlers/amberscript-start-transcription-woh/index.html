@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Asset Snapshot - Administration Guide</title>
+    <title>AmberScript Start Transcription - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,10 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "AssetManagerSnapshotWorkflowOperationHandler", url: "#_top", children: [
+          {title: "AmberScript Start Transcription", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -64,20 +63,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../asset-delete-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../asset-delete-woh/" class="btn btn-xs btn-link">
-        Asset Delete
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
+        AmberScript Attach Transcription
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../animate-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
-        AmberScript Attach Transcription
+        Previous</a><a href="../animate-woh/" class="btn btn-xs btn-link">
+        Animate
       </a>
     </div>
     
@@ -85,41 +84,47 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="assetmanagersnapshotworkflowoperationhandler">AssetManagerSnapshotWorkflowOperationHandler</h1>
+    <h1 id="amberscript-start-transcription">AmberScript Start Transcription</h1>
 <h2 id="description">Description</h2>
-<p>The snapshot operation allows you to take a new, versioned snapshot of a media package which is put into the asset
-manager.</p>
+<p>AmberScript Start Transcription invokes the AmberScript Transcription Service by submitting
+an audio or video file to be transcribed and captioned.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
 <th>configuration keys</th>
-<th>example</th>
 <th>description</th>
+<th>default</th>
+<th>example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>source-tags</td>
-<td>text</td>
-<td>Comma separated list of tags. Specifies which media should be the source of a snapshop.</td>
+<td>source-tag</td>
+<td>A tag selecting the audio or video file to be sent for translation.</td>
+<td>transcript</td>
+<td>engage-download</td>
 </tr>
 <tr>
-<td>source-flavors</td>
-<td>presenter/source</td>
-<td>Comma separated list of flavors. Specifies which media should be the source of a snapshot.</td>
+<td>jobtype</td>
+<td>direct (automated, fast) or perfect (additional manual improvements, slow)</td>
+<td>direct</td>
+<td>perfect</td>
+</tr>
+<tr>
+<td>language</td>
+<td>The target language for transcription.</td>
+<td>en</td>
+<td>nl</td>
+</tr>
+<tr>
+<td>skip-if-flavor-exists</td>
+<td>If this flavor already exists in the media package, skip this operation.</td>
+<td>captions/vtt</td>
+<td>captions/timedtext</td>
 </tr>
 </tbody>
 </table>
-<h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="snapshot"
-  description="Archiving"&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="source-tags"&gt;archive&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
 
   <br>
     
@@ -132,20 +137,20 @@ manager.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../asset-delete-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../asset-delete-woh/" class="btn btn-xs btn-link">
-        Asset Delete
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
+        AmberScript Attach Transcription
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../animate-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
-        AmberScript Attach Transcription
+        Previous</a><a href="../animate-woh/" class="btn btn-xs btn-link">
+        Animate
       </a>
     </div>
     
@@ -156,7 +161,7 @@ manager.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/snapshot-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/amberscript-start-transcription-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>

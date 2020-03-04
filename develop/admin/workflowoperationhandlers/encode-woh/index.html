@@ -92,9 +92,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </blockquote>
 <h2 id="description">Description</h2>
 <p>The encode workflow operation can be used to encode media files to different formats using <a href="https://ffmpeg.org">FFmpeg</a>.</p>
-<p>Its functionality is similar to the <a href="../compose-woh/">compose workflow operation</a> but can utilize the parallel encoding
-capabilities of FFmpeg. This has the advantage that the source file needs to be read only once for several encodings,
-reducing the encoding time quite a lot. Additionally, this will let FFmpeg make better use of multiple CPU cores.</p>
+<p>It can utilize the parallel encoding capabilities of FFmpeg. This has the advantage that the source file needs to be
+read only once for several encodings, reducing the encoding time quite a lot. Additionally, this will let FFmpeg make
+better use of multiple CPU cores.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -141,19 +141,19 @@ run of the operation, the media package will contain four new tracks: the first 
 <code>engage-download</code>, <code>engage-streaming</code> and <code>low-quality</code>; the second one containing the new tags <code>engage-download</code>,
 <code>engage-streaming</code> and <code>medium-quality</code>; etc.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="encode"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="encoding media files"&gt;
+<pre><code class="xml">&lt;operation
+  id=&quot;encode&quot;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;encoding media files&quot;&gt;
     &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;*/trimmed&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;*/delivery&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
-    &lt;configuration key="encoding-profile"&gt;parallel.http&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/trimmed&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;*/delivery&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profile&quot;&gt;parallel.http&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
+
 <h2 id="encoding-profile-example">Encoding Profile Example</h2>
 <p>Unlike a regular compose operation, this operation can generate more than one output file and, therefore, more than one
 media package track elements. In order to distinguish these tracks, the encoding profile syntax for this operation
