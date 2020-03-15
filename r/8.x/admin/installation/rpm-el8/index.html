@@ -36,7 +36,6 @@
           {title: "Install from Repository (Red Hat Enterprise Linux 8.x, CentOS 8.x)", url: "#_top", children: [
               {title: "Availability", url: "#availability" },
               {title: "Currently Supported", url: "#currently-supported" },
-              {title: "Registration", url: "#registration" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Opencast", url: "#install-opencast" },
@@ -110,14 +109,11 @@ available in the repository.</p>
 <blockquote>
 <p><em>Other architectures like i386, i686, arm, … are not supported!</em></p>
 </blockquote>
-<h2 id="registration">Registration</h2>
-<p>Before you can start you need to get an account for the repository. You will need the credentials that you got via
-e-mail after the registration to successfully complete this guide.</p>
-<p>Get your account on <a href="https://pkg.opencast.org">pkg.opencast.org</a>.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories so that your package manager can access them:</p>
-<pre><code>dnf install -y https://pkg.opencast.org/rpms/release/el/8/noarch/opencast-repository-8-0-1.el8.noarch.rpm
+<pre><code class="sh">dnf install -y https://pkg.opencast.org/rpms/release/el/8/noarch/opencast-repository-8-0-1.el8.noarch.rpm
 </code></pre>
+
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
 Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
@@ -127,6 +123,7 @@ To do that, follow the
 <p>You can check if the repositories were sucessfully enabled using:</p>
 <pre><code>dnf repolist enabled
 </code></pre>
+
 <h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
 <p>The Apache ActiveMQ message broker is required by Opencast. It can be installed on the same machine as Opencast.
 ActiveMQ can be installed by running:</p>
