@@ -95,11 +95,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <blockquote>
 <p><em>This guide is for EL8 only. There is a separate <a href="../rpm-el7/">CentOS 7 and Red Hat Enterprise Linux 7 guide</a>.</em></p>
 </blockquote>
-<hr />
-<blockquote>
-<p><em>This installation </em><em>is still experimental</em><em>.</em></p>
-</blockquote>
-<hr />
 <p>This guide is based on a RPM software repository available for Red Hat-based Linux distributions provided by Osnabrück
 University. This repository provides preconfigured Opencast installations and all necessary 3rd-Party-Tools. Using this
 method, you do not have to compile the software by yourself.</p>
@@ -120,14 +115,18 @@ available in the repository.</p>
 e-mail after the registration to successfully complete this guide.</p>
 <p>Get your account on <a href="https://pkg.opencast.org">pkg.opencast.org</a>.</p>
 <h2 id="activate-repository">Activate Repository</h2>
-<p>First you have to install the Opencast repository:</p>
-<pre><code>cd /etc/yum.repos.d
-curl -O https://pkg.opencast.org/opencast-testing.repo \
-   -d os=el -d version=8 -u [YOUR_USERNAME]
+<p>First you have to install the necessary repositories so that your package manager can access them:</p>
+<pre><code>dnf install -y https://pkg.opencast.org/rpms/release/el/8/noarch/opencast-repository-8-0-1.el8.noarch.rpm
 </code></pre>
-<p>You will be asked for your password.</p>
-<p>While this installation is experimental, only the testing repository is available for EL8. A stable repository will be
-made available once the installation has been proven to work properly in different environments.</p>
+<p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
+Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
+Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
+<p>If you get an error saying that the package <code>epel-release</code> is not available, please enable this repository manually.
+To do that, follow the
+<a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F">instructions in the EPEL documentation</a>.</p>
+<p>You can check if the repositories were sucessfully enabled using:</p>
+<pre><code>dnf repolist enabled
+</code></pre>
 <h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
 <p>The Apache ActiveMQ message broker is required by Opencast. It can be installed on the same machine as Opencast.
 ActiveMQ can be installed by running:</p>
