@@ -38,6 +38,7 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Configuration changes", url: "#configuration-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes About 8.2", url: "#additional-notes-about-82" },
               {title: "Aditional Notes About 8.1", url: "#aditional-notes-about-81" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release managers", url: "#release-managers" },
@@ -121,6 +122,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Admin UI: new event media upload progress bar</li>
 <li>Opencast Plug-in features for Karaf</li>
 <li>Single step delete of events</li>
+<li><strong>Opencast 8.2: Opencast Studio (browser-based recording tool)</strong></li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
@@ -165,11 +167,35 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 </ul>
+<h2 id="additional-notes-about-82">Additional Notes About 8.2</h2>
+<p>Unlike in other maintainance releases, the release managers decided to break the rule to include features only
+in major releases. So Opencast 8.2 includes <strong>Opencast Studio</strong> a browser-based recording tool. We felt that
+because of the Corona Crisis this tool would be to many Opencast users as soon as possible.</p>
+<p>Additionally this release also includes 17 other patches.</p>
+<h3 id="configuration-changes-in-82">Configuration Changes in 8.2</h3>
+<ul>
+<li><code>/etc/encoding/engage-images.properties</code> has a few optimizations that are needed especially for Studio</li>
+<li><code>etc/security/mh_default_org.xml</code> has some changes for Studio and a new ROLE_STUDIO is introduced</li>
+<li><code>etc/workflows/publish-uploaded-assets.xml</code> has some changes.</li>
+</ul>
 <h2 id="aditional-notes-about-81">Aditional Notes About 8.1</h2>
 <p>Opencast 8.1 fixes a number of security issues. Upgrading is strongly recommended.
 Take a look at the <a href="https://github.com/opencast/opencast/security/advisories">security advisories</a> for more details.</p>
 <p>One change is that the OAI-PMH endpoint is no longer publicly accessible by default.
 If you need it to be, you can easily change that in the security configuration at <code>etc/security/mh_default_org.xml</code>.</p>
+<h3 id="configuration-changes-in-81">Configuration Changes in 8.1</h3>
+<ul>
+<li><code>etc/security/mh_default_org.xml</code><ul>
+<li><code>/oaipmh</code> URL is now restricted to <code>ROLE_ADMIN</code></li>
+<li>Removed <code>ROLE_COURSE_ADMIN</code> that was used for <code>/</code> and <code>/admin-ng</code> URLs</li>
+<li>replaced <code>&lt;sec:remember-me key="opencast" user-service-ref="userDetailsService" /&gt;</code>
+with <code>&lt;sec:remember-me services-ref="rememberMeServices" /&gt;</code></li>
+<li>Added configuration for rememberMeServices</li>
+<li>Added CustomPasswordEncoder configuration instead of MD5</li>
+</ul>
+</li>
+<li>changed <code>exception-handler-workflow="error"</code> to <code>exception-handler-workflow="partial-error"</code> in several workflow definitions</li>
+</ul>
 <h3 id="fixed-security-issues">Fixed Security Issues</h3>
 <ul>
 <li>CVE-2020-5231 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-94qw-r73x-j7hg">Users with ROLE_COURSE_ADMIN can create new users
