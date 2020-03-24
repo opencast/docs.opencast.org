@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 7.x to 8.x", url: "#_top", children: [
+              {title: "Configuration Changes", url: "#configuration-changes" },
               {title: "How to Upgrade", url: "#how-to-upgrade" },
           ]},
         ];
@@ -86,10 +87,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="upgrading-opencast-from-7x-to-8x">Upgrading Opencast from 7.x to 8.x</h1>
 <p>This guide describes how to upgrade Opencast 7.x to 8.x. In case you need information about how to upgrade older
 versions of Opencast, please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<ol>
+<li>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> was moved
+   to <code>etc/org.opencastproject.security.lti.LtiLaunchAuthenticationHandler.cfg</code>.</li>
+</ol>
 <h2 id="how-to-upgrade">How to Upgrade</h2>
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
+<li>Update your Configuration (see above)</li>
 <li>Back-up Opencast files and database (optional)</li>
 <li><a href="#database-migration">Upgrade the database</a></li>
 <li>Remove search index data folder</li>
