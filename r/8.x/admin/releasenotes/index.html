@@ -169,12 +169,57 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 </ul>
 <h2 id="additional-notes-about-83">Additional Notes About 8.3</h2>
+<p>To improve the integration of Opencast Studio we introduced the custom roles plugin for LTI.</p>
+<p>There are also seveal changes in Opencast Studio:</p>
+<ul>
+<li>
+<p>Added</p>
+<ul>
+<li>Add detection of cameras. If none are detected, the buttons for "Camera" and "Screen &amp; Camera"
+are grayed out and not clickable.</li>
+<li>Add configuration options for the ACL sent by Studio on upload (the defaults haven't changed).</li>
+<li>Add configurations to limit the maximum video size and frame rate (the default haven't changed).</li>
+<li>Add configurations for video bitrate and preferred MIME types</li>
+<li>Add option to pass full configuration as hex encoded GET parameter.</li>
+<li>Show "Your recording will now be processed by Opencast." after upload.</li>
+<li>Full German translation</li>
+<li>Add build-time configuration of the settings.json path</li>
+</ul>
+</li>
+<li>
+<p>Changed</p>
+<ul>
+<li>Remove "beta" status of Studio</li>
+<li>Update dependencies</li>
+<li>Settings are now validated against a fixed schema</li>
+<li>An invalid Content-Type for the ACL XML request does not lead to the ACL template being ignored.
+Now it's used anyway, but a warning is still printed.</li>
+<li>Source map files are now included in the released tarballs.</li>
+</ul>
+</li>
+<li>
+<p>Fixed</p>
+<ul>
+<li>Fix bug in parsing GET parameters that would lead to only the last parameter being used</li>
+<li>Errors during upload are now shown to the user (previously, it would just show "Opencast connection not
+configured").</li>
+<li>Fixed very short recordings on weak devices leading to an error</li>
+<li>Fix MIME type to file extension detection</li>
+<li>Fix Safari detection</li>
+<li>GET parameters are now retained all the time</li>
+<li>text/xml is now also accepted as valid Content-Type for the ACL XML request (previously only application/xml
+was accepted)</li>
+</ul>
+</li>
+</ul>
 <h3 id="configuration-changes-in-83">Configuration Changes in 8.3</h3>
 <ul>
 <li>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> was moved
    to <code>etc/org.opencastproject.security.lti.LtiLaunchAuthenticationHandler.cfg</code>.</li>
 <li>The configuration file <code>etc/org.ops4j.pax.web.cfg</code> was updated to include the <code>org.ops4j.pax.web.session.timeout</code>
    option with value <code>240</code>.</li>
+<li>New workflows and encodings for Opencast Studio</li>
+<li>New configuration file <code>etc/ui-config/mh_default_org/studio/settings.json</code></li>
 </ul>
 <h2 id="additional-notes-about-82">Additional Notes About 8.2</h2>
 <p>Unlike in other maintainance releases, the release managers decided to break the rule to include features only
