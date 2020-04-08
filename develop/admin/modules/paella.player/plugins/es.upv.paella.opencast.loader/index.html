@@ -36,6 +36,7 @@
           {title: "Paella plugin: es.upv.paella.opencast.loader", url: "#_top", children: [
               {title: "Control which flavors to play", url: "#control-which-flavors-to-play" },
               {title: "Multiple audio tracks", url: "#multiple-audio-tracks" },
+              {title: "Selecting video canvas to use", url: "#selecting-video-canvas-to-use" },
               {title: "Examples", url: "#examples" },
           ]},
         ];
@@ -136,6 +137,32 @@ and the <em>value</em> is the label that will be shown in the player interface.<
 }
 </code></pre>
 
+<h2 id="selecting-video-canvas-to-use">Selecting video canvas to use</h2>
+<p>You can configure which canvas to use in order to render video files. This is usefull to enable 360 videos for example.</p>
+<p>Nowadays, paella has three video canvas you can use:</p>
+<ul>
+<li>
+<p><strong>video</strong>: Default rectangular canvas (This is used by default if no other canvas defined)</p>
+</li>
+<li>
+<p><strong>video360</strong>: 360 videos</p>
+</li>
+<li>
+<p><strong>video360theta</strong>: 360 videos for Ricoh 360 cameras</p>
+</li>
+</ul>
+<p>You need to configure the <code>videoCanvas</code> property. It is an object where the <em>key</em> is the flavor to configure
+and the <em>value</em> is the canvas to use.</p>
+<p>Example:</p>
+<pre><code class="json">{
+    &quot;videoCanvas&quot;: {
+        &quot;*/delivery+360&quot;: &quot;video360&quot;,
+        &quot;*/delivery+360Theta&quot;: &quot;video360Theta&quot;
+    }
+
+}
+</code></pre>
+
 <h2 id="examples">Examples</h2>
 <p>An institution whant to play only <code>*/delivery</code> media tracks and has two audio tracks for 
 english and spanish languages</p>
@@ -155,6 +182,10 @@ english and spanish languages</p>
         &quot;audioTag&quot;: {
             &quot;audio_en/delivery&quot; : &quot;en&quot;,
             &quot;audio_es/delivery&quot; : &quot;es&quot;
+        },
+        &quot;videoCanvas&quot;: {
+            &quot;*/delivery+360&quot;: &quot;video360&quot;,
+            &quot;*/delivery+360Theta&quot;: &quot;video360Theta&quot;
         }
     }    
 }
@@ -185,6 +216,10 @@ and <code>presenter/delivery</code> and <code>presentation/delivery</code> on th
             }
         ],
         &quot;audioTag&quot;: {
+        },
+        &quot;videoCanvas&quot;: {
+            &quot;*/delivery+360&quot;: &quot;video360&quot;,
+            &quot;*/delivery+360Theta&quot;: &quot;video360Theta&quot;
         }
     }    
 }
