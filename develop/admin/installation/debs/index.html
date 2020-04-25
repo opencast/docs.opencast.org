@@ -105,14 +105,19 @@ by the Debian repository.</p>
 Watch for announcements on list or just check which versions are available in the repository.</p>
 <h2 id="currently-supported">Currently Supported</h2>
 <ul>
-<li>Debian 8/9 amd64</li>
-<li>Ubuntu 16.04 amd64</li>
+<li>Debian 9 and newer amd64</li>
+<li>Ubuntu 18.04 amd64</li>
 </ul>
-<p><strong>Debian 8 requires a manual OpenJDK install</strong></p>
+<p><strong>Debian 10 and newer requires a manual OpenJDK install</strong></p>
 <ul>
 <li>
-<p>Add jessie-backports to your sources, replacing the mirror URL with your local mirror:</p>
-<pre><code>echo "deb http://[YOUR_MIRROR]/debian jessie-backports main" | sudo tee /etc/apt/sources.list.d/jessie-backports.list
+<p>Add Debian unstable to your sources, replacing the mirror URL with your local mirror:</p>
+<pre><code>echo "deb http://[YOUR_MIRROR]/debian unstable main" | sudo tee /etc/apt/sources.list.d/debian-unstable.list
+</code></pre>
+</li>
+<li>
+<p>Ensure you don't accidentally upgrade your entire Debian install to unstable</p>
+<pre><code>echo "APT::Default-Release \"`dpkg --status tzdata|grep Provides|cut -f2 -d'-'`\";" | sudo tee /etc/apt/apt.conf.d/99defaultrelease
 </code></pre>
 </li>
 <li>
@@ -122,7 +127,7 @@ Watch for announcements on list or just check which versions are available in th
 </li>
 <li>
 <p>Install OpenJDK 8 from the backports</p>
-<pre><code>apt-get install -t jessie-backports openjdk-8-jre
+<pre><code>apt-get install -t unstable openjdk-8-jre
 </code></pre>
 </li>
 </ul>
