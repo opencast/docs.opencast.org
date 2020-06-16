@@ -36,6 +36,7 @@
           {title: "Introduction", url: "#_top", children: [
               {title: "Basic Rules", url: "#basic-rules" },
               {title: "Quick Overview", url: "#quick-overview" },
+              {title: "API Stability", url: "#api-stability" },
               {title: "Action Details", url: "#action-details" },
               {title: "Agent State And Configuration", url: "#agent-state-and-configuration" },
               {title: "Further Reading", url: "#further-reading" },
@@ -94,8 +95,6 @@ following variables are used throughout this guide:</p>
 <li><code>$HOST</code> is your core's base URL</li>
 <li><code>$AGENT_NAME</code> is the agent's name</li>
 <li><code>$RECORDING_ID</code> is the recording's ID</li>
-<li><code>$SERIES_ID</code> is the UUID of the series</li>
-<li><code>$CUTOFF</code> is a Unix timestamp of the furthest point in time you want scheduling data for</li>
 </ul>
 <h2 id="basic-rules">Basic Rules</h2>
 <ul>
@@ -129,6 +128,11 @@ to initiate the connections. Also note that ideally some operations may run in p
 </ul>
 </li>
 </ul>
+<h2 id="api-stability">API Stability</h2>
+<p>The Opencast community takes care to avoid any disruptive modifications to the APIs described in this document to
+prevent hardware integrations from breaking since they are notorious hard to fix. This means that you can assume the API
+to be stable for a long time. The same is not true for other parts of the API and you should therefore avoid integrating
+hardware with other parts of Opencast's API</p>
 <h2 id="action-details">Action Details</h2>
 <p>This is a detailed description of the steps described in the quick overview section.</p>
 <p>For details about the REST endpoints, please <em>always</em> consult the Opencast REST documentation which can be found in the
@@ -187,7 +191,39 @@ properties file and can be set via an HTTP POST request to:</p>
 <p>The calendar can be retrieved by sending an HTTP GET request to</p>
 <pre><code>${SCHEDULER-ENDPOINT}/calendars?agentid=&lt;name&gt;
 </code></pre>
-<p>The format returned is iCal. The file contains all scheduled upcoming recordings the capture agent should handle.</p>
+<p>The format returned is iCal. The file contains all scheduled upcoming recordings the capture agent should handle.
+The output will look like this (base64 encoded parts are shortened):</p>
+<pre><code class="ical">BEGIN:VCALENDAR
+PRODID:Opencast Calendar File 0.5
+VERSION:2.0
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:20200616T124513Z
+DTSTART:20200616T124200Z
+DTEND:20200616T124400Z
+SUMMARY:Demo event
+UID:68b19d11-6aca-413e-b2b3-eda72eebc65a
+LAST-MODIFIED:20200616T124119Z
+DESCRIPTION:demo
+LOCATION:my_capture_agent_name
+ATTACH;FMTTYPE=application/xml;VALUE=BINARY;ENCODING=BASE64;X-APPLE-FILENAME=episode.xml:...
+ATTACH;FMTTYPE=application/text;VALUE=BINARY;ENCODING=BASE64;X-APPLE-FILENAME=org.opencastproject.capture.agent.properties:...
+END:VEVENT
+END:VCALENDAR
+</code></pre>
+
+<p>The iCal event contains start and end dates, all meta data catalogs for the event, the UID which is the <code>%RECORDING_ID</code>
+and which important when uploading media later on and additional capture agent properties which should be passed on.
+Note that most meta data like the dublin core catalogs can in most cases be ignored.</p>
+<p>In most cases, this means the data you are interested in per event are:</p>
+<ul>
+<li><code>DTSTART</code>: Date to starte the recording at</li>
+<li><code>DTEND</code>: Date at which to stop the recording</li>
+<li><code>UID</code>: Recording identifier used for updating the recording status and associating uploads with a scheduled event</li>
+<li><code>LOCATION</code>: This should always match your agent's name</li>
+<li><code>ATTACH;...FILENAME=org.opencastproject.capture.agent.properties</code>: Agent properties to pass on in case of workflow
+  properties</li>
+</ul>
 <p>Depending on the amount of recordings scheduled for the particular capture agent, this file may become very large. That
 is why there are two way of limiting the amount of necessary data to transfer and process:</p>
 <ol>
@@ -210,7 +246,7 @@ to:</p>
 <pre><code>state=capturing
 address=http(s)://&lt;ca-web-ui&gt;
 </code></pre>
-<p>Additionally, set the recording state with an HTTP POST request to</p>
+<p>Additionally, set the recording state using the event's UID obtained from the schedule with an HTTP POST request to</p>
 <pre><code>${CAPTURE-ADMIN-ENDPOINT}/recordings/&lt;recording_id&gt;
 </code></pre>
 <p>…including the data field:</p>
@@ -244,6 +280,8 @@ these methods. The most commonly used are:</p>
 </ul>
 </li>
 </ul>
+<p>Please make sure that the event's UID is passed on as <code>workfloeInstanceId</code> to the final call to <code>/ingest/ingest</code> to
+match the scheduled event to the media being uploaded.</p>
 <p>If possible, please follow these additional rules about recording files:</p>
 <ul>
 <li>Recordings may be deleted if the ingest was successful.</li>
