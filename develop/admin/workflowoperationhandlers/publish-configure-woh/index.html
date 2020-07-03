@@ -90,12 +90,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="configurablepublishworkflowoperationhandler">ConfigurablePublishWorkflowOperationHandler</h1>
 <h2 id="description">Description</h2>
-<p>The <code>ConfigurablePublishWorkflowOperationHandler</code> will distribute the given elements and create a publication element for
-it. By default it will retract all publications before publishing anew.</p>
+<p>The <code>ConfigurablePublishWorkflowOperationHandler</code> will distribute the given elements and create a publication element 
+for them. By default it will retract all published download elements before publishing anew.</p>
 <h2 id="parameter-table">Parameter Table</h2>
-<p>These are the keys that are configured through the workflow definition. At least one media package element must match
-the supplied <code>source-flavors</code> or <code>source-tags</code> or else the operation will not know what to publish. The <code>channel-id</code> and
-<code>url-pattern</code> are also mandatory.</p>
+<p>These are the keys that can be configured for this operation in the workflow definition. At least one media package 
+element must match the supplied <code>source-flavors</code> or <code>source-tags</code> (either for download or streaming or both) or else 
+the operation will not know what to publish. The <code>channel-id</code> and <code>url-pattern</code> are also mandatory.</p>
 <table>
 <thead>
 <tr>
@@ -119,15 +119,27 @@ the supplied <code>source-flavors</code> or <code>source-tags</code> or else the
 <td>Type of last distributed element</td>
 </tr>
 <tr>
-<td>source-flavors</td>
-<td>Flavors of the media package elements to publish</td>
+<td>download-source-flavors</td>
+<td>Flavors of the download media package elements to publish</td>
 <td><code>*/trimmed</code></td>
 <td></td>
 </tr>
 <tr>
-<td>source-tags</td>
-<td>Tags of the media package elements to publish</td>
-<td><code>engage</code></td>
+<td>download-source-tags</td>
+<td>Tags of the download media package elements to publish</td>
+<td><code>engage-download</code></td>
+<td></td>
+</tr>
+<tr>
+<td>streaming-source-flavors</td>
+<td>Flavors of the streaming media package elements to publish</td>
+<td><code>*/trimmed</code></td>
+<td></td>
+</tr>
+<tr>
+<td>streaming-source-tags</td>
+<td>Tags of the streaming media package elements to publish</td>
+<td><code>engage-streaming</code></td>
 <td></td>
 </tr>
 <tr>
@@ -160,8 +172,15 @@ the supplied <code>source-flavors</code> or <code>source-tags</code> or else the
 <td><code>mixed</code></td>
 <td><code>bulk</code></td>
 </tr>
+<tr>
+<td>retract-streaming</td>
+<td>Whether to also retract streaming elements *</td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+</tr>
 </tbody>
 </table>
+<p>* Enable if you have published streaming elements to this channel.</p>
 <h2 id="mode">Mode</h2>
 <p>The configuration key <code>mode</code> can be used to control how media package elements are being distributed:</p>
 <table>

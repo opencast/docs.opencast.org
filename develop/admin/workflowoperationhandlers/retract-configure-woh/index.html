@@ -35,6 +35,7 @@
         var pageToc = [
           {title: "ConfigurableRetractWorkflowOperationHandler", url: "#_top", children: [
               {title: "Description", url: "#description" },
+              {title: "Parameters", url: "#parameters" },
               {title: "Operation Examples", url: "#operation-examples" },
           ]},
         ];
@@ -90,7 +91,34 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>If the elements have been added to the Publication using "with-published-elements", as in the case with the external
 api, they haven't actually been published so it is unnecessary to have a retract-configuration. Adding a retraction
 won't cause any errors, it will just skip those elements.</p>
-<p>There is only one configuration key "channel-id". This is the channel to remove the published elements from.</p>
+<h2 id="parameters">Parameters</h2>
+<p>These are the keys that can be configured for the worklow operation in the workflow definition.  The <code>channel-id</code> is
+mandatory.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Example</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channel-id</td>
+<td>The id of the channel to retract from</td>
+<td><code>internal</code></td>
+<td></td>
+</tr>
+<tr>
+<td>retract-streaming</td>
+<td>Whether to retract streaming elements as well</td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<p>Setting <code>retract-streaming</code> to true only makes sense if you've published streaming elements for this channel before.</p>
 <h2 id="operation-examples">Operation Examples</h2>
 <h4 id="retract-from-internal-channel">Retract from Internal Channel</h4>
 <pre><code>&lt;!-- Remove the internal publication if the mediapackage is being deleted. --&gt;
@@ -110,6 +138,7 @@ won't cause any errors, it will just skip those elements.</p>
   description="Retract from external api publication channel"&gt;
   &lt;configurations&gt;
     &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
+    &lt;configuration key="retract-streaming"&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
