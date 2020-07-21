@@ -140,6 +140,7 @@ repository.</p>
 <p>Please make sure to install the following dependencies.</p>
 <p>Required:</p>
 <pre><code>java-1.8.0-openjdk-devel.x86_64 / openjdk-8-jdk (other jdk versions untested / Oracle JDK strongly not recommended)
+elasticsearch = 7.5.1
 ffmpeg &gt;= 3.2.4
 maven &gt;= 3.1
 python &gt;= 2.6, &lt; 3.0
@@ -174,6 +175,10 @@ synfig
 $ sudo apt-get install -y nodejs 
 $ sudo npm install -g eslint
 </code></pre>
+<h3 id="install-and-start-elasticsearch-with-docker">Install and start Elasticsearch with Docker</h3>
+<pre><code>$ sudo docker run -d --rm --name oc-elasticsearch -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.5.1
+</code></pre>
+<p>Note that --rm automatically removes the container when it exits, so if it does you will need to start it again in order to run opencast properly.</p>
 <h3 id="install-chrome">Install Chrome</h3>
 <pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &amp;&amp; sudo dpkg -i google-chrome-stable_current_amd64.deb
 </code></pre>
