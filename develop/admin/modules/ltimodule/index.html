@@ -115,6 +115,9 @@ oauth.consumer.secret.1=CONSUMERSECRET
 Opencast from generating a temporary username, or to block some specific usernames like the system administrator.</p>
 <p>For more details, take a look at the options in
 <code>etc/org.opencastproject.security.lti.LtiLaunchAuthenticationHandler.cfg</code>.</p>
+<p>The “delete” key in the series overview tool can be configured by specifying the retraction workflow in
+<code>etc/org.opencastproject.lti.endpoint.EventsEndpoint.cfg</code>. The property is called <code>retract-workflow-id</code>, and it defaults
+to <code>retract</code>.</p>
 <h2 id="configure-and-test-an-lti-tool-in-the-lms">Configure and test an LTI tool in the LMS</h2>
 <p>Configure an LTI tool in the LMS with these values:</p>
 <ul>
@@ -140,16 +143,27 @@ custom parameters to be defined separately in each place where an LTI tool is us
 custom parameters to be defined globally.</p>
 <ul>
 <li>To show the media module, use <code>tool=engage/ui/</code></li>
-<li>To show all videos for a single series, use <code>tool=ltitools/series/index.html?series=SERIESID</code></li>
+<li>To show all videos for a single series, specify the following parameters</li>
+<li><code>tool=ltitools/index.html</code></li>
+<li><code>subtool=series</code></li>
+<li><code>series=SERIESID</code> if you have the series ID</li>
+<li><code>series_name=SERIESNAME</code> if you just have the series name (has to be unique)</li>
+<li><code>deletion=true</code> if you want to display a deletion button next to each episode</li>
+<li><code>edit=true</code> if you want to display an edit button next to each episode</li>
+<li>To show an upload form, specify the following parameters:</li>
+<li><code>tool=ltitools/index.html</code></li>
+<li><code>subtool=upload</code></li>
+<li><code>series=SERIESID</code> if you have the series ID</li>
+<li><code>series_name=SERIESNAME</code> if you just have the series name (has to be unique)</li>
 <li>To show a single video, use <code>tool=/play/MEDIAPACKAGEID</code></li>
 <li>To show a debug page before proceeding to the tool, append the parameter <code>test=true</code></li>
 </ul>
 <p>For more information about how to set custom LTI parameters, please check the documentation of your LMS.</p>
-<h3 id="series-lti-tool">Series LTI Tool</h3>
-<p>Opencast's series LTI tool provides the option to provide custom style sheets for configuring the look and feel of the
-tool which may be important to match the design of the LTI consumer in which it is included. The CSS file can be found
+<h3 id="customizing-ltis-look">Customizing LTI’s look</h3>
+<p>The LTI module provides the option to provide custom style sheets for configuring the look and feel of the
+tools which may be important to match the design of the LTI consumer in which it is included. The CSS file can be found
 in the user interface configuration directory usually located at:</p>
-<pre><code>etc/ui-config/mh_default_org/ltitools/series.css
+<pre><code>etc/ui-config/mh_default_org/ltitools/lti.css
 </code></pre>
 
   <br>
