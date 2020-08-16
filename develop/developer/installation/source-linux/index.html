@@ -33,14 +33,14 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Developer installation guide", url: "#_top", children: [
+          {title: "Developer Installation guide", url: "#_top", children: [
               {title: "TL;DR", url: "#tldr" },
-              {title: "Configuring Git (optional)", url: "#configuring-git-optional" },
+              {title: "Configuring Git", url: "#configuring-git" },
               {title: "Clone Opencast", url: "#clone-opencast" },
               {title: "Install Dependencies", url: "#install-dependencies" },
               {title: "Ubuntu 18.04", url: "#ubuntu-1804" },
-              {title: "Fedora 30", url: "#fedora-30" },
-              {title: "Mac OS 10.14", url: "#mac-os-1014" },
+              {title: "Fedora", url: "#fedora" },
+              {title: "macOS 10.14", url: "#macos-1014" },
               {title: "Install and Configure ActiveMQ", url: "#install-and-configure-activemq" },
               {title: "Build and Start Opencast", url: "#build-and-start-opencast" },
               {title: "Modify Code and Build Changes", url: "#modify-code-and-build-changes" },
@@ -95,55 +95,52 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="developer-installation-guide">Developer installation guide</h1>
-<p>These instructions outline how to install Opencast on a Linux system. Currently guided flavors are Fedora 30, Ubuntu 18.04 and Mac OS 10.14.</p>
-<p><br/></p>
+    <h1 id="developer-installation-guide">Developer Installation guide</h1>
+<p>These instructions outline how to install Opencast.
+This is meant for developers.
+For the installation of a production cluster, take a look at the admin guides.</p>
 <h2 id="tldr">TL;DR</h2>
-<hr />
-<pre><code>$ git clone https://github.com/opencast/opencast.git
-$ cd opencast &amp;&amp; mvn clean install -Pdev
-$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast
+<pre><code class="sh">$ git clone https://github.com/opencast/opencast.git
+$ cd opencast
+$ mvn clean install -Pdev
+$ cd build/opencast-dist-develop-*
+$ ./bin/start-opencast
 </code></pre>
-<p>You can find the default Admin UI at: <a href="http://localhost:8080/admin-ng/index.html">localhost</a></p>
+
+<p>Opencast will then listen on <a href="http://localhost:8080">127.0.0.1:8080</a></p>
 <p>Default credentials are:</p>
 <ul>
 <li>username: admin</li>
 <li>password: opencast</li>
 </ul>
-<p><br/></p>
-<h2 id="configuring-git-optional">Configuring Git (optional)</h2>
-<hr />
-<pre><code>$ git config --global user.name "Example Name"
+<h2 id="configuring-git">Configuring Git</h2>
+<pre><code class="sh">$ git config --global user.name &quot;Example Name&quot;
 $ git config --global user.email example@domain.com
-$ ssh-keygen -t rsa -b 4096 -C "example@domain.com"
-$ cat ~/.ssh/id_rsa.pub
+$ ssh-keygen -t ed25519 -C &quot;Example Name &lt;example@domain.com&gt;&quot;
+$ cat ~/.ssh/id_ed25519.pub
 </code></pre>
+
 <p>Go to: <a href="https://github.com/settings/keys">Github</a>, click "New SSH Key" and paste your content of id_rsa.pub into the input field. It should look like:</p>
-<pre><code>ssh-rsa at90k0PY+z7mTyLB7UZXDnmpNHkU/MzOqpOHlEf1fCPViDYMXcFYeUMw0O/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzOqpOHlEf1fCPViDYMXcFYeUMw0O/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzOqpOHlEf1fCPViDYMXcFYeUMw0O/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzOqpOHlEf1fCPViDYMXcFYeUMw0O/q0tR69TqQvwiodajsiodjaaosdiasdjsaddioasjosij== example@domain.com
+<pre><code>ssh-ed25519 at9/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzO...
 </code></pre>
 <p>Now press "Add SSH Key" and return to your terminal and:</p>
-<pre><code>$ ssh -T git@github.com
-$ yes &lt;enter&gt;
+<pre><code class="sh">$ ssh -T git@github.com
 </code></pre>
-<p><br/></p>
+
 <h2 id="clone-opencast">Clone Opencast</h2>
-<hr />
-<p>You can get the Opencast source code by cloning the Git
-repository.</p>
+<p>You can get the Opencast source code by cloning the Git repository.</p>
 <p>Cloning the Git repository:</p>
-<pre><code>$ git clone https://github.com/opencast/opencast.git
+<pre><code class="sh">$ git clone https://github.com/opencast/opencast.git
 </code></pre>
-<p><br/></p>
+
 <h2 id="install-dependencies">Install Dependencies</h2>
-<hr />
-<h3 id="general-information">General Information</h3>
 <p>Please make sure to install the following dependencies.</p>
 <p>Required:</p>
 <pre><code>java-1.8.0-openjdk-devel.x86_64 / openjdk-8-jdk (other jdk versions untested / Oracle JDK strongly not recommended)
 elasticsearch = 7.5.1
 ffmpeg &gt;= 3.2.4
 maven &gt;= 3.1
-python &gt;= 2.6, &lt; 3.0
+python
 firefox/chrome/some other major browser
 unzip
 gcc-c++
@@ -151,7 +148,7 @@ tar
 bzip2
 </code></pre>
 <p>Required as a service for running Opencast:</p>
-<pre><code>ActiveMQ &gt;= 5.10 (older versions untested)
+<pre><code>ActiveMQ &gt;= 5.10
 </code></pre>
 <p>Required for some services. Some tests may be skipped and some features
 may not be usable if they are not installed. Hence, it's generally a good idea to
@@ -161,59 +158,44 @@ hunspell &gt;= 1.2.8
 sox &gt;= 14.4
 synfig
 </code></pre>
-<p><br/></p>
 <h2 id="ubuntu-1804">Ubuntu 18.04</h2>
-<hr />
 <h3 id="update-system">Update System</h3>
-<pre><code>$ sudo apt update &amp;&amp; sudo apt upgrade -y
+<pre><code class="sh">$ apt update
+$ apt upgrade -y
 </code></pre>
+
 <h3 id="install-packages-via-apt">Install Packages via APT</h3>
-<pre><code>$ sudo apt install -y git openjdk-8-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+<pre><code class="sh">$ apt install -y git openjdk-8-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
 </code></pre>
+
 <h3 id="install-nodejs-optional">Install NodeJS (optional)</h3>
-<pre><code>$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-$ sudo apt-get install -y nodejs 
-$ sudo npm install -g eslint
+<pre><code class="sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
 </code></pre>
+
 <h3 id="install-and-start-elasticsearch-with-docker">Install and start Elasticsearch with Docker</h3>
-<pre><code>$ sudo docker run -d --rm --name oc-elasticsearch -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.5.1
+<pre><code class="sh">$ docker run -d --rm --name oc-elasticsearch -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.5.1
 </code></pre>
-<p>Note that --rm automatically removes the container when it exits, so if it does you will need to start it again in order to run opencast properly.</p>
-<h3 id="install-chrome">Install Chrome</h3>
-<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &amp;&amp; sudo dpkg -i google-chrome-stable_current_amd64.deb
-</code></pre>
+
+<p>Note that <code>--rm</code> automatically removes the container when it exits,
+so if it does you will need to start it again in order to run opencast properly.</p>
 <h3 id="set-system-java-jdk">Set System Java JDK</h3>
 <p>Choose the Java Version 1.8.0 by entering:</p>
-<pre><code>$ sudo update-alternatives --config java
+<pre><code class="sh">$ update-alternatives --config java
 </code></pre>
-<h3 id="set-the-java_home-variable">Set the JAVA_HOME Variable</h3>
-<p>Open your .bashrc</p>
-<pre><code>$ cd &amp;&amp; nano .bashrc
-</code></pre>
-<p>and paste following content at the end of the file:</p>
-<pre><code>export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-</code></pre>
-<p><br/></p>
-<h2 id="fedora-30">Fedora 30</h2>
-<hr />
-<h3 id="update-system_1">Update System</h3>
-<pre><code>$ sudo dnf update -y
-</code></pre>
-<h3 id="install-packages-via-dnf-and-rpm-fusion">Install Packages via DNF and RPM Fusion</h3>
-<pre><code>$ sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
 
-$ sudo dnf group install 'Development Tools' -y &amp;&amp; $ sudo dnf install -y java-1.8.0-openjdk ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2
+<h2 id="fedora">Fedora</h2>
+<h3 id="update-system_1">Update System</h3>
+<pre><code class="sh">$ dnf update -y
 </code></pre>
-<h3 id="install-nodejs-optional_1">Install NodeJS (optional)</h3>
-<pre><code>$ sudo dnf install -y nodejs
-$ sudo npm install -g eslint
+
+<h3 id="install-dependencies_1">Install Dependencies</h3>
+<pre><code class="sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+$ dnf group install 'Development Tools'
+$ dnf install -y java-1.8.0-openjdk ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
 </code></pre>
-<h3 id="install-chrome_1">Install Chrome</h3>
-<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm &amp;&amp; sudo dnf install google-chrome-stable_current_x86_64.rpm -y
-</code></pre>
-<p><br/></p>
-<h2 id="mac-os-1014">Mac OS 10.14</h2>
-<hr />
+
+<h2 id="macos-1014">macOS 10.14</h2>
 <h3 id="update-system_2">Update System</h3>
 <p>Try to install all updates via the App Store or the Apple Icon on the top left corner.</p>
 <h3 id="java-jdk-8">Java JDK 8</h3>
@@ -222,33 +204,38 @@ $ sudo npm install -g eslint
 <p>Install XCode over the App Store. It will be needed for building and for git.</p>
 <h3 id="install-packages-via-homebrew">Install Packages via Homebrew</h3>
 <p>The Homebrew Project adds a package manager to Mac OS. You can install it by:</p>
-<pre><code>$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+<pre><code class="sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 </code></pre>
+
 <p>You can now install needed packages:</p>
-<pre><code>$ brew install maven ffmpeg
+<pre><code class="sh">$ brew install maven ffmpeg nodejs
 </code></pre>
-<h3 id="install-nodejs-optional_2">Install NodeJS (optional)</h3>
-<pre><code>$ brew install nodejs
-$ sudo npm install -g eslint
-</code></pre>
+
 <h3 id="activemq-with-homebrew">ActiveMQ with Homebrew</h3>
 <p>Homebrew offers you an ActiveMQ Package. Please decide, if you want to use Homebrew for ActiveMQ or if you want to follow the general guide below and run it by downloading the binaries. If you want continue you can install ActiveMQ by</p>
-<pre><code>$ brew install activemq
+<pre><code class="sh">$ brew install activemq
 </code></pre>
+
 <p>Remember to copy the activemq.xml like mentioned below in the right directory. You have to find the right folder for that operation, Homebrew will put the ActiveMQ files in a different location. You could find it by</p>
-<pre><code>$ sudo find / -name activemq.xml
-</code></pre>
-<p>After changing the configuration file you can list and start or stop you services with</p>
-<pre><code>$ brew services list
+<pre><code class="sh">$ sudo find / -name activemq.xml
+````
+
+After changing the configuration file you can list and start or stop you services with
+
+```sh
+$ brew services list
 $ brew services start activemq
 </code></pre>
+
 <h3 id="git-bash-completion">Git Bash Completion</h3>
-<p>In Mac OS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
-<pre><code>$ brew install bash-completion
+<p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
+<pre><code class="sh">$ brew install bash-completion
 </code></pre>
+
 <p>Find the location of the configuration file</p>
-<pre><code>$ sudo find / -type f -name "git-completion.bash"
+<pre><code class="sh">$ sudo find / -type f -name &quot;git-completion.bash&quot; 
 </code></pre>
+
 <p>Normally it should be in</p>
 <pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
 </code></pre>
@@ -258,17 +245,16 @@ $ brew services start activemq
 <p>Finally apply your changes with</p>
 <pre><code>$ source /usr/local/etc/bash_completion.d/git-completion.bash
 </code></pre>
-<p><br/></p>
 <h2 id="install-and-configure-activemq">Install and Configure ActiveMQ</h2>
-<hr />
 <p>Download the current version from https://activemq.apache.org/components/classic/download</p>
 <p>Extract and copy it to a directory, in this case you could use the opt directory.</p>
 <pre><code>$ sudo tar -zxvf apache-activemq-*-bin.tar.gz -C /opt
 $ cd /opt &amp;&amp; sudo mv apache-activemq-*/ activemq
 </code></pre>
-<p>Copy the preconfigured XML from your opencast directory into your ActiveMQ configuration. In this example you have following folder structure:</p>
+<p>Copy the preconfigured XML from your opencast directory into your ActiveMQ configuration.
+In this example you have following folder structure:</p>
 <ul>
-<li>~/Projects/opencast </li>
+<li>~/Projects/opencast</li>
 <li>/opt/activemq</li>
 </ul>
 <p>With that folder structure you could use following command:</p>
@@ -285,7 +271,6 @@ $ cd /opt &amp;&amp; sudo mv apache-activemq-*/ activemq
 <p>You can start your ActiveMQ instance with:</p>
 <pre><code>$ sudo ./location/to/your/activemq/bin/activemq start
 </code></pre>
-<p><br/></p>
 <h2 id="build-and-start-opencast">Build and Start Opencast</h2>
 <hr />
 <p>You can build now opencast by changing your directory into your opencast location and by running:</p>
@@ -311,11 +296,9 @@ $ mvn clean install -DtrimStackTrace=false
 <p>If you want to start opencast in debug mode, you could use the debug argument:</p>
 <pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast debug
 </code></pre>
-<p><br/></p>
 <h2 id="modify-code-and-build-changes">Modify Code and Build Changes</h2>
 <hr />
 <p>After you modified your code you can go back to step "Build and Start Opencast" to rebuild Opencast.</p>
-<p><br/></p>
 <h2 id="common-build-errors-or-fixes">Common Build Errors or Fixes</h2>
 <hr />
 <h3 id="npm-access-error">NPM Access Error</h3>
@@ -326,7 +309,7 @@ $ mvn clean install -DtrimStackTrace=false
 <p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE is configured to use JDK 1.8.0.</p>
 <h3 id="waiting-for-activemq">Waiting for ActiveMQ</h3>
 <p>Opencast requires ActiveMQ to be both running and properly configured, otherwise it will wait forever to connect. See <a href="#install-and-configure-activemq">here</a> for details on how to configure ActiveMQ. Make sure, that ActiveMQ runs without errors and with the right JAVA_HOME Variable (explained <a href="#set-the-javahome-variable">here</a>).</p>
-<h3 id="slow-idea-fix">Slow Idea Fix</h3>
+<h3 id="slow-idea-fix">Slow IDEA Fix</h3>
 <p>Edit following file</p>
 <pre><code>$ sudo nano /etc/sysctl.conf
 </code></pre>
@@ -336,7 +319,6 @@ $ mvn clean install -DtrimStackTrace=false
 <p>Apply your changes with</p>
 <pre><code>$ sudo sysctl -p --system
 </code></pre>
-<p><br/></p>
 <h2 id="intellij-idea-ide-community-edition-optional">Intellij Idea IDE Community Edition (optional)</h2>
 <hr />
 <p>If you are currently on Fedora, you can install it with following command.
@@ -367,7 +349,6 @@ $ cd /opt &amp;&amp; sudo mv idea-IC-*/ idea &amp;&amp; sh /opt/idea/bin/idea.sh
 <li>Import it from opencast/docs/intellij_settings/codestyle.xml</li>
 </ul>
 <p>Now your IDE should be ready for developing.</p>
-<p><br/></p>
 <h2 id="visual-studio-code-editor-optional">Visual Studio Code Editor (optional)</h2>
 <hr />
 <p>If you are currently on Fedora, you can install it with</p>
