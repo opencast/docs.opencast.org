@@ -36,6 +36,8 @@
           {title: "Opencast 9: Release Notes", url: "#_top", children: [
               {title: "Important Changes", url: "#important-changes" },
               {title: "Features", url: "#features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "API changes", url: "#api-changes" },
               {title: "Configuration changes", url: "#configuration-changes" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release managers", url: "#release-managers" },
@@ -88,19 +90,57 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-9-release-notes">Opencast 9: Release Notes</h1>
+<p><strong>TODO</strong> The following is as of 2020/08/26, and not finished, yet.</p>
 <h2 id="important-changes">Important Changes</h2>
 <ul>
-<li>External Elasticsearch</li>
+<li>Opencast now requires an external Elasticsearch server to function</li>
+<li>Paella is now the default video player</li>
+<li>The <code>encode</code> worfklow operation now completely replaces <code>compose</code>,
+  which is dropped now</li>
 <li>MariaDB JDBC driver</li>
-<li>Dropping compose operation in favor of encode</li>
-<li>Default player is now Paella</li>
+<li>...</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
-<li>todo:</li>
-<li>list</li>
-<li>of</li>
-<li>listed</li>
+<li>Get notified when there is a new version of Opencast,
+  and if your current version reached its end of life</li>
+<li>Sort events in the main event table
+  by the number of publications they have</li>
+<li>Publish streaming elements using <code>publish-configure</code></li>
+<li>Generate embed codes for videos right from the admin UI</li>
+<li>Extend support for resolution based encoding profiles
+  through new conditional commands</li>
+<li>Allow filtering series and events by write access
+  in the external API</li>
+<li>Support NUT container format</li>
+<li>Support playing 360 degree videos in Paella</li>
+<li>Optionally persist LTI users for the purpose of
+  longer running processes like uploads using Opencast Studio</li>
+<li>...</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>Paella Player version <strong>TODO</strong></li>
+<li>Make the <code>partial-import</code> workflow operation more robust
+  in the face of containers with multiple videos in them</li>
+<li>Multiple workflows with the same ID no longer bring Opencast down</li>
+<li>Respect LTI user data passed by the consumer
+  when persistence is enabled</li>
+<li>Fix entering custom roles in the admin UI</li>
+<li>Support odd widths/heights in the default encoding profiles</li>
+<li>Make image extraction more robust for streams wihtout known duration</li>
+<li>Fix image extraction at frame 0</li>
+<li>The external API now returns the bibliographic start date
+  instead of the technical one</li>
+<li>Silence detection now ignores the video streams
+  making it faster in cases there are some</li>
+<li>...</li>
+</ul>
+<h2 id="api-changes">API changes</h2>
+<ul>
+<li>The external API now returns the bibliographic start date
+  instead of the technical one</li>
+<li>...</li>
 </ul>
 <h2 id="configuration-changes">Configuration changes</h2>
 <p><em>TBD</em></p>
