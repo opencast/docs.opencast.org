@@ -102,11 +102,13 @@ versions of Opencast, please refer to <a href="https://docs.opencast.org">older 
 <li><a href="#check-passwords">Check passwords</a></li>
 </ol>
 <h2 id="configuration-changes">Configuration Changes</h2>
-<ol>
-<li>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code>
-   (before Opencast 8.3) was moved to <code>etc/org.opencastproject.security.lti.LtiLaunchAuthenticationHandler.cfg</code>.</li>
+<p>Note that this section will only highlight a few important changes.
+Please make sure to compare your configuration against the current configuration files.</p>
+<ul>
 <li>The default for the configuration option <code>lti.create_jpa_user_reference</code> changed from <code>false</code> (Opencast 8.3) to <code>true</code>.</li>
-</ol>
+<li>Make sure to have <code>?useMysqlMetadata=true</code> appended to <code>org.opencastproject.db.jdbc.url</code> if you use MariaDB as
+  database.</li>
+</ul>
 <h2 id="install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</h2>
 <p>In the past, Opencast came with its own integrated Elasticsearch node. However, recent versions of Elasticsearch no longer
 support to be embedded in applications. Since the Elasticsearch client was updated to version 7, Opencast now requires an
