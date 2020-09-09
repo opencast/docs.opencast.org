@@ -39,7 +39,8 @@
               {title: "Step 3: Change the default shutdown command", url: "#step-3-change-the-default-shutdown-command" },
               {title: "Step 4: Setting up Apache ActiveMQ Message Broker", url: "#step-4-setting-up-apache-activemq-message-broker" },
               {title: "Step 5: Database Configuration", url: "#step-5-database-configuration" },
-              {title: "Step 6: Setting the Storage Directory (optional)", url: "#step-6-setting-the-storage-directory-optional" },
+              {title: "Step 6: HTTPS Configuration", url: "#step-6-https-configuration" },
+              {title: "Step 7: Setting the Storage Directory (optional)", url: "#step-7-setting-the-storage-directory-optional" },
           ]},
         ];
 
@@ -155,7 +156,7 @@ secret.</p>
 broker is mostly run on the admin server of Opencast but can be run separately. It needs to be started before Opencast.
 For more details about the setup, have a look at the <a href="../message-broker/">Apache ActiveMQ configuration guide</a>.</p>
 <h2 id="step-5-database-configuration">Step 5: Database Configuration</h2>
-<p>Opencast uses an integrated HSQL database by default. While you will find it perfectly functional, it has certain
+<p>Opencast uses an integrated H2 database by default. While you will find it perfectly functional, it has certain
 drawbacks:</p>
 <ul>
 <li>It is rather slow</li>
@@ -165,7 +166,10 @@ drawbacks:</p>
 <p>For testing, it is totally fine to keep the internal database, but you are highly encouraged to switch to a stand-alone
 database for productional use. For more information about database configuration, have a look at the <a href="../database/">Database
 Configuration</a> section.</p>
-<h2 id="step-6-setting-the-storage-directory-optional">Step 6: Setting the Storage Directory (optional)</h2>
+<h2 id="step-6-https-configuration">Step 6: HTTPS Configuration</h2>
+<p>An installation without HTTPS does not make much sense today.
+Thus, make sure to follow <a href="../https/">a configuration guide for HTTPS</a>.</p>
+<h2 id="step-7-setting-the-storage-directory-optional">Step 7: Setting the Storage Directory (optional)</h2>
 <p>Even though it is not important for all systems – on test setups you can probably omit this – you will often want to set
 the storage directory. This directory is used to store all media, metadata, … Often, an NFS mount is used for this. You
 can set the directory by changing <code>org.opencastproject.storage.dir</code> like:</p>

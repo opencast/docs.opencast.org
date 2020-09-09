@@ -86,9 +86,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</h1>
-<p>In <code>opencast/etc/</code>, use the <code>org.ops4j.pax.web.cfg</code> file for
-configuration:</p>
-<pre><code># ...
+<p>Edit <code>etc/org.ops4j.pax.web.cfg</code> and set:</p>
+<pre><code># This property specifies the comma separated list of addresses used by Opencast to listen to (e.g. localhost or
+# localhost,10.0.0.1). Host names or IP addresses can be used. Pax Web default value is &quot;0.0.0.0&quot;.
+org.ops4j.pax.web.listening.addresses=0.0.0.0
 
 # Whether Opencast itself should handle HTTPS traffic.
 # Even if you set this to 'false',you can still use an HTTP proxy to handle SSL.
