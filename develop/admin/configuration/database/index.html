@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Database Configuration", url: "#_top", children: [
               {title: "Other databases", url: "#other-databases" },
-              {title: "Setting up MariaDB/MySQL", url: "#setting-up-mariadbmysql" },
+              {title: "Setting up MariaDB", url: "#setting-up-mariadb" },
           ]},
         ];
 
@@ -85,101 +85,107 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="database-configuration">Database Configuration</h1>
-<p>Opencast ships with embedded JDBC drivers for the H2, MySQL and MariaDB databases. The built-in H2 database is used by
-default and needs no configuration, but it is strongly recommended to use MariaDB for production.
-performance gain.</p>
+<p>Opencast ships with embedded JDBC drivers for the H2, MySQL, MariaDB and PostgreSQL databases.
+The built-in H2 database is used by default and needs no configuration,
+but it is strongly recommended to use MariaDB for production.</p>
 <blockquote>
-<p><strong>Notice:</strong> H2 is neither supported for updates, nor for distributed systems. Use it for testing only!</p>
+<p><strong>H2</strong> is not supported for updates or distributed systems. Use it for testing only!</p>
 </blockquote>
 <h3 id="other-databases">Other databases</h3>
-<p>Running Opencast with PostgreSQL should be possible and there is some community support for this. While it should work,
-the support for this is unofficial and we cannot guarantee that every new feature is well tested on that platform.</p>
+<p>Running Opencast with PostgreSQL should be possible and there is some community support for this.
+The support for this is unofficial and we cannot guarantee that every new feature is well tested on that platform.</p>
 <p>The EclipseLink JPA implementation which is used in Opencast supports other databases as well and it should be
 possible to attach other database engines.</p>
-<h2 id="setting-up-mariadbmysql">Setting up MariaDB/MySQL</h2>
-<h3 id="requirements">Requirements</h3>
+<h2 id="setting-up-mariadb">Setting up MariaDB</h2>
 <p>Before following this guide, you should have:</p>
 <ul>
-<li>Installed the Opencast Core System</li>
+<li><a href="../../installation/">Installed Opencast</a></li>
 <li>Followed the <a href="../basic/">Basic Configuration instructions</a></li>
 </ul>
-<h3 id="step-0-set-up-mariadbmysql">Step 0: Set-up MariaDB/MySQL</h3>
-<p>This step is not Opencast-specific and may be different depending on your scenario (e.g. if you want to have a dedicated
-database server). It shall only be a guide for people with no experience setting up MariaDB/MySQL to help them get
-started.  MariaDB is used for this guide but if your distribution includes MySQL instead, the installation should be
-very much the same.</p>
-<p>First, install the MariaDB server. On RedHat-based systems, use:</p>
-<pre><code>yum install mariadb mariadb-server
+<h3 id="installation">Installation</h3>
+<p>This step is not Opencast-specific and may be different depending on your scenario and system.
+This shall act as an example and is assuming CentOS 8 as Linux distribution.
+Look at your distributions documentation for setting up a database.</p>
+<p>Install and start MariaDB:</p>
+<pre><code class="sh">% dnf install mariadb mariadb-server
+% systemctl start mariadb.service
+% systemctl enable mariadb.service
 </code></pre>
-<p>Afterward, start the server and set it up to start automatically after each reboot:</p>
-<pre><code>systemctl start mariadb.service
-systemctl enable mariadb.service
+
+<p>Finally, set root user credentials by running</p>
+<pre><code class="sh">% mysql_secure_installation
 </code></pre>
-<p>Now you have MariaDB running, but without a properly configured root account (no password, etc.) which might pose a
-security risk. MariaDB includes a useful tool to secure your database server. You can launch it by executing (yes, it is
-still called mysql…):</p>
-<pre><code>mysql_secure_installation
+
+<h3 id="creating-a-database">Creating a Database</h3>
+<p>The first step is to create a database for Opencast.
+You can use any other database client, e.g. phpMyAdmin, for this as well.</p>
+<pre><code class="sh">% mysql -u root -p
 </code></pre>
-<p>It will guide you through the steps of setting up a root account with password, etc.</p>
-<h3 id="step-1-create-an-opencast-database">Step 1: Create an Opencast Database</h3>
-<p>The first step, if you have not already done this, is to create a database for Opencast. You can use the following SQL
-code to to that. For executing the SQL, use the MariaDB/MySQL client (run <code>mysql</code> from your shell) or use a graphical
-tool like phpMyAdmin. For now, we will use the MySQL shell client and the default administrative (root) user. Launch the
-client with:</p>
-<pre><code>mysql -u root -p
+
+<p>You will be asked for the password of the user root.
+Next, create a database called <code>opencast</code> by executing:</p>
+<pre><code class="sql">CREATE DATABASE opencast CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 </code></pre>
-<p>You will be asked for the password of the user root. When logged in, you will end up in the MariaDB/MySQL shell.  Next,
-create a database called <code>opencast</code> by executing:</p>
-<pre><code>CREATE DATABASE opencast CHARACTER SET utf8 COLLATE utf8_general_ci;
-</code></pre>
+
 <p>Then create a user <code>opencast</code> with a password and grant it all necessary rights:</p>
-<pre><code>GRANT SELECT,INSERT,UPDATE,DELETE,CREATE TEMPORARY TABLES ON opencast.*
+<pre><code class="sql">GRANT ALL PRIVILEGES ON opencast.* TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
+</code></pre>
+
+<details>
+
+<summary>Limiting the granted privileges</summary>
+
+You can limit the granted privileges further if you want to.
+The rights granted here are sufficient to run Opencast:
+
+
+<pre><code class="sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE TEMPORARY TABLES ON opencast.*
   TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
 </code></pre>
-<p>The rights granted here are all that is needed to run Opencast. To execute the migration scripts
-used to initialize (see next section) and upgrade the database schema upon releases of new versions
-of Opencast, you need more. If you don't want to do this using the <code>root</code> user (which normally
-can do anything), but with a dedicated user called <code>admin</code> for the sake of the example,
-you should grant that user the following rights:</p>
-<pre><code>GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
+
+
+These privileges are often not sufficient for running the scripts used to initialize and upgrade the database.
+For this, fall back to using the root user or grant a user slightly more privileges:
+
+
+<pre><code class="sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
   TO 'admin'@'localhost' IDENTIFIED BY 'opencast_admin_password';
 </code></pre>
+
+</details>
+
 <p>You can choose other names for the users and the database, and you should use a different password.</p>
 <p>In a distributed system, apart from <code>'username'@'localhost'</code> (which would allow access from the local machine only),
 you should grant a external user access to the database by running the same command for a user like
-<code>'username'@'10.0.1.%'</code>, where the <code>10.0.1.%</code> specifies the IP range allowed to access the server with <code>%</code> being a
-wildcard for "anything". For more details on MariaDB/MySQL user creation have a look at any of the following links:</p>
-<ul>
-<li><a href="https://mariadb.com/kb/en/mariadb/grant/">MariaDB Reference Manual :: <code>GRANT</code> statement</a></li>
-<li><a href="http://mysql.com/doc/en/adding-users.html">MySQL Reference Manual :: Adding User Accounts</a>.</li>
-</ul>
+<code>'username'@'10.0.1.%'</code>, where the <code>10.0.1.%</code> specifies the IP range allowed to access the server.
+For more details on MariaDB user creation, have a look at <a href="https://mariadb.com/kb/en/mariadb/grant/">MariaDB Reference Manual :: <code>GRANT</code> statement
+</a></p>
 <p>Finally, leave the client and restart the database server to enable the new user(s):</p>
-<pre><code>systemctl restart mariadb.service
+<pre><code class="sh">% systemctl restart mariadb.service
 </code></pre>
-<h3 id="step-2-set-up-the-database-structure">Step 2: Set up the Database Structure</h3>
+
+<h3 id="set-up-the-database-structure">Set up the Database Structure</h3>
 <p>To set up the database structure you can (and should!) use the Opencast ddl scripts. You can find them in
 <code>…/docs/scripts/ddl/mysql5.sql</code> or download them from GitHub.</p>
 <p>To import the database structure using the MariaDB client, switch to the directory that contains the <code>mysql5.sql</code> file,
-run the client with a user priviledged to create the database structure and switch to the database you want to use
+run the client with a user privileged to create the database structure and switch to the database you want to use
 (e.g. <code>opencast</code>):</p>
-<pre><code>mysql -u root -p opencast
+<pre><code class="sh">% mysql -u root -p opencast
 </code></pre>
+
 <p>Run the ddl script:</p>
 <pre><code>mysql&gt; source mysql5.sql;
 </code></pre>
-<p>Alternatively, you can import the script directly from the command line:</p>
-<pre><code>mysql -u root -p opencast &lt; …/docs/scripts/ddl/mysql5.sql
-</code></pre>
+
 <p>Now, ensure the MariaDB <a href="https://mariadb.com/kb/en/library/server-system-variables/"><code>wait_timeout</code></a> in <code>mariadb.cnf</code>
 or <code>mysql.cnf</code> is bigger than <code>org.opencastproject.db.jdbc.pool.max.idle.time</code> in Opencast's <code>custom.properties</code>.
 Raising the <code>max_connections</code> in <code>mariadb.cnf</code> parameter might be required, too, depending on your installation's size.
 Reload the configuration into MariaDB, then connect to your database as user <code>opencast</code> and verify the values by
-executing <code>SHOW  VARIABLES LIKE %_timeout;</code>. A <code>MySQLNonTransientConnectionException</code>, for instance “A PooledConnection
+executing <code>SHOW VARIABLES LIKE %_timeout;</code>. A <code>MySQLNonTransientConnectionException</code>, for instance “A PooledConnection
 that has already signaled a Connection error is still in use”, in your Opencast logs might indicate a problem with this
 configuration.</p>
-<h3 id="step-3-configure-opencast">Step 3: Configure Opencast</h3>
-<p>The following changes must be made in <code>…/etc/custom.properties</code> (<code>/etc/opencast/custom.properties</code> in a package
-installation).</p>
+<h3 id="configure-opencast">Configure Opencast</h3>
+<p>The following changes must be made in <code>etc/custom.properties</code>:</p>
 <ol>
 <li>
 <p>Configure Opencast to use the JDBC driver for MariaDB:</p>
@@ -193,7 +199,7 @@ installation).</p>
 </code></pre>
 </li>
 <li>
-<p>Configure the username and password which Opencast should use to access the database:</p>
+<p>Configure the username and password with which to access the database:</p>
 <pre><code>org.opencastproject.db.jdbc.user=opencast
 org.opencastproject.db.jdbc.pass=opencast_password
 </code></pre>
