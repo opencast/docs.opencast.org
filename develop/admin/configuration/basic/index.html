@@ -107,21 +107,6 @@ your own domain name:</p>
 <p><em>Note:</em> This value will be written to all generated mediapackages and thus cannot be changed easily for already
 processed media. At least not without an extra amount of work involving modifications to the database. That is why you
 should think about this setting carefully.</p>
-<p>Second, adjust the binding address in your <code>org.ops4j.pax.web.cfg</code> configuration file. The binding address can be set to
-<code>0.0.0.0</code> for general network access. The property to modify is:</p>
-<pre><code>org.ops4j.pax.web.listening.addresses=127.0.0.1
-</code></pre>
-<p>It may be necessary to adjust the jetty http connector idleTimeout value for processing large files in some configurations.
-To do so, uncomment this line in <code>org.ops4j.pax.web.cfg</code>:</p>
-<pre><code>org.ops4j.pax.web.config.file=${karaf.etc}/jetty-opencast.xml
-</code></pre>
-<p>and modify the host and if necessary port values in <code>jetty-opencast.xml</code> to match the ops4j configuration:</p>
-<pre><code>&lt;Set name="host"&gt;127.0.0.1&lt;/Set&gt;
-</code></pre>
-<p>If you are deploying to the cloud then your servers may not have useful hostnames. The node name is a descriptive title
-for this Opencast instance, eg Admin, worker-01, etc. and can be used as an alternative in the Admin UI.</p>
-<pre><code>org.opencastproject.server.nodename=AllInOne
-</code></pre>
 <h2 id="step-2-setting-the-login-details">Step 2: Setting the Login Details</h2>
 <p>There are two authentication methods for Opencast. HTTP Digest authentication and form-based authentication. Both
 methods need a username and a password. Change the password for both! The important keys in the 'custom.properties'

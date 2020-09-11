@@ -38,6 +38,7 @@
               {title: "Step 1: Configuration of the AAI Login handler", url: "#step-1-configuration-of-the-aai-login-handler" },
               {title: "Step 2: Spring Security Configuration", url: "#step-2-spring-security-configuration" },
               {title: "Step 3: Protecting HTML pages by Shibboleth", url: "#step-3-protecting-html-pages-by-shibboleth" },
+              {title: "Dynamic login handler configuration", url: "#dynamic-login-handler-configuration" },
           ]},
         ];
 
@@ -213,6 +214,24 @@ Access to APIs is protected by other means of authentication as, for example, di
     require valid-user
 &lt;/LocationMatch&gt;
 </code></pre>
+<h2 id="dynamic-login-handler-configuration">Dynamic login handler configuration</h2>
+<p>To configure the dynamic login for the use of attributes via SpEL in the <code>mh_default_org.xml</code> file, it is necessary to follow the same steps above. Just change the bean class to <code>aaiLoginHandler</code>,</p>
+<pre><code>&lt;bean id="aaiLoginHandler" class="org.opencastproject.security.aai.DynamicLoginHandler"&gt;
+  &lt;property name="securityService" ref="securityService" /&gt;
+  &lt;property name="userReferenceProvider" ref="userReferenceProvider" /&gt;
+  &lt;property name="attributeMapper" ref="attributeMapper" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>activate the bean attributeMapper,</p>
+<pre><code>&lt;bean id="attributeMapper" class="org.opencastproject.security.aai.api.AttributeMapper"&gt;
+  &lt;property name="useHeader" value="true" /&gt;
+  &lt;property name="multiValueDelimiter" value=";" /&gt;
+  &lt;property name="attributeMap" ref="attributeMap" /&gt;
+  &lt;property name="aaiAttributes" ref="aaiAttributes" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>and configure the values <code>&lt;util:...&gt;</code>.</p>
+<p>Everything is in the commented section Dynamic AAI Loginhandler.</p>
 
   <br>
     
