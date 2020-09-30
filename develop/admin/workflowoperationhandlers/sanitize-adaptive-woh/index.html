@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Segment Previews - Administration Guide</title>
+    <title>Sanitize Adaptive - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "SegmentpreviewsWorkflowOperation", url: "#_top", children: [
+          {title: "SanitizeAdaptiveWorkflowHandler", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -64,20 +64,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../segmentvideo-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../segmentpreviews-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../segmentvideo-woh/" class="btn btn-xs btn-link">
-        Segment Video
+      <a href="../segmentpreviews-woh/" class="btn btn-xs btn-link">
+        Segment Previews
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../sanitize-adaptive-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../sanitize-adaptive-woh/" class="btn btn-xs btn-link">
-        Sanitize Adaptive
+        Previous</a><a href="../retract-youtube-woh/" class="btn btn-xs btn-link">
+        Retract YouTube
       </a>
     </div>
     
@@ -85,10 +85,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="segmentpreviewsworkflowoperation">SegmentpreviewsWorkflowOperation</h1>
+    <h1 id="sanitizeadaptiveworkflowhandler">SanitizeAdaptiveWorkflowHandler</h1>
 <h2 id="description">Description</h2>
-<p>The SegmentpreviewsWorkflowOperation will extract still images from a video using FFmpeg, a given encoding profile and
-previous discovered segments.</p>
+<p>The SanitizeAdaptiveWorkflowHandler is used to fix references to media files in a playlist.
+When files are ingested, they are put into system created and uniquely named directories.
+This code will attempt to match the referenced files by changing the references in the playlists.
+All the file names must be unique.
+This will allow the inspection to parse and inspect all the renditions in an adaptive playlist.
+Currently only HLS is supported</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -101,56 +105,32 @@ previous discovered segments.</p>
 <tbody>
 <tr>
 <td>source-flavor</td>
-<td>presenter/source</td>
-<td>Specifies which media should be processed.</td>
+<td>presenter/work</td>
+<td>Which media should be checked</td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>presenter/work</td>
-<td>Specifies the flavor the new files will get.</td>
-</tr>
-<tr>
-<td>source-tags</td>
-<td>engage</td>
-<td>Specifies which media should be processed.</td>
+<td>presenter/delivery</td>
+<td>Specifies the flavor of the new media</td>
 </tr>
 <tr>
 <td>target-tags</td>
-<td>engage</td>
-<td>Specifies the tags the new files will get.</td>
-</tr>
-<tr>
-<td>encoding-profile</td>
-<td>search-cover.http</td>
-<td>The encoding profile to use.</td>
-</tr>
-<tr>
-<td>reference-flavor</td>
-<td>presentation/work</td>
-<td>Flavor of the segments to use.</td>
-</tr>
-<tr>
-<td>reference-tags</td>
-<td>engage</td>
-<td>Tags of the segments to use.</td>
+<td>sometag</td>
+<td>Specifies the tags of the new media</td>
 </tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code>&lt;operation
-      id="segmentpreviews"
-      fail-on-error="false"
-      exception-handler-workflow="error"
-      description="Encoding presentation (screen) to segment preview image"&gt;
-      &lt;configurations&gt;
-            &lt;configuration key="source-flavor"&gt;presentation/trimmed&lt;/configuration&gt;
-            &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-            &lt;configuration key="target-flavor"&gt;presentation/segment+preview&lt;/configuration&gt;
-            &lt;configuration key="reference-flavor"&gt;presentation/delivery&lt;/configuration&gt;
-            &lt;configuration key="reference-tags"&gt;engage&lt;/configuration&gt;
-            &lt;configuration key="target-tags"&gt;engage&lt;/configuration&gt;
-            &lt;configuration key="encoding-profile"&gt;player-slides.http&lt;/configuration&gt;
-      &lt;/configurations&gt;
+    id="sanitize-adaptive"
+    fail-on-error="true"
+    exception-handler-workflow="error"
+    description="Fix uploaded HLS files "&gt;
+    &lt;configurations&gt;
+        &lt;configuration key="source-flavor"&gt;presenter/ingested&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;engage&lt;/configuration&gt;
+    &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 
@@ -165,20 +145,20 @@ previous discovered segments.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../segmentvideo-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../segmentpreviews-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../segmentvideo-woh/" class="btn btn-xs btn-link">
-        Segment Video
+      <a href="../segmentpreviews-woh/" class="btn btn-xs btn-link">
+        Segment Previews
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../sanitize-adaptive-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../sanitize-adaptive-woh/" class="btn btn-xs btn-link">
-        Sanitize Adaptive
+        Previous</a><a href="../retract-youtube-woh/" class="btn btn-xs btn-link">
+        Retract YouTube
       </a>
     </div>
     
@@ -189,7 +169,7 @@ previous discovered segments.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/segmentpreviews-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/sanitize-adaptive-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
