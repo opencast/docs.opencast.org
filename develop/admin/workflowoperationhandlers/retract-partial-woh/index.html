@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Retract OAI-PMH - Administration Guide</title>
+    <title>Retract Partial - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,10 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "RetractOaiPmhWorkflowOperation", url: "#_top", children: [
+          {title: "Partial Retract Engage Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -64,20 +64,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../retract-partial-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../retract-partial-woh/" class="btn btn-xs btn-link">
-        Retract Partial
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-link">
+        Retract YouTube
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../retract-configure-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../retract-configure-woh/" class="btn btn-xs btn-link">
-        Retract Configure
+        Previous</a><a href="../retract-oaipmh-woh/" class="btn btn-xs btn-link">
+        Retract OAI-PMH
       </a>
     </div>
     
@@ -85,33 +85,39 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="retractoaipmhworkflowoperation">RetractOaiPmhWorkflowOperation</h1>
+    <h1 id="partial-retract-engage-workflow-operation">Partial Retract Engage Workflow Operation</h1>
+<p>ID: <code>retract-partial</code></p>
 <h2 id="description">Description</h2>
-<p>The Retract OAI-PMH workflow operation retracts the published elements from a OAI-PMH repository.</p>
+<p>The PartialRetractEngageWorkflowOperationHandler retracts a subset of the published elements from the local Opencast Media Module.  This is useful to remove incorrect captions without reprocessing the entire workflow.  Note: the elements selected for retraction match any combination of flavor or tag, and the resulting publication may be unusable if you accidentally retract one or more delivery files.  Use this operation with caution.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th>Configuration Keys</th>
-<th>Description</th>
+<th>configuration keys</th>
+<th>description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>repository</td>
-<td>The name of the OAI-PMH repository where the media should be retracted from</td>
+<td>retract-flavors</td>
+<td>Which flavor(s) to retract.  Use a comma to separate multiple flavors.</td>
+</tr>
+<tr>
+<td>retract-tags</td>
+<td>Which tags(s) to retract.  Use a comma to separate multiple tags.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="operation-examples">Operation Examples</h2>
-<pre><code>&lt;operation
-    id="retract-oaipmh"
-    fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Retract event from the OAI-PMH repository"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="repository"&gt;default&lt;/configuration&gt;
-    &lt;/configurations&gt;
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="xml">&lt;operation
+    id=&quot;retract-partial&quot;
+    fail-on-error=&quot;true&quot;
+    exception-handler-workflow=&quot;partial-error&quot;
+    description=&quot;Retracting elements flavored with presentation and tagged with preview from Engage&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;retract-flavors&quot;&gt;presentation/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;retract-tags&quot;&gt;preview&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 
@@ -126,20 +132,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../retract-partial-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../retract-partial-woh/" class="btn btn-xs btn-link">
-        Retract Partial
+      <a href="../retract-youtube-woh/" class="btn btn-xs btn-link">
+        Retract YouTube
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../retract-configure-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../retract-configure-woh/" class="btn btn-xs btn-link">
-        Retract Configure
+        Previous</a><a href="../retract-oaipmh-woh/" class="btn btn-xs btn-link">
+        Retract OAI-PMH
       </a>
     </div>
     
@@ -150,7 +156,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-oaipmh-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-partial-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
