@@ -93,8 +93,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The path <code>/studio</code> is accessible by users with the role <code>ROLE_ADMIN</code> or <code>ROLE_STUDIO</code>. The APIs used by Studio (<code>/ingest/*</code> and <code>info/me.json</code>) are also accessible if the user has <code>ROLE_STUDIO</code>.</p>
 <p>The preferred way to let your users access Studio is via LTI. Remember to configure your LTI users to have the role <code>ROLE_STUDIO</code> so that they can access Studio and all APIs used by Studio.</p>
 <h2 id="configuring-studio">Configuring Studio</h2>
-<p>Studio is pre-configured via <code>etc/ui-config/mh_default_org/studio/settings.json</code>. You can modify that file to change the configuration, but note that you probably don't want to touch <code>opencast.serverUrl</code> and <code>opencast.loginProvided</code>. For information on possible configuration values, please see <a href="https://github.com/elan-ev/opencast-studio/blob/master/CONFIGURATION.md"><code>CONFIGURATION.md</code> in the Studio repository</a>.</p>
-<p>If you want to pre-configure the ACL that is sent by studio, place a file <code>acl.xml</code> in <code>etc/ui-config/mh_default_org/studio/</code> and set <code>upload.acl</code> in <code>settings.json</code> to <code>/ui/config/studio/acl.xml</code>.</p>
+<p>Studio is pre-configured via <code>etc/ui-config/mh_default_org/studio/settings.toml</code>. You can modify that file to change the configuration, but note that you probably don't want to touch <code>opencast.serverUrl</code> and <code>opencast.loginProvided</code>. For information on possible configuration values, please see <a href="https://github.com/elan-ev/opencast-studio/blob/master/CONFIGURATION.md"><code>CONFIGURATION.md</code> in the Studio repository</a>.</p>
 <h2 id="workflow-requirements">Workflow requirements</h2>
 <p>The videos produced by the built-in recording capabilities of browsers are often quite exotic, to put it mildly. The Opencast workflow responsible for processing uploads from Studio needs to be able to handle the following things:</p>
 <ul>
@@ -108,7 +107,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li>Most browsers will default to VP8 as video codec, OPUS as audio codec and WEBM (or the superset MKV) as container.</li>
 <li>Desktop capture seem to happen with 30fps in Chrome and Firefox (tested on a 60hz monitor).</li>
-<li>In some cases, Firefox encodes all frames as key-frames, which – given the fixed bitrate – oftne results in a fairly low quality video.</li>
+<li>In some cases, Firefox encodes all frames as key-frames, which – given the fixed bitrate – often results in a fairly low quality video.</li>
 </ul>
 
   <br>

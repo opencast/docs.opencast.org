@@ -171,6 +171,18 @@ stream which makes the operation more expensive in terms of load.</p>
 <td></td>
 </tr>
 <tr>
+<td>preencode-encoding</td>
+<td>Boolean</td>
+<td>If set to <em>true</em>, all source target files will be encoded using the encoding profile <em>preencode-encoding-profile</em> before they're processed further</td>
+<td>false</td>
+</tr>
+<tr>
+<td>preencode-encoding-profile</td>
+<td>String</td>
+<td>Encoding profile to be used when <em>preencode-encoding</em> is set to <em>true</em></td>
+<td></td>
+</tr>
+<tr>
 <td>required-extensions</td>
 <td>String , { "," , String }</td>
 <td>Comma-separated list of file extension names (case insensitive). All generated target files whose file extensions are not in this list will be encoded using the encoding profile <em>force-encoding-profile</em></td>
@@ -414,6 +426,10 @@ hard-coded and are not supposed to be changed by the user.</p>
 <tr>
 <td>force-encoding-profile</td>
 <td>Used to re-encode target tracks in case the file extension of a given target track is not included in <em>required-extensions</em> or the configuration key <em>force-encoding</em> is set to <em>true</em></td>
+</tr>
+<tr>
+<td>preencode-encoding-profile</td>
+<td>Only used if <em>preencode-encoding</em> is set to true. Can be used to encode all source tracks before any processing happens, to avoid errors with non-uniform input. Should be used instead of <a href="../encode-woh/">Encode</a>, as the latter will break source-smil.</td>
 </tr>
 </tbody>
 </table>
