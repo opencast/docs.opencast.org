@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Linux - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Install from Source (Linux)", url: "#_top", children: [
+              {title: "Preparation", url: "#preparation" },
+              {title: "Install Dependencies", url: "#install-dependencies" },
+              {title: "Building Opencast", url: "#building-opencast" },
+              {title: "Configure", url: "#configure" },
+              {title: "Running Opencast", url: "#running-opencast" },
+              {title: "Run Opencast as a service", url: "#run-opencast-as-a-service" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../source-macosx/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../source-macosx/" class="btn btn-xs btn-link">
+        MacOS X
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../multiple-servers/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../multiple-servers/" class="btn btn-xs btn-link">
+        Multiple Servers
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="install-from-source-linux">Install from Source (Linux)</h1>
+<p>These instructions outline how to install an all in one Opencast system on Linux.</p>
+<h2 id="preparation">Preparation</h2>
+<p>Create a dedicated Opencast system user:</p>
+<pre><code>useradd -r -d /opt/opencast opencast
+</code></pre>
+<p>Get Opencast source:</p>
+<p>You can get the Opencast source code by either downloading a tarball of the source code or by cloning the Git
+repository. The latter option is more flexible, it is easier to upgrade and in general preferred for developers. The
+prior option, the tarball download, needs less tools and you do not have to download nearly as much as with Git.</p>
+<p>Using the tarball:</p>
+<p>Select the tarball for the version you want to install
+from the <a href="https://github.com/opencast/opencast/releases">GitHub releases section</a>.</p>
+<pre><code># Download desired tarball
+curl -OL https://github.com/opencast/opencast/archive/[...].tar.gz
+tar xf [...].tar.gz
+cd opencast--[...]
+</code></pre>
+<p>Cloning the Git repository:</p>
+<pre><code>git clone https://github.com/opencast/opencast.git
+cd opencast
+git tag   &lt;-  List all available versions
+git checkout TAG   &lt;-  Switch to desired version
+</code></pre>
+<h2 id="install-dependencies">Install Dependencies</h2>
+<p>Please make sure to install the following dependencies.</p>
+<p>Required:</p>
+<pre><code>java-1.8.0-openjdk-devel.x86_64 / openjdk-8-jdk
+ffmpeg &gt;= 3.2.4
+maven &gt;= 3.1
+python &gt;= 2.6
+unzip
+gcc-c++
+tar
+bzip2
+nc
+</code></pre>
+<p>Required (not necessarily on the same machine):</p>
+<pre><code>ActiveMQ &gt;= 5.10 (older versions untested)
+</code></pre>
+<p>Required for text extraction (recommended):</p>
+<pre><code>tesseract &gt;= 3
+</code></pre>
+<p>Required for hunspell based text filtering (optional):</p>
+<pre><code>hunspell &gt;= 1.2.8
+</code></pre>
+<p>Required for audio normalization (optional):</p>
+<pre><code>sox &gt;= 14.4
+</code></pre>
+<p>Required for animate service (optional):</p>
+<pre><code>synfig
+</code></pre>
+<h3 id="dependency-download">Dependency Download</h3>
+<p>Pre-built versions of most dependencies that are not in the repositories can be downloaded from the respective project
+website:</p>
+<ul>
+<li><a href="http://ffmpeg.org/download.html">Get FFmpeg</a></li>
+<li><a href="https://maven.apache.org/download.cgi">Get Apache Maven</a></li>
+<li><a href="http://activemq.apache.org/download.html">Get Apache ActiveMQ</a></li>
+</ul>
+<h2 id="building-opencast">Building Opencast</h2>
+<p>Automatically build all Opencast modules and assemble distributions for different server types:</p>
+<pre><code>cd opencast-dir
+mvn clean install
+</code></pre>
+<p>Deploy all-in-one distribution:</p>
+<pre><code>cd build/
+mv opencast-dist-allinone-*/ /opt/opencast
+</code></pre>
+<p>Make sure everything belongs to the user <code>opencast</code>:</p>
+<pre><code>sudo chown -R opencast:opencast /opt/opencast
+</code></pre>
+<h2 id="configure">Configure</h2>
+<p>Please follow the steps of the <a href="../../configuration/basic/">Basic Configuration guide</a>. It will help you to set your
+hostname, login information, …</p>
+<h2 id="running-opencast">Running Opencast</h2>
+<p>To start Opencast, run <code>.../bin/start-opencast</code> as user <code>opencast</code>:</p>
+<pre><code>sudo -u opencast /opt/opencast/bin/start-opencast
+</code></pre>
+<p>As soon as Opencast is completely started, browse to <a href="http://localhost:8080">http://localhost:8080</a> to get to the
+administration interface.</p>
+<h2 id="run-opencast-as-a-service">Run Opencast as a service</h2>
+<p>Usually, you do not want to run Opencast in interactive mode but as system service to make sure it is only running
+once on a system and is started automatically.</p>
+<p>You will find service files for Opencast in <code>docs/scripts/service/{opt,system}/</code>.</p>
+<h3 id="using-systemd">Using Systemd</h3>
+<p>Make sure the path to Opencast is set correctly:</p>
+<pre><code>vim docs/scripts/service/opencast.service
+</code></pre>
+<p>Install the unit file:</p>
+<pre><code>cp docs/scripts/service/opencast.service /etc/systemd/system/
+systemctl daemon-reload
+</code></pre>
+<p>Start Opencast and make it run automatically:</p>
+<pre><code>systemctl start opencast.service
+systemctl enable opencast.service
+</code></pre>
+<h3 id="using-sysv-init">Using SysV-Init</h3>
+<blockquote>
+<p>Note that this option is for compatibility to older systems. If you have the choice of either using the Systemd unit
+file or the Init script, it is recommended to use the Systemd unit file.</p>
+</blockquote>
+<p>Make sure the path to Opencast is set correctly:</p>
+<pre><code>vim docs/scripts/service/etc-init.d-opencast
+</code></pre>
+<ol>
+<li>
+<p>Install init script:</p>
+<pre><code>cp docs/scripts/service/etc-init.d-opencast /etc/init.d/opencast
+</code></pre>
+</li>
+<li>
+<p>Enable service using <code>chkconfig</code> or <code>update-rc.d</code></p>
+</li>
+<li>
+<p>Start Opencast using</p>
+<pre><code>service opencast start
+</code></pre>
+</li>
+</ol>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../source-macosx/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../source-macosx/" class="btn btn-xs btn-link">
+        MacOS X
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../multiple-servers/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../multiple-servers/" class="btn btn-xs btn-link">
+        Multiple Servers
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/source-linux.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

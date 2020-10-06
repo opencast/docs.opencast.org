@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Event Filters - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Events Filters Configuration", url: "#_top", children: [
+              {title: "Filters with relative time spans", url: "#filters-with-relative-time-spans" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../asset-upload/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../asset-upload/" class="btn btn-xs btn-link">
+        Manual Asset Upload
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../trim-segments/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../trim-segments/" class="btn btn-xs btn-link">
+        Trim Segments
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="events-filters-configuration">Events Filters Configuration</h2>
+<p>At the top right of the admin UI a set of predefined filters for events are available, displayed with a description and
+the amount of events currently matching that filter. By default, the following filters are visible:</p>
+<table>
+<thead>
+<tr>
+<th>Statistic</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yesterday</td>
+<td>All events with a start date sometime yesterday.</td>
+</tr>
+<tr>
+<td>Today</td>
+<td>All events with a start date sometime today.</td>
+</tr>
+<tr>
+<td>Tomorrow</td>
+<td>All events with a start date sometime tomorrow.</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>All events with status <em>Scheduled</em>.</td>
+</tr>
+<tr>
+<td>Recording</td>
+<td>All events with status <em>Recording</em>.</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>All events with status <em>Running</em>.</td>
+</tr>
+<tr>
+<td>Paused</td>
+<td>All events with status <em>Paused</em>.</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>All events with status <em>Failed</em>.</td>
+</tr>
+<tr>
+<td>Todo</td>
+<td>All events with status <em>Finished</em> and open comments.</td>
+</tr>
+<tr>
+<td>Finished</td>
+<td>All events with status <em>Finished</em>.</td>
+</tr>
+</tbody>
+</table>
+<p>Filters can be added or removed by editing the file <code>etc/listproviders/adminui.stats.properties</code>. For example, the
+<em>Finished</em> filter is defined as follows:</p>
+<pre><code>FINISHED=\
+{"filters": [{"name": "status", "filter": "FILTERS.EVENTS.STATUS.LABEL", \
+"value": "EVENTS.EVENTS.STATUS.PROCESSED"}],\
+"description": "DASHBOARD.FINISHED",\
+"order":12}
+</code></pre>
+<ul>
+<li><code>filters</code> defines a list containing at least one filter. Each filter is defined with<ul>
+<li>a <code>name</code>  that defines the event property to filter on for the backend</li>
+<li>a <code>filter</code> that defines the event property to filter on for the frontend</li>
+<li>and the <code>value</code> that property is supposed to have</li>
+</ul>
+</li>
+<li><code>description</code> contains the (possibly translated) description displayed in the UI</li>
+<li><code>order</code> controls the order the filters are shown in the UI</li>
+</ul>
+<h3 id="filters-with-relative-time-spans">Filters with relative time spans</h3>
+<p>For defining filters that contain a relative time span like <em>yesterday</em> or <em>this week</em> <code>value</code> can contain an object
+instead of a string. This object has to contain a <code>relativeDateSpan</code> property which itself contains the fields <code>from</code>,
+<code>to</code> and <code>unit</code>. The <code>unit</code> defines the unit of time that is being considered, e.g. <em>hour</em>, <em>day</em>, <em>week</em>, <em>month</em> or
+<em>year</em>, while <code>from</code> and <code>to</code> specify the beginning and end of the time span by defining an integer offset relative to
+the current hour, day, ... depending on the unit. So if the <code>unit</code> is defined as <em>day</em>, <strong>0</strong> is the current day while
+<strong>-1</strong> is yesterday and <strong>1</strong> is tomorrow. If the unit is <em>week</em> instead, <strong>0</strong> is the current week while <strong>-1</strong> is the
+last and <strong>1</strong> the next week, and so on.</p>
+<p>Every date/time unit below the one defined by <code>unit</code> depends on whether the offset is defined by <code>to</code> or <code>from</code>. So if
+the unit is <em>day</em>, <strong>from: -1</strong> would be the beginning of yesterday (so the time is 00:00:00 in the user's timezone)
+while <strong>to: -1</strong> would be the end of yesterday (23:59:59). If the unit is <em>week</em>, <strong>from: -1</strong> is the beginning of last
+week (which day is the first day of the week is defined by the user's locale) and <strong>to: 0</strong> would be the end of this
+week, so a filter defined as</p>
+<pre><code>LAST_TWO_WEEKS=\
+{"filters": [{"name": "startDate", "filter":"FILTERS.EVENTS.START_DATE",
+              "value": {"relativeDateSpan": {"from": "-2", "to": "0", "unit": "week"}}}],\
+ "description": "DATES.LAST_TWO_WEEKS",\
+ "order":15}
+</code></pre>
+<p>would cover all events whose start dates occur sometime during the last or current week.</p>
+<p>This functionality is implemented with the library <a href="https://momentjs.com">Moment.js</a> by adding the values of <code>to</code> or
+<code>from</code> to the current date and time while considering the defined unit. A list of valid unit strings can be found in
+the <a href="https://momentjs.com">documentation</a>.</p>
+<h5 id="to-be-considered">To be considered</h5>
+<p>Since only one unit can be defined per filter, time spans like <em>the beginning of this month until tomorrow</em> are
+currently not possible.</p>
+<p>Be advised that a too big amount of filters can lead to filters disappearing from view depending on the width of the
+user's screen.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../asset-upload/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../asset-upload/" class="btn btn-xs btn-link">
+        Manual Asset Upload
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../trim-segments/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../trim-segments/" class="btn btn-xs btn-link">
+        Trim Segments
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/event-filters.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
