@@ -248,7 +248,6 @@ cleanup.results.days=7
 # org.opencastproject.admin.email in custom.properties will be used.
 notification.email=localadmin@domain
 </code></pre>
-
 <h3 id="step-4-add-encoding-profile-for-extracting-audio">Step 4: Add encoding profile for extracting audio</h3>
 <p>The Google Speech-to-Text service has limitations on audio types. <a href="https://cloud.google.com/speech-to-text/docs/reference/rest/v1p1beta1/RecognitionConfig#AudioEncoding">Supported audio type are here</a>.
 By default Opencast will use the encoding settings in etc/encoding/googlespeech-audio.properties.</p>
@@ -257,7 +256,7 @@ By default Opencast will use the encoding settings in etc/encoding/googlespeech-
 published so that users can watch videos without having to wait for the transcription to finish, but it
 depends on your use case. The only requirement is to take a snapshot of the media package so that
 the second workflow can retrieve it from the archive to attach the caption/transcripts.</p>
-<pre><code class="xml">    &lt;!--  Encode audio to flac --&gt;
+<pre><code class="language-xml">    &lt;!--  Encode audio to flac --&gt;
     &lt;operation
       id=&quot;compose&quot;
       fail-on-error=&quot;true&quot;
@@ -289,10 +288,9 @@ the second workflow can retrieve it from the archive to attach the caption/trans
 
 
 </code></pre>
-
 <h3 id="step-6-create-a-workflow-that-will-add-the-generated-captiontranscript-to-the-media-package-and-republish-it">Step 6: Create a workflow that will add the generated caption/transcript to the media package and republish it</h3>
 <p>A sample one can be found in etc/workflows/google-speech-attach-transcripts.xml</p>
-<pre><code class="xml"> &lt;!-- Attach caption/transcript --&gt;
+<pre><code class="language-xml"> &lt;!-- Attach caption/transcript --&gt;
 
     &lt;operation id=&quot;google-speech-attach-transcription&quot;
       fail-on-error=&quot;true&quot;
@@ -334,7 +332,6 @@ the second workflow can retrieve it from the archive to attach the caption/trans
     &lt;/operation&gt;
 
 </code></pre>
-
 <h2 id="workflow-operations">Workflow Operations</h2>
 <ul>
 <li><a href="../../workflowoperationhandlers/google-speech-attach-transcription-woh/">google-speech-attach-transcription</a></li>

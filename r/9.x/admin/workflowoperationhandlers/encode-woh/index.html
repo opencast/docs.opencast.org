@@ -141,7 +141,7 @@ run of the operation, the media package will contain four new tracks: the first 
 <code>engage-download</code>, <code>engage-streaming</code> and <code>low-quality</code>; the second one containing the new tags <code>engage-download</code>,
 <code>engage-streaming</code> and <code>medium-quality</code>; etc.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="xml">&lt;operation
+<pre><code class="language-xml">&lt;operation
   id=&quot;encode&quot;
   exception-handler-workflow=&quot;partial-error&quot;
   description=&quot;encoding media files&quot;&gt;
@@ -153,7 +153,6 @@ run of the operation, the media package will contain four new tracks: the first 
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
 <h2 id="encoding-profile-example">Encoding Profile Example</h2>
 <p>Unlike a regular compose operation, this operation can generate more than one output file and, therefore, more than one
 media package track elements. In order to distinguish these tracks, the encoding profile syntax for this operation
@@ -163,7 +162,7 @@ media package element. For instance, if a media file with a filename of <code>my
 profile in the example below, the first output file will be <code>myfile-low.mp4</code> and the resulting media package element
 will contain a tag with the value <code>low-quality</code>; the second output file will be <code>myfile-medium.mp4</code> and the resulting
 media package element will contain a tag with the value <code>medium-quality</code>; and so on.</p>
-<pre><code class="properties"># Distribution format definition for low quality presenter download
+<pre><code class="language-properties"># Distribution format definition for low quality presenter download
 profile.parallel.http.name = parallel video encoding
 profile.parallel.http.input = visual
 profile.parallel.http.output = visual
@@ -181,7 +180,6 @@ profile.parallel.http.ffmpeg.command = -i #{in.video.path} \
   -c:v libx264 -filter:v yadif,scale=-2:720 -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
   -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.hd-quality}
 </code></pre>
-
 <h3 id="resolution-based-encoding">Resolution Based Encoding</h3>
 <p>The <code>encode</code> operation supports encoding based on the input video's resolution. For example, you can encode a certain
 output resolution only for high resolution inputs. For this you can define conditionally set variables like <code>if-height-geq-720</code>
@@ -189,7 +187,7 @@ as part of the <code>ffmpeg.command</code> property which retain their value onl
 This variable can then be used in the <code>ffmpeg.command</code> property.</p>
 <p>This modification to the encoding profile from above will encode the 720p output only if the input height is at least
 720 pixels, note the Reference <code>#{if-height-geq-720}</code> to the variable at the end of the <code>ffmpeg.command</code> property:</p>
-<pre><code class="properties">…
+<pre><code class="language-properties">…
 profile.parallel.http.ffmpeg.command.if-height-geq-720 = -c:v libx264 -filter:v yadif,scale=-2:720 \
   -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
   -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.hd-quality}
@@ -199,7 +197,6 @@ profile.parallel.http.ffmpeg.command = -i #{in.video.path} \
   -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.high-quality} \
   #{if-height-geq-720}
 </code></pre>
-
 <p>There are currently two resolution based conditionally set variables supported:</p>
 <table>
 <thead>

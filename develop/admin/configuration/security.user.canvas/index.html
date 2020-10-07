@@ -97,7 +97,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 with a set of roles made up of the user's membership in Canvas sites, of the form
 SITEID_Role. For example, an Opencast user who is also a Canvas user and a member
 of the Canvas site <code>CourseID</code> with the Canvas role <code>Student</code> will be granted the
-Opencast role <code>CouseID_Learner</code>. </p>
+Opencast role <code>CourseID_Learner</code>.</p>
 <p>The mapping of Canvas sites and roles to Opencast roles is consistent with the site
 and role mapping used by the <a href="../../modules/ltimodule/">LTI</a> endpoint. The Canvas
 User Provider can therefore be used with LTI or another method of authenticating
@@ -129,13 +129,11 @@ org.opencastproject.userdirectory.canvas.url=https://demo.instructure.com/
 org.opencastproject.userdirectory.canvas.token=token_of_a_user_with_sufficient_privilege
 
 </code></pre>
-
 <h3 id="step-3">Step 3</h3>
 <p>Verify that the Canvas User Provider starts up with the correct Canvas URL by looking
 for a log entry like this:</p>
 <pre><code>(CanvasUserRoleProvider:116) - Activating CanvasUserRoleProvider(url=https://demo.instructure.com, cacheSize=1000, cacheExpiration=60, instructorRoles=[teacher, ta], ignoredUserNames=[admin, anonymous]
 </code></pre>
-
 <p>Then login to Opencast using a username which also exists in your Canvas system.
 Verify the roles granted to the user by opening the url OPENCAST-URL/info/me.json
 in a new browser tab.</p>
@@ -144,7 +142,6 @@ adding an entry to <code>OPENCAST/etc/org.ops4j.pax.logging.cfg</code>:</p>
 <pre><code>log4j2.logger.canvas.name = org.opencastproject.userdirectory.canvas
 log4j2.logger.canvas.level = DEBUG
 </code></pre>
-
 <h3 id="step-4">Step 4</h3>
 <p>You can use the group role name <code>ROLE_GROUP_CANVAS</code> in Event or Series ACLs for all Canvas users
 and <code>ROLE_GROUP_CANVAS_INSTRUCTOR</code> for all Canvas instructors.</p>

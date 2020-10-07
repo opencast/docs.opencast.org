@@ -99,33 +99,29 @@ and can play back videos in an Opencast series set up for the course.</p>
 <h3 id="configure-oauth-authentication">Configure OAuth authentication</h3>
 <p>LTI uses OAuth to authenticate users. To enable OAuth in Opencast, edit <code>OPENCAST/etc/security/mh_default_org.xml</code> and
 uncomment the oAuthProtectedResourceFilter in the Authentication Filters section:</p>
-<pre><code class="xml">    &lt;!-- 2-legged OAuth is used by trusted 3rd party applications, including LTI. --&gt;
+<pre><code class="language-xml">    &lt;!-- 2-legged OAuth is used by trusted 3rd party applications, including LTI. --&gt;
     &lt;!-- Uncomment the line below to support LTI or other OAuth clients.          --&gt;
     &lt;ref bean=&quot;oauthProtectedResourceFilter&quot; /&gt;
 </code></pre>
-
 <p>To configure OAuth consumers (e.g. a LMS), edit
 <code>OPENCAST/etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> and replace CONSUMERNAME,
 CONSUMERKEY, and CONSUMERSECRET with the values you will use in your LMS:</p>
-<pre><code class="properties">oauth.consumer.name.1=CONSUMERNAME
+<pre><code class="language-properties">oauth.consumer.name.1=CONSUMERNAME
 oauth.consumer.key.1=CONSUMERKEY
 oauth.consumer.secret.1=CONSUMERSECRET
 </code></pre>
-
 <h3 id="configure-lti-optional">Configure LTI (optional)</h3>
 <p>To give LMS users the same username in Opencast as the LMS username, edit
 <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> and add the configured OAuth consumer key
 to the list of highly trusted keys.</p>
-<pre><code class="properties">lti.oauth.highly_trusted_consumer_key.1=CONSUMERKEY
+<pre><code class="language-properties">lti.oauth.highly_trusted_consumer_key.1=CONSUMERKEY
 </code></pre>
-
 <p>Use can exempt specific users even if a highly trusted consumer is used by configuring a blacklist. Additionally, there
 are settings for excluding the system administrator as well as the digest user (enabled by default).</p>
-<pre><code class="properties">lti.allow_system_administrator=false
+<pre><code class="language-properties">lti.allow_system_administrator=false
 lti.allow_digest_user=false
 lti.blacklist.user.1=myAdminUser
 </code></pre>
-
 <blockquote>
 <p><strong>Notice:</strong> Marking a consumer key as highly trusted can be a security risk! If the usernames of sensitive Opencast
 users are not blacklisted, the LMS administrator could create LMS users with the same username and use LTI to grant

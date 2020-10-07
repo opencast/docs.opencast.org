@@ -440,22 +440,20 @@ examples:</p>
 </tbody>
 </table>
 <p>Choose and download a configuration:</p>
-<pre><code class="sh">$ curl -o docker-compose.yml &lt;URL&gt;
+<pre><code class="language-sh">$ curl -o docker-compose.yml &lt;URL&gt;
 </code></pre>
-
 <p>You might want to edit the compose file and add extra volumes to include custom configurations or workflows (see
 <a href="https://docs.docker.com/compose/compose-file/">compose file reference</a>).</p>
 <p>The compose files assume that the ActiveMQ configuration is located at <code>./assets/activemq.xml</code>. Additionally, if you use
 MariaDB, the SQL DDL commands for the Opencast database must be available at <code>./assets/opencast-ddl.sql</code>. You can
 download both files from the repository:</p>
-<pre><code class="sh">$ mkdir assets
+<pre><code class="language-sh">$ mkdir assets
 $ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
 $ curl -o assets/opencast-ddl.sql https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/opencast-ddl.sql
 </code></pre>
-
 <p>Alternatively, you can use the Docker images to generate these files. This has the advantage that the correct version is
 always used:</p>
-<pre><code class="sh">$ mkdir assets
+<pre><code class="language-sh">$ mkdir assets
 
 $ docker run -it --rm \
     quay.io/opencast/allinone:&lt;version&gt; \
@@ -466,11 +464,9 @@ $ docker run -it --rm \
     quay.io/opencast/allinone:&lt;version&gt; \
     app:print:ddl &gt; assets/opencast-ddl.sql
 </code></pre>
-
 <p>At this point you are ready to start Opencast with the <code>up</code> command:</p>
-<pre><code class="sh">$ docker-compose up
+<pre><code class="language-sh">$ docker-compose up
 </code></pre>
-
 <p>After downloading the necessary Docker images, <code>docker-compose</code> should start all relevant services and you should see
 the logging output. Alternatively, adding the <code>-d</code> flag will start Opencast in the background and hide the log messages.
 The admin UI is available at <a href="http://localhost:8080">http://localhost:8080</a>.</p>

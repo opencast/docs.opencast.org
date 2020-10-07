@@ -100,16 +100,14 @@ Opencast videos without ever leaving their course.</p>
 <h3 id="configure-oauth">Configure OAuth</h3>
 <p>LTI uses OAuth to authenticate users. To enable OAuth in Opencast, edit <code>etc/security/mh_default_org.xml</code> and uncomment
 the oauthProtectedResourceFilter in the authentication filters section:</p>
-<pre><code class="xml">&lt;ref bean=&quot;oauthProtectedResourceFilter&quot; /&gt;
+<pre><code class="language-xml">&lt;ref bean=&quot;oauthProtectedResourceFilter&quot; /&gt;
 </code></pre>
-
 <p>Next, configure the OAuth consumer by setting custom credentials in
 <code>etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code>:</p>
-<pre><code class="properties">oauth.consumer.name.1=CONSUMERNAME
+<pre><code class="language-properties">oauth.consumer.name.1=CONSUMERNAME
 oauth.consumer.key.1=CONSUMERKEY
 oauth.consumer.secret.1=CONSUMERSECRET
 </code></pre>
-
 <h3 id="configure-lti">Configure LTI</h3>
 <p>Opencast's LTI module allows additional configuration like making a OAuth consumer key a highly trusted key, preventing
 Opencast from generating a temporary username, or to block some specific usernames like the system administrator.</p>

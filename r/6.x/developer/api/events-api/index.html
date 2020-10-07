@@ -357,9 +357,8 @@ the response:</p>
 on in Opencast. Remember to consider the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching
 this response.</p>
 <p><strong>Sample request</strong></p>
-<pre><code class="xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
+<pre><code class="language-xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: A (potentially empty) list of events is returned. The list is represented as JSON array where each element
 is a JSON object with the following fields:</p>
@@ -545,7 +544,6 @@ is a JSON object with the following fields:</p>
   }
 ]
 </code></pre>
-
 <h3 id="post-apievents">POST /api/events</h3>
 <p>Creates an event by sending metadata, access control list, processing instructions and files in a <a href="http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">multipart request</a>.</p>
 <table>
@@ -680,7 +678,6 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   }
 ]
 </code></pre>
-
 <p>processing:</p>
 <pre><code>{
   &quot;workflow&quot;: &quot;schedule-and-upload&quot;,
@@ -693,7 +690,6 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   }
 }
 </code></pre>
-
 <p>acl:</p>
 <pre><code>[
   {
@@ -706,7 +702,6 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   }
 ]
 </code></pre>
-
 <p>scheduling (<code>rrule</code> is optional and can be used to schedule multiple events):</p>
 <pre><code>{
   &quot;agent_id&quot;: &quot;ca24&quot;,
@@ -716,7 +711,6 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   &quot;rrule&quot;:&quot;FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=16;BYMINUTE=0&quot;
 }
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: Multiple new events were created (scheduling with <code>rrule</code>).<br/>
 <code>201 (CREATED)</code>: A new event is created and its identifier is returned in the <code>Location</code> header.<br/>
@@ -732,16 +726,13 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   }
 ]
 </code></pre>
-
 <p>In case of success (201):</p>
-<pre><code class="xml">Location: http://api.opencast.org/api/events/e6aeb8df-a852-46cd-8128-b89de696f20e
+<pre><code class="language-xml">Location: http://api.opencast.org/api/events/e6aeb8df-a852-46cd-8128-b89de696f20e
 </code></pre>
-
 <pre><code>{
   &quot;identifier&quot;: &quot;e6aeb8df-a852-46cd-8128-b89de696f20e&quot;
 }
 </code></pre>
-
 <p>In case of a conflict (409):</p>
 <pre><code>[
   {
@@ -751,7 +742,6 @@ Please note that <code>duration</code> is a mandatory field when creating multip
   }
 ]
 </code></pre>
-
 <h3 id="get-apieventsevent_id">GET /api/events/{event_id}</h3>
 <p>Returns a single event.</p>
 <p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if signing is turned on
@@ -949,7 +939,6 @@ response.</p>
   ]
 }
 </code></pre>
-
 <h3 id="post-apieventsevent_id">POST /api/events/{event_id}</h3>
 <p>Updates an event.</p>
 <table>
@@ -1021,7 +1010,6 @@ response.</p>
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The event has been updated.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.<br/>
@@ -1035,7 +1023,6 @@ response.</p>
   }
 ]
 </code></pre>
-
 <h3 id="delete-apieventsevent_id">DELETE /api/events/{event_id}</h3>
 <p>Deletes an event.</p>
 <p><strong>Response</strong></p>
@@ -1065,7 +1052,6 @@ kind of roles are available and how they are assigned to the current user.</p>
   }
 ]
 </code></pre>
-
 <h3 id="put-apieventsevent_idacl">PUT /api/events/{event_id}/acl</h3>
 <p>Update an event's access policy.</p>
 <table>
@@ -1100,7 +1086,6 @@ kind of roles are available and how they are assigned to the current user.</p>
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The access control list for the specified event is updated.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
@@ -1148,7 +1133,6 @@ convenience method to avoid having to build and post a complete access control l
 <p><strong>Sample</strong></p>
 <pre><code>role: &quot;ROLE_STUDENT&quot;
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The permission has been created in the access control list of the specified event.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
@@ -1243,7 +1227,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
-
 <h3 id="get-apieventsevent_idmetadata_1">GET /api/events/{event_id}/metadata</h3>
 <p>Returns the event's metadata of the specified type. For a metadata catalog there is the flavor such as
 <code>dublincore/episode</code> and this is the unique type.</p>
@@ -1285,7 +1268,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
-
 <h3 id="put-apieventsevent_idmetadata">PUT /api/events/{event_id}/metadata</h3>
 <p>Update the metadata with the matching type of the specified event. For a metadata catalog there is the flavor such as
 <code>dublincore/episode</code> and this is the unique type.</p>
@@ -1339,7 +1321,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The metadata of the given namespace has been updated.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
@@ -1404,7 +1385,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
-
 <h3 id="get-apieventsevent_idpublicationspublication_id">GET /api/events/{event_id}/publications/{publication_id}</h3>
 <p>Returns a single publication.</p>
 <table>
@@ -1492,7 +1472,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   ]
 }
 </code></pre>
-
 <h1 id="scheduling-information">Scheduling Information</h1>
 <h3 id="get-apieventsevent_idscheduling">GET /api/events/{event_id}/scheduling</h3>
 <p>Available since API version 1.1.0.</p>
@@ -1508,7 +1487,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   &quot;inputs&quot;: [&quot;default&quot;]
 }
 </code></pre>
-
 <h3 id="put-apieventsevent_idscheduling">PUT /api/events/{event_id}/scheduling</h3>
 <p>Available since API version 1.1.0.</p>
 <p>Update the scheduling information of the event with id <code>{event_id}</code>.</p>
@@ -1537,7 +1515,6 @@ configuration of series metadata catalogs. For more details about this mechanism
   &quot;inputs&quot;: [&quot;default&quot;]
 }
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The scheduling information of the event has been updated.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>

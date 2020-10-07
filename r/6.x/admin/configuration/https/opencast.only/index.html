@@ -114,7 +114,6 @@ org.ops4j.pax.web.ssl.password=&lt;the_keystore_password&gt;
 # Password used for keystore.
 org.ops4j.pax.web.ssl.keypassword=&lt;the_key_password&gt;
 </code></pre>
-
 <h2 id="port-forwarding-required">Port-Forwarding required</h2>
 <p>Note that Opencast most likely can't bind to port 443. That's why you still
 need to reverse-proxy or port-forward if you want to avoid URLs with port
@@ -124,11 +123,10 @@ confuse users or may be perceived as "ugly".</p>
 port forwarding:</p>
 <h3 id="port-forwarding-with-iptables">Port-Forwarding with iptables</h3>
 <p>A rule like</p>
-<pre><code class="sh">iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8443
+<pre><code class="language-sh">iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8443
 # Allow also localhost traffic to use :443
 # iptables -A OUTPUT -t nat -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
 </code></pre>
-
 <p>should do the job after replacing <code>eth0</code> with the network interface your
 Opencast consumers will connect on. Note that you usually want to persist the
 rule.</p>
@@ -157,7 +155,6 @@ table https_hosts {
     .*\.opencast\.example\.org 127.0.0.1:8443
 }
 </code></pre>
-
 <h2 id="creating-the-keystore">Creating the keystore</h2>
 <p>What you need, is the TLS private key and the certificate including the
 whole chain between the root certificate, all intermediates and the
@@ -167,7 +164,7 @@ certificate itself.</p>
 <a href="https://certificatechain.io/">certificatechain.io</a> or
 <a href="https://github.com/zakjan/cert-chain-resolver">cert-chain-resolver</a>.
 The latter can be used as follows:</p>
-<pre><code class="bash"># Obtain the chain for cert.pem and save it at opencast.chain.pem.tmp
+<pre><code class="language-bash"># Obtain the chain for cert.pem and save it at opencast.chain.pem.tmp
 # The -s command switch includes the root certificate; this is not
 # mandatory and might add some overhead
 cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
@@ -175,12 +172,11 @@ cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot
 # Verify the certificate using the chain
 openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
 </code></pre>
-
 <h3 id="create-the-p12-keystore">Create the p12 keystore</h3>
 <p>If the private key (assumed to be <code>key.pem</code>) is encrypted
 (password protected), issue the following command. Note that there
 are safer ways supplying the key's password to OpenSSL.</p>
-<pre><code class="bash">openssl pkcs12 \
+<pre><code class="language-bash">openssl pkcs12 \
         -export \
         -inkey &quot;key.pem&quot; \
         -passin &quot;pass:&lt;the_keys_password&gt;&quot; \
@@ -189,9 +185,8 @@ are safer ways supplying the key's password to OpenSSL.</p>
         -out &quot;opencast.p12&quot; \
         -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
 </code></pre>
-
 <p>In case the private key is not protected by password:</p>
-<pre><code class="bash">openssl pkcs12 \
+<pre><code class="language-bash">openssl pkcs12 \
         -export \
         -inkey &quot;key.pem&quot; \
         -in &quot;opencast.chain.pem.tmp&quot; \
@@ -199,9 +194,8 @@ are safer ways supplying the key's password to OpenSSL.</p>
         -out &quot;opencast.p12&quot; \
         -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
 </code></pre>
-
 <h3 id="import-the-p12-keystore-into-a-java-keystore">Import the p12 keystore into a Java keystore:</h3>
-<pre><code class="bash">keytool \
+<pre><code class="language-bash">keytool \
         -importkeystore \
         -srckeystore &quot;opencast.p12&quot; \
         -srcstoretype &quot;pkcs12&quot; \
@@ -215,7 +209,6 @@ keytool \
         -destalias serverkey \
         -storepass &quot;&lt;the_keystore_password&gt;&quot;
 </code></pre>
-
 <p><a href="https://gist.github.com/pawohl/dd92ff4909e3e2704e36dec747ea238e">There exists a shell script automating that task
 </a>.</p>
 <h2 id="default-to-https">Default to HTTPS</h2>
@@ -223,7 +216,7 @@ keytool \
 you can change Opencast's default URL to the HTTPS one.</p>
 <p>Set <code>org.opencastproject.server.url</code> to the  HTTPS-URL in
 <code>etc/custom.properties</code>.</p>
-<pre><code class="ini">org.opencastproject.server.url=https://opencast.example.com
+<pre><code class="language-ini">org.opencastproject.server.url=https://opencast.example.com
 </code></pre>
 
   <br>

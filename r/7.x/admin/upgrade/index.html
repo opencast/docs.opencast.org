@@ -119,14 +119,13 @@ update of the permissions would fix this if that is required.</p>
 <p>Due to the extreme unlikeliness of anyone encountering this problem, there is no automatic migration. In case you run a
 system migrated from a pre-1.2 Matterhorn, you can make sure that there are no old rule-sets left using the following
 SQL queries:</p>
-<pre><code class="sql">-- Check OAI-PMH publications:
+<pre><code class="language-sql">-- Check OAI-PMH publications:
 select * from oc_oaipmh_elements where flavor = 'security/xacml';
 -- Check engage publications:
 select * from oc_search where mediapackage_xml like '%&quot;security/xacml&quot;%';
 -- Check asset manager:
 select * from oc_assets_snapshot where mediapackage_xml like '%&quot;security/xacml&quot;%';
 </code></pre>
-
 <h2 id="scheduler-migration">Scheduler Migration</h2>
 <p>The way the scheduler stores its data was changed in Opencast 7 to improve performance when checking for conflicts.
 The necessary database schema changes are part of the upgrade script in <code>docs/upgrade/6_to_7/</code>.</p>

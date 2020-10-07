@@ -617,9 +617,8 @@
 </tbody>
 </table>
 <p><strong>Sample request</strong></p>
-<pre><code class="xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
+<pre><code class="language-xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: A (potentially empty) list of events is returned.</p>
 <pre><code>[
@@ -659,9 +658,7 @@
   }
 ]
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="post-apievents">POST /api/events</h3>
 <p>Creates an event by sending metadata, access control list, processing instructions and files in a <a href="http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">multipart request</a>.</p>
 <table>
@@ -735,7 +732,6 @@
   }
 ]
 </code></pre>
-
 <p>processing:</p>
 <pre><code>{
   &quot;workflow&quot;: &quot;ng-schedule-and-upload&quot;,
@@ -748,7 +744,6 @@
   }
 }
 </code></pre>
-
 <p>acl:</p>
 <pre><code>[
   {
@@ -761,20 +756,16 @@
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>201 (CREATED)</code>: A new event is created and its identifier is returned in the <code>Location</code> header.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.</p>
-<pre><code class="xml">Location: http://api.opencast.org/api/events/e6aeb8df-a852-46cd-8128-b89de696f20e
+<pre><code class="language-xml">Location: http://api.opencast.org/api/events/e6aeb8df-a852-46cd-8128-b89de696f20e
 </code></pre>
-
 <pre><code>{
   &quot;identifier&quot;: &quot;e6aeb8df-a852-46cd-8128-b89de696f20e&quot;
 }
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_id">GET /api/events/{event_id}</h3>
 <p>Returns a single event.</p>
 <p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if signing is turned on in Opencast. Remember to consider the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this response.</p>
@@ -830,9 +821,7 @@
   &quot;title&quot;: &quot;Einstein refrigerator&quot;
 }
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="post-apieventsevent_id">POST /api/events/{event_id}</h3>
 <p>Updates an event.</p>
 <table>
@@ -899,12 +888,10 @@
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The event has been updated.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.<br/></p>
 <!--- ##################################################################### -->
-
 <h3 id="delete-apieventsevent_id">DELETE /api/events/{event_id}</h3>
 <p>Deletes an event.</p>
 <p><strong>Response</strong></p>
@@ -914,7 +901,6 @@
 <p>Most events in Opencast come with an access control list (ACL), containing entries that map actions to roles, either allowing or denying that action.</p>
 <p>The section on roles in the chapter on <a href="../authorization/#AccessControl">Authorization</a> will help shed some light on what kind of roles are available and how they are assigned to the current user.</p>
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_idacl">GET /api/events/{event_id}/acl</h3>
 <p>Returns an event's access policy.</p>
 <p><strong>Response</strong></p>
@@ -933,9 +919,7 @@
   }
 ]
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="put-apieventsevent_idacl">PUT /api/events/{event_id}/acl</h3>
 <p>Update an event's access policy.</p>
 <table>
@@ -969,12 +953,10 @@
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The access control list for the specified event is updated.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <!--- ##################################################################### -->
-
 <h3 id="post-apieventsevent_idaclaction">POST /api/events/{event_id}/acl/{action}</h3>
 <p>Grants permission to execute <code>action</code> on the specified event to any user with role <code>role</code>. Note that this is a convenience method to avoid having to build and post a complete access control list.</p>
 <table>
@@ -1017,12 +999,10 @@
 <p><strong>Sample</strong></p>
 <pre><code>role: &quot;ROLE_STUDENT&quot;
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The permission has been created in the access control list of the specified event.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <!--- ##################################################################### -->
-
 <h3 id="delete-apieventsevent_idaclactionrole">DELETE /api/events/{event_id}/acl/{action}/{role}</h3>
 <p>Revokes permission to execute <code>action</code> on the specified event from any user with role <code>role</code>.</p>
 <table>
@@ -1056,7 +1036,6 @@
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <h1 id="metadata">Metadata</h1>
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_idmetadata">GET /api/events/{event_id}/metadata</h3>
 <p>Returns the complete set of metadata.</p>
 <p><strong>Response</strong></p>
@@ -1106,9 +1085,7 @@
   }
 ]
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_idmetadata_1">GET /api/events/{event_id}/metadata</h3>
 <p>Returns the event's metadata of the specified type. For a metadata catalog there is the flavor such as "dublincore/episode" and this is the unique type.</p>
 <table>
@@ -1149,9 +1126,7 @@
   }
 ]
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="put-apieventsevent_idmetadata">PUT /api/events/{event_id}/metadata</h3>
 <p>Update the metadata with the matching type of the specified event. For a metadata catalog there is the flavor such as "dublincore/episode" and this is the unique type.</p>
 <table>
@@ -1203,13 +1178,11 @@
   }
 ]
 </code></pre>
-
 <p><strong>Response</strong></p>
 <p><code>204 (NO CONTENT)</code>: The metadata of the given namespace has been updated.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <!--- ##################################################################### -->
-
 <h3 id="delete-apieventsevent_idmetadata">DELETE /api/events/{event_id}/metadata</h3>
 <p>Delete the metadata namespace catalog of the specified event. This will remove all fields and values of the catalog.</p>
 <table>
@@ -1234,7 +1207,6 @@
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <h1 id="publications">Publications</h1>
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_idpublications">GET /api/events/{event_id}/publications</h3>
 <p>Returns an event's list of publications.</p>
 <p><strong>Response</strong></p>
@@ -1255,9 +1227,7 @@
   }
 ]
 </code></pre>
-
 <!--- ##################################################################### -->
-
 <h3 id="get-apieventsevent_idpublicationspublication_id">GET /api/events/{event_id}/publications/{publication_id}</h3>
 <p>Returns a single publication.</p>
 <p><strong>Response</strong></p>

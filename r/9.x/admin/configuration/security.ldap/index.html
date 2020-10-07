@@ -98,7 +98,7 @@ configuration file for each tenant at <code>etc/security/&lt;organization_id&gt;
 Uncomment them and fill in the necessary configuration values.</p>
 <p>The first relevant section defines a context source. This contains the basic login information that enables Opencast to
 request information about users from the LDAP server in order to authenticate them.</p>
-<pre><code class="xml">&lt;bean id=&quot;contextSource&quot;
+<pre><code class="language-xml">&lt;bean id=&quot;contextSource&quot;
   class=&quot;org.springframework.security.ldap.DefaultSpringSecurityContextSource&quot;&gt;
   &lt;!-- URL of the LDAP server --&gt;
   &lt;constructor-arg value=&quot;ldap://myldapserver:myport&quot; /&gt;
@@ -109,9 +109,8 @@ request information about users from the LDAP server in order to authenticate th
   &lt;property name=&quot;password&quot; value=&quot;mypassword&quot; /&gt;
 &lt;/bean&gt;
 </code></pre>
-
 <p>The next part tells the system how to search for users in LDAP:</p>
-<pre><code class="xml">&lt;constructor-arg&gt;
+<pre><code class="language-xml">&lt;constructor-arg&gt;
   &lt;bean class=&quot;org.springframework.security.ldap.authentication.BindAuthenticator&quot;&gt;
     &lt;constructor-arg ref=&quot;contextSource&quot; /&gt;
     &lt;property name=&quot;userDnPatterns&quot;&gt;
@@ -136,7 +135,6 @@ request information about users from the LDAP server in order to authenticate th
   &lt;/bean&gt;
 &lt;/constructor-arg&gt;
 </code></pre>
-
 <p>As the previous snippet shows, there are two alternative ways to find users in your LDAP:</p>
 <ul>
 <li>
@@ -161,15 +159,13 @@ request information about users from the LDAP server in order to authenticate th
 is uncommented in the sample file because it is the most usual.</p>
 <p>Next, uncomment the reference to Opencast's LDAP OSGI service, making sure to set the correct <code>instanceId</code> which needs
 to match the one used later in the LDAP service configuration.</p>
-<pre><code class="xml">&lt;osgi:reference id=&quot;authoritiesPopulator&quot; cardinality=&quot;1..1&quot;
+<pre><code class="language-xml">&lt;osgi:reference id=&quot;authoritiesPopulator&quot; cardinality=&quot;1..1&quot;
                 interface=&quot;org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator&quot;
                 filter=&quot;(instanceId=theId)&quot;/&gt;
 </code></pre>
-
 <p>Finally, enable the authentication provider by uncommenting:</p>
-<pre><code class="xml">&lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
+<pre><code class="language-xml">&lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
 </code></pre>
-
 <h2 id="ldap-service-configuration">LDAP Service Configuration</h2>
 <p>Make a copy of the file <code>etc/org.opencastproject.userdirectory.ldap.cfg.template</code> in the same directory and
 rename it as:</p>
@@ -184,17 +180,16 @@ assigned to the users.</p>
 normal authorization mechanisms (i.e. the database). This means that if a user is present in both the database and the
 LDAP, the database will take precedence. The order is determined by the order in which the authentication providers
 appear on the security file. The relevant snippet is this:</p>
-<pre><code class="xml">&lt;sec:authentication-manager alias=&quot;authenticationManager&quot;&gt;
+<pre><code class="language-xml">&lt;sec:authentication-manager alias=&quot;authenticationManager&quot;&gt;
   &lt;sec:authentication-provider user-service-ref=&quot;userDetailsService&quot;&gt;…&lt;/sec:authentication-provider&gt;
   &lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
 &lt;/sec:authentication-manager&gt;
 </code></pre>
-
 <h2 id="adding-more-ldap-servers">Adding more LDAP servers</h2>
 <p>More LDAP servers can be added to the configuration by including the LDAP-related sections as many times as necessary
 with their corresponding configurations. The new authentication providers must also be added to the providers list
 at the bottom of the file. Please see the example below:</p>
-<pre><code class="xml">&lt;bean id=&quot;contextSource&quot;
+<pre><code class="language-xml">&lt;bean id=&quot;contextSource&quot;
   class=&quot;org.springframework.security.ldap.DefaultSpringSecurityContextSource&quot;&gt;
   &lt;!-- URL of the LDAP server --&gt;
   &lt;constructor-arg value=&quot;ldap://myldapserver:myport&quot; /&gt;
@@ -294,7 +289,6 @@ at the bottom of the file. Please see the example below:</p>
   &lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
 &lt;/sec:authentication-manager&gt;
 </code></pre>
-
 <p>Then, a separate <code>.cfg</code> must be generated for each of the configured providers, as explained <a href="#cfg">here</a>. Please make
 sure to configure the <code>org.opencastproject.userdirectory.ldap.id</code> parameter correctly. In this case, the values should
 be <code>theId</code> and <code>theId2</code>, respectively.</p>

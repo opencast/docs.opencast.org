@@ -560,7 +560,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 <p>Use <code>${workflowConfig['PROPERTY']}</code></p>
 <h3 id="last-failed-operation">Last Failed Operation</h3>
 <p>Operation that caused the workflow to fail. Should be tested before accessing any of its fields:</p>
-<pre><code>&lt;#if failedOperation?has_content&gt;Workflow failed in operation: ${failedOperation.template}&lt;/#if&gt;
+<pre><code>&lt;#if failedOperation?has_content&gt;Workflow failed in operation: ${failedOperation.template}&lt;!--#if--&gt;
 </code></pre>
 <h3 id="incidents">Incidents</h3>
 <p>In your email template:</p>
@@ -570,7 +570,6 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
   &lt;/#list&gt;
 &lt;/#if&gt;
 </code></pre>
-
 <h3 id="catalog-fields">Catalog fields</h3>
 <p>Use <code>``${catalogs['SUBTYPE']['FIELD']}</code></p>
 <h4 id="examples_2">Examples</h4>
@@ -603,7 +602,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 <h2 id="examples_3">Examples</h2>
 <h3 id="example-1">Example 1</h3>
 <p>Media package title in subject field, default email body.</p>
-<pre><code class="xml">&lt;operation
+<pre><code class="language-xml">&lt;operation
   id=&quot;send-email&quot;
   fail-on-error=&quot;false&quot;
   exception-handler-workflow=&quot;email-error&quot;
@@ -616,10 +615,9 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
 <h3 id="example-2">Example 2</h3>
 <p>To and subject are inline templates; the email body uses a template file named sample stored in<code>…/etc/email</code>:</p>
-<pre><code class="xml">&lt;operation
+<pre><code class="language-xml">&lt;operation
   id=&quot;send-email&quot;
   fail-on-error=&quot;false&quot;
   exception-handler-workflow=&quot;email-error&quot;
@@ -635,7 +633,6 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
 <h4 id="template-sample">Template: sample</h4>
 <p>The contents of the <code>…/etc/email/sample</code> email template:</p>
 <pre><code>Event Details
@@ -648,10 +645,9 @@ Title: ${mediaPackage.title}
 Workflow Id: ${workflow.id}
 Event Date: ${mediaPackage.date?datetime?iso_local}
 </code></pre>
-
 <h3 id="example-3">Example 3</h3>
 <p>Email address entered via admin UI as a workflow configuration parameter:</p>
-<pre><code class="xml">&lt;operation
+<pre><code class="language-xml">&lt;operation
   id=&quot;send-email&quot;
   fail-on-error=&quot;false&quot;
   exception-handler-workflow=&quot;email-error&quot;
@@ -663,9 +659,8 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
 <p>Workflow Configuration Panel:</p>
-<pre><code class="xml">&lt;configuration_panel&gt;
+<pre><code class="language-xml">&lt;configuration_panel&gt;
 &lt;![CDATA[
    &lt;!-- Add after the other configuration fields (Holds, Archive, etc) --&gt;
    &lt;fieldset&gt;
@@ -713,10 +708,9 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
 ]]&gt;
 &lt;/configuration_panel&gt;
 </code></pre>
-
 <h3 id="example-4">Example 4</h3>
 <p>In error handling workflow (email-error):</p>
-<pre><code class="xml">&lt;operation
+<pre><code class="language-xml">&lt;operation
   id=&quot;send-email&quot;
   fail-on-error=&quot;true&quot;
   exception-handler-workflow=&quot;error&quot;
@@ -730,7 +724,6 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
 <h4 id="template-errordetails">Template: errorDetails</h4>
 <p>The contents of the <config_dir>/etc/email/errorDetails email template:</p>
 <pre><code>Error Details

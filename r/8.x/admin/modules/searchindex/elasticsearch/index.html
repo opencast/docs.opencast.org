@@ -100,31 +100,27 @@ otherwise not match the server. To check the version, take a look at <a href="ht
 elasticsearch bundle in the search module</a>.</p>
 <p>For example, to quickly spin up an external Elasticsearch matching the current version using Docker, create a simple
 Elasticsearch configuration file called <code>elasticsearch.yml</code>:</p>
-<pre><code class="yml">cluster.name: opencast
+<pre><code class="language-yml">cluster.name: opencast
 network.host: 0.0.0.0
 discovery.type: single-node
 </code></pre>
-
 <p>…and run</p>
-<pre><code class="sh">% docker run -p 9200:9200 -p 9300:9300 \
+<pre><code class="language-sh">% docker run -p 9200:9200 -p 9300:9300 \
     -v &quot;$(pwd)/elasticsearch.yml&quot;:/usr/share/elasticsearch/config/elasticsearch.yml \
     elasticsearch:5.6.15
 </code></pre>
-
 <p>This will already give you a running cluster with the cluster name <code>opencast</code>. Note that the cluster name is important
 and you will need this to match Opencast's configuration.</p>
 <h2 id="configuring-external-nodes">Configuring External Nodes</h2>
 <p>To configure an external node, set the server's address in <code>etc/custom.properties</code>:</p>
-<pre><code class="properties">org.opencastproject.elasticsearch.server.address=127.0.0.1
+<pre><code class="language-properties">org.opencastproject.elasticsearch.server.address=127.0.0.1
 </code></pre>
-
 <p>Once this is set, Opencast will not launch its own internal Elasticsearch anymore. If necessary, you can also specify a
 custom port in this configuration file.</p>
 <p>Next, configure the correct cluster name in <code>etc/elasticsearch.yml</code>. Make sure that the correct cluster name is set in
 the configuration file of each index:</p>
-<pre><code class="yml">cluster.name: opencast
+<pre><code class="language-yml">cluster.name: opencast
 </code></pre>
-
 <p>Opencast will now use the external Elasticsearch.</p>
 
   <br>

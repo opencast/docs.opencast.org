@@ -410,7 +410,7 @@ git push &lt;remote&gt; r/2.1.x
    release:</p>
 <pre><code>git checkout develop
 for i in `find . -name pom.xml`; do \
-  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;/&lt;version&gt;2.2-SNAPSHOT&lt;/' $i; done
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.2-SNAPSHOT&lt;!--' $i; done
 </code></pre>
 </li>
 <li>
@@ -425,7 +425,7 @@ for i in `find . -name pom.xml`; do \
 <li>
 <p>If everything looks fine, commit everything and push it to the community repository:</p>
 <pre><code>git commit -as
-git push &lt;remote&gt; develop
+git push &lt;remote--&gt; develop
 </code></pre>
 </li>
 <li>
@@ -518,7 +518,7 @@ release be cut.</p>
 <li>
 <p>Make version changes for release. You can use <code>sed</code> to make things easier. Please make sure, the changes are correct:</p>
 <pre><code>for i in `find . -name pom.xml`; do \
-  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;/&lt;version&gt;2.1.0-beta1&lt;/' $i; done
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.1.0-beta1&lt;!--' $i; done
 </code></pre>
 </li>
 <li>
@@ -530,7 +530,7 @@ git tag -s 2.1.0-beta1
 <li>
 <p>Switch back to release branch and push tags:</p>
 <pre><code>git checkout r/2.1.x
-git push &lt;remote&gt; 2.1.0-beta1:2.1.0-beta1
+git push &lt;remote--&gt; 2.1.0-beta1:2.1.0-beta1
 </code></pre>
 </li>
 <li>
@@ -600,7 +600,7 @@ git checkout r/2.1.0
 <li>
 <p>Make version changes for release. You can use <code>sed</code> to make things easier. Please make sure, the changes are correct:</p>
 <pre><code>for i in `find . -name pom.xml`; do \
-  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;/&lt;version&gt;2.1.0&lt;/' $i; done
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.1.0&lt;!--' $i; done
 </code></pre>
 </li>
 <li>
@@ -612,7 +612,7 @@ git tag -s 2.1.0
 <li>
 <p>Switch back to release branch, push release notes and tags:</p>
 <pre><code>git checkout r/2.1.x
-git push &lt;remote&gt; 2.1.0:2.1.0
+git push &lt;remote--&gt; 2.1.0:2.1.0
 git push &lt;remote&gt; r/2.1.x
 </code></pre>
 </li>

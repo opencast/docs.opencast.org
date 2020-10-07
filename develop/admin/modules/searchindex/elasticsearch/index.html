@@ -91,16 +91,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 since the client commands will otherwise not match the server. To check the version, take a look at
 <a href="https://github.com/opencast/opencast/blob/develop/modules/search/pom.xml">the maven dependency declaration for the elasticsearch bundle in the search module</a>.</p>
 <p>For example, to quickly spin up an external Elasticsearch matching the current version using Docker, run</p>
-<pre><code class="sh">% docker run -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; elasticsearch:7.9.2
+<pre><code class="language-sh">% docker run -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; elasticsearch:7.9.2
 </code></pre>
-
 <h2 id="configuring-external-nodes">Configuring External Nodes</h2>
 <p>To configure an external node, set the server's address in <code>etc/custom.properties</code>:</p>
-<pre><code class="properties">org.opencastproject.elasticsearch.server.hostname=localhost
+<pre><code class="language-properties">org.opencastproject.elasticsearch.server.hostname=localhost
 org.opencastproject.elasticsearch.server.scheme=http
 org.opencastproject.elasticsearch.server.port=9200
 </code></pre>
-
 <p>Opencast will now use your Elasticsearch instance.</p>
 
   <br>

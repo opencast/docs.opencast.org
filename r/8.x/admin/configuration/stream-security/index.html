@@ -116,19 +116,16 @@ register themselves.</p>
 <h2 id="minimal-configuration-example">Minimal Configuration Example</h2>
 <p>This is a minimal configuration example which requires valid tokens for all static file downloads:</p>
 <p><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg</code>:</p>
-<pre><code class="properties">enabled=true
+<pre><code class="language-properties">enabled=true
 url.regex.files=.*localhost:8080/static/.*
 </code></pre>
-
 <p><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg</code></p>
-<pre><code class="properties">key.default.secret=THISISNOSECUREKEY
+<pre><code class="language-properties">key.default.secret=THISISNOSECUREKEY
 key.default.url=http://localhost:8080/static/
 </code></pre>
-
 <p><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg</code>:</p>
-<pre><code class="properties">key.default=THISISNOSECUREKEY
+<pre><code class="language-properties">key.default=THISISNOSECUREKEY
 </code></pre>
-
 <h2 id="configuration-of-signing-providers">Configuration of Signing Providers</h2>
 <p>The GenericUrlSigningProvider that comes with Opencast has its own configuration file:</p>
 <pre><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg
@@ -347,7 +344,7 @@ result must be a JSON document that contains exactly the values which have been 
 dGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0
 </code></pre>
 <p>…would result in this JSON document (policy):</p>
-<pre><code class="json">{
+<pre><code class="language-json">{
   &quot;Statement&quot;:{
     &quot;Resource&quot;:&quot;http:\/\/opencast.org\/engage\/resource.mp4&quot;,
     &quot;Condition&quot;:{
@@ -358,7 +355,6 @@ dGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJ
   }
 }
 </code></pre>
-
 <p>Inspecting and modifying the policy is useful for advanced testing, such as:</p>
 <ul>
 <li>URLs where the policy was modified after signing</li>

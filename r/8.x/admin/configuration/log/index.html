@@ -102,7 +102,6 @@ The directory has the same structure as a maven repository!</p>
 <p>Add the following line at the beginning of the startup.properties file:</p>
 <pre><code>mvn\:org.graylog2/gelfj/X.X.X = 7
 </code></pre>
-
 <p>We use startlevel <code>7</code> here, because it's need to be loaded before the <code>pax-logging</code>.</p>
 <p>Add this custom logging configuration example to the org.ops4j.pax.logging.cfg file</p>
 <pre><code># Async wrapper for send queue in case of GELF destination is unavailable
@@ -123,12 +122,10 @@ log4j.appender.gelf.addExtendedInformation=true
 log4j.appender.gelf.includeLocation=true
 log4j.appender.gelf.additionalFields={'environment': 'EXAMPLE-ENV', 'application': 'EXAMPLE-APP'}
 </code></pre>
-
 <p><em>Note:</em> The default protocol is UDP to use TCP instead, prefix hostname with <code>tcp:</code>.</p>
 <p>Add the new appender to the rootLogger</p>
 <pre><code>log4j.rootLogger=WARN, stdout, osgi:*, gelfasync
 </code></pre>
-
 <h2 id="example-configuration">Example Configuration</h2>
 <pre><code># Define the GELF destination
 log4j.appender.gelf=org.graylog2.log.GelfAppender
@@ -142,7 +139,6 @@ log4j.appender.gelf.addExtendedInformation=true
 log4j.appender.gelf.includeLocation=true
 log4j.appender.gelf.additionalFields={'environment': 'OPENCAST-TEST-ENV', 'application': 'OC-ADMIN'}
 </code></pre>
-
 <p>You can find further gelf appender documentation <a href="https://github.com/t0xa/gelfj">here</a>.</p>
 
   <br>

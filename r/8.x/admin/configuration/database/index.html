@@ -107,30 +107,25 @@ possible to attach other database engines.</p>
 This shall act as an example and is assuming CentOS 8 as Linux distribution.
 Look at your distributions documentation for setting up a database.</p>
 <p>Install and start MariaDB:</p>
-<pre><code class="sh">% dnf install mariadb mariadb-server
+<pre><code class="language-sh">% dnf install mariadb mariadb-server
 % systemctl start mariadb.service
 % systemctl enable mariadb.service
 </code></pre>
-
 <p>Finally, set root user credentials by running</p>
-<pre><code class="sh">% mysql_secure_installation
+<pre><code class="language-sh">% mysql_secure_installation
 </code></pre>
-
 <h3 id="creating-a-database">Creating a Database</h3>
 <p>The first step is to create a database for Opencast.
 You can use any other database client, e.g. phpMyAdmin, for this as well.</p>
-<pre><code class="sh">% mysql -u root -p
+<pre><code class="language-sh">% mysql -u root -p
 </code></pre>
-
 <p>You will be asked for the password of the user root.
 Next, create a database called <code>opencast</code> by executing:</p>
-<pre><code class="sql">CREATE DATABASE opencast CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+<pre><code class="language-sql">CREATE DATABASE opencast CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 </code></pre>
-
 <p>Then create a user <code>opencast</code> with a password and grant it all necessary rights:</p>
-<pre><code class="sql">GRANT ALL PRIVILEGES ON opencast.* TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
+<pre><code class="language-sql">GRANT ALL PRIVILEGES ON opencast.* TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
 </code></pre>
-
 <details>
 
 <summary>Limiting the granted privileges</summary>
@@ -139,7 +134,7 @@ You can limit the granted privileges further if you want to.
 The rights granted here are sufficient to run Opencast:
 
 
-<pre><code class="sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE TEMPORARY TABLES ON opencast.*
+<pre><code class="language-sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE TEMPORARY TABLES ON opencast.*
   TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
 </code></pre>
 
@@ -148,7 +143,7 @@ These privileges are often not sufficient for running the scripts used to initia
 For this, fall back to using the root user or grant a user slightly more privileges:
 
 
-<pre><code class="sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
+<pre><code class="language-sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
   TO 'admin'@'localhost' IDENTIFIED BY 'opencast_admin_password';
 </code></pre>
 
@@ -161,22 +156,19 @@ you should grant a external user access to the database by running the same comm
 For more details on MariaDB user creation, have a look at <a href="https://mariadb.com/kb/en/mariadb/grant/">MariaDB Reference Manual :: <code>GRANT</code> statement
 </a></p>
 <p>Finally, leave the client and restart the database server to enable the new user(s):</p>
-<pre><code class="sh">% systemctl restart mariadb.service
+<pre><code class="language-sh">% systemctl restart mariadb.service
 </code></pre>
-
 <h3 id="set-up-the-database-structure">Set up the Database Structure</h3>
 <p>To set up the database structure you can (and should!) use the Opencast ddl scripts. You can find them in
 <code>…/docs/scripts/ddl/mysql5.sql</code> or download them from GitHub.</p>
 <p>To import the database structure using the MariaDB client, switch to the directory that contains the <code>mysql5.sql</code> file,
 run the client with a user privileged to create the database structure and switch to the database you want to use
 (e.g. <code>opencast</code>):</p>
-<pre><code class="sh">% mysql -u root -p opencast
+<pre><code class="language-sh">% mysql -u root -p opencast
 </code></pre>
-
 <p>Run the ddl script:</p>
 <pre><code>mysql&gt; source mysql5.sql;
 </code></pre>
-
 <p>Now, ensure the MariaDB <a href="https://mariadb.com/kb/en/library/server-system-variables/"><code>wait_timeout</code></a> in <code>mariadb.cnf</code>
 or <code>mysql.cnf</code> is bigger than <code>org.opencastproject.db.jdbc.pool.max.idle.time</code> in Opencast's <code>custom.properties</code>.
 Raising the <code>max_connections</code> in <code>mariadb.cnf</code> parameter might be required, too, depending on your installation's size.

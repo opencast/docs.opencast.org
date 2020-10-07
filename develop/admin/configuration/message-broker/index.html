@@ -96,27 +96,28 @@ admin node).</p>
 <li>ActiveMQ 5.10 or above</li>
 </ul>
 <h2 id="installation">Installation</h2>
+<p>There are multiple options for installing ActiveMQ:</p>
 <ul>
-<li>If you use the Opencast package repository, simply install the <code>activemq-dist</code> package.</li>
+<li>If you used the Opencast package repository, simply install the <code>activemq-dist</code> package.</li>
 <li>If you are running RHEL, CentOS or Fedora you can use the <a href="https://copr.fedoraproject.org/coprs/lkiesow/apache-activemq-dist/">ActiveMQ-dist Copr RPM
   repository</a></li>
-<li>Newer Debian based operating systems contain a sufficient new version, however the ActiveMQ configuration file will
+<li>Newer Debian based operating systems contain a sufficiently new version, however the ActiveMQ configuration file will
   require modification to function correctly.</li>
 <li>You can download binary distributions from the <a href="http://activemq.apache.org/download.html">Apache ActiveMQ website</a></li>
 </ul>
 <h2 id="configuration">Configuration</h2>
 <p>What you need to do:</p>
-<ul>
-<li>Set-up required message queues for Opencast</li>
+<ol>
+<li>Set up the required message queues for Opencast</li>
 <li>Point all your Opencast nodes to your message broker.</li>
 <li>Configure authentication and access control</li>
-</ul>
-<p>The first task is easy. Opencast comes with a ActiveMQ configuration file, located at
+</ol>
+<p>The first task is easy. Opencast comes with an ActiveMQ configuration file, located at
 <code>docs/scripts/activemq/activemq.xml</code> (RPM repo: <code>/usr/share/opencast/docs/scripts/activemq/activemq.xml</code>). This file
 will give you a basic configuration with all queues set-up and accepting connections from the local host over TCP port
 <code>61616</code>.</p>
 <p>Replacing the default ActiveMQ configuration with this file will already give you a fully functional ActiveMQ set-up for
-an all-in-one server. You will find the configuration in the usually locations, e.g. <code>/etc/activemq/</code>. On Debian you
+an all-in-one server. You will find the configuration in the usual locations, e.g. <code>/etc/activemq/</code>. On Debian you
 first need to activate or create a new ActiveMQ instance. For more details on that see
 <code>/usr/share/doc/activemq/README.Debian</code>.</p>
 <p>Note that the default configuration needs to be adjusted for distributed set-ups since:</p>
@@ -125,27 +126,27 @@ first need to activate or create a new ActiveMQ instance. For more details on th
 <li>Opencast tries to connect to ActiveMQ locally (<code>custom.properties</code>)</li>
 <li>No password is set (<code>activemq.xml</code>, <code>custom.properties</code>)</li>
 </ul>
-<h3 id="connection">Connection</h3>
+<h3 id="1-connection">1. Connection</h3>
 <p>The ActiveMQ connection is configured in the <code>custom.properties</code>. The default configuration points to a local
 installation of ActiveMQ. You can easily configure this to point somewhere else:</p>
 <pre><code>activemq.broker.url = failover://tcp://example.opencast.org:61616
 </code></pre>
-<h3 id="bind-host">Bind Host</h3>
+<h3 id="2-bind-host">2. Bind Host</h3>
 <p>The default configuration tells ActiveMQ to listen to <code>127.0.0.1</code> only. On a distributed system, you want to set this to
 <code>0.0.0.0</code> to listen to all hosts by changing the <code>transportConnector</code>:</p>
 <pre><code>&lt;transportConnector name="openwire" uri="tcp://127.0.0.1:61616?..."/&gt;
 </code></pre>
-<h3 id="username-and-password">Username and Password</h3>
+<h3 id="3-username-and-password">3. Username and Password</h3>
 <p>ActiveMQ can secure its message queues by requiring login credentials. This section will go through the steps of setting
 up a username and a password. Have a look at the <a href="http://activemq.apache.org/security.html">ActiveMQ security site</a> for
 details about using alternative authentication and authorization providers.</p>
-<h4 id="create-activemq-admin-user">Create ActiveMQ Admin User</h4>
+<h4 id="step-1-create-activemq-admin-user">Step 1: Create ActiveMQ Admin User</h4>
 <p>First, you need to create a new user that will have access to the queues. This is configured in the <code>users.properties</code>
 configuration file in the configuration directory for ActiveMQ. It is a list of the format <code>username = password</code> so, for
 example, we could create a new admin user with the following file contents:</p>
 <pre><code>admin=password
 </code></pre>
-<h4 id="create-activemq-admin-group">Create ActiveMQ Admin Group</h4>
+<h4 id="step-2-create-activemq-admin-group">Step 2: Create ActiveMQ Admin Group</h4>
 <p>The next step is to provide a group that will have our user in it and will secure access to the message queues. This is
 configured in the file <code>groups.properties</code> in the configuration directory for ActiveMQ. It is a list of the format
 <code>group = user1,user2,…</code>. For example:</p>
@@ -154,7 +155,7 @@ configured in the file <code>groups.properties</code> in the configuration direc
 <p>To set-up our new user to be a part of the admins group:</p>
 <pre><code>admins=admin
 </code></pre>
-<h4 id="configure-users-and-groups-configuration-files">Configure Users and Groups Configuration Files</h4>
+<h4 id="step-3-configure-users-and-groups-configuration-files">Step 3: Configure Users and Groups Configuration Files</h4>
 <p>Next, we need to make sure that ActiveMQ is using our <code>users.properties</code> and <code>groups.properties</code> files to authenticate
 and authorize users. The <code>login.config</code> file should be in the ActiveMQ configuration directory and contain:</p>
 <pre><code>activemq {
@@ -163,7 +164,7 @@ and authorize users. The <code>login.config</code> file should be in the ActiveM
     org.apache.activemq.jaas.properties.group="groups.properties";
 };
 </code></pre>
-<h4 id="configure-message-broker-security">Configure Message Broker Security</h4>
+<h4 id="step-4-configure-message-broker-security">Step 4: Configure Message Broker Security</h4>
 <p>The final step to secure the ActiveMQ queues is to limit access to a specific group. This can be done by editing
 <code>activemq.xml</code> in the ActiveMQ configuration directory. In this file, we need to add some XML in between these tags:</p>
 <pre><code>&lt;broker&gt;&lt;/broker&gt;
@@ -200,7 +201,7 @@ and authorize users. The <code>login.config</code> file should be in the ActiveM
 <ul>
 <li>The <code>authorizationEntry</code> restricts read, write and admin access for queues and topics to members of the group admins.</li>
 </ul>
-<h4 id="configure-opencast-to-connect-with-username-and-password-to-message-broker">Configure Opencast to Connect with Username and Password to Message Broker</h4>
+<h4 id="step-5-configure-opencast-to-connect-with-username-and-password-to-message-broker">Step 5: Configure Opencast to Connect with Username and Password to Message Broker</h4>
 <p>Now that we have secured the queues, Opencast will complain that it is unable to connect, using the current username and
 password. The username and password used above need to be added to the <code>custom.properties</code> file of Opencast.  There are
 two properties to set:</p>

@@ -132,13 +132,11 @@ the Moodle user that should be used for API calls.</p>
 org.opencastproject.userdirectory.moodle.url=http://localhost/webservice/rest/server.php
 org.opencastproject.userdirectory.moodle.token=mytoken1234abcdef
 </code></pre>
-
 <h3 id="step-2">Step 2</h3>
 <p>Verify that the Moodle User Provider starts up with the correct Moodle URL by looking
 for a log entry like this:</p>
 <pre><code>(MoodleUserProviderInstance:143) - Creating new MoodleUserProviderInstance(pid=org.opencastproject.userdirectory.moodle.378cdff4-825f-4b60-b1ed-33f75aa7f265, url=http://localhost/webservice/rest/server.php, cacheSize=1000, cacheExpiration=60)
 </code></pre>
-
 <p>Then login to Opencast using a username which also exists in your Moodle system.
 Verify the roles granted to the user by opening the url
 OPENCAST-URL/info/me.json in a new browser tab, or navigate to the user details
@@ -147,7 +145,6 @@ and open the tab "Effective Roles".</p>
 by adding an entry to <code>OPENCAST/etc/org.ops4j.pax.logging.cfg</code>:</p>
 <pre><code>log4j.logger.org.opencastproject.userdirectory.moodle=DEBUG
 </code></pre>
-
 <h3 id="step-3">Step 3</h3>
 <p>You can grant additional roles to all Moodle users in Opencast by creating a
 group with the name 'Moodle'. You can then add additional roles to this group,
