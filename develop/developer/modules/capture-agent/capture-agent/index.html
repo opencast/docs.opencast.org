@@ -217,7 +217,7 @@ properties file and can be set via an HTTP POST request to:</p>
 </code></pre>
 <p>The format returned is iCal. The file contains all scheduled upcoming recordings the capture agent should handle.
 The output will look like this (base64 encoded parts are shortened):</p>
-<pre><code class="language-ical">BEGIN:VCALENDAR
+<pre><code class="ical">BEGIN:VCALENDAR
 PRODID:Opencast Calendar File 0.5
 VERSION:2.0
 CALSCALE:GREGORIAN
@@ -235,6 +235,7 @@ ATTACH;FMTTYPE=application/text;VALUE=BINARY;ENCODING=BASE64;X-APPLE-FILENAME=or
 END:VEVENT
 END:VCALENDAR
 </code></pre>
+
 <p>The iCal event contains start and end dates, all meta data catalogs for the event, the UID which is the <code>%RECORDING_ID</code>
 and which important when uploading media later on and additional capture agent properties which should be passed on.
 Note that most meta data like the dublin core catalogs can in most cases be ignored.</p>
@@ -341,7 +342,7 @@ Opencast has the updated configuration even if the core is reset in the meantime
 <p>It should also send the configuration when the agent's configuration changes to avoid conflicts between selected and
 available options.</p>
 <p>The format of this XML structure is the following:</p>
-<pre><code class="language-XML">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+<pre><code class="XML">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
 &lt;!DOCTYPE properties SYSTEM &quot;http://java.sun.com/dtd/properties.dtd\&quot;&gt;
 &lt;properties&gt;
   &lt;comment&gt;Capabilities for $AGENT_NAME&lt;/comment&gt;
@@ -349,12 +350,14 @@ available options.</p>
   …
 &lt;/properties&gt;
 </code></pre>
+
 <p>If sent as JSON, the format is a simple JSON object:</p>
-<pre><code class="language-JSON">{
+<pre><code class="JSON">{
   'key':'value',
   'key2':'value2'
 }
 </code></pre>
+
 <p>To specify inputs the user can select, the special key <code>capture.device.names</code> is used.  It is a comma separated list of
 inputs which will be presented in the Opencast user interface.</p>
 <h3 id="recording-state">Recording State</h3>

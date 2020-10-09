@@ -123,6 +123,7 @@ HTTP request header:</p>
 <p><strong>Example</strong></p>
 <pre><code>Accept: application/v1.0.0+json
 </code></pre>
+
 <p>If that header is not specified, or no version information can be extracted from the header, the assumption is that the
 request should be executed against the most recent version. If the version specified is not available, <code>406 (NOT
 ACCEPTABLE)</code> is returned as the HTTP response code.</p>
@@ -209,6 +210,7 @@ section</a> for more details.</p>
   &quot;lastname&quot;: &quot;Doe&quot;
 }
 </code></pre>
+
 <h2 id="encoding-of-collections-of-objects">Encoding of collections of objects</h2>
 <h3 id="json-notation_1">JSON notation</h3>
 <p>Collections of objects are enclosed in braces "[ ... ]" and are not explicitly named.</p>
@@ -224,6 +226,7 @@ section</a> for more details.</p>
   }
 ]
 </code></pre>
+
 <h2 id="encoding-of-empty-fields">Encoding of empty fields</h2>
 <p>Instead of dropping fields that do not contain a value for a specific data object from the JSON response structure, the
 respective identity element should be used:</p>
@@ -274,8 +277,9 @@ explicitly defines the fields that support sorting.</p>
 </table>
 <p><strong>Example</strong></p>
 <p>Ordering the list of events by title:</p>
-<pre><code class="language-xml">GET /api/events?sort=title:ASC,start_date:DESC
+<pre><code class="xml">GET /api/events?sort=title:ASC,start_date:DESC
 </code></pre>
+
 <h1 id="filtering">Filtering</h1>
 <p>Filtering of result sets is supported by a set of well-defined fields per request. Multiple filter criteria can be
 defined by specifying a comma-separated list of filters. In this case, the criteria are applied using logical
@@ -300,8 +304,9 @@ defined by specifying a comma-separated list of filters. In this case, the crite
 <p>Note that filter conditions must be URL encoded.</p>
 <p><strong>Example</strong></p>
 <p>Filter the list of events by status and by series.</p>
-<pre><code class="language-xml">GET /api/events?filter=status%3dpublished,series%3dmath
+<pre><code class="xml">GET /api/events?filter=status%3dpublished,series%3dmath
 </code></pre>
+
 <h1 id="pagination">Pagination</h1>
 <p>When loading large result sets, being able to address and access the data in well-defined chunks using a limit and
 offset is essential. Paging is enabled for all requests that return lists of items.</p>
@@ -325,7 +330,7 @@ offset is essential. Paging is enabled for all requests that return lists of ite
 </table>
 <p><strong>Example</strong></p>
 <p>From the list of events, return items 50-74.</p>
-<pre><code class="language-xml">GET /api/events?limit=25&amp;offset=50
+<pre><code class="xml">GET /api/events?limit=25&amp;offset=50
 </code></pre>
 
   <br>

@@ -275,8 +275,9 @@ the response:</p>
 </tbody>
 </table>
 <p><strong>Sample request</strong></p>
-<pre><code class="language-xml">https://opencast.domain.com/api/series?filter=creator:Default Administrator&amp;sort=title:ASC&amp;limit=2&amp;offset=1
+<pre><code class="xml">https://opencast.domain.com/api/series?filter=creator:Default Administrator&amp;sort=title:ASC&amp;limit=2&amp;offset=1
 </code></pre>
+
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: A (potentially empty) list of series is returned as JSON array contained JSON objects describing the series:</p>
 <table>
@@ -395,6 +396,7 @@ the response:</p>
   }
 ]
 </code></pre>
+
 <h3 id="get-apiseriesseries_id">GET /api/series/{series_id}</h3>
 <p>Returns a single series.</p>
 <table>
@@ -519,6 +521,7 @@ the response:</p>
 }
 
 </code></pre>
+
 <h3 id="post-apiseries">POST /api/series</h3>
 <p>Creates a series.</p>
 <table>
@@ -574,6 +577,7 @@ the response:</p>
   }
 ]
 </code></pre>
+
 <p>acl:</p>
 <pre><code>[
   {
@@ -588,19 +592,23 @@ the response:</p>
   }
 ]
 </code></pre>
+
 <p>theme:</p>
 <pre><code>&quot;1234&quot;
 </code></pre>
+
 <p><strong>Response</strong></p>
 <p><code>201 (CREATED)</code>: A new series is created and its identifier is returned in the <code>Location</code> header.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
 <code>401 (UNAUTHORIZED)</code>: The user doesn't have the rights to create the series.</p>
-<pre><code class="language-xml">Location: http://api.opencast.org/api/series/4fd0ef66-aea5-4b7a-a62a-a4ada0eafd6f
+<pre><code class="xml">Location: http://api.opencast.org/api/series/4fd0ef66-aea5-4b7a-a62a-a4ada0eafd6f
 </code></pre>
+
 <pre><code>{
   &quot;identifier&quot;: &quot;4fd0ef66-aea5-4b7a-a62a-a4ada0eafd6f&quot;
 }
 </code></pre>
+
 <h3 id="delete-apiseriesseries_id">DELETE /api/series/{series_id}</h3>
 <p>Deletes a series</p>
 <p><strong>Response</strong></p>
@@ -666,6 +674,7 @@ configuration of series metadata catalogs. For more details about this mechanism
   }
 ]
 </code></pre>
+
 <h3 id="get-apiseriesseries_idmetadata_1">GET /api/series/{series_id}/metadata</h3>
 <p>Returns a series' metadata collection of the given type when the query string parameter type is specified. For each
 metadata catalog there is a unique property called the flavor such as dublincore/series so the type in this example
@@ -709,6 +718,7 @@ would be "dublincore/series".</p>
   }
 ]
 </code></pre>
+
 <h3 id="put-apiseriesseries_idmetadata">PUT /api/series/{series_id}/metadata</h3>
 <p>Update a series' metadata of the given type.</p>
 <table>
@@ -765,12 +775,14 @@ would be "dublincore/series".</p>
   }
 ]
 </code></pre>
+
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: The series' metadata have been updated.<br/>
 <code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
 <code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
 <pre><code>Returns: The full metadata catalog of the series
 </code></pre>
+
 <h3 id="delete-apiseriesseries_idmetadata">DELETE /api/series/{series_id}/metadata</h3>
 <p>Deletes a series' metadata catalog of the given type. All fields and values of that catalog will be deleted.</p>
 <table>
@@ -816,6 +828,7 @@ would be "dublincore/series".</p>
   }
 ]
 </code></pre>
+
 <h3 id="put-apiseriesseries_idacl">PUT /api/series/{series_id}/acl</h3>
 <p>Updates a series' access policy.</p>
 <table>
@@ -867,6 +880,7 @@ would be "dublincore/series".</p>
   }
 ]
 </code></pre>
+
 <p>returns</p>
 <pre><code>[
   {
@@ -881,6 +895,7 @@ would be "dublincore/series".</p>
   }
 ]
 </code></pre>
+
 <h1 id="properties">Properties</h1>
 <p>Properties can be assigned to series in means of key-value pairs. Both the property name (key) and property value are
 of type <code>string</code>.</p>
@@ -895,6 +910,7 @@ of type <code>string</code>.</p>
   &quot;live&quot;: &quot;false&quot;
 }
 </code></pre>
+
 <h3 id="put-apiseriesseries_idproperties">PUT /api/series/{series_id}/properties</h3>
 <p>Add or update properties of a series.</p>
 <table>
@@ -930,12 +946,14 @@ used:</p>
   &quot;live&quot;: &quot;false&quot;
 }
 </code></pre>
+
 <p>The response of the request will contain the properties added/updated by this request:</p>
 <pre><code>{
   &quot;ondemand&quot;: &quot;true&quot;,
   &quot;live&quot;: &quot;false&quot;
 }
 </code></pre>
+
 <p>After this, the properties of the series are:</p>
 <pre><code>{
   &quot;theme&quot;: &quot;1000&quot;,

@@ -112,7 +112,7 @@ follow these steps:</p>
 <h2 id="prefer-a-specific-repository">Prefer a Specific Repository</h2>
 <p>If you did set-up a local repository or just want to select a specific global repository by default, you can use a
 custom Maven configuration. To do that, create asettings file in <code>~/.m2/settings.xml</code> like this:</p>
-<pre><code class="language-xml">&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
+<pre><code class="xml">&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
   xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0
   http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;
@@ -126,6 +126,7 @@ custom Maven configuration. To do that, create asettings file in <code>~/.m2/set
   &lt;/mirrors&gt;
 &lt;/settings&gt;
 </code></pre>
+
 <p>This example would add a mirror for the primary Opencast Maven repository, causing the Osnabrück repository to be the
 preferred repository to use. You can find some example configurations in <code>docs/maven/</code>.</p>
 <h2 id="pushing-artifacts-to-a-maven-repository">Pushing artifacts to a Maven repository</h2>
@@ -192,7 +193,7 @@ transitioning to using Maven Central.  There are a few steps prior to being able
   <a href="https://issues.sonatype.org/browse/OSSRH-36510">our repo creation ticket</a> or create a new issue to give your user permissions</li>
 <li>Put the following in your <code>.m2/settings.xml</code> file</li>
 </ul>
-<pre><code class="language-xml">    &lt;settings&gt;
+<pre><code class="xml">    &lt;settings&gt;
       &lt;servers&gt;
         &lt;server&gt;
           &lt;id&gt;ossrh&lt;/id&gt;
@@ -215,10 +216,12 @@ transitioning to using Maven Central.  There are a few steps prior to being able
       &lt;/profiles&gt;
     &lt;/settings&gt;
 </code></pre>
+
 <h5 id="pushing-snapshots">Pushing Snapshots</h5>
 <p>Snapshots are pushed automatically by the CI servers.  For historical purposes, this is accomplished by:</p>
-<pre><code class="language-bash">mvn deploy
+<pre><code class="bash">mvn deploy
 </code></pre>
+
 <p>To verify, your artifacts can be found <a href="https://oss.sonatype.org/content/repositories/snapshots/org/opencastproject/">here</a>
 and <a href="https://oss.sonatype.org/content/groups/staging/org/opencastproject/">here</a>.  Note that you cannot (easily) drop
 bad snapshots.  Instead, fix it and redeploy!</p>
@@ -232,30 +235,35 @@ release once it has been closed!</p>
 <li>GPG signatures for the binaries, docs, and sources</li>
 </ul>
 <p>This is automated with the <code>release</code> profile.  To push a release run</p>
-<pre><code class="language-bash">mvn nexus-staging:deploy -P release
+<pre><code class="bash">mvn nexus-staging:deploy -P release
 </code></pre>
+
 <p>This creates a staging repository (https://oss.sonatype.org/content/groups/staging/org/opencastproject/) for your
 artifacts.  This is always safe to do - you can still rollback all changes with</p>
-<pre><code class="language-bash">mvn nexus-staging:drop
+<pre><code class="bash">mvn nexus-staging:drop
 </code></pre>
+
 <p>If things do not look ok, fix the issue and redeploy.  Once you are confident that everything is ok, you can run</p>
-<pre><code class="language-bash">mvn nexus-staging:close
+<pre><code class="bash">mvn nexus-staging:close
 </code></pre>
+
 <p>This closes the staging repository, and runs the Sonatype-side tests for things like GPG signatures.  If this fails,
 correct the issue locally, and redeploy.  Once this succeeds, you have two options: drop (to destroy the release) or:</p>
-<pre><code class="language-bash">mvn nexus-staging:release
+<pre><code class="bash">mvn nexus-staging:release
 </code></pre>
+
 <p>to permanently release the binaries in their current states.</p>
 <h5 id="troubleshooting">Troubleshooting</h5>
 <p>Sometimes the deploy or close will fail, timing out after 5 minutes waiting for Sonatype.  It will complain about
 violations of deploy rules - this may or may not actually be true.  If you're confident that this is caused by a simple
 timeout and not something you have done use one of the following.</p>
 <p>To reattempt a deploy use</p>
-<pre><code class="language-bash">mvn nexus-staging:deploy-staged
+<pre><code class="bash">mvn nexus-staging:deploy-staged
 </code></pre>
+
 <p>This will avoid recompiling, retesting, and resigning all of the binaries.</p>
 <p>To reattempt a close use</p>
-<pre><code class="language-bash">mvn nexus-staging:close
+<pre><code class="bash">mvn nexus-staging:close
 </code></pre>
 
   <br>

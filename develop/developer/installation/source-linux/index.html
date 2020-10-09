@@ -100,12 +100,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 This is meant for developers.
 For the installation of a production cluster, take a look at the admin guides.</p>
 <h2 id="tldr">TL;DR</h2>
-<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+<pre><code class="sh">$ git clone https://github.com/opencast/opencast.git
 $ cd opencast
 $ mvn clean install -Pdev
 $ cd build/opencast-dist-develop-*
 $ ./bin/start-opencast
 </code></pre>
+
 <p>Opencast will then listen on <a href="http://localhost:8080">127.0.0.1:8080</a></p>
 <p>Default credentials are:</p>
 <ul>
@@ -113,22 +114,25 @@ $ ./bin/start-opencast
 <li>password: opencast</li>
 </ul>
 <h2 id="configuring-git">Configuring Git</h2>
-<pre><code class="language-sh">$ git config --global user.name &quot;Example Name&quot;
+<pre><code class="sh">$ git config --global user.name &quot;Example Name&quot;
 $ git config --global user.email example@domain.com
 $ ssh-keygen -t ed25519 -C &quot;Example Name &lt;example@domain.com&gt;&quot;
 $ cat ~/.ssh/id_ed25519.pub
 </code></pre>
+
 <p>Go to: <a href="https://github.com/settings/keys">Github</a>, click "New SSH Key" and paste your content of id_rsa.pub into the input field. It should look like:</p>
 <pre><code>ssh-ed25519 at9/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzO...
 </code></pre>
 <p>Now press "Add SSH Key" and return to your terminal and:</p>
-<pre><code class="language-sh">$ ssh -T git@github.com
+<pre><code class="sh">$ ssh -T git@github.com
 </code></pre>
+
 <h2 id="clone-opencast">Clone Opencast</h2>
 <p>You can get the Opencast source code by cloning the Git repository.</p>
 <p>Cloning the Git repository:</p>
-<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+<pre><code class="sh">$ git clone https://github.com/opencast/opencast.git
 </code></pre>
+
 <h2 id="install-dependencies">Install Dependencies</h2>
 <p>Please make sure to install the following dependencies.</p>
 <p>Required:</p>
@@ -156,34 +160,41 @@ synfig
 </code></pre>
 <h2 id="ubuntu-1804">Ubuntu 18.04</h2>
 <h3 id="update-system">Update System</h3>
-<pre><code class="language-sh">$ apt update
+<pre><code class="sh">$ apt update
 $ apt upgrade -y
 </code></pre>
+
 <h3 id="install-packages-via-apt">Install Packages via APT</h3>
-<pre><code class="language-sh">$ apt install -y git openjdk-8-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+<pre><code class="sh">$ apt install -y git openjdk-8-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
 </code></pre>
+
 <h3 id="install-nodejs-optional">Install NodeJS (optional)</h3>
-<pre><code class="language-sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+<pre><code class="sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 </code></pre>
+
 <h3 id="install-and-start-elasticsearch-with-docker">Install and start Elasticsearch with Docker</h3>
-<pre><code class="language-sh">$ docker run -d --rm --name oc-elasticsearch -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.5.1
+<pre><code class="sh">$ docker run -d --rm --name oc-elasticsearch -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.5.1
 </code></pre>
+
 <p>Note that <code>--rm</code> automatically removes the container when it exits,
 so if it does you will need to start it again in order to run opencast properly.</p>
 <h3 id="set-system-java-jdk">Set System Java JDK</h3>
 <p>Choose the Java Version 1.8.0 by entering:</p>
-<pre><code class="language-sh">$ update-alternatives --config java
+<pre><code class="sh">$ update-alternatives --config java
 </code></pre>
+
 <h2 id="fedora">Fedora</h2>
 <h3 id="update-system_1">Update System</h3>
-<pre><code class="language-sh">$ dnf update -y
+<pre><code class="sh">$ dnf update -y
 </code></pre>
+
 <h3 id="install-dependencies_1">Install Dependencies</h3>
-<pre><code class="language-sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+<pre><code class="sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
 $ dnf group install 'Development Tools'
 $ dnf install -y java-1.8.0-openjdk ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
 </code></pre>
+
 <h2 id="macos-1014">macOS 10.14</h2>
 <h3 id="update-system_2">Update System</h3>
 <p>Try to install all updates via the App Store or the Apple Icon on the top left corner.</p>
@@ -193,17 +204,20 @@ $ dnf install -y java-1.8.0-openjdk ffmpeg maven tesseract hunspell sox synfig u
 <p>Install XCode over the App Store. It will be needed for building and for git.</p>
 <h3 id="install-packages-via-homebrew">Install Packages via Homebrew</h3>
 <p>The Homebrew Project adds a package manager to Mac OS. You can install it by:</p>
-<pre><code class="language-sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<pre><code class="sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 </code></pre>
+
 <p>You can now install needed packages:</p>
-<pre><code class="language-sh">$ brew install maven ffmpeg nodejs
+<pre><code class="sh">$ brew install maven ffmpeg nodejs
 </code></pre>
+
 <h3 id="activemq-with-homebrew">ActiveMQ with Homebrew</h3>
 <p>Homebrew offers you an ActiveMQ Package. Please decide, if you want to use Homebrew for ActiveMQ or if you want to follow the general guide below and run it by downloading the binaries. If you want continue you can install ActiveMQ by</p>
-<pre><code class="language-sh">$ brew install activemq
+<pre><code class="sh">$ brew install activemq
 </code></pre>
+
 <p>Remember to copy the activemq.xml like mentioned below in the right directory. You have to find the right folder for that operation, Homebrew will put the ActiveMQ files in a different location. You could find it by</p>
-<pre><code class="language-sh">$ sudo find / -name activemq.xml
+<pre><code class="sh">$ sudo find / -name activemq.xml
 ````
 
 After changing the configuration file you can list and start or stop you services with
@@ -212,13 +226,16 @@ After changing the configuration file you can list and start or stop you service
 $ brew services list
 $ brew services start activemq
 </code></pre>
+
 <h3 id="git-bash-completion">Git Bash Completion</h3>
 <p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
-<pre><code class="language-sh">$ brew install bash-completion
+<pre><code class="sh">$ brew install bash-completion
 </code></pre>
+
 <p>Find the location of the configuration file</p>
-<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot; 
+<pre><code class="sh">$ sudo find / -type f -name &quot;git-completion.bash&quot; 
 </code></pre>
+
 <p>Normally it should be in</p>
 <pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
 </code></pre>
