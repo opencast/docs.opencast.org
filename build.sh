@@ -11,6 +11,11 @@ rm -rf opencast || :
 git clone https://github.com/opencast/opencast.git
 cd opencast
 
+# Unpack old docs
+tar xf r.tar.xz
+mkdir ${OUTDIR}
+mv r/ ${OUTDIR}
+
 # Get the branches
 BRANCHES="develop
 $(git branch -a |
@@ -18,6 +23,9 @@ $(git branch -a |
     sort -r)"
 
 VERSIONS="var versions = ['develop'"
+
+# Install mkdocs and extensions
+pip -q install mkdocs mkdocs-windmill markdown_inline_graphviz_extension
 
 for branch in ${BRANCHES}
 do
@@ -27,39 +35,34 @@ do
 
     # install mkdocs
     if echo "$branch" | grep -q '^r/[234]\.'; then
-        # deliberately install an old version for the old docs
-        pip -q install mkdocs==0.16.3
+        echo Skipping archived old version "$branch..."
     else
-        pip -q install mkdocs mkdocs-windmill markdown_inline_graphviz_extension
+        [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
+        git reset --hard HEAD
+        git clean -fdx
+        git checkout "origin/${branch}"
+
+        echo "Building documentation for ${branch}"
+        for target in admin developer
+        do
+            (
+                set -eu
+                cd ~/opencast/docs/guides/"${target}"
+                python -m mkdocs build
+                mkdir -p "${OUTDIR}/${branch}"
+                mv site "${OUTDIR}/${branch}/${target}"
+            )
+        done
     fi
-
-    [ "develop" = "${branch}" ] || VERSIONS="${VERSIONS}, '${branch}'"
-    git reset --hard HEAD
-    git clean -fdx
-    git checkout "origin/${branch}"
-
-    echo "Building documentation for ${branch}"
-    for target in admin developer
-    do
-        (
-            set -eu
-            cd ~/opencast/docs/guides/"${target}"
-            python -m mkdocs build
-            mkdir -p "${OUTDIR}/${branch}"
-            mv site "${OUTDIR}/${branch}/${target}"
-        )
-    done
 
     # Add index page
     if [ "${branch}" = 'develop' ]; then
         cp ~/opencast/docs/guides/index.html "${OUTDIR}"
     fi
-
-    # Remove mkdocs to ensure we can install the version we need
-    pip uninstall -y mkdocs
 done
 
-echo "${VERSIONS}];" > "${OUTDIR}/versions.js"
+OLDVERSIONS="'r/4.x', 'r/3.x', 'r/2.3.x', 'r/2.2.x', 'r/2.1.x', 'r/2.0.x'"
+echo "${VERSIONS}, ${OLDVERSIONS}];" > "${OUTDIR}/versions.js"
 
 # Hide all exept develop and the last 3 release branches from search engines
 # shellcheck disable=SC2016
