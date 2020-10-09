@@ -3,6 +3,11 @@ set -eu
 
 OUTDIR=~/output/
 
+# Unpack old docs
+tar xf r.tar.xz
+mkdir ${OUTDIR}
+mv r/ ${OUTDIR}
+
 cd
 pwd
 
@@ -10,11 +15,6 @@ pwd
 rm -rf opencast || :
 git clone https://github.com/opencast/opencast.git
 cd opencast
-
-# Unpack old docs
-tar xf r.tar.xz
-mkdir ${OUTDIR}
-mv r/ ${OUTDIR}
 
 # Get the branches
 BRANCHES="develop
