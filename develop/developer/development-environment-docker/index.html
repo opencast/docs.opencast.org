@@ -94,44 +94,38 @@ because of Docker's isolation functionality, multiple environments can be operat
 <p>Two <code>docker-compose</code> files are provided to start up different development environments. You also need the ActiveMQ configuration
 (see "Testing Locally with Docker" guide in the administration documentation).</p>
 <p>First, download the support assets:</p>
-<pre><code class="sh">$ mkdir assets
+<pre><code class="language-sh">$ mkdir assets
 $ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
 $ curl -o assets/opencast-ddl.sql https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/opencast-ddl.sql
 </code></pre>
-
 <p>Now create a folder where the Opencast repository should be located, and expose its path as an environment variable. You
 must also create the local Maven repository if it does not already exist.</p>
-<pre><code class="sh">$ mkdir -p opencast ~/.m2
+<pre><code class="language-sh">$ mkdir -p opencast ~/.m2
 $ export OPENCAST_SRC=$PWD/opencast
 </code></pre>
-
 <p>The <code>OPENCAST_SRC</code> variable is used in the compose file to set up a Docker volume so that the host and Docker container
 can share the Opencast codebase. Similarly, the local Maven repository is shared in order to persist Maven artifacts
 beyond the lifetime of the Docker container. If you do not want to use the default path <code>~/.m2</code> you can set the
 <code>M2_REPO</code> variable to any other directory on the host system.</p>
 <p>Next, you should specify your UID and GID. A matching user will then be created within the container so that all new
 files can also be accessed from the host. If these variables remain unset, both default to 1000.</p>
-<pre><code class="sh">$ export OPENCAST_BUILD_USER_UID=$(id -u)
+<pre><code class="language-sh">$ export OPENCAST_BUILD_USER_UID=$(id -u)
 $ export OPENCAST_BUILD_USER_GID=$(id -g)
 </code></pre>
-
 <h2 id="single-node-opencast-development">Single node Opencast Development</h2>
 <p>Now download the Docker compose file:</p>
-<pre><code class="sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.build.yml
+<pre><code class="language-sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.build.yml
 </code></pre>
-
 <p>With this you are ready to start up the build environment:</p>
-<pre><code class="sh">$ docker-compose up -d
+<pre><code class="language-sh">$ docker-compose up -d
 </code></pre>
-
 <p>You can enter the Opencast build environment with the <code>exec</code> command. Omitting the <code>--user opencast-builder</code> argument
 would give you a root shell, but that is not necessary because the user <code>opencast-builder</code> can use <code>sudo</code> within the
 container.</p>
-<pre><code class="sh">$ docker-compose exec --user opencast-builder opencast bash
+<pre><code class="language-sh">$ docker-compose exec --user opencast-builder opencast bash
 </code></pre>
-
 <p>There are multiple helper scripts available within the container:</p>
-<pre><code class="sh"># Clone the Opencast source code to the shared volume.
+<pre><code class="language-sh"># Clone the Opencast source code to the shared volume.
 $ oc_clone
 
 # Build Opencast.
@@ -149,7 +143,6 @@ $ oc_uninstall
 # Remove all Opencast files (database, media packages, etc.).
 $ oc_clean_data
 </code></pre>
-
 <p>These scripts are provided to automate common tasks, but you can also run the necessary commands directly. The install
 script has the advantage that it automatically connects Opencast to the configured ActiveMQ instance available at
 <code>tcp://activemq:61616</code>.</p>
@@ -157,9 +150,8 @@ script has the advantage that it automatically connects Opencast to the configur
 <h2 id="multi-node-opencast-development">Multi-node Opencast Development</h2>
 <p>Development with multi-node Opencast environments are also supported using a different compose file.  Instead of
 downloading the single-node Docker compose file, download the multi-node version:</p>
-<pre><code class="sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.multiserver.build.yml
+<pre><code class="language-sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.multiserver.build.yml
 </code></pre>
-
 <p>This file defines a three node (admin, presentation, worker) cluster for use in testing, with all of the appropriate
 ports exported.  To access the a node run <code>docker-compose exec --user opencast-builder opencast-$nodetype bash</code>.  For
 example, to access the presentation node run <code>docker-compose exec --user opencast-builder opencast-presentation bash</code>.</p>
