@@ -8,6 +8,11 @@ tar xf r.tar.xz
 mkdir ${OUTDIR}
 mv r/ ${OUTDIR}
 
+# Test dot
+dot -Tpng simple.dot -o simple.png
+dot -Tsvg simple.dot -o simple.svg
+cp -v simple.* ${OUTDIR}
+
 cd
 
 # Clone Opencast repository
