@@ -13,6 +13,11 @@ dot -Tpng simple.dot -o simple.png
 dot -Tsvg simple.dot -o simple.svg
 cp -v simple.* ${OUTDIR}
 
+# Patch mkdocs extension
+sed -i 's/^\( *\)\(proc = .*\)$/\1print(args)\n\1\2/;s/^\( *\)\(output, .*\)$/\1\2\n\1print(output)/' \
+  $(python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')/markdown_inline_graphviz.py                                                                                   (git)-[develop] [0]
+
+
 cd
 
 # Clone Opencast repository
