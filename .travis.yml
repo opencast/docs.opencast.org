@@ -5,10 +5,11 @@ python: "3.8"
 addons:
   apt:
     packages:
-    - graphviz
+      - graphviz
 
 install:
-  - true
+  - pip -q install mkdocs mkdocs-windmill markdown_inline_graphviz_extension
+  - dot '-?'
 script:
   - shellcheck build.sh
   - sh build.sh

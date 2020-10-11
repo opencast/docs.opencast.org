@@ -9,7 +9,6 @@ mkdir ${OUTDIR}
 mv r/ ${OUTDIR}
 
 cd
-pwd
 
 # Clone Opencast repository
 rm -rf opencast || :
@@ -23,9 +22,6 @@ $(git branch -a |
     sort -r)"
 
 VERSIONS="var versions = ['develop'"
-
-# Install mkdocs and extensions
-pip -q install mkdocs mkdocs-windmill markdown_inline_graphviz_extension
 
 for branch in ${BRANCHES}
 do
