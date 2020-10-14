@@ -34,7 +34,7 @@
         
         var pageToc = [
           {title: "Authentication and Authorization Infrastructure (AAI) Configuration", url: "#_top", children: [
-              {title: "Prerequesites", url: "#prerequesites" },
+              {title: "Prerequisites", url: "#prerequisites" },
               {title: "Step 1: Configuration of the AAI Login handler", url: "#step-1-configuration-of-the-aai-login-handler" },
               {title: "Step 2: Spring Security Configuration", url: "#step-2-spring-security-configuration" },
               {title: "Step 3: Protecting HTML pages by Shibboleth", url: "#step-3-protecting-html-pages-by-shibboleth" },
@@ -90,15 +90,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="authentication-and-authorization-infrastructure-aai-configuration">Authentication and Authorization Infrastructure (AAI) Configuration</h1>
 <p>This page describes how to configure Opencast to take advantage of the Authentication and Authorization
 Infrastructure (AAI).</p>
-<h2 id="prerequesites">Prerequesites</h2>
+<h2 id="prerequisites">Prerequisites</h2>
 <p>This guides assumes that you know how to setup and configure a Shibboleth Service Provider, i.e. you are assumed
 to already have performed the following steps:</p>
 <ul>
-<li>Registeration of your Shibboleth Service Provider at your Shibboleth Federation Service Registry</li>
+<li>Registration of your Shibboleth Service Provider at your Shibboleth Federation Service Registry</li>
 <li>Setup and configuration of Shibboleth on the servers you want to use it</li>
 <li>Configuration of your web server</li>
 </ul>
-<p>In case you require help on this, contact the institution responsilbe for managing the Shibboleth Federation you
+<p>In case you require help on this, contact the institution responsible for managing the Shibboleth Federation you
 are part of.</p>
 <p>An informative list of Shibboleth Federations can be found on:</p>
 <p><a href="https://refeds.org/federations">https://refeds.org/federations</a></p>
@@ -140,7 +140,7 @@ role as specified by the property <em>role.federation</em>.</p>
 <h2 id="step-2-spring-security-configuration">Step 2: Spring Security Configuration</h2>
 <p>In order to take advantage of Shibboleth authentication, you will need to uncomment the following lines found
 in <code>etc/security/mh_default_org.xml</code>:</p>
-<p>The Shibboleth header authentification filter needs to be enabled to get access to the Shibboleth information
+<p>The Shibboleth header authentication filter needs to be enabled to get access to the Shibboleth information
 within the HTTP request headers.</p>
 <pre><code>&lt;!-- Shibboleth header authentication filter --&gt;
 &lt;sec:custom-filter ref="shibbolethHeaderFilter" position="PRE_AUTH_FILTER"/&gt;
@@ -156,7 +156,7 @@ respective name of the Shibboleth attribute you use in your Shibboleth Federatio
 &lt;!-- # Shibboleth Support # --&gt;
 &lt;!-- ###################### --&gt;
 
-&lt;!-- General Shibboleth header extration filter --&gt;
+&lt;!-- General Shibboleth header extraction filter --&gt;
 &lt;bean id="shibbolethHeaderFilter"
       class="org.opencastproject.security.shibboleth.ShibbolethRequestHeaderAuthenticationFilter"&gt;
   &lt;property name="principalRequestHeader" value="&lt;Shibboleth attribute name&gt;"/&gt;

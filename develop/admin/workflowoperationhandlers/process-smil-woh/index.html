@@ -101,7 +101,7 @@ This workflow operation is used to bypass the generation of the temporary target
 directly.
 Subsequent workflow operations can select the highest quality source medium by tags and flavors.
 This operation saves the encoding time of one set of full length video and allows concurrent
-processing of multiple independent ffmpeg operations.</p>
+processing of multiple independent FFmpeg operations.</p>
 <p>To use this operation with the editor, the following must be added to the <a href="../editor-woh/">editor</a> workflow operation
 to bypass the video editor encoding,</p>
 <pre><code>&lt;configuration key=&quot;skip-processing&quot;&gt;true&lt;/configuration&gt;
@@ -113,7 +113,7 @@ The transition duration is a 2 second fade, configured in org.opencastproject.co
 In the future, each transition can be configurable as a SMIL element.</p>
 <p>The SMIL file can use more than one source video, but the caller has to take care that the dimension of
 all the source videos are the same.
-This workflow will generate one independent ffmpeg operation per SMIL paramgroup (based on source) regardless
+This workflow will generate one independent FFmpeg operation per SMIL paramgroup (based on source) regardless
 of the number of target outputs.</p>
 <p>This workflow can handle each source flavor selector independently.
 eg: Each source selector can have its own set of encoding profiles, target tags and flavors.
@@ -218,7 +218,7 @@ https://tools.ietf.org/html/draft-pantos-http-live-streaming-23</p>
 <tr>
 <td>tag-with-profile</td>
 <td>true (default to false)</td>
-<td>target medium are tagged with coresponding encoding profile Id</td>
+<td>target medium are tagged with corresponding encoding profile Id</td>
 </tr>
 </tbody>
 </table>
@@ -247,12 +247,12 @@ https://tools.ietf.org/html/draft-pantos-http-live-streaming-23</p>
     mp4-low.http,mp4-medium.http,multiencode-hls*;*mp4-vga-medium,mp4-medium.http,multiencode-hls&lt;/configuration&gt;
 </code></pre>
 <h2 id="notevery-important">Note:(Very Important)</h2>
-<p>Each encoding section generates all the target media in one ffmpeg call by incorporating relevant parts
+<p>Each encoding section generates all the target media in one FFmpeg call by incorporating relevant parts
 of each encoding profile command using complex filters.</p>
 <ul>
 <li>
 <p>Care must be taken that <strong>no complex filters</strong> are used in the encoding profiles used for this workflow,
-as it can cause a conflict and ffmpeg will fail.
+as it can cause a conflict and FFmpeg will fail.
 Simple filters (i.e.: -vf, -af , -filter:v, -filter:a) can be used.</p>
 </li>
 <li>
