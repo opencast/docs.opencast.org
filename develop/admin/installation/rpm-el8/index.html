@@ -122,6 +122,7 @@ To do that, follow the
 <p>You can check if the repositories were successfully enabled using:</p>
 <pre><code>dnf repolist enabled
 </code></pre>
+<!-- _This section needs reworking: important info should be beginning, or at least more clearly stated -->
 <h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
 <p>The Apache ActiveMQ message broker is required by Opencast. It can be installed on the same machine as Opencast.
 ActiveMQ can be installed by running:</p>
@@ -132,7 +133,8 @@ ActiveMQ can be installed by running:</p>
 installation the following command should suffice:</p>
 <pre><code>cp /usr/share/opencast/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
 </code></pre>
-<p>ActiveMQ should be started <em>prior to</em> Opencast.</p>
+<p>ActiveMQ should be started <em>prior to</em> Opencast. <!-- _How? Where does one out how to do that? --></p>
+<!-- _Unclear: Is out-of-the-box ActiveMQ enough to run for OC, or does user HAVE TO do more configuration before using it? -->
 <p>More information about how to properly set up ActiveMQ for Opencast can be found in the <a href="../../configuration/message-broker/">message broker configuration
 documentation</a>.</p>
 <h2 id="install-opencast">Install Opencast</h2>
@@ -142,14 +144,17 @@ documentation</a>.</p>
 </code></pre>
 <p>…where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install, e.g. <code>opencast8-allinone</code>.
 This will install the default distribution of Opencast and all its dependencies.</p>
-<p>Don't forget to start configure and start ActiveMQ first as <a href="#install-apache-activemq">described in the ActiveMQ installation section
+<!-- _Unclear, again: Same information as "Install ActiveMQ" section above ("Do this first."), but... now includes doing configuration beforehand?-->
+<p>Don't forget to configure and start ActiveMQ first as <a href="#install-apache-activemq">described in the ActiveMQ installation section
 </a>.</p>
 <p>Then start Opencast by running:</p>
 <pre><code>systemctl start opencast.service
 </code></pre>
 <p>While Opencast is preconfigured, it is strongly recommended to follow at least the <a href="../../configuration/basic/">Basic Configuration guide
-</a>. It will help you to set your hostname, login information, …</p>
+</a>. It will help you to set your hostname, login information, etc.</p>
+<!-- _Advanced Install doesn't need to be explained here: could be a separate doc -->
 <h2 id="advanced-installation">Advanced Installation</h2>
+<!-- _Instance of single vs multiple servers, that could link to a separate doc for setting up multiple -->
 <p>The basic installation will give you an all-in-one Opencast distribution on a single server.  For productions, most
 users prefer deploying Opencast over several machines, which allows for a better workload distribution.  You can list
 all available Opencast packages with:</p>

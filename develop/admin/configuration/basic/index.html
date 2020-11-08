@@ -91,9 +91,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="basic-configuration">Basic Configuration</h1>
+<!-- _Guide says nothing about how to start running OC, nor does it point to the "Next Step"
+as the Installation Docs do (i.e. Install doc refers to Config doc) -->
 <p>This guide will help you to change the basic configuration settings which are required or at least strongly recommended
 for each Opencast installation. This is basically what you should do, right after installing Opencast on your machine.</p>
-<p>All settings are made to files residing in the Opencast configuration directory. In most cases, that should be either
+<!-- _"In most cases, ..." Unclear: the cases being the different Operating Systems? -->
+<p>All settings changes are made to files residing in the Opencast configuration directory. In most cases, that should be either
 <code>/etc/opencast/</code> or <code>/opt/opencast/etc/</code>. Edit the files using the editor of your choice, e.g.:</p>
 <pre><code>vim /etc/opencast/custom.properties
 </code></pre>
@@ -131,13 +134,14 @@ configuration file are:</p>
 </li>
 </ul>
 <p><em>Note:</em> The digest credentials are also used for internal communication of Opencast servers. So these keys have to be
-set to the same value on each of you Opencast nodes (Core, Worker, Capture Agent, …)</p>
+set to the same value on each of your Opencast nodes (Core, Worker, Capture Agent, …)</p>
 <h2 id="step-3-change-the-default-shutdown-command">Step 3: Change the default shutdown command</h2>
 <p>Karaf provides a socket over which you can send a shutdown command. The socket does not provide any kind of
 authentication. Therefore anyone who obtains write access to this socket is able to shutdown karaf and everything
 that runs on it. There is a default <code>karaf.shutdown.command</code> defined in <code>custom.properties</code>. Change this to something
 secret.</p>
 <h2 id="step-4-setting-up-apache-activemq-message-broker">Step 4: Setting up Apache ActiveMQ Message Broker</h2>
+<!-- _This is a very nonchalant and subdued description for how important this config probably is -->
 <p>Since version 2.0, Opencast requires a running Apache ActiveMQ instance with a specific configuration.  The message
 broker is mostly run on the admin server of Opencast but can be run separately. It needs to be started before Opencast.
 For more details about the setup, have a look at the <a href="../message-broker/">Apache ActiveMQ configuration guide</a>.</p>
@@ -157,6 +161,8 @@ Configuration</a> section.</p>
 For more details about the setup, have a look at the <a href="../../modules/searchindex/elasticsearch/">Elasticsearch configuration
 guide</a>.</p>
 <h2 id="step-7-https-configuration">Step 7: HTTPS Configuration</h2>
+<!-- _Every other instance of linking to another doc so far has been a "do now, but in another doc", 
+whereas here it is very much "not necessary for right now": what to do? -->
 <p>An installation without HTTPS does not make much sense today.
 Thus, make sure to follow <a href="../https/">a configuration guide for HTTPS</a>.</p>
 <h2 id="step-8-setting-the-storage-directory-optional">Step 8: Setting the Storage Directory (optional)</h2>
@@ -165,6 +171,7 @@ the storage directory. This directory is used to store all media, metadata, … 
 can set the directory by changing <code>org.opencastproject.storage.dir</code> like:</p>
 <pre><code>org.opencastproject.storage.dir=/media/mhdatamount
 </code></pre>
+<!-- _Instance of "implied Note" -->
 <p>Please keep in mind that the user running Opencast must have read/write permissions to the storage directory.</p>
 
   <br>
