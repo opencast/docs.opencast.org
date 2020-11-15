@@ -85,34 +85,35 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-player-matomo-tracking-plugin">Opencast Player - Matomo Tracking Plugin</h1>
-<p>This plugin allows to use Matomo (https://matomo.org/), formerly known as Piwik, to track usage data. To setup Matomo
-please follow the instructions on the Matomo website:
-https://matomo.org/docs/installation/#the-5-minute-matomo-installation</p>
-<p>The plugin respects the <a href="https://en.wikipedia.org/wiki/Do_Not_Track">Do-Not-Track</a> settings of a browser. You might also
-need to consider the legal requirements of your country when you setup Matomo.</p>
-<p>This plugin uses a Matomo javascript library that is loaded from the remote Matomo server!</p>
-<p>Tested Matomo version: 3.0.2+</p>
-<p>The configurations for the Matomo player plugin are done for each tenant. So the configuration keys are located in
-<code>.../etc/org.opencastproject.organization-mh_default_org.cfg</code>.</p>
-<p>To activate the plugin set:</p>
-<pre><code>prop.player.matomo.server=http://localhost/matomo
+<p>This plugin allows using <a href="https://matomo.org">Matomo</a> to track usage data.
+To setup Matomo please follow the instructions on the Matomo website:</p>
+<ul>
+<li><a href="https://matomo.org/docs/installation/#the-5-minute-matomo-installation">The 5-minute Matomo Installation</a></li>
+</ul>
+<p>The plugin respects the <a href="https://en.wikipedia.org/wiki/Do_Not_Track">Do-Not-Track</a> settings of a browser.
+Please consider the legal requirements of your country when you set up Matomo.</p>
+<p>This plugin uses a Matomo JavaScript library that is loaded from the remote Matomo server!</p>
+<p>Tested Matomo version: 3.0.2+ ; Matomo Analytics Cloud</p>
+<p>The configurations for the Matomo player plugin are done for each tenant.
+The configuration keys are located in <code>etc/ui-config/&lt;organization&gt;/theodul/config.yml</code>.</p>
+<p>To activate the plugin set the Matomo server URL:</p>
+<pre><code>server: https://matomo.example.com/matomo
 </code></pre>
-<p>Where localhost should be replaced with your Piwik server URL.</p>
 <h2 id="configuration">Configuration</h2>
-<h3 id="propplayermatomoserver">prop.player.matomo.server</h3>
-<p>The plugin shows a notification about the tracking to the user. This can be disabled with this option. (Default: true)
-Before you disable the notification, make sure that you do not violate any local regulations.</p>
-<h3 id="propplayermatomoserver_1">prop.player.matomo.server</h3>
+<h3 id="server">server:</h3>
 <p>The Matomo server from which the Piwik JS library will be loaded and where the data will be reported.</p>
-<h3 id="propplayermatomosite_id1">prop.player.matomo.site_id=1</h3>
+<h3 id="site_id-1">site_id: 1</h3>
 <p>The Matomo site ID has to be numeric value. If not set this will be 1. It is recommended to use different site IDs for
 each tenant that is configured in Opencast.</p>
-<h3 id="propplayermatomoheartbeat30">prop.player.matomo.heartbeat=30</h3>
+<h3 id="heartbeat-30">heartbeat: 30</h3>
 <p>The heartbeat setting to track how long a user stayed on the player page. Set to 0 or comment this line to
 disable the heartbeat.</p>
-<h3 id="propplayermatomotrack_events">prop.player.matomo.track_events</h3>
-<p>This setting lets you track several player events. Add the events that you want to track to the list. Comment this
-property to prevent event tracking.</p>
+<h3 id="notification-true">notification: true</h3>
+<p>The plugin shows a notification about the tracking to the user. This can be disabled with this option. (Default: <code>true</code>)
+Before you disable the notification, make sure that you do not violate any local regulations.</p>
+<h3 id="track_events-play-pause-seek-ended">track_events: ["play", "pause", "seek", "ended"]</h3>
+<p>This setting lets you track several player events. Add the events that you want to track to the list.
+Comment this property to prevent event tracking.</p>
 <p>Events that can be tracked:</p>
 <ul>
 <li>play: play has been pressed (will also be called if after seeking).</li>
