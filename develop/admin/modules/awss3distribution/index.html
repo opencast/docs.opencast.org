@@ -37,6 +37,9 @@
               {title: "Amazon User Configuration", url: "#amazon-user-configuration" },
               {title: "Amazon Service Configuration", url: "#amazon-service-configuration" },
               {title: "Amazon CloudFront", url: "#amazon-cloudfront" },
+              {title: "Presigned URL", url: "#presigned-url" },
+              {title: "Service Default Security Note", url: "#service-default-security-note" },
+              {title: "S3 Compatible Service", url: "#s3-compatible-service" },
               {title: "Opencast Service Configuration", url: "#opencast-service-configuration" },
               {title: "Using S3 Distribution", url: "#using-s3-distribution" },
               {title: "Publishing to multiple distribution services", url: "#publishing-to-multiple-distribution-services" },
@@ -117,6 +120,32 @@ versioning.  For production use we suggest using Amazon CloudFront, which requir
 <p>Amazon CloudFront provides an <em>optional</em> way to better handle distributing your media to end users.  While fully
 configuring CloudFront is outside the scope of this documentation, we wish to note that this does affect one of the keys
 described below.  Please ensure you use the correct distribution base format depending on which service you are using!</p>
+<h2 id="presigned-url">Presigned URL</h2>
+<p>S3 and Cloudfront work together to speed delivery of your content, but if your media URLs leak then anyone can
+download your recordings.  S3 allows you to create <strong>Presigned URL</strong>s, which are only valid for a limited time.  This
+means that even if your media URLs leak, they will only be valid for a configurable duration.</p>
+<p>Set <code>org.opencastproject.distribution.aws.s3.presigned.url</code> to <code>true</code> to enable this feature.</p>
+<p>Note: <strong>CloudFront</strong> and <strong>Presigned URL</strong> can be used together. </p>
+<p>Note: Opencast's distribution files can be quite large depending on your settings, and some of your users may not be
+able to complete the download within the time limit.  While AWS should not stop a download currently in progress, some
+players may not completely download the media if playback is stopped.  If you are experiencing complaints about
+playback breaking and have presigned URLs enabled, try lengthening the timeout.</p>
+<h2 id="service-default-security-note">Service Default Security Note</h2>
+<p>On startup, Opencast checks to see if the S3 bucket exists, and if it does not it creates it.  This bucket has default
+permissions allowing anyone to read the full contents of the bucket.  This may not be what you want, depending on your
+institutional priorites.  If you wish to protect the files with presigned URLs, then please create the bucket in advance,
+with the appropriate security settings.</p>
+<h2 id="s3-compatible-service">S3 Compatible Service</h2>
+<p>The S3 API has become the de facto standard interface for almost all storage providers.
+This module also supports S3 compatible service.
+In this case, <code>org.opencastproject.distribution.aws.s3.endpoint</code> should be set to the endpoint of the S3 service.
+Meanwhile, <code>org.opencastproject.distribution.aws.s3.region</code> should not be set.
+Note: only one of these two configuration keys may be set.</p>
+<p>There are <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html">two access</a> style for bucket, virtual hosted style (default) and path style.
+- Virtual hosted style sample: <code>https://bucketname.s3.service.com/</code>
+- Path style sample: <code>https://s3.service.com/bucketname</code></p>
+<p>AWS use virtual hosted style by default, and will deprecate path style. Yet, for self hosted s3 compatible service, path style URL is useful.<br />
+Set <code>org.opencastproject.distribution.aws.s3.path.style</code> to <code>true</code> to enable this feature.</p>
 <h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
 <p>The Opencast AWS S3 Distribution service has five configuration keys, which can be found in the
 <code>org.opencastproject.distribution.aws.s3.AwsS3DistributionServiceImpl.cfg</code> configuration file.</p>
@@ -140,6 +169,16 @@ described below.  Please ensure you use the correct distribution base format dep
 <td>us-west-2</td>
 </tr>
 <tr>
+<td>org.opencastproject.distribution.aws.s3.endpoint</td>
+<td>The endpoint of AWS S3 service. Only used with S3 compatible service</td>
+<td>https://s3.service.com</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.path.style</td>
+<td>True to enable path style access URL for bucket, false otherwise</td>
+<td>false</td>
+</tr>
+<tr>
 <td>org.opencastproject.distribution.aws.s3.bucket</td>
 <td>The S3 bucket name</td>
 <td>example-org-dist</td>
@@ -158,6 +197,16 @@ described below.  Please ensure you use the correct distribution base format dep
 <td>org.opencastproject.distribution.aws.s3.secret.key</td>
 <td>Your secret key</td>
 <td>40 characters</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.presigned.url</td>
+<td>True to enable presigned URL, false otherwise</td>
+<td>false</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.presigned.url.valid.duration</td>
+<td>Valid duration for presigned URL in milliseconds</td>
+<td>14400000</td>
 </tr>
 </tbody>
 </table>
