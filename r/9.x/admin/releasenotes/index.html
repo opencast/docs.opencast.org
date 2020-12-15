@@ -38,7 +38,6 @@
               {title: "Features", url: "#features" },
               {title: "Improvements", url: "#improvements" },
               {title: "API changes", url: "#api-changes" },
-              {title: "Configuration changes", url: "#configuration-changes" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release managers", url: "#release-managers" },
           ]},
@@ -90,28 +89,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-9-release-notes">Opencast 9: Release Notes</h1>
-<p><strong>TODO</strong> The following is as of 2020/08/26, and not finished, yet.</p>
 <h2 id="important-changes">Important Changes</h2>
 <ul>
 <li>Opencast now requires an external Elasticsearch server to function</li>
 <li>Paella is now the default video player</li>
 <li>The <code>encode</code> worfklow operation now completely replaces <code>compose</code>,
   which is dropped now</li>
-<li>MariaDB JDBC driver<ul>
-<li>TODO Where is this in the changelog?!</li>
-</ul>
-</li>
-<li>New LTI-Tools?</li>
+<li>MariaDB JDBC driver</li>
+<li>New LTI-Tools</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
-<li>
-<p>TODO Paella changes?!</p>
-</li>
-<li>
-<p>Get notified when there is a new version of Opencast,
-  and if your current version reached its end of life</p>
-</li>
+<li>Get notified when there is a new version of Opencast,
+  and if your current version reached its end of life</li>
 <li>Sort events in the main event table
   by the number of publications they have</li>
 <li>Publish streaming elements using <code>publish-configure</code></li>
@@ -133,10 +123,24 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   or move them between series</li>
 <li>Export statistics to CSV using a new External API endpoint</li>
 <li>Edit event meta data in bulk with a new dialog in the admin UI</li>
+<li>Create Shibboleth users dynamically using configuration</li>
+<li>Support Serverless HLS</li>
+<li>Retract only specific flavors/tags with a new WOH</li>
+<li>New download button in the Theodul player</li>
+<li>New VideoGrid-WOH to handle grids of videos as presented for example
+  by BigBlueButton</li>
+<li>Allow specifying role prefixes in various user providers to better
+  distinguish users from different sources</li>
+<li>Adopter registration</li>
+<li>New version of Opencast Studio</li>
+<li>User and role provider for the Canvas LMS</li>
+<li>The partial import WOH can now do certain kinds of preprocessings
+  to simplify further processing down the line</li>
+<li>Support for presigned S3 URLs</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
-<li>Paella Player version <strong>TODO</strong></li>
+<li>New Paella Player version</li>
 <li>Make the <code>partial-import</code> workflow operation more robust
   in the face of containers with multiple videos in them</li>
 <li>Multiple workflows with the same ID no longer bring Opencast down</li>
@@ -175,6 +179,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   by loading them all at once</li>
 <li>Improved compatibility with S3 compatibles/alternatives</li>
 <li>Display notifications as overlay instead of as "flash messages"</li>
+<li>The <code>tag</code> workflow operation now allows wildcards in the target flavor</li>
+<li>Use series ACL as default ACL for events in LTI upload tool if available</li>
 </ul>
 <h2 id="api-changes">API changes</h2>
 <ul>
@@ -182,9 +188,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   instead of the technical one</li>
 <li>Allow updating processing information using the Events API</li>
 <li>Export statistics to CSV</li>
+<li>The filter in the Events API is "additive" now, allowing you to get
+  different types of events in one request</li>
+<li>The Series API can now return ACLs within its response, if you tell it to</li>
 </ul>
-<h2 id="configuration-changes">Configuration changes</h2>
-<p><em>TBD</em></p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
