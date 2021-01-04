@@ -37,10 +37,13 @@
               {title: "Availability", url: "#availability" },
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Activate Repository", url: "#activate-repository" },
-              {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Opencast", url: "#install-opencast" },
+              {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
+              {title: "Install Elasticsearch", url: "#install-elasticsearch" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Start Opencast", url: "#start-opencast" },
               {title: "Advanced Installation", url: "#advanced-installation" },
-              {title: "Upgrading Major Versions", url: "#upgrading-major-versions" },
+              {title: "Upgrading", url: "#upgrading" },
               {title: "Uninstall Opencast", url: "#uninstall-opencast" },
               {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
@@ -95,14 +98,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <blockquote>
 <p><em>This guide is for EL7 only. There is a separate <a href="../rpm-el8/">CentOS 8 and Red Hat Enterprise Linux 8 guide</a>.</em></p>
 </blockquote>
-<p>This guide is based on a RPM software repository available for Red Hat-based Linux distributions provided by Osnabrück
-University. This repository provides preconfigured Opencast installations and all necessary 3rd-Party-Tools. Using this
-method, you do not have to compile the software by yourself.</p>
-<blockquote>
-<p><strong>Release</strong></p>
-<p>Opencast 9 is currently not available from the RPM repository.
-It should be available within a week after the release of Opencast 9.</p>
-</blockquote>
+<p>This guide is based on an RPM software repository available for Red Hat-based Linux distributions provided by <a href="https://uni-osnabrueck.de">Osnabrück
+University</a>. This repository provides preconfigured Opencast installations and all necessary
+3rd-party-tools.</p>
+<div class=warn>
+<b>Opencast 9</b> is currently available from the testing repository only.
+</div>
+
 <h2 id="availability">Availability</h2>
 <p>Note that it may take some time (usually about two weeks after a new release is out) before the RPMs are available.
 Watch for announcements on <a href="https://docs.opencast.org/#mailing-lists">the users list</a> or just check which versions are
@@ -113,71 +115,88 @@ available in the repository.</p>
 <li>Red Hat Enterprise Linux 7.x (x86_64)</li>
 <li>Scientific Linux 7.x (x86_64)</li>
 </ul>
-<blockquote>
-<p><em>Other architectures like i386, i686, arm, … are not supported!</em></p>
-</blockquote>
+<p>Other architectures like i386, i686, arm, … are not supported.</p>
 <h2 id="activate-repository">Activate Repository</h2>
-<p>First you have to install the necessary repositories so that your package manager can access them:</p>
-<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/noarch/opencast-repository-8-0-1.el8.noarch.rpm
+<p>First you have to install the necessary repositories:</p>
+<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-09/noarch/opencast-repository-9-0-1.el8.noarch.rpm
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
 Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
-<p>If you get an error saying that the package <code>epel-release</code> is not available, please enable this repository manually.
-To do that, follow the
-<a href="https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F">instructions in the EPEL documentation</a>.</p>
-<p>You can check if the repositories were sucessfully enabled using:</p>
+<div class=warn>
+For <b>Opencast 9</b> temporarily enable the testing repository in <code>/etc/yum.repo.d/opencast-testing.repo</code>
+while it is not yet in the stable repository.
+</div>
+
+<p>You can check if the repositories were successfully enabled using:</p>
 <pre><code>yum repolist enabled
 </code></pre>
-<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
-<p>The Apache ActiveMQ message broker is required by Opencast. It can be installed on the same machine as Opencast.
-ActiveMQ can be installed by running:</p>
-<pre><code>yum install activemq-dist
-</code></pre>
-<p>A prepared configuration file for ActiveMQ can be found at <code>/usr/share/opencast/docs/scripts/activemq/activemq.xml</code>
-<em>after Opencast itself has been installed</em> and should replace <code>/etc/activemq/activemq.xml</code>. For an all-in-one
-installation the following command should suffice:</p>
-<pre><code>cp /usr/share/opencast/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
-</code></pre>
-<p>ActiveMQ should be started <em>prior to</em> Opencast.</p>
-<p>More information about how to properly set up ActiveMQ for Opencast can be found in the <a href="../../configuration/message-broker/">message broker configuration
-documentation</a>.</p>
 <h2 id="install-opencast">Install Opencast</h2>
-<h3 id="basic-installation">Basic Installation</h3>
-<p>For a basic installation (All-In-One) just run:</p>
-<pre><code>yum install opencast&lt;version&gt;-allinone
+<p>For a basic all-in-one installation just run:</p>
+<pre><code class="language-sh">yum install opencast&lt;version&gt;-allinone
 </code></pre>
-<p>…where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install, e.g. <code>opencast8-allinone</code>.
+<p>…where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install, e.g. <code>opencast9-allinone</code>.
 This will install the default distribution of Opencast and all its dependencies.</p>
-<p>Don't forget to start configure and start ActiveMQ first as <a href="#install-apache-activemq">described in the ActiveMQ installation section
-</a>.</p>
-<p>Then start Opencast by running:</p>
-<pre><code>systemctl start opencast.service
+<p>For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
+<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
+<p>The Apache ActiveMQ message broker is required by Opencast.
+It can be run on the same machine as Opencast.
+Install ActiveMQ by running:</p>
+<pre><code class="language-sh">yum install activemq-dist
 </code></pre>
-<p>While Opencast is preconfigured, it is strongly recommended to follow at least the <a href="../../configuration/basic/">Basic Configuration guide
-</a>. It will help you to set your hostname, login information, …</p>
+<p>A prepared configuration file for ActiveMQ comes with Opencast.
+It should suffice for an all-in-one installation and can be copied to replace the default configuration:</p>
+<pre><code class="language-sh">cp /usr/share/opencast/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
+</code></pre>
+<p>Then start and enable ActiveMQ by running:</p>
+<pre><code class="language-sh">systemctl start activemq
+systemctl enable activemq
+</code></pre>
+<p>More information about how to properly set up ActiveMQ for Opencast, cluster installations in particular,
+can be found in the <a href="../../configuration/message-broker/">message broker configuration documentation</a>.</p>
+<h2 id="install-elasticsearch">Install Elasticsearch</h2>
+<p>Opencast uses Elasticsearch as a search index and a cache for quick access to some data from user interfaces.
+Make sure to install it on the node which also serves the admin interface.</p>
+<pre><code class="language-sh">yum install elasticsearch-oss
+</code></pre>
+<p>Opencast automatically configures the search index once it is connected.
+The default configuration will work for a local Elasticsearch with no modifications.
+Just make sure to start and enable the service:</p>
+<pre><code class="language-sh">systemctl start elasticsearch
+systemctl enable elasticsearch
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>Make sure to set your hostname, login information and other configuration details by following the</p>
+<ul>
+<li><a href="../../configuration/basic/">Basic Configuration guide</a></li>
+</ul>
+<h2 id="start-opencast">Start Opencast</h2>
+<p>Finally, start and enable Opencast by running:</p>
+<pre><code class="language-sh">systemctl start opencast.service
+systemctl enable opencast.service
+</code></pre>
 <h2 id="advanced-installation">Advanced Installation</h2>
-<p>The basic installation will give you an all-in-one Opencast distribution on a single server.  For productions, most
-users prefer deploying Opencast over several machines, which allows for a better workload distribution.  You can list
-all available Opencast packages with:</p>
-<pre><code>yum search opencast
+<p>The basic installation will give you an all-in-one Opencast distribution on a single server.
+For production, most users prefer deploying Opencast as a cluster, which allows for a better workload distribution.
+You can list all available Opencast packages/distributions with:</p>
+<pre><code class="language-sh">yum search opencast
 </code></pre>
-<p>This will list all available Opencast distributions in the form <code>opencast&lt;version&gt;-&lt;dist-type&gt;</code>. Some commonly used
-distributions are:</p>
+<p>This will list all available Opencast distributions in the form <code>opencast&lt;version&gt;-&lt;dist-type&gt;</code>.
+Some commonly used distributions are:</p>
 <ul>
 <li><code>opencast&lt;version&gt;-allinone</code></li>
 <li><code>opencast&lt;version&gt;-admin</code></li>
 <li><code>opencast&lt;version&gt;-presentation</code></li>
 <li><code>opencast&lt;version&gt;-worker</code></li>
 </ul>
-<h2 id="upgrading-major-versions">Upgrading Major Versions</h2>
+<h2 id="upgrading">Upgrading</h2>
 <p>Packages will automatically upgrade to the latest minor version in a release series. They do not automatically upgrade
 the latest major version. This is intentional since additional migration steps might be necessary for that. For example,
 if you install <code>opencast7-admin</code> you get the latest 7.x release, not the latest 8.x release. To upgrade from one major
 version to another, please consult the upgrade guide for each major version. Still, here is a short overview of the
 required steps:</p>
 <p>First, stop Opencast:</p>
-<pre><code>systemctl stop opencast.service
+<pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
 <p>As a reminder, these instructions will upgrade your Opencast installation to a new version which is likely incompatible
 with older versions, and cannot be rolled back. If you are performing this on a production system, please ensure you
@@ -191,21 +210,21 @@ have valid backups prior to taking the next steps.</p>
 <p>At this point you must follow the relevant <a href="../../upgrade/">upgrade instructions</a>, prior to starting Opencast again.</p>
 <h2 id="uninstall-opencast">Uninstall Opencast</h2>
 <p>To uninstall Opencast, you can run:</p>
-<pre><code>yum remove opencast
+<pre><code class="language-sh">yum remove opencast
 </code></pre>
-<p>This will not touch your created media files or <em>modified</em> configuration files.  If you want to remove them as well, you
-have to do that by yourself.</p>
-<pre><code># Remove media files (default location)
-sudo rm -rf /srv/opencast
+<p>This will not touch your created media files or <em>modified</em> configuration files.
+If you want to remove them as well, you have to do that by yourself.</p>
+<pre><code class="language-sh"># Remove media files (default location)
+rm -rf /srv/opencast
 
 # Remove local db, search indexes and working files
-sudo rm -rf /var/lib/opencast
+rm -rf /var/lib/opencast
 
 # Remove configuration files
-sudo rm -rf /etc/opencast
+rm -rf /etc/opencast
 
 # Remove logs
-sudo rm -rf /var/log/opencast
+rm -rf /var/log/opencast
 </code></pre>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="missing-dependencies">Missing Dependencies</h3>
