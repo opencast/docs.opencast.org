@@ -92,7 +92,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#development-process">Development Process</a><ul>
 <li><a href="#contributing-code">Contributing Code</a><ul>
 <li><a href="#github">GitHub</a></li>
-<li><a href="#bugfix-vs-feature">Bugfix vs Feature</a></li>
+<li><a href="#accepting-criteria-for-patches-in-different-versions">Accepting Criteria for Patches in Different Versions</a></li>
 <li><a href="#reviews">Reviews</a><ul>
 <li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 </ul>
@@ -152,17 +152,19 @@ this repository are explained later in this guide.</p>
   which will show up on the project's list of open pull requests.</p>
 </li>
 </ul>
-<h3 id="bugfix-vs-feature">Bugfix vs Feature</h3>
-<p>Opencast distinguishes between bug fix and feature pull requests.</p>
+<h3 id="accepting-criteria-for-patches-in-different-versions">Accepting Criteria for Patches in Different Versions</h3>
+<p>Updates between minor versions should be as smooth as possible and should usually not need manual intervention.
+That is why patches may only be accepted into releases branches (<code>r/?.x</code>) if they meet the following criteria:</p>
 <ul>
-<li>
-<p>Features are <em>only</em> allowed to be merged into <code>develop</code>, which will let them automatically become part of the next
-  major/minor release, given that the release branch for the next release has not been cut yet.</p>
-</li>
-<li>
-<p>Bug fixes can be merged both into <code>develop</code> and into release branches.</p>
-</li>
+<li>Patches must not modify existing database tables</li>
+<li>Patches must not modify the indexes or otherwise cause re-indexing</li>
+<li>Patches must not require a different ActiveMQ configuration</li>
+<li>Patches must not modify existing translation keys</li>
+<li>Patches must work with the same configuration within a major version</li>
 </ul>
+<p>Patches which do not meet these criteria should target the branch <code>develop</code> to become part of the next major version.</p>
+<p>To determine the acceptance of patches, all pull requests will be discussed in the technical meeting.
+This protects against inclusion of controversial changes with no broader consent among committers.</p>
 <h3 id="reviews">Reviews</h3>
 <p>Before a patch is merged, it needs to be reviewed. The reviewer tries to make sure that the patch merges without
 conflicts, that it works as expected and that it does not break anything else.</p>
@@ -179,7 +181,7 @@ of what work has been done. To this end, there are a few expectations for all pu
 <li>The GitHub issue should contain the same information</li>
 </ul>
 </li>
-<li>For feature pull requests, accompanying documentation should be included</li>
+<li>Pull request should include appropriate documentation</li>
 <li>The pull request should have a clean commit history</li>
 <li>In the case of major user interface changes, it is good practice to include screenshots of the change</li>
 <li>Any actions that would be required for a version upgrade (e.g: from 3.x to 4.x) must be documented in
@@ -201,8 +203,8 @@ maintenance releases.</p>
   this branch only. Release branches are branched off from <code>develop</code>. It is basically the preparation for the next big
   release at all times.</li>
 <li>The release branches are named <code>r/&lt;a&gt;.x</code> (e.g. <code>r/6.x</code>). They are the latest state of development for a specific
-  release. Only bug fixes and no features may be added to these branches. All releases are created from these branches.
-  The branches live on as long as there may be additional maintenance releases for a given version.</li>
+  major version.  All minor releases are created from these branches.  The branches live on as long as there may be
+  additional maintenance releases for a given version.</li>
 <li>Git tags in the form of <code>a.b</code> are created to indicate official releases.</li>
 </ul>
 <p>To get a closer look at the branching model, let us consider a simple example with a single release:</p>
@@ -233,8 +235,8 @@ part of the next Opencast versions (and <code>develop</code>), without having to
 exists, <code>r/8.x</code> and from there into <code>develop</code>. That way patches bubble through all newer versions and finally end up in
 <code>develop</code>.</p>
 <h2 id="release-process">Release Process</h2>
-<p>As indicated above, the release cycle of a new Opencast version starts when a release branch is cut. The new features
-merged into <code>develop</code> afterwards will be part of the next version, but not the one just cut.</p>
+<p>As indicated above, the release cycle of a new Opencast version starts when a release branch is cut. Patches merged into
+<code>develop</code> after the cut will be part of the next version, but not the one just cut.</p>
 <p>This is why the position of release manager for the next Opencast version should be assigned at this point. The current
 release manager should therefore ask for volunteers in the mailing lists. For more details about the rights and
 responsibilities of a release manager, please have a look at the <a href="../release-manager/">Release Manager Guide</a>.</p>
@@ -257,15 +259,15 @@ to identify phases for internal and public testing.</p>
 </thead>
 <tbody>
 <tr>
-<td>April 1st</td>
+<td>May 15th</td>
 <td>Feature Freeze</td>
 </tr>
 <tr>
-<td>May 6th - May 12th</td>
+<td>May 24th</td>
 <td>Translation week</td>
 </tr>
 <tr>
-<td>May 13th - May 26th</td>
+<td>May 31st</td>
 <td>Public QA phase</td>
 </tr>
 <tr>
@@ -292,8 +294,8 @@ This tag is then pushed to the community repository.</p>
 <h3 id="maintenance-releases">Maintenance Releases</h3>
 <p>After a final release, additional issues may show up. These issues may be fixed on the ongoing release branch and at
 some point released as maintenance release.</p>
-<p>There is usually no release schedule for maintenance releases. It is up to the release manager to decide when it is
-worthwhile to create a maintenance release with the fixes for bugs affecting a given release.</p>
+<p>Maintenance releases will be cut monthly for the latest stable release. For legacy releases, it is up to the release
+manager to decide when it is worthwhile to make the cut.</p>
 <h2 id="quality-assurance">Quality Assurance</h2>
 <p>As any piece of software, Opencast may contain bugs. It is the duty of the whole community to identify these bugs,
 report them and possibly fix them to improve Opencast as product.</p>
