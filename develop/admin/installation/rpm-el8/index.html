@@ -137,11 +137,10 @@ while it is not yet in the stable repository.
 </code></pre>
 <h2 id="install-opencast">Install Opencast</h2>
 <p>For a basic all-in-one installation just run:</p>
-<pre><code class="language-sh">dnf install opencast&lt;version&gt;-allinone
+<pre><code class="language-sh">dnf install opencast-allinone
 </code></pre>
-<p>…where <code>&lt;version&gt;</code> is the major version number of the Opencast release you want to install, e.g. <code>opencast9-allinone</code>.
-This will install the default distribution of Opencast and all its dependencies.</p>
-<p>For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
+<p>This will install the default distribution of Opencast and all its dependencies.
+For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
 <h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
 <p>The Apache ActiveMQ message broker is required by Opencast.
 It can be run on the same machine as Opencast.
@@ -185,31 +184,32 @@ For production, most users prefer deploying Opencast as a cluster, which allows 
 You can list all available Opencast packages/distributions with:</p>
 <pre><code class="language-sh">dnf search opencast
 </code></pre>
-<p>This will list all available Opencast distributions in the form <code>opencast&lt;version&gt;-&lt;dist-type&gt;</code>.
+<p>This will list all available Opencast distributions in the form <code>opencast-&lt;dist-type&gt;</code>.
 Some commonly used distributions are:</p>
 <ul>
-<li><code>opencast&lt;version&gt;-allinone</code></li>
-<li><code>opencast&lt;version&gt;-admin</code></li>
-<li><code>opencast&lt;version&gt;-presentation</code></li>
-<li><code>opencast&lt;version&gt;-worker</code></li>
+<li><code>opencast-allinone</code></li>
+<li><code>opencast-admin</code></li>
+<li><code>opencast-presentation</code></li>
+<li><code>opencast-worker</code></li>
 </ul>
 <h2 id="upgrading">Upgrading</h2>
-<p>Packages will automatically upgrade to the latest minor version in a release series. They do not automatically upgrade
-the latest major version. This is intentional since additional migration steps might be necessary for that. For example,
-if you install <code>opencast7-admin</code> you get the latest 7.x release, not the latest 8.x release. To upgrade from one major
-version to another, please consult the upgrade guide for each major version. Still, here is a short overview of the
-required steps:</p>
-<p>First, stop Opencast:</p>
+<p>Packages will automatically upgrade to the latest minor version in a release series when running <code>dnf update</code>.
+They do not automatically upgrade the latest major version.
+This is intentional since additional migration steps might be required.
+For example, if you install Opencast 9.1, you get the latest 9.x release, but no 10 release.</p>
+<p>These instructions will upgrade Opencast to a new version which may be incompatible with older versions.
+Thus, a rollback might not be possible.
+If you are performing this on a production system, please ensure you have valid backups prior to taking the next steps.</p>
+<p>For an RPM-based upgrade, first, stop Opencast:</p>
 <pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
-<p>As a reminder, these instructions will upgrade your Opencast installation to a new version which is likely incompatible
-with older versions, and cannot be rolled back. If you are performing this on a production system, please ensure you
-have valid backups prior to taking the next steps.</p>
-<p>Uninstall your current Opencast package and install the new one by running:</p>
-<pre><code class="language-sh">dnf shell
-&gt; remove opencast
-&gt; install opencast&lt;version&gt;-&lt;distribution&gt;
-&gt; run
+<p>Then, replace the repository</p>
+<pre><code class="language-sh">dnf remove -y opencast-repository-8
+rm -f /etc/yum.repos.d/opencast*.repo* || :
+dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-09/noarch/opencast-repository-9-0-1.el8.noarch.rpm
+</code></pre>
+<p>Upgrade to the new Opencast package by running:</p>
+<pre><code class="language-sh">dnf  install opencast-&lt;distribution&gt;
 </code></pre>
 <p>At this point you must follow the relevant <a href="../../upgrade/">upgrade instructions</a>, prior to starting Opencast again.</p>
 <h2 id="uninstall-opencast">Uninstall Opencast</h2>
