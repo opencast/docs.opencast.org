@@ -33,13 +33,13 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "PartialImportWorkflowOperation", url: "#_top", children: [
+          {title: "Partial Import Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Prerequisite", url: "#prerequisite" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
               {title: "SMIL File Structure", url: "#smil-file-structure" },
-              {title: "Encoding Profiles The PartialImportWorkflowOperation uses a number of encoding profiles to perform its processing.", url: "#encoding-profiles-the-partialimportworkflowoperation-uses-a-number-of-encoding-profiles-to-perform-its-processing" },
+              {title: "Encoding Profiles", url: "#encoding-profiles" },
           ]},
         ];
 
@@ -88,7 +88,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="partialimportworkflowoperation">PartialImportWorkflowOperation</h1>
+    <h1 id="partial-import-operation">Partial Import Operation</h1>
+<p>ID: <code>animate</code></p>
 <h2 id="description">Description</h2>
 <p>The PartialImportWorkflowOperation processes a set of audio and video files according to a SMIL document describing
 their relations. Its primary use is to post-process audio and video files ingested by capture agents using
@@ -225,42 +226,42 @@ per source.</p>
 which time the content fits into the overall recording. The ingest service will automatically create the SMIL file
 describing how the files relate to each other and add it to the media package as flavor <em>smil/source+partial</em>.</p>
 <p>In our example, this SMIL file would like something like:</p>
-<pre><code>  &lt;?xml version="1.1" encoding="UTF-8"?&gt;
-  &lt;smil xmlns="http://www.w3.org/ns/SMIL" version="3.0"&gt;
-    &lt;head/&gt;
-    &lt;body&gt;
-      &lt;par dur="93861ms"&gt;
-        &lt;seq&gt;
-          &lt;video begin="412ms" dur="13440ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov"/&gt;
-          &lt;video begin="15324ms" dur="73440ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov"/&gt;
-          &lt;audio begin="0ms" dur="40861ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov"/&gt;
-          &lt;audio begin="43400ms" dur="13861ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov"/&gt;
-        &lt;/seq&gt;
-        &lt;seq&gt;
-          &lt;video begin="948ms" dur="33440ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov"/&gt;
-          &lt;video begin="35643ms" dur="15430ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov"/&gt;
-          &lt;video begin="45448ms" dur="25440ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov"/&gt;
-        &lt;/seq&gt;
-      &lt;/par&gt;
-    &lt;/body&gt;
-  &lt;/smil&gt;
+<pre><code class="language-xml">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;smil xmlns=&quot;http://www.w3.org/ns/SMIL&quot; version=&quot;3.0&quot;&gt;
+  &lt;head/&gt;
+  &lt;body&gt;
+    &lt;par dur=&quot;93861ms&quot;&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;412ms&quot; dur=&quot;13440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;15324ms&quot; dur=&quot;73440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;0ms&quot; dur=&quot;40861ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;43400ms&quot; dur=&quot;13861ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;948ms&quot; dur=&quot;33440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;35643ms&quot; dur=&quot;15430ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;45448ms&quot; dur=&quot;25440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+    &lt;/par&gt;
+  &lt;/body&gt;
+&lt;/smil&gt;
 </code></pre>
 <p>What we finally want, however, is a single presenter and a single presentation track that can be processed by Opencast
 workflow operations. To achieve this, the PartialImportWorkflowOperation is used to post-process the files as described
 in the SMIL file:</p>
-<pre><code> &lt;operation id="partial-import"
-           description="Post-processing raw audio and video files from capture agent"
-           fail-on-error="true"
-           exception-handler-workflow="partial-error"&gt;
+<pre><code class="language-xml">&lt;operation id=&quot;partial-import&quot;
+     description=&quot;Post-processing raw audio and video files from capture agent&quot;
+     fail-on-error=&quot;true&quot;
+     exception-handler-workflow=&quot;partial-error&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-presenter-flavor"&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key="source-presentation-flavor"&gt;presentation/source&lt;/configuration&gt;
-    &lt;configuration key="source-smil-flavor"&gt;smil/source+partial&lt;/configuration&gt;
-    &lt;configuration key="target-presenter-flavor"&gt;presenter/standard&lt;/configuration&gt;
-    &lt;configuration key="target-presentation-flavor"&gt;presentation/standard&lt;/configuration&gt;
-    &lt;configuration key="concat-encoding-profile"&gt;concat.work&lt;/configuration&gt;
-    &lt;configuration key="trim-encoding-profile"&gt;trim.work&lt;/configuration&gt;
-    &lt;configuration key="force-encoding-profile"&gt;editor.work&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-presenter-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-presentation-flavor&quot;&gt;presentation/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-smil-flavor&quot;&gt;smil/source+partial&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-presenter-flavor&quot;&gt;presenter/standard&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-presentation-flavor&quot;&gt;presentation/standard&lt;/configuration&gt;
+    &lt;configuration key=&quot;concat-encoding-profile&quot;&gt;concat.work&lt;/configuration&gt;
+    &lt;configuration key=&quot;trim-encoding-profile&quot;&gt;trim.work&lt;/configuration&gt;
+    &lt;configuration key=&quot;force-encoding-profile&quot;&gt;editor.work&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -303,23 +304,23 @@ presentation/standard as depicted below:</p>
 <h2 id="smil-file-structure">SMIL File Structure</h2>
 <p>The PartialImportWorkflowOperation expects a specific subset of SMIL that is described in this section.
 The overall structure of the SMIL file is shown by example below:</p>
-<pre><code>  &lt;?xml version="1.1" encoding="UTF-8"?&gt;
-  &lt;smil xmlns="http://www.w3.org/ns/SMIL" version="3.0"&gt;
-    &lt;head/&gt;
-    &lt;body&gt;
-      &lt;par dur="15000ms"&gt;
-        &lt;seq&gt;
-          &lt;video begin="400ms" dur="13000ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov"/&gt;
-          &lt;video begin="15000ms" dur="70000ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov"/&gt;
-          &lt;audio begin="0ms" dur="400ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov"/&gt;
-          &lt;audio begin="900ms" dur="13000ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov"/&gt;
-        &lt;/seq&gt;
-        &lt;seq&gt;
-          &lt;video begin="900ms" dur="30000ms" src="/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov"/&gt;
-        &lt;/seq&gt;
-      &lt;/par&gt;
-    &lt;/body&gt;
-  &lt;/smil&gt;
+<pre><code class="language-xml">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;smil xmlns=&quot;http://www.w3.org/ns/SMIL&quot; version=&quot;3.0&quot;&gt;
+  &lt;head/&gt;
+  &lt;body&gt;
+    &lt;par dur=&quot;15000ms&quot;&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;400ms&quot; dur=&quot;13000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;15000ms&quot; dur=&quot;70000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;0ms&quot; dur=&quot;400ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;900ms&quot; dur=&quot;13000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;900ms&quot; dur=&quot;30000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+    &lt;/par&gt;
+  &lt;/body&gt;
+&lt;/smil&gt;
 </code></pre>
 <p>The PartialImportWorkflowOperation can handle at most one <strong><em>par</em></strong> element that is used to describe to overall media
 duration using the attribute <em>dur</em>. The resulting tracks will be trimmed to this duration if necessary. In the example
@@ -376,9 +377,10 @@ appearance in the SMIL file is not correct.</p>
 of <em>begin</em> for the subsequent element <em>(e+1)</em> of the same type (<em>video</em> or <em>audio</em>) within the same sequence must be
 equal or greater than <em>e.begin + e.dur</em>, i.e. make sure that the following invariant holds: <em>(e+1).begin &gt;= e.begin +
 e.dur</em></p>
-<h2 id="encoding-profiles-the-partialimportworkflowoperation-uses-a-number-of-encoding-profiles-to-perform-its-processing">Encoding Profiles The PartialImportWorkflowOperation uses a number of encoding profiles to perform its processing.</h2>
-<p>Some of the encoding profiles can be explicitly configured by the user, others are used implicitly in means of being
-hard-coded and are not supposed to be changed by the user.</p>
+<h2 id="encoding-profiles">Encoding Profiles</h2>
+<p>The PartialImportWorkflowOperation uses a number of encoding profiles to perform its processing.  Some of the encoding
+profiles can be explicitly configured by the user, others are used implicitly in means of being hard-coded and are not
+supposed to be changed by the user.</p>
 <h3 id="hard-coded-encoding-profiles">Hard-coded Encoding Profiles</h3>
 <table>
 <thead>
