@@ -116,7 +116,7 @@ available in the repository.</p>
 <p>Other architectures like i386, i686, arm, … are not supported.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories:</p>
-<pre><code class="language-sh">dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-09/noarch/opencast-repository-9-0-1.el8.noarch.rpm
+<pre><code class="language-sh">dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-09/noarch/opencast-repository-9-1.el8.noarch.rpm
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
@@ -204,9 +204,8 @@ If you are performing this on a production system, please ensure you have valid 
 <pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
 <p>Then, replace the repository</p>
-<pre><code class="language-sh">dnf remove -y opencast-repository-8
-rm -f /etc/yum.repos.d/opencast*.repo* || :
-dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-09/noarch/opencast-repository-9-0-1.el8.noarch.rpm
+<pre><code class="language-sh">rm -f /etc/yum.repos.d/opencast*.repo* || :
+dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-09/noarch/opencast-repository-9-1.el8.noarch.rpm
 </code></pre>
 <p>Upgrade to the new Opencast package by running:</p>
 <pre><code class="language-sh">dnf  install opencast-&lt;distribution&gt;
