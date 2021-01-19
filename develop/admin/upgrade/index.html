@@ -38,6 +38,7 @@
               {title: "Install and configure a standalone Elasticsearch node", url: "#install-and-configure-a-standalone-elasticsearch-node" },
               {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
               {title: "Check Passwords", url: "#check-passwords" },
+              {title: "Static File Delivery", url: "#static-file-delivery" },
           ]},
         ];
 
@@ -100,6 +101,7 @@ versions of Opencast, please refer to <a href="https://docs.opencast.org">older 
 <li>Start Opencast</li>
 <li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
 <li><a href="#check-passwords">Check passwords</a></li>
+<li>Static file delivery</li>
 </ol>
 <h2 id="configuration-changes">Configuration Changes</h2>
 <p>Note that this section will only highlight a few important changes.
@@ -151,6 +153,13 @@ schema has changed, you will need to drop you indices and <a href="#rebuild-the-
 but to benefit from this mechanism, users have to reset their password.</p>
 <p>You can use the endpoint <code>/user-utils/users/md5.json</code> to find out which users are still using MD5-hashed passwords and
 suggest to them that they update their passwords.</p>
+<h2 id="static-file-delivery">Static File Delivery</h2>
+<p>Opencast 9.2 came with a <a href="../configuration/serving-static-files/">completely new system for securing static file content</a>
+which is now active by default in Opencast 10. If you are deferring the file access authorization to another system
+using Opencast's <a href="../configuration/stream-security/">security token mechanism</a>, you need to deactivate this protection
+in:</p>
+<pre><code>etc/org.opencastproject.fsresources.StaticResourceServlet.cfg
+</code></pre>
 
   <br>
     
