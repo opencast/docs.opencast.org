@@ -1,23 +1,5 @@
-commit 0edd0efcf3e4c498201cc94c471637edd0e10b3f
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Jan 14 01:06:14 2021 +0100
+commit 5d1be08e46c65e5ed7075eabe95bc10e4f75bf7b
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Wed Jan 20 11:35:24 2021 +0100
 
-    Validate Ingested DublinCore Catalogs
-    
-    This patch makes the ingest service validate DublinCore catalogs when
-    they are being ingested and returning a 400 Bad Request instead of
-    accespting the request and failing afterwards with a broken workflow and
-    a broken entry in the admin interface.
-    
-    To test this, just submit a broken DublinCore catalog like this:
-    
-    ```xml
-     <dublincore xmlns="http://www.opencastproject.org/xsd/1.0/dublincore/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <brokenxml
-       <dcterms:creator>demo</dcterms:creator>
-       <dcterms:contributor>demo</dcterms:contributor>
-    ```
-    
-    This fixes #2127
+    Fix typo in branding properties
