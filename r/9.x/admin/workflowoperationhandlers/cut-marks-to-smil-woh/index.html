@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Defaults - Administration Guide</title>
+    <title>Cut Marks To Smil - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,9 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "DefaultsWorkflowOperation", url: "#_top", children: [
+          {title: "Cut Marks to Smil Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
+              {title: "JSON Format", url: "#json-format" },
               {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
@@ -64,20 +65,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../demux-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../defaults-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../demux-woh/" class="btn btn-xs btn-link">
-        Demux
+      <a href="../defaults-woh/" class="btn btn-xs btn-link">
+        Defaults
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../cut-marks-to-smil-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cut-marks-to-smil-woh/" class="btn btn-xs btn-link">
-        Cut Marks To Smil
+        Previous</a><a href="../cropvideo-woh/" class="btn btn-xs btn-link">
+        Crop Video
       </a>
     </div>
     
@@ -85,38 +86,66 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="defaultsworkflowoperation">DefaultsWorkflowOperation</h1>
+    <h1 id="cut-marks-to-smil-operation">Cut Marks to Smil Operation</h1>
+<p>ID: <code>cut-marks-to-smil</code></p>
 <h2 id="description">Description</h2>
-<p>The DefaultsWorkflowOperationHandler is used to define default workflow configuration values that are in effect in cases
-where a workflow instance is started without the user interface being invoked, with the result that no configuration of
-the workflow instance has taken place. The defaults specified by this handler will be applied for configuration keys
-that have not been specified but won't overwrite existing values.</p>
+<p>This operation parses a JSON containing cut marks into a SMIL that can be used by the <a href="../editor-woh/">Video Editor</a>.
+It does this by attributing the given times to the specified tracks.</p>
+<p>Tracks are assumed to start at 0.
+Likewise, cut marks are assumed to be specified relative to the beginning of the tracks.</p>
 <h2 id="parameter-table">Parameter Table</h2>
-<p>Tags and flavors can be used in combination.</p>
 <table>
 <thead>
 <tr>
-<th>configuration keys</th>
-<th>example</th>
-<th>description</th>
-<th>default value</th>
+<th>Configuration Keys</th>
+<th>Example</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>key</td>
-<td>hello world</td>
-<td>This would set the workflow configuration "key" to the value "hello world" if - and only if - the key is undefined.</td>
-<td>-</td>
+<td>source-media-flavors</td>
+<td><code>presenter/prepared</code></td>
+<td>The flavors containing the video tracks.</td>
+</tr>
+<tr>
+<td>source-json-flavor</td>
+<td><code>cut-marks/json</code></td>
+<td>The flavor of the JSON. Must contain exactly one file.</td>
+</tr>
+<tr>
+<td>target-smil-flavor</td>
+<td><code>smil/cutmarks</code></td>
+<td>The flavor of the resulting SMIL.</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td><code>archive</code></td>
+<td>(Optional) Tags to add to the resulting SMIL. Default is <code>null</code></td>
 </tr>
 </tbody>
 </table>
+<h2 id="json-format">JSON Format</h2>
+<p>The JSON structure specifies all segments which should be kept after cutting.
+The property <code>begin</code> marks the start of a segment while <code>duration</code> its duration.
+The values are specified in milliseconds.</p>
+<pre><code class="language-json">[
+  {
+    &quot;begin&quot;: 1672,
+    &quot;duration&quot;: 7199
+  }
+]
+</code></pre>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="defaults"
-  description="Applying default values"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;cut-marks-to-smil&quot;
+    description=&quot;Process ingested cut marks by applying them to current tracks&quot;
+    fail-on-error=&quot;true&quot;
+    exception-handler-workflow=&quot;partial-error&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="key"&gt;hello world&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-media-flavors&quot;&gt;presenter/prepared,presentation/prepared&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-json-flavor&quot;&gt;cut-marks/json&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-smil-flavor&quot;&gt;smil/cutting&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -132,20 +161,20 @@ that have not been specified but won't overwrite existing values.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../demux-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../defaults-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../demux-woh/" class="btn btn-xs btn-link">
-        Demux
+      <a href="../defaults-woh/" class="btn btn-xs btn-link">
+        Defaults
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../cut-marks-to-smil-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cut-marks-to-smil-woh/" class="btn btn-xs btn-link">
-        Cut Marks To Smil
+        Previous</a><a href="../cropvideo-woh/" class="btn btn-xs btn-link">
+        Crop Video
       </a>
     </div>
     
@@ -156,7 +185,7 @@ that have not been specified but won't overwrite existing values.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/defaults-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/cut-marks-to-smil-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
