@@ -119,10 +119,10 @@ streams. It also, always means a quality loss.</p>
 <p>This section will help you to understand how you can modify an existing profile or create a completely new one.</p>
 <p>Creating a new encoding profile is a matter of creating a configuration file and placing it in the encoding profiles
 watch folder.</p>
-<h3 id="encoding-profile-folder">Encoding Profile Folder</h3>
+<h3 id="step-1-encoding-profile-folder">Step 1: Encoding Profile Folder</h3>
 <p>The <code>&lt;config_dir&gt;/encoding</code> folder allows you to quickly augment Opencast's existing behavior, simply by modifying or
 adding new configuration files. The file names should follow the pattern <code>*.properties</code>.</p>
-<h3 id="the-encoding-profile">The Encoding Profile</h3>
+<h3 id="step-2-the-encoding-profile">Step 2: The Encoding Profile</h3>
 <p>Encoding profiles consist of a set of key-value pairs that conform to the following pattern:</p>
 <pre><code>profile.&lt;name&gt;.&lt;context&gt;.&lt;property&gt; = &lt;value&gt;
 </code></pre>
@@ -146,7 +146,7 @@ profile.my-av-profile.http.ffmpeg.command = -i #{in.video.path} -c:v venc -c:a a
 </code></pre>
 <p>The most important part of this profile is the <code>ffmpeg.command</code>. This line specifies FFmpeg command line options using
 <code>#{expression}</code> for string replacement.</p>
-<h3 id="ffmpeg">FFmpeg</h3>
+<h3 id="step-3-ffmpeg">Step 3: FFmpeg</h3>
 <p>To create a new profile you have basically one task to do: Find an appropriate FFmpeg command line for whatever you want
 to do. For more information about FFmpeg, its options and how you can build FFmpeg with additional functionality have a
 look at the <a href="http://trac.ffmpeg.org/wiki">Official FFmpeg Wiki</a>. For trying out new encoding settings, just call FFmpeg

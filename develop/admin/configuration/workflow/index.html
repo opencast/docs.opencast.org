@@ -125,14 +125,14 @@ values allows workflows to dynamically adapt to a given input or user decision.<
 &lt;/definition&gt;
 </code></pre>
 <h2 id="create-a-workflow">Create a Workflow</h2>
-<p>This sections will walk you through creating a custom workflow, which will encode ingested tracks to defined output
+<p>This section will walk you through creating a custom workflow, which will encode ingested tracks to defined output
 format.</p>
-<h3 id="encoding-profiles">Encoding Profiles</h3>
+<h3 id="step-1-encoding-profiles">Step 1: Encoding Profiles</h3>
 <p>First create or select the encoding profiles you want to use. For more details on this, have a look at the <a href="../encoding/">Encoding
 Profile Configuration Guide</a>. For this guide we assume that we have an encoding profile <code>mov-low.http</code>
 which creates a distribution format definition for mp4 video and a <code>feed-cover.http</code> encoding profile to create
 thumbnail images for the videos.</p>
-<h3 id="describe-the-workflow">Describe the Workflow</h3>
+<h3 id="step-2-describe-the-workflow">Step 2: Describe the Workflow</h3>
 <p>Start by naming the workflow and giving it a meaningful description:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
 
@@ -189,7 +189,7 @@ thumbnail images for the videos.</p>
 <li>The <code>description</code> allows you to describe the workflow in detail. Blank lines are formatted as newlines, while single
   line breaks are ignored so that the XML remains compact and readable even with long paragraphs.</li>
 </ul>
-<h3 id="inspect-the-media">Inspect the Media</h3>
+<h3 id="step-3-inspect-the-media">Step 3: Inspect the Media</h3>
 <p>The first operation will be to inspect the media for technical metadata, such as format and length:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
 
@@ -213,7 +213,7 @@ thumbnail images for the videos.</p>
 </code></pre>
 <p>The <em>fail-on-error</em> attribute is a boolean determining whether the workflow will throw an error to the
 exception-handler-workflow or simply proceed with the remaining operations.</p>
-<h3 id="encoding">Encoding</h3>
+<h3 id="step-4-encoding">Step 4: Encoding</h3>
 <p>The next operations will encode the media to the Mp4 format:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
 
@@ -262,7 +262,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
   media as input for other operations, using their <code>source-tags</code> attribute.</li>
 <li>The <code>encoding-profile</code> attribute refers to an encoding profile defined in <code>etc/encoding</code>.</li>
 </ul>
-<h3 id="encode-to-thumbnail">Encode to Thumbnail</h3>
+<h3 id="step-5-encode-to-thumbnail">Step 5: Encode to Thumbnail</h3>
 <p>The next operations will create thumbnails from the media:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
   ...
@@ -306,7 +306,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
 <ul>
 <li>The time attribute determines the approximate frame of the source media is used. The time unit is in seconds.</li>
 </ul>
-<h3 id="distribute-the-media">Distribute the Media</h3>
+<h3 id="step-6-distribute-the-media">Step 6: Distribute the Media</h3>
 <p>The next operation copies the encoded media to the Opencast distribution channel:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
   ...
@@ -332,6 +332,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
 <ul>
 <li>The publish-engage operation uses all media tagged as <em>rss</em> or <em>atom</em> as input.</li>
 </ul>
+<!-- _Are the next sections still part of Creating a Custom Workflow? -->
 <h2 id="accept-user-input">Accept User Input</h2>
 <p>Workflow definitions may optionally include variables to be replaced by user input. For instance, this may be used to
 select optional parts of a workflow. To enable user control of individual workflow instances, the workflow definition

@@ -160,7 +160,7 @@ table https_hosts {
 <p>What you need is the TLS private key and the certificate including the
 whole chain between the root certificate, all intermediates and the
 certificate itself.</p>
-<h3 id="obtaining-the-certificate-chain">Obtaining the certificate chain</h3>
+<h3 id="step-1-obtaining-the-certificate-chain">Step 1: Obtaining the certificate chain</h3>
 <p>If you only have the key and the certificate, I recommend
 <a href="https://certificatechain.io/">certificatechain.io</a> or
 <a href="https://github.com/zakjan/cert-chain-resolver">cert-chain-resolver</a>.
@@ -173,7 +173,7 @@ cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot
 # Verify the certificate using the chain
 openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
 </code></pre>
-<h3 id="create-the-p12-keystore">Create the p12 keystore</h3>
+<h3 id="step-2-create-the-p12-keystore">Step 2: Create the p12 keystore</h3>
 <p>If the private key (assumed to be <code>key.pem</code>) is encrypted
 (password protected), issue the following command. Note that there
 are safer ways supplying the key's password to OpenSSL.</p>
@@ -195,7 +195,7 @@ are safer ways supplying the key's password to OpenSSL.</p>
         -out &quot;opencast.p12&quot; \
         -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
 </code></pre>
-<h3 id="import-the-p12-keystore-into-a-java-keystore">Import the p12 keystore into a Java keystore:</h3>
+<h3 id="step-3-import-the-p12-keystore-into-a-java-keystore">Step 3: Import the p12 keystore into a Java keystore:</h3>
 <pre><code class="language-bash">keytool \
         -importkeystore \
         -srckeystore &quot;opencast.p12&quot; \

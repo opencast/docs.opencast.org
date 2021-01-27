@@ -96,7 +96,7 @@ versions of Opencast, please refer to <a href="https://docs.opencast.org">older 
 <li>Replace Opencast with the new version</li>
 <li>Back-up Opencast files and database (optional)</li>
 <li><a href="#database-migration">Upgrade the database</a></li>
-<li><a href="#install-and-confifure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</a></li>
+<li><a href="#install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</a></li>
 <li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
 <li>Remove search index data folder</li>
 <li>Start Opencast</li>
@@ -134,13 +134,13 @@ Please make sure to compare your configuration against the current configuration
   <a href="https://github.com/elan-ev/opencast-studio/blob/2020-09-14/CONFIGURATION.md">this document</a>.</li>
 </ul>
 <h2 id="install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</h2>
-<p>In the past, Opencast came with its own integrated Elasticsearch node. However, recent versions of Elasticsearch no longer
-support to be embedded in applications. Since the Elasticsearch client was updated to version 7, Opencast now requires an
-external Elasticsearch node of the same version to be present. This means, that all Opencast adopters now have to run
-Elasticsearch.</p>
+<p>Although Opencast has come with its own integrated Elasticsearch node in the past, recent versions of Elasticsearch no
+longer support being embedded in applications. Since the Elasticsearch client was updated to version 7, Opencast requires
+an external Elasticsearch node of the same version to be present. This means all Opencast adopters now have to run
+Elasticsearch as a service.</p>
 <p>Please check <a href="../installation/">the installation guides</a> for information about how to setup Elasticsearch.</p>
 <p>If you already used an external Elasticsearch node in the past, please update your node to version 7. Since the index
-schema has changed, you will need to drop you indices and <a href="#rebuild-the-elasticsearch-indexes">rebuild them</a>.</p>
+schema has changed, you will need to drop your indices and <a href="#rebuild-the-elasticsearch-indexes">rebuild them</a>.</p>
 <h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
 <p>In order to populate the external Elasticsearch index, an index rebuild is necessary.</p>
 <h3 id="admin-interface">Admin Interface</h3>

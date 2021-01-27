@@ -203,6 +203,8 @@ signed with a single key. Or it could be configured so that each different schem
 different keys protecting each host’s URLs separately etc. Having the timing configurations separate from the key
 configuration allows the different types of URLs to be signed differently depending on the needs of the users without
 needing to configure this timing for all of the different keys.</p>
+<!-- _Very wordy.If this paragraph of examples is necessary, consider making it a list instead (and not full complete sentences) -->
+
 <h3 id="signing-for-opencast-internal-access">Signing for Opencast-internal access</h3>
 <p>Signing of requests for internal use is performed by a core component called <em>TrustedHttpClientImpl</em>, which is used to
 establish all internal HTTP connections. More specifically, the HTTP client needs access to internal storage areas such
@@ -273,8 +275,8 @@ url.regex.static=.*static.*
 <h2 id="testing">Testing</h2>
 <p>Once all components of Stream Security are installed and properly configured, it is important to verify that the system
 is working as expected. It is especially important to try to access resources that should <em>not</em> be accessible.</p>
-<p>There are ways to test in a structured way which will be explained below.</p>
-<h3 id="creating-signed-urls-with-signing-endpoint">Creating Signed URLs with Signing Endpoint</h3>
+<p>The following explains how to test if Stream Security has been correctly configured.</p>
+<h3 id="step-1-creating-signed-urls-with-signing-endpoint">Step 1: Creating Signed URLs with Signing Endpoint</h3>
 <p>The signing service provides a REST endpoint, which allows for the signing of arbitrary URLs. For manual use it is
 recommended to visit the endpoint’s documentation page at <code>http://localhost:8080/signing/docs</code>.</p>
 <h4 id="is-the-url-accepted">Is the URL accepted?</h4>
@@ -283,7 +285,7 @@ using the <code>/signing/accepts</code> endpoint. If that is not the case, the c
 checked again to ensure that at least one signing provider is responsible for the URL in question.</p>
 <p>If the service is fully operational, the response code will be <em>200 OK</em> and the response body either <em>true</em> (accepted)
 or <em>false</em> (refused).</p>
-<h3 id="signing-the-url">Signing the URL</h3>
+<h3 id="step-2-signing-the-url">Step 2: Signing the URL</h3>
 <p>On the same documentation page URLs can be signed using the <code>/signing/sign</code> endpoint, and the access policy may be
 specified in that form as well. With this, several scenarios can be tested. Examples are:</p>
 <ul>
@@ -292,7 +294,7 @@ specified in that form as well. With this, several scenarios can be tested. Exam
 <li>URLs that are missing some or all of the signing parameters (policy, keyId or signature)</li>
 <li>URLs that are attempting to use signing parameters (policy and signature) from a different signed URL</li>
 </ul>
-<h3 id="verifying-the-url">Verifying the URL</h3>
+<h3 id="step-3-verifying-the-url">Step 3: Verifying the URL</h3>
 <p>The signed URLs can then be passed to the appropriate testing tool (web browser, cURL, player, …) to test the
 functionality of the verification component(s). The following table is the return codes associated with different
 rejection conditions:</p>
@@ -336,7 +338,7 @@ rejection conditions:</p>
 </table>
 <p>The components that verify a URL is signed will run before a request is checked to be valid, so if a non-existent URL is
 signed for example, the above conditions will need to be fixed before a missing (404) response code will be returned.</p>
-<h3 id="inspect-policy">Inspect policy</h3>
+<h3 id="step-4-inspect-policy">Step 4: Inspect policy</h3>
 <p>The generated policy which is added to the signed URLs can be inspected. It needs to be decoded from Base64 and the
 result must be a JSON document that contains exactly the values which have been passed during signing.</p>
 <p>Decoding this Base64 encoded policy</p>
@@ -361,7 +363,7 @@ dGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJ
 <li>URLs where the policy was modified and resigned with a different key</li>
 </ul>
 <h2 id="further-information">Further information</h2>
-<p>For an overview of Stream Security:</p>
+<p>For an overview of Stream Security: <!-- _This info is already given at the very beginning of the page! --></p>
 <ul>
 <li><a href="../../modules/stream-security/">Stream Security Overview</a></li>
 </ul>
