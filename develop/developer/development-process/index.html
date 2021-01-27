@@ -65,12 +65,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-right">
+      <a href="../release-manager/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
-        Reviewing, Merging and Declining Pull Requests
+      <a href="../release-manager/" class="btn btn-xs btn-link">
+        Release Manager
       </a>
     </div>
     
@@ -92,7 +92,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#development-process">Development Process</a><ul>
 <li><a href="#contributing-code">Contributing Code</a><ul>
 <li><a href="#github">GitHub</a></li>
-<li><a href="#accepting-criteria-for-patches-in-different-versions">Accepting Criteria for Patches in Different Versions</a></li>
+<li><a href="#acceptance-criteria-for-patches-in-different-versions">Acceptance Criteria for Patches in Different Versions</a></li>
 <li><a href="#reviews">Reviews</a><ul>
 <li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 </ul>
@@ -152,7 +152,7 @@ this repository are explained later in this guide.</p>
   which will show up on the project's list of open pull requests.</p>
 </li>
 </ul>
-<h3 id="accepting-criteria-for-patches-in-different-versions">Accepting Criteria for Patches in Different Versions</h3>
+<h3 id="acceptance-criteria-for-patches-in-different-versions">Acceptance Criteria for Patches in Different Versions</h3>
 <p>Updates between minor versions should be as smooth as possible and should usually not need manual intervention.
 That is why patches may only be accepted into releases branches (<code>r/?.x</code>) if they meet the following criteria:</p>
 <ul>
@@ -170,8 +170,6 @@ This protects against inclusion of controversial changes with no broader consent
 conflicts, that it works as expected and that it does not break anything else.</p>
 <p>If the reviewer discovers any kind of issue, he should comment on the pull request in GitHub, so that the author can
 fix the problem.</p>
-<p>For more details about the review and merge process, have a look at <a href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull
-Requests</a>.</p>
 <h4 id="pull-request-guidelines">Pull Request Guidelines</h4>
 <p>When reviewing a pull request, it is always easier if the reviewer knows what the ticket is about, and has a rough idea
 of what work has been done. To this end, there are a few expectations for all pull requests:</p>
@@ -190,6 +188,25 @@ of what work has been done. To this end, there are a few expectations for all pu
 <li>The licenses of any external libraries used in the pull request comply with the <a href="../license/">licensing rules</a> both
   in terms of the license itself as well as its listing in NOTICES</li>
 </ul>
+<p>Some changes require special attention:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">etc/listproviders</td>
+<td>Changes here might need to be reflected in the static mockup data for the Admin UI facade found in modules/admin-ui/src/test/resources/app/admin-ng/resources</td>
+</tr>
+<tr>
+<td align="left">modules/admin-ui/src/main/java</td>
+<td>In case the interface of the Admin UI facade changes, those changes need to be also reflected in the static mockup data for the Admin UI facade found in modules/admin-ui/src/test/resources/app.</td>
+</tr>
+</tbody>
+</table>
 <p>While a committer may accept a patch even if it does not meet these expectations, it is encouraged that anyone filing
 a pull request ensures that they meet these expectations.</p>
 <h2 id="git-repository-branching-model">Git Repository Branching Model</h2>
@@ -340,12 +357,12 @@ version of Opencast. They are meant for testing. Do not fear to break them. They
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-right">
+      <a href="../release-manager/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
-        Reviewing, Merging and Declining Pull Requests
+      <a href="../release-manager/" class="btn btn-xs btn-link">
+        Release Manager
       </a>
     </div>
     
