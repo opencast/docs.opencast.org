@@ -36,6 +36,7 @@
           {title: "Transcripts (Automated by Google Speech)", url: "#_top", children: [
               {title: "Overview", url: "#overview" },
               {title: "Configuration", url: "#configuration" },
+              {title: "Transcription delay before cancellation", url: "#transcription-delay-before-cancellation" },
               {title: "Workflow Operations", url: "#workflow-operations" },
           ]},
         ];
@@ -332,6 +333,17 @@ the second workflow can retrieve it from the archive to attach the caption/trans
     &lt;/operation&gt;
 
 </code></pre>
+<h2 id="transcription-delay-before-cancellation">Transcription delay before cancellation</h2>
+<p>If an event is deleted before the end of Google transcription process, or the Google Speech to Text API has some issues, or
+something unexpected happens, the transcription process for the event will not be immediately cancelled.
+Instead, transcription will be attempted several times based on the video duration and configuration properties: <code>completion.check.buffer</code> and <code>max.processing.time</code>.</p>
+<p><code>Video duration</code> + <code>completion.check.buffer</code> + <code>max.processing.time</code> set the duration before a 
+Google transcription job is cancelled.</p>
+<p><code>completion.check.buffer</code> 5 minutes by default</p>
+<p><code>completion.check.buffer</code> 5 hours by default.</p>
+<p>All these values can be changed in Google Transcription properties file: <em>etc/org.opencastproject.transcription.googlespeech.GoogleSpeechTranscriptionService.cfg</em></p>
+<p>For example, if you have a 30 min video, using the default values, it will take 5 hours and 35 min before the transcription
+is cancelled (when something goes wrong).</p>
 <h2 id="workflow-operations">Workflow Operations</h2>
 <ul>
 <li><a href="../../workflowoperationhandlers/google-speech-attach-transcription-woh/">google-speech-attach-transcription</a></li>
