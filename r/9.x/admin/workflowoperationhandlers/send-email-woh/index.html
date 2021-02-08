@@ -33,11 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "EmailWorkflowOperation", url: "#_top", children: [
+          {title: "Send Email Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Variable Substitution", url: "#variable-substitution" },
-              {title: "Examples", url: "#examples_3" },
+              {title: "Examples", url: "#examples_2" },
           ]},
         ];
 
@@ -86,10 +86,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="emailworkflowoperation">EmailWorkflowOperation</h1>
+    <h1 id="send-email-workflow-operation">Send Email Workflow Operation</h1>
+<p>ID: <code>send-email</code></p>
 <h2 id="description">Description</h2>
-<p>The EmailWorkflowOperationHandler invokes the SMTP Service to send an email with the parameters provided. It is useful
-to send email notifications when some operation(s) have been completed or some error(s) have occurred in a workflow.</p>
+<p>The send-email operation invokes the SMTP Service to send an email with the parameters provided.
+It is useful to send email notifications when some operation(s) have been completed or some error(s) have occurred in a
+workflow.</p>
 <p>The email body, if not specified by body or body-template-file, will consist of a single line of the form:
 <code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code>.</p>
 <p>Freemarker templates can be used in the following fields to allow replacement with values obtained from the workflow or
@@ -191,7 +193,6 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </table>
 <h3 id="workflow-information">Workflow Information</h3>
 <p>Use <code>${workflow.FIELD}</code></p>
-<h4 id="examples_1">Examples</h4>
 <table>
 <thead>
 <tr>
@@ -205,11 +206,36 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 <td>${workflow.id}</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>workflow template id</td>
 <td>${workflow.template}</td>
+</tr>
+<tr>
+<td>workflow state</td>
+<td>${workflow.state}</td>
+</tr>
+<tr>
+<td>workflow title</td>
+<td>${workflow.title}</td>
+</tr>
+<tr>
+<td>workflow description</td>
+<td>${workflow.description}</td>
+</tr>
+<tr>
+<td>id of parent workflow</td>
+<td>${workflow.parentId}</td>
+</tr>
+<tr>
+<td>name of workflow creator</td>
+<td>${workflow.creatorName}</td>
+</tr>
+<tr>
+<td>workflow organization</td>
+<td>${workflow.organizationId}</td>
 </tr>
 </tbody>
 </table>
+<p>Note that some of these values may not exist depending on the workflow.</p>
 <h3 id="workflow-configuration-properties">Workflow Configuration Properties</h3>
 <p>Use <code>${workflowConfig['PROPERTY']}</code></p>
 <h3 id="last-failed-operation">Last Failed Operation</h3>
@@ -226,7 +252,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </code></pre>
 <h3 id="catalog-fields">Catalog fields</h3>
 <p>Use <code>${catalogs['SUBTYPE']['FIELD']}</code></p>
-<h4 id="examples_2">Examples</h4>
+<h4 id="examples_1">Examples</h4>
 <table>
 <thead>
 <tr>
@@ -253,7 +279,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </tr>
 </tbody>
 </table>
-<h2 id="examples_3">Examples</h2>
+<h2 id="examples_2">Examples</h2>
 <h3 id="example-1">Example 1</h3>
 <p>Media package title in subject field, default email body.</p>
 <pre><code class="language-xml">&lt;operation
@@ -431,6 +457,19 @@ Logged incident of the error looks like this:
         scheme=W3C-DTF;&lt;/dcterms:temporal&gt;
     &lt;dcterms:title&gt;Test Lecture&lt;/dcterms:title&gt;
 &lt;/dublincore&gt;
+</code></pre>
+<h3 id="example-6">Example 6</h3>
+<p>Send an email to the user which started the workflow.
+Requires the user account to have a valid email address.</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;send-email&quot;
+    description=&quot;Sending email to user after media package is published&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- Lookup email address of the creator --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${workflow.creatorName}&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${mediaPackage.title} has been published&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
 
   <br>
