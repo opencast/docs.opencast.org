@@ -1,34 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    
-    <link rel="shortcut icon" href="../../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Manual Asset Upload - Administration Guide</title>
-    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/highlight.css">
-    <link href="../../../css/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Manual Asset Upload - Administration Guide</title>
+<link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../../css/base.css" rel="stylesheet"/>
+<link href="../../../css/highlight.css" rel="stylesheet"/>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="../../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="../../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
       var base_url = '../../..';
       var is_top_frame = false;
         
@@ -43,51 +37,34 @@
         ];
 
     </script>
-    <script src="../../../js/base.js"></script>
-      <script src="../../../javascript/extra.js"></script> 
-</head>
-
+<script src="../../../js/base.js"></script>
+<script src="../../../javascript/extra.js"></script>
+</meta></head>
 <body>
 <script>
 if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </script>
-
-
-
 <div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../languages/" class="btn btn-xs btn-default pull-right">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../languages/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../languages/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../languages/">
         Languages
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../event-filters/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../event-filters/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../event-filters/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../event-filters/">
         Event Filters
       </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="asset-upload-options">Asset Upload Options</h1>
+</div>
+</div>
+<h1 id="asset-upload-options">Asset Upload Options</h1>
 <h2 id="description">Description</h2>
 <p>This guide will help you customize manual upload asset options for the Admin UI.</p>
 <p>Opencast event media packages reference several different types of assets. These may include video file tracks,
@@ -118,7 +95,7 @@ EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={\
   "displayOrder": 2}
 </code></pre>
 <p>Source upload options as displayed in the Admin UI Create event:
-    <img alt="assetUploadSource" src="../images/assetUploadSource.png" /></p>
+    <img alt="assetUploadSource" src="../images/assetUploadSource.png"/></p>
 <p>Asset flavor and sub-flavor are used by default Opencast workflows. When you add new asset types, you may need to adjust
 workflows to process the new asset flavor.</p>
 <p>These workflow variables are avaiable to workflows started by the create event or add asset action:</p>
@@ -151,13 +128,13 @@ workflows to process the new asset flavor.</p>
 <p>Example of variables in a workflow:</p>
 <pre><code class="language-xml">&lt;!-- Tag any optionally uploaded assets --&gt;
 &lt;operation
-  id=&quot;tag&quot;
-  if=&quot;${downloadSourceflavorsExist}&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Tagging uploaded assets for distribution&quot;&gt;
+  id="tag"
+  if="${downloadSourceflavorsExist}"
+  exception-handler-workflow="partial-error"
+  description="Tagging uploaded assets for distribution"&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;${download-source-flavors}&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;+engage-download&lt;/configuration&gt;
+    &lt;configuration key="source-flavors"&gt;${download-source-flavors}&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;+engage-download&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -198,14 +175,14 @@ EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SEGMENTABLE={"id": "track_presentation","type":"
 <p>After enabling an upload option, a new navigation area becomes visible in the "Create event", called "Asset Upload".
 Assets can be uploaded to new events. The "Asset Upload" navigation disapears for scheduled events.
 Assets cannot be uploaded for scheduled events until after the scheduled event is processed.
-    <img alt="assetUpload" src="../images/assetUpload.png" /></p>
+    <img alt="assetUpload" src="../images/assetUpload.png"/></p>
 <p>The manually uploaded assets appear in the Create event summary
-    <img alt="assetUploadSummary" src="../images/assetUploadSummary.png" /></p>
+    <img alt="assetUploadSummary" src="../images/assetUploadSummary.png"/></p>
 <p>To Upload an asset to an existing event, go into the existing event details Assets tab, and click "Add Asset &gt;" link
-    <img alt="assetUploadExistingEvent" src="../images/assetUploadExistingEvent.png" /></p>
+    <img alt="assetUploadExistingEvent" src="../images/assetUploadExistingEvent.png"/></p>
 <p>The option selection is the same as for Create event, execpt the "Add Asset" button automatically executes the workflow
 defined by <code>EVENTS.EVENTS.NEW.UPLOAD_ASSET.WORKFLOWDEFID</code>
-    <img alt="assetUploadExistingOptions" src="../images/assetUploadExistingOptions.png" /></p>
+<img alt="assetUploadExistingOptions" src="../images/assetUploadExistingOptions.png"/></p>
 <h2 id="how-to-create-a-new-asset-option">How to Create a New Asset Option</h2>
 <p>The following steps will assist you in creating a new asset upload option. As mentioned before, only catalog and
 attachments can be added to existing events. New source types can be added to new events.</p>
@@ -313,7 +290,7 @@ Underbars are allowed. CONFIGURATION values are in JSON object format.</p>
 <tr>
 <td>accept</td>
 <td>'video/*,.png'</td>
-<td>A list of accepted file formats as taken by the HTML \&lt;input>'s <code>accept</code> field. This field is optional. This has to be a list of comma separated values. Each value of the list can either be a IANA MediaType or a file ending.</td>
+<td>A list of accepted file formats as taken by the HTML \&lt;input&gt;'s <code>accept</code> field. This field is optional. This has to be a list of comma separated values. Each value of the list can either be a IANA MediaType or a file ending.</td>
 </tr>
 </tbody>
 </table>
@@ -330,59 +307,45 @@ Add a translation for the option property when adding new option, otherwise the 
 </code></pre>
 <pre><code class="language-json">{
   ...
-  &quot;EVENTS&quot;: {
+  "EVENTS": {
     ...
-    &quot;EVENTS&quot;: {
+    "EVENTS": {
        ...
-       &quot;NEW&quot;: {
+       "NEW": {
         ...
-        &quot;UPLOAD_ASSET&quot;: {
+        "UPLOAD_ASSET": {
              ...
-            &quot;CAPTIONS_WEBVTT&quot; : &quot;Captions WebVTT&quot;,
+            "CAPTIONS_WEBVTT" : "Captions WebVTT",
              ...
 </code></pre>
 <p>Now you are ready to test and deploy.</p>
-
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../languages/" class="btn btn-xs btn-default pull-right">
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../languages/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../languages/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../languages/">
         Languages
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../event-filters/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../event-filters/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../event-filters/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../event-filters/">
         Event Filters
       </a>
-    </div>
-    
-  </div>
-
-    <br>
 </div>
-
+</div>
+<br/>
+</div>
 <footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/asset-upload.md"><i class="fa fa-github"></i>
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/asset-upload.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-
 </body>
 </html>
