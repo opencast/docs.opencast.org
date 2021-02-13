@@ -1,34 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    
-    <link rel="shortcut icon" href="../../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Internal HTTPS - Administration Guide</title>
-    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/highlight.css">
-    <link href="../../../css/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Internal HTTPS - Administration Guide</title>
+<link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../../css/base.css" rel="stylesheet"/>
+<link href="../../../css/highlight.css" rel="stylesheet"/>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="../../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="../../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
       var base_url = '../../..';
       var is_top_frame = false;
         
@@ -41,54 +35,37 @@
         ];
 
     </script>
-    <script src="../../../js/base.js"></script>
-      <script src="../../../javascript/extra.js"></script> 
-</head>
-
+<script src="../../../js/base.js"></script>
+<script src="../../../javascript/extra.js"></script>
+</meta></head>
 <body>
 <script>
 if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </script>
-
-
-
 <div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../migration/" class="btn btn-xs btn-default pull-right">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../migration/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../migration/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../migration/">
         Migrating old content to HTTPS
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../apache-httpd/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../apache-httpd/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../apache-httpd/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../apache-httpd/">
         Using Apache httpd
       </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</h1>
+</div>
+</div>
+<h1 id="enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</h1>
 <p>Edit <code>etc/org.ops4j.pax.web.cfg</code> and set:</p>
 <pre><code># This property specifies the comma separated list of addresses used by Opencast to listen to (e.g. localhost or
-# localhost,10.0.0.1). Host names or IP addresses can be used. Pax Web default value is &quot;0.0.0.0&quot;.
+# localhost,10.0.0.1). Host names or IP addresses can be used. Pax Web default value is "0.0.0.0".
 org.ops4j.pax.web.listening.addresses=0.0.0.0
 
 # Whether Opencast itself should handle HTTPS traffic.
@@ -168,10 +145,10 @@ The latter can be used as follows:</p>
 <pre><code class="language-bash"># Obtain the chain for cert.pem and save it at opencast.chain.pem.tmp
 # The -s command switch includes the root certificate; this is not
 # mandatory and might add some overhead
-cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+cert-chain-resolver -s -o "opencast.chain.pem.tmp" "cert.pem"
 
 # Verify the certificate using the chain
-openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+openssl verify -crl_download -crl_check -untrusted "opencast.chain.pem.tmp" "cert.pem"
 </code></pre>
 <h3 id="step-2-create-the-p12-keystore">Step 2: Create the p12 keystore</h3>
 <p>If the private key (assumed to be <code>key.pem</code>) is encrypted
@@ -179,36 +156,36 @@ openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&
 are safer ways supplying the key's password to OpenSSL.</p>
 <pre><code class="language-bash">openssl pkcs12 \
         -export \
-        -inkey &quot;key.pem&quot; \
-        -passin &quot;pass:&lt;the_keys_password&gt;&quot; \
-        -in &quot;opencast.chain.pem.tmp&quot; \
-        -name &quot;serverkey&quot; \
-        -out &quot;opencast.p12&quot; \
-        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+        -inkey "key.pem" \
+        -passin "pass:&lt;the_keys_password&gt;" \
+        -in "opencast.chain.pem.tmp" \
+        -name "serverkey" \
+        -out "opencast.p12" \
+        -passout "pass:&lt;the_keystore_password&gt;"
 </code></pre>
 <p>In case the private key is not protected by password:</p>
 <pre><code class="language-bash">openssl pkcs12 \
         -export \
-        -inkey &quot;key.pem&quot; \
-        -in &quot;opencast.chain.pem.tmp&quot; \
-        -name &quot;serverkey&quot; \
-        -out &quot;opencast.p12&quot; \
-        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+        -inkey "key.pem" \
+        -in "opencast.chain.pem.tmp" \
+        -name "serverkey" \
+        -out "opencast.p12" \
+        -passout "pass:&lt;the_keystore_password&gt;"
 </code></pre>
 <h3 id="step-3-import-the-p12-keystore-into-a-java-keystore">Step 3: Import the p12 keystore into a Java keystore:</h3>
 <pre><code class="language-bash">keytool \
         -importkeystore \
-        -srckeystore &quot;opencast.p12&quot; \
-        -srcstoretype &quot;pkcs12&quot; \
-        -srcstorepass &quot;&lt;the_keystore_password&gt;&quot; \
-        -destkeystore &quot;keystore.jks&quot; \
-        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+        -srckeystore "opencast.p12" \
+        -srcstoretype "pkcs12" \
+        -srcstorepass "&lt;the_keystore_password&gt;" \
+        -destkeystore "keystore.jks" \
+        -storepass "&lt;the_keystore_password&gt;"
 # print out details about the JKS built
 keytool \
-        -keystore &quot;keystore.jks&quot; \
+        -keystore "keystore.jks" \
         -list \
         -destalias serverkey \
-        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+        -storepass "&lt;the_keystore_password&gt;"
 </code></pre>
 <p><a href="https://gist.github.com/pawohl/dd92ff4909e3e2704e36dec747ea238e">There exists a shell script automating that task
 </a>.</p>
@@ -219,47 +196,33 @@ you can change Opencast's default URL to the HTTPS one.</p>
 <code>etc/custom.properties</code>.</p>
 <pre><code class="language-ini">org.opencastproject.server.url=https://opencast.example.com
 </code></pre>
-
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../migration/" class="btn btn-xs btn-default pull-right">
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../migration/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../migration/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../migration/">
         Migrating old content to HTTPS
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../apache-httpd/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../apache-httpd/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../apache-httpd/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../apache-httpd/">
         Using Apache httpd
       </a>
-    </div>
-    
-  </div>
-
-    <br>
 </div>
-
+</div>
+<br/>
+</div>
 <footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/https/opencast.only.md"><i class="fa fa-github"></i>
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/https/opencast.only.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-
 </body>
 </html>

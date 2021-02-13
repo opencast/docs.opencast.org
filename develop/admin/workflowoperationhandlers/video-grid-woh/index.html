@@ -1,34 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    
-    <link rel="shortcut icon" href="../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Video Grid - Administration Guide</title>
-    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/highlight.css">
-    <link href="../../css/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Video Grid - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
       var base_url = '../..';
       var is_top_frame = false;
         
@@ -42,51 +36,34 @@
         ];
 
     </script>
-    <script src="../../js/base.js"></script>
-      <script src="../../javascript/extra.js"></script> 
-</head>
-
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
 <body>
 <script>
 if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </script>
-
-
-
 <div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../waveform-woh/" class="btn btn-xs btn-default pull-right">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../waveform-woh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../waveform-woh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../waveform-woh/">
         Waveform
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../theme-woh/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../theme-woh/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../theme-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../theme-woh/">
         Theme
       </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="videogridworkflowoperationhandler">VideoGridWorkflowOperationHandler</h1>
+</div>
+</div>
+<h1 id="videogridworkflowoperationhandler">VideoGridWorkflowOperationHandler</h1>
 <h2 id="description">Description</h2>
 <p>The VideoGridWorkflowOperationHandler offers a way to combine several, partially simultaneously
 playing videos into a single video file. For example, the webcam feeds during a video conference
@@ -154,67 +131,53 @@ a single output file.</p>
 <p>For this example, let us assume that our source-flavor contains three videos. The SMIL file from our
 source-smil-flavor defines the duration for the final video as 3 (units of time). It also defines the start
 time and end time for each individual video, as seen below:</p>
-<p><img alt="Figure 1" src="../video-grid-woh-figure-1.png" /></p>
+<p><img alt="Figure 1" src="../video-grid-woh-figure-1.png"/></p>
 <p>Every time a video starts or ends, it marks the beginning of a new section. For each section, a video is
 generated. In our case, this happens three times, so three videos are generated. The image below shows 
 how the videos from our source-flavor are arranged in each section.</p>
-<p><img alt="Figure 2" src="../video-grid-woh-figure-2.png" /></p>
+<p><img alt="Figure 2" src="../video-grid-woh-figure-2.png"/></p>
 <p>Finally, the videos for each section are combined into one final, single video file.</p>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
-    id=&quot;video-grid&quot;
-    description=&quot;Generate sections of the final video&quot;
-    fail-on-error=&quot;true&quot;
-    exception-handler-workflow=&quot;partial-error&quot;&gt;
+    id="video-grid"
+    description="Generate sections of the final video"
+    fail-on-error="true"
+    exception-handler-workflow="partial-error"&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-smil-flavor&quot;&gt;smil/source+partial&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/partial&lt;/configuration&gt;
-    &lt;configuration key=&quot;concat-encoding-profile&quot;&gt;concat-samecodec.work&lt;/configuration&gt;
+    &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key="source-smil-flavor"&gt;smil/source+partial&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;presenter/partial&lt;/configuration&gt;
+    &lt;configuration key="concat-encoding-profile"&gt;concat-samecodec.work&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../waveform-woh/" class="btn btn-xs btn-default pull-right">
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../waveform-woh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../waveform-woh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../waveform-woh/">
         Waveform
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../theme-woh/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../theme-woh/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../theme-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../theme-woh/">
         Theme
       </a>
-    </div>
-    
-  </div>
-
-    <br>
 </div>
-
+</div>
+<br/>
+</div>
 <footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/video-grid-woh.md"><i class="fa fa-github"></i>
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/video-grid-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-
 </body>
 </html>

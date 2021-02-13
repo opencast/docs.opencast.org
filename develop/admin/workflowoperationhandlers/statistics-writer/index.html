@@ -1,34 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    
-    <link rel="shortcut icon" href="../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Statistics Writer - Administration Guide</title>
-    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/highlight.css">
-    <link href="../../css/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Statistics Writer - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
       var base_url = '../..';
       var is_top_frame = false;
         
@@ -41,51 +35,34 @@
         ];
 
     </script>
-    <script src="../../js/base.js"></script>
-      <script src="../../javascript/extra.js"></script> 
-</head>
-
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
 <body>
 <script>
 if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </script>
-
-
-
 <div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../tag-woh/" class="btn btn-xs btn-default pull-right">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../tag-woh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../tag-woh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../tag-woh/">
         Tag
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../start-workflow-woh/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../start-workflow-woh/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../start-workflow-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../start-workflow-woh/">
         Start Workflow
       </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="statistics-writer-workflow-operation">Statistics Writer Workflow Operation</h1>
+</div>
+</div>
+<h1 id="statistics-writer-workflow-operation">Statistics Writer Workflow Operation</h1>
 <p>ID: <code>statistics-writer</code></p>
 <h2 id="description">Description</h2>
 <p>The statistics writer operation can be used to publish statistics about a video to a statistics backend such as
@@ -141,62 +118,48 @@ write the negative length and can thus be used for retract workflows, too.</p>
 <p>* Possible values are <code>milliseconds</code>, <code>seconds</code>, <code>minutes</code>, <code>hours</code>, <code>days</code></p>
 <h2 id="operation-examples">Operation Examples</h2>
 <pre><code class="language-XML">&lt;operation
-  id=&quot;statistics-writer&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Collect video statistics&quot;&gt;
+  id="statistics-writer"
+  fail-on-error="true"
+  exception-handler-workflow="partial-error"
+  description="Collect video statistics"&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;flavor&quot;&gt;presenter/video&lt;/configuration&gt;
-    &lt;configuration key=&quot;retract&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;retention-policy&quot;&gt;infinite&lt;/configuration&gt;
-    &lt;configuration key=&quot;measurement-name&quot;&gt;publishedhours&lt;/configuration&gt;
-    &lt;configuration key=&quot;organization-resource-id-name&quot;&gt;organizationId&lt;/configuration&gt;
-    &lt;configuration key=&quot;length-field-name&quot;&gt;hours&lt;/configuration&gt;
-    &lt;configuration key=&quot;temporal-resolution&quot;&gt;hours&lt;/configuration&gt;
+    &lt;configuration key="flavor"&gt;presenter/video&lt;/configuration&gt;
+    &lt;configuration key="retract"&gt;false&lt;/configuration&gt;
+    &lt;configuration key="retention-policy"&gt;infinite&lt;/configuration&gt;
+    &lt;configuration key="measurement-name"&gt;publishedhours&lt;/configuration&gt;
+    &lt;configuration key="organization-resource-id-name"&gt;organizationId&lt;/configuration&gt;
+    &lt;configuration key="length-field-name"&gt;hours&lt;/configuration&gt;
+    &lt;configuration key="temporal-resolution"&gt;hours&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../tag-woh/" class="btn btn-xs btn-default pull-right">
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../tag-woh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../tag-woh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../tag-woh/">
         Tag
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../start-workflow-woh/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../start-workflow-woh/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../start-workflow-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../start-workflow-woh/">
         Start Workflow
       </a>
-    </div>
-    
-  </div>
-
-    <br>
 </div>
-
+</div>
+<br/>
+</div>
 <footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/statistics-writer.md"><i class="fa fa-github"></i>
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/statistics-writer.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-
 </body>
 </html>
