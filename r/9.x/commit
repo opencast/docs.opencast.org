@@ -1,5 +1,13 @@
-commit 7195c458eb8493b240583031d04836f22caa3b57
+commit 508e8ca26098951b21b72f12687044e864b55560
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Sat Mar 20 13:18:27 2021 +0100
+Date:   Sat Mar 20 22:02:42 2021 +0100
 
-    Merge r/8.x into r/9.x
+    Revert "No Matrix Build on Opencast 8"
+    
+    This reverts commit 12872fd8ec681dce706616f9654ee9e7edce02f0.
+    
+    Commit 12872fd8ec681dce706616f9654ee9e7edce02f0 was a temporary fix for
+    Opencast 8 and should be reverted when merged into `r/9.x`.  On Opencast
+    9+, builds are run against both Java 8 and Java 11. Since we dont want
+    to build and upload the distribution twice, possibly even causing upload
+    problems, the upload steps are limited to Java 11 only.
