@@ -113,6 +113,13 @@ Please make sure to compare your configuration against the current configuration
   to <code>download-source-tags</code> and <code>download-source-flavors</code> respectively. If you use custom workflows, you may need to
   adjust them accordingly.</li>
 </ul>
+<h3 id="wowza-streaming-configuration-changes">Wowza streaming configuration changes</h3>
+<p>In <a href="https://github.com/opencast/opencast/pull/1179">pull request #1179</a>, the configuration
+of Wowza servers was made tenant-specific and has been moved to
+<code>etc/org.opencastproject.distribution.streaming.wowza.WowzaStreamingDistributionService.cfg</code>.</p>
+<p>Additionally, support for RTMP was dropped. This shouldn't be a problem in most cases, as RTMP usually wasn't
+used before, despite being specified in the URL. If your streaming URL started with <code>rtmp://</code>, try changing
+it to <code>https://</code>.</p>
 <h2 id="install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</h2>
 <p>Although Opencast has come with its own integrated Elasticsearch node in the past, recent versions of Elasticsearch no
 longer support being embedded in applications. Since the Elasticsearch client was updated to version 7, Opencast requires
