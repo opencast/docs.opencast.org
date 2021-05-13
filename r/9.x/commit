@@ -1,8 +1,14 @@
-commit d41f3ae76eb528d6efa37f2cec707c774f2f2060
+commit 09668c95004aee96222f725052f4599238c97530
 Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Wed May 12 11:41:14 2021 -0600
+Date:   Fri May 7 21:23:01 2021 -0600
 
-    Merge branch 'oaipmh-modification-date' of lkiesow/opencast into r/9.x
+    Fixing unchecked directory list() call.
     
-    Pull request #2344
-      Auto-generate OAI-PMH database
+    This change resolves an issue report on the users list where retracting would
+    sometimes cause NPEs when the list().length check was done.  Reading the docs
+    closely, .list() returns null in the case where the File is *not* a directory,
+    or if an IO error occurs.  Since an IO error will likely show up as a *ton* of
+    other errors, we're going to check if the .list() call returns null, and assume
+    that a null here is because the File isn't pointing at a directory.  This
+    probably shouldn't be happening, but we'll try and delete whatever it's
+    pointing at anyway.
