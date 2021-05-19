@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Retry Strategies - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Retry Strategies", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../add-catalog-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../add-catalog-woh/">
+        Add Catalog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../">
+        Overview
+      </a>
+</div>
+</div>
+<h1 id="retry-strategies">Retry Strategies</h1>
+<p>An operation can have a retry-strategy specified to define what will happen if the operation <strong>fails</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>none</strong></td>
+<td>This is the default. No action taken. If the operation fails, the behavior will depend on the fail-on-error parameter. If fail-on-error="true", the workflow will fail. If fail-on-error="false", the next operation will be executed.</td>
+</tr>
+<tr>
+<td><strong>retry</strong></td>
+<td>If the operation fails, it will be re-tried until the number of attempts reaches max-attempts, which defaults to 2.</td>
+</tr>
+<tr>
+<td><strong>hold</strong></td>
+<td>If the operation fails, the workflow will be paused, until the user takes an action. The user can choose to <em>Retry</em> the operation or <em>Abort</em> it. The user can retry the operation many times, until the number of attempts reaches max-attempts. If the user aborts the operation, the behavior will depend on the fail-on-error parameter as described above.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 1</strong>: No retry</p>
+<p>If the operation1 fails, the workflow will fail because fail-on-error="true".</p>
+<pre><code>&lt;operation
+  id="operation1"
+  retry-strategy="none"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Operation One"&gt;
+&lt;/operation&gt;
+</code></pre>
+<p><strong>Example 2</strong>: Automatic retry</p>
+<p>If operation2 fails, it will be retried until it succeeds or until it has failed 5 times.</p>
+<pre><code>&lt;operation
+  id="operation2"
+  retry-strategy="retry"
+  max-attempts="5"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Operation Two"&gt;
+&lt;/operation&gt;
+</code></pre>
+<p><strong>Example 3</strong>: Manual retry</p>
+<p>If operation3 fails, the user can choose between Retry or Abort. The user can manually retry the operation 4 times.</p>
+<pre><code>&lt;operation
+  id="operation3"
+  retry-strategy="hold"
+  max-attempts="5"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Operation Three"&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../add-catalog-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../add-catalog-woh/">
+        Add Catalog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../">
+        Overview
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retry-strategies.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>
