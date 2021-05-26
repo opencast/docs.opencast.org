@@ -1033,9 +1033,11 @@ response.</p>
 ]
 </code></pre>
 <h3 id="delete-apieventsevent_id">DELETE /api/events/{event_id}</h3>
-<p>Deletes an event.</p>
+<p>Retracts possible publications and deletes an event. Since version 1.6.0 published events will be retracted by this 
+endpoint, if you use a version previous to 1.6.0 don't call this endpoint before retracting published events.  </p>
 <p><strong>Response</strong></p>
-<p><code>204 (NO CONTENT)</code>: The event has been deleted.<br/>
+<p><code>202 (ACCEPTED)</code>: The retraction of publications has started.<br/>
+<code>204 (NO CONTENT)</code>: The event has been deleted.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
 <h1 id="access-policy">Access Policy</h1>
 <p>Most events in Opencast come with an access control list (ACL), containing entries that map actions to roles, either
