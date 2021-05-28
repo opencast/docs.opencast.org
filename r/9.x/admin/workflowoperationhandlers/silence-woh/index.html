@@ -91,11 +91,28 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td>smil-flavor-subtype</td>
 <td><code>smil</code></td>
-<td>The output parameter is smil-flavor-subtype which provides the modificatory for the flavor subtype after this operation. The main flavor will be consistent and only the subtype will be replaced.</td>
+<td>The output parameter is smil-flavor-subtype which provides the modification for the flavor subtype after this operation. The main flavor will be consistent and only the subtype will be replaced.</td>
 <td>EMPTY</td>
+</tr>
+<tr>
+<td>export-segments-duration</td>
+<td><code>true</code></td>
+<td>Set this value to true and this operation will set two workflow properties for each analyzed track, the sum of duration of each non silent segment and same value in relation to the whole track length (in percent).</td>
+<td><code>false</code></td>
 </tr>
 </tbody>
 </table>
+<h3 id="workflow-properties-generated-if-export-segments-duration-is-set-to-true">Workflow properties generated if export-segments-duration is set to true</h3>
+<p>For each source track the silence detection will run as expected. As a result we get a list of non-silent segments.
+Each segment has a start and end timestamp, where we can calculate the segment duration.
+The sum of duration of all non-silent segments will be set as workflow property with the name
+<code>&lt;source_flavor_type&gt;_&lt;source_flavor_subtype&gt;_active_audio_duration</code> and value in seconds.
+The relation to the whole track length will be set with the workflow property named
+<code>&lt;source_flavor_type&gt;_&lt;source_flavor_subtype&gt;_active_audio_duration_percent</code> as percent value (0-100).</p>
+<p>Example output for an 120 minutes long presenter/source track:</p>
+<pre><code>presenter_source_active_audio_duration = 5400
+presenter_source_active_audio_duration_percent = 75
+</code></pre>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code>&lt;operation
   id="silence"
@@ -104,6 +121,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     &lt;configuration key="source-flavors"&gt;*/audio&lt;/configuration&gt;
     &lt;configuration key="smil-flavor-subtype"&gt;smil&lt;/configuration&gt;
     &lt;configuration key="reference-tracks-flavor"&gt;*/preview&lt;/configuration&gt;
+    &lt;configuration key="export-segments-duration"&gt;true&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
