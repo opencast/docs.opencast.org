@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Incident - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "IncidentCreatorWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="include-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="include-woh.html">
+        Include
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="import-wf-properties-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="import-wf-properties-woh.html">
+        Import Workflow Properties
+      </a>
+</div>
+</div>
+<h1 id="incidentcreatorworkflowoperationhandler">IncidentCreatorWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The IncidentCreatorWorkflowOperationHandler creates an incident on a dummy job used for integration testing.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>2</td>
+<td>The code number of the incident to produce.</td>
+<td>1</td>
+</tr>
+<tr>
+<td>severity</td>
+<td>WARNING</td>
+<td>The severity. See Incident.Severity enum.</td>
+<td>INFO</td>
+</tr>
+<tr>
+<td>details</td>
+<td>"tagged,+rss" / "-rss,+tagged"</td>
+<td>Some details: title=content;title=content;...</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>params</td>
+<td>"presentation/tagged"</td>
+<td>Some params: key=value;key=value;...</td>
+<td>EMPTY</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+  id="incident"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Provoke a job incident"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="code"&gt;3&lt;/configuration&gt;
+    &lt;configuration key="severity"&gt;INFO&lt;/configuration&gt;
+    &lt;configuration key="details"&gt;exception=content;id=325&lt;/configuration&gt;
+    &lt;configuration key="params"&gt;track=track-1;profile=full&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="include-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="include-woh.html">
+        Include
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="import-wf-properties-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="import-wf-properties-woh.html">
+        Import Workflow Properties
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/incident-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

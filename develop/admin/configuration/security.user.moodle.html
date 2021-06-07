@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Moodle User Provider - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "What it does", url: "#_top", children: [
+          ]},
+          {title: "Requirements", url: "#requirements", children: [
+          ]},
+          {title: "Step 1", url: "#step-1", children: [
+          ]},
+          {title: "Step 2", url: "#step-2", children: [
+          ]},
+          {title: "Step 3", url: "#step-3", children: [
+          ]},
+          {title: "Step 4", url: "#step-4", children: [
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="security.user.sakai.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="security.user.sakai.html">
+        Sakai User Provider
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="security.ldap.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="security.ldap.html">
+        LDAP Authentication and Authorization (without CAS)
+      </a>
+</div>
+</div>
+<h3 id="what-it-does">What it does</h3>
+<p>The <a href="https://moodle.org/">Moodle</a> User Provider enriches Opencast users with a
+set of roles made up of the user's membership in Moodle courses, of the form
+COURSEID_Role. For example, an Opencast user who is also a Moodle user and a
+member of the Moodle course <code>myCourseID</code> with the Moodle capability
+<code>tool/opencast:learner</code> will be granted the Opencast role <code>myCourseID_Learner</code>.
+Analogously, users with the capability <code>tool/opencast:instructor</code> will receive
+the Opencast role <code>myCourseID_Instructor</code>. Note that by default, Moodle course
+IDs are opaque ID values such as <code>10765</code>. The <code>ROLE_GROUP_MOODLE</code> Opencast group
+role is granted to all users that also exist in Moodle.</p>
+<p>The mapping of Moodle courses and capabilities to Opencast roles is consistent
+with the course and role mapping used by the <a href="../modules/ltimodule.html">LTI</a>
+endpoint. The Moodle User Provider can therefore be used with LTI or another
+method of authenticating users.</p>
+<p>The Moodle Role Provider allows Moodle course and capability combinations to be
+used in Event and Series ACLs. For example, the role <code>myCourseID_Learner</code> can be
+added to a Series ACL to grant access to the Series to members of the
+<code>myCourseID</code> course in Moodle.</p>
+<h3 id="requirements">Requirements</h3>
+<p>The Moodle User Provider requires the
+<a href="https://github.com/unirz-tu-ilmenau/moodle-tool_opencast">moodle-tool_opencast</a>
+plug-in that extends Moodle with the necessary API functions and capabilities.
+As this plug-in also provides base settings for additional Moodle plug-ins, the
+user is asked to provide Opencast API login information during the installation.
+The values can be arbitrary, if only the Moodle User Provider should be
+configured.</p>
+<p>After the installation, a new user with the capabilities
+<code>webservice/rest:use</code>, <code>tool/opencast:externalapi</code>, <code>moodle/user:viewalldetails</code>,
+<code>moodle/user:viewdetails</code> and <code>moodle/site:accessallgroups</code> has to be created.
+Then generate a new web service token and add that user to the "Opencast web
+service" service.</p>
+<h3 id="step-1">Step 1</h3>
+<p>Edit <code>etc/org.apache.karaf.features.cfg</code> and make sure the <code>opencast-moodle</code> feature is listed in the <code>featuresBoot</code>
+option.</p>
+<h3 id="step-2">Step 2</h3>
+<p>To enable the Moodle User Provider, copy and rename the bundled configuration
+template from
+<code>OPENCAST/etc/org.opencastproject.userdirectory.moodle-default.cfg.template</code> to
+<code>OPENCAST/etc/org.opencastproject.userdirectory.moodle-default.cfg</code></p>
+<p>Edit the configuration file to set your Moodle URL and the web service token of
+the Moodle user that should be used for API calls.</p>
+<pre><code># The URL and token for the Moodle REST webservice
+org.opencastproject.userdirectory.moodle.url=http://localhost/webservice/rest/server.php
+org.opencastproject.userdirectory.moodle.token=mytoken1234abcdef
+</code></pre>
+<h3 id="step-3">Step 3</h3>
+<p>Verify that the Moodle User Provider starts up with the correct Moodle URL by looking
+for a log entry like this:</p>
+<pre><code>(MoodleUserProviderInstance:143) - Creating new MoodleUserProviderInstance(pid=org.opencastproject.userdirectory.moodle.378cdff4-825f-4b60-b1ed-33f75aa7f265, url=http://localhost/webservice/rest/server.php, cacheSize=1000, cacheExpiration=60)
+</code></pre>
+<p>Then login to Opencast using a username which also exists in your Moodle system.
+Verify the roles granted to the user by opening the URL
+OPENCAST-URL/info/me.json in a new browser tab, or navigate to the user details
+and open the tab "Effective Roles".</p>
+<p>If necessary, you can increase the logging detail from the Moodle user provider
+by adding an entry to <code>OPENCAST/etc/org.ops4j.pax.logging.cfg</code>:</p>
+<pre><code>log4j.logger.org.opencastproject.userdirectory.moodle=DEBUG
+</code></pre>
+<h3 id="step-4">Step 4</h3>
+<p>You can grant additional roles to all Moodle users in Opencast by creating a
+group with the name 'Moodle'. You can then add additional roles to this group,
+which will be inherited by all Moodle users.</p>
+<p>You can also use the group role name <code>ROLE_GROUP_MOODLE</code> in Event or Series
+ACLs.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="security.user.sakai.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="security.user.sakai.html">
+        Sakai User Provider
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="security.ldap.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="security.ldap.html">
+        LDAP Authentication and Authorization (without CAS)
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/security.user.moodle.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

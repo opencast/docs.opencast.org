@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Events API - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "General", url: "#_top", children: [
+              {title: "GET /api/events", url: "#get-apievents" },
+              {title: "POST /api/events", url: "#post-apievents" },
+              {title: "GET /api/events/{event_id}", url: "#get-apieventsevent_id" },
+              {title: "POST /api/events/{event_id}", url: "#post-apieventsevent_id" },
+              {title: "DELETE /api/events/{event_id}", url: "#delete-apieventsevent_id" },
+          ]},
+          {title: "Access Policy", url: "#access-policy", children: [
+              {title: "GET /api/events/{event_id}/acl", url: "#get-apieventsevent_idacl" },
+              {title: "PUT /api/events/{event_id}/acl", url: "#put-apieventsevent_idacl" },
+              {title: "POST /api/events/{event_id}/acl/{action}", url: "#post-apieventsevent_idaclaction" },
+              {title: "DELETE /api/events/{event_id}/acl/{action}/{role}", url: "#delete-apieventsevent_idaclactionrole" },
+          ]},
+          {title: "Metadata", url: "#metadata", children: [
+              {title: "GET /api/events/{event_id}/metadata", url: "#get-apieventsevent_idmetadata" },
+              {title: "GET /api/events/{event_id}/metadata", url: "#get-apieventsevent_idmetadata_1" },
+              {title: "PUT /api/events/{event_id}/metadata", url: "#put-apieventsevent_idmetadata" },
+              {title: "DELETE /api/events/{event_id}/metadata", url: "#delete-apieventsevent_idmetadata" },
+          ]},
+          {title: "Publications", url: "#publications", children: [
+              {title: "GET /api/events/{event_id}/publications", url: "#get-apieventsevent_idpublications" },
+              {title: "GET /api/events/{event_id}/publications/{publication_id}", url: "#get-apieventsevent_idpublicationspublication_id" },
+          ]},
+          {title: "Scheduling Information", url: "#scheduling-information", children: [
+              {title: "GET /api/events/{event_id}/scheduling", url: "#get-apieventsevent_idscheduling" },
+              {title: "PUT /api/events/{event_id}/scheduling", url: "#put-apieventsevent_idscheduling" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="series-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="series-api.html" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="agents-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="agents-api.html" class="btn btn-xs btn-link">
+        Agents API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apievents">GET /api/events</a></li>
+<li><a href="#post-apievents">POST /api/events</a></li>
+<li><a href="#get-apieventsevent_id">GET /api/events/{event_id}</a></li>
+<li><a href="#post-apieventsevent_id">POST /api/events/{event_id}</a></li>
+<li><a href="#delete-apieventsevent_id">DELETE /api/events/{event_id}</a></li>
+</ul>
+</li>
+<li><a href="#access-policy">Access Policy</a><ul>
+<li><a href="#get-apieventsevent_idacl">GET /api/events/{event_id}/acl</a></li>
+<li><a href="#put-apieventsevent_idacl">PUT /api/events/{event_id}/acl</a></li>
+<li><a href="#post-apieventsevent_idaclaction">POST /api/events/{event_id}/acl/{action}</a></li>
+<li><a href="#delete-apieventsevent_idaclactionrole">DELETE /api/events/{event_id}/acl/{action}/{role}</a></li>
+</ul>
+</li>
+<li><a href="#metadata">Metadata</a><ul>
+<li><a href="#get-apieventsevent_idmetadata">GET /api/events/{event_id}/metadata</a></li>
+<li><a href="#get-apieventsevent_idmetadata_1">GET /api/events/{event_id}/metadata</a></li>
+<li><a href="#put-apieventsevent_idmetadata">PUT /api/events/{event_id}/metadata</a></li>
+<li><a href="#delete-apieventsevent_idmetadata">DELETE /api/events/{event_id}/metadata</a></li>
+</ul>
+</li>
+<li><a href="#publications">Publications</a><ul>
+<li><a href="#get-apieventsevent_idpublications">GET /api/events/{event_id}/publications</a></li>
+<li><a href="#get-apieventsevent_idpublicationspublication_id">GET /api/events/{event_id}/publications/{publication_id}</a></li>
+</ul>
+</li>
+<li><a href="#scheduling-information">Scheduling Information</a><ul>
+<li><a href="#get-apieventsevent_idscheduling">GET /api/events/{event_id}/scheduling</a></li>
+<li><a href="#put-apieventsevent_idscheduling">PUT /api/events/{event_id}/scheduling</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<h3 id="get-apievents">GET /api/events</h3>
+<p>Returns a list of events.</p>
+<p>The following query string parameters are supported to filter, sort and paginate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="usage.html#filtering">Filtering</a>). See the below table for the list of available filters. Version 1.5.0 and newer support comma separated use of the <code>filter</code> keyword, creating a logical OR.</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="usage.html#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="types.html#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="usage.html#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="types.html#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="usage.html#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>contributors</code></td>
+<td align="left">Events where the contributors match. Can occur multiple times</td>
+</tr>
+<tr>
+<td align="left"><code>location</code></td>
+<td align="left">Events based upon the location it is scheduled in</td>
+</tr>
+<tr>
+<td align="left"><code>series</code></td>
+<td align="left">Events based upon which series they are a part of. Use the series identifier here. If using version 1.1.0 or higher, please use <code>is_part_of</code> instead</td>
+</tr>
+<tr>
+<td align="left"><code>subject</code></td>
+<td align="left">Filters events based upon which subject they are a part of</td>
+</tr>
+<tr>
+<td align="left"><code>textFilter</code></td>
+<td align="left">Filters events where any part of the event's metadata fields match this value</td>
+</tr>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left">Filters events whose identifiers match this value. Can occur multiple times (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">Filters events whose title match this value (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">Filters events whose description match this value (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>series_name</code></td>
+<td align="left">Filters events that belong to series with the given name (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>language</code></td>
+<td align="left">Filters events whose language match this value (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>created</code></td>
+<td align="left">Filters events whose created match this value (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>license</code></td>
+<td align="left">Filters events whose license match this value (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code></td>
+<td align="left">Filters events whose rights holder matches this value (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>status</code></td>
+<td align="left">Filters events based on their status (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>is_part_of</code></td>
+<td align="left">Events based upon which series they are a part of. Use the series identifier here (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>source</code></td>
+<td align="left">Filter events whose source match this value (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>agent_id</code></td>
+<td align="left">Filter events based on the capture agent id (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>start</code></td>
+<td align="left">Filter events based on start date (version 1.1.0 or higher)</td>
+</tr>
+<tr>
+<td align="left"><code>technical_start</code></td>
+<td align="left">Filter events based on the technical start date (version 1.1.0 or higher)</td>
+</tr>
+</tbody>
+</table>
+<p>Note:
+The filters <code>start</code> and <code>technical_start</code> expect the following value:</p>
+<p><a href="types.html#date-and-time"><code>datetime</code></a> + '/' + <a href="types.html#date-and-time"><code>datetime</code></a></p>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">By the title of the event</td>
+</tr>
+<tr>
+<td align="left"><code>presenter</code></td>
+<td align="left">By the presenter of the event</td>
+</tr>
+<tr>
+<td align="left"><code>start_date</code></td>
+<td align="left">By the start date of the event</td>
+</tr>
+<tr>
+<td align="left"><code>end_date</code></td>
+<td align="left">By the end date of the event</td>
+</tr>
+<tr>
+<td align="left"><code>review_status</code></td>
+<td align="left">By whether the event has been reviewed and approved or not [DEPRECATED]</td>
+</tr>
+<tr>
+<td align="left"><code>workflow_state</code></td>
+<td align="left">By the current processing state of the event. Is it scheduled to be recorded (INSTANTIATED), currently processing (RUNNING), paused waiting for a resource or user paused (PAUSED), cancelled (STOPPED), currently failing (FAILING), already failed (FAILED), or finally SUCCEEDED</td>
+</tr>
+<tr>
+<td align="left"><code>scheduling_status</code></td>
+<td align="left">By the current scheduling status of the event [DEPRECATED]</td>
+</tr>
+<tr>
+<td align="left"><code>series_name</code></td>
+<td align="left">By the series name of the event</td>
+</tr>
+<tr>
+<td align="left"><code>location</code></td>
+<td align="left">By the location (capture agent) that the event will be or has been recorded on</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>sign</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether public distribution urls should be signed</td>
+</tr>
+<tr>
+<td align="left"><code>withacl</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the acl metadata should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withmetadata</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the metadata catalogs should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withpublications</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the publication ids and urls should be included in the response</td>
+</tr>
+<tr>
+<td align="left"><code>withscheduling</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the scheduling information should be included in the response (version 1.1.0 and higher).</td>
+</tr>
+</tbody>
+</table>
+<p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if URL signing is turned
+on in Opencast. Remember to consider the <a href="security-api.html#Introduction">maximum validity of signed URLs</a> when caching
+this response.</p>
+<p><strong>Sample request</strong></p>
+<pre><code class="language-xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of events is returned. The list is represented as JSON array where each element
+is a JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the event</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical creator of this event</td>
+</tr>
+<tr>
+<td align="left"><code>presenter</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The presenters of this event</td>
+</tr>
+<tr>
+<td align="left"><code>created</code>*</td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time this event was created</td>
+</tr>
+<tr>
+<td align="left"><code>subjects</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The subjects of this event</td>
+</tr>
+<tr>
+<td align="left"><code>start</code></td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The technical (version &lt; 1.4.0) or bibliographic (version &gt;= 1.4.0) start date and time of this event</td>
+</tr>
+<tr>
+<td align="left"><code>description</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of this event</td>
+</tr>
+<tr>
+<td align="left"><code>title</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of this event</td>
+</tr>
+<tr>
+<td align="left"><code>processing_state</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The current processing state of this event</td>
+</tr>
+<tr>
+<td align="left"><code>duration</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The bibliographic duration of this event</td>
+</tr>
+<tr>
+<td align="left"><code>archive_version</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The current version of this event</td>
+</tr>
+<tr>
+<td align="left"><code>contributor</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The contributors of this event</td>
+</tr>
+<tr>
+<td align="left"><code>has_previews</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether this event can be opened with the video editor</td>
+</tr>
+<tr>
+<td align="left"><code>location</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The bibliographic location of this event</td>
+</tr>
+<tr>
+<td align="left"><code>publication_status</code></td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The publications available for this event</td>
+</tr>
+<tr>
+<td align="left"><code>language</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The language of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The rights holder of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>license</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The license of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>is_part_of</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical identifier of the series this event belongs to (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>series</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of the series this event belongs to (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>source</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The source of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>status</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical status of this event (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p>* Metadata fields of metadata catalog <code>dublincore/episode</code></p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;776d4970-bc2d-45c4-900a-1f80b7990cb8&quot;,
+    &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+    &quot;presenter&quot;: [
+      &quot;Prof. X&quot;,
+      &quot;Dr. Who&quot;
+    ],
+    &quot;created&quot;: &quot;2018-03-19T16:11:48Z&quot;,
+    &quot;subjects&quot;: [
+      &quot;Mathematics&quot;,
+      &quot;Basics&quot;
+    ],
+    &quot;start&quot;: &quot;2018-03-19T16:11:48Z&quot;,
+    &quot;description&quot;: &quot;This lecture is about the very basics&quot;,
+    &quot;title&quot;: &quot;Lecture 1 - The Basics&quot;,
+    &quot;processing_state&quot;: &quot;SUCCEEDED&quot;,
+    &quot;duration&quot;: 0,
+    &quot;archive_version&quot;: 3,
+    &quot;contributor&quot;: [
+      &quot;Prof. X&quot;
+    ],
+    &quot;has_previews&quot;: true,
+    &quot;location&quot;: &quot;&quot;,
+    &quot;publication_status&quot;: [
+      &quot;internal&quot;,
+      &quot;engage-player&quot;,
+      &quot;api&quot;,
+      &quot;oaipmh-default&quot;
+    ]
+  },
+  {
+    &quot;identifier&quot;: &quot;2356d450-b42d-94xd-2a0d-3fa04745c0cb8&quot;,
+    &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+    &quot;presenter&quot;: [
+    ],
+    &quot;created&quot;: &quot;2018-04-20T09:38:42Z&quot;,
+    &quot;subjects&quot;: [
+      &quot;Physics&quot;
+    ],
+    &quot;start&quot;: &quot;2018-04-23T08:00:00Z&quot;,
+    &quot;description&quot;: &quot;The forces explained&quot;,
+    &quot;title&quot;: &quot;Lecture 8 - Advanced stuff&quot;,
+    &quot;processing_state&quot;: &quot;SUCCEEDED&quot;,
+    &quot;duration&quot;: 0,
+    &quot;archive_version&quot;: 2,
+    &quot;contributor&quot;: [
+    ],
+    &quot;has_previews&quot;: true,
+    &quot;location&quot;: &quot;&quot;,
+    &quot;publication_status&quot;: [
+      &quot;internal&quot;,
+      &quot;engage-player&quot;,
+      &quot;api&quot;,
+      &quot;oaipmh-default&quot;
+    ]
+  }
+]
+</code></pre>
+<h3 id="post-apievents">POST /api/events</h3>
+<p>Creates an event by sending metadata, access control list, processing instructions and files in a <a href="http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">multipart request</a>.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Multipart Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>acl</code></td>
+<td align="left"><a href="types.html#acl"><code>acl</code></a></td>
+<td align="left">A collection of roles with their possible action</td>
+</tr>
+<tr>
+<td align="left"><code>metadata</code></td>
+<td align="left"><a href="types.html#catalogs"><code>catalogs</code></a></td>
+<td align="left">Event metadata as Form param</td>
+</tr>
+<tr>
+<td align="left"><code>presenter</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Presenter movie track</td>
+</tr>
+<tr>
+<td align="left"><code>presentation</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Presentation movie track</td>
+</tr>
+<tr>
+<td align="left"><code>audio</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Audio track</td>
+</tr>
+<tr>
+<td align="left"><code>processing</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Processing instructions task configuration</td>
+</tr>
+<tr>
+<td align="left"><code>scheduling</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Scheduling information (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Scheduling</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>agent_id</code></td>
+<td align="left">Yes</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical identifier of the capture agent</td>
+</tr>
+<tr>
+<td align="left"><code>start</code></td>
+<td align="left">Yes</td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time (UTC) when the recording shall start</td>
+</tr>
+<tr>
+<td align="left"><code>end</code></td>
+<td align="left">Yes*</td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time (UTC) when the recording shall end</td>
+</tr>
+<tr>
+<td align="left"><code>duration</code></td>
+<td align="left">Yes*</td>
+<td align="left"><a href="types.html#basic"><code>integer</code></a></td>
+<td align="left">The duration of the recording in milliseconds</td>
+</tr>
+<tr>
+<td align="left"><code>rrule</code></td>
+<td align="left">Yes*</td>
+<td align="left"><a href="types.html#recurrence-rule"><code>rrule</code></a></td>
+<td align="left">The recurrence rule used to create multiple scheduled events</td>
+</tr>
+</tbody>
+</table>
+<p>* When creating a single scheduled event, either <code>end</code> or <code>duration</code> must be specified. When creating multiple
+scheduled events, the fields <code>end</code>, <code>duration</code> and <code>rrule</code> are required</p>
+<p>To create a single scheduled event, omit the field <code>rrule</code>. You can specify the start and end of the recording by
+using either the fields <code>start</code> and <code>end</code> or the fields <code>start</code> and <code>duration</code>.
+Please note that specifying both <code>end</code> and <code>duration</code> is not valid.</p>
+<p>To create multiple scheduled events, the field <code>rrule</code> is used. This field contains the recurrence rule used to
+determine the dates and times the scheduled events shall be created within the time period specified by the fields
+<code>start</code> and <code>end</code> + <code>duration</code>.
+Please note that <code>duration</code> is a mandatory field when creating multiple scheduled events.</p>
+<p><strong>Additional Notes</strong></p>
+<ul>
+<li>Both <code>start</code> and <code>end</code> must be specified in UTC</li>
+</ul>
+<p><strong>Sample</strong></p>
+<p>metadata:</p>
+<pre><code>[
+  {
+    &quot;flavor&quot;: &quot;dublincore/episode&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;value&quot;: &quot;Captivating title&quot;
+      },
+      {
+        &quot;id&quot;: &quot;subjects&quot;,
+        &quot;value&quot;: [&quot;John Clark&quot;, &quot;Thiago Melo Costa&quot;]
+      },
+      {
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;value&quot;: &quot;A great description&quot;
+      },
+      {
+        &quot;id&quot;: &quot;startDate&quot;,
+        &quot;value&quot;: &quot;2016-06-22&quot;
+      },
+      {
+        &quot;id&quot;: &quot;startTime&quot;,
+        &quot;value&quot;: &quot;13:30:00Z&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<p>processing:</p>
+<pre><code>{
+  &quot;workflow&quot;: &quot;schedule-and-upload&quot;,
+  &quot;configuration&quot;: {
+    &quot;flagForCutting&quot;: &quot;false&quot;,
+    &quot;flagForReview&quot;: &quot;false&quot;,
+    &quot;publishToEngage&quot;: &quot;true&quot;,
+    &quot;publishToHarvesting&quot;: &quot;true&quot;,
+    &quot;straightToPublishing&quot;: &quot;true&quot;
+  }
+}
+</code></pre>
+<p>acl:</p>
+<pre><code>[
+  {
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<p>scheduling a single event:</p>
+<pre><code>{
+  &quot;agent_id&quot;: &quot;ca24&quot;,
+  &quot;start&quot;: &quot;2018-03-27T16:00:00Z&quot;,
+  &quot;end&quot;: &quot;2018-03-27T19:00:00Z&quot;,
+  &quot;inputs&quot;: [&quot;default&quot;]
+}
+</code></pre>
+<p>scheduling multiple events:</p>
+<pre><code>{
+  &quot;agent_id&quot;: &quot;ca24&quot;,
+  &quot;start&quot;: &quot;2019-05-20T16:00:00Z&quot;,
+  &quot;end&quot;: &quot;2019-06-10T19:00:00Z&quot;,
+  &quot;inputs&quot;: [&quot;default&quot;],
+  &quot;rrule&quot;:&quot;FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=16;BYMINUTE=0&quot;,
+  &quot;duration&quot;:1080000;
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: Multiple new events were created (scheduling with <code>rrule</code>).<br/>
+<code>201 (CREATED)</code>: A new event is created and its identifier is returned in the <code>Location</code> header.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>409 (CONFLICT)</code>: The event could not be created due to a scheduling conflict. A list of conflicting events is returned.</p>
+<p>In case of success, when scheduling multiple events (200):</p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;e6aeb8df-a852-46cd-8128-b89de696f20e&quot;
+  },
+  {
+    &quot;identifier&quot;: &quot;90e93bf6-ed95-483b-8e57-3e2de77a786f&quot;
+  }
+]
+</code></pre>
+<p>In case of success (201):</p>
+<pre><code class="language-xml">Location: http://api.opencast.org/api/events/e6aeb8df-a852-46cd-8128-b89de696f20e
+</code></pre>
+<pre><code>{
+  &quot;identifier&quot;: &quot;e6aeb8df-a852-46cd-8128-b89de696f20e&quot;
+}
+</code></pre>
+<p>In case of a conflict (409):</p>
+<pre><code>[
+  {
+    &quot;start&quot;:&quot;2018-03-21T14:00:00Z&quot;,
+    &quot;end&quot;:&quot;2018-03-21T16:00:00Z&quot;,
+    &quot;title&quot;:&quot;My Event 06&quot;
+  }
+]
+</code></pre>
+<h3 id="get-apieventsevent_id">GET /api/events/{event_id}</h3>
+<p>Returns a single event.</p>
+<p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if signing is turned on
+in Opencast. Remember to consider the <a href="security-api.html#Introduction">maximum validity of signed URLs</a> when caching this
+response.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>sign</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether public distribution urls should be signed.</td>
+</tr>
+<tr>
+<td align="left"><code>withacl</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the acl metadata should be included in the response.</td>
+</tr>
+<tr>
+<td align="left"><code>withmetadata</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the metadata catalogs should be included in the response.</td>
+</tr>
+<tr>
+<td align="left"><code>withpublications</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the publication ids and urls should be included in the response.</td>
+</tr>
+<tr>
+<td align="left"><code>withscheduling</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether the scheduling information should be included in the response (version 1.1.0 and higher).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The event is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the event</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical creator of this event</td>
+</tr>
+<tr>
+<td align="left"><code>presenter</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The presenters of this event</td>
+</tr>
+<tr>
+<td align="left"><code>created</code>*</td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time this event was created</td>
+</tr>
+<tr>
+<td align="left"><code>subjects</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The subjects of this event</td>
+</tr>
+<tr>
+<td align="left"><code>start</code></td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">The technical (version &lt; 1.4.0) or bibliographic (version &gt;= 1.4.0) start date and time of this event</td>
+</tr>
+<tr>
+<td align="left"><code>description</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of this event</td>
+</tr>
+<tr>
+<td align="left"><code>title</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of this event</td>
+</tr>
+<tr>
+<td align="left"><code>processing_state</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The current processing state of this event</td>
+</tr>
+<tr>
+<td align="left"><code>duration</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The bibliographic duration of this event</td>
+</tr>
+<tr>
+<td align="left"><code>archive_version</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The current version of this event</td>
+</tr>
+<tr>
+<td align="left"><code>contributor</code>*</td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The contributors of this event</td>
+</tr>
+<tr>
+<td align="left"><code>has_previews</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether this event can be opened with the video editor</td>
+</tr>
+<tr>
+<td align="left"><code>location</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The bibliographic location of this event</td>
+</tr>
+<tr>
+<td align="left"><code>publication_status</code></td>
+<td align="left"><a href="types.html#array"><code>array[string]</code></a></td>
+<td align="left">The publications available for this event</td>
+</tr>
+<tr>
+<td align="left"><code>language</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The language of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The rights holder of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>license</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The license of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>is_part_of</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical identifier of the series this event belongs to (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>series</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of the series this event belongs to (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>source</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The source of this event (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>status</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The technical status of this event (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p>* Metadata fields of metadata catalog <code>dublincore/episode</code></p>
+<p><code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;776d4970-bc2d-45c4-900a-1f80b7990cb8&quot;,
+  &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+  &quot;presenter&quot;: [
+    &quot;Prof. X&quot;,
+    &quot;Dr. Who&quot;
+  ],
+  &quot;created&quot;: &quot;2018-03-19T16:11:48Z&quot;,
+  &quot;subjects&quot;: [
+    &quot;Mathematics&quot;,
+    &quot;Basics&quot;
+  ],
+  &quot;start&quot;: &quot;2018-03-19T16:11:48Z&quot;,
+  &quot;description&quot;: &quot;This lecture is about the very basics&quot;,
+  &quot;title&quot;: &quot;Lecture 1 - The Basics&quot;,
+  &quot;processing_state&quot;: &quot;SUCCEEDED&quot;,
+  &quot;duration&quot;: 0,
+  &quot;archive_version&quot;: 3,
+  &quot;contributor&quot;: [
+    &quot;Prof. X&quot;
+  ],
+  &quot;has_previews&quot;: true,
+  &quot;location&quot;: &quot;&quot;,
+  &quot;publication_status&quot;: [
+    &quot;internal&quot;,
+    &quot;engage-player&quot;,
+    &quot;api&quot;,
+    &quot;oaipmh-default&quot;
+  ]
+}
+</code></pre>
+<h3 id="post-apieventsevent_id">POST /api/events/{event_id}</h3>
+<p>Updates an event.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Multipart Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>acl</code></td>
+<td align="left"><a href="types.html#acl"><code>acl</code></a></td>
+<td align="left">A collection of roles with their possible action</td>
+</tr>
+<tr>
+<td align="left"><code>metadata</code></td>
+<td align="left"><a href="types.html#catalogs"><code>catalogs</code></a></td>
+<td align="left">Event metadata as Form param</td>
+</tr>
+<tr>
+<td align="left"><code>presenter</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Presenter movie track</td>
+</tr>
+<tr>
+<td align="left"><code>presentation</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Presentation movie track</td>
+</tr>
+<tr>
+<td align="left"><code>audio</code></td>
+<td align="left"><a href="types.html#file"><code>file</code></a></td>
+<td align="left">Audio track</td>
+</tr>
+<tr>
+<td align="left"><code>processing</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Processing instructions task configuration</td>
+</tr>
+<tr>
+<td align="left"><code>scheduling</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Scheduling information (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample</strong></p>
+<p>This sample request will update the Dublin Core metadata section of the event only.</p>
+<p>metadata:</p>
+<pre><code>[
+  {
+    &quot;flavor&quot;: &quot;dublincore/episode&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;value&quot;: &quot;Captivating title&quot;
+      },
+      {
+        &quot;id&quot;: &quot;subjects&quot;,
+        &quot;value&quot;: [&quot;Space&quot;, &quot;Final Frontier&quot;]
+      },
+      {
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;value&quot;: &quot;A great description&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The event has been updated.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.<br/>
+<code>409 (CONFLICT)</code>: The event could not be updated due to a scheduling conflict. A list of conflicting events is returned.</p>
+<p>In case of a conflict (when updating <code>scheduling</code>):</p>
+<pre><code>[
+  {
+    &quot;start&quot;:&quot;2018-03-21T14:00:00Z&quot;,
+    &quot;end&quot;:&quot;2018-03-21T16:00:00Z&quot;,
+    &quot;title&quot;:&quot;My Event 06&quot;
+  }
+]
+</code></pre>
+<h3 id="delete-apieventsevent_id">DELETE /api/events/{event_id}</h3>
+<p>Retracts possible publications and deletes an event. Since version 1.6.0 published events will be retracted by this 
+endpoint, if you use a version previous to 1.6.0 don't call this endpoint before retracting published events.  </p>
+<p><strong>Response</strong></p>
+<p><code>202 (ACCEPTED)</code>: The retraction of publications has started.<br/>
+<code>204 (NO CONTENT)</code>: The event has been deleted.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h1 id="access-policy">Access Policy</h1>
+<p>Most events in Opencast come with an access control list (ACL), containing entries that map actions to roles, either
+allowing or denying that action.</p>
+<p>The section on roles in the chapter on <a href="authorization.html#AccessControl">Authorization</a> will help shed some light on what
+kind of roles are available and how they are assigned to the current user.</p>
+<p>For more information about access control lists, please refer to <a href="types.html#access-control-lists">Access Control Lists</a>.</p>
+<h3 id="get-apieventsevent_idacl">GET /api/events/{event_id}/acl</h3>
+<p>Returns an event's access policy.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The access control list for the specified event is returned as <a href="types.html#acl"><code>acl</code></a>.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<h3 id="put-apieventsevent_idacl">PUT /api/events/{event_id}/acl</h3>
+<p>Update an event's access policy.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>acl</code></td>
+<td align="left"><a href="types.html#acl"><code>acl</code></a></td>
+<td align="left">Access policy</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the existing access control list will be overwritten.</p>
+<p><strong>Sample</strong></p>
+<p>acl:</p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The access control list for the specified event is updated.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h3 id="post-apieventsevent_idaclaction">POST /api/events/{event_id}/acl/{action}</h3>
+<p>Grants permission to execute <code>action</code> on the specified event to any user with role <code>role</code>. Note that this is a
+convenience method to avoid having to build and post a complete access control list.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Path Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>event_id</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Event identifier</td>
+</tr>
+<tr>
+<td align="left"><code>action</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The action that is allowed to be executed</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The role that is granted permission</td>
+</tr>
+</tbody>
+</table>
+<p>Note that other access control lists entries will not be affected by this request.</p>
+<p><strong>Sample</strong></p>
+<pre><code>role: &quot;ROLE_STUDENT&quot;
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The permission has been created in the access control list of the specified event.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h3 id="delete-apieventsevent_idaclactionrole">DELETE /api/events/{event_id}/acl/{action}/{role}</h3>
+<p>Revokes permission to execute <code>action</code> on the specified event from any user with role <code>role</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Path Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>event_id</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Event identifier</td>
+</tr>
+<tr>
+<td align="left"><code>action</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The action that is no longer allowed to be executed</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The role that is no longer granted permission</td>
+</tr>
+</tbody>
+</table>
+<p>Note that other access control lists entries will not be affected by this request.</p>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The permission has been revoked from the access control list of the specified event.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h1 id="metadata">Metadata</h1>
+<p>This section describes how to use the External API to work with metadata catalogs associated to events.</p>
+<p>Opencast manages the bibliographic metadata of series using metadata catalogs which are identified by flavors.
+The default metadata catalog for Opencast events has the flavor <code>dublincore/episode</code>. Opencast additionally supports
+extended metadata catalogs for series that can be configured.</p>
+<p>The External API supports both the default event metadata catalog and events extended metadata catalogs.
+For the default event metadata catalog, the metadata is directly returned in the responses.</p>
+<p>Since the metadata catalogs can be configured, the External API provides a facility to retrieve the catalog
+configuration of series metadata catalogs. For more details about this mechanism, please refer to
+<a href="types.html#metadata-catalogs">"Metadata Catalogs"</a>.</p>
+<h3 id="get-apieventsevent_idmetadata">GET /api/events/{event_id}/metadata</h3>
+<p>Returns the complete set of metadata.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The metadata collection is returned as <a href="types.html#catalogs"><code>catalogs</code></a>.<br/>
+<code>404 (OK)</code>: The specified event does not exist.</p>
+<pre><code>[
+  {
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.EPISODE&quot;,
+    &quot;flavor&quot;: &quot;dublincore/episode&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;Captivating title&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;required&quot;: true
+      },
+      {
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;A great description&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.DESCRIPTION&quot;,
+        &quot;type&quot;: &quot;text_long&quot;,
+        &quot;required&quot;: false
+      }
+    ]
+  },
+  {
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.LICENSE&quot;,
+    &quot;flavor&quot;: &quot;license/episode&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;license&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;CCND&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.LICENSE&quot;,
+        &quot;collection&quot;: {
+          &quot;BSD&quot;: &quot;EVENTS.LICENSE.BSD&quot;,
+          &quot;GPL3&quot;: &quot;EVENTS.LICENSE.GPL&quot;,
+          &quot;CCND&quot;: &quot;EVENTS.LICENSE.CCND&quot;
+        },
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;required&quot;: false
+      }
+    ]
+  }
+]
+</code></pre>
+<h3 id="get-apieventsevent_idmetadata_1">GET /api/events/{event_id}/metadata</h3>
+<p>Returns the event's metadata of the specified type. For a metadata catalog there is the flavor such as
+<code>dublincore/episode</code> and this is the unique type.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="types.html#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to get</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The metadata collection is returned as <a href="types.html#fields"><code>fields</code></a>.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;readOnly&quot;: false,
+    &quot;value&quot;: &quot;Captivating title&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+    &quot;type&quot;: &quot;text&quot;,
+    &quot;required&quot;: true
+  },
+  {
+    &quot;id&quot;: &quot;description&quot;,
+    &quot;readOnly&quot;: false,
+    &quot;value&quot;: &quot;A great description&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.DESCRIPTION&quot;,
+    &quot;type&quot;: &quot;text_long&quot;,
+    &quot;required&quot;: false
+  }
+]
+</code></pre>
+<h3 id="put-apieventsevent_idmetadata">PUT /api/events/{event_id}/metadata</h3>
+<p>Update the metadata with the matching type of the specified event. For a metadata catalog there is the flavor such as
+<code>dublincore/episode</code> and this is the unique type.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="types.html#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to update</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>metadata</code></td>
+<td align="left"><a href="types.html#values"><code>values</code></a></td>
+<td align="left">Metadata fields and values to be updated</td>
+</tr>
+</tbody>
+</table>
+<p>Note that metadata fields not included in the form parameter <code>metadata</code> will not be updated.</p>
+<p><strong>Sample</strong></p>
+<p>metadata:</p>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;value&quot;: &quot;Captivating title&quot;
+  },
+  {
+    &quot;id&quot;: &quot;subjects&quot;,
+    &quot;value&quot;: [&quot;Space&quot;, &quot;Final Frontier&quot;]
+  },
+  {
+    &quot;id&quot;: &quot;description&quot;,
+    &quot;value&quot;: &quot;A great description&quot;
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The metadata of the given namespace has been updated.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h3 id="delete-apieventsevent_idmetadata">DELETE /api/events/{event_id}/metadata</h3>
+<p>Delete the metadata namespace catalog of the specified event. This will remove all fields and values of the catalog.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="types.html#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to delete</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the metadata catalog of type <code>dublincore/episode</code> cannot be deleted.</p>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The metadata of the given namespace has been updated.<br/>
+<code>403 (FORBIDDEN)</code>: The main metadata catalog dublincore/episode cannot be deleted as it has mandatory fields.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<h1 id="publications">Publications</h1>
+<h3 id="get-apieventsevent_idpublications">GET /api/events/{event_id}/publications</h3>
+<p>Returns an event's list of publications.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>sign</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether public distribution urls should be signed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The list of publications is returned.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<pre><code>[
+  {
+    &quot;id&quot;:&quot;publication-1&quot;,
+    &quot;channel&quot;:&quot;engage&quot;,
+    &quot;mediatype&quot;:&quot;text/html&quot;,
+    &quot;url&quot;:&quot;http://engage.opencast.org/engage/ui/player.html?id=123&quot;
+  },
+  {
+    &quot;id&quot;:&quot;publication-2&quot;,
+    &quot;channel&quot;:&quot;oaipmh&quot;,
+    &quot;mediatype&quot;:&quot;text/html&quot;,
+    &quot;url&quot;:&quot;http://oaipmh.opencast.org/default/?verb=GetRecord&amp;id=123&quot;
+  }
+]
+</code></pre>
+<h3 id="get-apieventsevent_idpublicationspublication_id">GET /api/events/{event_id}/publications/{publication_id}</h3>
+<p>Returns a single publication.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>sign</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether public distribution urls should be signed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The track details are returned.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</br>
+<code>404 (NOT FOUND)</code>: The specified publication does not exist.</p>
+<pre><code>{
+  &quot;id&quot;:&quot;publication-1&quot;,
+  &quot;channel&quot;:&quot;engage&quot;,
+  &quot;mediatype&quot;:&quot;text/html&quot;,
+  &quot;url&quot;:&quot;http://engage.opencast.org/engage/ui/player.html?id=123&quot;,
+  &quot;media&quot;:[
+    {
+      &quot;id&quot;:&quot;track-1&quot;,
+      &quot;mediatype&quot;:&quot;video/mp4&quot;,
+      &quot;url&quot;:&quot;http://download.opencast.org/123/presenter.mp4&quot;,
+      &quot;flavor&quot;:&quot;presenter/delivery&quot;,
+      &quot;size&quot;:84938490,
+      &quot;checksum&quot;:&quot;58308405383094&quot;,
+      &quot;tags&quot;:[
+
+      ],
+      &quot;has_audio&quot;:true,
+      &quot;has_video&quot;:true,
+      &quot;duration&quot;:3648,
+      &quot;description&quot;:&quot;Video: h264 (Constrained Baseline) (avc1 / 0x31637661), yuv420p, 640x360, 447 kb/s, 25 fps, 25&quot;
+    },
+    {
+      &quot;id&quot;:&quot;track-2&quot;,
+      &quot;mediatype&quot;:&quot;audio/aac&quot;,
+      &quot;url&quot;:&quot;http://download.opencast.org/123/presenter.m4a&quot;,
+      &quot;flavor&quot;:&quot;presenter/audio&quot;,
+      &quot;size&quot;:9364,
+      &quot;checksum&quot;:&quot;839478372&quot;,
+      &quot;tags&quot;:[
+
+      ],
+      &quot;has_audio&quot;:true,
+      &quot;has_video&quot;:false,
+      &quot;duration&quot;:3648,
+      &quot;description&quot;:&quot;aac (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 96 kb/s (default)&quot;
+    }
+  ],
+  &quot;attachments&quot;:[
+    {
+      &quot;id&quot;:&quot;attachment-1&quot;,
+      &quot;mediatype&quot;:&quot;image/png&quot;,
+      &quot;url&quot;:&quot;http://download.opencast.org/123/preview.png&quot;,
+      &quot;flavor&quot;:&quot;presenter/preview&quot;,
+      &quot;size&quot;:62728,
+      &quot;checksum&quot;:&quot;389475737&quot;,
+      &quot;tags&quot;:[
+
+      ]
+    }
+  ],
+  &quot;metadata&quot;:[
+    {
+      &quot;id&quot;:&quot;catalog-1&quot;,
+      &quot;mediatype&quot;:&quot;text/xml&quot;,
+      &quot;url&quot;:&quot;http://download.opencast.org/123/dublincore.xml&quot;,
+      &quot;flavor&quot;:&quot;dublincore/episode&quot;,
+      &quot;size&quot;:364,
+      &quot;checksum&quot;:&quot;18498498383&quot;,
+      &quot;tags&quot;:[
+
+      ]
+    }
+  ]
+}
+</code></pre>
+<h1 id="scheduling-information">Scheduling Information</h1>
+<h3 id="get-apieventsevent_idscheduling">GET /api/events/{event_id}/scheduling</h3>
+<p>Available since API version 1.1.0.</p>
+<p>Returns an event's scheduling information.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The scheduling information is returned.<br/>
+<code>204 (NO CONTENT)</code>: The event is not scheduled.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
+<pre><code>{
+  &quot;agent_id&quot;: &quot;ca24&quot;,
+  &quot;start&quot;: &quot;2018-03-27T16:00:00Z&quot;,
+  &quot;end&quot;: &quot;2018-03-27T19:00:00Z&quot;,
+  &quot;inputs&quot;: [&quot;default&quot;]
+}
+</code></pre>
+<h3 id="put-apieventsevent_idscheduling">PUT /api/events/{event_id}/scheduling</h3>
+<p>Available since API version 1.1.0.</p>
+<p>Update the scheduling information of the event with id <code>{event_id}</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+<th align="left">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>scheduling</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The scheduling information.</td>
+<td align="left"><span class="required">Required</span></td>
+<td align="left">1.1.0</td>
+</tr>
+<tr>
+<td align="left"><code>allowConflict</code></td>
+<td align="left"><code>boolean</code></td>
+<td align="left">Allow conflicts when updating scheduling.</td>
+<td align="left">false</td>
+<td align="left">1.2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample</strong></p>
+<p>scheduling:</p>
+<pre><code>{
+  &quot;agent_id&quot;: &quot;ca24&quot;,
+  &quot;start&quot;: &quot;2018-03-27T16:00:00Z&quot;,
+  &quot;end&quot;: &quot;2018-03-27T19:00:00Z&quot;,
+  &quot;inputs&quot;: [&quot;default&quot;]
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The scheduling information of the event has been updated.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.<br/>
+<code>409 (CONFLICT)</code>: The scheduling information could not be updated due to a conflict. A list of conflicting events is returned.</p>
+<p>In case of a conflict:</p>
+<pre><code>[
+  {
+    &quot;start&quot;:&quot;2018-03-21T14:00:00Z&quot;,
+    &quot;end&quot;:&quot;2018-03-21T16:00:00Z&quot;,
+    &quot;title&quot;:&quot;My Event 06&quot;
+  }
+]
+</code></pre>
+<p><code>allowConflict</code> allows the schedule to be updated without checking for conflicts.
+To allow conflicts (<code>true</code>) the call <strong>MUST</strong> be made with a user that has an <em>Administrative Role</em>.</p>
+<p>If not handled properly this will likely cause two or more events to be
+scheduled on a particular capture agent at the same time, which will then
+cause a capture failure for all but one of the events.</p>
+<p>The person making this call and allowing conflicts to exist, will bear the
+responsibility of resolving the conflicts that might result.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="series-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="series-api.html" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="agents-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="agents-api.html" class="btn btn-xs btn-link">
+        Agents API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/events-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

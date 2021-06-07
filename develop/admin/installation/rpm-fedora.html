@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Fedora - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Install from Repository (Fedora)", url: "#_top", children: [
+              {title: "Add RPMfusion repository", url: "#add-rpmfusion-repository" },
+              {title: "Install 3rd-party-tools", url: "#install-3rd-party-tools" },
+              {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
+              {title: "Install Opencast", url: "#install-opencast" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="rpm-el7.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="rpm-el7.html">
+        RHEL/CentOS 7
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="debs.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="debs.html">
+        Debian/Ubuntu
+      </a>
+</div>
+</div>
+<h1 id="install-from-repository-fedora">Install from Repository (Fedora)</h1>
+<p>The Opencast RPM repository for Fedora has been discontinued since Fedora with RPMfusion now provides nearly all
+necessary dependencies for Opencast. Use the following steps to install them, then continue with the <a href="source-linux.html">installation from
+source</a>.</p>
+<p><em>This guide is to be merged into the guide for the installation from source.</em></p>
+<h2 id="add-rpmfusion-repository">Add RPMfusion repository</h2>
+<p><a href="https://rpmfusion.org/">RPMFusion</a> is a community-driven RPM repository for Fedora. It provides tools like FFmpeg. You
+can activate it using:</p>
+<pre><code>dnf install --nogpgcheck \
+  http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+</code></pre>
+<h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
+<p>You can install all necessary 3rd-Party-Tools for Opencast like this:</p>
+<pre><code>dnf install maven ffmpeg tesseract hunspell sox synfig nmap-ncat
+</code></pre>
+<p>For additional Unicode tests run during the build process, you can also install:</p>
+<pre><code>dnf install hunspell-de tesseract-langpack-deu
+</code></pre>
+<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
+<p>The Apache ActiveMQ message broker is commonly installed on the same machine as Opencast for an all-in-one system. The
+version of ActiveMQ shipped with Fedora is too old but you can use the <a href="https://copr.fedoraproject.org/coprs/lkiesow/apache-activemq-dist/">ActiveMQ-dist Copr RPM repository
+</a></p>
+<p>Make sure it is properly configured for Opencast. For more information about the setup, have a look at the
+<a href="../configuration/message-broker.html">message broker configuration documentation</a>.</p>
+<h2 id="install-opencast">Install Opencast</h2>
+<p>For the installation of Opencast, please have a look at the <a href="source-linux.html">installation from source documentation
+</a>.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="rpm-el7.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="rpm-el7.html">
+        RHEL/CentOS 7
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="debs.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="debs.html">
+        Debian/Ubuntu
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/rpm-fedora.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

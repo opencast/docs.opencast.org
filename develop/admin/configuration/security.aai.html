@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Authentication and Authorization Infrastructure (AAI) - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Authentication and Authorization Infrastructure (AAI) Configuration", url: "#_top", children: [
+              {title: "Prerequisites", url: "#prerequisites" },
+              {title: "Step 1: Configuration of the AAI Login handler", url: "#step-1-configuration-of-the-aai-login-handler" },
+              {title: "Step 2: Spring Security Configuration", url: "#step-2-spring-security-configuration" },
+              {title: "Step 3: Protecting HTML pages by Shibboleth", url: "#step-3-protecting-html-pages-by-shibboleth" },
+              {title: "Advanced SSO configuration: The DynamicLoginHandler", url: "#advanced-sso-configuration-the-dynamicloginhandler" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="security.cas.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="security.cas.html">
+        Central Authentication Service (CAS)
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="acl.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="acl.html">
+        Access Control Lists
+      </a>
+</div>
+</div>
+<h1 id="authentication-and-authorization-infrastructure-aai-configuration">Authentication and Authorization Infrastructure (AAI) Configuration</h1>
+<p>This page describes how to configure Opencast to take advantage of the Authentication and Authorization
+Infrastructure (AAI).</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This guides assumes that you know how to setup and configure a Shibboleth Service Provider, i.e. you are assumed
+to already have performed the following steps:</p>
+<ul>
+<li>Registration of your Shibboleth Service Provider at your Shibboleth Federation Service Registry</li>
+<li>Setup and configuration of Shibboleth on the servers you want to use it</li>
+<li>Configuration of your web server</li>
+</ul>
+<p>In case you require help on this, contact the institution responsible for managing the Shibboleth Federation you
+are part of.</p>
+<p>An informative list of Shibboleth Federations can be found on:</p>
+<p><a href="https://refeds.org/federations">https://refeds.org/federations</a></p>
+<h2 id="step-1-configuration-of-the-aai-login-handler">Step 1: Configuration of the AAI Login handler</h2>
+<p>Opencast ships with a configurable AAI Login handler that needs to be adjusted to your environment.
+The configuration can be found in <code>etc/org.opencastproject.security.aai.ConfigurableLoginHandler.cfg</code>.</p>
+<p>First off all, enable the AAI login handler:</p>
+<pre><code>enabled=true
+</code></pre>
+<p>For bootstrapping purposes, you might want to configure the AAI bootstrap user:</p>
+<pre><code>bootstrap.user.id=&lt;AAI ID&gt;
+</code></pre>
+<p>That user will be assigned ROLE_ADMIN at login time. This enables you to access the administrative UI and
+configure user authorization without the need to fiddle with the database directly.
+Once user authorization has been setup, disable the AAI bootstrap user.</p>
+<p>Since the HTTP request header names required by the AAI login handler are specific to Shibboleth Federations,
+you will need to first adjust the following properties.</p>
+<p>Set the following header names to the correct values:</p>
+<pre><code>header.given_name = "&lt;Name of Shibboleth attribute&gt;"
+header.surname = "&lt;Name of Shibboleth attribute&gt;"
+header.email = "&lt;Name of Shibboleth attribute&gt;"
+header.home_organization = "&lt;Name of Shibboleth attribute&gt;"
+</code></pre>
+<p>Optionally, you can configure the name of some basic roles the AAI login handler will assign to authenticated users.</p>
+<p>The prefix of the user role will determine what unique role a given Shibboleth user has. The role is of the
+form <em>role.user.prefix + Unique ID provided by Shibboleth</em>.</p>
+<pre><code>role.user.prefix = "ROLE_AAI_USER_"
+</code></pre>
+<p>To indicate the AAI home organization a user belongs to, the organization membership role is assigned to the user.
+The role is of the form <em>role.organization.prefix + Home Organization provided by Shibboleth +
+role.organization.suffix</em></p>
+<pre><code>role.organization.prefix = "ROLE_AAI_ORG_"
+role.organization.suffix = "_MEMBER"
+</code></pre>
+<p>To indicate the fact that a user has authenticated himself using Shibboleth, the login handler assigns the
+role as specified by the property <em>role.federation</em>.</p>
+<pre><code>role.federation = "ROLE_AAI_USER"
+</code></pre>
+<h2 id="step-2-spring-security-configuration">Step 2: Spring Security Configuration</h2>
+<p>In order to take advantage of Shibboleth authentication, you will need to uncomment the following lines found
+in <code>etc/security/mh_default_org.xml</code>:</p>
+<p>The Shibboleth header authentication filter needs to be enabled to get access to the Shibboleth information
+within the HTTP request headers.</p>
+<pre><code>&lt;!-- Shibboleth header authentication filter --&gt;
+&lt;sec:custom-filter ref="shibbolethHeaderFilter" position="PRE_AUTH_FILTER"/&gt;
+</code></pre>
+<p>To ensure that a logout is not just logging out the user from the Opencast application but also from Shibboleth,
+you will need to configure the logout-success-url:</p>
+<pre><code>&lt;!-- Enables log out --&gt;
+&lt;sec:logout logout-success-url="/Shibboleth.sso/Logout?return=www.opencast.org" /&gt;
+</code></pre>
+<p><strong>IMPORTANT:</strong> In the section <em>Shibboleth Support</em>, be sure to adapt the value of <em>principalRequestHeader</em> to the
+respective name of the Shibboleth attribute you use in your Shibboleth Federation:</p>
+<pre><code>&lt;!-- ###################### --&gt;
+&lt;!-- # Shibboleth Support # --&gt;
+&lt;!-- ###################### --&gt;
+
+&lt;!-- General Shibboleth header extraction filter --&gt;
+&lt;bean id="shibbolethHeaderFilter"
+      class="org.opencastproject.security.shibboleth.ShibbolethRequestHeaderAuthenticationFilter"&gt;
+  &lt;property name="principalRequestHeader" value="&lt;Shibboleth attribute name&gt;"/&gt;
+  &lt;property name="authenticationManager" ref="authenticationManager" /&gt;
+  &lt;property name="userDetailsService" ref="userDetailsService" /&gt;
+  &lt;property name="userDirectoryService" ref="userDirectoryService" /&gt;
+  &lt;property name="shibbolethLoginHandler" ref="configurableLoginHandler" /&gt;
+  &lt;property name="exceptionIfHeaderMissing" value="false" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- AAI specific header extractor and user generator --&gt;
+&lt;bean id="configurableLoginHandler" class="org.opencastproject.security.aai.ConfigurableLoginHandler"&gt;
+  &lt;property name="securityService" ref="securityService" /&gt;
+  &lt;property name="userReferenceProvider" ref="userReferenceProvider" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="preauthAuthProvider"
+      class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider"&gt;
+  &lt;property name="preAuthenticatedUserDetailsService"&gt;
+    &lt;bean id="userDetailsServiceWrapper"
+          class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper"&gt;
+      &lt;property name="userDetailsService" ref="userDetailsService"/&gt;
+    &lt;/bean&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>Finally be sure to enable the user reference provider to enable support for externally provided users:</p>
+<pre><code>&lt;osgi:reference id="userReferenceProvider" cardinality="1..1"
+              interface="org.opencastproject.userdirectory.api.UserReferenceProvider" /&gt;
+</code></pre>
+<p>Since the Opencast login page is not used when Shibboleth authentication is in place, there is no point in redirecting
+unauthenticated requests to the Opencast login form. You can redirect them directly to the administrative user
+interface which is supposed to be protected by Shibboleth.</p>
+<pre><code>&lt;!-- Redirects unauthenticated requests to the login form --&gt;
+&lt;bean id="userEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"&gt;
+  &lt;property name="loginFormUrl" value="/admin-ng/index.html" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>Last but not least, you need to add the <em>preauthAuthProvider</em> authentication provider to the <em>authentication-manager</em>:</p>
+<pre><code>&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider ref="preauthAuthProvider"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;
+    &lt;sec:password-encoder hash="md5"&gt;&lt;sec:salt-source user-property="username" /&gt;&lt;/sec:password-encoder&gt;
+  &lt;/sec:authentication-provider&gt;
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<h2 id="step-3-protecting-html-pages-by-shibboleth">Step 3: Protecting HTML pages by Shibboleth</h2>
+<p>It is important to understand that Shibboleth is only used to protect content that is accessed by human users.
+Access to APIs is protected by other means of authentication as, for example, digest authentication.</p>
+<p>To protect HTML pages, you will need to adapt the configuration of your web server:</p>
+<pre><code>&lt;LocationMatch \.(htm|html)$&gt;
+    AuthType shibboleth
+    ShibRequireSession On
+    ShibUseHeaders On
+    require valid-user
+&lt;/LocationMatch&gt;
+</code></pre>
+<h2 id="advanced-sso-configuration-the-dynamicloginhandler">Advanced SSO configuration: The DynamicLoginHandler</h2>
+<p>To configure complex mappings of AAI attributes via <a href="https://docs.spring.io/spring-framework/docs/3.0.x/reference/expressions.html"><code>SpEL</code></a> in the <code>mh_default_org.xml</code> file, it is necessary to follow the same steps as above. Just change the bean reference of <code>shibbolethLoginHandler</code> to <code>aaiLoginHandler</code> in the <code>shibbolethHeaderFilter</code>:</p>
+<pre><code>&lt;bean id="shibbolethHeaderFilter"
+      class="org.opencastproject.security.shibboleth.ShibbolethRequestHeaderAuthenticationFilter"&gt;
+  &lt;property name="principalRequestHeader" value="&lt;Shibboleth attribute name&gt;"/&gt;
+  &lt;property name="authenticationManager" ref="authenticationManager" /&gt;
+  &lt;property name="userDetailsService" ref="userDetailsService" /&gt;
+  &lt;property name="userDirectoryService" ref="userDirectoryService" /&gt;
+  &lt;property name="shibbolethLoginHandler" ref="aaiLoginHandler" /&gt;
+  &lt;property name="exceptionIfHeaderMissing" value="false" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>Activate the <code>aaiLoginHandler</code> bean and the <code>attributeMapper</code> bean</p>
+<pre><code>&lt;bean id="aaiLoginHandler" class="org.opencastproject.security.aai.DynamicLoginHandler"&gt;
+  &lt;property name="securityService" ref="securityService" /&gt;
+  &lt;property name="userReferenceProvider" ref="userReferenceProvider" /&gt;
+  &lt;property name="attributeMapper" ref="attributeMapper" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="attributeMapper" class="org.opencastproject.security.aai.api.AttributeMapper"&gt;
+  &lt;property name="useHeader" value="true" /&gt;
+  &lt;property name="multiValueDelimiter" value=";" /&gt;
+  &lt;property name="attributeMap" ref="attributeMap" /&gt;
+  &lt;property name="aaiAttributes" ref="aaiAttributes" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>then, define all the attributes you may want to use, so the mapper gets populated at login e.g.</p>
+<pre><code>&lt;util:list id="aaiAttributes" value-type="java.lang.String"&gt;
+  &lt;value&gt;sn&lt;/value&gt;
+  &lt;value&gt;givenName&lt;/value&gt;
+  &lt;value&gt;mail&lt;/value&gt;
+  &lt;value&gt;homeOrganization&lt;/value&gt;
+  &lt;value&gt;eduPersonEntitlement&lt;/value&gt;
+  &lt;value&gt;eduPersonPrincipalName&lt;/value&gt;
+  &lt;value&gt;homeOrganization&lt;/value&gt;
+&lt;/util:list&gt;
+</code></pre>
+<p>Opencast has a fairly simple account model that consists only of an username, display name and email address. Additionally an user may have some roles. For each of those attributes you define a map entry that refers to a list of mappings (username is mapped in the <code>shibbolethHeaderFilter</code> bean above).</p>
+<pre><code>&lt;util:map id="attributeMap" map-class="java.util.HashMap"&gt;
+  &lt;entry key="roles" value-ref="roleMapping" /&gt;
+  &lt;entry key="displayName" value-ref="displayNameMapping" /&gt;
+  &lt;entry key="mail" value-ref="mailMapping" /&gt;
+&lt;/util:map&gt;
+</code></pre>
+<p>Each attribute as treated as multi-value so you have to access single value attributes (like <code>sn</code> and <code>givenName</code>) by accessing the first element of the list of values received via Shibboleth. For the email address and the <code>displayName</code> of an user the mapping is usually straight forward, see inline comments for further explanation:</p>
+<pre><code>&lt;!-- Use SpEL string concatenation to build a displayName from `sn` and `givenName` --&gt;
+&lt;util:list id="displayNameMapping" value-type="java.lang.String"&gt;
+  &lt;value&gt;['givenName'][0] + ' ' + ['sn'][0]&lt;/value&gt;
+&lt;/util:list&gt;
+
+&lt;util:list id="mailMapping" value-type="java.lang.String"&gt;
+  &lt;value&gt;['mail'][0]&lt;/value&gt;
+&lt;/util:list&gt;
+</code></pre>
+<p>The <code>mail</code> and the <code>displayName</code> of an user has only one value, but when it comes to the roles of an user you are able to produce an arbitrary number of roles using the whole power of SpEL and <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/String.html"><code>java.lang.String</code></a> methods. See inline comments for further explanation and examples:</p>
+<pre><code>&lt;util:list id="roleMapping" value-type="java.lang.String"&gt;
+  &lt;!-- assign every user the role ROLE_AAI_USER --&gt;
+  &lt;value&gt;'ROLE_AAI_USER'&lt;/value&gt;
+
+  &lt;!-- assign every user the role ROLE_AAI_USER_&lt;username&gt;.
+       For a user john.doe@example.org this will result in a ROLE_USER_JOHN_DOE_EXAMPLE_ORG
+       since Opencast replaces all special chars in this case --&gt;
+  &lt;value&gt;'ROLE_AAI_USER_' + ['eduPersonPrincipalName']&lt;/value&gt;
+
+  &lt;!-- if you implement a kind of DAC based access control you may want to produce
+  an owner role. To get the same behaviour as for ROLE_AAI_USER_&lt;username&gt; above
+  you may replace all special chars from the value of `eduPersonPrincipalName`
+  and convert it to uppercase --&gt;
+  &lt;value&gt;('ROLE_AAI_OWNER_' + ['eduPersonPrincipalName']).replaceAll("[^a-zA-Z0-9]","_").toUpperCase()&lt;/value&gt;
+
+  &lt;!-- an AAI user may provide the attribute homeOrganization.
+       If so, assign an appropriate role. Otherwise not. --&gt;
+  &lt;value&gt;['homeOrganization'] != null ? 'ROLE_AAI_ORG_' + ['homeOrganization'] + '_MEMBER' : null&lt;/value&gt;
+
+  &lt;!-- a sophisticated AAI approach would use entitlements to assign
+       e.g. the admin role to authorized users --&gt;
+  &lt;value&gt;['eduPersonEntitlement'].contains('urn:mace:opencast.org:permission:shibboleth:opencast_admin') ? 'ROLE_ADMIN' : null&lt;/value&gt;
+
+  &lt;!-- a less sophisticated approach would directly assign the admin role
+       to users based on usernames (same as bootstrap user above) --&gt;
+  &lt;value&gt;['eduPersonPrincipalName'].contains('john.doe@example.org') ? 'ROLE_ADMIN' : null&lt;/value&gt;
+
+  &lt;!-- to assing a common set of roles to a class of users, you may create
+       a group (e.g. AAI_EDITOR) and assign some roles to it in the admin ui.
+       So the group is the container of all the roles and you assign only the
+       group to a user e.g. based on his affiliation, thus enabling a class
+       of users for certain abilities in Opencast --&gt;
+  &lt;value&gt;['eduPersonScopedAffiliation'].contains('faculty@example.org') ? 'ROLE_GROUP_AAI_EDITOR' : null&lt;/value&gt;
+
+&lt;/util:list&gt;
+</code></pre>
+<p>You may start by uncommenting the whole example in <code>mh_default_org.xml</code>.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="security.cas.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="security.cas.html">
+        Central Authentication Service (CAS)
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="acl.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="acl.html">
+        Access Control Lists
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/security.aai.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Development - Developer Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Development Process", url: "#_top", children: [
+              {title: "Contributing Code", url: "#contributing-code" },
+              {title: "Git Repository Branching Model", url: "#git-repository-branching-model" },
+              {title: "Release Process", url: "#release-process" },
+              {title: "Quality Assurance", url: "#quality-assurance" },
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="release-manager.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="release-manager.html" class="btn btn-xs btn-link">
+        Release Manager
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="installation/source-linux.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="installation/source-linux.html" class="btn btn-xs btn-link">
+        Installation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="development-process">Development Process</h1>
+<div class="toc">
+<ul>
+<li><a href="#development-process">Development Process</a><ul>
+<li><a href="#contributing-code">Contributing Code</a><ul>
+<li><a href="#github">GitHub</a></li>
+<li><a href="#acceptance-criteria-for-patches-in-different-versions">Acceptance Criteria for Patches in Different Versions</a></li>
+<li><a href="#reviews">Reviews</a><ul>
+<li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#git-repository-branching-model">Git Repository Branching Model</a></li>
+<li><a href="#release-process">Release Process</a><ul>
+<li><a href="#preparations">Preparations</a><ul>
+<li><a href="#release-schedule">Release Schedule</a></li>
+</ul>
+</li>
+<li><a href="#release-branch">Release Branch</a></li>
+<li><a href="#tags">Tags</a></li>
+<li><a href="#maintenance-releases">Maintenance Releases</a></li>
+</ul>
+</li>
+<li><a href="#quality-assurance">Quality Assurance</a><ul>
+<li><a href="#reporting-bugs">Reporting Bugs</a><ul>
+<li><a href="#security-issues">Security Issues</a></li>
+</ul>
+</li>
+<li><a href="#unit-tests">Unit Tests</a></li>
+<li><a href="#user-tests">User Tests</a></li>
+<li><a href="#test-server">Test Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>This document defines rules and recommendations for Opencast development. In particular, it defines how patches can be
+contributed, how they are merged and how releases are done.</p>
+<p><em>If this document does not answer all of your questions, here is how you can get further help:</em></p>
+<ul>
+<li><em>Ask on the <a href="https://groups.google.com/a/opencast.org/forum/#!forum/dev">Opencast Development List</a></em></li>
+<li><em>Chat with developers on <a href="https://app.element.io/#/room/#opencast-community:matrix.org">Matrix (#opencast-community)</a></em></li>
+<li><em>Join our weekly technical meeting (see lists or Matrix)</em></li>
+</ul>
+<h2 id="contributing-code">Contributing Code</h2>
+<p>Opencast sources can be found on <a href="https://github.com/opencast">GitHub</a>. The easiest way to contribute code to the
+project is by creating a pull request against the project's official repository. More details about the structure of
+this repository are explained later in this guide.</p>
+<h3 id="github">GitHub</h3>
+<ul>
+<li>
+<p>Opencast uses <a href="https://github.com/opencast/opencast/issues">GitHub</a> for tracking issues. Each pull request should be
+  accompanied by a ticket in GitHub unless it is a very small fix. The issue identifier should also be in the
+  description of the pull request, which will automatically close the issue (if any) when the PR is merged.  See
+  <a href="https://help.github.com/en/articles/closing-issues-using-keywords">here</a> for more details. Creating a GitHub issue
+  is usually the first step when fixing something.</p>
+</li>
+<li>
+<p>Opencast uses <a href="https://github.com/opencast">GitHub</a> for code hosting. Please
+  <a href="https://help.github.com/articles/fork-a-repo/">fork</a> the <a href="https://github.com/opencast/opencast">official repository</a>
+  on GitHub to <a href="https://help.github.com/articles/creating-a-pull-request/">create pull requests</a> from your repository
+  which will show up on the project's list of open pull requests.</p>
+</li>
+</ul>
+<h3 id="acceptance-criteria-for-patches-in-different-versions">Acceptance Criteria for Patches in Different Versions</h3>
+<p>Updates between minor versions should be as smooth as possible and should usually not need manual intervention.
+That is why patches may only be accepted into releases branches (<code>r/?.x</code>) if they meet the following criteria:</p>
+<ul>
+<li>Patches must not modify existing database tables</li>
+<li>Patches must not modify the indexes or otherwise cause re-indexing</li>
+<li>Patches must not require a different ActiveMQ configuration</li>
+<li>Patches must not modify existing translation keys</li>
+<li>Patches must work with the same configuration within a major version</li>
+</ul>
+<p>Patches which do not meet these criteria should target the branch <code>develop</code> to become part of the next major version.</p>
+<p>To determine the acceptance of patches, all pull requests will be discussed in the technical meeting.
+This protects against inclusion of controversial changes with no broader consent among committers.</p>
+<h3 id="reviews">Reviews</h3>
+<p>Before a patch is merged, it needs to be reviewed. The reviewer tries to make sure that the patch merges without
+conflicts, that it works as expected and that it does not break anything else.</p>
+<p>If the reviewer discovers any kind of issue, he should comment on the pull request in GitHub, so that the author can
+fix the problem.</p>
+<h4 id="pull-request-guidelines">Pull Request Guidelines</h4>
+<p>When reviewing a pull request, it is always easier if the reviewer knows what the ticket is about, and has a rough idea
+of what work has been done. To this end, there are a few expectations for all pull requests:</p>
+<ul>
+<li>The GitHub issue  title should match the pull request title</li>
+<li>The pull request description should contain a summary of the work done, along with reasoning for any major change<ul>
+<li>The GitHub issue should contain the same information</li>
+</ul>
+</li>
+<li>Pull request should include appropriate documentation</li>
+<li>The pull request should have a clean commit history</li>
+<li>In the case of major user interface changes, it is good practice to include screenshots of the change</li>
+<li>Any actions that would be required for a version upgrade (e.g: from 3.x to 4.x) must be documented in
+  <code>docs/guides/admin/docs/upgrade.md</code></li>
+<li>The commands <code>mvn clean install</code>, <code>mvn javadoc:javadoc javadoc:aggregate</code>, and <code>mvn site</code> should all succeed</li>
+<li>The licenses of any external libraries used in the pull request comply with the <a href="license.html">licensing rules</a> both
+  in terms of the license itself as well as its listing in NOTICES</li>
+</ul>
+<p>Some changes require special attention:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">etc/listproviders</td>
+<td>Changes here might need to be reflected in the static mockup data for the Admin UI facade found in modules/admin-ui/src/test/resources/app/admin-ng/resources</td>
+</tr>
+<tr>
+<td align="left">modules/admin-ui/src/main/java</td>
+<td>In case the interface of the Admin UI facade changes, those changes need to be also reflected in the static mockup data for the Admin UI facade found in modules/admin-ui/src/test/resources/app.</td>
+</tr>
+</tbody>
+</table>
+<p>While a committer may accept a patch even if it does not meet these expectations, it is encouraged that anyone filing
+a pull request ensures that they meet these expectations.</p>
+<h2 id="git-repository-branching-model">Git Repository Branching Model</h2>
+<p>While the Opencast repository and branching model is inspired by
+<a href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>, there have been some distinct changes to how release
+branches are used and releases are tagged. The purpose of this is mainly to support multiple, simultaneous versions and
+maintenance releases.</p>
+<p>Swift overview:</p>
+<ul>
+<li>The <code>develop</code> branch represents the latest state of development. Features may be merged into this branch and into
+  this branch only. Release branches are branched off from <code>develop</code>. It is basically the preparation for the next big
+  release at all times.</li>
+<li>The release branches are named <code>r/&lt;a&gt;.x</code> (e.g. <code>r/6.x</code>). They are the latest state of development for a specific
+  major version.  All minor releases are created from these branches.  The branches live on as long as there may be
+  additional maintenance releases for a given version.</li>
+<li>Git tags in the form of <code>a.b</code> are created to indicate official releases.</li>
+</ul>
+<p>To get a closer look at the branching model, let us consider a simple example with a single release:</p>
+<p><img alt="branching-simple.png" src="data:image/png;base64,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" /></p>
+<p>As described above, <code>develop</code> is the branch used for preparing the next version. At some point marked in the release
+schedule, the release branch is cut from <code>develop</code>. This action also marks the feature freeze for that version since
+features may be merged only into the <code>develop</code> branch.</p>
+<p>After the release branch is cut, the development on the <code>develop</code> branch may continue as before. Features can (and
+should) be merged without waiting for the next version to be released. Thus, the creation of a release branch also marks
+the beginning of the development for the next version.</p>
+<p>In contrast to that, only bug fixes may be merged into the release branch. This branch should be tested with care, so
+that bugs can be identified and fixed before the release.</p>
+<p>During the whole process the release manager will regularly merge back the release branch into <code>develop</code> or, if
+existent, the next active release branch.</p>
+<p>The releases themselves are not part of the release branch. Instead, the release manager branches off, makes the
+necessary changes to the pom files (and possibly the UI) and creates a separately tagged commit.</p>
+<p>Finally, after a release is done, more bug fixes may be added to the release branch. The release manager should identify
+if there are enough commits to be put into a maintenance release.</p>
+<p>Even after an Opencast version has been released, more bugs may be found and fixes for them merged into the release
+branch. When the release manager considers that the number or importance of such bug fixes is sufficient, he may decide
+to create a new maintenance release. The version <code>6.1</code> above is an example of that.</p>
+<p>With Opencast supporting two major releases, you may find not one, but up to three active release branches.</p>
+<p><img alt="branching-two-versions.png" src="data:image/png;base64,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" /></p>
+<p>Mostly, this is just the same as the simpler model from before. The branches exist separately from each other and only
+interact through merges from older to newer versions so that bug fixes from a release branch will automatically become
+part of the next Opencast versions (and <code>develop</code>), without having to create additional pull requests.</p>
+<p>For example, a pull request may be merged into <code>r/7.x</code>, <code>r/7.x</code> will then be merged into <code>develop</code> or, if it already
+exists, <code>r/8.x</code> and from there into <code>develop</code>. That way patches bubble through all newer versions and finally end up in
+<code>develop</code>.</p>
+<h2 id="release-process">Release Process</h2>
+<p>As indicated above, the release cycle of a new Opencast version starts when a release branch is cut. Patches merged into
+<code>develop</code> after the cut will be part of the next version, but not the one just cut.</p>
+<p>This is why the position of release manager for the next Opencast version should be assigned at this point. The current
+release manager should therefore ask for volunteers in the mailing lists. For more details about the rights and
+responsibilities of a release manager, please have a look at the <a href="release-manager.html">Release Manager Guide</a>.</p>
+<h3 id="preparations">Preparations</h3>
+<p>The first phase of the release consists of adding new features and defining the release schedule. It is the duty of the
+release manager to orchestrate this. This does not necessarily mean that release managers merge or review pull requests,
+but that they talk to developers and ensure the merge process is driven forward.</p>
+<h4 id="release-schedule">Release Schedule</h4>
+<p>Releases should happen twice a year, usually within a time span of 9.5 months between the cut of the previous release
+branch and the final release. The release manager should create a release schedule as soon as possible, identifying when
+the release branch is cut and when the final release will happen. Additionally, he should coordinate with the QA manager
+to identify phases for internal and public testing.</p>
+<p>Usually, a release schedule will look like this:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>May 15th</td>
+<td>Feature Freeze</td>
+</tr>
+<tr>
+<td>May 24th</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>May 31st</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>June 15th</td>
+<td>Release of Opencast 7.0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="release-branch">Release Branch</h3>
+<p>The release branch is created from <code>develop</code>. The release branch is named <code>r/A.x</code> (e.g. <code>r/7.x</code>) to indicate that it is
+the origin of all releases with the major version of <code>A</code>. The creation of the release branch marks the feature freeze
+for a given version, as no more features can be merged into a release branch.</p>
+<p>To ensure that all fixes that go into the release branch will become part of <code>develop</code> (and thus part of the next version
+of Opencast) with a minimum amount of work, the release manager will merge the release branch into <code>develop</code> on a
+regular basis. He may request assistance from certain developers in case of merge conflicts. This process continues until
+the next release branch is cut.</p>
+<h3 id="tags">Tags</h3>
+<p>Git tags are used to mark Opencast releases. Here is how a release looks like in the history:</p>
+<p><img alt="branching-tags.png" src="data:image/png;base64,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" /></p>
+<p>To create a version based on a given state of the release branch (commit <code>A</code>), the release manager will branch off from
+this commit, make the necessary version changes to all <code>pom.xml</code> files and create a commit which is then finally tagged.
+This tag is then pushed to the community repository.</p>
+<p>For more details about how to create a release, have a look at the <a href="release-manager.html">Release Manager Guide</a>.</p>
+<h3 id="maintenance-releases">Maintenance Releases</h3>
+<p>After a final release, additional issues may show up. These issues may be fixed on the ongoing release branch and at
+some point released as maintenance release.</p>
+<p>Maintenance releases will be cut monthly for the latest stable release. For legacy releases, it is up to the release
+manager to decide when it is worthwhile to make the cut.</p>
+<h2 id="quality-assurance">Quality Assurance</h2>
+<p>As any piece of software, Opencast may contain bugs. It is the duty of the whole community to identify these bugs,
+report them and possibly fix them to improve Opencast as product.</p>
+<p>Additionally, before releasing a new version of Opencast, the current release manager and quality assurance manager will
+coordinate test phases dedicated to new releases in order to identify possible problems ahead of time. The whole
+community will be requested to participate in this testing.</p>
+<h3 id="reporting-bugs">Reporting Bugs</h3>
+<p>If you identify any bugs, please <a href="https://github.com/opencast/opencast/issues">report them on Github</a>!. Please make
+sure to  describe in detail how to reproduce the problem, and which version of Opencast you are experiencing the issue
+on.</p>
+<h4 id="security-issues">Security Issues</h4>
+<p>If you discover a problem that has severe implications for system security, please do not publish this information on
+list. Instead, send a report of the problem to <em>security@opencast.org</em>. The message will be forwarded to the private
+committers list, where the issue will be discussed. Once a patch for the problem is ready, a security notice will be
+released along with it.</p>
+<h3 id="unit-tests">Unit Tests</h3>
+<p>All Opencast modules should have built-in unit tests to check that they are actually doing what they are supposed to do
+and that code patches do not break the existing functionality. These tests are automatically run whenever the project is
+built. If building repeatedly fails due to test failures, then something is most likely wrong. Please report this as a
+severe bug.</p>
+<h3 id="user-tests">User Tests</h3>
+<p>Before each major release, the release and quality assurance managers will ask the whole community to participate in
+the execution of a set of manual tests. These tests are designed to check that important functionalities of Opencast
+work as expected even if users are in slightly different environments or choose different methods to achieve a certain
+goal.</p>
+<p>Such a call for participation will usually be raised both on the lists, the technical and the adopters meeting.  If it
+is possible for you to participate, please do so. Identifying possible problems early will immensely benefit the release
+process.</p>
+<h3 id="test-server">Test Server</h3>
+<p>Some institutions provide public testing infrastructure for Opencast. Use them to try out the most recent development
+version of Opencast. They are meant for testing. Do not fear to break them. They are meant for testing.</p>
+<p>For a list of test servers, take a look at the <a href="infrastructure/index.html">infrastructure documentation</a>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="release-manager.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="release-manager.html" class="btn btn-xs btn-link">
+        Release Manager
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="installation/source-linux.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="installation/source-linux.html" class="btn btn-xs btn-link">
+        Installation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/development-process.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
