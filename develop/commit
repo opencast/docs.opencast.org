@@ -1,19 +1,13 @@
-commit ef0ace048c666934a3a7b95d81f8f62ed97f9d4a
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon Jun 7 13:42:44 2021 +0000
+commit 802686ebbe879527e23963702a42baef64275054
+Author: Julian Kniephoff <kniephoff@elan-ev.de>
+Date:   Thu Jun 3 15:02:39 2021 +0200
 
-    Bump react-bootstrap from 1.6.0 to 1.6.1 in /modules/lti
+    Fix metrics exporter Prometheus dependency
     
-    Bumps [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap) from 1.6.0 to 1.6.1.
-    - [Release notes](https://github.com/react-bootstrap/react-bootstrap/releases)
-    - [Changelog](https://github.com/react-bootstrap/react-bootstrap/blob/v1.6.1/CHANGELOG.md)
-    - [Commits](https://github.com/react-bootstrap/react-bootstrap/compare/v1.6.0...v1.6.1)
-    
-    ---
-    updated-dependencies:
-    - dependency-name: react-bootstrap
-      dependency-type: direct:production
-      update-type: version-update:semver-patch
-    ...
-    
-    Signed-off-by: dependabot[bot] <support@github.com>
+    This PR embeds all relevant Prometheus dependencies
+    (even transitive ones) into the `metrics-exporter` bundle,
+    some new ones were missing due to the `0.11.0` update.
+    The update also seems to add some new functionality related
+    to OpenTelemetry, which we don't use (:crossed_fingers:),
+    but which we still need to exlude from the generated `Import-Packages`
+    header.
