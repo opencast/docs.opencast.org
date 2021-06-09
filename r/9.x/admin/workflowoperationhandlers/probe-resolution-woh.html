@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Probe Resolution - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "ProbeResolutionWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="process-smil-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="process-smil-woh.html">
+        Process Smil
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="prepareav-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="prepareav-woh.html">
+        Prepare A/V
+      </a>
+</div>
+</div>
+<h1 id="proberesolutionworkflowoperationhandler">ProbeResolutionWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The ProbeResolutionWorkflowOperationHandler analyzes specified tracks in the mediapackage and sets workflow instance
+variables based on the video resolution and the mapping set-up.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>Configuration Key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor*</td>
+<td><code>presentation/work</code></td>
+<td>The "flavor" of the track to use as a source input</td>
+</tr>
+<tr>
+<td>var:VARNAME</td>
+<td><code>1280x720,1920x1080</code></td>
+<td>Resolutions to variable mapping</td>
+</tr>
+<tr>
+<td>val:VARNAME</td>
+<td><code>16/9</code></td>
+<td>Value to set if resolution matches</td>
+</tr>
+</tbody>
+</table>
+<p>* mandatory configuration key</p>
+<p>There can be an arbitrary number of variable parameters. They must be prefixed by <code>var:</code>, followed by the variable name
+to set to true if the video has a resolution listed. The <code>var:</code> prefix will not be part of the resulting variable name
+but will be replaced with a representation of the tracks flavor.</p>
+<p>By default, the variable will be set to <code>true</code> if the resolution matches. If a <code>val:VARNAME</code> configuration is present
+which matches a <code>var:VARNAME</code>, the value from that configuration key will be used instead.</p>
+<p>Note that if there are multiple video streams with one flavor, only the information from the last video stream are
+taken.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="probe-resolution"
+  fail-on-error="true"
+  exception-handler-workflow="partial-error"
+  description="Set control variables based on video resolution"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key="var:aspect"&gt;1280x720,1920x1080,2592x1080&lt;/configuration&gt;
+    &lt;configuration key="val:aspect"&gt;16/9&lt;/configuration&gt;
+    &lt;configuration key="var:is_720"&gt;1280x720&lt;/configuration&gt;
+    &lt;configuration key="var:is_1080"&gt;1920x1080,2592x1080&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>If a video track with a resolution of 1280x720 is passed to this operation as <code>presentation/source</code>, the resulting
+variables would be:</p>
+<pre><code>presentation_source_is_720=true
+presentation_source_aspect=16/9
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="process-smil-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="process-smil-woh.html">
+        Process Smil
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="prepareav-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="prepareav-woh.html">
+        Prepare A/V
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/probe-resolution-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

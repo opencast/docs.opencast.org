@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Amazon S3 Distribution - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AWS S3 Distribution Configuration", url: "#_top", children: [
+              {title: "Amazon User Configuration", url: "#amazon-user-configuration" },
+              {title: "Amazon Service Configuration", url: "#amazon-service-configuration" },
+              {title: "Amazon CloudFront", url: "#amazon-cloudfront" },
+              {title: "Presigned URL", url: "#presigned-url" },
+              {title: "Service Default Security Note", url: "#service-default-security-note" },
+              {title: "S3 Compatible Service", url: "#s3-compatible-service" },
+              {title: "Opencast Service Configuration", url: "#opencast-service-configuration" },
+              {title: "Using S3 Distribution", url: "#using-s3-distribution" },
+              {title: "Publishing to multiple distribution services", url: "#publishing-to-multiple-distribution-services" },
+              {title: "Using this handler in custom workflows", url: "#using-this-handler-in-custom-workflows" },
+              {title: "Migrating to S3 Distribution with Pre-Existing Data", url: "#migrating-to-s3-distribution-with-pre-existing-data" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="execute.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="execute.html">
+        Execute Service
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="awss3archive.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="awss3archive.html">
+        Amazon S3 Archive Storage
+      </a>
+</div>
+</div>
+<h1 id="aws-s3-distribution-configuration">AWS S3 Distribution Configuration</h1>
+<p>This page documents the configuration for Opencast module <strong>distribution-service-aws-s3</strong>.  This
+configuration is only required on the presentation node, and only if you are using Amazon S3 and/or Cloudfront for
+distributing media to end users.</p>
+<h2 id="amazon-user-configuration">Amazon User Configuration</h2>
+<p>Configuration of Amazon users is beyond the scope of this documentation, instead we suggest referring to
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">Amazon's documentation</a>.
+You will, however, require to set up proper credentials by either:</p>
+<ul>
+<li>Creating an <a href="https://aws.amazon.com/developers/access-keys/">Access Key ID and a Secret Access Key</a> or</li>
+<li>Using <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-roles.html">Instance Profile Credentials</a>
+  (recommended when running Opencast on EC2 instances)</li>
+</ul>
+<p><em>AmazonS3FullAccess</em> permission is <em>required</em>, which can be granted using
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_inline-using.html">these instructions</a>.</p>
+<p><strong>A <a href="https://aws.amazon.com/free/">free Amazon account</a> will work for small scale testing, but be aware that S3
+distribution can cost you a lot of money very quickly.  Be aware of how much data and how many requests you are making,
+and be sure to <a href="http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-alarms.html">set alarms</a> to
+notify you of cost overruns.</strong></p>
+<h2 id="amazon-service-configuration">Amazon Service Configuration</h2>
+<p>The development and testing it is generally safe to allow the Opencast AWS S3 Distribution service to create the S3
+bucket for you.  It will create the bucket per its configuration, with public read-only access to the files, and no
+versioning.  For production use we suggest using Amazon CloudFront, which requires additional configuration.</p>
+<h2 id="amazon-cloudfront">Amazon CloudFront</h2>
+<p>Amazon CloudFront provides an <em>optional</em> way to better handle distributing your media to end users.  While fully
+configuring CloudFront is outside the scope of this documentation, we wish to note that this does affect one of the keys
+described below.  Please ensure you use the correct distribution base format depending on which service you are using!</p>
+<h2 id="presigned-url">Presigned URL</h2>
+<p>S3 and Cloudfront work together to speed delivery of your content, but if your media URLs leak then anyone can
+download your recordings.  S3 allows you to create <strong>Presigned URL</strong>s, which are only valid for a limited time.  This
+means that even if your media URLs leak, they will only be valid for a configurable duration.</p>
+<p>Set <code>org.opencastproject.distribution.aws.s3.presigned.url</code> to <code>true</code> to enable this feature.</p>
+<p>Note: <strong>CloudFront</strong> and <strong>Presigned URL</strong> can be used together. </p>
+<p>Note: Opencast's distribution files can be quite large depending on your settings, and some of your users may not be
+able to complete the download within the time limit.  While AWS should not stop a download currently in progress, some
+players may not completely download the media if playback is stopped.  If you are experiencing complaints about
+playback breaking and have presigned URLs enabled, try lengthening the timeout.</p>
+<h2 id="service-default-security-note">Service Default Security Note</h2>
+<p>On startup, Opencast checks to see if the S3 bucket exists, and if it does not it creates it.  This bucket has default
+permissions allowing anyone to read the full contents of the bucket.  This may not be what you want, depending on your
+institutional priorites.  If you wish to protect the files with presigned URLs, then please create the bucket in advance,
+with the appropriate security settings.</p>
+<h2 id="s3-compatible-service">S3 Compatible Service</h2>
+<p>The S3 API has become the de facto standard interface for almost all storage providers.
+This module also supports S3 compatible service.
+In this case, <code>org.opencastproject.distribution.aws.s3.endpoint</code> should be set to the endpoint of the S3 service.
+Meanwhile, <code>org.opencastproject.distribution.aws.s3.region</code> should not be set.
+Note: only one of these two configuration keys may be set.</p>
+<p>There are <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html">two access</a> style for bucket, virtual hosted style (default) and path style.
+- Virtual hosted style sample: <code>https://bucketname.s3.service.com/</code>
+- Path style sample: <code>https://s3.service.com/bucketname</code></p>
+<p>AWS use virtual hosted style by default, and will deprecate path style. Yet, for self hosted s3 compatible service, path style URL is useful.<br/>
+Set <code>org.opencastproject.distribution.aws.s3.path.style</code> to <code>true</code> to enable this feature.</p>
+<h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
+<p>The Opencast AWS S3 Distribution service has five configuration keys, which can be found in the
+<code>org.opencastproject.distribution.aws.s3.AwsS3DistributionServiceImpl.cfg</code> configuration file.</p>
+<table>
+<thead>
+<tr>
+<th>Key name</th>
+<th>Value</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.distribution.enable</td>
+<td>True to enable S3 distribution, false otherwise</td>
+<td>true</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.region</td>
+<td>The AWS region to set</td>
+<td>us-west-2</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.endpoint</td>
+<td>The endpoint of AWS S3 service. Only used with S3 compatible service</td>
+<td>https://s3.service.com</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.path.style</td>
+<td>True to enable path style access URL for bucket, false otherwise</td>
+<td>false</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.bucket</td>
+<td>The S3 bucket name</td>
+<td>example-org-dist</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.distribution.base</td>
+<td>Where the S3 files are available from.  This value can be derived from the bucket and region values, or is set by CloudFront.</td>
+<td>http://s3-us-west-2.amazonaws.com/example-org-dist, or DOMAIN_NAME.cloudfront.net</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.access.id</td>
+<td>Your access ID</td>
+<td>20 alphanumeric characters</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.secret.key</td>
+<td>Your secret key</td>
+<td>40 characters</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.presigned.url</td>
+<td>True to enable presigned URL, false otherwise</td>
+<td>false</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.aws.s3.presigned.url.valid.duration</td>
+<td>Valid duration for presigned URL in milliseconds</td>
+<td>14400000</td>
+</tr>
+</tbody>
+</table>
+<p>If <em>org.opencastproject.distribution.aws.s3.access.id</em> and <em>org.opencastproject.distribution.aws.s3.secret.key</em> are
+ not <em>explicitly</em> provided, search for credentials will be performed in the order specified by the
+ <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html">Default Credentials Provider Chain</a>.</p>
+<h2 id="using-s3-distribution">Using S3 Distribution</h2>
+<p>Amazon S3 distribution is already included in the default Opencast workflows, however it must first be enabled.  The
+<code>schedule-and-upload.xml</code> and <code>publish.xml</code> workflow configuration files both contain lines containing the string
+"Remove this line if you wish to publish to AWS S3".  Both of these lines must be removed before publishing to AWS S3
+will function correctly.</p>
+<p>If you wish to use AWS S3 publishing with your own custom workflow, you must add the <code>publish-aws</code> workflow operation to
+your workflow.  The operation documentation can be found <a href="../workflowoperationhandlers/publish-aws-woh.html">here</a>.</p>
+<h2 id="publishing-to-multiple-distribution-services">Publishing to multiple distribution services</h2>
+<p>Currently we do not support publication to multiple distribution services simultaneously.  This means that whichever
+workflow operation is <em>last</em> in the workflow will be the final publication.</p>
+<h2 id="using-this-handler-in-custom-workflows">Using this handler in custom workflows</h2>
+<p>If your workflow contains both <code>publish-engage</code> and <code>publish-aws</code>, in that order, and without a
+<a href="../configuration/workflow.html">conditional</a> you would have publication files stored both locally <em>and</em> in AWS.  This is
+likely not what you want, so protect your workflow operations appropriately.  If you really do need these files stored
+in both places (for example, in cases where you need to make the files available immediately, and only push to AWS in
+some cases) then remember to add a <a href="../workflowoperationhandlers/retract-engage-woh.html">retract-engage</a> in between the
+publication operations.  Note that if this step is omitted the files will remain available locally, but will not be
+used.  Of further note, if you retract after publication to AWS then your workflow <em>will not be available</em> to users.
+To summarize, this table presents a subset of the various situations that are possible</p>
+<table>
+<thead>
+<tr>
+<th>Workflow Operations</th>
+<th>Files present in the Media Module</th>
+<th>Files present in AWS</th>
+<th>Files served from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>publish-engage</td>
+<td>Yes</td>
+<td>No</td>
+<td>Opencast Media Module</td>
+</tr>
+<tr>
+<td>publish-aws</td>
+<td>No</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-engage, publish-aws</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-aws, publish-engage</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Opencast Media Module</td>
+</tr>
+<tr>
+<td>publish-engage, retract-engage, publish-aws</td>
+<td>Temporary</td>
+<td>Yes</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>publish-engage, publish-aws, retract-engage</td>
+<td>No</td>
+<td>Yes</td>
+<td>Not available</td>
+</tr>
+</tbody>
+</table>
+<h2 id="migrating-to-s3-distribution-with-pre-existing-data">Migrating to S3 Distribution with Pre-Existing Data</h2>
+<p>If you already have data published to your local Opencast install, you should be able to republish the media selecting
+AWS S3 as the distribution service to use.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="execute.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="execute.html">
+        Execute Service
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="awss3archive.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="awss3archive.html">
+        Amazon S3 Archive Storage
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/awss3distribution.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

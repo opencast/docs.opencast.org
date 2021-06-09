@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Video Segmentation - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Video Segmentation Configuration", url: "#_top", children: [
+              {title: "What is Video Segmentation", url: "#what-is-video-segmentation" },
+              {title: "How the video segmentation process works", url: "#how-the-video-segmentation-process-works" },
+              {title: "What can be optimized", url: "#what-can-be-optimized" },
+              {title: "How the Optimization works", url: "#how-the-optimization-works" },
+              {title: "Configuration", url: "#configuration" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="waveform.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="waveform.html">
+        Waveform Service
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="videoeditor.architecture.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="videoeditor.architecture.html">
+        Architecture
+      </a>
+</div>
+</div>
+<h1 id="video-segmentation-configuration">Video Segmentation Configuration</h1>
+<h2 id="what-is-video-segmentation">What is Video Segmentation</h2>
+<p>Video segmentation is a way of dividing a movie into meaningful segments. In the context of lecture capture,
+segmentation is best applied to captured screen presentation, that the presenter goes through slide after slide.</p>
+<p>As a result, the video segmentation returns the exact times of slide changes on the timeline, which allows for
+sophisticated ways for the learner to browse the lecture content, as shown in the slides section of the Opencast Player.</p>
+<h2 id="how-the-video-segmentation-process-works">How the video segmentation process works</h2>
+<p>For detecting new scenes, Opencast uses the scene detection build into the FFmpeg select filter. The basic idea behind
+this filter is to compare to consecutive frames and decide if the second frame belongs to a new scene based on the
+difference.</p>
+<h2 id="what-can-be-optimized">What can be optimized</h2>
+<p>The segmentation does not yield perfect results for all scenarios if always the same parameters for the FFmpeg filter
+are used. Especially for presentations that include live handwriting or small videos often way too many segments are
+created. In these special cases the difference between two consecutive frames is much higher than for normal
+presentation slides and these big differences happen very often, whereby many segments would be found.
+To improve the resulting number of segments, different FFmpeg parameters are tried out and to prevent having segments
+that are too short to be reasonably clickable, too short segments are filtered out.</p>
+<h2 id="how-the-optimization-works">How the Optimization works</h2>
+<p>In general the optimization repeats a cycle of calling the ffmpeg filter, merging too small segments and calculating a
+new changes threshold until the segmentation is good enough.</p>
+<p>Additional to calling the ffmpeg function there is a filter function that merges small segments to a bigger segment or
+splits it to the surrounding segments if the resulting segment would be too small. This can be beneficial for example
+if a video is shown in a lecture, so that the video will be only one segment and not many short segments.
+The stability threshold is used in the filter method to determine which segments are long enough and which should be
+merged.</p>
+<p>First the segmentation is run with a stability threshold of 1 second and the initial changes threshold, that can be
+changed in the options. If the segmentation or the filtered segmentation doesn't deviate more from the preferred number
+of segments than the maximum error allows, the optimization is done. If not, a new changes threshold, that should yield
+better results, is calculated and the segmentation is run again until the segmentation is good enough or until the
+maximum number of cycles is reached.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The value for the frame difference as well as the minimum length for a segment, the preferred number of segments, the
+maximum error and the maximum number of cycles can be configured in
+<code>etc/org.opencastproject.videosegmenter.ffmpeg.VideoSegmenterServiceImpl.cfg</code>.</p>
+<p>The options that can be set are the minimum length of a segment (defaults to 60 sec).</p>
+<pre><code>stabilitythreshold = 60
+</code></pre>
+<p>The percentage of pixels that may change between two frames without considering them different (defaults to 0.025).</p>
+<pre><code>changesthreshold = 0.025
+</code></pre>
+<p>The number of segments that the segmentation optimally should yield (defaults to 30).</p>
+<pre><code>prefNumber = 30
+</code></pre>
+<p>The maximum error for the number of segments in percent. As soon as a segmentation with a lower error is achieved the
+optimization will be ended (defaults to 0.25).</p>
+<pre><code>maxError = 0.25
+</code></pre>
+<p>The maximum number of times the optimization will call the FFmpeg select filter (defaults to 3).</p>
+<pre><code>maxCycles = 3
+</code></pre>
+<p>The absolute maximum number of segments. If at the end of the optimization more segments than this are found, instead a
+uniform segmentation will be generated (defaults to 150).</p>
+<pre><code>absoluteMax = 150
+</code></pre>
+<p>The absolute minimum number of segments. If at the end of the optimization less segments than this are found, instead a
+uniform segmentation will be generated (defaults to 3).</p>
+<pre><code>absoluteMin = 3
+</code></pre>
+<p>This parameter controls whether the options prefNumber, absoluteMax and absoluteMin are interpreted as absolute
+segment numbers or relative to track duration. If this is set to true, prefNumber, absoluteMax and absoluteMin will be
+interpreted as number of segments per hour. (defaults to false)</p>
+<pre><code>durationDependent = false
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="waveform.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="waveform.html">
+        Waveform Service
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="videoeditor.architecture.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="videoeditor.architecture.html">
+        Architecture
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/videosegmentation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

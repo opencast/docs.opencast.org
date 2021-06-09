@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="./img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Upgrade - Administration Guide</title>
+<link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="./css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="./css/base.css" rel="stylesheet"/>
+<link href="./css/highlight.css" rel="stylesheet"/>
+<link href="css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script src="./js/bootstrap-3.3.7.min.js"></script>
+<script src="./js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '.';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 8.x to 9.x", url: "#_top", children: [
+              {title: "Database Migration", url: "#database-migration" },
+              {title: "Configuration Changes", url: "#configuration-changes" },
+              {title: "Install and configure a standalone Elasticsearch node", url: "#install-and-configure-a-standalone-elasticsearch-node" },
+              {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
+              {title: "Check Passwords", url: "#check-passwords" },
+          ]},
+        ];
+
+    </script>
+<script src="./js/base.js"></script>
+<script src="javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="changelog.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="changelog.html">
+        Changelog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="releasenotes.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="releasenotes.html">
+        Release Notes
+      </a>
+</div>
+</div>
+<h1 id="upgrading-opencast-from-8x-to-9x">Upgrading Opencast from 8.x to 9.x</h1>
+<p>This guide describes how to upgrade Opencast 8.x to 9.x. In case you need information about how to upgrade older
+versions of Opencast, please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<ol>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast with the new version</li>
+<li>Back-up Opencast files and database (optional)</li>
+<li><a href="#database-migration">Upgrade the database</a></li>
+<li><a href="#install-and-confifure-a-standalone-elasticsearch-node">Install and configure a standlone Elasticsearch node</a></li>
+<li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
+<li>Remove search index data folder</li>
+<li>Start Opencast</li>
+<li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
+<li><a href="#check-passwords">Check passwords</a></li>
+</ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>There are two parts to the Opencast 9 database migration:</p>
+<ul>
+<li>
+<p>Two database tables become unnecessary with Opencast 9 and can be dropped.
+  Opencast provides database upgrade script which include all necessary SQL commands.
+  You will find them in
+  <a href="https://github.com/opencast/opencast/blob/develop/docs/upgrade/8_to_9/mysql5.sql"><code>docs/upgrade/8_to_9/</code></a>.
+  This script is suitable for both, MariaDB and MySQL.</p>
+</li>
+<li>
+<p>Opencast no longer needs scripts to manually create the database structure.
+  This will now happen automatically and Opencast 9 will create a new table on its first run.
+  This means that Opencast's database user now needs additional priviledges.
+  Please consult the <a href="configuration/database.html">database configuration guide</a> for more details.</p>
+</li>
+</ul>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>Note that this section will only highlight a few important changes.
+Please make sure to compare your configuration against the current configuration files.</p>
+<ul>
+<li>The default for the configuration option <code>lti.create_jpa_user_reference</code> changed from <code>false</code> (Opencast 8.3) to <code>true</code>.</li>
+<li>Make sure to have <code>?useMysqlMetadata=true</code> appended to <code>org.opencastproject.db.jdbc.url</code> if you use MariaDB as
+  database.</li>
+<li>Opencast Studio now uses TOML instead of JSON as configuration format. Additionally, the ACL template is
+  now specified as a string in the TOML file and not as a separate file (usually <code>acl.xml</code>) anymore. Finally,
+  the variables passed into the Mustache ACL template have changed. For more information, see
+  <a href="https://github.com/elan-ev/opencast-studio/blob/2020-09-14/CONFIGURATION.md">this document</a>.</li>
+<li>The configuration keys <code>source-tags</code> and <code>source-flavors</code> of the <em>publish-configure</em> workflow operation were renamed
+  to <code>download-source-tags</code> and <code>download-source-flavors</code> respectively. If you use custom workflows, you may need to
+  adjust them accordingly.</li>
+</ul>
+<h3 id="wowza-streaming-configuration-changes">Wowza streaming configuration changes</h3>
+<p>In <a href="https://github.com/opencast/opencast/pull/1179">pull request #1179</a>, the configuration
+of Wowza servers was made tenant-specific and has been moved to
+<code>etc/org.opencastproject.distribution.streaming.wowza.WowzaStreamingDistributionService.cfg</code>.</p>
+<p>Additionally, support for RTMP was dropped. This shouldn't be a problem in most cases, as RTMP usually wasn't
+used before, despite being specified in the URL. If your streaming URL started with <code>rtmp://</code>, try changing
+it to <code>https://</code>.</p>
+<h2 id="install-and-configure-a-standalone-elasticsearch-node">Install and configure a standalone Elasticsearch node</h2>
+<p>In the past, Opencast came with its own integrated Elasticsearch node. However, recent versions of Elasticsearch no longer
+support to be embedded in applications. Since the Elasticsearch client was updated to version 7, Opencast now requires an
+external Elasticsearch node of the same version to be present. This means, that all Opencast adopters now have to run
+Elasticsearch.</p>
+<p>Please check <a href="installation/index.html">the installation guides</a> for information about how to setup Elasticsearch.</p>
+<p>If you already used an external Elasticsearch node in the past, please update your node to version 7. Since the index
+schema has changed, you will need to drop you indices and <a href="#rebuild-the-elasticsearch-indexes">rebuild them</a>.</p>
+<h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
+<p>In order to populate the external Elasticsearch index, an index rebuild is necessary.</p>
+<h3 id="admin-interface">Admin Interface</h3>
+<p>Stop Opencast, delete the index directory at <code>data/index</code>, restart Opencast and make an HTTP POST request to
+<code>/admin-ng/index/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/admin-ng/index/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+<code>/recreateIndex</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="external-api">External API</h3>
+<p>If you are using the External API, then also trigger a rebuilt of its index by sending an HTTP POST request to
+<code>/api/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/api/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+<code>/recreateIndex</code>.</p>
+<p>In both cases you should again get a 200 HTTP status.</p>
+<h2 id="check-passwords">Check Passwords</h2>
+<p>Since Opencast 8.1 <a href="https://github.com/opencast/opencast/security/advisories/GHSA-h362-m8f2-5x7c">passwords are stored in a much safer way than before
+</a>
+but to benefit from this mechanism, users have to reset their password.</p>
+<p>You can use the endpoint <code>/user-utils/users/md5.json</code> to find out which users are still using MD5-hashed passwords and
+suggest to them that they update their passwords.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="changelog.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="changelog.html">
+        Changelog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="releasenotes.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="releasenotes.html">
+        Release Notes
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>
