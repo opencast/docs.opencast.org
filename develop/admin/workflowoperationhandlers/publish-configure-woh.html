@@ -237,7 +237,7 @@ custom publication channels in the configuration files <code>etc/listproviders/p
   exception-handler-workflow="partial-error"
   description="Publish to internal channel"&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key="download-source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
     &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
     &lt;configuration key="url-pattern"&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
   &lt;/configurations&gt;
@@ -251,9 +251,23 @@ custom publication channels in the configuration files <code>etc/listproviders/p
   &lt;configurations&gt;
     &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
     &lt;configuration key="mimetype"&gt;application/json&lt;/configuration&gt;
-    &lt;configuration key="source-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key="download-source-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
     &lt;configuration key="url-pattern"&gt;http://api.oc.org/api/events/${event_id}&lt;/configuration&gt;
     &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h3 id="meta-publication">Meta publication</h3>
+<p>Meta publications are URL only publications as reference to external systems like media portal.</p>
+<pre><code>&lt;operation
+  id="publish-configure"
+  exception-handler-workflow="partial-error"
+  description="Publish to meta publication channel"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;edu-reference&lt;/configuration&gt;
+    &lt;configuration key="mimetype"&gt;text/html&lt;/configuration&gt;
+    &lt;configuration key="url-pattern"&gt;https://org.mediaportal.edu/events/${event_id}&lt;/configuration&gt;
+    &lt;configuration key="check-availability"&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
