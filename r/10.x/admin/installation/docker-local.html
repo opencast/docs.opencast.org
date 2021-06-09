@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Testing Locally - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Testing Locally with Docker", url: "#_top", children: [
+              {title: "Install Docker", url: "#install-docker" },
+              {title: "Start with docker-compose", url: "#start-with-docker-compose" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../configuration/index.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../configuration/index.html">
+        Overview
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="ansible.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="ansible.html">
+        Ansible
+      </a>
+</div>
+</div>
+<h1 id="testing-locally-with-docker">Testing Locally with Docker</h1>
+<p>Opencast is a complex system that requires multiple steps to install and configure properly, which may be too
+complicated for quick, local testing. Therefore, the University of Münster provides various Docker images for Opencast
+that can simplify this process. The only requirement is an <code>x86_64</code> Linux system with a running Docker Engine.</p>
+<p>This method is ideal for new adopters who just want to try out Opencast. It can also be used to test workflows. Because
+of the isolation that Docker provides, multiple instances of Opencast can run in parallel on a single system. This might
+be helpful for developers.</p>
+<h2 id="install-docker">Install Docker</h2>
+<p>Docker is available for multiple Linux distributions. Please have a look at the <a href="https://docs.docker.com/engine/installation/">official
+documentation</a> for the latest installation instructions. Note that it
+might be necessary to install <a href="https://docs.docker.com/compose/install/"><code>docker-compose</code></a> separately.</p>
+<h2 id="start-with-docker-compose">Start with docker-compose</h2>
+<p>Opencast is packaged into multiple distributions. There is a separate Docker image for each distribution. Simple
+installations can use the all-in-one distribution.</p>
+<p>Opencast requires a database and a message broker (Apache ActiveMQ). We currently support H2 or MySQL/MariaDB databases.
+The Docker Hub repository has official Docker images for MySQL and MariaDB. H2 is already integrated into Opencast so
+that no database container is needed. There are multiple 3rd-party Docker images for ActiveMQ; this guide uses
+<code>webcenter/activemq</code>.</p>
+<p><code>docker-compose</code> can be used to configure, start and connect all services automatically. The <a href="https://github.com/opencast/opencast-docker/tree/master/docker-compose">opencast-docker
+repository</a> contains multiple configuration
+examples:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Compose file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all-in-one + H2</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.allinone.h2.yml</code></td>
+</tr>
+<tr>
+<td>all-in-one + H2 + pyCA</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.allinone.h2+pyca.yml</code></td>
+</tr>
+<tr>
+<td>all-in-one + MariaDB</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.allinone.mariadb.yml</code></td>
+</tr>
+<tr>
+<td>all-in-one + PostgreSQL</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.allinone.postgresql.yml</code></td>
+</tr>
+<tr>
+<td>admin, presentation, worker + MariaDB</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.multiserver.mariadb.yml</code></td>
+</tr>
+<tr>
+<td>admin, presentation, worker + PostgreSQL</td>
+<td><code>https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.multiserver.postgresql.yml</code></td>
+</tr>
+</tbody>
+</table>
+<p>Choose and download a configuration:</p>
+<pre><code class="language-sh">$ curl -o docker-compose.yml &lt;URL&gt;
+</code></pre>
+<p>You might want to edit the compose file and add extra volumes to include custom configurations or workflows (see
+<a href="https://docs.docker.com/compose/compose-file/">compose file reference</a>).</p>
+<p>The compose files assume that the ActiveMQ configuration is located at <code>./assets/activemq.xml</code>. You can download the
+file from the repository:</p>
+<pre><code class="language-sh">$ mkdir assets
+$ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
+</code></pre>
+<p>Alternatively, you can use the Docker images to generate the file. This has the advantage that the correct version is
+always used:</p>
+<pre><code class="language-sh">$ mkdir assets
+
+$ docker run -it --rm \
+    quay.io/opencast/allinone:&lt;version&gt; \
+    app:print:activemq.xml &gt; assets/activemq.xml
+</code></pre>
+<p>At this point you are ready to start Opencast with the <code>up</code> command:</p>
+<pre><code class="language-sh">$ docker-compose up
+</code></pre>
+<p>After downloading the necessary Docker images, <code>docker-compose</code> should start all relevant services and you should see
+the logging output. Alternatively, adding the <code>-d</code> flag will start Opencast in the background and hide the log messages.
+The admin UI is available at <a href="http://localhost:8080">http://localhost:8080</a>.</p>
+<p>The <code>down</code> command will stop Opencast and remove the created Docker containers. All relevant Opencast files are still
+preserved in Docker volumes. To remove them as well, run <code>down -v</code> instead.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../configuration/index.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../configuration/index.html">
+        Overview
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="ansible.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="ansible.html">
+        Ansible
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/docker-local.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

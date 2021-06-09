@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Prepare A/V - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "PrepareAVWorkflowOperation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+              {title: "Audio Muxing", url: "#audio-muxing" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="probe-resolution-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="probe-resolution-woh.html">
+        Probe Resolution
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="postmediapackage-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="postmediapackage-woh.html">
+        Post Media Package
+      </a>
+</div>
+</div>
+<h1 id="prepareavworkflowoperation">PrepareAVWorkflowOperation</h1>
+<h2 id="description">Description</h2>
+<p>The PrepareAVWorkflowOperation works is like this:</p>
+<p>If there are two tracks with the same flavor, and one of them contains a video stream only, while the other contains an
+audio stream only, the implementation will call the composer's "mux" method, with the result that the audio will be
+muxed with the video, using the video's movie container.</p>
+<p>If it there is one track with a certain flavor, the "encode" method is called which will rewrite (vs. encode) the file
+using the same container and codec (-vcodec copy, -a codec copy), while the container format is determined by FFmpeg via
+the file's extension. The reason for doing this is that many media files are in a poor state with regard to their
+compatibility (most often, the stream's codec contains differing information from the container), so we are basically
+asking FFmepg to rewrite the whole thing, which will in many cases eliminate problems that would otherwise occur later
+in the pipeline (encoding to flash, mjpeg etc.).</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor</td>
+<td>presenter/source</td>
+<td>Specifies which media should be processed.</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>presenter/work</td>
+<td>Specifies the flavor the new files will get.</td>
+</tr>
+<tr>
+<td>mux-encoding-profile</td>
+<td>mux-av.prepared</td>
+<td>The encoding profile to use for media that needs to be muxed (default is 'mux-av.work')</td>
+</tr>
+<tr>
+<td>audio-video-encoding-profile</td>
+<td>av.prepared</td>
+<td>The encoding profile to use for media that is audio-video already and needs to be re-encodend (default is av.work)</td>
+</tr>
+<tr>
+<td>video-encoding-profile</td>
+<td>video-only.prepared</td>
+<td>The encoding profile to use for media that is only video and needs to be re-encodend (default is video-only.work)</td>
+</tr>
+<tr>
+<td>audio-encoding-profile</td>
+<td>audio-only.prepared</td>
+<td>The encoding profile to use for media that is only audio and needs to be re-encodend (default is audio-only.work)</td>
+</tr>
+<tr>
+<td>rewrite</td>
+<td>true</td>
+<td>Should files be rewritten</td>
+</tr>
+<tr>
+<td>audio-muxing-source-flavors</td>
+<td>presentation/source,presentation/*,*/*</td>
+<td>If there is no matching flavor to mux, search for a track with audio that can be muxed by going from left to right through this comma-separated list of source flavors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="prepare-av"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Preparing presenter audio and video work versions"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;presenter/work&lt;/configuration&gt;
+    &lt;configuration key="rewrite"&gt;false&lt;/configuration&gt;
+    &lt;configuration key="audio-muxing-source-flavors"&gt;*/?,*/*&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h2 id="audio-muxing">Audio Muxing</h2>
+<p>The PrepareAVWorkflowOperation can be used for audio muxing in case a matching source video track has no audio. Audio
+muxing is performed as described below:</p>
+<p>In case the <em>source-flavor</em> matches to exactly two tracks whereas one track is a video-only track and the other is an
+audio-only track, those tracks will be merged into a single audio-video track.</p>
+<p>If there is no such matching flavor to mux, additional audio muxing facilities can be controlled by the use of the
+configuration key <em>audio-muxing-source-flavors</em>. That configuration key contains a comma-separated list of flavors that
+defines the search order of how to find an audio track.</p>
+<p>The following two wildcard characters can be used in flavors in that list:</p>
+<ul>
+<li>'*' will match to any type or subtype</li>
+<li>'?' will match to the type or subtype of the matching <em>source-flavor</em></li>
+</ul>
+<p>Note: In case that a flavor used with <em>audio-muxing-source-flavors</em> matches to multiple tracks within the media package
+resulting in a list of matching tracks, the search order within that list is undefined, i.e. PrepareAVWorkflowOperation
+will just pick any of those tracks that has audio.</p>
+<h3 id="example">Example</h3>
+<pre><code>[...]
+&lt;configuration key="source-flavor"&gt;presenter/*&lt;/configuration&gt;
+&lt;configuration key="audio-muxing-source-flavors"&gt;presenter-audio/?, presentation/?,presentation/*,?/audio,*/*&lt;/configuration&gt;
+[...]
+</code></pre>
+<p>Let's assume that exactly one video-only track of flavor presenter/source in the media package and another track of
+flavor audio/track that has audio.</p>
+<p>In this example, the PrepareAVWorkflowOperation would perform the following steps:</p>
+<ol>
+<li>Search tracks of flavor presenter-audio/source (presenter-audio/?)</li>
+<li>Search tracks of flavor presentation/source (presentation/?)</li>
+<li>Search tracks of flavor presentation/*</li>
+<li>Search tracks of flavor presenter/audio (?/audio)</li>
+<li>Search tracks of flavor */*</li>
+</ol>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="probe-resolution-woh.html">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="probe-resolution-woh.html">
+        Probe Resolution
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="postmediapackage-woh.html">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="postmediapackage-woh.html">
+        Post Media Package
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/prepareav-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

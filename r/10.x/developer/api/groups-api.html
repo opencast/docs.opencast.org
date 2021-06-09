@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Groups API - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "General", url: "#_top", children: [
+              {title: "GET /api/groups", url: "#get-apigroups" },
+              {title: "GET /api/groups/{group_id}", url: "#get-apigroupsgroup_id" },
+              {title: "POST /api/groups", url: "#post-apigroups" },
+              {title: "PUT /api/groups/{group_id}", url: "#put-apigroupsgroup_id" },
+              {title: "DELETE /api/groups/{group_id}", url: "#delete-apigroupsgroup_id" },
+          ]},
+          {title: "Members", url: "#members", children: [
+              {title: "POST /api/groups/{group_id}/members", url: "#post-apigroupsgroup_idmembers" },
+              {title: "DELETE /api/groups/{group_id}/members/{member_id}", url: "#delete-apigroupsgroup_idmembersmember_id" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="security-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="security-api.html" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="statistics-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="statistics-api.html" class="btn btn-xs btn-link">
+        Statistics API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apigroups">GET /api/groups</a></li>
+<li><a href="#get-apigroupsgroup_id">GET /api/groups/{group_id}</a></li>
+<li><a href="#post-apigroups">POST /api/groups</a></li>
+<li><a href="#put-apigroupsgroup_id">PUT /api/groups/{group_id}</a></li>
+<li><a href="#delete-apigroupsgroup_id">DELETE /api/groups/{group_id}</a></li>
+</ul>
+</li>
+<li><a href="#members">Members</a><ul>
+<li><a href="#post-apigroupsgroup_idmembers">POST /api/groups/{group_id}/members</a></li>
+<li><a href="#delete-apigroupsgroup_idmembersmember_id">DELETE /api/groups/{group_id}/members/{member_id}</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<h3 id="get-apigroups">GET /api/groups</h3>
+<p>Returns a list of groups.</p>
+<p>The following query string parameters can be used to filter, sort and paginate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="usage.html#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="usage.html#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="types.html#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="usage.html#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="types.html#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="usage.html#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">Groups where the name specified in the metadata field match</td>
+</tr>
+</tbody>
+</table>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">By the group name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">By the group description</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left">By the group role</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">By the group members (only for api versions &lt; 1.6.0)</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">By the group roles (only for api versions &lt; 1.6.0)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code>https://opencast.domain.com/api/groups?sort=name:ASC&amp;limit=2&amp;offset=1
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of groups as JSON array of groups wheres the JSON objects representing groups
+have the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The identifier of the group</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The role of the group</td>
+</tr>
+<tr>
+<td align="left"><code>organization</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The roles assigned to the group (comma-separated list)</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The list of users that belong to this group (comma-separated list of usernames)</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The name of the group</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of the group</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+    &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;roles&quot;: &quot;ROLE_OAUTH_USER,ROLE_SUDO,ROLE_ADMIN,ROLE_ANONYMOUS&quot;,
+    &quot;members&quot;: &quot;admin,admin2&quot;,
+    &quot;name&quot;: &quot;Opencast Project System Administrators&quot;,
+    &quot;description&quot;: &quot;System administrators of 'Opencast Project'&quot;
+  },
+  {
+    &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_EXTERNAL_APPLICATIONS&quot;,
+    &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_EXTERNAL_APPLICATIONS&quot;,
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;roles&quot;: &quot;ROLE_EXAMPLE1,ROLE_EXAMPLE2,ROLE_EXAMPLE3&quot;,
+    &quot;members&quot;: &quot;apiuser&quot;,
+    &quot;name&quot;: &quot;Opencast Project External Applications&quot;,
+    &quot;description&quot;: &quot;External application users of 'Opencast Project'&quot;
+  }
+]
+</code></pre>
+<h3 id="get-apigroupsgroup_id">GET /api/groups/{group_id}</h3>
+<p>Returns a single group.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The group is returned as JSON object with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The identifier of the group</td>
+</tr>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The role of the group</td>
+</tr>
+<tr>
+<td align="left"><code>organization</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The roles assigned to the group (comma-separated list)</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The list of users that belong to this group (comma-separated list of usernames)</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The name of the group</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of the group</td>
+</tr>
+</tbody>
+</table>
+<p><code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+  &quot;role&quot;: &quot;ROLE_GROUP_MH_DEFAULT_ORG_SYSTEM_ADMINS&quot;,
+  &quot;organization&quot;: &quot;mh_default_org&quot;,
+  &quot;roles&quot;: &quot;ROLE_OAUTH_USER,ROLE_SUDO,ROLE_ADMIN,ROLE_ANONYMOUS&quot;,
+  &quot;members&quot;: &quot;admin,admin2&quot;,
+  &quot;name&quot;: &quot;Opencast Project System Administrators&quot;,
+  &quot;description&quot;: &quot;System administrators of 'Opencast Project'&quot;
+}
+</code></pre>
+<h3 id="post-apigroups">POST /api/groups</h3>
+<p>Creates a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Group Name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Group Description</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of roles</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of members</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>201 (CREATED)</code>: A new group is created.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>409 (CONFLICT)</code>: The group could not be created because a group with the same name already exists.</p>
+<h3 id="put-apigroupsgroup_id">PUT /api/groups/{group_id}</h3>
+<p>Updates a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Group Name</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Group Description</td>
+</tr>
+<tr>
+<td align="left"><code>roles</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of roles</td>
+</tr>
+<tr>
+<td align="left"><code>members</code></td>
+<td align="left">no</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">Comma-separated list of members</td>
+</tr>
+</tbody>
+</table>
+<p>If any of form parameters are ommited, the respective fields of the group will not be changed.</p>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>200 (OK)</code>: The group has been updated.<br/>
+<code>404 (NOT FOUND)</code>: The specified group does not exist.<br/></p>
+<h3 id="delete-apigroupsgroup_id">DELETE /api/groups/{group_id}</h3>
+<p>Deletes a group.</p>
+<p><strong>Response</strong></p>
+<p>This request does not return data.</p>
+<p><code>204 (NO CONTENT)</code>: The group has been deleted.<br/>
+<code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<h1 id="members">Members</h1>
+<h3 id="post-apigroupsgroup_idmembers">POST /api/groups/{group_id}/members</h3>
+<p>Adds a member to a group.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>member</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The username of the member to be added</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The member has been added or was already member of the group.<br/></p>
+<p>If the member has been added, the request does not return data.
+In case that the member already was in the group, the following message is returned as string:</p>
+<pre><code>Member is already member of group
+</code></pre>
+<p><code>404 (NOT FOUND)</code>: The specified group does not exist.</p>
+<h3 id="delete-apigroupsgroup_idmembersmember_id">DELETE /api/groups/{group_id}/members/{member_id}</h3>
+<p>Removes a member from a group</p>
+<p><strong>Response</strong></p>
+<p><code>200 (NO CONTENT)</code>: The member has been removed.<br/>
+<code>404 (NOT FOUND)</code>: The specified group or member does not exist.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="security-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="security-api.html" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="statistics-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="statistics-api.html" class="btn btn-xs btn-link">
+        Statistics API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/groups-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
