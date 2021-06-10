@@ -83,36 +83,43 @@ better use of multiple CPU cores.</p>
 </thead>
 <tbody>
 <tr>
-<td>source-flavor</td>
+<td>source-flavor¹</td>
 <td>presenter/work</td>
-<td>Which media should be encoded</td>
+<td>Single flavor specifying media to be encoded</td>
+</tr>
+<tr>
+<td>source-flavors¹</td>
+<td>presenter/work,presentation/work</td>
+<td>Comma-separated list of flavors specifying media to be encoded</td>
 </tr>
 <tr>
 <td>target-flavor</td>
 <td>presenter/delivery</td>
-<td>Specifies the flavor of the new media</td>
+<td>Flavor of the new media</td>
 </tr>
 <tr>
 <td>source-tags</td>
 <td>sometag</td>
-<td>Tags of media to encode</td>
+<td>Comma-separated list of tags of media to encode</td>
 </tr>
 <tr>
 <td>target-tags</td>
 <td>sometag</td>
-<td>Specifies the tags of the new media</td>
+<td>Comma-separated list of tags to be assigned to the new media</td>
 </tr>
 <tr>
 <td>encoding-profile</td>
-<td>webm-hd</td>
-<td>Specifies the encoding profile to use</td>
+<td>parallel.http</td>
+<td>Encoding profile to use</td>
 </tr>
 </tbody>
 </table>
-<p>As explained in the "Encoding Profile" section, every media file created by an encode operation has its own named
-suffix. The suffix name is defined in the encode profile definition. It will be added as a tag to the corresponding
-track in the media package. This is different from the <code>target-tags</code> workflow operation parameter, which will cause the
-specified tag list to be added to every media file created by the operation.</p>
+<p>¹If source-flavour<strong>s</strong> are specified, media of these flavors are considered, if not, media matching the source-flavour
+configuration option is considered.</p>
+<p>As explained in the <a href="#encoding-profile-example">"Encoding Profile Example" section</a>, every media file created by an encode operation
+has its own named suffix. The suffix name is defined in the encode profile definition. It will be added as a tag to the
+corresponding track in the media package. This is different from the <code>target-tags</code> workflow operation parameter, which
+will cause the specified tag list to be added to every media file created by the operation.</p>
 <p>For instance, let us take the example operation and encoding profile defined in this documentation. After a successful
 run of the operation, the media package will contain four new tracks: the first one containing the new tags
 <code>engage-download</code>, <code>engage-streaming</code> and <code>low-quality</code>; the second one containing the new tags <code>engage-download</code>,
