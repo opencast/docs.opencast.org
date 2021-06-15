@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Licenses and Legal Matters - Developer Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Licenses and Legal Matters", url: "#_top", children: [
+              {title: "Which Licenses May I Use for Opencast?", url: "#which-licenses-may-i-use-for-opencast" },
+              {title: "How To Label Third Party Libraries", url: "#how-to-label-third-party-libraries" },
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="governance.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="governance.html" class="btn btn-xs btn-link">
+        Governance
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="committer.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="committer.html" class="btn btn-xs btn-link">
+        Committers
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="licenses-and-legal-matters">Licenses and Legal Matters</h1>
+<blockquote>
+<p>This is a guide from developers for developers and therefore not an official legal document. We try to be as accurate
+as possible but cannot guarantee that there are no mistakes. If in doubt, please send a question to the Opencast
+developer mailing list, to the Opencast Board or to the Apereo Foundation, preferably in that order.</p>
+</blockquote>
+<h2 id="which-licenses-may-i-use-for-opencast">Which Licenses May I Use for Opencast?</h2>
+<p>All libraries that are used in Opencast need to be compatible with the Educational Community License version 2.0.</p>
+<p>In short, if the license is on:</p>
+<ul>
+<li>the Apereo or Apache Category-A list, it is fine to use the library.</li>
+<li>the Apereo or Apache Category-B list, we may use it unmodified. Please avoid Category-B if possible.</li>
+<li>the Apereo or Apache Category-X list, we cannot use it.</li>
+</ul>
+<p>Everything else needs to go to the Apereo foundation for approval.</p>
+<p>These lists, along with a more detailed explanation, can be found on the <a href="https://apereo.org/licensing/third-party">Apereo page about practices on third-party
+licenses</a></p>
+<p>Here is the slightly longer section from the „Apereo Licensing &amp; Intellectual Property Practices“ page:</p>
+<h2 id="how-to-label-third-party-libraries">How To Label Third Party Libraries</h2>
+<p>Third party libraries that are used within an Opencast system in production need to be listed in the <code>NOTICES</code> file,
+which can be found in the root directory of our code repository. Libraries and tools that are only used for testing or
+building the project, or are run via system call, do not need to be listed (e.g. maven, maven plugins, junit, ...).</p>
+<h3 id="javascript-libraries">JavaScript Libraries</h3>
+<p>For JavaScript libraries, list the file or folder that is included and give a short statement about the copyright and
+license. This can usually be taken from the copyright header at the top of the library.</p>
+<p>Example:</p>
+<pre><code>modules/admin-ui/src/main/webapp/lib/angular/*
+  AngularJS v1.3.6
+  (c) 2010-2014 Google, Inc. http://angularjs.org
+  License: MIT
+</code></pre>
+<h3 id="java-libraries-maven-dependencies">Java Libraries / Maven Dependencies</h3>
+<p>Java dependencies are listed pre module. Maven provides some helpful tools to list dependencies and even report
+libraries. Have a look at the output of <code>mvn dependency:list</code> and <code>mvn dependency:tree</code> or generate a full report for a
+module using:</p>
+<pre><code>mvn -s settings.xml project-info-reports:dependencies
+</code></pre>
+<p>This will create a file <code>target/site/dependencies.html</code> containing a full report, including the library versions and
+licenses.</p>
+<p>Finally, add the library and license to the <code>NOTICES</code> file in the form:</p>
+<pre><code>rn-workflow-service-remote
+  GroupId       ArtifactId    License
+  commons-io    commons-io    The Apache Software License, Version 2.0
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="governance.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="governance.html" class="btn btn-xs btn-link">
+        Governance
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="committer.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="committer.html" class="btn btn-xs btn-link">
+        Committers
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/license.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

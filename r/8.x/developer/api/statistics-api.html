@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Statistics API - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "General", url: "#_top", children: [
+              {title: "GET /api/statistics/providers", url: "#get-apistatisticsproviders" },
+              {title: "GET /api/statistics/providers/{providerId}", url: "#get-apistatisticsprovidersproviderid" },
+              {title: "POST /api/statistics/data/query", url: "#post-apistatisticsdataquery" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="groups-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="groups-api.html" class="btn btn-xs btn-link">
+        Groups API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="series-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="series-api.html" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apistatisticsproviders">GET /api/statistics/providers</a></li>
+<li><a href="#get-apistatisticsprovidersproviderid">GET /api/statistics/providers/{providerId}</a></li>
+<li><a href="#post-apistatisticsdataquery">POST /api/statistics/data/query</a><ul>
+<li><a href="#time-series-statistics-provider">Time Series Statistics Provider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<p>The Statistics API is available since API version 1.3.0.</p>
+<h3 id="get-apistatisticsproviders">GET /api/statistics/providers</h3>
+<p>Returns a list of statistics providers.</p>
+<p>The following query string parameters are supported to filter the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="usage.html#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left">Filter statistics provider by resource type (either <code>episode</code>, <code>series</code> or <code>organization</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withparameters</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether support parameters should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="language-xml">https://opencast.domain.com/api/statistics/providers?filter=resourceType:episode
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of providers is returned as a JSON array containing JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="types.html#statistics"><code>array[parameter]</code></a></td>
+<td align="left">Supported query parameters (optional)</td>
+</tr>
+</tbody>
+</table>
+<p>* Currently, only the <code>timeseries</code> type is supported</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;influxdb-episode-views-provider&quot;,
+    &quot;title&quot;: &quot;Episode Views&quot;,
+    &quot;description&quot;: &quot;Episode Views, Lorem Ipsum&quot;,
+    &quot;type&quot;: &quot;timeSeries&quot;,
+    &quot;resourceType&quot;: &quot;episode&quot;
+  }
+]
+</code></pre>
+<h3 id="get-apistatisticsprovidersproviderid">GET /api/statistics/providers/{providerId}</h3>
+<p>Returns a statistics provider.</p>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withparameters</code></td>
+<td align="left"><a href="types.html#basic"><code>boolean</code></a></td>
+<td align="left">Whether support parameters should be included in the response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="language-xml">https://opencast.domain.com/api/statistics/providers/a-timeseries-provider?withparameters=true
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of providers is returned as a JSON array containing JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The title of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The description of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="types.html#statistics"><code>array[parameter]</code></a></td>
+<td align="left">Supported query parameters (optional)</td>
+</tr>
+</tbody>
+</table>
+<p>* Currently, only the <code>timeSeries</code> type is supported</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;a-timeseries-provider&quot;,
+  &quot;title&quot;: &quot;Episode Views&quot;,
+  &quot;description&quot;: &quot;Episode Views, Lorem Ipsum&quot;,
+  &quot;type&quot;: &quot;timeseries&quot;,
+  &quot;resourceType&quot;: &quot;episode&quot;,
+  &quot;parameters&quot;: [
+    {
+      &quot;name&quot;: &quot;resourceId&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;name&quot;: &quot;from&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;datetime&quot;
+    },
+    {
+      &quot;name&quot;: &quot;to&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;datetime&quot;
+    },
+    {
+      &quot;values&quot;: [
+        &quot;daily&quot;,
+        &quot;weekly&quot;,
+        &quot;monthly&quot;,
+        &quot;yearly&quot;
+      ],
+      &quot;name&quot;: &quot;dataResolution&quot;,
+      &quot;optional&quot;: false,
+      &quot;type&quot;: &quot;enumeration&quot;
+    }
+  ]
+}
+</code></pre>
+<h3 id="post-apistatisticsdataquery">POST /api/statistics/data/query</h3>
+<p>Retrieves statistical data from one or more providers</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>data</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="types.html#extended"><code>array[object]</code></a></td>
+<td align="left">A JSON array describing the statistics queries to request (see below)</td>
+</tr>
+</tbody>
+</table>
+<p>The JSON array consists of query JSON objects. A query JSON object contains information about a statistics query to be executed:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object with information about the statistics provider to be queried</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object containing the parameters</td>
+</tr>
+</tbody>
+</table>
+<p>The JSON object <code>provider</code> has the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">A JSON object with information about the statistics provider to be queried</td>
+</tr>
+</tbody>
+</table>
+<p>The format of the JSON object <code>parameters</code> depends on the provider type that is queried, and is described separately for
+each provider in the next section.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    "provider": {
+      "identifier": "a-statistics-provider"
+    },
+    "parameters": {
+      "resourceId": "93213324-5d29-428d-bbfd-369a2bae6700"
+    }
+  },
+  {
+    "provider": {
+      "identifier": "a-timeseries-provider"
+    },
+    "parameters": {
+      "resourceId": "23413432-5a15-328e-aafe-562a2bae6800",
+      "from": "2019-04-10T13:45:32Z",
+      "to": "2019-04-12T00:00:00Z",
+      "dataResolution": "daily"
+    }
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of query results is returned as a JSON array containing JSON objects
+<code>400 (BAD REQUEST)</code>: The request was not valid</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object describing the statistics provider as described below</td>
+</tr>
+<tr>
+<td align="left"><code>parameters</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object describing the query parameters</td>
+</tr>
+<tr>
+<td align="left"><code>data</code></td>
+<td align="left"><a href="#extended"><code>property</code></a></td>
+<td align="left">A JSON object containing the query result</td>
+</tr>
+</tbody>
+</table>
+<p>Here, a statistics provider JSON object has the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>type</code>*</td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The type of the provider</td>
+</tr>
+<tr>
+<td align="left"><code>resourceType</code></td>
+<td align="left"><a href="types.html#basic"><code>string</code></a></td>
+<td align="left">The resource type of the provider</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the format of data is implied by the type of the statistics provider.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    "provider": {
+      "identifier": "a-statistics-provider",
+      "type": "someType",
+      "resourceType": "episode",
+    },
+    "parameters": {
+      "resourceId": "93213324-5d29-428d-bbfd-369a2bae6700"
+    },
+    "data": {
+      "value": "1"
+    },
+  {
+    "provider": {
+      "identifier": "a-timeseries-provider",
+      "type": "timeseries",
+      "resourceType": "episode",
+    },
+    "parameters": {
+      "resourceId": "23413432-5a15-328e-aafe-562a2bae6800",
+      "from": "2019-04-10T13:45:32Z",
+      "to": "2019-04-12T00:00:00Z",
+      "dataResolution": "daily"
+    },
+    "data": {
+      "labels": ["2019-04-10T13:45:32Z", "2019-04-11T00:00:00Z", "2019-04-12T00:00:00Z"],
+      "values": [20, 100, 300],
+      "total": 420
+    }
+]
+</code></pre>
+<h4 id="time-series-statistics-provider">Time Series Statistics Provider</h4>
+<p>Time Series Statistics Providers (type = timeseries) support some well-defined parameters and deliver a well-defined
+data format.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>resourceId</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The technical identifier of the resource the data relates to</td>
+</tr>
+<tr>
+<td align="left"><code>from</code></td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">Start of time period this query relates to</td>
+</tr>
+<tr>
+<td align="left"><code>to</code></td>
+<td align="left"><a href="types.html#date-and-time"><code>datetime</code></a></td>
+<td align="left">End of time period this query relates to</td>
+</tr>
+<tr>
+<td align="left"><code>dataResolution</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left"><code>hourly</code>, <code>daily</code>, <code>monthly</code> or <code>yearly</code> (as described by provider)</td>
+</tr>
+</tbody>
+</table>
+<p>Query Result Data Field:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>labels</code></td>
+<td align="left"><a href="#extended"><code>array[datetime]</code></a></td>
+<td align="left">The dates of the measurement points</td>
+</tr>
+<tr>
+<td align="left"><code>values</code></td>
+<td align="left"><a href="#extended"><code>array[integer]</code></a></td>
+<td align="left">The values of the measurement points</td>
+</tr>
+<tr>
+<td align="left"><code>total</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The sum of all values</td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="groups-api.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="groups-api.html" class="btn btn-xs btn-link">
+        Groups API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="series-api.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="series-api.html" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/statistics-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

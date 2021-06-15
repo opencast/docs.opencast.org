@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Notes - Administration Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Opencast 8: Release Notes", url: "#_top", children: [
+              {title: "Features", url: "#features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "Configuration changes", url: "#configuration-changes" },
+              {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 8.11", url: "#additional-notes-about-811" },
+              {title: "Additional Notes about 8.10", url: "#additional-notes-about-810" },
+              {title: "Additional Notes about 8.9", url: "#additional-notes-about-89" },
+              {title: "Additional Notes About 8.8", url: "#additional-notes-about-88" },
+              {title: "Additional Notes About 8.7", url: "#additional-notes-about-87" },
+              {title: "Additional Notes About 8.6", url: "#additional-notes-about-86" },
+              {title: "Additional Notes About 8.5", url: "#additional-notes-about-85" },
+              {title: "Additional Notes About 8.4", url: "#additional-notes-about-84" },
+              {title: "Additional Notes About 8.3", url: "#additional-notes-about-83" },
+              {title: "Additional Notes About 8.2", url: "#additional-notes-about-82" },
+              {title: "Aditional Notes About 8.1", url: "#aditional-notes-about-81" },
+              {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release managers", url: "#release-managers" },
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="upgrade.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="upgrade.html" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="index.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="index.html" class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-8-release-notes">Opencast 8: Release Notes</h1>
+<h2 id="features">Features</h2>
+<ul>
+<li>Improved integration of external statistics providers (InfluxDB)<ul>
+<li>Hourly scale for data exports</li>
+<li>Visualization of statistics in the Admin UI</li>
+</ul>
+</li>
+<li>Limit accepted file types when uploading assets</li>
+<li>Support for exclusion pattern for URL signing</li>
+<li>Add option to configure state mappings for workflows</li>
+<li>Assembly configuration</li>
+<li>Multi-tenancy support for workflows</li>
+<li>Role support for workflows</li>
+<li>Video-crop service</li>
+<li>Paella Player 6.2.4</li>
+<li>Multiple audio tracks support on Paella Player</li>
+<li>Feeds-tab: adds a new tab in series properties for ATOM and RSS Feeds</li>
+<li>Custom LTI series tool styles</li>
+<li>Show only events with write access in the Admin UI</li>
+<li>Access org properties from publish-configure WOH</li>
+<li>Resolution based, conditional encoding</li>
+<li>Termination State Service to integrate with AWS AutoScaling Lifecycle</li>
+<li>Health check endpoint</li>
+<li>Officially support URL signing keys that handle multiple URL prefixes</li>
+<li>Support for exclusion pattern for URL signing</li>
+<li>User-provider for the d2l Brightspace LMS</li>
+<li>Provide access to file contents in the Working File Repository</li>
+<li>Automatic caption using Google speech to text API</li>
+<li>Admin UI: new event media upload progress bar</li>
+<li>Opencast Plug-in features for Karaf</li>
+<li>Single step delete of events</li>
+<li><strong>Opencast 8.2: Opencast Studio (browser-based recording tool)</strong></li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>Resume on past table page when leaving video editor</li>
+<li>JavaScript dependency management</li>
+<li>Highlight main table rows on hover</li>
+<li>Reduces job payload size in database</li>
+<li>Improved URL signing performance</li>
+<li>ingest-download operation moved to worker</li>
+<li>Media Module configuration now in the organization configuration file</li>
+<li>Sensible names for hosts instead of URLs</li>
+<li>Improved icons and wording in video editor</li>
+<li>Improved delete-event submit button</li>
+<li>Extended the ingest-download-woh</li>
+<li>Tag elements retrieved from asset manager</li>
+<li>Improve navigation in video editor when zoom is active</li>
+<li>Switch to compatible file type filter definitions</li>
+<li>Improved setting values from Dublin Core catalog</li>
+<li>Don't start Opencast on a used port</li>
+<li>ESLint used in Theodul Core</li>
+<li>Theodul Player scroll/zoom overlay to use shift + scroll wheel zoom</li>
+<li>Removed State Mapping "Importing"</li>
+<li>Hide column "Stop" by default</li>
+<li>Fixed Workflow Index rebuild ACL handling</li>
+<li>Reduced memory needed for Workflow Index rebuild</li>
+<li>Ansible script documentation</li>
+<li>Automatic publication of streaming URLs</li>
+<li>S3 compatibility - Endpoint configuration for Amazon S3 alternatives added</li>
+<li>Theodul player ui config</li>
+<li>Re-introduce ability to avoid data loss during ingest</li>
+</ul>
+<h2 id="configuration-changes">Configuration changes</h2>
+<ul>
+<li><code>etc/org.opencastproject.adminui.cfg</code> has a new option <code>retract.workflow.id</code> which contains the id of the workflow used
+  to retract events when deleting.</li>
+</ul>
+<h2 id="api-changes">API changes</h2>
+<ul>
+<li>Removed REST endpoints for modifying workflow definitions<ul>
+<li>DELETE /workflow/definition/{id}</li>
+<li>PUT /workflow/definition</li>
+</ul>
+</li>
+</ul>
+<h2 id="additional-notes-about-811">Additional Notes about 8.11</h2>
+<p>This release contains several bugfixes.
+- Gracefully handle missing Shibboleth User References
+- Handle broken encoding profiles without killing the ComposerService
+- Configure POST api/groups access correctly
+- Validate Ingested DublinCore Catalogs
+- Fix Sorting Series by Creators
+- Properly configure AWS S3 distribution on startup by default</p>
+<p>Please check the changelog for a complete overview.</p>
+<h2 id="additional-notes-about-810">Additional Notes about 8.10</h2>
+<p>This release contains an important bugfix where unprivileged users could not upload videos.</p>
+<h2 id="additional-notes-about-89">Additional Notes about 8.9</h2>
+<p>Opencast 8.9 contains an important security fix regarding host verification. Upgrading is strongly recommended. If you
+use self-signed certificates, you now need to properly import them.
+Additionally, the UI of the docs were improved and and the Spring snapshot repository was removed to resolve build
+problems.
+5 other patches have been merged.</p>
+<h2 id="additional-notes-about-88">Additional Notes About 8.8</h2>
+<p>This maintenance includes 12 patches.</p>
+<h2 id="additional-notes-about-87">Additional Notes About 8.7</h2>
+<p>This maintenance release fixes severals bugs including problems with the scheduler in multitenant systems and adds
+missing ACLs after asset uploads.</p>
+<h2 id="additional-notes-about-86">Additional Notes About 8.6</h2>
+<p>This maintenance release contains some bugfixes.</p>
+<h2 id="additional-notes-about-85">Additional Notes About 8.5</h2>
+<p>This maintenance release contains mainly fixes for LTI issues.</p>
+<h2 id="additional-notes-about-84">Additional Notes About 8.4</h2>
+<p>This maintenance release contains several Opencast Studio bug fixes and enhancements, plus additional security filters.</p>
+<h3 id="configuration-changes-in-84">Configuration Changes in 8.4</h3>
+<ul>
+<li>Updated studio workflows</li>
+<li>Additional security configuration in <code>etc/security/mh_default_org.xml</code> include<ul>
+<li>403 Logout redirect</li>
+<li>admin access to "/"</li>
+<li>role access to system filters</li>
+<li>prevent normal user from deleting series</li>
+<li>additional studio access filters</li>
+</ul>
+</li>
+<li>
+<p>Muxing fix in encoding files</p>
+<ul>
+<li><code>etc/encoding/adaptive-streaming-movies.properties</code></li>
+<li><code>etc/encoding/opencast-movies.properties</code></li>
+<li>Increased preview image resolution in</li>
+<li><code>etc/encoding/engage-images.properties</code></li>
+<li>A new editor preview profile in</li>
+<li><code>etc/encoding/opencast-movies.properties</code></li>
+<li>Default maximum job attempt increases 1 to 10 in</li>
+<li><code>etc/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="additional-notes-about-83">Additional Notes About 8.3</h2>
+<p>To improve the integration of Opencast Studio we introduced the custom roles plugin for LTI.</p>
+<p>There are also several changes in Opencast Studio:</p>
+<ul>
+<li>
+<p>Added</p>
+<ul>
+<li>Add detection of cameras. If none are detected, the buttons for "Camera" and "Screen &amp; Camera"
+are grayed out and not clickable.</li>
+<li>Add configuration options for the ACL sent by Studio on upload (the defaults haven't changed).</li>
+<li>Add configurations to limit the maximum video size and frame rate (the default haven't changed).</li>
+<li>Add configurations for video bitrate and preferred MIME types</li>
+<li>Add option to pass full configuration as hex encoded GET parameter.</li>
+<li>Show "Your recording will now be processed by Opencast." after upload.</li>
+<li>Full German translation</li>
+<li>Add build-time configuration of the settings.json path</li>
+</ul>
+</li>
+<li>
+<p>Changed</p>
+<ul>
+<li>Remove "beta" status of Studio</li>
+<li>Update dependencies</li>
+<li>Settings are now validated against a fixed schema</li>
+<li>An invalid Content-Type for the ACL XML request does not lead to the ACL template being ignored.
+Now it's used anyway, but a warning is still printed.</li>
+<li>Source map files are now included in the released tarballs.</li>
+</ul>
+</li>
+<li>
+<p>Fixed</p>
+<ul>
+<li>Fix bug in parsing GET parameters that would lead to only the last parameter being used</li>
+<li>Errors during upload are now shown to the user (previously, it would just show "Opencast connection not
+configured").</li>
+<li>Fixed very short recordings on weak devices leading to an error</li>
+<li>Fix MIME type to file extension detection</li>
+<li>Fix Safari detection</li>
+<li>GET parameters are now retained all the time</li>
+<li>text/xml is now also accepted as valid Content-Type for the ACL XML request (previously only application/xml
+was accepted)</li>
+</ul>
+</li>
+</ul>
+<h3 id="configuration-changes-in-83">Configuration Changes in 8.3</h3>
+<ul>
+<li>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> was moved
+   to <code>etc/org.opencastproject.security.lti.LtiLaunchAuthenticationHandler.cfg</code>.</li>
+<li>The configuration file <code>etc/org.ops4j.pax.web.cfg</code> was updated to include the <code>org.ops4j.pax.web.session.timeout</code>
+   option with value <code>240</code>.</li>
+<li>New workflows and encodings for Opencast Studio</li>
+<li>New configuration file <code>etc/ui-config/mh_default_org/studio/settings.json</code></li>
+</ul>
+<h2 id="additional-notes-about-82">Additional Notes About 8.2</h2>
+<p>Unlike in other maintainance releases, the release managers decided to break the rule to include features only
+in major releases. So Opencast 8.2 includes <strong>Opencast Studio</strong> a browser-based recording tool. We felt that
+because of the Corona Crisis this tool would be to many Opencast users as soon as possible.</p>
+<p>Additionally this release also includes 17 other patches.</p>
+<h3 id="configuration-changes-in-82">Configuration Changes in 8.2</h3>
+<ul>
+<li><code>/etc/encoding/engage-images.properties</code> has a few optimizations that are needed especially for Studio</li>
+<li><code>etc/security/mh_default_org.xml</code> has some changes for Studio and a new ROLE_STUDIO is introduced</li>
+<li><code>etc/workflows/publish-uploaded-assets.xml</code> has some changes.</li>
+</ul>
+<h2 id="aditional-notes-about-81">Aditional Notes About 8.1</h2>
+<p>Opencast 8.1 fixes a number of security issues. Upgrading is strongly recommended.
+Take a look at the <a href="https://github.com/opencast/opencast/security/advisories">security advisories</a> for more details.</p>
+<p>One change is that the OAI-PMH endpoint is no longer publicly accessible by default.
+If you need it to be, you can easily change that in the security configuration at <code>etc/security/mh_default_org.xml</code>.</p>
+<h3 id="configuration-changes-in-81">Configuration Changes in 8.1</h3>
+<ul>
+<li><code>etc/security/mh_default_org.xml</code><ul>
+<li><code>/oaipmh</code> URL is now restricted to <code>ROLE_ADMIN</code></li>
+<li>Removed <code>ROLE_COURSE_ADMIN</code> that was used for <code>/</code> and <code>/admin-ng</code> URLs</li>
+<li>replaced <code>&lt;sec:remember-me key="opencast" user-service-ref="userDetailsService" /&gt;</code>
+with <code>&lt;sec:remember-me services-ref="rememberMeServices" /&gt;</code></li>
+<li>Added configuration for rememberMeServices</li>
+<li>Added CustomPasswordEncoder configuration instead of MD5</li>
+</ul>
+</li>
+<li>changed <code>exception-handler-workflow="error"</code> to <code>exception-handler-workflow="partial-error"</code> in several workflow definitions</li>
+</ul>
+<h3 id="fixed-security-issues">Fixed Security Issues</h3>
+<ul>
+<li>CVE-2020-5231 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-94qw-r73x-j7hg">Users with ROLE_COURSE_ADMIN can create new users
+  </a></li>
+<li>CVE-2020-5206 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-vmm6-w4cf-7f3x">Authentication Bypass For Endpoints With Anonymous Access
+  </a></li>
+<li>CVE-2020-5222 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-mh8g-hprg-8363">Hard-Coded Key Used For Remember-me Token
+  </a></li>
+<li>CVE-2020-5230 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-w29m-fjp4-qhmq">Unsafe Identifiers
+  </a></li>
+<li>CVE-2020-5229 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-h362-m8f2-5x7c">Replace MD5 with bcrypt for password hashing
+  </a></li>
+<li>CVE-2020-5228 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-6f54-3qr9-pjgj">Public Access Via OAI-PMH
+  </a></li>
+</ul>
+<h2 id="release-schedule">Release Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>October 1st 2019</td>
+<td>Feature Freeze</td>
+</tr>
+<tr>
+<td>Nov 4th - Nov 10th 2019</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>Nov 11th - Nov 24th 2019</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>December 17th 2019</td>
+<td>Release of Opencast 8.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release managers</h2>
+<ul>
+<li>Karen Dolan (Harvard University DCE)</li>
+<li>Rüdiger Rolf (Osnabrück University)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="upgrade.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="upgrade.html" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="index.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="index.html" class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/releasenotes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
