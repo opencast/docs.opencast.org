@@ -128,9 +128,22 @@ you have to enable the remote debugging in Karaf OSGI server that runs Opencast.
 <pre><code>export DEFAULT_JAVA_DEBUG_OPTS='-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
 </code></pre>
 <p>You can connect the remote debugger of your IDE on port <code>5005</code>.</p>
+<h3 id="enabling-debugger-for-package-installations">Enabling debugger for package installations</h3>
+<p>Albeit you can use the afforemented method for package installations, you can't start debug mode via system services.
+The recommended way is to enable the debug mode in the <code>setenv</code> file, normally found in:</p>
+<pre><code>/usr/share/opencast/bin/
+</code></pre>
+<p>And add this line:</p>
+<pre><code>export KARAF_DEBUG=true
+</code></pre>
+<p>In case you need to change the port for debbuging, you can adding this another line:</p>
+<pre><code>export JAVA_DEBUG_PORT={{PORT}}
+</code></pre>
+<p>Where <code>{{PORT}}</code> is the desired port.</p>
+<hr />
 <p>For more information on remote debugging with Karaf you can visit <a href="https://karaf.apache.org/manual/latest/#_debugging">this
 site.</a></p>
-<p>It is not recommended to enable remote debugging on production systems!</p>
+<p>It is <strong>not recommended</strong> to enable remote debugging on production systems!</p>
 
   <br>
     
