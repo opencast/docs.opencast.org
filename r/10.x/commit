@@ -1,19 +1,8 @@
-commit 8a69a4bcbbb777b103510af40ee29720a67ff9d1
+commit 537e4016870724a6ad15043cda8196b3096ee855
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jun 18 14:46:15 2021 +0200
+Date:   Tue Jun 15 15:53:14 2021 +0200
 
-    Fix `jakarta.mail` Dependency Problem
+    Fix Log Statements
     
-    In the new CXF version, `javax.mail` has been replaced by
-    `jakarta.mail-api` whis was missing in our distributions.
-    This caused a broken mail system in Opencast and an exception on boot:
-    
-    ```
-    2021-06-17 19:23:34,228 | ERROR | (Log:186) - [org.osgi.service.cm.ManagedService, org.opencastproject.kernel.mail.SmtpService, id=396, bundle=134/mvn:org.opencastproject/opencast-kernel/10.0]: Unexpected problem updating configuration org.opencastproject.kernel.mail.SmtpService
-    java.lang.NoClassDefFoundError: com/sun/mail/util/MailLogger
-            at javax.mail.Session.initLogger(Session.java:260) ~[?:?]
-            ...
-    ```
-    
-    This patch adds the latest 1.6 version of `jakarta.mail-api`.
-    This fixes #2746.
+    This is a simple patch to fix a few log statements with incorrectly set
+    parameters.
