@@ -1,8 +1,44 @@
-commit 7a98544ee2e160907433207670e89c394c511340
+commit 1066c5a282b6ee8916433a100bc2dcf5d4ff1343
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Mon Jun 21 12:09:50 2021 +0200
+Date:   Sun Jun 13 00:04:44 2021 +0200
 
-    Prevent Users From Modifying ICLA Workflow
+    Fixed admin interface tests in certain timezones
     
-    The workflow for checking a users ICLA should not run in a pull request
-    context directly since users could otherwise modify the workflow.
+    This patch fixes an admin interface unit test which fails in certain timezones
+    with active daylight saving time (e.g. CEST).
+    
+    The error is:
+    
+    ```
+           Chrome Headless 93.0.4535.3 (Linux x86_64) adminNg.directives.adminNgTableFilter #selectFilterPeriodValue with both from- and to dates sets the time period filter value (accounting for localized day) FAILED
+    [INFO]  Expected spy put to have been called with:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z' ]
+    [INFO]  but actual calls were:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' ].
+    [INFO]
+    [INFO]  Call 0:
+    [INFO]    Expected $[3] = '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' to equal '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z'.
+    [INFO]  Error: Expected spy put to have been called with:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z' ]
+    [INFO]  but actual calls were:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' ].
+    [INFO]  Call 0:
+    [INFO]    Expected $[3] = '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' to equal '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z'.
+    [INFO]      at <Jasmine>
+    [INFO]      at UserContext.<anonymous> (test/unit/shared/directives/tableFilterDirectiveSpec.js:206:37)
+    [INFO]      at <Jasmine>
+           Firefox 89.0 (Fedora 0.0.0) adminNg.directives.adminNgTableFilter #selectFilterPeriodValue with both from- and to dates sets the time period filter value (accounting for localized day) FAILED
+    [INFO]  Expected spy put to have been called with:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z' ]
+    [INFO]  but actual calls were:
+    [INFO]    [ 'filter', 'furniture', undefined, '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' ].
+    [INFO]
+    [INFO]  Call 0:
+    [INFO]    Expected $[3] = '2014-12-31T23:00:00.001Z/2015-01-02T22:59:59.999Z' to equal '2014-12-30T23:00:00.001Z/2015-01-02T22:59:59.999Z'.
+    [INFO]  <Jasmine>
+    [INFO]  @test/unit/shared/directives/tableFilterDirectiveSpec.js:206:37
+    [INFO]  <Jasmine>
+           Chrome Headless 93.0.4535.3 (Linux x86_64): Executed 739 of 761 (1 FAILED) (skipped 22) (8.758 secs / 7.689 secs)
+    [INFO] Firefox 89.0 (Fedora 0.0.0): Executed 739 of 761 (1 FAILED) (skipped 22) (11.939 secs / 10.721 secs)
+    [INFO] TOTAL: 2 FAILED, 1476 SUCCESS
+    ```
