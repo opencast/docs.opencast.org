@@ -28,7 +28,6 @@
         
         var pageToc = [
           {title: "Install from Repository (Red Hat Enterprise Linux 7.x, CentOS 7.x, Scientific Linux 7.x)", url: "#_top", children: [
-              {title: "Availability", url: "#availability" },
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Opencast", url: "#install-opencast" },
@@ -78,10 +77,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>This guide is based on an RPM software repository available for Red Hat-based Linux distributions provided by <a href="https://uni-osnabrueck.de">Osnabrück
 University</a>. This repository provides preconfigured Opencast installations and all necessary
 3rd-party-tools.</p>
-<h2 id="availability">Availability</h2>
-<p>Note that it may take some time (usually about two weeks after a new release is out) before the RPMs are available.
-Watch for announcements on <a href="https://docs.opencast.org/#mailing-lists">the users list</a> or just check which versions are
-available in the repository.</p>
+<div class="warn">
+<b>Opencast 10</b> is currently available from the testing repository only.
+</div>
 <h2 id="currently-supported">Currently Supported</h2>
 <ul>
 <li>CentOS 7.x (x86_64)</li>
@@ -91,7 +89,7 @@ available in the repository.</p>
 <p>Other architectures like i386, i686, arm, … are not supported.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories:</p>
-<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-09/noarch/opencast-repository-9-1.el7.noarch.rpm
+<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-10/noarch/opencast-repository-10-1.el7.noarch.rpm
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
@@ -167,12 +165,15 @@ If you are performing this on a production system, please ensure you have valid 
 <p>For an RPM-based upgrade, first, stop Opencast:</p>
 <pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
-<p>Then, replace the repository</p>
-<pre><code class="language-sh">rm -f /etc/yum.repos.d/opencast*.repo* || :
-yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-09/noarch/opencast-repository-9-1.el7.noarch.rpm
+<p>Then, update the repository:</p>
+<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-10/noarch/opencast-repository-10-1.el7.noarch.rpm
 </code></pre>
 <p>Upgrade to the new Opencast package by running:</p>
-<pre><code class="language-sh">yum  install opencast-&lt;distribution&gt;
+<pre><code class="language-sh">yum update
+</code></pre>
+<p>Finally, since Opencast 10 switched to using Java 11, make sure that Java 8 is no longer installed.
+Alternative, you can also set Java 11 as default.</p>
+<pre><code>yum remove 'java-1.8*'
 </code></pre>
 <p>At this point you must follow the relevant <a href="../upgrade.html">upgrade instructions</a>, prior to starting Opencast again.</p>
 <h2 id="uninstall-opencast">Uninstall Opencast</h2>
