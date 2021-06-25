@@ -65,7 +65,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h1 id="partial-retract-engage-workflow-operation">Partial Retract Engage Workflow Operation</h1>
 <p>ID: <code>retract-partial</code></p>
 <h2 id="description">Description</h2>
-<p>The PartialRetractEngageWorkflowOperationHandler retracts a subset of the published elements from the local Opencast Media Module.  This is useful to remove incorrect captions without reprocessing the entire workflow.  Note: the elements selected for retraction match any combination of flavor or tag, and the resulting publication may be unusable if you accidentally retract one or more delivery files.  Use this operation with caution.</p>
+<p>The partial retract engage operation retracts a subset of the published elements from the search service.
+This is useful to e.g. remove incorrect captions without reprocessing the entire workflow.</p>
+<p>The elements selected for retraction match any combination of flavor or tag,
+and the resulting publication may become unusable if you accidentally retract one or more delivery files.
+Use this operation with caution.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -88,8 +92,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
     id="retract-partial"
-    fail-on-error="true"
-    exception-handler-workflow="partial-error"
     description="Retracting elements flavored with presentation and tagged with preview from Engage"&gt;
   &lt;configurations&gt;
     &lt;configuration key="retract-flavors"&gt;presentation/*&lt;/configuration&gt;
