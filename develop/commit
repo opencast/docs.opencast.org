@@ -1,18 +1,10 @@
-commit 31a464aea75a622f6e1d99942d93135aa2868738
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon Jun 28 08:17:55 2021 +0000
+commit cb18e20ee850dda45a4270ec0fda65de3366d999
+Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
+Date:   Fri Jun 25 14:26:26 2021 +0200
 
-    Bump @types/react-select from 4.0.15 to 4.0.16 in /modules/lti
+    Fix random error with Maven dependency download in GitHub Actions
     
-    Bumps [@types/react-select](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/react-select) from 4.0.15 to 4.0.16.
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
-    - [Commits](https://github.com/DefinitelyTyped/DefinitelyTyped/commits/HEAD/types/react-select)
-    
-    ---
-    updated-dependencies:
-    - dependency-name: "@types/react-select"
-      dependency-type: direct:development
-      update-type: version-update:semver-patch
-    ...
-    
-    Signed-off-by: dependabot[bot] <support@github.com>
+    In GitHub Actions sometimes the build fails due to Maven not been able
+    to download dependencies. This is specific to the networking setup of
+    GitHub. This PR adds suggested flags to the Maven commands that forces
+    Maven to start new TCP connections instead of having long running ones.
