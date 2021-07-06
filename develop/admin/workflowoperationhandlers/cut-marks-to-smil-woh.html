@@ -70,6 +70,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 It does this by attributing the given times to the specified tracks.</p>
 <p>Tracks are assumed to start at 0.
 Likewise, cut marks are assumed to be specified relative to the beginning of the tracks.</p>
+<p>The cut marks must be a media package attachment.
+For compatibility to early versions, the code falls back to looking for catalogs if no attachment was found.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -83,12 +85,12 @@ Likewise, cut marks are assumed to be specified relative to the beginning of the
 <tr>
 <td>source-media-flavors</td>
 <td><code>presenter/prepared</code></td>
-<td>The flavors containing the video tracks.</td>
+<td>The flavors identifying the video tracks.</td>
 </tr>
 <tr>
 <td>source-json-flavor</td>
 <td><code>cut-marks/json</code></td>
-<td>The flavor of the JSON. Must contain exactly one file.</td>
+<td>The flavor of the JSON. Must identify exactly one element.</td>
 </tr>
 <tr>
 <td>target-smil-flavor</td>
@@ -98,7 +100,7 @@ Likewise, cut marks are assumed to be specified relative to the beginning of the
 <tr>
 <td>target-tags</td>
 <td><code>archive</code></td>
-<td>(Optional) Tags to add to the resulting SMIL. Default is <code>null</code></td>
+<td>Tags to add to the resulting SMIL. (Default: <code>null</code>)</td>
 </tr>
 </tbody>
 </table>
