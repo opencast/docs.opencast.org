@@ -1,5 +1,9 @@
-commit 35e06b9db9232eb3ace85961e20e849df5ad3ba6
-Author: Crowdin Bot <crowdin-bot@opencast.org>
-Date:   Mon Jul 19 05:19:34 2021 +0000
+commit 319eab9b182e93ad7a7639538ce4e196e4ee292a
+Author: Kristof Keppens <kkeppens@gmail.com>
+Date:   Mon Jul 19 16:35:40 2021 +0200
 
-    Automatically update translation keys (r/9.x)
+    Prevent search service endpoint from querying series service
+    
+    This patch fixes the problem that the search service's episode endpoint uses the series service when providing the `sname` parameter. Instead of relying on the series service, we can use the Solr search index directly to map the `sname` parameter to a series identifier.
+    
+    This fixes #2738
