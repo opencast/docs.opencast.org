@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Base API - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Information", url: "#_top", children: [
+              {title: "GET /api", url: "#get-api" },
+          ]},
+          {title: "User and Organization", url: "#user-and-organization", children: [
+              {title: "GET /api/info/me", url: "#get-apiinfome" },
+              {title: "GET /api/info/me/roles", url: "#get-apiinfomeroles" },
+              {title: "GET /api/info/organization", url: "#get-apiinfoorganization" },
+              {title: "GET /api/info/organization/properties", url: "#get-apiinfoorganizationproperties" },
+          ]},
+          {title: "Versions", url: "#versions", children: [
+              {title: "GET /api/version", url: "#get-apiversion" },
+              {title: "GET /api/version/default", url: "#get-apiversiondefault" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../agents-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../agents-api/" class="btn btn-xs btn-link">
+        Agents API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../authorization/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../authorization/" class="btn btn-xs btn-link">
+        Authorization
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#information">Information</a><ul>
+<li><a href="#get-api">GET /api</a></li>
+</ul>
+</li>
+<li><a href="#user-and-organization">User and Organization</a><ul>
+<li><a href="#get-apiinfome">GET /api/info/me</a></li>
+<li><a href="#get-apiinfomeroles">GET /api/info/me/roles</a></li>
+<li><a href="#get-apiinfoorganization">GET /api/info/organization</a></li>
+<li><a href="#get-apiinfoorganizationproperties">GET /api/info/organization/properties</a></li>
+</ul>
+</li>
+<li><a href="#versions">Versions</a><ul>
+<li><a href="#get-apiversion">GET /api/version</a></li>
+<li><a href="#get-apiversiondefault">GET /api/version/default</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="information">Information</h1>
+<p>In order to assess key characteristics of the External API and to test general connectivity, the External API’s root
+url is not protected through authentication:</p>
+<h3 id="get-api">GET /api</h3>
+<p>Returns key characteristics of the External API such as the API base URL and the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The api information is returned as a JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>version</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Default version of the External API</td>
+</tr>
+<tr>
+<td align="left"><code>url</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Base URL clients shall use to communicate with the External API</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;url&quot;: &quot;https:\/\/api.opencast.org\/api&quot;,
+  &quot;version&quot;: &quot;v1.0.1&quot;
+}
+</code></pre>
+<h1 id="user-and-organization">User and Organization</h1>
+<h3 id="get-apiinfome">GET /api/info/me</h3>
+<p>Returns information on the logged in user.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The user information is returned as a JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>provider</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The Opencast user provider that manages this user</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Displayable name of the user</td>
+</tr>
+<tr>
+<td align="left"><code>username</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The username</td>
+</tr>
+<tr>
+<td align="left"><code>userrole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role uniquly identifying the user</td>
+</tr>
+<tr>
+<td align="left"><code>email</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The e-mail address of the user</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;provider&quot;: &quot;opencast&quot;,
+  &quot;name&quot;: &quot;Opencast Student&quot;,
+  &quot;userrole&quot;: &quot;ROLE_USER_92623987_OPENCAST_ORG&quot;,
+  &quot;email&quot;: &quot;nowhere@opencast.org&quot;,
+  &quot;username&quot;: &quot;92623987@opencast.org&quot;
+}
+</code></pre>
+<h3 id="get-apiinfomeroles">GET /api/info/me/roles</h3>
+<p>Returns current user's roles.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The set of roles is returned as <a href="../types/#array"><code>array[string]</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  &quot;ROLE_USER_92623987@opencast.org&quot;,
+  &quot;ROLE_STUDENT&quot;
+]
+</code></pre>
+<h3 id="get-apiinfoorganization">GET /api/info/organization</h3>
+<p>Returns the current organization.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The organization details are returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>adminRole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role administrator users have</td>
+</tr>
+<tr>
+<td align="left"><code>anonymousRole</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The role unauthenticated users have</td>
+</tr>
+<tr>
+<td align="left"><code>id</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant identifier</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The tenant name</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;adminRole&quot;: &quot;ROLE_ADMIN&quot;,
+  &quot;anonymousRole&quot;: &quot;ROLE_ANONYMOUS&quot;,
+  &quot;id&quot;: &quot;mh_default_org&quot;,
+  &quot;name&quot;: &quot;Opencast&quot;
+}
+</code></pre>
+<h3 id="get-apiinfoorganizationproperties">GET /api/info/organization/properties</h3>
+<p>Returns the current organization's properties. The set of properties is a key-value set that depends on the
+configuration of Opencast.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The organization properties are returned as <a href="../types/#property"><code>property</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;org.opencastproject.feed.url&quot;: &quot;http://feeds.opencast.org&quot;,
+  &quot;org.opencastproject.admin.documentation.url&quot;: &quot;http://documentation.opencast.org&quot;,
+  &quot;org.opencastproject.external.api.url&quot;: &quot;http://api.opencast.org&quot;
+}
+</code></pre>
+<h1 id="versions">Versions</h1>
+<h3 id="get-apiversion">GET /api/version</h3>
+<p>Returns a list of available version as well as the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The version information is returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>versions</code></td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">All External API versions supported by this server</td>
+</tr>
+<tr>
+<td align="left"><code>default</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The default External API version used by this server</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;versions&quot;: [
+    &quot;v1.0.0&quot;,
+    &quot;v1.1.0&quot;
+  ],
+  &quot;default&quot;: &quot;v1.1.0&quot;
+}
+</code></pre>
+<h3 id="get-apiversiondefault">GET /api/version/default</h3>
+<p>Returns the default version.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The default version is returned as JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>default</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The default External API version used by this server</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;default&quot;: &quot;v1.1.0&quot;
+}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../agents-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../agents-api/" class="btn btn-xs btn-link">
+        Agents API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../authorization/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../authorization/" class="btn btn-xs btn-link">
+        Authorization
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/base-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
