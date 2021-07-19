@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Upgrade - Administration Guide</title>
+<link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="../css/highlight.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/bootstrap-3.3.7.min.js"></script>
+<script src="../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 9.x to 10.x", url: "#_top", children: [
+              {title: "Upgrade Java", url: "#upgrade-java" },
+              {title: "Configuration Changes", url: "#configuration-changes" },
+          ]},
+        ];
+
+    </script>
+<script src="../js/base.js"></script>
+<script src="../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../changelog/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../changelog/">
+        Changelog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../releasenotes/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../releasenotes/">
+        Release Notes
+      </a>
+</div>
+</div>
+<h1 id="upgrading-opencast-from-9x-to-10x">Upgrading Opencast from 9.x to 10.x</h1>
+<p>This guide describes how to upgrade Opencast 9.x to 10.x.
+In case you need information about how to upgrade older versions of Opencast,
+please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<ol>
+<li>Stop your current Opencast instance</li>
+<li><a href="#upgrade-java">Upgrade Java</a></li>
+<li>Replace Opencast with the new version</li>
+<li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
+<li>Start Opencast</li>
+</ol>
+<h2 id="upgrade-java">Upgrade Java</h2>
+<p>While Opencast 9 worked with both Java 8 and Java 11, Opencast 10 requires Java 11.
+Trying to start Opencast 10 with Java 8 will fail.</p>
+<p>Either install both java versions and set Java 11 as default using something like:</p>
+<pre><code>update-alternatives --config java
+</code></pre>
+<p>Or replace the old Java version like this:</p>
+<pre><code>% dnf shell
+&gt; remove 'java-1.8.0*'
+&gt; install java-11-openjdk.x86_64
+&gt; run
+</code></pre>
+<p>Note that these commands can differ based on your distribution and your set-up.
+Make sure to adjust them accordingly.</p>
+<p>Finally, check you have the correct version using:</p>
+<pre><code>% java --version
+openjdk 11.0.11 2021-04-20
+OpenJDK Runtime Environment 18.9 (build 11.0.11+9)
+OpenJDK 64-Bit Server VM 18.9 (build 11.0.11+9, mixed mode, sharing)
+</code></pre>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>Note that this section will only highlight a few important changes.
+Please make sure to compare your configuration against the current configuration files.</p>
+<h3 id="ldap">LDAP</h3>
+<p>A new configuration option <code>org.opencastproject.userdirectory.ldap.groupcheckprefix</code> was added.
+The option affects the <code>org.opencastproject.userdirectory.ldap.roleattributes</code> and
+<code>org.opencastproject.userdirectory.ldap.extra.roles</code> configuration options and may need to be adjusted.</p>
+<h3 id="static-file-delivery">Static File Delivery</h3>
+<p>Opencast 9.2 came with a <a href="../configuration/serving-static-files/">completely new system for securing static file content</a>
+which is now active by default in Opencast 10. If you are deferring the file access authorization to another system
+using Opencast's <a href="../configuration/stream-security/">security token mechanism</a>, you need to deactivate this protection
+in:</p>
+<pre><code>etc/org.opencastproject.fsresources.StaticResourceServlet.cfg
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../changelog/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../changelog/">
+        Changelog
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../releasenotes/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../releasenotes/">
+        Release Notes
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

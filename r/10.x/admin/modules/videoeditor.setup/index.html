@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Setup - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Video Editor: Setup", url: "#_top", children: [
+              {title: "Silence Detection Configuration", url: "#silence-detection-configuration" },
+              {title: "Video Editor Configuration", url: "#video-editor-configuration" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../videoeditor.architecture/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../videoeditor.architecture/">
+        Architecture
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../watsontranscripts/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../watsontranscripts/">
+        Transcripts (IBM Watson)
+      </a>
+</div>
+</div>
+<h1 id="video-editor-setup">Video Editor: Setup</h1>
+<h2 id="silence-detection-configuration">Silence Detection Configuration</h2>
+<p>The settings regarding the sensitivity of the silence detection can be changed in
+<code>etc/org.opencastproject.silencedetection.impl.SilenceDetectionServiceImpl.cfg</code>.</p>
+<ol>
+<li>silence.pre.length<ul>
+<li>Duration of silence that should be included at the beginning of  a new voice segment. This is to avoid that a cut
+  seems to sudden.</li>
+<li>Default: 2000 (2s)</li>
+</ul>
+</li>
+<li>silence.threshold.db<ul>
+<li>Silence threshold (e.g. -50dB for loud classrooms, -35dB for silent indoor location).</li>
+<li>Default: -40dB</li>
+</ul>
+</li>
+<li>silence.min.length<ul>
+<li>Minimum duration in milliseconds to detect a sequence as silence.</li>
+<li>Default: 10000 (10s)</li>
+</ul>
+</li>
+<li>voice.min.length<ul>
+<li>Minimum segment duration in milliseconds to start a new voice containing sequence after a silent sequence.</li>
+<li>Default: 60000 (1min)</li>
+</ul>
+</li>
+</ol>
+<h2 id="video-editor-configuration">Video Editor Configuration</h2>
+<p>The FFmpeg properties for the Video Editor can be modified in
+<code>etc/org.opencastproject.videoeditor.impl.VideoEditorServiceImpl.cfg</code>. Usually there should be no reason to touch this
+file.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../videoeditor.architecture/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../videoeditor.architecture/">
+        Architecture
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../watsontranscripts/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../watsontranscripts/">
+        Transcripts (IBM Watson)
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/videoeditor.setup.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>General Security - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Security Configuration", url: "#_top", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Configure Access", url: "#configure-access" },
+              {title: "Authentication Provider", url: "#authentication-provider" },
+              {title: "User and Role Providers", url: "#user-and-role-providers" },
+              {title: "Further Authentication Configuration", url: "#further-authentication-configuration" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../acl/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../acl/">
+        Access Control Lists
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../multi.tenancy/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../multi.tenancy/">
+        Multi Tenancy
+      </a>
+</div>
+</div>
+<h1 id="security-configuration">Security Configuration</h1>
+<p>This document will help you configure the Opencast security policy.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Opencast service endpoints and user interfaces are secured by default using a set of servlet filters. The following
+diagram illustrates the flow of an HTTP request and response through these filters.</p>
+<p><img alt="Diagram" src="../security1.png"/></p>
+<p>The Spring Security filters used here are very powerful, but are also somewhat complicated. Please familiarize yourself
+with the basic concepts and vocabulary described in the Spring Security documentation, then edit the xml files in
+<code>etc/security</code>, as described below.</p>
+<h2 id="configure-access">Configure Access</h2>
+<p>To configure access roles and URL patterns for a tenant, modify <code>/etc/security/{{tenant_identifier.xml}}</code>.  If you are
+not hosting multiple tenants on your Opencast server or cluster, all configuration should be done in
+<code>mh_default_org.xml</code>.</p>
+<p>Some examples:</p>
+<pre><code>&lt;!-- Allow anonymous access to the welcome.html URLs --&gt;
+&lt;sec:intercept-url pattern='/welcome.html' access='ROLE_ANONYMOUS,ROLE_USER'/&gt;
+
+&lt;!-- Allow anonymous GET to the search service, but not POST or PUT --&gt;
+&lt;sec:intercept-url pattern='/search/**' method="GET" access='ROLE_ANONYMOUS,ROLE_USER' /&gt;
+
+&lt;!-- Allow users with the admin role to do anything --&gt;
+&lt;sec:intercept-url pattern='/**' access='ROLE_ADMIN'/&gt;
+</code></pre>
+<h2 id="authentication-provider">Authentication Provider</h2>
+<p>Opencast specifies an AuthenticationProvider by default, using a UserDetailService that is obtained from the OSGI
+service registry.</p>
+<p>You can use this simple provider as is, loading users into the <code>oc_user</code> and <code>oc_role</code> database tables, and specifying
+an administrative username and password in <code>custom.properties</code>:</p>
+<pre><code>org.opencastproject.security.digest.user=opencast_system_account
+org.opencastproject.security.digest.pass=CHANGE_ME
+</code></pre>
+<h2 id="user-and-role-providers">User and Role Providers</h2>
+<p>Opencast allows user and role information to be supplied from external systems through user and role providers.
+Four user providers are available by default:</p>
+<ul>
+<li>LDAP User Provider, described in <a href="../security.ldap/">LDAP Security and Authorization</a></li>
+<li><a href="../security.user.sakai/">Sakai User Provider</a></li>
+<li><a href="../security.user.moodle/">Moodle User Provider</a></li>
+<li><a href="../security.user.brightspace/">Brightspace D2L User Provider</a></li>
+<li><a href="../security.user.canvas/">Canvas LMS User Provider</a></li>
+</ul>
+<p>The set of user and role providers can be configured. If you do not want to keep users and passwords in Opencast's
+database, you can replace the JpaUserAndRoleProvider with the LdapUserProvider by replacing the
+userdirectory-jpa jar with the userdirectory-ldap jar.</p>
+<h2 id="further-authentication-configuration">Further Authentication Configuration</h2>
+<ul>
+<li><a href="../security.cas/">Configure Central Authentication Service (CAS)</a></li>
+<li><a href="../security.ldap/">Configure LDAP Authentication and Authorization</a></li>
+<li><a href="../security.aai/">Configure Authentication and Authorization Infrastructure (AAI)</a></li>
+</ul>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../acl/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../acl/">
+        Access Control Lists
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../multi.tenancy/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../multi.tenancy/">
+        Multi Tenancy
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/security.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>
