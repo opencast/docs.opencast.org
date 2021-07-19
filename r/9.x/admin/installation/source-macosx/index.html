@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>MacOS X - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Install from Source (macOS)", url: "#_top", children: [
+              {title: "Preparation", url: "#preparation" },
+              {title: "Install Dependencies", url: "#install-dependencies" },
+              {title: "Building Opencast", url: "#building-opencast" },
+              {title: "Configure", url: "#configure" },
+              {title: "Running Opencast", url: "#running-opencast" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../debs/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../debs/">
+        Debian/Ubuntu
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../source-linux/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../source-linux/">
+        Linux
+      </a>
+</div>
+</div>
+<h1 id="install-from-source-macos">Install from Source (macOS)</h1>
+<p>These instructions outline how to install an all in one Opencast system on the macOS operating system.
+Tested on OS X 10.14.1 Mojave.</p>
+<div class="warn">
+The installation on macOS is not officially supported.
+Use this at your own risk.
+</div>
+<h2 id="preparation">Preparation</h2>
+<p>Open a Terminal and switch to the directory, in which the Opencast installation should be placed, e.g. <code>/opt/</code>,
+<code>~/develop/</code> or whatever you prefer.</p>
+<h3 id="get-opencast-source">Get Opencast source</h3>
+<p>You can get the Opencast source code by either downloading a tarball of the source code or by cloning the Git
+repository. The latter option is more flexible, it is easier to upgrade and in general preferred for developers. The
+prior option, the tarball download, needs less tools and you don't have to download nearly as much as with Git.</p>
+<p>Cloning the Git repository:</p>
+<pre><code>git clone https://github.com/opencast/opencast.git
+cd opencast
+git tag   &lt;-  List all available versions
+git checkout TAG   &lt;-  Switch to desired version
+</code></pre>
+<p>Using the tarball:</p>
+<p>Select the tarball for the version you want to install
+from the <a href="https://github.com/opencast/opencast/releases">GitHub releases section</a> under the "Tags" tab and download it
+directly from there or with the curl command specified below.</p>
+<pre><code># Download desired tarball, replace [...] with the desired version
+curl -OL https://github.com/opencast/opencast/archive/[...].tar.gz
+tar xf [...].tar.gz
+</code></pre>
+<h2 id="install-dependencies">Install Dependencies</h2>
+<p>Please make sure to install the following dependencies.</p>
+<p>Required:</p>
+<pre><code>Xcode
+jdk 11
+ffmpeg &gt;= 3.2.4
+maven &gt;= 3.1
+python &gt;= 2.6
+</code></pre>
+<p>(If you are using <a href="http://www.jenv.be/">jEnv</a> to set up your environment, make sure to <a href="https://stackoverflow.com/a/37466252">enable the maven plugin
+</a>.)</p>
+<p>Required (not necessarily on the same machine):</p>
+<pre><code>ActiveMQ &gt;= 5.10 (older versions untested)
+Elasticsearch 7.9.x
+</code></pre>
+<p>Required for text extraction:</p>
+<pre><code>tesseract &gt;= 3
+</code></pre>
+<p>Required for hunspell based text filtering:</p>
+<pre><code>hunspell &gt;= 1.2.8
+</code></pre>
+<p>Required for audio normalization:</p>
+<pre><code>sox &gt;= 14.4 (with MP3, FLAC and OGG support)
+</code></pre>
+<p>Required for animate service:</p>
+<pre><code>synfig
+</code></pre>
+<h3 id="dependency-download">Dependency Download</h3>
+<p>You can download Xcode in the Mac App Store. JDK 8 for OS X is available from
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle</a>.</p>
+<h4 id="using-homebrew">Using Homebrew</h4>
+<p>Homebrew is a package manager for OS X. For installation instruction see <a href="http://brew.sh/">their website</a>.</p>
+<pre><code>brew install maven
+brew install ffmpeg
+brew install apache-activemq
+
+brew install tesseract
+brew install hunspell
+brew install sox
+brew install synfig
+</code></pre>
+<h4 id="elasticsearch-on-macos">Elasticsearch on macOS</h4>
+<p>If you want to install Elasticsearch in the same machine run Elasticsearch as a Docker container</p>
+<pre><code>docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e 'discovery.type=single-node' elasticsearch:7.9.3
+</code></pre>
+<h4 id="using-pre-built-binaries">Using pre-built binaries</h4>
+<p>Pre-built versions of most dependencies can be downloaded from the respective project website:</p>
+<ul>
+<li><a href="https://maven.apache.org/download.cgi">Get Apache Maven</a></li>
+<li><a href="http://ffmpeg.org/download.html">Get FFmpeg</a></li>
+<li><a href="http://activemq.apache.org/download.html">Get Apache ActiveMQ</a></li>
+</ul>
+<h2 id="building-opencast">Building Opencast</h2>
+<p>Switch to the opencast folder. If you downloaded the tarball, this is the folder you just unpacked (called something
+like <code>opencast-community-opencast-[…]</code>). If you chose to download via git, use <code>cd opencast</code>. You can proceed by
+building opencast (depending on the folder permissions, you might need to start the command with <code>sudo</code>):</p>
+<pre><code>mvn clean install -Pdev
+</code></pre>
+<p>Please be patient, as building Opencast for the first time will take quite long.</p>
+<h2 id="configure">Configure</h2>
+<p>Please follow the steps of the <a href="../../configuration/basic/">Basic Configuration guide</a>. It will help you to set your host
+name, login information, etc. Be aware that the config files now reside in the build folders for the desired
+distribution. For the allinone distribution, this would be
+<code>/your/path/to/opencast/build/opencast-dist-allinone-[…]/etc/</code>, again with <code>[…]</code> representing the selected version.</p>
+<p>As specified in the guide, make sure you replace the default ActiveMQ configuration with the one provided in
+<code>docs/scripts/activemq/activemq.xml</code>. If you installed ActiveMQ using homebrew, you can find the installation path with
+<code>brew info activemq</code>. The configuration is probably located in <code>/usr/local/Cellar/activemq/&lt;version&gt;/libexec/conf/</code>.</p>
+<p>ffprobe is used to analyse new videos. It is installed with ffmpeg but usually not on the path to be automatically
+executed. You have to link the ffprobe to <code>/usr/local/bin/</code>. You can find the ffmpeg install directory with
+<code>brew info ffmpeg</code>. Usually you would link the file with
+<code>ln -s /usr/local/Cellar/ffmpeg/&lt;version&gt;/bin/ffprobe /usr/local/bin/ffprobe</code>.</p>
+<h2 id="running-opencast">Running Opencast</h2>
+<p>Make sure you have ActiveMQ running (unless you're running it on a different machine). Then you can start Opencast using
+the start-opencast script:</p>
+<pre><code>activemq start
+cd /your/path/to/opencast/
+cd build/opencast-dist-allinone-[…]
+./bin/start-opencast
+</code></pre>
+<p>As soon as Opencast is completely started, browse to <a href="http://localhost:8080">localhost:8080</a> to get to the
+administration interface.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../debs/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../debs/">
+        Debian/Ubuntu
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../source-linux/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../source-linux/">
+        Linux
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/source-macosx.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

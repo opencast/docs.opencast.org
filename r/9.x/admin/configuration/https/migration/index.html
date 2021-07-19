@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Migrating old content to HTTPS - Administration Guide</title>
+<link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../../css/base.css" rel="stylesheet"/>
+<link href="../../../css/highlight.css" rel="stylesheet"/>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="../../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Migrating old content to HTTPS", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+<script src="../../../js/base.js"></script>
+<script src="../../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../../firewall/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../../firewall/">
+        Firewall
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../opencast.only/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../opencast.only/">
+        Internal HTTPS
+      </a>
+</div>
+</div>
+<h1 id="migrating-old-content-to-https">Migrating old content to HTTPS</h1>
+<p>Opencast will not modify already published events. This means that old publications might still use HTTP as protocol if
+it was used before.  Re-processing or re-publishing will update the links but this may not be an option for larger
+migrations. For that, the following steps might help.</p>
+<blockquote>
+<p>Note that you modify stored data directly without any safety nets usually provided by Opencast. You should understand
+what you are doing!</p>
+</blockquote>
+<ol>
+<li>Backup your database, and the Solr and Elasticsearch indexes.<ul>
+<li>Elasticsearch: <code>{data}/index</code></li>
+<li>Solr: <code>{data}/solr-indexes</code></li>
+</ul>
+</li>
+<li>Configure Opencast to use HTTPS and test your set-up with a new publication.</li>
+<li>Put all your nodes into maintenance mode or, at least, do not process any videos.</li>
+<li>
+<p>Update the media packages:</p>
+<pre><code>find . -type f -name "*.xml" -exec \
+  sed -i 's/http\:\/\/oc-presentation\.example\.com\:80/https:\/\/oc-presentation.example.com/g' {} +
+</code></pre>
+</li>
+<li>
+<p>Update database tables. Note that Opencast 5 did change the database table name prefix from <code>mh</code> to <code>oc</code>:</p>
+<pre><code>UPDATE opencast.oc_assets_snapshot
+   SET mediapackage_xml =
+   REPLACE( mediapackage_xml,
+            'http://oc-presentation.example.com:80',
+            'https://oc-presentation.example.com')
+   WHERE INSTR( mediapackage_xml,
+                'http://oc-presentation.example.com:80') &gt; 0;
+UPDATE opencast.oc_search
+   SET mediapackage_xml =
+   REPLACE( mediapackage_xml,
+            'http://oc-presentation.example.com:80',
+            'https://oc-presentation.example.com')
+   WHERE INSTR( mediapackage_xml,
+                'http://oc-presentation.example.com:80') &gt; 0;
+</code></pre>
+</li>
+<li>
+<p>Remove the search service's Solr index. It usually is located at <code>solr-indexes/search</code> but its location really
+   depends on <code>org.opencastproject.solr.dir</code> and <code>org.opencastproject.search.solr.dir</code></p>
+</li>
+<li>Rebuild the Solr indices by re-starting your Opencast node running the search service (usually presentation).</li>
+<li>Rebuild the Elasticsearch indices using the REST endpoint listed in the docs:
+   https://admin.opencast.example.com/docs.html?path=/admin-ng/index</li>
+</ol>
+<p>Note: If the solr index does not repopulate by itself please check if your nodes are still in maintenance mode and
+reactiveate them.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../../firewall/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../../firewall/">
+        Firewall
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../opencast.only/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../opencast.only/">
+        Internal HTTPS
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/https/migration.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

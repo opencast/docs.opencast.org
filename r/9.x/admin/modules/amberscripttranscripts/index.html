@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Transcripts (AmberScript) - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AmberScript Transcription Service", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Workflow Operations", url: "#workflow-operations" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../googlespeechtranscripts/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../googlespeechtranscripts/">
+        Transcripts (Google Speech)
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../timelinepreviews/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../timelinepreviews/">
+        Timeline Previews
+      </a>
+</div>
+</div>
+<h1 id="amberscript-transcription-service">AmberScript Transcription Service</h1>
+<h2 id="overview">Overview</h2>
+<p>The AmberScriptTranscriptionService uses the AmberScript Transcription API to transcribe audio files.
+Audio will get extracted from an opencast recording video file and sent to the AmberScript server to be processed.
+AmberScriptTranscriptionService will periodically check for a transcription result.
+Depending on your audio length and jobtype chosen, transcribing will take some time.
+When the transcription result is ready the service will transform it to VTT format and attach it to the recording.
+The recording will be available prior when its workflow finishes.
+As soon as the transcription gets attached, the Video will be able to be played back using transcriptions.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="step-1-get-amberscript-api-key">Step 1: Get AmberScript API key</h3>
+<ul>
+<li>Contact AmberScript via https://www.amberscript.com/en/opencast-integration</li>
+</ul>
+<h3 id="step-2-configure-amberscripttranscriptionservice">Step 2: Configure AmberscriptTranscriptionService</h3>
+<p>Edit <code>opencast/etc/org.opencastproject.transcription.amberscript.AmberscriptTranscriptionService.cfg</code>:</p>
+<ul>
+<li>Set <code>enabled=true</code> to enable the service.</li>
+<li>Set API key <code>client.key=__YOU-API-KEY__</code>. This is mandatory.</li>
+<li>Change options to your liking.</li>
+</ul>
+<h3 id="step-3-include-workflow-operations-into-your-workflow">Step 3: Include workflow operations into your workflow</h3>
+<p>Integrate AmberScript workflow operations by including the provided workflow file <code>amberscript-start-transcription.xml</code>
+into your existing workflow:</p>
+<pre><code>&lt;operation
+  id="include"
+  description="Start AmberScript Transcription"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="workflow-id"&gt;amberscript-start-transcription&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h2 id="workflow-operations">Workflow Operations</h2>
+<ul>
+<li><a href="../../workflowoperationhandlers/amberscript-start-transcription-woh/">amberscript-start-transcription</a></li>
+<li><a href="../../workflowoperationhandlers/amberscript-attach-transcription-woh/">amberscript-attach-transcription</a></li>
+</ul>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../googlespeechtranscripts/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../googlespeechtranscripts/">
+        Transcripts (Google Speech)
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../timelinepreviews/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../timelinepreviews/">
+        Timeline Previews
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/amberscripttranscripts.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

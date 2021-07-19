@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Tag-By-DCTerm - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TagByDCTermWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../timelinepreviews-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../timelinepreviews-woh/">
+        Timelinepreviews
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../tag-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../tag-woh/">
+        Tag
+      </a>
+</div>
+</div>
+<h1 id="tagbydctermworkflowoperationhandler">TagByDCTermWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>With the TagByDCTermWorkflowOperationHandler it's possible to select various media package elements and then modify
+their tag set and / or set their flavor according to whether a Dublin Core term in a catalog has a specific value.</p>
+<p>So for example it's possible to pick elements like the Dublin Core catalogs that have been added to the media package
+at the beginning of the workflow and tag them, so they can be picked up by operations later on or even an application
+that harvests the mediapackage from a publication channel.</p>
+<p>In combination with <a href="../configure-by-dcterm-woh/">ConfigureByDCTermWorkflowOperationHandler</a> workflows can be controlled
+by the metadata contained within the Dublin core catalogs.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<p>Tags and flavors can be used in combination.</p>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-tags</td>
+<td>"engage,atom,rss,-publish"</td>
+<td>Tag any media package elements with one of these (comma separated) tags. If a source-tag starts with a '-', media package elements with this tag will be excluded.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-flavors</td>
+<td>"presentation/trimmed"</td>
+<td>Tag any media package elements with one of these (comma separated) flavors.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>dccatalog</td>
+<td>"episode" or "series"</td>
+<td>the type of catalog in which to search for dcterm</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>dcterm</td>
+<td>"creator"</td>
+<td>the name of the Dublin Core term which to check</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>match-value</td>
+<td>"Joe Bloggs"</td>
+<td>the Dublin Core term value to check for</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>default-value"</td>
+<td>"Anon"</td>
+<td>the implied value if the dubincore term is not present in the catalog</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>"tagged,+rss" / "-rss,+tagged"</td>
+<td>Apply these (comma separated) tags to any media package elements. If a target-tag starts with a '-', it will be removed from preexisting tags, if a target-tag starts with a '+', it will be added to preexisting tags. If there is no prefix, all preexisting tags are removed and replaced by the target-tags.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>"presentation/tagged"</td>
+<td>Apply these flavor to any media package elements</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>"true" or "false"</td>
+<td>Indicates if matching elements will be cloned before tagging is applied or whether tagging is applied to the original element. Set to "true" to create a copy first, "false" otherwise.</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+<p>Note: see <a href="../tag-woh/">TagWorkflowOperationHandler</a> for further explanation of the source/target-flavor/tags</p>
+<h3 id="dccatalog">dccatalog</h3>
+<p>The type of Dublin Core catalog in which to look for the <code>dcterm</code>. This will usually be <code>episode</code> or <code>series</code>.</p>
+<h3 id="dcterm">dcterm</h3>
+<p>The name of the Dublin Core term to look for in the <code>dccatalog</code>. This could be one of the terms set by Opencast or an
+additional term adding to the catalog.</p>
+<h3 id="match-value">match-value</h3>
+<p>The value of the <code>dcterm</code> which to match against. The comparison is case sensitive.</p>
+<h3 id="default-value">default-value</h3>
+<p>If <code>default-value</code> is used when the <code>dcterm</code> is not found in the catalog. If not specified the operation will treat the
+match as false and not tag anything. If <code>default-value</code> is specified the operation will compare the <code>match-value</code> to
+the <code>default-value</code> and apply the tags if they match. This allows an implied value to be explicitly and clearly
+defined. For example if you have mediapackages that were created before additional metadata was added to the episode
+catalog you may want to imply that the <code>audience</code> term has a value of <code>all-enrolled</code>.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="tag-by-dcterm"
+  max-attempts="2"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Tagging media package elements according to dcterm"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavors"&gt;dublincore/*,security/*&lt;/configuration&gt;
+    &lt;configuration key="dccatalog"&gt;episode&lt;/configuration&gt;
+    &lt;configuration key="dcterm"&gt;audience&lt;/configuration&gt;
+    &lt;configuration key="match-value"&gt;learning-difficulties&lt;/configuration&gt;
+    &lt;configuration key="default-value"&gt;all-enrolled&lt;/confiuration&gt;
+    &lt;configuration key="target-tags"&gt;+publishBeforeEditing&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../timelinepreviews-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../timelinepreviews-woh/">
+        Timelinepreviews
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../tag-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../tag-woh/">
+        Tag
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/tag-by-dcterm-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

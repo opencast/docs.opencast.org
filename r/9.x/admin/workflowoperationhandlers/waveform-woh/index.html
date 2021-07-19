@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Waveform - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "WaveformWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../zip-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../zip-woh/">
+        Zip
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../video-grid-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../video-grid-woh/">
+        Video Grid
+      </a>
+</div>
+</div>
+<h1 id="waveformworkflowoperationhandler">WaveformWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The waveform operation creates an image showing the temporal audio activity within the recording like this:</p>
+<p><img alt="waveform" src="../waveform.png"/></p>
+<p>The implementation uses an ffmpeg filter that produces a waveform PNG image file from an audio/video file with at least
+one audio channel.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration</th>
+<th>example</th>
+<th>description</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavors</td>
+<td><code>*/audio</code></td>
+<td>Flavor specifying tracks for which a waveform should be created</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>source-tags</td>
+<td><code>edit</code></td>
+<td>Tags specifying tracks for which a waveform should be created</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td><code>*/waveform</code></td>
+<td>Flavor used for the generated waveform</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td><code>preview</code></td>
+<td>Comma-separated list of tags to be added to the waveform</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>pixels-per-minute</td>
+<td>400</td>
+<td>Width of waveform image in pixels per minute</td>
+<td>200</td>
+</tr>
+<tr>
+<td>min-width</td>
+<td>10000</td>
+<td>Minimum width of waveform image in pixels</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>max-width</td>
+<td>30000</td>
+<td>Maximum width of waveform image in pixels</td>
+<td>20000</td>
+</tr>
+<tr>
+<td>height</td>
+<td>60</td>
+<td>Height of waveform image in pixels</td>
+<td>500</td>
+</tr>
+<tr>
+<td>color</td>
+<td>black</td>
+<td>Color of waveform image, see <a href="https://www.ffmpeg.org/ffmpeg-all.html#Color">ffmpeg.org/ffmpeg-all.html#Color</a></td>
+<td>black</td>
+</tr>
+<tr>
+<td>Additional notes:</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>All media, that match either source-flavors or source tags will be processed.</li>
+<li>Using a wildcard in the <code>target-flavor</code> will cause the main flavor of the input being used.</li>
+</ul>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="waveform"
+  description="Generating waveform"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;*/audio&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;*/waveform&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;preview&lt;/configuration&gt;
+    &lt;configuration key="pixels-per-minute"&gt;200&lt;/configuration&gt;
+    &lt;configuration key="min-width"&gt;5000&lt;/configuration&gt;
+    &lt;configuration key="max-width"&gt;20000&lt;/configuration&gt;
+    &lt;configuration key="height"&gt;60&lt;/configuration&gt;
+    &lt;configuration key="color"&gt;black&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../zip-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../zip-woh/">
+        Zip
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../video-grid-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../video-grid-woh/">
+        Video Grid
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/waveform-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>
