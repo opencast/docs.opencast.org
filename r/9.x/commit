@@ -1,9 +1,9 @@
-commit 319eab9b182e93ad7a7639538ce4e196e4ee292a
-Author: Kristof Keppens <kkeppens@gmail.com>
-Date:   Mon Jul 19 16:35:40 2021 +0200
+commit 8bf41f247fdfa4d582edc703d3c8054ed99e326d
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Wed Jul 21 16:51:44 2021 +0200
 
-    Prevent search service endpoint from querying series service
+    Fixed publication pop-overs overlaying each other
     
-    This patch fixes the problem that the search service's episode endpoint uses the series service when providing the `sname` parameter. Instead of relying on the series service, we can use the Solr search index directly to map the `sname` parameter to a series identifier.
+    Circumvents the problem by closing all other publication pop-overs when opening a new one. This means the pop-overs can potentially still overlap with other elements (e.g. the filter dropdown), but maybe that's not a bug but a feature.
     
-    This fixes #2738
+    Resolves #2519
