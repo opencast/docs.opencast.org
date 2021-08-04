@@ -104,7 +104,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>[<a href="https://github.com/opencast/opencast/pull/2644">#2644</a>]: Use millisecond precision in Solr date range queries</li>
 </ul>
 <h2 id="additional-notes-about-101">Additional Notes about 10.1</h2>
-<p>This release contains many bugfixes.  In particular, the email libraries are now working properly!</p>
+<p>This release contains many bugfixes.  In particular, the email libraries are now working properly! You might also
+encounter issues with updating the Elasticsearch indices with 10.0, especially when deleting elements, that are fixed
+with this minor release.</p>
+<p>From this release onwards there's also no longer the need to run the Elasticsearch index rebuild separately for each
+service to avoid concurrency issues. Instead, you can simply use the /admin-ng/index/recreateIndex or /api/recreateIndex
+endpoints to trigger the complete rebuild and be sure that everything will happen in order, since there is no longer any
+asynchronicity involved.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
