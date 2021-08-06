@@ -27,9 +27,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 9.x to 10.x", url: "#_top", children: [
-              {title: "Upgrade Java", url: "#upgrade-java" },
-              {title: "Configuration Changes", url: "#configuration-changes" },
+          {title: "Upgrading Opencast from 10.x to 11.x", url: "#_top", children: [
+              {title: "???", url: "#_1" },
           ]},
         ];
 
@@ -61,51 +60,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       </a>
 </div>
 </div>
-<h1 id="upgrading-opencast-from-9x-to-10x">Upgrading Opencast from 9.x to 10.x</h1>
-<p>This guide describes how to upgrade Opencast 9.x to 10.x.
+<h1 id="upgrading-opencast-from-10x-to-11x">Upgrading Opencast from 10.x to 11.x</h1>
+<p>This guide describes how to upgrade Opencast 10.x to 11.x.
 In case you need information about how to upgrade older versions of Opencast,
 please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
 <li>Stop your current Opencast instance</li>
-<li><a href="#upgrade-java">Upgrade Java</a></li>
-<li>Replace Opencast with the new version</li>
-<li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
+<li>TBA</li>
 <li>Start Opencast</li>
 </ol>
-<h2 id="upgrade-java">Upgrade Java</h2>
-<p>While Opencast 9 worked with both Java 8 and Java 11, Opencast 10 requires Java 11.
-Trying to start Opencast 10 with Java 8 will fail.</p>
-<p>Either install both java versions and set Java 11 as default using something like:</p>
-<pre><code>update-alternatives --config java
-</code></pre>
-<p>Or replace the old Java version like this:</p>
-<pre><code>% dnf shell
-&gt; remove 'java-1.8.0*'
-&gt; install java-11-openjdk.x86_64
-&gt; run
-</code></pre>
-<p>Note that these commands can differ based on your distribution and your set-up.
-Make sure to adjust them accordingly.</p>
-<p>Finally, check you have the correct version using:</p>
-<pre><code>% java --version
-openjdk 11.0.11 2021-04-20
-OpenJDK Runtime Environment 18.9 (build 11.0.11+9)
-OpenJDK 64-Bit Server VM 18.9 (build 11.0.11+9, mixed mode, sharing)
-</code></pre>
-<h2 id="configuration-changes">Configuration Changes</h2>
-<p>Note that this section will only highlight a few important changes.
-Please make sure to compare your configuration against the current configuration files.</p>
-<h3 id="ldap">LDAP</h3>
-<p>A new configuration option <code>org.opencastproject.userdirectory.ldap.groupcheckprefix</code> was added.
-The option affects the <code>org.opencastproject.userdirectory.ldap.roleattributes</code> and
-<code>org.opencastproject.userdirectory.ldap.extra.roles</code> configuration options and may need to be adjusted.</p>
-<h3 id="static-file-delivery">Static File Delivery</h3>
-<p>Opencast 9.2 came with a <a href="../configuration/serving-static-files/">completely new system for securing static file content</a>
-which is now active by default in Opencast 10. If you are deferring the file access authorization to another system
-using Opencast's <a href="../configuration/stream-security/">security token mechanism</a>, you need to deactivate this protection
-in:</p>
-<pre><code>etc/org.opencastproject.fsresources.StaticResourceServlet.cfg
-</code></pre>
+<h2 id="_1">???</h2>
+<p>TBA</p>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
