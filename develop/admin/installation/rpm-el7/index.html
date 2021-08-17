@@ -77,6 +77,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>This guide is based on an RPM software repository available for Red Hat-based Linux distributions provided by <a href="https://uni-osnabrueck.de">Osnabrück
 University</a>. This repository provides preconfigured Opencast installations and all necessary
 3rd-party-tools.</p>
+<div class="warn">
+<b>Opencast 11</b> is not yet available.
+</div>
 <h2 id="currently-supported">Currently Supported</h2>
 <ul>
 <li>CentOS 7.x (x86_64)</li>
@@ -86,7 +89,7 @@ University</a>. This repository provides preconfigured Opencast installations an
 <p>Other architectures like i386, i686, arm, … are not supported.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories:</p>
-<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-10/noarch/opencast-repository-10-1.el7.noarch.rpm
+<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-11/noarch/opencast-repository-11-1.el7.noarch.rpm
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
@@ -155,7 +158,9 @@ Some commonly used distributions are:</p>
 <p>Packages will automatically upgrade to the latest minor version in a release series when running <code>dnf update</code>.
 They do not automatically upgrade the latest major version.
 This is intentional since additional migration steps might be required.
-For example, if you install Opencast 9.1, you get the latest 9.x release, but no 10 release.</p>
+For example, if you install Opencast 11.1,
+you get the latest 11.x release,
+but no 12.x release.</p>
 <p>These instructions will upgrade Opencast to a new version which may be incompatible with older versions.
 Thus, a rollback might not be possible.
 If you are performing this on a production system, please ensure you have valid backups prior to taking the next steps.</p>
@@ -163,14 +168,10 @@ If you are performing this on a production system, please ensure you have valid 
 <pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
 <p>Then, update the repository:</p>
-<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-10/noarch/opencast-repository-10-1.el7.noarch.rpm
+<pre><code class="language-sh">yum install -y https://pkg.opencast.org/rpms/release/el/7/oc-11/noarch/opencast-repository-11-1.el7.noarch.rpm
 </code></pre>
 <p>Upgrade to the new Opencast package by running:</p>
 <pre><code class="language-sh">yum update
-</code></pre>
-<p>Finally, since Opencast 10 switched to using Java 11, make sure that Java 8 is no longer installed.
-Alternative, you can also set Java 11 as default.</p>
-<pre><code>yum remove 'java-1.8*'
 </code></pre>
 <p>At this point you must follow the relevant <a href="../../upgrade/">upgrade instructions</a>, prior to starting Opencast again.</p>
 <h2 id="uninstall-opencast">Uninstall Opencast</h2>
