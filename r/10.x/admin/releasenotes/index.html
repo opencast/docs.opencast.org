@@ -32,8 +32,8 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behaviour changes", url: "#behaviour-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 10.2", url: "#additional-notes-about-102" },
               {title: "Additional Notes about 10.1", url: "#additional-notes-about-101" },
-              {title: "Additional Notes about 10.1", url: "#additional-notes-about-101_1" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release managers", url: "#release-managers" },
           ]},
@@ -104,15 +104,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Rename value for <code>sort</code> parameter in search API from <code>DATE_PUBLISHED</code> to <code>DATE_MODIFIED</code>.</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/2644">#2644</a>]: Use millisecond precision in Solr date range queries</li>
 </ul>
-<h2 id="additional-notes-about-101">Additional Notes about 10.1</h2>
-<p>This release contains many bugfixes.  In particular, the email libraries are now working properly! You might also
-encounter issues with updating the Elasticsearch indices with 10.0, especially when deleting elements, that are fixed
-with this minor release.</p>
-<p>From this release onwards there's also no longer the need to run the Elasticsearch index rebuild separately for each
-service to avoid concurrency issues. Instead, you can simply use the /admin-ng/index/recreateIndex or /api/recreateIndex
-endpoints to trigger the complete rebuild and be sure that everything will happen in order, since there is no longer any
-asynchronicity involved.</p>
-<h2 id="additional-notes-about-101_1">Additional Notes about 10.1</h2>
+<h2 id="additional-notes-about-102">Additional Notes about 10.2</h2>
 <p>This release fixes a number of bugs including two very important fixes related Extron SMP capture agent compatibility
 and problems during publication.</p>
 <p><strong>Manual action required if upgrading from Opencast 10.1</strong>:
@@ -124,6 +116,14 @@ remove <code>&lt;karaf-data&gt;/solr-indexes/search</code> (often <code>/var/lib
 and restart Opencast. The re-index progress will be logged. Once Opencast is up again, everything should be fine.
 All other indexes are not effected.</p>
 <p>More details can be found at <a href="https://github.com/opencast/opencast/pull/2923">pull request #2923</a>.</p>
+<h2 id="additional-notes-about-101">Additional Notes about 10.1</h2>
+<p>This release contains many bugfixes.  In particular, the email libraries are now working properly! You might also
+encounter issues with updating the Elasticsearch indices with 10.0, especially when deleting elements, that are fixed
+with this minor release.</p>
+<p>From this release onwards there's also no longer the need to run the Elasticsearch index rebuild separately for each
+service to avoid concurrency issues. Instead, you can simply use the /admin-ng/index/recreateIndex or /api/recreateIndex
+endpoints to trigger the complete rebuild and be sure that everything will happen in order, since there is no longer any
+asynchronicity involved.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
