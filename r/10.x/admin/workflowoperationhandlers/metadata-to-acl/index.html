@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Move Storage - Administration Guide</title>
+<title>Metadata to ACL - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "MoveStorageOperationHandler", url: "#_top", children: [
+          {title: "Metadata to ACL Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -46,78 +46,78 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../multiencode-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../move-storage-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../multiencode-woh/">
-        Multiencode
+<a class="btn btn-xs btn-link" href="../move-storage-woh/">
+        Move Storage
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../metadata-to-acl/">
+<a class="btn btn-xs btn-default pull-left" href="../notification/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../metadata-to-acl/">
-        Metadata to ACL
+        Previous</a><a class="btn btn-xs btn-link" href="../notification/">
+        Mattermost Notification Module
       </a>
 </div>
 </div>
-<h1 id="movestorageoperationhandler">MoveStorageOperationHandler</h1>
+<h1 id="metadata-to-acl-workflow-operation">Metadata to ACL Workflow Operation</h1>
+<p>ID: <code>metadata-to-acl</code></p>
 <h2 id="description">Description</h2>
-<p>The MoveStorageOperationHandler can be used to move files in the Asset Manager from one storage system to another.</p>
+<p>The metadata-to-acl operation can be used to automatically add access rights for users mentioned in metadata fields to
+the access control list.
+Users are identified by their username.
+The operation works like this:</p>
+<ol>
+<li>Get values for configured field from the episode Dublin Core catalog.</li>
+<li>Look up if a user with this username exists</li>
+<li>Add read and write permissions for this user</li>
+</ol>
+<p>Please consider carefully how you use this operation since this effectively means that anyone who can modify metadata
+can also modify access rights.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th align="left">Configuration Key</th>
-<th align="center">Example</th>
-<th align="left">Description</th>
+<th>Name</th>
+<th>Default</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">target-storage*</td>
-<td align="center">local-storage</td>
-<td align="left">The ID of the storage to move the files to</td>
-</tr>
-<tr>
-<td align="left">target-version</td>
-<td align="center">0</td>
-<td align="left">The (optional) snapshot version to move. Use the keyword <code>latest</code> to move the last snapshot version.</td>
+<td>field</td>
+<td>publisher</td>
+<td>The Dublin Core element to convert to access rights</td>
 </tr>
 </tbody>
 </table>
-<p>* mandatory configuration key</p>
-<p>Notes:</p>
-<ul>
-<li>Omitting <code>target-version</code> will move <strong>all</strong> current versions of the mediapackage to <code>target-storage</code>.  An example
-  usecase would be moving the raw input media to a cold(er) storage system after initial processing.</li>
-</ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="move-storage"
-  description="Offloading to AWS S3"&gt;
+<pre><code class="language-xml">&lt;operation
+  id="metadata-to-acl"
+  description="Add read/write access for `publisher`"&gt;
   &lt;configurations&gt;
-    &lt;configuration key="target-storage"&gt;aws-s3&lt;/configuration&gt;
+    &lt;configuration key="field"&gt;publisher&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../multiencode-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../move-storage-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../multiencode-woh/">
-        Multiencode
+<a class="btn btn-xs btn-link" href="../move-storage-woh/">
+        Move Storage
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../metadata-to-acl/">
+<a class="btn btn-xs btn-default pull-left" href="../notification/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../metadata-to-acl/">
-        Metadata to ACL
+        Previous</a><a class="btn btn-xs btn-link" href="../notification/">
+        Mattermost Notification Module
       </a>
 </div>
 </div>
@@ -125,7 +125,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/move-storage-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/metadata-to-acl.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
