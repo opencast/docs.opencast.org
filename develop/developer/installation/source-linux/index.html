@@ -132,11 +132,11 @@ $ cat ~/.ssh/id_ed25519.pub
 <h2 id="install-dependencies">Install Dependencies</h2>
 <p>Please make sure to install the following dependencies.</p>
 <p>Required:</p>
-<pre><code>java-11-openjdk-devel.x86_64 / openjdk-11-jdk (other jdk versions untested / Oracle JDK strongly not recommended)
+<pre><code>java-11-openjdk-devel
 ffmpeg &gt;= 3.2.4
-maven &gt;= 3.1
+maven &gt;= 3.6
 python
-firefox/chrome/some other major browser
+firefox/chrome
 unzip
 gcc-c++
 tar
@@ -160,7 +160,7 @@ synfig
 $ apt upgrade -y
 </code></pre>
 <h3 id="install-packages-via-apt">Install Packages via APT</h3>
-<pre><code class="language-sh">$ apt install -y git openjdk-8-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+<pre><code class="language-sh">$ apt install -y git openjdk-11-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
 </code></pre>
 <h3 id="install-nodejs-optional">Install NodeJS (optional)</h3>
 <pre><code class="language-sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
@@ -176,7 +176,7 @@ $ docker-compose up -d
 $ docker-compose down
 </code></pre>
 <h3 id="set-system-java-jdk">Set System Java JDK</h3>
-<p>Choose the Java Version 1.8.0 by entering:</p>
+<p>Choose the Java Version 11 by entering:</p>
 <pre><code class="language-sh">$ update-alternatives --config java
 </code></pre>
 <h2 id="fedora">Fedora</h2>
@@ -186,13 +186,13 @@ $ docker-compose down
 <h3 id="install-dependencies_1">Install Dependencies</h3>
 <pre><code class="language-sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
 $ dnf group install 'Development Tools'
-$ dnf install -y java-1.8.0-openjdk ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
+$ dnf install -y ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
 </code></pre>
 <h2 id="macos-1014">macOS 10.14</h2>
 <h3 id="update-system_2">Update System</h3>
 <p>Try to install all updates via the App Store or the Apple Icon on the top left corner.</p>
-<h3 id="java-jdk-8">Java JDK 8</h3>
-<p>Install the JDK 8 by downloading it from https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</p>
+<h3 id="java-jdk-11">Java JDK 11</h3>
+<p>Install the JDK 11</p>
 <h3 id="xcode">XCode</h3>
 <p>Install XCode over the App Store. It will be needed for building and for git.</p>
 <h3 id="install-packages-via-homebrew">Install Packages via Homebrew</h3>
@@ -221,7 +221,7 @@ $ brew services start activemq
 <pre><code class="language-sh">$ brew install bash-completion
 </code></pre>
 <p>Find the location of the configuration file</p>
-<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot; 
+<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot;
 </code></pre>
 <p>Normally it should be in</p>
 <pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
