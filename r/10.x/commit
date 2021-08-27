@@ -1,9 +1,10 @@
-commit 8bb775ec0096af46c8b0e41b9dad146c1026fd32
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Aug 27 21:33:25 2021 +0200
+commit 09fb0ea73527d716a91c6efb4cd26943ed99b46c
+Author: Lukas Kalbertodt <lukas.kalbertodt@gmail.com>
+Date:   Mon Aug 23 16:02:37 2021 +0200
 
-    Fix ICLA Test
+    Fix SQL query by using `true` instead of `1` for bool comparison
     
-    The author of the action we use to comment on pull requests decided to
-    move from `master` to `main` which broke our integration. This patch
-    should fix the issue.
+    This queries fails in PostgreSQL databases. The literal `true` is, as
+    far as my searches show, defined in the standard SQL. This works for
+    the M2 database. I also tested a dummy query with `true` on MySQL and
+    PostgreSQL databases and everything worked out.
