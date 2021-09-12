@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Development Environment", url: "#_top", children: [
+              {title: "Common Developer Pitfalls", url: "#common-developer-pitfalls" },
               {title: "Developer Builds", url: "#developer-builds" },
               {title: "Logging During Builds", url: "#logging-during-builds" },
               {title: "Building single modules", url: "#building-single-modules" },
@@ -87,6 +88,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="development-environment">Development Environment</h1>
+<h2 id="common-developer-pitfalls">Common Developer Pitfalls</h2>
+<p>Every development environment has its quirks, so here are a few which have been collected by the community:</p>
+<h3 id="general">General</h3>
+<ul>
+<li>Build Opencast, then open your IDE.  Opencast generates a number of classes as part of its build process (eg:
+  QSnapshotDto), which will not be found by your IDE and thus cause build errors.  It is possible to get your IDE
+  to run the appropriate Maven lifecycle event, but that can be hit-and-miss in terms of functionality.</li>
+<li>If your IDE stubbornly refuses to acknowledge that a class exists, even when you're sure it's there, try closing your
+  IDE, then running <code>git clean -fdx</code>, then building.  This will ensure everything in your clone is up to date.  Also
+  ensure you find your project workspace to make sure your IDE isn't keeping a cache of things.</li>
+<li>Absolute worst case, remove your Maven cache (typically ~/.m2), and possibly your Node cache (typically ~/.npm) and
+  repeat the above steps.  This is completely starting from scratch.</li>
+</ul>
+<h3 id="intellij">IntelliJ</h3>
+<ul>
+<li>Do not use the prebuilt indexes.</li>
+</ul>
 <h2 id="developer-builds">Developer Builds</h2>
 <p>Besides the default <code>dist</code> Maven profile, the assemblies project defines a second <code>dev</code> profile which will cause only
 one allinone distribution to be created. It is already unpacked and ready to be started. Activate the profile using:</p>
