@@ -141,6 +141,41 @@ Best regards,
 
 Katrin
 </code></pre>
+<h3 id="external-api-deprecation-policy">External API deprecation policy</h3>
+<p>Proposed by Maximiliano Lira Del Canto <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#105;&#114;&#97;&#100;&#101;&#108;&#64;&#117;&#110;&#105;&#45;&#107;&#111;&#101;&#108;&#110;&#46;&#100;&#101;">&#109;&#108;&#105;&#114;&#97;&#100;&#101;&#108;&#64;&#117;&#110;&#105;&#45;&#107;&#111;&#101;&#108;&#110;&#46;&#100;&#101;</a>, passed on 24 Feb 2021</p>
+<pre><code class="language-no-highlight">As we talked in the draft thread and there are no more comments, this is the 
+final version of the proposal about the deprecation of the old 
+versions in the external API.
+
+External API deprecation policy:
+
+- Any minor version should be supported at a maximum of 2 (Two) Opencast 
+Releases since the release of the next minor version of the API.
+
+    Example: If Opencast 10 has API v1.3.0 and Opencast 11 comes 
+    with API v1.4.0, the API v1.3.0 will be supported until Opencast 12)
+
+
+- Deprecating a version does not require removing it from the code base, 
+just removes the guarantee that it will be present in the next version.
+
+
+- When an API version is set to be deprecated needs to notify the users 
+with a warning that they should start to use the newest version of the API. 
+A custom HTTP header when the flagged version is called plus a warning in 
+the website docs.
+
+
+- In the case of a new major version, the immediate old version should 
+be deprecated 4 (Four) next releases of Opencast.
+
+- Updating Opencast don't mean a new API version
+
+- This proposal is only for the external API
+
+</code></pre>
+<p>Example of deprecation policy:
+<img alt="deprecation-api-policy" src="../img/api-depr-example.png" /></p>
 <h3 id="release-notes">Release Notes</h3>
 <p>Proposed by Greg Logan <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, passed on Tue, 26 Jan 2021</p>
 <pre><code class="language-no-highlight">Hi all,
