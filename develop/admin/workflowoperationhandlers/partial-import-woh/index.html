@@ -119,6 +119,12 @@ stream which makes the operation more expensive in terms of load.</p>
 <td></td>
 </tr>
 <tr>
+<td><strong>preencode-encoding-profile</strong>*</td>
+<td>String</td>
+<td>Encoding profile to for pre-processing videos. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile</td>
+<td></td>
+</tr>
+<tr>
 <td><strong>concat-encoding-profile</strong>*</td>
 <td>String</td>
 <td>Encoding profile used for concatenating audio or video files</td>
@@ -146,18 +152,6 @@ stream which makes the operation more expensive in terms of load.</p>
 <td><strong>force-encoding-profile</strong>*</td>
 <td>String</td>
 <td>Encoding profile to be used when <em>force-encoding</em> is set to <em>true</em> or a given target track has a file extension not included in <em>required-extensions</em></td>
-<td></td>
-</tr>
-<tr>
-<td>preencode-encoding</td>
-<td>Boolean</td>
-<td>If set to <em>true</em>, all source target files will be encoded using the encoding profile <em>preencode-encoding-profile</em> before they're processed further</td>
-<td>false</td>
-</tr>
-<tr>
-<td>preencode-encoding-profile</td>
-<td>String</td>
-<td>Encoding profile to be used when <em>preencode-encoding</em> is set to <em>true</em></td>
 <td></td>
 </tr>
 <tr>
@@ -237,6 +231,7 @@ in the SMIL file:</p>
     &lt;configuration key="source-smil-flavor"&gt;smil/source+partial&lt;/configuration&gt;
     &lt;configuration key="target-presenter-flavor"&gt;presenter/standard&lt;/configuration&gt;
     &lt;configuration key="target-presentation-flavor"&gt;presentation/standard&lt;/configuration&gt;
+    &lt;configuration key="preencode-encoding-profile"&gt;partial-import-preencode&lt;/configuration&gt;
     &lt;configuration key="concat-encoding-profile"&gt;concat.work&lt;/configuration&gt;
     &lt;configuration key="trim-encoding-profile"&gt;trim.work&lt;/configuration&gt;
     &lt;configuration key="force-encoding-profile"&gt;editor.work&lt;/configuration&gt;
@@ -396,6 +391,10 @@ supposed to be changed by the user.</p>
 </thead>
 <tbody>
 <tr>
+<td>preencode-encoding-profile</td>
+<td>Used to encode all source video tracks before any processing happens, to avoid errors with non-uniform input and prepare them for lossless concatenation. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile.</td>
+</tr>
+<tr>
 <td>concat-encoding-profile</td>
 <td>Used to concatenate partial tracks into tracks</td>
 </tr>
@@ -406,10 +405,6 @@ supposed to be changed by the user.</p>
 <tr>
 <td>force-encoding-profile</td>
 <td>Used to re-encode target tracks in case the file extension of a given target track is not included in <em>required-extensions</em> or the configuration key <em>force-encoding</em> is set to <em>true</em></td>
-</tr>
-<tr>
-<td>preencode-encoding-profile</td>
-<td>Only used if <em>preencode-encoding</em> is set to true. Can be used to encode all source tracks before any processing happens, to avoid errors with non-uniform input. Should be used instead of <a href="../encode-woh/">Encode</a>, as the latter will break source-smil.</td>
 </tr>
 </tbody>
 </table>
