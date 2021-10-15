@@ -1,7 +1,9 @@
-commit cd09498effac634812f589ff180d748d72797759
+commit 8abc88d0dafb6b3d30ac2a563cac1de9b3520fb2
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Oct 15 17:08:42 2021 +0200
+Date:   Fri Oct 15 23:59:38 2021 +0200
 
-    Fixed limit value returned by search service endpoint (#3050)
+    Removed ManagedService from Admin UI backend (#3049)
     
-    Previously, the limit value in the response xml/json was guessed at. This changes the value to actual limit that was being used.
+    The ManagedService interface would cause service restarts on
+    configuration updates. This PR removes said interface and replaces it
+    with OSGi annotations.
