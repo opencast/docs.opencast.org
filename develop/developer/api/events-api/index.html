@@ -336,22 +336,22 @@ the response:</p>
 <tr>
 <td align="left"><code>sign</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether public distribution urls should be signed</td>
+<td align="left">Whether publication urls (version 1.7.0 or higher) and distribution urls should be pre-signed.</td>
 </tr>
 <tr>
 <td align="left"><code>withacl</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether the acl metadata should be included in the response</td>
+<td align="left">Whether the acl metadata should be included in the response.</td>
 </tr>
 <tr>
 <td align="left"><code>withmetadata</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether the metadata catalogs should be included in the response</td>
+<td align="left">Whether the metadata catalogs should be included in the response.</td>
 </tr>
 <tr>
 <td align="left"><code>withpublications</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether the publication ids and urls should be included in the response</td>
+<td align="left">Whether the publication ids and urls should be included in the response.</td>
 </tr>
 <tr>
 <td align="left"><code>withscheduling</code></td>
@@ -361,8 +361,8 @@ the response:</p>
 </tbody>
 </table>
 <p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if URL signing is turned
-on in Opencast. Remember to consider the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching
-this response.</p>
+on in Opencast. Starting with version 1.7.0, publication urls will also be signed if configured. Remember to consider
+the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this response.</p>
 <p><strong>Sample request</strong></p>
 <pre><code class="language-xml">https://opencast.example.org/api/events?sort=title:DESC&amp;limit=5&amp;offset=1&amp;filter=location:ca-01
 </code></pre>
@@ -761,8 +761,8 @@ Please note that <code>duration</code> is a mandatory field when creating multip
 <h3 id="get-apieventsevent_id">GET /api/events/{event_id}</h3>
 <p>Returns a single event.</p>
 <p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if signing is turned on
-in Opencast. Remember to consider the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this
-response.</p>
+in Opencast. Starting with version 1.7.0, publication urls will also be signed if configured. Remember to consider the
+<a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this response.</p>
 <table>
 <thead>
 <tr>
@@ -775,7 +775,7 @@ response.</p>
 <tr>
 <td align="left"><code>sign</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether public distribution urls should be signed.</td>
+<td align="left">Whether publication urls (version 1.7.0 or higher) and distribution urls should be pre-signed.</td>
 </tr>
 <tr>
 <td align="left"><code>withacl</code></td>
@@ -1625,10 +1625,13 @@ configuration of series metadata catalogs. For more details about this mechanism
 <tr>
 <td align="left"><code>sign</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether public distribution urls should be signed</td>
+<td align="left">Whether publication urls (version 1.7.0 or higher) and distribution urls should be pre-signed.</td>
 </tr>
 </tbody>
 </table>
+<p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if URL signing is turned
+on in Opencast. Starting with version 1.7.0, publication urls will also be signed if configured. Remember to consider
+the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this response.</p>
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: The list of publications is returned.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</p>
@@ -1661,10 +1664,13 @@ configuration of series metadata catalogs. For more details about this mechanism
 <tr>
 <td align="left"><code>sign</code></td>
 <td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
-<td align="left">Whether public distribution urls should be signed</td>
+<td align="left">Whether publication urls (version 1.7.0 or higher) and distribution urls should be pre-signed.</td>
 </tr>
 </tbody>
 </table>
+<p>By setting the optional <code>sign</code> parameter to <code>true</code>, the method will pre-sign distribution urls if URL signing is turned
+on in Opencast. Starting with version 1.7.0, publication urls will also be signed if configured. Remember to consider
+the <a href="../security-api/#Introduction">maximum validity of signed URLs</a> when caching this response.</p>
 <p><strong>Response</strong></p>
 <p><code>200 (OK)</code>: The track details are returned.<br/>
 <code>404 (NOT FOUND)</code>: The specified event does not exist.</br>
