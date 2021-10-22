@@ -72,11 +72,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 their relations. Its primary use is to post-process audio and video files ingested by capture agents using
 /ingest/addPartialTrack of the ingest endpoint.</p>
 <h2 id="prerequisite">Prerequisite</h2>
-<p>When using the PartialImportWorkflowOperation, it is recommended to perform a media inspection beforehand using the
-InspectWorkflowOperation with the option <code>accurate-frame-count</code> set to <code>true</code>. This ensures that
-the PartialImportWorkflowOperation works correctly in case of media files with incorrect frame count in their header.
+<p>When using the partial-import operation, make sure to perform a media inspection beforehand using the
+<a href="../inspect-woh/">inspect operation</a> with the option <code>accurate-frame-count</code> set to <code>true</code>. This ensures that
+the partial-import operation works correctly in case of media files with incorrect frame count in their header.
 Note that the use of <code>accurate-frame-count</code> will force the InspectWorkflowOperation to decode the complete video
 stream which makes the operation more expensive in terms of load.</p>
+<p>Not all encoding profiles required for the PartialImportWorkflowOperation are available in
+Opencast per default, so you will have to add them yourself.
+Examples can be found <a href="encoding-profiles">further down</a>.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -234,7 +237,7 @@ in the SMIL file:</p>
     &lt;configuration key="preencode-encoding-profile"&gt;partial-import-preencode&lt;/configuration&gt;
     &lt;configuration key="concat-encoding-profile"&gt;concat.work&lt;/configuration&gt;
     &lt;configuration key="trim-encoding-profile"&gt;trim.work&lt;/configuration&gt;
-    &lt;configuration key="force-encoding-profile"&gt;editor.work&lt;/configuration&gt;
+    &lt;configuration key="force-encoding-profile"&gt;encode.partial-import&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -358,8 +361,8 @@ supposed to be changed by the user.</p>
 <table>
 <thead>
 <tr>
-<th>encoding profile</th>
-<th>description</th>
+<th>Encoding Profile</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -385,15 +388,11 @@ supposed to be changed by the user.</p>
 <table>
 <thead>
 <tr>
-<th>configuration key</th>
-<th>description</th>
+<th>Configuration Key</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>preencode-encoding-profile</td>
-<td>Used to encode all source video tracks before any processing happens, to avoid errors with non-uniform input and prepare them for lossless concatenation. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile.</td>
-</tr>
 <tr>
 <td>concat-encoding-profile</td>
 <td>Used to concatenate partial tracks into tracks</td>
@@ -403,11 +402,60 @@ supposed to be changed by the user.</p>
 <td>Used to trim the resulting concatenated single tracks if necessary</td>
 </tr>
 <tr>
+<td>preencode-encoding-profile</td>
+<td>Used to encode all source video tracks before any processing happens, to avoid errors with non-uniform input and prepare them for lossless concatenation. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile.</td>
+</tr>
+<tr>
 <td>force-encoding-profile</td>
 <td>Used to re-encode target tracks in case the file extension of a given target track is not included in <em>required-extensions</em> or the configuration key <em>force-encoding</em> is set to <em>true</em></td>
 </tr>
 </tbody>
 </table>
+<h3 id="missing-encoding-profiles">Missing Encoding Profiles</h3>
+<p>Some of the encoding profiles necessary for this operation are not included in Opencast per default,
+but the operation will not work without them (or with similar ones configured).
+If you want to use this operation. we recommend using the following encoding profiles by copy and pasting them in
+a <code>.properties</code> file in the <code>etc/encoding</code> folder of your installation.</p>
+<pre><code># Generate silent audio tracks for filling gaps for partial import operation
+profile.import.silent.name = Generate silent audio tracks for filling gaps
+profile.import.silent.input = nothing
+profile.import.silent.output = audio
+profile.import.silent.suffix = -silent-audio.mp4
+profile.import.silent.ffmpeg.command = -strict -2 -filter_complex aevalsrc=0:d=#{time} -c:a aac -b:a 8k #{out.dir}/#{out.name}#{out.suffix}
+
+# Extract last image for partial import operation
+profile.import.image-frame.name = Extract last image
+profile.import.image-frame.input = visual
+profile.import.image-frame.output = image
+profile.import.image-frame.suffix = -image.jpg
+profile.import.image-frame.ffmpeg.command = -sseof -3 -i #{in.video.path} -update 1 -q:v 1 #{out.dir}/#{out.name}#{out.suffix}
+
+# Extract image for partial import operation
+profile.import.preview.name = Extract an image
+profile.import.preview.input = visual
+profile.import.preview.output = image
+profile.import.preview.suffix = -image.jpg
+profile.import.preview.ffmpeg.command = -ss #{time} -i #{in.video.path} -r 1 -frames:v 1 #{out.dir}/#{out.name}#{out.suffix}
+
+# Trim a stream
+#   This command will trim and input stream. Trimming will be fast, as no
+#   re-encoding takes place. It will, however, not be frame accurate.
+profile.trim.work.name = trim track
+profile.trim.work.input = stream
+profile.trim.work.output = visual
+profile.trim.work.suffix = -trimmed.#{in.video.suffix}
+profile.trim.work.ffmpeg.command = -ss #{trim.start} -i #{in.video.path} -t #{trim.duration} -c copy #{out.dir}/#{out.name}#{out.suffix}
+
+# Used by Partial Import operation to encode tracks into equal formats
+profile.encode.partial-import.name = editor
+profile.encode.partial-import.input = audiovisual
+profile.encode.partial-import.output = audiovisual
+profile.encode.partial-import.suffix = -editor.mp4
+profile.encode.partial-import.mimetype = video/mp4
+profile.encode.partial-import.ffmpeg.command = -i #{in.video.path} \
+  -filter:v crop=trunc(iw/2)*2:trunc(ih/2)*2,fps=25 -shortest -c:v libx264 -preset superfast -pix_fmt yuv420p -crf 18 -c:a aac -b:a 196k \
+  #{out.dir}/#{out.name}#{out.suffix}
+</code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">

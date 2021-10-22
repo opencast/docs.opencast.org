@@ -235,23 +235,6 @@ video-201711201040.mp4
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<p>Example of a lossless concat operation for videos with identical formats in a workflow definition.</p>
-<pre><code class="language-xml">&lt;!-- Concatenate chunked video from camera --&gt;
-&lt;operation
-  id="concat"
-  fail-on-error="true"
-  exception-handler-workflow="error"
-  description="Concatenate the generated videos."&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="source-flavor-numbered-files"&gt;multipart/chunkedsource&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;presenter/concat&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
-    &lt;!-- do not encode before concatenation --&gt;
-    &lt;configuration key="same-codec"&gt;true&lt;/configuration&gt;
-    &lt;configuration key="encoding-profile"&gt;concat-samecodec&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
 <h2 id="encoding-profile">Encoding Profile</h2>
 <p>The encoding profile command must contain the #{concatCommand} parameter which will set all input and possibly filter
 commands required for this operation:</p>

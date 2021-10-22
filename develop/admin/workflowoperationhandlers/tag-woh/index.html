@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "TagWorkflowOperation", url: "#_top", children: [
+          {title: "Tag Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -62,10 +62,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       </a>
 </div>
 </div>
-<h1 id="tagworkflowoperation">TagWorkflowOperation</h1>
+<h1 id="tag-workflow-operation">Tag Workflow Operation</h1>
+<p>ID: <code>tag</code></p>
 <h2 id="description">Description</h2>
-<p>With the TagWorkflowOperationHandler it's possible to select various media package elements and then modify their tag
-set and / or set their flavor.</p>
+<p>With the tag operation, it's possible to select various media package elements and then modify their tags
+and/or their flavor.</p>
 <p>So for example it's possible to pick up elements like the dublin core catalogs that have been added to the media package
 at the beginning of the workflow and tag them, so they can be picked up by operations later on.</p>
 <h2 id="parameter-table">Parameter Table</h2>
@@ -150,11 +151,8 @@ at the beginning of the workflow and tag them, so they can be picked up by opera
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
+<pre><code class="language-xml">&lt;operation
   id="tag"
-  max-attempts="2"
-  fail-on-error="true"
-  exception-handler-workflow="error"
   description="Tagging media package elements"&gt;
   &lt;configurations&gt;
     &lt;configuration key="source-tags"&gt;engage,atom,publish&lt;/configuration&gt;
@@ -162,6 +160,16 @@ at the beginning of the workflow and tag them, so they can be picked up by opera
     &lt;configuration key="target-tags"&gt;-atom,+rss&lt;/configuration&gt;
     &lt;configuration key="target-flavor"&gt;presentation/tagged&lt;/configuration&gt;
     &lt;configuration key="copy"&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>You can also use <code>tag</code> to just modify flavors (<code>*/source</code> will not be present any longer):</p>
+<pre><code class="language-xml">&lt;operation
+  id="tag"
+  description="Changing flavor of source elements"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavors"&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;*/delivery&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
