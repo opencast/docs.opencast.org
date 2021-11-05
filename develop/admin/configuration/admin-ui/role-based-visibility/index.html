@@ -76,7 +76,11 @@ roles that allow the users to access specific parts of the UI.</p>
 <p>There is a set of so-called user interface roles, each of them providing access to a specific part of the
 administrative user interface. Those roles can be easily identified by their name prefix <code>ROLE_UI</code>.</p>
 <p><strong>Important</strong> <code>ROLE_ADMIN</code> implicitly provides full access to the user interface. When working with role-based
-visibility, users (and the groups they belong to) may not have <code>ROLE_ADMIN</code> therefore.</p>
+visibility, users (and the groups they belong to) may not have <code>ROLE_ADMIN</code> therefore. Similarly,
+<code>ROLE_CAPTURE_AGENT</code> provides write access to events the user having the role would usually have no write access
+to. This is the role automatically attached to users used by capture agents. They need this special priviledge
+to ingest to events which another user has created. In general, it's not a good idea to re-use this role for
+regular users.</p>
 <h2 id="user-interface-roles">User Interface Roles</h2>
 <p>This section describes which roles permit access to what parts of the user interface. Note that role-based visibility
 is not just hiding graphical elements from users, it does also protect server-side resources from unauthorized access
