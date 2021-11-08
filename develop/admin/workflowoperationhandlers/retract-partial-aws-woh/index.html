@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Retract Partial - Administration Guide</title>
+<title>Retract Partial AWS - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Partial Retract Engage Workflow Operation", url: "#_top", children: [
+          {title: "Partial Retract Engage Workflow Operation (AWS)", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -46,30 +46,26 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-youtube-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../retract-partial-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-youtube-woh/">
-        Retract YouTube
+<a class="btn btn-xs btn-link" href="../retract-partial-woh/">
+        Retract Partial
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../retract-partial-aws-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../retract-oaipmh-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../retract-partial-aws-woh/">
-        Retract Partial AWS
+        Previous</a><a class="btn btn-xs btn-link" href="../retract-oaipmh-woh/">
+        Retract OAI-PMH
       </a>
 </div>
 </div>
-<h1 id="partial-retract-engage-workflow-operation">Partial Retract Engage Workflow Operation</h1>
-<p>ID: <code>retract-partial</code></p>
+<h1 id="partial-retract-engage-workflow-operation-aws">Partial Retract Engage Workflow Operation (AWS)</h1>
+<p>ID: <code>retract-partial-aws</code></p>
 <h2 id="description">Description</h2>
-<p>The partial retract engage operation retracts a subset of the published elements from the search service.
-This is useful to e.g. remove incorrect captions without reprocessing the entire workflow.</p>
-<p>The elements selected for retraction match any combination of flavor or tag,
-and the resulting publication may become unusable if you accidentally retract one or more delivery files.
-Use this operation with caution.</p>
+<p>The PartialRetractEngageAWSS3WorkflowOperationHandler retracts a subset of the published elements from the local Opencast Media Module.  This is useful to remove incorrect captions without reprocessing the entire workflow.  Note: the elements selected for retraction match any combination of flavor or tag, and the resulting publication may be unusable if you accidentally retract one or more delivery files.  Use this operation with caution.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -91,8 +87,10 @@ Use this operation with caution.</p>
 </table>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
-    id="retract-partial"
-    description="Retracting elements flavored with presentation and tagged with preview from Engage"&gt;
+    id="retract-partial-aws"
+    fail-on-error="true"
+    exception-handler-workflow="partial-error"
+    description="Retracting elements flavored with presentation and tagged with preview from Engage (AWS)"&gt;
   &lt;configurations&gt;
     &lt;configuration key="retract-flavors"&gt;presentation/*&lt;/configuration&gt;
     &lt;configuration key="retract-tags"&gt;preview&lt;/configuration&gt;
@@ -102,19 +100,19 @@ Use this operation with caution.</p>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-youtube-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../retract-partial-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-youtube-woh/">
-        Retract YouTube
+<a class="btn btn-xs btn-link" href="../retract-partial-woh/">
+        Retract Partial
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../retract-partial-aws-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../retract-oaipmh-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../retract-partial-aws-woh/">
-        Retract Partial AWS
+        Previous</a><a class="btn btn-xs btn-link" href="../retract-oaipmh-woh/">
+        Retract OAI-PMH
       </a>
 </div>
 </div>
@@ -122,7 +120,7 @@ Use this operation with caution.</p>
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-partial-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-partial-aws-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>

@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Publish AWS - Administration Guide</title>
+<title>Publish Engage AWS - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "PublishAWSS3WorkflowOperation", url: "#_top", children: [
+          {title: "Publish Engage Workflow Operation (AWS)", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -46,25 +46,26 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../publish-configure-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../publish-engage-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../publish-configure-woh/">
-        Publish Configure
+<a class="btn btn-xs btn-link" href="../publish-engage-woh/">
+        Publish Engage
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../process-smil-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../publish-configure-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../process-smil-woh/">
-        Process Smil
+        Previous</a><a class="btn btn-xs btn-link" href="../publish-configure-woh/">
+        Publish Configure
       </a>
 </div>
 </div>
-<h1 id="publishawss3workflowoperation">PublishAWSS3WorkflowOperation</h1>
+<h1 id="publish-engage-workflow-operation-aws">Publish Engage Workflow Operation (AWS)</h1>
+<p>ID: <code>publish-engage-aws</code></p>
 <h2 id="description">Description</h2>
-<p>The PublishAWSS3WorkflowOperation will publish your recording to the normal publication channel (e.g. engage), but the
+<p>The publish-engage-aws operation will publish your recording to the normal publication channel (e.g. engage), but the
 media files will be hosted via AWS S3/Cloudfront.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -77,15 +78,15 @@ media files will be hosted via AWS S3/Cloudfront.</p>
 <tbody>
 <tr>
 <td>check-availability</td>
-<td>Check if the media if reachable</td>
+<td>Check if the media is reachable</td>
 </tr>
 <tr>
 <td>download-source-flavors</td>
-<td>Specifies which media should be published for download</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) flavors to download</td>
 </tr>
 <tr>
 <td>download-source-tags</td>
-<td>Specifies which media should be published for download</td>
+<td>Distribute any mediapackage elements with one of these (comma separated) tags to download</td>
 </tr>
 <tr>
 <td>download-target-subflavors</td>
@@ -93,7 +94,7 @@ media files will be hosted via AWS S3/Cloudfront.</p>
 </tr>
 <tr>
 <td>download-target-tags</td>
-<td>Modify tags of published media</td>
+<td>Add tags (comma separated) to published media</td>
 </tr>
 <tr>
 <td>strategy</td>
@@ -101,61 +102,52 @@ media files will be hosted via AWS S3/Cloudfront.</p>
 </tr>
 <tr>
 <td></td>
-<td><configuration key="strategy">merge</configuration></td>
+<td><code>&lt;configuration key="strategy"&gt;merge&lt;/configuration&gt;</code></td>
 </tr>
 <tr>
 <td></td>
 <td>merges new publication with existing publication</td>
 </tr>
 <tr>
-<td>streaming-source-flavors</td>
-<td>Specifies which media should be published to the streaming server</td>
+<td>merge-force-flavors</td>
+<td>Flavors of elements for which an update is enforced when mergeing catalogs.</td>
 </tr>
 <tr>
-<td>streaming-source-tags</td>
-<td>Specifies which media should be published to the streaming server</td>
-</tr>
-<tr>
-<td>streaming-target-tags</td>
-<td>Modify tags of published media</td>
-</tr>
-<tr>
-<td>streaming-target-subflavors</td>
-<td>Subflavor to use for distributed material</td>
+<td></td>
+<td>Defaults to <code>dublincore/*,security/*</code>.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="publish-aws"
-  max-attempts="2"
-  exception-handler-workflow="partial-error"
-  description="Publishing to Amazon Web Services"&gt;
+<pre><code class="language-xml">&lt;operation
+    id="publish-engage-aws"
+    max-attempts="2"
+    fail-on-error="true"
+    exception-handler-workflow="error"
+    description="Distribute and publish to engage player using AWS S3"&gt;
   &lt;configurations&gt;
-    &lt;configuration key="download-source-flavors"&gt;dublincore/*,security/*&lt;/configuration&gt;
-    &lt;configuration key="download-source-tags"&gt;engage-download,atom,rss,mobile&lt;/configuration&gt;
-    &lt;configuration key="streaming-source-tags"&gt;engage-streaming&lt;/configuration&gt;
-    &lt;configuration key="strategy"&gt;merge&lt;/configuration&gt;
+    &lt;configuration key="download-source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
     &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
+    &lt;configuration key="strategy"&gt;merge&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../publish-configure-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../publish-engage-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../publish-configure-woh/">
-        Publish Configure
+<a class="btn btn-xs btn-link" href="../publish-engage-woh/">
+        Publish Engage
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../process-smil-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../publish-configure-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../process-smil-woh/">
-        Process Smil
+        Previous</a><a class="btn btn-xs btn-link" href="../publish-configure-woh/">
+        Publish Configure
       </a>
 </div>
 </div>
@@ -163,7 +155,7 @@ media files will be hosted via AWS S3/Cloudfront.</p>
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/publish-aws-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/publish-engage-aws-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>

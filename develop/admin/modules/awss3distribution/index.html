@@ -102,7 +102,7 @@ described below.  Please ensure you use the correct distribution base format dep
 download your recordings.  S3 allows you to create <strong>Presigned URL</strong>s, which are only valid for a limited time.  This
 means that even if your media URLs leak, they will only be valid for a configurable duration.</p>
 <p>Set <code>org.opencastproject.distribution.aws.s3.presigned.url</code> to <code>true</code> to enable this feature.</p>
-<p>Note: <strong>CloudFront</strong> and <strong>Presigned URL</strong> can be used together. </p>
+<p>Note: <strong>CloudFront</strong> and <strong>Presigned URL</strong> can be used together.</p>
 <p>Note: Opencast's distribution files can be quite large depending on your settings, and some of your users may not be
 able to complete the download within the time limit.  While AWS should not stop a download currently in progress, some
 players may not completely download the media if playback is stopped.  If you are experiencing complaints about
@@ -121,7 +121,7 @@ Note: only one of these two configuration keys may be set.</p>
 <p>There are <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html">two access</a> style for bucket, virtual hosted style (default) and path style.
 - Virtual hosted style sample: <code>https://bucketname.s3.service.com/</code>
 - Path style sample: <code>https://s3.service.com/bucketname</code></p>
-<p>AWS use virtual hosted style by default, and will deprecate path style. Yet, for self hosted s3 compatible service, path style URL is useful.<br/>
+<p>AWS use virtual hosted style by default, and will deprecate path style. Yet, for self hosted s3 compatible service, path style URL is useful.
 Set <code>org.opencastproject.distribution.aws.s3.path.style</code> to <code>true</code> to enable this feature.</p>
 <h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
 <p>The Opencast AWS S3 Distribution service has five configuration keys, which can be found in the
@@ -242,13 +242,13 @@ Set <code>org.opencastproject.distribution.aws.s3.path.style</code> to <code>tru
 <code>schedule-and-upload.xml</code> and <code>publish.xml</code> workflow configuration files both contain lines containing the string
 "Remove this line if you wish to publish to AWS S3".  Both of these lines must be removed before publishing to AWS S3
 will function correctly.</p>
-<p>If you wish to use AWS S3 publishing with your own custom workflow, you must add the <code>publish-aws</code> workflow operation to
-your workflow.  The operation documentation can be found <a href="../../workflowoperationhandlers/publish-aws-woh/">here</a>.</p>
+<p>If you wish to use AWS S3 publishing with your own custom workflow, you must add the <code>publish-engage-aws</code> workflow operation to
+your workflow.  The operation documentation can be found <a href="../../workflowoperationhandlers/publish-engage-aws-woh/">here</a>.</p>
 <h2 id="publishing-to-multiple-distribution-services">Publishing to multiple distribution services</h2>
 <p>Currently we do not support publication to multiple distribution services simultaneously.  This means that whichever
 workflow operation is <em>last</em> in the workflow will be the final publication.</p>
 <h2 id="using-this-handler-in-custom-workflows">Using this handler in custom workflows</h2>
-<p>If your workflow contains both <code>publish-engage</code> and <code>publish-aws</code>, in that order, and without a
+<p>If your workflow contains both <code>publish-engage</code> and <code>publish-engage-aws</code>, in that order, and without a
 <a href="../../configuration/workflow/">conditional</a> you would have publication files stored both locally <em>and</em> in AWS.  This is
 likely not what you want, so protect your workflow operations appropriately.  If you really do need these files stored
 in both places (for example, in cases where you need to make the files available immediately, and only push to AWS in
@@ -273,31 +273,31 @@ To summarize, this table presents a subset of the various situations that are po
 <td>Opencast Media Module</td>
 </tr>
 <tr>
-<td>publish-aws</td>
+<td>publish-engage-aws</td>
 <td>No</td>
 <td>Yes</td>
 <td>AWS</td>
 </tr>
 <tr>
-<td>publish-engage, publish-aws</td>
+<td>publish-engage, publish-engage-aws</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>AWS</td>
 </tr>
 <tr>
-<td>publish-aws, publish-engage</td>
+<td>publish-engage-aws, publish-engage</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Opencast Media Module</td>
 </tr>
 <tr>
-<td>publish-engage, retract-engage, publish-aws</td>
+<td>publish-engage, retract-engage, publish-engage-aws</td>
 <td>Temporary</td>
 <td>Yes</td>
 <td>AWS</td>
 </tr>
 <tr>
-<td>publish-engage, publish-aws, retract-engage</td>
+<td>publish-engage, publish-engage-aws, retract-engage</td>
 <td>No</td>
 <td>Yes</td>
 <td>Not available</td>

@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Retract OAI-PMH - Administration Guide</title>
+<title>Retract Configure AWS - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,9 +27,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "RetractOaiPmhWorkflowOperation", url: "#_top", children: [
+          {title: "ConfigurableAWSS3RetractWorkflowOperationHandler", url: "#_top", children: [
               {title: "Description", url: "#description" },
-              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Parameters", url: "#parameters" },
               {title: "Operation Examples", url: "#operation-examples" },
           ]},
         ];
@@ -46,67 +46,87 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-partial-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../retract-configure-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-partial-aws-woh/">
-        Retract Partial AWS
-      </a>
-</div>
-<div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../retract-configure-woh/">
-<i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../retract-configure-woh/">
+<a class="btn btn-xs btn-link" href="../retract-configure-woh/">
         Retract Configure
       </a>
 </div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../retract-engage-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../retract-engage-woh/">
+        Retract Engage
+      </a>
 </div>
-<h1 id="retractoaipmhworkflowoperation">RetractOaiPmhWorkflowOperation</h1>
+</div>
+<h1 id="configurableawss3retractworkflowoperationhandler">ConfigurableAWSS3RetractWorkflowOperationHandler</h1>
 <h2 id="description">Description</h2>
-<p>The Retract OAI-PMH workflow operation retracts the published elements from a OAI-PMH repository.</p>
-<h2 id="parameter-table">Parameter Table</h2>
+<p>The ConfigurableAWSS3RetractWorkflowOperationHandler retracts the published elements from a configured publication.</p>
+<p>If the elements have been added to the Publication using "with-published-elements", as in the case with the external
+api, they haven't actually been published so it is unnecessary to have a retract-configuration. Adding a retraction
+won't cause any errors, it will just skip those elements.</p>
+<h2 id="parameters">Parameters</h2>
+<p>These are the keys that can be configured for the worklow operation in the workflow definition.  The <code>channel-id</code> is
+mandatory.</p>
 <table>
 <thead>
 <tr>
-<th>Configuration Keys</th>
+<th>Key</th>
 <th>Description</th>
+<th>Example</th>
+<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>repository</td>
-<td>The name of the OAI-PMH repository where the media should be retracted from</td>
+<td>channel-id</td>
+<td>The id of the channel to retract from</td>
+<td><code>internal</code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 <h2 id="operation-examples">Operation Examples</h2>
+<h4 id="retract-from-internal-channel">Retract from Internal Channel</h4>
+<pre><code>&lt;!-- Remove the internal publication if the mediapackage is being deleted. --&gt;
+&lt;operation
+  id="retract-configure-aws"
+  exception-handler-workflow="partial-error"
+  description="Retract from internal publication channel using AWS S3"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h4 id="retract-from-external-api">Retract from External API</h4>
 <pre><code>&lt;operation
-    id="retract-oaipmh"
-    fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Retract event from the OAI-PMH repository"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="repository"&gt;default&lt;/configuration&gt;
-    &lt;/configurations&gt;
+  id="retract-configure-aws"
+  exception-handler-workflow="partial-error"
+  description="Retract from external api publication channel using AWS S3"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-partial-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../retract-configure-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-partial-aws-woh/">
-        Retract Partial AWS
+<a class="btn btn-xs btn-link" href="../retract-configure-woh/">
+        Retract Configure
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../retract-configure-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../retract-engage-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../retract-configure-woh/">
-        Retract Configure
+        Previous</a><a class="btn btn-xs btn-link" href="../retract-engage-woh/">
+        Retract Engage
       </a>
 </div>
 </div>
@@ -114,7 +134,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-oaipmh-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-configure-aws-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>

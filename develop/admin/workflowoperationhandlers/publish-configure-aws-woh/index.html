@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Publish Configure - Administration Guide</title>
+<title>Publish Configure AWS - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ConfigurablePublishWorkflowOperationHandler", url: "#_top", children: [
+          {title: "ConfigurableAWSS3PublishWorkflowOperationHandler", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Mode", url: "#mode" },
@@ -49,30 +49,30 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../publish-engage-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../publish-configure-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../publish-engage-aws-woh/">
-        Publish Engage AWS
+<a class="btn btn-xs btn-link" href="../publish-configure-woh/">
+        Publish Configure
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../publish-configure-aws-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../process-smil-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../publish-configure-aws-woh/">
-        Publish Configure AWS
+        Previous</a><a class="btn btn-xs btn-link" href="../process-smil-woh/">
+        Process Smil
       </a>
 </div>
 </div>
-<h1 id="configurablepublishworkflowoperationhandler">ConfigurablePublishWorkflowOperationHandler</h1>
+<h1 id="configurableawss3publishworkflowoperationhandler">ConfigurableAWSS3PublishWorkflowOperationHandler</h1>
 <h2 id="description">Description</h2>
-<p>The <code>ConfigurablePublishWorkflowOperationHandler</code> will distribute the given elements and create a publication element 
-for them. By default it will retract all published download elements before publishing anew.</p>
+<p>The <code>ConfigurableAWSS3PublishWorkflowOperationHandler</code> will distribute the given elements to AWS S3 and create a
+publication element for them. By default, it will retract all published download elements before publishing anew.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <p>These are the keys that can be configured for this operation in the workflow definition. At least one media package 
-element must match the supplied <code>source-flavors</code> or <code>source-tags</code> (either for download or streaming or both) or else 
-the operation will not know what to publish. The <code>channel-id</code> and <code>url-pattern</code> are also mandatory.</p>
+element must match the supplied <code>source-flavors</code> or <code>source-tags</code> or else the operation will not know what to publish.
+The <code>channel-id</code> and <code>url-pattern</code> are also mandatory.</p>
 <table>
 <thead>
 <tr>
@@ -108,18 +108,6 @@ the operation will not know what to publish. The <code>channel-id</code> and <co
 <td></td>
 </tr>
 <tr>
-<td>streaming-source-flavors</td>
-<td>Flavors of the streaming media package elements to publish</td>
-<td><code>*/trimmed</code></td>
-<td></td>
-</tr>
-<tr>
-<td>streaming-source-tags</td>
-<td>Tags of the streaming media package elements to publish</td>
-<td><code>engage-streaming</code></td>
-<td></td>
-</tr>
-<tr>
 <td>url-pattern</td>
 <td>Pattern to create the URI for the published from</td>
 <td><code>ftp://…/${event_id}</code></td>
@@ -149,15 +137,8 @@ the operation will not know what to publish. The <code>channel-id</code> and <co
 <td><code>mixed</code></td>
 <td><code>bulk</code></td>
 </tr>
-<tr>
-<td>retract-streaming</td>
-<td>Whether to also retract streaming elements *</td>
-<td><code>true</code></td>
-<td><code>false</code></td>
-</tr>
 </tbody>
 </table>
-<p>* Enable if you have published streaming elements to this channel.</p>
 <h2 id="mode">Mode</h2>
 <p>The configuration key <code>mode</code> can be used to control how media package elements are being distributed:</p>
 <table>
@@ -233,11 +214,11 @@ custom publication channels in the configuration files <code>etc/listproviders/p
 <h2 id="operation-examples">Operation Examples</h2>
 <h3 id="internal-channel">Internal Channel</h3>
 <pre><code>&lt;operation
-  id="publish-configure"
+  id="publish-configure-aws"
   exception-handler-workflow="partial-error"
-  description="Publish to internal channel"&gt;
+  description="Publish to internal channel using AWS S3"&gt;
   &lt;configurations&gt;
-    &lt;configuration key="download-source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key="source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
     &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
     &lt;configuration key="url-pattern"&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
   &lt;/configurations&gt;
@@ -245,48 +226,34 @@ custom publication channels in the configuration files <code>etc/listproviders/p
 </code></pre>
 <h3 id="external-api">External API</h3>
 <pre><code>&lt;operation
-  id="publish-configure"
+  id="publish-configure-aws"
   exception-handler-workflow="partial-error"
-  description="Publish to external api publication channel"&gt;
+  description="Publish to external api publication channel using AWS S3"&gt;
   &lt;configurations&gt;
     &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
     &lt;configuration key="mimetype"&gt;application/json&lt;/configuration&gt;
-    &lt;configuration key="download-source-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key="source-tags"&gt;engage-download&lt;/configuration&gt;
     &lt;configuration key="url-pattern"&gt;http://api.oc.org/api/events/${event_id}&lt;/configuration&gt;
     &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
-<h3 id="meta-publication">Meta publication</h3>
-<p>Meta publications are URL only publications as reference to external systems like media portal.</p>
-<pre><code>&lt;operation
-  id="publish-configure"
-  exception-handler-workflow="partial-error"
-  description="Publish to meta publication channel"&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;edu-reference&lt;/configuration&gt;
-    &lt;configuration key="mimetype"&gt;text/html&lt;/configuration&gt;
-    &lt;configuration key="url-pattern"&gt;https://org.mediaportal.edu/events/${event_id}&lt;/configuration&gt;
-    &lt;configuration key="check-availability"&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../publish-engage-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../publish-configure-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../publish-engage-aws-woh/">
-        Publish Engage AWS
+<a class="btn btn-xs btn-link" href="../publish-configure-woh/">
+        Publish Configure
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../publish-configure-aws-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../process-smil-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../publish-configure-aws-woh/">
-        Publish Configure AWS
+        Previous</a><a class="btn btn-xs btn-link" href="../process-smil-woh/">
+        Process Smil
       </a>
 </div>
 </div>
@@ -294,7 +261,7 @@ custom publication channels in the configuration files <code>etc/listproviders/p
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/publish-configure-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/publish-configure-aws-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
