@@ -1,8 +1,7 @@
-commit cb6fcd04f074b2a49aa87889938ae76056f970c3
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Mon Nov 8 13:41:29 2021 -0600
+commit d58ac98b3b88ace0ceb5b2c955272767bfc5c911
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Fri Oct 29 12:42:21 2021 +0200
 
-    Merge branch 'output-file-recognition' of lkiesow/opencast into r/10.x
+    Force same sample rate for audio files in PartialImport WOH encoding profiles
     
-    Pull request #3105
-      Composer Output File Recognition
+    During concatenation of input audio files and generated silent audio files, "Non-monotonous DTS" warnings could appear and the output file would be distorted. For example, the output file could have a different length from the sum of its parts or the quality would be significantly lowered. Forcing the same sample rate alleviates the problem (thanks Lars!).
