@@ -33,6 +33,7 @@
               {title: "Configuration of Signing Providers", url: "#configuration-of-signing-providers" },
               {title: "Configuration of URL Signing Timeout Values", url: "#configuration-of-url-signing-timeout-values" },
               {title: "Configuration of Verification Components", url: "#configuration-of-verification-components" },
+              {title: "Configuration of Wowza URL Signing", url: "#configuration-of-wowza-url-signing" },
               {title: "Testing", url: "#testing" },
               {title: "Further information", url: "#further-information" },
           ]},
@@ -248,6 +249,27 @@ url.regex.staticfiles=(?\=(.*staticfiles.*))(?=^(?!.*staticfiles.*url|.*docs.*).
 url.regex.archive=.*archive\/archive\/mediapackage\/.*\/.*\/.*
 url.regex.static=.*static.*
 </code></pre>
+<h2 id="configuration-of-wowza-url-signing">Configuration of Wowza URL Signing</h2>
+<p>To configure Wowza URL Signing, you should use the file configuration <code>org.opencastproject.security.urlsigning.provider.impl.WowzaUrlSigningProvider.cfg</code>.</p>
+<p>You can find three properties to configure:</p>
+<pre><code># key.wowzatoken.secret=myTokenPrefix@mySharedSecret
+# key.wowzatoken.url=http://localhost:8080
+# key.wowzatoken.organization=mh_default_org
+</code></pre>
+<p>Each property has the form: key.<em>keyId</em>.<em>propertyName</em></p>
+<p><code>key.wowzatoken.organization</code> is optional. By deafult is <code>*</code>, that means any organization.</p>
+<p><code>key.wowzatoken.url</code> is mandatory. describes the url prefix that urls must have.</p>
+<p><code>key.wowzatoken.secret=myTokenPrefix@mySharedSecret</code> is mandatory. It is a pair separated by <code>@</code>. First value, <code>myTokenPrefix</code>, means defines the prefix that all parameters of signed urls will have. Second value, <code>mySharedSecret</code>, defines a secret value, to secure urls.</p>
+<p>After configuring the Opencast server, the steps to configure enable stream security in Wowza are:</p>
+<ol>
+<li>Open your Wowza server webpage (Normally <code>http://&lt;wowza-server&gt;:8088/enginemanager</code>) , log in and enter to your desired VOD application</li>
+<li>In the menu, select <code>Playback-Security</code> and click in <code>edit</code></li>
+<li>Select <code>Protect all protocols using hash (SecureToken version 2)</code></li>
+<li><code>Shared Secret</code> write the <code>mySharedSecret</code> set in the first step</li>
+<li><code>Hash-Algorithm</code>: SHA-256</li>
+<li><code>Hash Query Parameter Prefix</code> write the <code>myTokenPrefix</code> set in step one</li>
+<li>Save changes and restart the application</li>
+</ol>
 <h2 id="testing">Testing</h2>
 <p>Once all components of Stream Security are installed and properly configured, it is important to verify that the system
 is working as expected. It is especially important to try to access resources that should <em>not</em> be accessible.</p>
