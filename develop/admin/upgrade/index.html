@@ -28,7 +28,7 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 10.x to 11.x", url: "#_top", children: [
-              {title: "???", url: "#_1" },
+              {title: "Elasticsearch Migration", url: "#elasticsearch-migration" },
           ]},
         ];
 
@@ -66,11 +66,60 @@ In case you need information about how to upgrade older versions of Opencast,
 please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
 <li>Stop your current Opencast instance</li>
-<li>TBA</li>
-<li>Start Opencast</li>
+<li>Replace Opencast with the new version</li>
+<li>Review the configuration changes and adjust your configuration accordingly</li>
+<li><a href="#elasticsearch-migration">Migrate, rebuild or rename Elasticsearch index</a></li>
+<li>Start Opencast if you haven't already done so</li>
 </ol>
-<h2 id="_1">???</h2>
-<p>TBA</p>
+<h2 id="elasticsearch-migration">Elasticsearch Migration</h2>
+<p>In Opencast 11, instead of having two separate Elasticsearch indices for the Admin UI and the External API that share
+most of their content, there will be only one index supporting both. Since this index will have a new name, this index
+will either have to be rebuilt from scratch (<a href="#option-1-rebuild">Option 1</a>), or you can migrate your Admin UI index
+(<a href="#option-2-migration">Option 2</a>), since its structure is completely identical to the new index.
+However, if you don't care about accuracy, you could just keep using the Admin UI index
+(<a href="#option-3-keep-the-admin-ui-index">Option 3</a>).</p>
+<p>Please read all options and commit to one before taking any action.</p>
+<h3 id="option-1-rebuild">Option 1: Rebuild</h3>
+<p>Start your new Opencast and make an HTTP POST request to <code>/index/rebuild</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i -u &lt;admin_user&gt;:&lt;password&gt; -s -X POST https://example.opencast.org/index/rebuild
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Index Endpoint” section and use the testing form on
+<code>/rebuild</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="option-2-migration">Option 2: Migration</h3>
+<p><strong>Some important notices before you start:</strong></p>
+<ul>
+<li>Please take a quick look at the scripts before using them and adjust them if needed.</li>
+<li>Do not start your new Opencast before or during migration of the index (at least on the Admin node)!
+  Starting Opencast before migration will create a new empty index which will later cause the cloning process to fail.
+  (To fix this, delete all subindices of the new index - <code>opencast_event</code>, <code>opencast_series</code>, <code>opencast_theme</code>,
+  <code>opencast_version</code> - before attempting migration again. You could use a <strong>modified</strong> version of
+  <code>delete-old-indices.sh</code> to do this or pick out the relevant commands and do it manually.
+  <em>Make sure you remove the correct subindices for the new index, not the old ones!</em>)
+  Running Opencast during migration (whether with the new or old indices) can result in inconsistent data during
+  cloning. Do not do this!</li>
+<li>By default the cloning process will not copy over the index metadata and the two index settings <code>number_of_replicas</code>
+  and <code>auto_expand_replicas</code>. The script will set <code>number_of_replicas</code> to 0 (assuming you have a single node) and
+  <code>auto_expand_replicas</code> to false (the default). This should be fine for most people, but if you have a more intricate
+  setup, you might need to change these.</li>
+<li>The cleanup script will also attempt to delete the group indices that are no longer used since OC 10. If you started
+with OC 10 or already removed them, this will fail, but that's okay.</li>
+<li><strong>Before removing the old indices, please start Opencast and test the new index first!</strong></li>
+</ul>
+<p>To migrate your index, you can use the <code>migrate-indices.sh</code> bash script contained in
+<a href="https://github.com/opencast/opencast/blob/develop/docs/upgrade/10_to_11/"><code>docs/upgrade/10_to_11/</code></a>.
+This will clone the Admin UI index to an index with the new name. If your storage supports hardlinks, the cloning
+process should be pretty quick.</p>
+<p>If you then want to clean up the old indices, you can use <code>delete-old-indices.sh</code> for this.</p>
+<h3 id="option-3-keep-the-admin-ui-index">Option 3: Keep the Admin UI index</h3>
+<p>If you don't have time for either and if you don't care about having an exact index identifier in your Elasticsearch,
+you could also just set <code>index.identifier</code> in <code>org.opencastproject.elasticsearch.index.ElasticsearchIndex</code> to "adminui"
+to keep using the old admin ui index. Do this before starting Opencast to avoid creating a new index.</p>
+<p>The external API index can then be removed. (Please be aware that the External API index cannot be used any longer since
+it doesn't contain the themes.) You can use a <strong>modified</strong> version of <code>delete-old-indices.sh</code> to do this (make sure
+to remove only the External API sub indices and <em>not</em> the Admin UI ones you're currently using!)</p>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
