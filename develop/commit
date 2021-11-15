@@ -1,5 +1,13 @@
-commit 62701f5928dd0436a03fc0016679423c27d6f064
-Author: Lukas Kalbertodt <lukas.kalbertodt@gmail.com>
-Date:   Fri Nov 12 11:15:13 2021 +0100
+commit 94f554ea0d7a1a6b67b953de4efb6aa7bebfd280
+Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
+Date:   Fri May 21 00:43:03 2021 +0200
 
-    Only return series belonging to the current organization in getAllForAdministrativeRead
+    educast: Don't force inclusion of referred elements in snapshot
+    
+    When a referred element should be excluded, but the reference has
+    properties Opencast forces the element to stay in the snapshot. This
+    changes the behaviour to the same as when no properties are set, i.e.
+    the refered element will not be included in the snapshot when a user
+    requests this.
+    
+    Fixes #2627
