@@ -1,23 +1,5 @@
-commit ff9b21d9e2272fa8fb1675ef242d112384d7b5d8
-Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Wed Nov 17 20:10:57 2021 +0100
+commit f8b19a7eb9eb5918623777562968f20ece514784
+Author: Gao Jun <gaojun@fudan.edu.cn>
+Date:   Thu Nov 18 03:18:50 2021 +0800
 
-    Remove automatic handling of HLS bitrate ladder (#2591)
-    
-    * Remove automatic handling of HLS bitrate ladder
-    
-    When using HLS Opencast currently forces the use of `-b:v` and `-b:a`
-    for each stream. The bitrate is determined either from the same options
-    in the encoding profile or geometrically distribute between a min and a
-    max. This limits the rate control mechanism to either Average Bitrate
-    (ABR) (i.e. only setting `-b`) or Constant Bitrate (CBR) (i.e. setting
-    `-b`, `-maxrate`, `-minrate`, `-bufsize`). In particular, Constrained
-    Encoding (VBV) (i.e. setting `-crf`, `-maxrate`, `-minrate`, `-bufsize`)
-    is not possible.
-    
-    This removes the bitrate handling in Opencast completely forcing the
-    user to properly setup the rate control in the used encoding profiles.
-    
-    * Remove mentions of removed HLS properties in documentation
-    
-    * Add HLS bitrate handling release notes
+    Encode username before useing it in CanvasUserRoleProvider (#2949)
