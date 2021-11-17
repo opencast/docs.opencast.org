@@ -1,0 +1,19 @@
+commit 006accc3f8120de7cbe60b6200eadb0352227013
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Wed Nov 17 20:24:00 2021 +0100
+
+    Removed Solr from Series Service (#3161)
+    
+    * Removed Solr from Series Service
+    
+    Removes all Solr functionality from the series service. Functions that
+    relied on the solr index were either removed or now query the database
+    directly.
+    
+    - Moved the series filter query to the external api, while trying to
+      preserve as much functionality as possible (for example, there is no
+    pagination, so instead an offset variable is offered)
+    
+    * Fixed wrong variable name in SeriesEndpoint.java
+    
+    * Fixed missing imports

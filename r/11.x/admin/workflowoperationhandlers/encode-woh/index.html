@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Encode - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Encode Workflow Operation Handler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+              {title: "Encoding Profile Example", url: "#encoding-profile-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../error-resolution-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../error-resolution-woh/">
+        Error Resolution
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../editor-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../editor-woh/">
+        Editor
+      </a>
+</div>
+</div>
+<h1 id="encode-workflow-operation-handler">Encode Workflow Operation Handler</h1>
+<blockquote>
+<p>Parallel FFmpeg encoding</p>
+</blockquote>
+<h2 id="description">Description</h2>
+<p>The encode workflow operation can be used to encode media files to different formats using <a href="https://ffmpeg.org">FFmpeg</a>.</p>
+<p>It can utilize the parallel encoding capabilities of FFmpeg. This has the advantage that the source file needs to be
+read only once for several encodings, reducing the encoding time quite a lot. Additionally, this will let FFmpeg make
+better use of multiple CPU cores.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor¹</td>
+<td>presenter/work</td>
+<td>Single flavor specifying media to be encoded</td>
+</tr>
+<tr>
+<td>source-flavors¹</td>
+<td>presenter/work,presentation/work</td>
+<td>Comma-separated list of flavors specifying media to be encoded</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>presenter/delivery</td>
+<td>Flavor of the new media</td>
+</tr>
+<tr>
+<td>source-tags</td>
+<td>sometag</td>
+<td>Comma-separated list of tags of media to encode</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>sometag</td>
+<td>Comma-separated list of tags to be assigned to the new media</td>
+</tr>
+<tr>
+<td>encoding-profile</td>
+<td>parallel.http</td>
+<td>Encoding profile to use</td>
+</tr>
+</tbody>
+</table>
+<p>¹If source-flavour<strong>s</strong> are specified, media of these flavors are considered, if not, media matching the source-flavour
+configuration option is considered.</p>
+<p>As explained in the <a href="#encoding-profile-example">"Encoding Profile Example" section</a>, every media file created by an encode operation
+has its own named suffix. The suffix name is defined in the encode profile definition. It will be added as a tag to the
+corresponding track in the media package. This is different from the <code>target-tags</code> workflow operation parameter, which
+will cause the specified tag list to be added to every media file created by the operation.</p>
+<p>For instance, let us take the example operation and encoding profile defined in this documentation. After a successful
+run of the operation, the media package will contain four new tracks: the first one containing the new tags
+<code>engage-download</code>, <code>engage-streaming</code> and <code>low-quality</code>; the second one containing the new tags <code>engage-download</code>,
+<code>engage-streaming</code> and <code>medium-quality</code>; etc.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+  id="encode"
+  exception-handler-workflow="partial-error"
+  description="encoding media files"&gt;
+    &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;*/trimmed&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;*/delivery&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key="encoding-profile"&gt;parallel.http&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h2 id="encoding-profile-example">Encoding Profile Example</h2>
+<p>Unlike a regular compose operation, this operation can generate more than one output file and, therefore, more than one
+media package track elements. In order to distinguish these tracks, the encoding profile syntax for this operation
+allows different named suffix parameters in the form of <code>&lt;profile_name&gt;.suffix.&lt;suffix_name&gt; = &lt;suffix_value&gt;</code>.</p>
+<p>Because file names are irrelevant for the workflow operations, each suffix name is added as a tag to the corresponding
+media package element. For instance, if a media file with a filename of <code>myfile.ext</code> is processed with the encoding
+profile in the example below, the first output file will be <code>myfile-low.mp4</code> and the resulting media package element
+will contain a tag with the value <code>low-quality</code>; the second output file will be <code>myfile-medium.mp4</code> and the resulting
+media package element will contain a tag with the value <code>medium-quality</code>; and so on.</p>
+<pre><code class="language-properties"># Distribution format definition for low quality presenter download
+profile.parallel.http.name = parallel video encoding
+profile.parallel.http.input = visual
+profile.parallel.http.output = visual
+profile.parallel.http.suffix.low-quality = -low.mp4
+profile.parallel.http.suffix.medium-quality = -medium.mp4
+profile.parallel.http.suffix.high-quality = -high.mp4
+profile.parallel.http.suffix.hd-quality = -hd.mp4
+profile.parallel.http.ffmpeg.command = -i #{in.video.path} \
+  -c:v libx264 -filter:v scale=-2:288 -preset slower -crf 28 -r 25 -profile:v baseline -tune film -movflags faststart \
+  -c:a aac -ar 22050 -ac 1 -ab 32k #{out.dir}/#{out.name}#{out.suffix.low-quality} \
+  -c:v libx264 -filter:v scale=-2:360 -preset slower -crf 25 -r 25 -profile:v baseline -tune film -movflags faststart \
+  -c:a aac -ar 22050 -ac 1 -ab 48k #{out.dir}/#{out.name}#{out.suffix.medium-quality} \
+  -c:v libx264 -filter:v scale=-2:576 -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
+  -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.high-quality} \
+  -c:v libx264 -filter:v scale=-2:720 -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
+  -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.hd-quality}
+</code></pre>
+<h3 id="resolution-based-encoding">Resolution Based Encoding</h3>
+<p>The <code>encode</code> operation supports encoding based on the input video's resolution. For example, you can encode a certain
+output resolution only for high resolution inputs. For this you can define conditionally set variables like <code>if-height-geq-720</code>
+as part of the <code>ffmpeg.command</code> property which retain their value only if the video resolution meets the defined criteria.
+This variable can then be used in the <code>ffmpeg.command</code> property.</p>
+<p>This modification to the encoding profile from above will encode the 720p output only if the input height is at least
+720 pixels, note the Reference <code>#{if-height-geq-720}</code> to the variable at the end of the <code>ffmpeg.command</code> property:</p>
+<pre><code class="language-properties">…
+profile.parallel.http.ffmpeg.command.if-height-geq-720 = -c:v libx264 -filter:v scale=-2:720 \
+  -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
+  -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.hd-quality}
+profile.parallel.http.ffmpeg.command = -i #{in.video.path} \
+  …
+  -c:v libx264 -filter:v scale=-2:576 -preset medium -crf 23 -r 25 -pix_fmt yuv420p -tune film  -movflags faststart \
+  -c:a aac -ar 44100 -ab 96k #{out.dir}/#{out.name}#{out.suffix.high-quality} \
+  #{if-height-geq-720}
+</code></pre>
+<p>There are currently two resolution based conditionally set variables supported:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if-height-geq-&lt;height&gt;</code></td>
+<td><code>if-height-geq-720</code></td>
+<td>The value is set if the height of the video is greater or equal to <code>&lt;height&gt;</code> pixels.</td>
+</tr>
+<tr>
+<td><code>if-width-or-height-geq-&lt;width&gt;-&lt;height&gt;</code></td>
+<td><code>if-width-or-height-geq-1280-720</code></td>
+<td>The value is set if the width of the video is greater or equal to <code>&lt;width&gt;</code> or if the height is greater or equal to <code>&lt;height&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>if-height-lt-&lt;height&gt;</code></td>
+<td><code>if-height-lt-480</code></td>
+<td>The value is set if the height of the video is less than <code>&lt;height&gt;</code> pixels.</td>
+</tr>
+</tbody>
+</table>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../error-resolution-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../error-resolution-woh/">
+        Error Resolution
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../editor-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../editor-woh/">
+        Editor
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/encode-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Installation - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Developer Installation guide", url: "#_top", children: [
+              {title: "TL;DR", url: "#tldr" },
+              {title: "Configuring Git", url: "#configuring-git" },
+              {title: "Clone Opencast", url: "#clone-opencast" },
+              {title: "Install Dependencies", url: "#install-dependencies" },
+              {title: "Ubuntu 18.04", url: "#ubuntu-1804" },
+              {title: "Fedora", url: "#fedora" },
+              {title: "macOS 10.14", url: "#macos-1014" },
+              {title: "Install and Configure ActiveMQ", url: "#install-and-configure-activemq" },
+              {title: "Build and Start Opencast", url: "#build-and-start-opencast" },
+              {title: "Modify Code and Build Changes", url: "#modify-code-and-build-changes" },
+              {title: "Common Build Errors or Fixes", url: "#common-build-errors-or-fixes" },
+              {title: "Intellij Idea IDE Community Edition (optional)", url: "#intellij-idea-ide-community-edition-optional" },
+              {title: "Visual Studio Code Editor (optional)", url: "#visual-studio-code-editor-optional" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../development-process/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../development-process/" class="btn btn-xs btn-link">
+        Development
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../.." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../.." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="developer-installation-guide">Developer Installation guide</h1>
+<p>These instructions outline how to install Opencast.
+This is meant for developers.
+For the installation of a production cluster, take a look at the admin guides.</p>
+<h2 id="tldr">TL;DR</h2>
+<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+$ cd opencast
+$ mvn clean install -Pdev
+$ cd build/opencast-dist-develop-*
+$ ./bin/start-opencast
+</code></pre>
+<p>Opencast will then listen on <a href="http://localhost:8080">127.0.0.1:8080</a></p>
+<p>Default credentials are:</p>
+<ul>
+<li>username: admin</li>
+<li>password: opencast</li>
+</ul>
+<h2 id="configuring-git">Configuring Git</h2>
+<pre><code class="language-sh">$ git config --global user.name &quot;Example Name&quot;
+$ git config --global user.email example@domain.com
+$ ssh-keygen -t ed25519 -C &quot;Example Name &lt;example@domain.com&gt;&quot;
+$ cat ~/.ssh/id_ed25519.pub
+</code></pre>
+<p>Go to: <a href="https://github.com/settings/keys">Github</a>, click "New SSH Key" and paste your content of id_rsa.pub into the input field. It should look like:</p>
+<pre><code>ssh-ed25519 at9/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzO...
+</code></pre>
+<p>Now press "Add SSH Key" and return to your terminal and:</p>
+<pre><code class="language-sh">$ ssh -T git@github.com
+</code></pre>
+<h2 id="clone-opencast">Clone Opencast</h2>
+<p>You can get the Opencast source code by cloning the Git repository.</p>
+<p>Cloning the Git repository:</p>
+<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+</code></pre>
+<h2 id="install-dependencies">Install Dependencies</h2>
+<p>Please make sure to install the following dependencies.</p>
+<p>Required:</p>
+<pre><code>java-11-openjdk-devel
+ffmpeg &gt;= 3.2.4
+maven &gt;= 3.6
+python
+firefox/chrome
+unzip
+gcc-c++
+tar
+bzip2
+</code></pre>
+<p>Required as a service for running Opencast:</p>
+<pre><code>ActiveMQ &gt;= 5.10
+elasticsearch = 7.9.x
+</code></pre>
+<p>Required for some services. Some tests may be skipped and some features
+may not be usable if they are not installed. Hence, it's generally a good idea to
+install them.</p>
+<pre><code>tesseract &gt;= 3
+hunspell &gt;= 1.2.8
+sox &gt;= 14.4
+synfig
+</code></pre>
+<h2 id="ubuntu-1804">Ubuntu 18.04</h2>
+<h3 id="update-system">Update System</h3>
+<pre><code class="language-sh">$ apt update
+$ apt upgrade -y
+</code></pre>
+<h3 id="install-packages-via-apt">Install Packages via APT</h3>
+<pre><code class="language-sh">$ apt install -y git openjdk-11-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+</code></pre>
+<h3 id="install-nodejs-optional">Install NodeJS (optional)</h3>
+<pre><code class="language-sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+</code></pre>
+<h3 id="install-and-start-elasticsearch-and-activemq-with-docker">Install and start Elasticsearch and ActiveMQ with Docker</h3>
+<p>You can use <code>docker-compose</code> to easily run both ActiveMQ and Elasticsearch:</p>
+<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
+$ docker-compose up -d
+</code></pre>
+<p>To shut the services down ahain, run:</p>
+<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
+$ docker-compose down
+</code></pre>
+<h3 id="set-system-java-jdk">Set System Java JDK</h3>
+<p>Choose the Java Version 11 by entering:</p>
+<pre><code class="language-sh">$ update-alternatives --config java
+</code></pre>
+<h2 id="fedora">Fedora</h2>
+<h3 id="update-system_1">Update System</h3>
+<pre><code class="language-sh">$ dnf update -y
+</code></pre>
+<h3 id="install-dependencies_1">Install Dependencies</h3>
+<pre><code class="language-sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+$ dnf group install 'Development Tools'
+$ dnf install -y ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
+</code></pre>
+<h2 id="macos-1014">macOS 10.14</h2>
+<h3 id="update-system_2">Update System</h3>
+<p>Try to install all updates via the App Store or the Apple Icon on the top left corner.</p>
+<h3 id="java-jdk-11">Java JDK 11</h3>
+<p>Install the JDK 11</p>
+<h3 id="xcode">XCode</h3>
+<p>Install XCode over the App Store. It will be needed for building and for git.</p>
+<h3 id="install-packages-via-homebrew">Install Packages via Homebrew</h3>
+<p>The Homebrew Project adds a package manager to Mac OS. You can install it by:</p>
+<pre><code class="language-sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre>
+<p>You can now install needed packages:</p>
+<pre><code class="language-sh">$ brew install maven ffmpeg nodejs
+</code></pre>
+<h3 id="activemq-with-homebrew">ActiveMQ with Homebrew</h3>
+<p>Homebrew offers you an ActiveMQ Package. Please decide, if you want to use Homebrew for ActiveMQ or if you want to follow the general guide below and run it by downloading the binaries. If you want continue you can install ActiveMQ by</p>
+<pre><code class="language-sh">$ brew install activemq
+</code></pre>
+<p>Remember to copy the activemq.xml like mentioned below in the right directory. You have to find the right folder for that operation, Homebrew will put the ActiveMQ files in a different location. You could find it by</p>
+<pre><code class="language-sh">$ sudo find / -name activemq.xml
+````
+
+After changing the configuration file you can list and start or stop you services with
+
+```sh
+$ brew services list
+$ brew services start activemq
+</code></pre>
+<h3 id="git-bash-completion">Git Bash Completion</h3>
+<p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
+<pre><code class="language-sh">$ brew install bash-completion
+</code></pre>
+<p>Find the location of the configuration file</p>
+<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot;
+</code></pre>
+<p>Normally it should be in</p>
+<pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
+</code></pre>
+<p>Then add following line to the bash_profile in home</p>
+<pre><code>[ -f /usr/local/etc/bash_completion ] &amp;&amp; . /usr/local/etc/bash_completion
+</code></pre>
+<p>Finally apply your changes with</p>
+<pre><code>$ source /usr/local/etc/bash_completion.d/git-completion.bash
+</code></pre>
+<h2 id="install-and-configure-activemq">Install and Configure ActiveMQ</h2>
+<p>Download the current version from https://activemq.apache.org/components/classic/download</p>
+<p>Extract and copy it to a directory, in this case you could use the opt directory.</p>
+<pre><code>$ sudo tar -zxvf apache-activemq-*-bin.tar.gz -C /opt
+$ cd /opt &amp;&amp; sudo mv apache-activemq-*/ activemq
+</code></pre>
+<p>Copy the preconfigured XML from your opencast directory into your ActiveMQ configuration.
+In this example you have following folder structure:</p>
+<ul>
+<li>~/Projects/opencast</li>
+<li>/opt/activemq</li>
+</ul>
+<p>With that folder structure you could use following command:</p>
+<pre><code>$ cd &amp;&amp; cd Projects &amp;&amp; sudo cp opencast/docs/scripts/activemq/activemq.xml /opt/activemq/conf/activemq.xml
+</code></pre>
+<p>If your folder structure is different from that example or you do decide to put it somewhere else, you should copy and replace the preconfigured XML from</p>
+<ul>
+<li>/location/to/your/opencast/docs/scripts/activemq/activemq.xml</li>
+</ul>
+<p>into</p>
+<ul>
+<li>/location/to/your/activemq/conf/activemq.xml</li>
+</ul>
+<p>You can start your ActiveMQ instance with:</p>
+<pre><code>$ sudo ./location/to/your/activemq/bin/activemq start
+</code></pre>
+<h2 id="build-and-start-opencast">Build and Start Opencast</h2>
+<hr />
+<p>You can build now opencast by changing your directory into your opencast location and by running:</p>
+<pre><code>$ mvn clean install
+</code></pre>
+<p>After the successfully compilation you can start opencast with:</p>
+<pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast
+</code></pre>
+<p>The <code>-Pdev</code> argument decreases the build time and skips the creation of multiple tarballs and turning on the developer tarball.</p>
+<pre><code>$ cd opencast &amp;&amp; mvn clean install -Pdev
+$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast
+</code></pre>
+<p>For further information visit <a href="../../development-environment/">Development Environment</a>.</p>
+<h3 id="useful-commands-for-testing-purposes">Useful Commands for Testing Purposes</h3>
+<p>For a quick build, you can use the following command to skip Opencast's tests.</p>
+<pre><code>$ cd opencast
+$ mvn clean install -Pdev -DskipTests=true
+</code></pre>
+<p>To see the whole stacktrace of the installation you can use the following command to disable the trimming.</p>
+<pre><code>$ cd opencast
+$ mvn clean install -DtrimStackTrace=false
+</code></pre>
+<p>If you want to start opencast in debug mode, you could use the debug argument:</p>
+<pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast debug
+</code></pre>
+<h2 id="modify-code-and-build-changes">Modify Code and Build Changes</h2>
+<hr />
+<p>After you modified your code you can go back to step "Build and Start Opencast" to rebuild Opencast.</p>
+<h2 id="common-build-errors-or-fixes">Common Build Errors or Fixes</h2>
+<hr />
+<h3 id="npm-access-error">NPM Access Error</h3>
+<p>To fix an npm access error (<a href="https://stackoverflow.com/questions/16151018/npm-throws-error-without-sudo">example</a>), you can run</p>
+<pre><code>$ sudo chown -R $USER:$(id -gn $USER) ~/.config &amp;&amp; sudo chown -R $USER:$(id -gn $USER) ~/.npm
+</code></pre>
+<h3 id="jdk-version">JDK Version</h3>
+<p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE is configured to use JDK 1.8.0.</p>
+<h3 id="waiting-for-activemq">Waiting for ActiveMQ</h3>
+<p>Opencast requires ActiveMQ to be both running and properly configured, otherwise it will wait forever to connect. See <a href="#install-and-configure-activemq">here</a> for details on how to configure ActiveMQ. Make sure, that ActiveMQ runs without errors and with the right JAVA_HOME Variable (explained <a href="#set-the-javahome-variable">here</a>).</p>
+<h3 id="slow-idea-fix">Slow IDEA Fix</h3>
+<p>Edit following file</p>
+<pre><code>$ sudo nano /etc/sysctl.conf
+</code></pre>
+<p>and copy this text into it</p>
+<pre><code>fs.inotify.max_user_watches = 524288
+</code></pre>
+<p>Apply your changes with</p>
+<pre><code>$ sudo sysctl -p --system
+</code></pre>
+<h2 id="intellij-idea-ide-community-edition-optional">Intellij Idea IDE Community Edition (optional)</h2>
+<hr />
+<p>If you are currently on Fedora, you can install it with following command.
+Make sure, that the versions match, you probably have to change it depending on the most current version.</p>
+<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; wget https://download.jetbrains.com/idea/ideaIC-2019.2.tar.gz
+$ sudo tar -zxvf ideaIC-*.tar.gz -C /opt
+$ cd /opt &amp;&amp; sudo mv idea-IC-*/ idea &amp;&amp; sh /opt/idea/bin/idea.sh
+</code></pre>
+<p>Otherwise install it by downloading and following the manufacturer guide, select Community Edition:</p>
+<p><a href="https://www.jetbrains.com/idea/download/">IDEA Intellij Community Edition</a></p>
+<p>Follow the next steps, if you want to import opencast correctly</p>
+<ul>
+<li>Import project from external model</li>
+<li>Choose Maven</li>
+<li>Search for projects recursively</li>
+<li>Uncheck all listed profiles</li>
+<li>Check all projects to import</li>
+<li>Make sure not to select JDK 11, please select JDK 1.8.0, it should be somewhere around /usr/lib/jvm/java-1.8.0-openjdk depending on your current system</li>
+</ul>
+<p>Now Idea should import the projects, it could take some time, you can make it faster by following <a href="#slow-idea-fix">this</a>. </p>
+<p>Import the opencast code style configuration by following the steps</p>
+<ul>
+<li>Go to settings</li>
+<li>Search for code style</li>
+<li>You should find it under Editor-&gt;Code Style</li>
+<li>Select Java and click on the gear icon</li>
+<li>Select Import Scheme and Intellij IDEA code style XML</li>
+<li>Import it from opencast/docs/intellij_settings/codestyle.xml</li>
+</ul>
+<p>Now your IDE should be ready for developing.</p>
+<h2 id="visual-studio-code-editor-optional">Visual Studio Code Editor (optional)</h2>
+<hr />
+<p>If you are currently on Fedora, you can install it with</p>
+<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &amp;&amp; sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" &gt; /etc/yum.repos.d/vscode.repo' &amp;&amp; dnf check-update &amp;&amp; sudo dnf install code -y
+</code></pre>
+<p>Otherwise install it by downloading and following the manufacturer guide:</p>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a></p>
+<p>After installation you can open a folder in bash with</p>
+<pre><code>$ code .
+</code></pre>
+<p>Recommended Extensions are</p>
+<ul>
+<li>ESLint by Dirk Baeumer</li>
+<li>AngularJs 1.x Code Snippets by alexandersage</li>
+<li>Debugger for Chrome by Microsoft</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../development-process/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../development-process/" class="btn btn-xs btn-link">
+        Development
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../.." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../.." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/installation/source-linux.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

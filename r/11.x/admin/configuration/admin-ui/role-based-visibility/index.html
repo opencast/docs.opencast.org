@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Role-based Visibility - Administration Guide</title>
+<link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../../css/base.css" rel="stylesheet"/>
+<link href="../../../css/highlight.css" rel="stylesheet"/>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="../../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Role-Based Visibility", url: "#_top", children: [
+              {title: "How To Use", url: "#how-to-use" },
+              {title: "User Interface Roles", url: "#user-interface-roles" },
+          ]},
+        ];
+
+    </script>
+<script src="../../../js/base.js"></script>
+<script src="../../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../capture-agent-access/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../capture-agent-access/">
+        Capture-Agent Access
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../thumbnails/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../thumbnails/">
+        Thumbnails
+      </a>
+</div>
+</div>
+<h1 id="role-based-visibility">Role-Based Visibility</h1>
+<p>Opencast supports a powerful mechanism that allows to provide users selective access to the administrative user
+interface. Using that mechanism, it is possible to configure what parts of the UI (and therefore functionality)
+are visible to a given user based on the user's roles. Hence, we call that mechanism role-based visibility.</p>
+<blockquote>
+<p>This is <strong>no</strong> security feature and does not guarantee that users cannot access any of the functionality.</p>
+</blockquote>
+<h2 id="how-to-use">How To Use</h2>
+<p>The best practice to assign a larger set of roles to a user is to use Opencast's support for user groups. This
+way, you can define a group whose roles provide access to the parts of the UI you want to provide access to. Given
+such a group, you can just add users to that group and they will get all the roles of the group which includes
+roles that allow the users to access specific parts of the UI.</p>
+<p>There is a set of so-called user interface roles, each of them providing access to a specific part of the
+administrative user interface. Those roles can be easily identified by their name prefix <code>ROLE_UI</code>.</p>
+<p><strong>Important</strong> <code>ROLE_ADMIN</code> implicitly provides full access to the user interface. When working with role-based
+visibility, users (and the groups they belong to) may not have <code>ROLE_ADMIN</code> therefore. Similarly,
+<code>ROLE_CAPTURE_AGENT</code> provides write access to events the user having the role would usually have no write access
+to. This is the role automatically attached to users used by capture agents. They need this special priviledge
+to ingest to events which another user has created. In general, it's not a good idea to re-use this role for
+regular users.</p>
+<h2 id="user-interface-roles">User Interface Roles</h2>
+<p>This section describes which roles permit access to what parts of the user interface. Note that role-based visibility
+is not just hiding graphical elements from users, it does also protect server-side resources from unauthorized access
+if necessary.</p>
+<p>It is important to understand that the UI roles are not coupled, i.e. having a particular role does not imply any other
+permission than the one exactly provided by the role.</p>
+<p>Example: Just having the role <code>ROLE_UI_NAV_CAPTURE_VIEW</code> won't display the navigation menu. This requires the role
+<code>ROLE_UI_NAV</code>, too.</p>
+<p>The advantage of having independent roles is that it makes role-based visibility even more flexible, For example, it is
+possible to not use the navigation menu at all. The drawback of this approach is that it makes configuration more
+advanced. But configuring role-based visibility is not a daily tasks.</p>
+<h3 id="general-access">General Access</h3>
+<p><strong>Important:</strong> <code>ROLE_ADMIN_UI</code> is required for accessing the admin ui in general in means of providing access to
+some often used resources</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ROLE_ADMIN_UI</code></td>
+<td>Allow user to access login page as well as commonly used resources</td>
+</tr>
+</tbody>
+</table>
+<h3 id="navigation-menu">Navigation Menu</h3>
+<p>The navigation menu is the menu on the top-left that allows the user to navigate between subsections of the
+administrative user interface.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_NAV</td>
+<td>Display navigation menu</td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_RECORDINGS_VIEW</td>
+<td>Display navigation menu entry <em>Recordings</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_CAPTURE_VIEW</td>
+<td>Display navigation menu entry <em>Capture</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_SYSTEMS_VIEW</td>
+<td>Display navigation menu entry <em>Systems</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_ORGANIZATION_VIEW</td>
+<td>Display navigation menu entry <em>Organization</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_CONFIGURATION_VIEW</td>
+<td>Display navigation menu entry <em>Configuration</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_NAV_STATISTICS_VIEW</td>
+<td>Display navigation menu entry <em>Statistics</em></td>
+</tr>
+</tbody>
+</table>
+<p>If you want to provide access to the navigation menu, <em>ROLE_UI_NAV</em> is needed. Then, for each of the
+navigation menu entries, include the respective role if the menu entry should be accessible by the user.</p>
+<p>Note that this really just controls the navigation menu and its menu entries. Not less, not more.</p>
+<h3 id="statistics-organization">Statistics: Organization</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_STATISTICS_ORGANIZATION_VIEW</td>
+<td>Display <em>Organization</em> page</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recordings-events">Recordings: Events</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_EVENTS_VIEW</td>
+<td>Display <em>Events</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_COUNTERS_VIEW</td>
+<td>Display the <em>Counters</em> on the <em>Events</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_CREATE</td>
+<td>Display <em>Add Event</em> button on <em>Events</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Events</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_EDITOR_VIEW</td>
+<td>Display <em>Playback/Editor</em> action in <em>Events</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_VIEW</td>
+<td>Display <em>Event Details</em> action in <em>Events</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_TASKS_CREATE</td>
+<td>Display <em>Actions</em> on <em>Events</em> page</td>
+</tr>
+</tbody>
+</table>
+<p>For the <em>Playback/Editor</em> tool, further access can be provided:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_EVENTS_EDITOR_EDIT</td>
+<td>Allow the user to actually edit videos</td>
+</tr>
+</tbody>
+</table>
+<p>There are quite a number of roles to provide selective access to the tabs offered by the <em>Event Details</em> modal:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_METADATA_VIEW</td>
+<td>Display tab <em>Metadata</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_ASSETS_VIEW</td>
+<td>Display tab <em>Assets</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_PUBLICATIONS_VIEW</td>
+<td>Display tab <em>Publications</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_WORKFLOWS_VIEW</td>
+<td>Display tab <em>Workflows</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_SCHEDULING_VIEW</td>
+<td>Display tab <em>Scheduling</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_ACL_VIEW</td>
+<td>Display tab <em>Access Policy</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_VIEW</td>
+<td>Display tab <em>Comments</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_STATISTICS_VIEW</td>
+<td>Display tab <em>Statistics</em></td>
+</tr>
+</tbody>
+</table>
+<p>For the individual tabs, it is possible to further provide access:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_METADATA_EDIT</td>
+<td>Allow the user to edit <em>Metadata</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_ACL_EDIT</td>
+<td>Allow the user to edit <em>Access Policy</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_WORKFLOWS_EDIT</td>
+<td>Allow the user to edit <em>Workflows</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_WORKFLOWS_DELETE</td>
+<td>Allow the user to delete <em>Workflows</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_SCHEDULING_EDIT</td>
+<td>Allow the user to edit <em>Scheduling</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_CREATE</td>
+<td>Allow the user to create comments</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_DELETE</td>
+<td>Allow the user to delete comments</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_EDIT</td>
+<td>Allow the user to edit comments</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_REPLY</td>
+<td>Allow the user to reply to comments</td>
+</tr>
+<tr>
+<td>ROLE_UI_EVENTS_DETAILS_COMMENTS_RESOLVE</td>
+<td>Allow the user to resolve comments</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recordings-series">Recordings: Series</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_SERIES_VIEW</td>
+<td>Display <em>Series</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_CREATE</td>
+<td>Display <em>Add Series</em> on <em>Series</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Series</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_VIEW</td>
+<td>Display <em>Series Details</em> action in <em>Series</em> table</td>
+</tr>
+</tbody>
+</table>
+<p>There are quite a number of roles to provide selective access to the tabs offered by the <em>Series Details</em> modal:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_METADATA_VIEW</td>
+<td>Display tab <em>Metadata</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_ACL_VIEW</td>
+<td>Display tab <em>Access Policy</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_THEMES_VIEW</td>
+<td>Display tab <em>Theme</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_STATISTICS_VIEW</td>
+<td>Display tab <em>Statistics</em></td>
+</tr>
+</tbody>
+</table>
+<p>For the individual tabs, it is possible to further provide access:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_METADATA_EDIT</td>
+<td>Allow the user to edit <em>Metadata</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_ACL_EDIT</td>
+<td>Allow the user to edit <em>Access Policy</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_SERIES_DETAILS_THEMES_EDIT</td>
+<td>Allow the user to edit <em>Theme</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="capture-locations">Capture: Locations</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_LOCATIONS_VIEW</td>
+<td>Display <em>Locations</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_LOCATIONS_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Locations</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_LOCATIONS_DETAILS_VIEW</td>
+<td>Display <em>Location Details</em> action in <em>Locations</em> table</td>
+</tr>
+</tbody>
+</table>
+<p>There are quite a number of roles to provide selective access to the tabs offered by the <em>Locations Details</em> modal:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_LOCATIONS_DETAILS_CAPABILITIES_VIEW</td>
+<td>Display tab <em>Capabilities</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_LOCATIONS_DETAILS_CONFIGURATION_VIEW</td>
+<td>Display tab <em>Configuration</em></td>
+</tr>
+<tr>
+<td>ROLE_UI_LOCATIONS_DETAILS_GENERAL_VIEW</td>
+<td>Display tab <em>General</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="systems-jobs-servers-and-services">Systems: Jobs, Servers and Services</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_JOBS_VIEW</td>
+<td>Display <em>Jobs</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERVERS_VIEW</td>
+<td>Display <em>Servers</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERVICES_VIEW</td>
+<td>Display <em>Services</em> page</td>
+</tr>
+</tbody>
+</table>
+<p>On those pages, it is possible to further provide access:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_SERVERS_MAINTENANCE_EDIT</td>
+<td>Allow the user turn on/off server maintenance</td>
+</tr>
+<tr>
+<td>ROLE_UI_SERVICES_STATUS_EDIT</td>
+<td>Allow the user to sanitize services</td>
+</tr>
+</tbody>
+</table>
+<h3 id="organization-users">Organization: Users</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_USERS_VIEW</td>
+<td>Display <em>Users</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_USERS_CREATE</td>
+<td>Display <em>Add user</em> on <em>Users</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_USERS_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Users</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_USERS_EDIT</td>
+<td>Display <em>User Details</em> action in <em>Users</em> table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="organization-groups">Organization: Groups</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_GROUPS_VIEW</td>
+<td>Display <em>Groups</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_GROUPS_CREATE</td>
+<td>Display <em>Add groups</em> on <em>Groups</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_GROUPS_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Groups</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_GROUPS_EDIT</td>
+<td>Display <em>Group Details</em> action in <em>Groups</em> table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="organization-access-policies">Organization: Access Policies</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_ACLS_VIEW</td>
+<td>Display <em>Access Policies</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_ACLS_CREATE</td>
+<td>Display <em>Add access policy</em> on <em>Access Policies</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_ACLS_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Access Policies</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_ACLS_EDIT</td>
+<td>Display <em>Group Details</em> action in <em>Access Policies</em> table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuration-themes">Configuration: Themes</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>User Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_UI_THEMES_VIEW</td>
+<td>Display <em>Themes</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_THEMES_CREATE</td>
+<td>Display <em>Add theme</em> on <em>Themes</em> page</td>
+</tr>
+<tr>
+<td>ROLE_UI_THEMES_DELETE</td>
+<td>Display <em>Delete</em> action in <em>Themes</em> table</td>
+</tr>
+<tr>
+<td>ROLE_UI_THEMES_EDIT</td>
+<td>Display <em>Theme Details</em> action in <em>Themes</em> table</td>
+</tr>
+</tbody>
+</table>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../capture-agent-access/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../capture-agent-access/">
+        Capture-Agent Access
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../thumbnails/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../thumbnails/">
+        Thumbnails
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/role-based-visibility.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Series API - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "General", url: "#_top", children: [
+              {title: "GET /api/series", url: "#get-apiseries" },
+              {title: "GET /api/series/{series_id}", url: "#get-apiseriesseries_id" },
+              {title: "POST /api/series", url: "#post-apiseries" },
+              {title: "DELETE /api/series/{series_id}", url: "#delete-apiseriesseries_id" },
+              {title: "Metadata", url: "#metadata" },
+          ]},
+          {title: "Access Policy", url: "#access-policy", children: [
+              {title: "GET /api/series/{series_id}/acl", url: "#get-apiseriesseries_idacl" },
+              {title: "PUT /api/series/{series_id}/acl", url: "#put-apiseriesseries_idacl" },
+          ]},
+          {title: "Properties", url: "#properties", children: [
+              {title: "GET /api/series/{series_id}/properties", url: "#get-apiseriesseries_idproperties" },
+              {title: "PUT /api/series/{series_id}/properties", url: "#put-apiseriesseries_idproperties" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../statistics-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../statistics-api/" class="btn btn-xs btn-link">
+        Statistics API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../events-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../events-api/" class="btn btn-xs btn-link">
+        Events API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#general">General</a><ul>
+<li><a href="#get-apiseries">GET /api/series</a></li>
+<li><a href="#get-apiseriesseries_id">GET /api/series/{series_id}</a></li>
+<li><a href="#post-apiseries">POST /api/series</a></li>
+<li><a href="#delete-apiseriesseries_id">DELETE /api/series/{series_id}</a></li>
+<li><a href="#metadata">Metadata</a><ul>
+<li><a href="#get-apiseriesseries_idmetadata">GET /api/series/{series_id}/metadata</a></li>
+<li><a href="#get-apiseriesseries_idmetadata_1">GET /api/series/{series_id}/metadata</a></li>
+<li><a href="#put-apiseriesseries_idmetadata">PUT /api/series/{series_id}/metadata</a></li>
+<li><a href="#delete-apiseriesseries_idmetadata">DELETE /api/series/{series_id}/metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#access-policy">Access Policy</a><ul>
+<li><a href="#get-apiseriesseries_idacl">GET /api/series/{series_id}/acl</a></li>
+<li><a href="#put-apiseriesseries_idacl">PUT /api/series/{series_id}/acl</a></li>
+</ul>
+</li>
+<li><a href="#properties">Properties</a><ul>
+<li><a href="#get-apiseriesseries_idproperties">GET /api/series/{series_id}/properties</a></li>
+<li><a href="#put-apiseriesseries_idproperties">PUT /api/series/{series_id}/properties</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="general">General</h1>
+<h3 id="get-apiseries">GET /api/series</h3>
+<p>Returns a list of series.</p>
+<p>The following query string parameters are supported to filter, sort and paginate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of filters to limit the results with (see <a href="../usage/#filtering">Filtering</a>). See the below table for the list of available filters</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">A comma-separated list of sort criteria (see <a href="../usage/#sorting">Sorting</a>).  See the below table for the list of available sort criteria</td>
+</tr>
+<tr>
+<td align="left"><code>limit</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The maximum number of results to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="../types/#basic"><code>integer</code></a></td>
+<td align="left">The index of the first result to return (see <a href="../usage/#pagination">Pagination</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following filters are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Filter Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>contributors</code></td>
+<td align="left">Series where the contributors specified in the metadata field match. Can occur multiple times</td>
+</tr>
+<tr>
+<td align="left"><code>Creator</code></td>
+<td align="left">Series where the creator specified in the metadata field match (please use <code>creator</code> for version 1.1.0 and higher instead)</td>
+</tr>
+<tr>
+<td align="left"><code>creationDate</code></td>
+<td align="left">Series that were created between two dates. The two dates are in UTC format to the second i.e. yyyy-MM-ddTHH:mm:ssZ e.g. 2014-09-27T16:25Z. They are seperated by a forward slash (url encoded or not) so an example of the full filter would be CreationDate:2015-05-08T00:00:00.000Z/2015-05-10T00:00:00.000Z</td>
+</tr>
+<tr>
+<td align="left"><code>language</code></td>
+<td align="left">Series based upon the language specified</td>
+</tr>
+<tr>
+<td align="left"><code>license</code></td>
+<td align="left">Series based upon the license specified</td>
+</tr>
+<tr>
+<td align="left"><code>organizers</code></td>
+<td align="left">Series where the organizers specified in the metadata field match. Can occur multiple times</td>
+</tr>
+<tr>
+<td align="left"><code>managedAcl</code></td>
+<td align="left">Series who have the same managed acl name</td>
+</tr>
+<tr>
+<td align="left"><code>subject</code></td>
+<td align="left">By the subject they are a part of. Can occur multiple times</td>
+</tr>
+<tr>
+<td align="left"><code>textFilter</code></td>
+<td align="left">Filters series where any part of the series' metadata fields match this value</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">By the title of the series</td>
+</tr>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left">By the technical identifiers of the series. Can occur multiple times (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">By the description of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left">Series where the creator specified in the metadata field match (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>publishers</code></td>
+<td align="left">Series where the publishers specified in the metadata field match. Can occur multiple times (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code></td>
+<td align="left">By the rights holder of the series (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p>The list can be sorted by the following criteria:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Sort Criteria</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>contributors</code></td>
+<td align="left">By the series contributors</td>
+</tr>
+<tr>
+<td align="left"><code>created</code></td>
+<td align="left">By when the series was created</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left">By who created the series</td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">By the title of the series</td>
+</tr>
+</tbody>
+</table>
+<p>This request additionally supports the following query string parameters to include additional information directly in
+the response:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withacl</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the acl should be included in the response (version 1.5.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<pre><code class="language-xml">https://opencast.domain.com/api/series?filter=creator:Default Administrator&amp;sort=title:ASC&amp;limit=2&amp;offset=1
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of series is returned as JSON array contained JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the series</td>
+</tr>
+<tr>
+<td align="left"><code>created</code>*</td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">The data when the series was created</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the user that has created the series</td>
+</tr>
+<tr>
+<td align="left"><code>title</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of the series</td>
+</tr>
+<tr>
+<td align="left"><code>contributors</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The contributors of the series</td>
+</tr>
+<tr>
+<td align="left"><code>publishers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The publishers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>subjects</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The subjects of the series</td>
+</tr>
+<tr>
+<td align="left"><code>organizers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The organizers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>description</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>language</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The language of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>license</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The license of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The rights holder of the series (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p>* Metadata fields from the default metadata catalog <code>dublincore/series</code></p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;identifier&quot;: &quot;dc11ab0a-fd5b-462d-a939-0a4703df38cf&quot;,
+    &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+    &quot;created&quot;: &quot;2018-03-19T15:40:21Z&quot;,
+    &quot;subjects&quot;: [
+      &quot;Mathematics&quot;
+    ],
+    &quot;organizers&quot;: [
+      &quot;John Doe&quot;,
+      &quot;Prof. X&quot;
+    ],
+    &quot;publishers&quot;: [
+      &quot;University of Prof. X&quot;
+    ],
+    &quot;contributors&quot;: [
+      &quot;Hans Muster&quot;,
+      &quot;Maria Müller&quot;
+    ],
+    &quot;title&quot;: &quot;Advanced Mathematics&quot;
+  },
+  {
+    &quot;identifier&quot;: &quot;6a4462ca-3783-432a-81c3-962ca756dc6f&quot;,
+    &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+    &quot;created&quot;: &quot;2018-03-19T15:41:20Z&quot;,
+    &quot;subjects&quot;: [
+      &quot;Physics&quot;,
+      &quot;Mathematics&quot;
+    ],
+    &quot;organizers&quot;: [
+      &quot;Dr. Who&quot;
+    ],
+    &quot;publishers&quot;: [
+      &quot;University of Prof. X&quot;,
+      &quot;Doctor Who&quot;
+    ],
+    &quot;contributors&quot;: [
+      &quot;Dr. Who&quot;
+    ],
+    &quot;title&quot;: &quot;Basics of Physics&quot;
+  }
+]
+</code></pre>
+<h3 id="get-apiseriesseries_id">GET /api/series/{series_id}</h3>
+<p>Returns a single series.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>withacl</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the acl should be included in the response (version 1.5.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series is returned as a JSON object containing the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the series</td>
+</tr>
+<tr>
+<td align="left"><code>created</code>*</td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">The data when the series was created</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the user that has created the series</td>
+</tr>
+<tr>
+<td align="left"><code>title</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of the series</td>
+</tr>
+<tr>
+<td align="left"><code>contributors</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The contributors of the series</td>
+</tr>
+<tr>
+<td align="left"><code>publishers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The publishers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>subjects</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The subjects of the series</td>
+</tr>
+<tr>
+<td align="left"><code>organizers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The organizers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>organization</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The identifier of the tenant this series belongs to</td>
+</tr>
+<tr>
+<td align="left"><code>opt_out</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Field is not used</td>
+</tr>
+<tr>
+<td align="left"><code>language</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The language of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>license</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The license of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The rights holder of the series (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
+<p>* Fields from the default metadata catalog <code>dublincore/series</code></p>
+<p><code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;identifier&quot;: &quot;dc11ab0a-fd5b-462d-a939-0a4703df38cf&quot;,
+  &quot;creator&quot;: &quot;Opencast Project Administrator&quot;,
+  &quot;opt_out&quot;: false,
+  &quot;created&quot;: &quot;2018-03-19T15:40:21Z&quot;,
+  &quot;subjects&quot;: [
+    &quot;Mathematics&quot;
+  ],
+  &quot;organization&quot;: &quot;mh_default_org&quot;,
+  &quot;organizers&quot;: [
+    &quot;John Doe&quot;,
+    &quot;Prof. X&quot;
+  ],
+  &quot;description&quot;: &quot;This is a advanced mathematics course&quot;,
+  &quot;publishers&quot;: [
+    &quot;University of Prof. X&quot;
+  ],
+  &quot;contributors&quot;: [
+    &quot;Hans Muster&quot;,
+    &quot;Maria Müller&quot;
+  ],
+  &quot;title&quot;: &quot;Advanced Mathematics&quot;
+}
+
+</code></pre>
+<h3 id="post-apiseries">POST /api/series</h3>
+<p>Creates a series.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>metadata</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#catalogs"><code>catalogs</code></a></td>
+<td align="left">Series metadata</td>
+</tr>
+<tr>
+<td align="left"><code>acl</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#acl"><code>acl</code></a></td>
+<td align="left">A collection of roles with their possible action</td>
+</tr>
+<tr>
+<td align="left"><code>theme</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#string"><code>string</code></a></td>
+<td align="left">The theme ID to be applied to the series</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample</strong></p>
+<p>metadata:</p>
+<pre><code>[
+  {
+    &quot;label&quot;: &quot;Opencast Series DublinCore&quot;,
+    &quot;flavor&quot;: &quot;dublincore/series&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;value&quot;: &quot;Captivating title&quot;
+      },
+      {
+        &quot;id&quot;: &quot;subjects&quot;,
+        &quot;value&quot;: [&quot;John Clark&quot;, &quot;Thiago Melo Costa&quot;]
+      },
+      {
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;value&quot;: &quot;A great description&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<p>acl:</p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<p>theme:</p>
+<pre><code>&quot;1234&quot;
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>201 (CREATED)</code>: A new series is created and its identifier is returned in the <code>Location</code> header.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>401 (UNAUTHORIZED)</code>: The user doesn't have the rights to create the series.</p>
+<pre><code class="language-xml">Location: http://api.opencast.org/api/series/4fd0ef66-aea5-4b7a-a62a-a4ada0eafd6f
+</code></pre>
+<pre><code>{
+  &quot;identifier&quot;: &quot;4fd0ef66-aea5-4b7a-a62a-a4ada0eafd6f&quot;
+}
+</code></pre>
+<h3 id="delete-apiseriesseries_id">DELETE /api/series/{series_id}</h3>
+<p>Deletes a series</p>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The series has been deleted.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<h2 id="metadata">Metadata</h2>
+<p>This section describes how to use the External API to work with metadata catalogs associated to series.</p>
+<p>Opencast manages the bibliographic metadata of series using metadata catalogs which are identified by flavors.
+The default metadata catalog for Opencast series has the flavor <code>dublincore/series</code>. Opencast additionally supports
+extended metadata catalogs for series that can be configured.</p>
+<p>The External API supports both the default series metadata catalog and series extended metadata catalogs.
+For the default series metadata catalog, the metadata is directly returned in the responses.</p>
+<p>Since the metadata catalogs can be configured, the External API provides a facility to retrieve the catalog
+configuration of series metadata catalogs. For more details about this mechanism, please refer to
+<a href="../types/#metadata-catalogs">"Metadata Catalogs"</a>.</p>
+<h3 id="get-apiseriesseries_idmetadata">GET /api/series/{series_id}/metadata</h3>
+<p>Returns a series' metadata of all types.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series' metadata are returned as <a href="../types/#catalogs"><code>catalogs</code></a>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.EPISODE&quot;,
+    &quot;flavor&quot;: &quot;dublincore/series&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;Captivating title&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;required&quot;: true
+      },
+      {
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;A great description&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.DESCRIPTION&quot;,
+        &quot;type&quot;: &quot;text_long&quot;,
+        &quot;required&quot;: false
+      }
+    ]
+  },
+  {
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.LICENSE&quot;,
+    &quot;flavor&quot;: &quot;license/series&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;id&quot;: &quot;license&quot;,
+        &quot;readOnly&quot;: false,
+        &quot;value&quot;: &quot;CCND&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.LICENSE&quot;,
+        &quot;collection&quot;: {
+          &quot;BSD&quot;: &quot;EVENTS.LICENSE.BSD&quot;,
+          &quot;GPL3&quot;: &quot;EVENTS.LICENSE.GPL&quot;,
+          &quot;CCND&quot;: &quot;EVENTS.LICENSE.CCND&quot;
+        },
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;required&quot;: false
+      }
+    ]
+  }
+]
+</code></pre>
+<h3 id="get-apiseriesseries_idmetadata_1">GET /api/series/{series_id}/metadata</h3>
+<p>Returns a series' metadata collection of the given type when the query string parameter type is specified. For each
+metadata catalog there is a unique property called the flavor such as dublincore/series so the type in this example
+would be "dublincore/series".</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="../types/#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to return</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series' metadata are returned as <a href="../types/#fields"><code>fields</code></a> above.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;readOnly&quot;: false,
+    &quot;value&quot;: &quot;Captivating title&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+    &quot;type&quot;: &quot;text&quot;,
+    &quot;required&quot;: true
+  },
+  {
+    &quot;id&quot;: &quot;description&quot;,
+    &quot;readOnly&quot;: false,
+    &quot;value&quot;: &quot;A great description&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.DESCRIPTION&quot;,
+    &quot;type&quot;: &quot;text_long&quot;,
+    &quot;required&quot;: false
+  }
+]
+</code></pre>
+<h3 id="put-apiseriesseries_idmetadata">PUT /api/series/{series_id}/metadata</h3>
+<p>Update a series' metadata of the given type.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to update</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>metadata</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#values"><code>values</code></a></td>
+<td>Series metadata as Form param</td>
+</tr>
+</tbody>
+</table>
+<p>Note that metadata fields not contained in the argument won't be updated.</p>
+<p><strong>Example</strong></p>
+<p>metadata:</p>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;value&quot;: &quot;Captivating title - edited&quot;
+  },
+  {
+    &quot;id&quot;: &quot;creator&quot;,
+    &quot;value&quot;: [&quot;John Clark&quot;, &quot;Thiago Melo Costa&quot;]
+  },
+  {
+    &quot;id&quot;: &quot;description&quot;,
+    &quot;value&quot;: &quot;A great description - edited&quot;
+  }
+]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series' metadata have been updated.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<pre><code>Returns: The full metadata catalog of the series
+</code></pre>
+<h3 id="delete-apiseriesseries_idmetadata">DELETE /api/series/{series_id}/metadata</h3>
+<p>Deletes a series' metadata catalog of the given type. All fields and values of that catalog will be deleted.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#flavor"><code>flavor</code></a></td>
+<td align="left">The type of metadata to delete</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the default metadata catalog (type dublincore/series) cannot be deleted.</p>
+<p><strong>Response</strong></p>
+<p><code>204 (NO CONTENT)</code>: The metadata have been deleted.<br/>
+<code>403 (FORBIDDEN)</code>: The main metadata catalog dublincore/series cannot be deleted as it has mandatory fields.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<h1 id="access-policy">Access Policy</h1>
+<h3 id="get-apiseriesseries_idacl">GET /api/series/{series_id}/acl</h3>
+<p>Returns a series' access policy.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series' access policy of type <a href="../types/#acl"><code>acl</code></a> is returned.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<h3 id="put-apiseriesseries_idacl">PUT /api/series/{series_id}/acl</h3>
+<p>Updates a series' access policy.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+<th align="left">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>acl</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#acl"><code>acl</code></a></td>
+<td align="left">Access policy to be applied</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>override</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether the episode ACL of all events of this series should be removed</td>
+<td align="left">false</td>
+<td align="left">1.2.0</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the existing access policy of the series will be overwritten.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The updated access control list of type <a href="../types/#acl"><code>acl</code></a> is returned.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<p>acl:</p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<p>returns</p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<h1 id="properties">Properties</h1>
+<p>Properties can be assigned to series in means of key-value pairs. Both the property name (key) and property value are
+of type <code>string</code>.</p>
+<h3 id="get-apiseriesseries_idproperties">GET /api/series/{series_id}/properties</h3>
+<p>Returns a series' properties.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The series' properties are returned as <a href="../types/#property"><code>property</code></a>  <br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;ondemand&quot;: &quot;true&quot;,
+  &quot;live&quot;: &quot;false&quot;
+}
+</code></pre>
+<h3 id="put-apiseriesseries_idproperties">PUT /api/series/{series_id}/properties</h3>
+<p>Add or update properties of a series.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>properties</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#property"><code>property</code></a></td>
+<td align="left">List of properties to be assigned to the series</td>
+</tr>
+</tbody>
+</table>
+<p>The request can be used to add new properties and/or update existing properties. Properties not included in the request
+are not affected.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The added/updated series' properties are returned as JSON object.<br/>
+<code>404 (NOT FOUND)</code>: The specified series does not exist.</p>
+<p><strong>Example</strong></p>
+<p>Assume that the series already has the properties <code>theme</code>=<code>1000</code> and <code>live</code>=<code>true</code>.</p>
+<p>To add the property <code>ondemand</code> and update the value of the existing property <code>live</code> the following form parameter is
+used:</p>
+<p>properties:</p>
+<pre><code>{
+  &quot;ondemand&quot;: &quot;true&quot;,
+  &quot;live&quot;: &quot;false&quot;
+}
+</code></pre>
+<p>The response of the request will contain the properties added/updated by this request:</p>
+<pre><code>{
+  &quot;ondemand&quot;: &quot;true&quot;,
+  &quot;live&quot;: &quot;false&quot;
+}
+</code></pre>
+<p>After this, the properties of the series are:</p>
+<pre><code>{
+  &quot;theme&quot;: &quot;1000&quot;,
+  &quot;ondemand&quot;: &quot;true&quot;,
+  &quot;live&quot;: &quot;false&quot;
+}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../statistics-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../statistics-api/" class="btn btn-xs btn-link">
+        Statistics API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../events-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../events-api/" class="btn btn-xs btn-link">
+        Events API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/series-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
