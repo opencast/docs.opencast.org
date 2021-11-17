@@ -29,6 +29,7 @@
         var pageToc = [
           {title: "Configuration for JWT-based Authentication and Authorization", url: "#_top", children: [
               {title: "Prerequisites", url: "#prerequisites" },
+              {title: "Enable Karaf Feature", url: "#enable-karaf-feature" },
               {title: "Spring Security Configuration", url: "#spring-security-configuration" },
           ]},
         ];
@@ -62,6 +63,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </div>
 </div>
 <h1 id="configuration-for-jwt-based-authentication-and-authorization">Configuration for JWT-based Authentication and Authorization</h1>
+<div class="warn">
+The JWT authentication and authorization is still <b>beta</b>.
+</div>
 <p>This page describes how to configure Opencast to enable authentication and authorization based on
 <a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Tokens (JWTs)</a>. With this feature, a login-mechanism based
 on the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> protocol can be configured, since OIDC uses JWTs.</p>
@@ -69,6 +73,19 @@ on the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> protocol 
 <p>This guide assumes that a JWT provider is already setup and Opencast receives the JWT within an HTTP request header. 
 In order to integrate Opencast with an OIDC provider you could use the
 <a href="https://github.com/oauth2-proxy/oauth2-proxy">oauth2-proxy</a>.</p>
+<h2 id="enable-karaf-feature">Enable Karaf Feature</h2>
+<p>The JWT authentication and authorization is disabled by default and needs to be enabled before it can be used.
+For this, make sure the Karaf feature <code>opencast-security-jwt</code> boots when starting Opencast.</p>
+<p>For this, edit the configuration file <code>etc/org.apache.karaf.features.cfg</code> and add the feature:</p>
+<pre><code>  …
+  http-whiteboard/4.2.9, \
+  opencast-admin/11.0.0, \
+  opencast-security-jwt/11.0.0, \
+  bundle/4.2.9, \
+  …
+</code></pre>
+<p>Make sure to specify the correct version.
+The version should always be identical to the one from the main Opencast feature.</p>
 <h2 id="spring-security-configuration">Spring Security Configuration</h2>
 <p>In order to active JWT-based authentication and authorization, you will need to uncomment and adapt the following
 sections found in <code>etc/security/mh_default_org.xml</code>. Some of the options are configured with the
