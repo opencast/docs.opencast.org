@@ -82,7 +82,7 @@ organizations using the server name, and an HTTP status code 404 will be returne
 installation that cannot be mapped to any organization.</p>
 <h3 id="limitations">Limitations</h3>
 <p>Multi tenancy in Opencast is working, however it is not fully finished. Certain objects are still shared amongst
-organizations, most notably workflow definitions, RSS/Atom feeds and encoding profiles.</p>
+organizations, most notably RSS/Atom feeds and encoding profiles.</p>
 <h2 id="adding-a-tenant">Adding A Tenant</h2>
 <p>To add a tenant to the installation, two things need to be put in place: a tenant configuration and a set of security
 rules. For this example we have a three node install of <code>admin.example.org</code>, <code>worker.example.org</code>, and
@@ -93,11 +93,13 @@ rules. For this example we have a three node install of <code>admin.example.org<
 installation, on each of the nodes.  As an example, this is what the admin node looks like:</p>
 <pre><code>id=tenant1
 name=Tenant 1
-port=8080
-prop.org.opencastproject.host.admin.example.org=tenant1-admin.example.org
-prop.org.opencastproject.host.presentation.example.org=tenant1-presentation.example.org
 admin_role=ROLE_ADMIN
 anonymous_role=ROLE_ANONYMOUS
+
+# Hostname URL mapping
+prop.org.opencastproject.host.admin.example.org=https://tenant1-admin.example.org
+prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentation.example.org
+prop.org.opencastproject.host.worker.example.org=https://tenant1-worker.example.org:8443
 
 # Admin and Presentation Server Urls
 prop.org.opencastproject.admin.ui.url=https://tenant1-admin.example.org
@@ -111,13 +113,14 @@ prop.logo_player=/engage/ui/img/logo/opencast.svg
 copy of the already existing <code>org.opencastproject.organization-mh_default_org.cfg</code>.</p>
 <p>Note, the default organization file <code>org.opencastproject.organization-mh_default_org.org</code> <em>must</em> refer to the actual
 server names:</p>
-<pre><code>prop.org.opencastproject.host.admin.example.org=admin.example.org
-prop.org.opencastproject.host.presentation.example.org=presentation.example.org
+<pre><code>prop.org.opencastproject.host.admin.example.org=https://admin.example.org
+prop.org.opencastproject.host.presentation.example.org=https://presentation.example.org
+prop.org.opencastproject.host.worker.example.org=https://worker.example.org:8443
 </code></pre>
 <p>This file sets the default organization that is selected.  This is currently required because some Opencast components
 do not support multitenancy.</p>
-<p>Note that if you are running Apache httpd with mod_proxy in front of the Opencast installation, the port number will be
--1 in both files.</p>
+<p>Hosts can have different schemas (http / https) and port numbers, e.g. when you run behind proxy server. Note, that
+the combination of hostname and port number is uniquely mapped to an organization.</p>
 <h3 id="step-2-security-configuration">Step 2: Security Configuration</h3>
 <p>Create a file called tenant1.xml in /etc/security. This file specifies access rules for individual URLs that specify
 which roles are needed in order to access a given URL. In addition, it allows to define the directory services that are
