@@ -32,6 +32,7 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behaviour changes", url: "#behaviour-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 10.6", url: "#additional-notes-about-106" },
               {title: "Additional Notes about 10.5", url: "#additional-notes-about-105" },
               {title: "Additional Notes about 10.4", url: "#additional-notes-about-104" },
               {title: "Additional Notes about 10.3", url: "#additional-notes-about-103" },
@@ -107,6 +108,21 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Rename value for <code>sort</code> parameter in search API from <code>DATE_PUBLISHED</code> to <code>DATE_MODIFIED</code>.</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/2644">#2644</a>]: Use millisecond precision in Solr date range queries</li>
 </ul>
+<h2 id="additional-notes-about-106">Additional Notes about 10.6</h2>
+<p>This release fixes several bugs.  This release also contains fixes for three security issues.  The simplest of these
+was fixed in 9.10 and merged forward to this release.  This fix is:</p>
+<ul>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-mf4f-j588-5xm8]">GHSA-mf4f-j588-5xm8</a>:
+  Apache Log4j Remote Code Execution</li>
+</ul>
+<p>The other two security related issues are:</p>
+<ul>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-hcxx-mp6g-6gr9">GHSA-hcxx-mp6g-6gr9</a>:
+  Opencast publishes global system account credentials</li>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-59g4-hpg3-3gcp">GHSA-59g4-hpg3-3gcp</a>:
+  Files Accessible to External Parties</li>
+</ul>
+<p>Notably, these last two issues could completely expose all secrets in your production system.  You should consider changing them.</p>
 <h2 id="additional-notes-about-105">Additional Notes about 10.5</h2>
 <p>This release fixes several bugs.  Notably, this should drastically speed up audio normalization.</p>
 <h2 id="additional-notes-about-104">Additional Notes about 10.4</h2>
