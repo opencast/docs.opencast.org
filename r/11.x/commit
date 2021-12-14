@@ -1,5 +1,19 @@
-commit 699bd765816c51df73bc4f6f46acfd5ecc22cb62
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Dec 14 22:49:11 2021 +0100
+commit 36384021987e8b3d8dc275a4dff843e52a3d49d3
+Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
+Date:   Wed Dec 15 00:09:56 2021 +0100
 
-    Merge r/10.x into r/11.x
+    Fix posible type change in external API (#3231)
+    
+    PR #3148 introduced a possible type change in the external API from int
+    to string for the duration field of tracks in case the field is `null`.
+    As discussed, this PR changes the return value to JSON `null` instead.
+    
+    Note that the behavior is still inconsistend when it comes to durations:
+    
+    * `{eventId}/media` will omit the field
+    * Event duration has a type change to `""`
+    * this changes Track duration to `null`
+    
+    This patch leave the behavior of `{eventId}/media` as this is done with
+    all the fields. The Event duration though now also returns JSON `null`
+    as default value.
