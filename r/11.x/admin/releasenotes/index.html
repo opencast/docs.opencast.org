@@ -68,7 +68,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h1 id="opencast-11-release-notes">Opencast 11: Release Notes</h1>
 <h2 id="features">Features</h2>
 <ul>
-<li>New ElasticSearch architecture, now there is one elastic search for the admin ui and the external api. This
+<li>New Elasticsearch architecture, now there is one elastic search for the admin ui and the external api. This
   simplifies the maintenance and double the speed of index rebuild.</li>
 <li>New <em>select-version</em> workflow operation handler, used to replace the media package in the currently
   running workflow with an older version from the asset manager.</li>
@@ -94,7 +94,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   to the old Admin UI index, thus migration is possible, alternatively the index has to be rebuilt or the old Admin UI
   index can be configured (see upgrade guide).
   With this change the index rebuild should now be twice as fast as before. The index endpoints to clear and rebuild
-  the index were moved to /index.</li>
+  the index were moved to <code>/index</code>.</li>
 <li>There is a completely new set of workflows. Please make sure to check your local configuration and adapt
   it accordingly if you made changes to your workflows before. Opencast will also continue to work with the old set of
   workflows. The new ones just remove a lot of redundancies, making the whole process more efficient.
@@ -115,27 +115,24 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>There are changes to how hosts are mapped to tenants. If you use a multi-tenant system you therefore need to update
   your <code>org.opencastproject.organization-*.cfg</code> configuration files:
   Before Opencast 11 the domain names were mapped to tenants and a common port number was assumed for all domains. Now
-  you need to configure a URL per instance you want to map to a tenant.</li>
+  you need to configure a URL per instance you want to map to a tenant.
+  ```
+  # Before:
+  port=8080
+  prop.org.opencastproject.host.admin.example.org=tenant1-admin.example.org 
+  prop.org.opencastproject.host.presentation.example.org=tenant1-presentation.example.org</li>
 </ul>
-<pre><code># Before:
-port=8080
-prop.org.opencastproject.host.admin.example.org=tenant1-admin.example.org 
-prop.org.opencastproject.host.presentation.example.org=tenant1-presentation.example.org
-
-# Now:
-prop.org.opencastproject.host.admin.example.org=https://tenant1-admin.example.org
-prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentation.example.org:8443
-</code></pre>
-<ul>
-<li>Support for automatically setting up an HLS encoding ladder via the <code>{video,audio}.bitrates.mink</code>
-  and <code>{video,audio}.bitrates.maxk</code> encoding profile options was removed. Instead, users should now explicitly specify
-  the bit rate and bit rate control mechanism in the <code>ffmpeg.command</code>.</li>
-<li>Some S3 distribution workflow operation handlers have been renamed: <em>publish-aws</em> to <em>publish-engage-aws</em> and
-  <em>retract-aws</em> to <em>retract-engage-aws</em>.</li>
-<li>If an URL does not exist, it returns to the welcome page.</li>
-<li>The amount of job statistics for servers displayed in the admin interface was reduced to running and queued jobs to
-  avoid performance problems and remove incorrect and/or misleading data.</li>
-</ul>
+<p># Now:
+  prop.org.opencastproject.host.admin.example.org=https://tenant1-admin.example.org
+  prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentation.example.org:8443
+  <code>``
+- Support for automatically setting up an HLS encoding ladder via the</code>{video,audio}.bitrates.mink<code>and</code>{video,audio}.bitrates.maxk<code>encoding profile options was removed. Instead, users should now explicitly specify
+  the bit rate and bit rate control mechanism in the</code>ffmpeg.command`.
+- Some S3 distribution workflow operation handlers have been renamed: <em>publish-aws</em> to <em>publish-engage-aws</em> and
+  <em>retract-aws</em> to <em>retract-engage-aws</em>.
+- If an URL does not exist, it returns to the welcome page.
+- The amount of job statistics for servers displayed in the admin interface was reduced to running and queued jobs to
+  avoid performance problems and remove incorrect and/or misleading data.</p>
 <h2 id="api-changes">API changes</h2>
 <ul>
 <li>[<a href="https://github.com/opencast/opencast/pull/2814">#2814</a>] - Add track fields <code>is_master_playlist</code> and <code>is_live</code> to
