@@ -28,6 +28,7 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 10.x to 11.x", url: "#_top", children: [
+              {title: "Database Migration", url: "#database-migration" },
               {title: "Elasticsearch Migration", url: "#elasticsearch-migration" },
           ]},
         ];
@@ -67,10 +68,16 @@ please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
+<li>Read the release notes (especially the section of behaviour changes)</li>
 <li>Review the configuration changes and adjust your configuration accordingly</li>
+<li>Do the <a href="#database-migration">database migration</a></li>
 <li><a href="#elasticsearch-migration">Migrate, rebuild or rename Elasticsearch index</a></li>
 <li>Start Opencast if you haven't already done so</li>
 </ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>Upgrading to Opencast 11 requires a DB migration, as some tables have changed slightly.
+Migration scripts can be found in <code>doc/upgrade/10_to_11/</code>.
+There are separate scripts for MariaDB/MySQL (<code>mysql5.sql</code>) and PostgreSQL (<code>postgresql.sql</code>).</p>
 <h2 id="elasticsearch-migration">Elasticsearch Migration</h2>
 <p>In Opencast 11, instead of having two separate Elasticsearch indices for the Admin UI and the External API that share
 most of their content, there will be only one index supporting both. Since this index will have a new name, this index
