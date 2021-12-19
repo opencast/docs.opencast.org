@@ -32,6 +32,8 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behavior changes", url: "#behavior-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 11.2", url: "#additional-notes-about-112" },
+              {title: "Additional Notes about 11.1", url: "#additional-notes-about-111" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release managers", url: "#release-managers" },
           ]},
@@ -141,6 +143,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>[<a href="https://github.com/opencast/opencast/pull/3002">#3002</a>] - Sign publication URL of events in External API</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3148">#3148</a>] - Allow empty track duration</li>
 </ul>
+<h2 id="additional-notes-about-112">Additional Notes about 11.2</h2>
+<p>This release contains a security fix:</p>
+<ul>
+<li>Further mitigation for Log4Shell (CVE-2021-45105)</li>
+</ul>
+<p>Like the previous release this is an out-of-order patch to address and resolve a further vulnerability discovered
+by security researchers. Unlike the previous release it not only provides an updated version of Pax Logging, but
+also entirely removes the replaced bundles from Opencast's assemblies to avoid confusion if people do find the old,
+vulnerable version of Log4J somewhere on the filesystem, even though it is not used.</p>
+<h2 id="additional-notes-about-111">Additional Notes about 11.1</h2>
+<p>This release contains an updated version of Pax Logging, which provides Opencast's Log4j functionality.  Earlier
+versions are affected by the Log4Shell vulnerability, which was partially mitigated in 11.0 by
+<a href="https://github.com/opencast/opencast/security/advisories/GHSA-mf4f-j588-5xm8">GHSA-mf4f-j588-5xm8</a>.  Further
+vulnerability discoveries by security researchers have rendered the previous mitigations ineffective.  Normally
+we would wait for our underlying runtime (Apache Karaf) to update, however in light of the severity of these issues
+we have issued an out-of-order patch to address, and resolve, these concerns immediately.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
