@@ -30,6 +30,7 @@
           {title: "Install from Repository (Debian, Ubuntu)", url: "#_top", children: [
               {title: "Availability", url: "#availability" },
               {title: "Currently Supported", url: "#currently-supported" },
+              {title: "Supported JDKs", url: "#supported-jdks" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Elasticsearch", url: "#install-elasticsearch" },
@@ -84,8 +85,10 @@ Watch for announcements on list or just check which versions are available in th
 <h2 id="currently-supported">Currently Supported</h2>
 <ul>
 <li>Debian 10 and newer amd64</li>
-<li>Ubuntu 18.04 amd64</li>
+<li>Ubuntu 18.04 and newer amd64</li>
 </ul>
+<h2 id="supported-jdks">Supported JDKs</h2>
+<p>For Opencast 10 and newer we support JDK 11 only.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories so that your package manager can access them:</p>
 <ul>
@@ -96,12 +99,12 @@ Watch for announcements on list or just check which versions are available in th
 </li>
 <li>
 <p>Add Opencast repository:</p>
-<pre><code>echo "deb https://pkg.opencast.org/debian 9.x stable" | sudo tee /etc/apt/sources.list.d/opencast.list
+<pre><code>echo "deb https://pkg.opencast.org/debian 12.x stable" | sudo tee /etc/apt/sources.list.d/opencast.list
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the Debs are moved to the stable
 repository. If you need the new release prior to its promotion to stable you can use the testing repository.
 Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
-<pre><code>echo "deb https://pkg.opencast.org/debian 9.x stable testing" | sudo tee /etc/apt/sources.list.d/opencast.list
+<pre><code>echo "deb https://pkg.opencast.org/debian 12.x stable testing" | sudo tee /etc/apt/sources.list.d/opencast.list
 </code></pre>
 </li>
 <li>
@@ -149,11 +152,9 @@ file at <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the
 </code></pre>
 <p>This applies a mitigation for the security issue.  Once applied, you should restart Elasticsearch.</p>
 <h2 id="install-opencast">Install Opencast</h2>
-<p>For this guide we will be installing the latest released version of Opencast 9.x, however if you wish to install another
-version please change the name accordingly.</p>
 <h3 id="basic-installation">Basic Installation</h3>
 <p>For a basic installation (All-In-One) just run:</p>
-<pre><code>apt-get install opencast-9-allinone elasticsearch-oss activemq-dist
+<pre><code>apt-get install opencast-12-allinone elasticsearch-oss activemq-dist
 </code></pre>
 <p>This will install the default distribution of Opencast and all its dependencies, including the 3rd-Party-Tools.  Note
 that while the repository provides a packaged version of FFmpeg, your distribution may have a version which is
@@ -186,17 +187,18 @@ want to install. You can list all Opencast packages with:</p>
 <li>opencast-X-worker</li>
 </ul>
 <p>…where <code>X</code> stands for a specific Opencast version. These packages will install the latest release for a given version,
-so opencast-8-admin will install the admin profile for Opencast 8.x (currently 8.9). Once Opencast 8.10 has been packaged
-and made available your system will automatically update to Opencast 8.10 using the standard <code>apt-get</code> tools.</p>
+so opencast-12-admin will install the admin profile for Opencast 12.x.
+Once an update to Opencast 12 has been released an <code>apt-get update</code> followed by <code>apt-get upgrade</code>
+will upgrade you to the latest Opencast 12 release.</p>
 <p>To list all available packages and versions, use:</p>
 <pre><code>apt list 'opencast*'
 </code></pre>
 <h2 id="point-revisions-experts-only">Point Revisions (Experts only)</h2>
 <p>If for some reason you wish to install a specific point revision of Opencast, and the repository still hosts that point
 revision, you can select it by adding it, and the packaging build, to your <code>apt-get install</code> line.  For example:</p>
-<pre><code>apt-get install opencast-8-admin=8.9-2
+<pre><code>apt-get install opencast-12-admin=12.0-2
 </code></pre>
-<p>Installs an Opencast 8.9 admin node, using the second build of that series.  Not all series have more than a single build,
+<p>Installs an Opencast 12.0 admin node, using the second build of that series.  Not all series have more than a single build,
 and older point revisions may be removed once superceded, so please explore the repository prior to attempting this.</p>
 <h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
 <p>This step is optional and only recommended for those who want to build Opencast from source. If you install Opencast
@@ -205,6 +207,8 @@ from the repository, all necessary dependencies will be installed automatically.
 <pre><code>apt-get install ffmpeg-dist tesseract-ocr sox hunspell netcat
 </code></pre>
 <h2 id="upgrading-major-versions">Upgrading Major Versions</h2>
+<p>Note: All upgrade between major versions are required.  If you want to upgrade Opencast 8 to Opencast 10 you have to
+first upgrade to Opencast 9.</p>
 <p>While these packages will automatically upgrade you to the latest point version in a release series, they do not
 automatically upgrade you to the latest major version. In other words, if you install <code>opencast-9-admin</code> you get the
 latest 9.x release, not the latest 10.x release. To upgrade from one version to another you first stop Opencast:</p>
