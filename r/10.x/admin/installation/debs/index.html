@@ -99,12 +99,12 @@ Watch for announcements on list or just check which versions are available in th
 </li>
 <li>
 <p>Add Opencast repository:</p>
-<pre><code>echo "deb https://pkg.opencast.org/debian &lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f97d48ab310&gt;.x stable" | sudo tee /etc/apt/sources.list.d/opencast.list
+<pre><code>echo "deb https://pkg.opencast.org/debian 10.x stable" | sudo tee /etc/apt/sources.list.d/opencast.list
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the Debs are moved to the stable
 repository. If you need the new release prior to its promotion to stable you can use the testing repository.
 Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
-<pre><code>echo "deb https://pkg.opencast.org/debian &lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f97d48ab310&gt;.x stable testing" | sudo tee /etc/apt/sources.list.d/opencast.list
+<pre><code>echo "deb https://pkg.opencast.org/debian 10.x stable testing" | sudo tee /etc/apt/sources.list.d/opencast.list
 </code></pre>
 </li>
 <li>
@@ -154,7 +154,7 @@ file at <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the
 <h2 id="install-opencast">Install Opencast</h2>
 <h3 id="basic-installation">Basic Installation</h3>
 <p>For a basic installation (All-In-One) just run:</p>
-<pre><code>apt-get install opencast-&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f97d48ab310&gt;-allinone elasticsearch-oss activemq-dist
+<pre><code>apt-get install opencast-10-allinone elasticsearch-oss activemq-dist
 </code></pre>
 <p>This will install the default distribution of Opencast and all its dependencies, including the 3rd-Party-Tools.  Note
 that while the repository provides a packaged version of FFmpeg, your distribution may have a version which is
@@ -187,19 +187,19 @@ want to install. You can list all Opencast packages with:</p>
 <li>opencast-X-worker</li>
 </ul>
 <p>…where <code>X</code> stands for a specific Opencast version. These packages will install the latest release for a given version,
-so opencast-<function define_env.\<locals="">.opencast_major_version at 0x7f97d48ab310&gt;-admin will install the admin profile for Opencast <function define_env.\<locals="">.opencast_major_version at 0x7f97d48ab310&gt;.x.
-Once an update to Opencast <function define_env.\<locals="">.opencast_major_version at 0x7f97d48ab310&gt; has been released an <code>apt-get update</code> followed by <code>apt-get upgrade</code>
-will upgrade you to the latest Opencast <function define_env.\<locals="">.opencast_major_version at 0x7f97d48ab310&gt; release.</function></function></function></function></p>
+so opencast-10-admin will install the admin profile for Opencast 10.x.
+Once an update to Opencast 10 has been released an <code>apt-get update</code> followed by <code>apt-get upgrade</code>
+will upgrade you to the latest Opencast 10 release.</p>
 <p>To list all available packages and versions, use:</p>
 <pre><code>apt list 'opencast*'
 </code></pre>
 <h2 id="point-revisions-experts-only">Point Revisions (Experts only)</h2>
 <p>If for some reason you wish to install a specific point revision of Opencast, and the repository still hosts that point
 revision, you can select it by adding it, and the packaging build, to your <code>apt-get install</code> line.  For example:</p>
-<pre><code>apt-get install opencast-&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f97d48ab310&gt;-admin=&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f97d48ab310&gt;.0-2
+<pre><code>apt-get install opencast-10-admin=10.0-2
 </code></pre>
-<p>Installs an Opencast <function define_env.\<locals="">.opencast_major_version at 0x7f97d48ab310&gt;.0 admin node, using the second build of that series.  Not all series have more than a single build,
-and older point revisions may be removed once superceded, so please explore the repository prior to attempting this.</function></p>
+<p>Installs an Opencast 10.0 admin node, using the second build of that series.  Not all series have more than a single build,
+and older point revisions may be removed once superceded, so please explore the repository prior to attempting this.</p>
 <h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
 <p>This step is optional and only recommended for those who want to build Opencast from source. If you install Opencast
 from the repository, all necessary dependencies will be installed automatically.</p>
