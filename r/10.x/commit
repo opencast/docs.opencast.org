@@ -1,33 +1,8 @@
-commit c2848d3840564636fc5ae66e8781ec5ea31ac98b
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Mon Dec 20 22:29:42 2021 +0100
+commit c689a4eb05af1f1e0a5266cd1f8b5fee19caaa43
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Thu Dec 23 10:09:53 2021 -0600
 
-    Fix Database Connection Tests
+    Merge branch 'remove-unused-loog4j' of lkiesow/opencast into r/10.x
     
-    Starting Opencast with PostgreSQL configured you end up with a database error
-    being logged:
-    
-    ```
-    2021-12-20 21:47:06,778 | WARN  | (Activator:172) - Unable to delete temp table oc_temp_808069, please remove this yourself!
-    org.postgresql.util.PSQLException: No results were returned by the query.
-            at org.postgresql.jdbc.PgStatement.executeQuery(PgStatement.java:237) ~[!/:?]
-            at com.mchange.v2.c3p0.impl.NewProxyStatement.executeQuery(NewProxyStatement.java:327) ~[!/:?]
-            at org.opencastproject.db.Activator.start(Activator.java:170) [!/:?]
-            at org.apache.felix.framework.util.SecureAction.startActivator(SecureAction.java:697) [org.apache.felix.framework-5.6.12.jar:?]
-            at org.apache.felix.framework.Felix.activateBundle(Felix.java:2240) [org.apache.felix.framework-5.6.12.jar:?]
-            at org.apache.felix.framework.Felix.startBundle(Felix.java:2146) [org.apache.felix.framework-5.6.12.jar:?]
-            at org.apache.felix.framework.BundleImpl.start(BundleImpl.java:998) [org.apache.felix.framework-5.6.12.jar:?]
-            at org.apache.felix.framework.BundleImpl.start(BundleImpl.java:984) [org.apache.felix.framework-5.6.12.jar:?]
-            at org.apache.karaf.features.internal.service.BundleInstallSupportImpl.startBundle(BundleInstallSupportImpl.java:165) [!/:?]
-            at org.apache.karaf.features.internal.service.FeaturesServiceImpl.startBundle(FeaturesServiceImpl.java:1153) [!/:?]
-            at org.apache.karaf.features.internal.service.Deployer.deploy(Deployer.java:1036) [!/:?]
-            at org.apache.karaf.features.internal.service.FeaturesServiceImpl.doProvision(FeaturesServiceImpl.java:1062) [!/:?]
-            at org.apache.karaf.features.internal.service.FeaturesServiceImpl.lambda$doProvisionInThread$13(FeaturesServiceImpl.java:998) [!/:?]
-            at java.util.concurrent.FutureTask.run(FutureTask.java:264) [?:?]
-            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]
-            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]
-            at java.lang.Thread.run(Thread.java:829) [?:?]
-    ```
-    
-    While the error is inconsequential and the table is actually even removed, the
-    warning is confusing and not accurate.  This patch fixes the problem.
+    Pull request #3299
+      Remove Unused Additional Log4J
