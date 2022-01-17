@@ -384,18 +384,17 @@ git tag -s 6.0
 <pre><code>git push &lt;remote&gt; 6.0:6.0
 </code></pre>
 </li>
-<li>
-<p>Push the built artifacts to Maven. Bug the QA Coordinator to do this so that he remembers to set this up from the CI
-    servers. If you want to do this yourself please read the <a href="../infrastructure/maven-repository/#pushing-to-maven-central">infra documentation</a>.</p>
-</li>
-<li>
-<p>Check the “Create new release” GitHub Actions workflow.
+</ol>
+<p>8 Check the “Create new release” GitHub Actions workflow.
    It will automatically build and upload the release tarballs and create a new release draft.
    Once it is finished, review the draft, adjust the description and publish the release.</p>
-</li>
-</ol>
 <p>If the workflow fails, investigate what was going wrong and either restart the workflow or create the release
    manually in the GitHub user interface.</p>
+<ol>
+<li>Check that the release is published on <a href="https://repo1.maven.org/maven2/org/opencastproject/opencast-common/">Maven Central</a>.
+    This can take some time, and is done via <a href="http://ci.opencast.org">Buildbot</a>.  If in doubt, ask the QA Coordinator to
+    check.  If you need to do this yourself please read the <a href="../infrastructure/maven-repository/#pushing-to-maven-central">infra documentation</a>.</li>
+</ol>
 <p>Finally, send a release notice to Opencast's announcement list. Note that posting to this list is restricted to those
 who need access to avoid general discussions on that list. In case you do not already have permissions to post on this
 list, please ask to be given permission. For the message, you may use the following template:</p>
