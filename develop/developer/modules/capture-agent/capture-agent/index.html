@@ -68,12 +68,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testcases/" class="btn btn-xs btn-default pull-right">
+      <a href="../capture-agent-input/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testcases/" class="btn btn-xs btn-link">
-        Test Cases
+      <a href="../capture-agent-input/" class="btn btn-xs btn-link">
+        Input Selection
       </a>
     </div>
     
@@ -137,9 +137,15 @@ hardware with other parts of Opencast's API</p>
 <h2 id="authentication">Authentication</h2>
 <p>Opencast supports two types of authentication which can be used by capture agents:</p>
 <ul>
-<li>(Backend) HTTP Digest authentication which is historically used for machine-to-machine communication.</li>
-<li>(General) HTTP Basic (or session-based) authentication used for both front-end users and integrations.</li>
+<li>HTTP Basic authentication used for both front-end users and integrations.</li>
+<li>HTTP Digest authentication which is historically used for machine-to-machine communication.</li>
 </ul>
+<p>Generally, we recommend using HTTP Basic authentication since it's easier for adopters to manage capture agent users via
+the admin interface and does not rely on hidden users while being less complicated at the same time.</p>
+<p>HTTP Basic authentication can be used with users defined via web-interface or via any regular user provider. A request
+using HTTP Basic does not need to specify any additional headers:</p>
+<pre><code>curl -u admin:opencast https://develop.opencast.org/info/me.json
+</code></pre>
 <p>HTTP Digest authentication is the legacy option for capture agents. It is still widely used today and will continue to
 be supported. HTTP Digest is more complicated and has the disadvantage that users need to be specified separately in the
 backend. There is a global HTTP Digest user with admin privileges but specific capture agent users with limited
@@ -148,12 +154,6 @@ privileges can be defined as well.</p>
 <pre><code>curl --digest -u opencast_system_account:CHANGE_ME -H "X-Requested-Auth: Digest" \
   https://develop.opencast.org/info/me.json
 </code></pre>
-<p>HTTP Basic authentication can be used with users defined via web-interface or via any regular user provider. A request
-using HTTP Basic does not need to specify any additional headers:</p>
-<pre><code>curl -u admin:opencast https://develop.opencast.org/info/me.json
-</code></pre>
-<p>Generally, we recommend using HTTP Basic authentication since it's easier for adopters to manage capture agent users via
-the admin interface and does not rely on hidden users while being less complicated at the same time.</p>
 <p>Whatever authentication method you choose to implement – maybe even both, allowing users to choose for themselves –
 please clearly specify what authentication you expect since users have to provide different types of users which can
 easily lead to usability problems if not clearly marked.</p>
@@ -206,11 +206,11 @@ and schedules can be added for this agent.</p>
 <p>Setting <code>address</code> is optional. It can be used to link an administrative web
 interface of a capture agent.</p>
 <h3 id="setting-agent-capabilities">Setting Agent Capabilities</h3>
-<p>Additional to registering, the agent may set its capabilities allowing users to select possible inputs in the user
-interface of Opencast when scheduling events. The configuration may be set as XML or JSON representation of a Java
-properties file and can be set via an HTTP POST request to:</p>
+<p>Additional to registering, the agent may optionally set its capabilities allowing users to select possible inputs in the
+user interface of Opencast when scheduling events. Capabilities can be set via an HTTP POST request to:</p>
 <pre><code>/capture-admin/agents/$AGENT_NAME/configuration
 </code></pre>
+<p>For more details about this process, take a look at the <a href="../capture-agent-input/">Capture Agent Input Selection guide</a>.</p>
 <h3 id="getting-the-calendarschedule">Getting the Calendar/Schedule</h3>
 <p>The calendar can be retrieved by sending an HTTP GET request to</p>
 <pre><code>${SCHEDULER-ENDPOINT}/calendars?agentid=&lt;name&gt;
@@ -463,12 +463,12 @@ that servers unique capabilities.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testcases/" class="btn btn-xs btn-default pull-right">
+      <a href="../capture-agent-input/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testcases/" class="btn btn-xs btn-link">
-        Test Cases
+      <a href="../capture-agent-input/" class="btn btn-xs btn-link">
+        Input Selection
       </a>
     </div>
     
