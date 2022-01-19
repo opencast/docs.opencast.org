@@ -32,6 +32,7 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behavior changes", url: "#behavior-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 11.3", url: "#additional-notes-about-113" },
               {title: "Additional Notes about 11.2", url: "#additional-notes-about-112" },
               {title: "Additional Notes about 11.1", url: "#additional-notes-about-111" },
               {title: "Release Schedule", url: "#release-schedule" },
@@ -117,24 +118,25 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>There are changes to how hosts are mapped to tenants. If you use a multi-tenant system you therefore need to update
   your <code>org.opencastproject.organization-*.cfg</code> configuration files:
   Before Opencast 11 the domain names were mapped to tenants and a common port number was assumed for all domains. Now
-  you need to configure a URL per instance you want to map to a tenant.
-  ```
-  # Before:
-  port=8080
-  prop.org.opencastproject.host.admin.example.org=tenant1-admin.example.org 
-  prop.org.opencastproject.host.presentation.example.org=tenant1-presentation.example.org</li>
+  you need to configure a URL per instance you want to map to a tenant.</li>
 </ul>
-<p># Now:
-  prop.org.opencastproject.host.admin.example.org=https://tenant1-admin.example.org
-  prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentation.example.org:8443
-  <code>``
-- Support for automatically setting up an HLS encoding ladder via the</code>{video,audio}.bitrates.mink<code>and</code>{video,audio}.bitrates.maxk<code>encoding profile options was removed. Instead, users should now explicitly specify
-  the bit rate and bit rate control mechanism in the</code>ffmpeg.command`.
-- Some S3 distribution workflow operation handlers have been renamed: <em>publish-aws</em> to <em>publish-engage-aws</em> and
-  <em>retract-aws</em> to <em>retract-engage-aws</em>.
-- If an URL does not exist, it returns to the welcome page.
-- The amount of job statistics for servers displayed in the admin interface was reduced to running and queued jobs to
-  avoid performance problems and remove incorrect and/or misleading data.</p>
+<pre><code># Before:
+port=8080
+prop.org.opencastproject.host.admin.example.org=tenant1-admin.example.org 
+prop.org.opencastproject.host.presentation.example.org=tenant1-presentation.example.org
+# Now:
+prop.org.opencastproject.host.admin.example.org=https://tenant1-admin.example.org
+prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentation.example.org:8443
+</code></pre>
+<ul>
+<li>Support for automatically setting up an HLS encoding ladder via the <code>{video,audio}.bitrates.mink</code>
+  and <code>{video,audio}.bitrates.maxk</code> encoding profile options was removed. Instead, users should now explicitly specify
+  the bit rate and bit rate control mechanism in the <code>ffmpeg.command</code>.</li>
+<li>Some S3 distribution workflow operation handlers have been renamed: <em>publish-aws</em> to <em>publish-engage-aws</em> and
+  <em>retract-aws</em> to <em>retract-engage-aws</em>.</li>
+<li>The amount of job statistics for servers displayed in the admin interface was reduced to running and queued jobs to
+  avoid performance problems and remove incorrect and/or misleading data.</li>
+</ul>
 <h2 id="api-changes">API changes</h2>
 <ul>
 <li>[<a href="https://github.com/opencast/opencast/pull/2814">#2814</a>] - Add track fields <code>is_master_playlist</code> and <code>is_live</code> to
@@ -143,6 +145,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>[<a href="https://github.com/opencast/opencast/pull/3002">#3002</a>] - Sign publication URL of events in External API</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3148">#3148</a>] - Allow empty track duration</li>
 </ul>
+<h2 id="additional-notes-about-113">Additional Notes about 11.3</h2>
+<p>This release fixes several bugs and a security issue related to logging which was fixed in 10.9 and forward merged to
+this release (cf. [<a href="https://github.com/opencast/opencast/pull/3305">#3305</a>]). A notable new feature is the
+<code>speechtotext</code> workflow operation introducing support for the STT Engine Vosk (cf. the
+<a href="../workflowoperationhandlers/speech-to-text-woh/">corresponding docs section</a> and
+[<a href="https://github.com/opencast/opencast/pull/2855">#2855</a>]). Additionally, the design of the embed code selection
+within the Admin UI was updated (cf. [<a href="https://github.com/opencast/opencast/pull/3273">#3273</a>]). Furthermore,
+[<a href="https://github.com/opencast/opencast/pull/3152">#3152</a>] and [<a href="https://github.com/opencast/opencast/pull/3154">#3154</a>]
+introduced enhancements to the <code>execute-once</code> and <code>execute-many</code> workflow operations.</p>
 <h2 id="additional-notes-about-112">Additional Notes about 11.2</h2>
 <p>This release contains a security fix:</p>
 <ul>
