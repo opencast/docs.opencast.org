@@ -31,6 +31,7 @@
               {title: "Overview", url: "#overview" },
               {title: "Create a Workflow", url: "#create-a-workflow" },
               {title: "Accept User Input", url: "#accept-user-input" },
+              {title: "Organisation Properties", url: "#organisation-properties" },
               {title: "Conditional Execution", url: "#conditional-execution" },
               {title: "Thumbnail Support", url: "#thumbnail-support" },
               {title: "Test the Workflow", url: "#test-the-workflow" },
@@ -340,6 +341,11 @@ selection will be used to replace the <code>${someaction}</code> variable in the
 <p>This input can also be sent by capture agents, using the ingest endpoints. Please note that capture agents usually do
 not load the configuration panel. Hence defaults set in the user interface will not apply to ingests. To circumvent
 this, the <a href="../../workflowoperationhandlers/defaults-woh/">defaults operation</a> can be used.</p>
+<h2 id="organisation-properties">Organisation Properties</h2>
+<p>Workflows can access organisation properties stored as <code>prop.*</code> in the organisation configuration
+(<code>etc/org.opencastproject.organization-mh_default_org.cfg</code> for the default organisation <code>mh_default_org</code>). This allows
+for organisation specific configuration of your workflow. To access the property use the <code>org_</code> prefix, e.g.
+<code>prop.my.var</code> can be access using <code>${org_my.var}</code>.</p>
 <h2 id="conditional-execution">Conditional Execution</h2>
 <p>The attribute <code>if</code> of the <code>operation</code> element can be used to specify a condition to control whether the workflow
 operation should be executed. This so-called execution condition is a boolean expression of the following form:</p>
