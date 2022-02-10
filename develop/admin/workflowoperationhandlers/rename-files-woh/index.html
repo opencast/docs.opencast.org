@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../img/favicon.ico" rel="shortcut icon"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<title>Republish OAI-PMH - Administration Guide</title>
+<title>Rename Files - Administration Guide</title>
 <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
 <link href="../../css/base.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "RepublishOaiPmhWorkflowOperation", url: "#_top", children: [
+          {title: "Rename Files Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -46,76 +46,100 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <a name="_top"></a>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-engage-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../republish-oaipmh-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-engage-aws-woh/">
-        Retract Engage AWS
+<a class="btn btn-xs btn-link" href="../republish-oaipmh-woh/">
+        Republish OAI-PMH
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../rename-files-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../publish-youtube-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../rename-files-woh/">
-        Rename Files
+        Previous</a><a class="btn btn-xs btn-link" href="../publish-youtube-woh/">
+        Publish YouTube
       </a>
 </div>
 </div>
-<h1 id="republishoaipmhworkflowoperation">RepublishOaiPmhWorkflowOperation</h1>
+<h1 id="rename-files-workflow-operation">Rename Files Workflow Operation</h1>
+<p>ID: <code>rename-files</code></p>
 <h2 id="description">Description</h2>
-<p>The Republish OAI-PMH workflow operation will update metadata in your OAI-PMH repositories. In case that the media has
-not been published before, this operation will skip. Otherwise all elements matching the flavors and tags will be replaced.
-In case of missing elements in the media package, the published elements will be also removed.</p>
+<p>The rename files operation allows you to rename media files using different metadata.
+This can be used to, for example, generate human readable names for downloads.</p>
+<div class="warn">
+    The operation will only rename, not convert files.
+    Make sure your pattern contains a valid file extension.
+    You can use `#{file.extension}` to keep the old extension.
+</div>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th align="left">Configuration Keys</th>
-<th align="left">Description</th>
+<th>configuration keys</th>
+<th>description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">source-flavors</td>
-<td align="left">Republish any media package elements with one of these (comma-separated) flavors</td>
+<td>source-flavors</td>
+<td>Comma separated list of flavors to select tracks to rename</td>
 </tr>
 <tr>
-<td align="left">source-tags</td>
-<td align="left">Republish only media package elements that are tagged with one of these (comma-separated) tags</td>
+<td>source-flavor</td>
+<td>Same as <code>source-flavors</code> but can only select a single flavor</td>
 </tr>
 <tr>
-<td align="left">repository</td>
-<td align="left">The name of the OAI-PMH repository where the media should be updated</td>
+<td>name-pattern</td>
+<td>Pattern to use for renaming the media files</td>
 </tr>
 </tbody>
 </table>
+<h3 id="replacement-patterns">Replacement Patterns</h3>
+<p>You can use the following placeholders in your replacement pattern:</p>
+<ul>
+<li><code>#{file.extension}</code></li>
+<li><code>#{file.basename}</code></li>
+<li><code>#{flavor.type}</code></li>
+<li><code>#{flavor.subtype}</code></li>
+<li><code>#{episode...}</code></li>
+<li><code>#{series...}</code></li>
+</ul>
+<p>You can use all metadata fields present in the episode and series Dublin Core catalogs of an event.</p>
+<pre><code>'#{' ['series' | 'episode'] '.' DC-FIELD '}'
+</code></pre>
+<p>Here are some common examples:</p>
+<ul>
+<li><code>#{episode.title}</code></li>
+<li><code>#{episode.creator}</code></li>
+<li><code>#{series.title}</code></li>
+</ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="republish-oaipmh"
-  description="Update recording metadata in default OAI-PMH repository"&gt;
+<pre><code class="language-XML">&lt;operation
+  id="rename-files"
+  description="Rename files based on metadata"&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavors"&gt;dublincore/*,security/*&lt;/configuration&gt;
-    &lt;configuration key="repository"&gt;default&lt;/configuration&gt;
+    &lt;configuration key="name-pattern"&gt;#{episode.title}.#{file.extension}&lt;/configuration&gt;
+    &lt;configuration key="source-flavors"&gt;*/*&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
-<a class="btn btn-xs btn-default pull-right" href="../retract-engage-aws-woh/">
+<a class="btn btn-xs btn-default pull-right" href="../republish-oaipmh-woh/">
         Next
         <i aria-hidden="true" class="fa fa-chevron-right"></i>
 </a>
-<a class="btn btn-xs btn-link" href="../retract-engage-aws-woh/">
-        Retract Engage AWS
+<a class="btn btn-xs btn-link" href="../republish-oaipmh-woh/">
+        Republish OAI-PMH
       </a>
 </div>
 <div class="wm-article-nav">
-<a class="btn btn-xs btn-default pull-left" href="../rename-files-woh/">
+<a class="btn btn-xs btn-default pull-left" href="../publish-youtube-woh/">
 <i aria-hidden="true" class="fa fa-chevron-left"></i>
-        Previous</a><a class="btn btn-xs btn-link" href="../rename-files-woh/">
-        Rename Files
+        Previous</a><a class="btn btn-xs btn-link" href="../publish-youtube-woh/">
+        Publish YouTube
       </a>
 </div>
 </div>
@@ -123,7 +147,7 @@ In case of missing elements in the media package, the published elements will be
 </div>
 <footer class="container-fluid wm-page-content">
 <p>
-<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/republish-oaipmh-woh.md"><i class="fa fa-github"></i>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/rename-files-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
 </p>
 <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
