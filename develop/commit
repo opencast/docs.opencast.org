@@ -1,17 +1,21 @@
-commit ce632d1a5b52ea17a2c0c2acc24a3ebbccd1fc2f
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Fri Feb 11 17:15:58 2022 +0000
+commit bc782ff7fd1dd815d10b0d41981d1e73e070fa19
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Mon Feb 14 14:38:06 2022 +0100
 
-    Bump lodash in /modules/engage-theodul-plugin-tab-shortcuts
+    Regenerate `package-lock.json` (#3443)
     
-    Bumps [lodash](https://github.com/lodash/lodash) from 4.17.20 to 4.17.21.
-    - [Release notes](https://github.com/lodash/lodash/releases)
-    - [Commits](https://github.com/lodash/lodash/compare/4.17.20...4.17.21)
+    This patch regenerates our project's `package-lock.json` files since most
+    of them were originally generated with old `npm` versions and running
+    `npm ci` is constantly complaining that the format has slightly changed:
     
-    ---
-    updated-dependencies:
-    - dependency-name: lodash
-      dependency-type: indirect
-    ...
+    ```
+    ❯ npm ci
+    npm WARN old lockfile
+    npm WARN old lockfile The package-lock.json file was created with an old version of npm,
+    npm WARN old lockfile so supplemental metadata must be fetched from the registry.
+    npm WARN old lockfile
+    npm WARN old lockfile This is a one-time fix-up, please be patient...
+    npm WARN old lockfile
+    ```
     
-    Signed-off-by: dependabot[bot] <support@github.com>
+    This should fix that issue.
