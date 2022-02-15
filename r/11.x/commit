@@ -1,7 +1,20 @@
-commit 9b4b1f8440641c920c33f7628427984969d7c77b
-Author: Kristof Keppens <kkeppens@gmail.com>
-Date:   Mon Feb 14 14:41:07 2022 +0100
+commit b3fa2c2e364eb3f98c47c272f8f2c2c58a24013f
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Feb 15 10:27:28 2022 +0100
 
-    Merge the ldap userdirectory behaviour from 9.x into the current module.
+    Fix frontend-no-prebuilt profile (#3444)
     
-    This makes the module work as it did in 9.x when using it only for authorization. This does not implement all the changes present in the OpencastLdapAuthoritiesPopulator (#3344)
+    This patch fixes the frontend-no-prebuilt maven profile which can be
+    used to have maven run the local npm version instead of downloading one.
+    That has the big advantage of not having to remove any `none*` folders
+    when you switch versions.
+    
+    To try this, run:
+    
+    ```
+    ❯ mvn clean install -Pdev,frontend-no-prebuilt
+    ```
+    
+    The profile did exist for a long time but was broken due to some tasks
+    being executed in the wrong order like trying to copy the frontend to
+    the target folder before actually building it.
