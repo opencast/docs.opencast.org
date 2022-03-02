@@ -65,12 +65,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </div>
 </div>
 <h1 id="database-configuration">Database Configuration</h1>
-<p>Opencast ships with embedded JDBC drivers for the H2, MySQL, MariaDB and PostgreSQL databases.
+<p>Opencast ships with embedded H2, MariaDB and PostgreSQL JDBC drivers.
 The built-in H2 database is used by default and needs no configuration,
 but is not suited for production.</p>
-<blockquote>
-<p><strong>H2</strong> is not supported for updates or distributed systems. Use it for testing only!</p>
-</blockquote>
+<p>The MariaDB driver also supports connecting to MySQL.
+But this may need additional setting and it not part of Opencast's documentation.
+We also do not test this, and hence do not guarantee that this will work.</p>
+<div class="warn">
+  __H2__ is not supported for updates or distributed systems. Use it for testing only!
+</div>
 <h3 id="requirements">Requirements</h3>
 <p>Before following this guide, you should have:</p>
 <ul>
@@ -85,7 +88,6 @@ Other database engines are not tested and specific issues will likely not be add
 <ul>
 <li><strong>MariaDB</strong> is the recommended database engine.
   It is used by most adopters and is well tested.</li>
-<li><strong>MySQL</strong> is supported but tested less than MariaDB.</li>
 <li><strong>PostgreSQL</strong> support is experimental.</li>
 <li><strong>H2</strong> is not suitable for anything but testing and development.
   It cannot be used in distributed environments.</li>
@@ -146,12 +148,12 @@ postgres=# grant all privileges on database opencast to opencast;
 </code></pre>
 <h2 id="step-4-configure-opencast">Step 4: Configure Opencast</h2>
 <p>The following changes must be made in <code>etc/custom.properties</code>.
-Examples are provided for MariaDB/MySQL and PostgreSQL.</p>
+Examples are provided for MariaDB and PostgreSQL.</p>
 <ol>
 <li>
 <p>Configure Opencast to use the JDBC driver for MariaDB or PostgreSQL.
    The MariaDB driver will also work for MySQL.</p>
-<pre><code># MariaDB/MySQL
+<pre><code># MariaDB
 org.opencastproject.db.jdbc.driver=org.mariadb.jdbc.Driver
 # PostgreSQL
 org.opencastproject.db.jdbc.driver=org.postgresql.Driver
@@ -159,8 +161,8 @@ org.opencastproject.db.jdbc.driver=org.postgresql.Driver
 </li>
 <li>
 <p>Configure the host where Opencast will find the database (<code>127.0.0.1</code>) and the database name (<code>opencast</code>).</p>
-<pre><code># MariaDB/MySQL
-org.opencastproject.db.jdbc.url=jdbc:mysql://127.0.0.1/opencast?useMysqlMetadata=true
+<pre><code># MariaDB
+org.opencastproject.db.jdbc.url=jdbc:mariadb://127.0.0.1/opencast?useMysqlMetadata=true
 # PostgreSQL
 org.opencastproject.db.jdbc.url=jdbc:postgresql://127.0.0.1/opencast
 </code></pre>

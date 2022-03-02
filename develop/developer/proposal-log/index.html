@@ -88,6 +88,34 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 about decision making</a>.</p>
 <p>The following list contains a list of passed proposals for reference.</p>
 <h2 id="passed-proposals">Passed Proposals</h2>
+<h3 id="drop-official-mysql-support">Drop official MySQL support</h3>
+<p>Proposed by Lars Kiesow <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#107;&#105;&#101;&#115;&#111;&#119;&#64;&#117;&#111;&#115;&#46;&#100;&#101;">&#108;&#107;&#105;&#101;&#115;&#111;&#119;&#64;&#117;&#111;&#115;&#46;&#100;&#101;</a>, passed on Wed, February 16 2022</p>
+<pre><code class="language-no-highlight">Hi everyone,
+since I'm testing database things once again, I noticed that more and
+more our infrastructure is set-up to test with MariaDB (or now
+PostegreSQL) and no longer with MySQL. We have MySQL left in none of our
+deployments and I feel like something could break compatibility at any
+moment right now and no one would notice during a release cycle.
+
+Overall, the situation is similar to back when we decided to no longer
+officially support PostgreSQL. It technically works and should continue
+to work, but no developers actually test against it and it could easily
+break without someone noticing.
+
+
+That is why, similar to the old decision, I would like to #propose to:
+
+- officially mark MySQL it as unsupported
+- explain that it should technically work, but we do not test it
+- explain that the set-up should be similar to MariaDB but may differ
+  slightly and we have no documentation for that
+
+
+Of course, also similar to PostgreSQL, we can always decide to support
+it again later, if interest picks up and the database landscape changes.
+
+–Lars
+</code></pre>
 <h3 id="pr-and-release-process-changes">PR and release process changes</h3>
 <p>Proposed by Greg Logan <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, passed on Thu, 17 Jun 2021</p>
 <pre><code class="language-no-highlight">Hi all,
