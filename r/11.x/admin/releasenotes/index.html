@@ -32,6 +32,7 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behavior changes", url: "#behavior-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 11.5", url: "#additional-notes-about-115" },
               {title: "Additional Notes about 11.4", url: "#additional-notes-about-114" },
               {title: "Additional Notes about 11.3", url: "#additional-notes-about-113" },
               {title: "Additional Notes about 11.2", url: "#additional-notes-about-112" },
@@ -147,6 +148,33 @@ prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentat
 <li>[<a href="https://github.com/opencast/opencast/pull/2878">#2878</a>] - Add endpoint to resume Index Rebuild for specified service</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3002">#3002</a>] - Sign publication URL of events in External API</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3148">#3148</a>] - Allow empty track duration</li>
+</ul>
+<h2 id="additional-notes-about-115">Additional Notes about 11.5</h2>
+<ul>
+<li>Bug Fixes:<ul>
+<li>This release downgrades Paella from 6.5.5 to 6.4.4 to fix HLS videos not loading on slow connections (forward
+  merged from 10.11 to this release).</li>
+<li>Issues with the admin UI configuration (cf. [<a href="https://github.com/opencast/opencast/pull/3532">#3532</a>]).</li>
+<li>Exceptions when signing publication URLs (cf. [<a href="https://github.com/opencast/opencast/pull/3540">#3540</a>]).</li>
+<li>Problems in the admin UI when creating a series with  an empty title (cf.
+  [<a href="https://github.com/opencast/opencast/pull/3460">#3460</a>]).</li>
+<li>Issues with Safari when using the editor (cf. [<a href="https://github.com/opencast/opencast/pull/3544">#3544</a>]).</li>
+</ul>
+</li>
+<li>New Features and updates<ul>
+<li>A notable new feature is the password strength indicator in the user modal. Also, the stand-alone editor was
+  updated  to version 2022-03-22 (for details on the changes, see the corresponding
+  <a href="https://github.com/opencast/opencast-editor/releases/tag/2022-03-22">release notes</a> for the editor).</li>
+<li>Configuration options for Elasticsearch have been added. In case a request to  Elasticsearch fails because of an
+  <code>ElasticsearchStatusException</code>, you can now configure Opencast to try again. For this, set <code>max.retry.attempts</code>
+  in <code>org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code> to  something higher than 0. Set
+  <code>retry.waiting.period</code> to a time period in ms to wait between retries (default: 1 second) so  you don't overwhelm
+  Elasticsearch. Both parameters can be configured separately for read-only actions and those that also update or
+  delete, since arguably the success of the latter is more important. Changing this config does not require  a
+  restart of Opencast. See the <a href="../configuration/elasticsearch/">Elasticsearch docs</a> for more details.</li>
+<li>Traditional chinese translations are back (cf. [<a href="https://github.com/opencast/opencast/pull/3545">#3545</a>]).</li>
+</ul>
+</li>
 </ul>
 <h2 id="additional-notes-about-114">Additional Notes about 11.4</h2>
 <ul>
