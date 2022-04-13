@@ -35,6 +35,7 @@
               {title: "Conditional Execution", url: "#conditional-execution" },
               {title: "Thumbnail Support", url: "#thumbnail-support" },
               {title: "Test the Workflow", url: "#test-the-workflow" },
+              {title: "Using YAML Files with Workflows", url: "#using-yaml-files-with-workflows" },
           ]},
         ];
 
@@ -86,7 +87,7 @@ repetition in a given workflow.</p>
 <p>Workflow operations can be configured using configuration elements. The use of string replacement in configuration
 values allows workflows to dynamically adapt to a given input or user decision.</p>
 <h3 id="document">Document</h3>
-<p>Opencast workflows are defined in XML.  The structure of a Opencast workflow looks like this:</p>
+<p>Opencast workflows are defined in XML, or alternatively in <a href="./#using-yaml-files-with-workflows">YAML</a> .  The structure of a Opencast workflow looks like this:</p>
 <pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
 
   &lt;!-- Description --&gt;
@@ -457,6 +458,30 @@ and be consistent to the Admin UI thumbnail configuration (see <a href="../admin
 <h2 id="test-the-workflow">Test the Workflow</h2>
 <p>The easiest way to test a workflow is to just put it into the workflow folder where it will be picked up by Opencast
 automatically and will be available in Opencast a few seconds later.</p>
+<h2 id="using-yaml-files-with-workflows">Using YAML Files with Workflows</h2>
+<p>As an alternative to XML workflow configuration files, it is possible to use YAML files with the following structure.</p>
+<h3 id="yaml-workflow-definition-structure">YAML Workflow Definition Structure</h3>
+<pre><code>---
+id:
+title:
+tags: []
+displayOrder:
+description:
+operations: []
+state-mappings:
+  - state:
+    value:
+</code></pre>
+<h3 id="yaml-operation-structure">YAML Operation Structure</h3>
+<pre><code>- id:
+  if:
+  fail-on-error:
+  exception-handler-workflow:
+  description:
+  configurations:
+    - key1: value1
+    - key2: value2
+</code></pre>
 <br/>
 <div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
 <div class="wm-article-nav pull-right">
