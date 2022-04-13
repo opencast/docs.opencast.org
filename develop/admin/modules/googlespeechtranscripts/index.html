@@ -177,6 +177,8 @@ For up to date instructions please search for <em>'google speech to text configu
 <li>Use <strong><em>OAuth Client ID</em></strong>, <strong><em>OAuth Client secret</em></strong>, <strong><em>Refresh token</em></strong>, <strong><em>Token endpoint</em></strong> and <strong><em>storage bucket</em></strong> created above to respectively set <em>google.cloud.client.id</em> , <em>google.cloud.client.secret</em> , <em>google.cloud.refresh.token</em> , <em>google.cloud.token.endpoint.url</em> and <em>google.cloud.storage.bucket</em></li>
 <li>Enter the appropriate language in <em>google.speech.language</em>, default is (<em>en-US</em>). List of supported language: <a href="https://cloud.google.com/speech-to-text/docs/languages">https://cloud.google.com/speech-to-text/docs/languages</a></li>
 <li>Remove profanity (bad language) from transcription by using <em>google.speech.profanity.filter</em>, default is (<em>false</em>), not removed by default</li>
+<li>Set the transcription model using <em>google.speech.transcription.model</em>, default is (<em>default</em>). List of models: https://cloud.google.com/speech-to-text/docs/transcription-model</li>
+<li>Enable punctuation for transcription result by setting <em>google.speech.transcription.punctuation</em>, to (<em>true</em>) default is (<em>false</em>)</li>
 <li>In <em>workflow</em>, enter the workflow definition id of the workflow to be used to attach the generated transcripts/captions</li>
 <li>Enter a <em>notification.email</em> to get job failure notifications. If not entered, the email in <em>etc/custom.properties</em> (org.opencastproject.admin.email) will be used.
 If no email address specified in either <em>notification.email</em> or <em>org.opencastproject.admin.email</em>,
@@ -201,6 +203,13 @@ google.speech.language=
 
 # Filter out profanities from result. Default is false
 google.speech.profanity.filter=false
+
+# Enable punctuations for transcription. Default is false
+google.speech.transcription.punctuation=true
+
+# Transcription model to use
+# If empty, the "default" model will be used
+google.speech.transcription.model=default
 
 # Workflow to be executed when results are ready to be attached to media package.
 workflow=google-speech-attach-transcripts
