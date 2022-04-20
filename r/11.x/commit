@@ -1,5 +1,15 @@
-commit e34e9b00966e5411c50b4defadfce28f7a24ffc7
-Author: Maximiliano Lira Del Canto <8040628+mliradelc@users.noreply.github.com>
-Date:   Wed Apr 20 17:08:24 2022 +0200
+commit 8ef91fe7a62ab9666f08b646578e682ce8dba82b
+Author: Lukas Kalbertodt <lukas.kalbertodt@gmail.com>
+Date:   Wed Apr 6 12:48:56 2022 +0200
 
-    Merge branch 'r/10.x' into r/11.x
+    Fix bug with adding a series when a deleted one still lingers
+    
+    `this.deleteSeries` only marks the series as deleted again, not actually
+    removing it. This will clash if a series with the same ID is added again
+    as it will cause a unique constraint violation. Instead, we completely
+    remove it here. Unfortunately, without the `flush` it didn't work: the
+    unique violation was still triggered. Whether `flush` is the best
+    solution: 🤷, I hardly know stuff about JPA.
+    
+    This was noticed by Katrin:
+    https://github.com/opencast/opencast/pull/3076#discussion_r839548962
