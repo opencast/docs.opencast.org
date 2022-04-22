@@ -1,8 +1,19 @@
-commit 4a488160d2615685fbfc69b8d83a3515d2dab514
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Apr 21 14:26:18 2022 +0200
+commit 6d76b3d08ff346c60557a7efa5676cdbe3261588
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Fri Apr 22 16:05:04 2022 +0200
 
-    Opencast 12 Release Schedule
+    Remove Solr from series service (#3204)
     
-    This patch updates the release notes and adds the release schedule for
-    Opencast 12.
+    Removes all Solr functionality from the series service. Functions that
+    relied on the Solr index were either removed or now query the database
+    directly.
+    
+    - Moved the series filter query to the External API, while trying to
+      preserve as much functionality as possible (for example, there is no
+      pagination, so instead an offset variable is offered)
+    - ExternalAPI: Get Series directly from ES index instead of the roundabout way through the index service
+    - AdminUIAPI: Get Series directly from ES index instead of the roundabout way through the index service
+    - StatisticsEndpoints: Get Series directly from ES index instead of the roundabout way through the index service
+    - IndexService: Get Series directly from ES index instead of the roundabout way through the index service
+    - Removed index ACL update from function in SeriesServiceImpl where it served no purpose
+    - Get series by title from elasticsearchindex in IngestServiceImpl.java

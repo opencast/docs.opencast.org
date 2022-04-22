@@ -36,6 +36,7 @@
           {title: "General", url: "#_top", children: [
               {title: "GET /api/series", url: "#get-apiseries" },
               {title: "GET /api/series/{series_id}", url: "#get-apiseriesseries_id" },
+              {title: "GET /api/series/series.json", url: "#get-apiseriesseriesjson" },
               {title: "POST /api/series", url: "#post-apiseries" },
               {title: "DELETE /api/series/{series_id}", url: "#delete-apiseriesseries_id" },
               {title: "Metadata", url: "#metadata" },
@@ -100,6 +101,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#general">General</a><ul>
 <li><a href="#get-apiseries">GET /api/series</a></li>
 <li><a href="#get-apiseriesseries_id">GET /api/series/{series_id}</a></li>
+<li><a href="#get-apiseriesseriesjson">GET /api/series/series.json</a></li>
 <li><a href="#post-apiseries">POST /api/series</a></li>
 <li><a href="#delete-apiseriesseries_id">DELETE /api/series/{series_id}</a></li>
 <li><a href="#metadata">Metadata</a><ul>
@@ -519,6 +521,185 @@ the response:</p>
 }
 
 </code></pre>
+<h3 id="get-apiseriesseriesjson">GET /api/series/series.json</h3>
+<p>Returns the series matching the query parameters</p>
+<p>The following query string parameters are supported to filter, sort and paginate the returned list:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Query String Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>q</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Free text search</td>
+</tr>
+<tr>
+<td align="left"><code>edit</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether this query should return only series that are editable</td>
+</tr>
+<tr>
+<td align="left"><code>fuzzyMatch</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">Whether a partial match on series id is allowed</td>
+</tr>
+<tr>
+<td align="left"><code>seriesId</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series identifier</td>
+</tr>
+<tr>
+<td align="left"><code>seriesTitle</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series title</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series creator</td>
+</tr>
+<tr>
+<td align="left"><code>contributor</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series contributor</td>
+</tr>
+<tr>
+<td align="left"><code>publisher</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series publisher</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series rights holder</td>
+</tr>
+<tr>
+<td align="left"><code>createdfrom</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Filter results by created from (yyyy-MM-dd'T'HH:mm:ss'Z')</td>
+</tr>
+<tr>
+<td align="left"><code>createdto</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Filter results by created to (yyyy-MM-dd'T'HH:mm:ss'Z')</td>
+</tr>
+<tr>
+<td align="left"><code>language</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series language</td>
+</tr>
+<tr>
+<td align="left"><code>license</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series license</td>
+</tr>
+<tr>
+<td align="left"><code>subject</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series subject</td>
+</tr>
+<tr>
+<td align="left"><code>abstract</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The series abstract</td>
+</tr>
+<tr>
+<td align="left"><code>sort</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The sort order. May include any of the following: TITLE, SUBJECT, CREATOR, PUBLISHERS, CONTRIBUTORS, DESCRIPTION, CREATED_DATE_TIME, LANGUAGE, RIGHTS_HOLDER, MANAGED_ACL, LICENCE. Add '_DESC' to reverse the sort order (e.g. TITLE_DESC).</td>
+</tr>
+<tr>
+<td align="left"><code>offset</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The offset</td>
+</tr>
+<tr>
+<td align="left"><code>count</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Maximum number of results</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample request</strong></p>
+<p>https://opencast.domain.com/api/series/series.json?creator:Administrator&amp;sort=title_DESC&amp;limit=2</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A (potentially empty) list of series is returned as JSON array contained JSON objects describing the series:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The unique identifier of the series</td>
+</tr>
+<tr>
+<td align="left"><code>license</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The license of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>created</code>*</td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">The data when the series was created</td>
+</tr>
+<tr>
+<td align="left"><code>creator</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The name of the user that has created the series</td>
+</tr>
+<tr>
+<td align="left"><code>title</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The title of the series</td>
+</tr>
+<tr>
+<td align="left"><code>contributors</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The contributors of the series</td>
+</tr>
+<tr>
+<td align="left"><code>publishers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The publishers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>subjects</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The subjects of the series</td>
+</tr>
+<tr>
+<td align="left"><code>organizers</code>*</td>
+<td align="left"><a href="../types/#array"><code>array[string]</code></a></td>
+<td align="left">The organizers of the series</td>
+</tr>
+<tr>
+<td align="left"><code>description</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The description of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>language</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The language of the series (version 1.1.0 and higher)</td>
+</tr>
+<tr>
+<td align="left"><code>rightsholder</code>*</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The rights holder of the series (version 1.1.0 and higher)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="post-apiseries">POST /api/series</h3>
 <p>Creates a series.</p>
 <table>
