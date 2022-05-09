@@ -1,8 +1,16 @@
-commit aaaad153da439020267e24a4eadfc89190c68b37
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Mon May 9 11:44:10 2022 -0600
+commit a55686beba099b0d173b9183751297f408cb7e42
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Mon May 9 20:09:48 2022 +0200
 
-    Merge branch 'dependabot/npm_and_yarn/modules/runtime-info-ui/eslint-8.15.0' of opencast/opencast into develop
+    Change the way workflows are stored in the database from XML to tables (#3376)
     
-    Pull request #3748
-      Bump eslint from 8.14.0 to 8.15.0 in /modules/runtime-info-ui
+    Currently, workflows are stored as a single XML object in the database. This makes it difficult/inperformant to use more complex queries, which is why workflow information is also stored in a Solr Index. In preparation for removing Solr from the Workflow Service, this PR creates new database tables for workflow information.
+    
+    Key changes:
+    
+    - Workflow information is now stored in tables named "oc_workflow*"
+    - Workflow information is no longer stored in the job tables "payload" column. Instead, it stores the workflow_id there (which is the same id as the corresponding "START_WORKFLOW" job, so it is actually kinda superfluous)
+    - Therefore, the WorkflowInstance and WorkflowOperationInstance classes are now using JPA annotations instead of JAXB annotations.
+    - Workflows still require XML representations for e.g. REST endpoints, so corresponding JAXB classes for that purposes are added
+    - Requires a db upgrade script. The script is a python script, placed in the usual sport for db upgrade scripts.
+    - Adds an endpoint that allows to query for workflow instances by mediapackage id
