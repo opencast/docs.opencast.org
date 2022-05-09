@@ -1,16 +1,19 @@
-commit a55686beba099b0d173b9183751297f408cb7e42
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon May 9 20:09:48 2022 +0200
+commit f538718471fd3c1d9b2117d244e085edcfdca353
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Mon May 9 08:01:56 2022 +0000
 
-    Change the way workflows are stored in the database from XML to tables (#3376)
+    Bump grunt-html-validate in /modules/admin-ui-frontend
     
-    Currently, workflows are stored as a single XML object in the database. This makes it difficult/inperformant to use more complex queries, which is why workflow information is also stored in a Solr Index. In preparation for removing Solr from the Workflow Service, this PR creates new database tables for workflow information.
+    Bumps [grunt-html-validate](https://gitlab.com/html-validate/grunt-html-validate) from 1.0.2 to 2.0.0.
+    - [Release notes](https://gitlab.com/html-validate/grunt-html-validate/tags)
+    - [Changelog](https://gitlab.com/html-validate/grunt-html-validate/blob/master/CHANGELOG.md)
+    - [Commits](https://gitlab.com/html-validate/grunt-html-validate/compare/v1.0.2...v2.0.0)
     
-    Key changes:
+    ---
+    updated-dependencies:
+    - dependency-name: grunt-html-validate
+      dependency-type: direct:development
+      update-type: version-update:semver-major
+    ...
     
-    - Workflow information is now stored in tables named "oc_workflow*"
-    - Workflow information is no longer stored in the job tables "payload" column. Instead, it stores the workflow_id there (which is the same id as the corresponding "START_WORKFLOW" job, so it is actually kinda superfluous)
-    - Therefore, the WorkflowInstance and WorkflowOperationInstance classes are now using JPA annotations instead of JAXB annotations.
-    - Workflows still require XML representations for e.g. REST endpoints, so corresponding JAXB classes for that purposes are added
-    - Requires a db upgrade script. The script is a python script, placed in the usual sport for db upgrade scripts.
-    - Adds an endpoint that allows to query for workflow instances by mediapackage id
+    Signed-off-by: dependabot[bot] <support@github.com>
