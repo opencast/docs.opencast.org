@@ -100,10 +100,9 @@ might be necessary to install <a href="https://docs.docker.com/compose/install/"
 <h2 id="start-with-docker-compose">Start with docker-compose</h2>
 <p>Opencast is packaged into multiple distributions. There is a separate Docker image for each distribution. Simple
 installations can use the all-in-one distribution.</p>
-<p>Opencast requires a database and a message broker (Apache ActiveMQ). We currently support H2 or MySQL/MariaDB databases.
+<p>Opencast requires a database. We currently support H2 or MySQL/MariaDB databases.
 The Docker Hub repository has official Docker images for MySQL and MariaDB. H2 is already integrated into Opencast so
-that no database container is needed. There are multiple 3rd-party Docker images for ActiveMQ; this guide uses
-<code>webcenter/activemq</code>.</p>
+that no database container is needed.</p>
 <p><code>docker-compose</code> can be used to configure, start and connect all services automatically. The <a href="https://github.com/opencast/opencast-docker/tree/master/docker-compose">opencast-docker
 repository</a> contains multiple configuration
 examples:</p>
@@ -146,19 +145,6 @@ examples:</p>
 </code></pre>
 <p>You might want to edit the compose file and add extra volumes to include custom configurations or workflows (see
 <a href="https://docs.docker.com/compose/compose-file/">compose file reference</a>).</p>
-<p>The compose files assume that the ActiveMQ configuration is located at <code>./assets/activemq.xml</code>. You can download the
-file from the repository:</p>
-<pre><code class="language-sh">$ mkdir assets
-$ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
-</code></pre>
-<p>Alternatively, you can use the Docker images to generate the file. This has the advantage that the correct version is
-always used:</p>
-<pre><code class="language-sh">$ mkdir assets
-
-$ docker run -it --rm \
-    quay.io/opencast/allinone:&lt;version&gt; \
-    app:print:activemq.xml &gt; assets/activemq.xml
-</code></pre>
 <p>At this point you are ready to start Opencast with the <code>up</code> command:</p>
 <pre><code class="language-sh">$ docker-compose up
 </code></pre>

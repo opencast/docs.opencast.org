@@ -37,7 +37,6 @@
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Opencast", url: "#install-opencast" },
-              {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Elasticsearch", url: "#install-elasticsearch" },
               {title: "Configuration", url: "#configuration" },
               {title: "Start Opencast", url: "#start-opencast" },
@@ -137,22 +136,6 @@ Note that the testing repository is an additional repository and still requires 
 </code></pre>
 <p>This will install the default distribution of Opencast and all its dependencies.
 For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
-<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
-<p>The Apache ActiveMQ message broker is required by Opencast.
-It can be run on the same machine as Opencast.
-Install ActiveMQ by running:</p>
-<pre><code class="language-sh">dnf install activemq-dist
-</code></pre>
-<p>A prepared configuration file for ActiveMQ comes with Opencast.
-It should suffice for an all-in-one installation and can be copied to replace the default configuration:</p>
-<pre><code class="language-sh">cp /usr/share/opencast/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
-</code></pre>
-<p>Then start and enable ActiveMQ by running:</p>
-<pre><code class="language-sh">systemctl start activemq
-systemctl enable activemq
-</code></pre>
-<p>More information about how to properly set up ActiveMQ for Opencast, cluster installations in particular,
-can be found in the <a href="../../configuration/message-broker/">message broker configuration documentation</a>.</p>
 <h2 id="install-elasticsearch">Install Elasticsearch</h2>
 <p>Opencast uses Elasticsearch as a search index and a cache for quick access to some data from user interfaces.
 Make sure to install it on the node which also serves the admin interface.</p>

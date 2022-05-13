@@ -153,7 +153,6 @@ Elasticsearch 7.9.x
 <p>Homebrew is a package manager for OS X. For installation instruction see <a href="http://brew.sh/">their website</a>.</p>
 <pre><code>brew install maven
 brew install ffmpeg
-brew install apache-activemq
 
 brew install tesseract
 brew install hunspell
@@ -169,7 +168,6 @@ brew install synfig
 <ul>
 <li><a href="https://maven.apache.org/download.cgi">Get Apache Maven</a></li>
 <li><a href="http://ffmpeg.org/download.html">Get FFmpeg</a></li>
-<li><a href="http://activemq.apache.org/download.html">Get Apache ActiveMQ</a></li>
 </ul>
 <h2 id="building-opencast">Building Opencast</h2>
 <p>Switch to the opencast folder. If you downloaded the tarball, this is the folder you just unpacked (called something
@@ -183,18 +181,13 @@ building opencast (depending on the folder permissions, you might need to start 
 name, login information, etc. Be aware that the config files now reside in the build folders for the desired
 distribution. For the all-in-one distribution, this would be
 <code>/your/path/to/opencast/build/opencast-dist-allinone-[…]/etc/</code>, again with <code>[…]</code> representing the selected version.</p>
-<p>As specified in the guide, make sure you replace the default ActiveMQ configuration with the one provided in
-<code>docs/scripts/activemq/activemq.xml</code>. If you installed ActiveMQ using homebrew, you can find the installation path with
-<code>brew info activemq</code>. The configuration is probably located in <code>/usr/local/Cellar/activemq/&lt;version&gt;/libexec/conf/</code>.</p>
 <p>ffprobe is used to analyze new videos. It is installed with FFmpeg but usually not on the path to be automatically
 executed. You have to link the ffprobe to <code>/usr/local/bin/</code>. You can find the FFmpeg install directory with
 <code>brew info ffmpeg</code>. Usually you would link the file with
 <code>ln -s /usr/local/Cellar/ffmpeg/&lt;version&gt;/bin/ffprobe /usr/local/bin/ffprobe</code>.</p>
 <h2 id="running-opencast">Running Opencast</h2>
-<p>Make sure you have ActiveMQ running (unless you're running it on a different machine). Then you can start Opencast using
-the start-opencast script:</p>
-<pre><code>activemq start
-cd /your/path/to/opencast/
+<p>You can start Opencast using the start-opencast script:</p>
+<pre><code>cd /your/path/to/opencast/
 cd build/opencast-dist-allinone-[…]
 ./bin/start-opencast
 </code></pre>

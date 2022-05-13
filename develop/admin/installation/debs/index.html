@@ -38,7 +38,6 @@
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Supported JDKs", url: "#supported-jdks" },
               {title: "Activate Repository", url: "#activate-repository" },
-              {title: "Install Apache ActiveMQ", url: "#install-apache-activemq" },
               {title: "Install Elasticsearch", url: "#install-elasticsearch" },
               {title: "Install Opencast", url: "#install-opencast" },
               {title: "Advanced Installation", url: "#advanced-installation" },
@@ -143,22 +142,6 @@ Note that the testing repository is an additional repository and still requires 
 </code></pre>
 </li>
 </ul>
-<h2 id="install-apache-activemq">Install Apache ActiveMQ</h2>
-<p>The Apache ActiveMQ message broker is required by Opencast since version 2.0. It does not necessarily have to be
-installed on the same machine as Opencast, however many adopters commonly install it on their admin nodes.
-Install ActiveMQ with:</p>
-<pre><code>apt-get install activemq-dist
-</code></pre>
-<p>A prepared configuration file for ActiveMQ can be found at <code>/usr/share/opencast/docs/scripts/activemq/activemq.xml</code>
-<em>after Opencast itself has been installed</em> and should replace <code>/etc/activemq/activemq.xml</code>. For an all-in-one
-installation the following command should suffice:</p>
-<pre><code>cp /usr/share/opencast/docs/scripts/activemq/activemq.xml /etc/activemq/activemq.xml
-</code></pre>
-<p>ActiveMQ must be started <em>prior to</em> Opencast startup.</p>
-<p>More information about how to properly set up ActiveMQ for Opencast can be found in the <a href="../../configuration/message-broker/">message broker configuration
-documentation</a>.</p>
-<p>Note that most Debian based distributions also have ActiveMQ packaged by upstream package maintainers. These packages
-will work, however the ActiveMQ configuration file will require modification to function correctly.</p>
 <h2 id="install-elasticsearch">Install Elasticsearch</h2>
 <p>Starting with Opencast 9, Elasticsearch is now a dependency.  Our packages do not explicitly depend on Elasticsearch
 because it runs externally to Opencast.  By default we expect Elasticsearch to be running on the admin node, however
@@ -186,15 +169,13 @@ that while the repository provides a packaged version of FFmpeg, your distributi
 pre-installed or otherwise takes precedence.  This version may work, however Opencast only formally supports the
 version(s) in the repository.  To install the Opencast version of ffmpeg add <code>ffmpeg-dist</code> to the end of the command above.</p>
 <p>At this point Opencast is installed and will work locally, but it is not completely configured.  Because additional configuration
-is required, neither Opencast nor ActiveMQ are configured to start automatically. Please follow the
-<a href="../../configuration/basic/">Basic Configuration guide</a>.  Once you are ready, enable Opencast and ActiveMQ to start on boot with:</p>
-<pre><code>    systemctl enable activemq.service
-    systemctl enable elasticsearch.service
+is required, Opencast is not configured to start automatically. Please follow the
+<a href="../../configuration/basic/">Basic Configuration guide</a>.  Once you are ready, enable Opencast and Elasticsearch to start on boot with:</p>
+<pre><code>    systemctl enable elasticsearch.service
     systemctl enable opencast.service
 </code></pre>
 <p>then start them with:</p>
-<pre><code>    systemctl start activemq.service
-    systemctl start elasticsearch.service
+<pre><code>    systemctl start elasticsearch.service
     systemctl start opencast.service
 </code></pre>
 <h2 id="advanced-installation">Advanced Installation</h2>

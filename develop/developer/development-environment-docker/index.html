@@ -93,10 +93,6 @@ because of Docker's isolation functionality, multiple environments can be operat
 <h2 id="setting-up-a-docker-build-environment">Setting up a Docker build environment</h2>
 <p>Two <code>docker-compose</code> files are provided to start up different development environments. You also need the ActiveMQ configuration
 (see "Testing Locally with Docker" guide in the administration documentation).</p>
-<p>First, download the support assets:</p>
-<pre><code class="language-sh">$ mkdir assets
-$ curl -o assets/activemq.xml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/assets/activemq.xml
-</code></pre>
 <p>Now create a folder where the Opencast repository should be located, and expose its path as an environment variable. You
 must also create the local Maven repository if it does not already exist.</p>
 <pre><code class="language-sh">$ mkdir -p opencast ~/.m2
@@ -142,9 +138,7 @@ $ oc_uninstall
 # Remove all Opencast files (database, media packages, etc.).
 $ oc_clean_data
 </code></pre>
-<p>These scripts are provided to automate common tasks, but you can also run the necessary commands directly. The install
-script has the advantage that it automatically connects Opencast to the configured ActiveMQ instance available at
-<code>tcp://activemq:61616</code>.</p>
+<p>These scripts are provided to automate common tasks, but you can also run the necessary commands directly.</p>
 <p>Since the Opencast code is shared, any change from an IDE is directly visible within the container.</p>
 <h2 id="multi-node-opencast-development">Multi-node Opencast Development</h2>
 <p>Development with multi-node Opencast environments are also supported using a different compose file.  Instead of

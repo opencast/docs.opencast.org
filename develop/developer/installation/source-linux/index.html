@@ -41,7 +41,6 @@
               {title: "Ubuntu 18.04", url: "#ubuntu-1804" },
               {title: "Fedora", url: "#fedora" },
               {title: "macOS 10.14", url: "#macos-1014" },
-              {title: "Install and Configure ActiveMQ", url: "#install-and-configure-activemq" },
               {title: "Build and Start Opencast", url: "#build-and-start-opencast" },
               {title: "Modify Code and Build Changes", url: "#modify-code-and-build-changes" },
               {title: "Common Build Errors or Fixes", url: "#common-build-errors-or-fixes" },
@@ -202,20 +201,6 @@ $ dnf install -y ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bz
 <p>You can now install needed packages:</p>
 <pre><code class="language-sh">$ brew install maven ffmpeg nodejs
 </code></pre>
-<h3 id="activemq-with-homebrew">ActiveMQ with Homebrew</h3>
-<p>Homebrew offers you an ActiveMQ Package. Please decide, if you want to use Homebrew for ActiveMQ or if you want to follow the general guide below and run it by downloading the binaries. If you want continue you can install ActiveMQ by</p>
-<pre><code class="language-sh">$ brew install activemq
-</code></pre>
-<p>Remember to copy the activemq.xml like mentioned below in the right directory. You have to find the right folder for that operation, Homebrew will put the ActiveMQ files in a different location. You could find it by</p>
-<pre><code class="language-sh">$ sudo find / -name activemq.xml
-````
-
-After changing the configuration file you can list and start or stop you services with
-
-```sh
-$ brew services list
-$ brew services start activemq
-</code></pre>
 <h3 id="git-bash-completion">Git Bash Completion</h3>
 <p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
 <pre><code class="language-sh">$ brew install bash-completion
@@ -231,32 +216,6 @@ $ brew services start activemq
 </code></pre>
 <p>Finally apply your changes with</p>
 <pre><code>$ source /usr/local/etc/bash_completion.d/git-completion.bash
-</code></pre>
-<h2 id="install-and-configure-activemq">Install and Configure ActiveMQ</h2>
-<p>Download the current version from https://activemq.apache.org/components/classic/download</p>
-<p>Extract and copy it to a directory, in this case you could use the opt directory.</p>
-<pre><code>$ sudo tar -zxvf apache-activemq-*-bin.tar.gz -C /opt
-$ cd /opt &amp;&amp; sudo mv apache-activemq-*/ activemq
-</code></pre>
-<p>Copy the preconfigured XML from your opencast directory into your ActiveMQ configuration.
-In this example you have following folder structure:</p>
-<ul>
-<li>~/Projects/opencast</li>
-<li>/opt/activemq</li>
-</ul>
-<p>With that folder structure you could use following command:</p>
-<pre><code>$ cd &amp;&amp; cd Projects &amp;&amp; sudo cp opencast/docs/scripts/activemq/activemq.xml /opt/activemq/conf/activemq.xml
-</code></pre>
-<p>If your folder structure is different from that example or you do decide to put it somewhere else, you should copy and replace the preconfigured XML from</p>
-<ul>
-<li>/location/to/your/opencast/docs/scripts/activemq/activemq.xml</li>
-</ul>
-<p>into</p>
-<ul>
-<li>/location/to/your/activemq/conf/activemq.xml</li>
-</ul>
-<p>You can start your ActiveMQ instance with:</p>
-<pre><code>$ sudo ./location/to/your/activemq/bin/activemq start
 </code></pre>
 <h2 id="build-and-start-opencast">Build and Start Opencast</h2>
 <hr />
@@ -294,8 +253,6 @@ $ mvn clean install -DtrimStackTrace=false
 </code></pre>
 <h3 id="jdk-version">JDK Version</h3>
 <p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE is configured to use JDK 1.8.0.</p>
-<h3 id="waiting-for-activemq">Waiting for ActiveMQ</h3>
-<p>Opencast requires ActiveMQ to be both running and properly configured, otherwise it will wait forever to connect. See <a href="#install-and-configure-activemq">here</a> for details on how to configure ActiveMQ. Make sure, that ActiveMQ runs without errors and with the right JAVA_HOME Variable (explained <a href="#set-the-javahome-variable">here</a>).</p>
 <h3 id="slow-idea-fix">Slow IDEA Fix</h3>
 <p>Edit following file</p>
 <pre><code>$ sudo nano /etc/sysctl.conf
