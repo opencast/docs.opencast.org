@@ -1,19 +1,13 @@
-commit c47a7f509973e112e1de7f8563d8f98c1b97dd42
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon May 16 08:36:34 2022 +0000
+commit 4cf50103f550ebfc22573ebbb4a6f7c64e3547f4
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Wed May 18 01:20:00 2022 +0200
 
-    Bump html-validate in /modules/engage-paella-player-7
+    Remove Solr from WorkflowService (#3377)
     
-    Bumps [html-validate](https://gitlab.com/html-validate/html-validate) from 7.0.0 to 7.1.0.
-    - [Release notes](https://gitlab.com/html-validate/html-validate/tags)
-    - [Changelog](https://gitlab.com/html-validate/html-validate/blob/master/CHANGELOG.md)
-    - [Commits](https://gitlab.com/html-validate/html-validate/compare/v7.0.0...v7.1.0)
+    Removes all Solr functionality from the workflow service. The workflow service now instead completely relies on the database. Code that would only work with the Solr Index has also been removed.
     
-    ---
-    updated-dependencies:
-    - dependency-name: html-validate
-      dependency-type: direct:development
-      update-type: version-update:semver-minor
-    ...
+    Key changes:
     
-    Signed-off-by: dependabot[bot] <support@github.com>
+    - Removes internal collecting and storing of workflow statistics from the workflow service, as well as related endpoints. Instead, numbers about workflows can already be gotten from the metrics endpoint
+    - Removes the full text workflow query endpoint from the workflow service and External API, since it requires indexing of workflow data. By creating an Elasticsearch index for workflows, the query could be reintroduced to the External API in the future.
+    - Modifies the count endpoint in the workflow service by removes querying for current operation. By creating an Elasticsearch index for workflows, querying by current operation could be reintroduced to the External API in the future.

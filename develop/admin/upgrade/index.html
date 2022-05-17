@@ -35,6 +35,7 @@
         var pageToc = [
           {title: "Upgrading Opencast from 11.x to 11.x", url: "#_top", children: [
               {title: "Database Migration", url: "#database-migration" },
+              {title: "Optional: Delete Workflow Service Solr Index", url: "#optional-delete-workflow-service-solr-index" },
           ]},
         ];
 
@@ -101,6 +102,10 @@ please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <p>Upgrading to Opencast 12 requires a DB migration, as some tables have changed slightly.
 Migration scripts can be found in <code>doc/upgrade/11_to_12/</code>.
 There are separate scripts for MariaDB/MySQL (<code>mysql5.sql</code>) and PostgreSQL (<code>postgresql.sql</code>).</p>
+<h2 id="optional-delete-workflow-service-solr-index">Optional: Delete Workflow Service Solr Index</h2>
+<p>Starting with Opencast 12, the Workflow Service does not store data in its Solr Index anymore. Therefore, the index can
+be deleted to save on disk space. Unless you setup Solr yourself, the index can likely be found under
+ <code>/var/lib/opencast/solr-indexes/workflows/</code>.</p>
 
   <br>
     
