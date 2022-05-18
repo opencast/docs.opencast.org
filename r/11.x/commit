@@ -1,5 +1,15 @@
-commit 205838759f3a9558efcf0ababb534740ab3b1025
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed May 18 12:45:02 2022 +0200
+commit 3f55f7e0838b4c29a73bb3f62cc2f341ef11f02a
+Author: Felix Pahlow <felix.pahlow@itz.uni-halle.de>
+Date:   Thu Apr 28 21:24:32 2022 +0200
 
-    Merge r/10.x into r/11.x
+    Add missing tags in encode WOH
+    
+    Tags for different output files were missing in encode WOH, because
+    the comparison of the output file name to a specified suffix stopped
+    working after 19c0940c.
+    The reason for this is that the files were renamed not including
+    the specified suffix, and comparison for the suffix as a condition
+    for adding a tag is used.
+    Fixes the issue by remembering the original file name from encoding.
+    
+    Resolves #3639
