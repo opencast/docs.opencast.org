@@ -1,13 +1,5 @@
-commit 4cf50103f550ebfc22573ebbb4a6f7c64e3547f4
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed May 18 01:20:00 2022 +0200
+commit 7da3dbdbe06ba6cc09d929cb6dfb7b71f0ec0f26
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Wed May 18 12:45:14 2022 +0200
 
-    Remove Solr from WorkflowService (#3377)
-    
-    Removes all Solr functionality from the workflow service. The workflow service now instead completely relies on the database. Code that would only work with the Solr Index has also been removed.
-    
-    Key changes:
-    
-    - Removes internal collecting and storing of workflow statistics from the workflow service, as well as related endpoints. Instead, numbers about workflows can already be gotten from the metrics endpoint
-    - Removes the full text workflow query endpoint from the workflow service and External API, since it requires indexing of workflow data. By creating an Elasticsearch index for workflows, the query could be reintroduced to the External API in the future.
-    - Modifies the count endpoint in the workflow service by removes querying for current operation. By creating an Elasticsearch index for workflows, querying by current operation could be reintroduced to the External API in the future.
+    Merge r/11.x into develop
