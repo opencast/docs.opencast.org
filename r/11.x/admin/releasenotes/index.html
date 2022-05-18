@@ -38,6 +38,7 @@
               {title: "Improvements", url: "#improvements" },
               {title: "Behavior changes", url: "#behavior-changes" },
               {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 11.7", url: "#additional-notes-about-117" },
               {title: "Additional Notes about 11.6", url: "#additional-notes-about-116" },
               {title: "Additional Notes about 11.5", url: "#additional-notes-about-115" },
               {title: "Additional Notes about 11.4", url: "#additional-notes-about-114" },
@@ -172,6 +173,40 @@ prop.org.opencastproject.host.presentation.example.org=https://tenant1-presentat
 <li>[<a href="https://github.com/opencast/opencast/pull/2878">#2878</a>] - Add endpoint to resume Index Rebuild for specified service</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3002">#3002</a>] - Sign publication URL of events in External API</li>
 <li>[<a href="https://github.com/opencast/opencast/pull/3148">#3148</a>] - Allow empty track duration</li>
+</ul>
+<h2 id="additional-notes-about-117">Additional Notes about 11.7</h2>
+<ul>
+<li>Security fixes:<ul>
+<li>This release fixes the issue that users can pass URLs from other tenants to the ingest service which will check
+  only against the other organization but not against the one currently active. This allows users to easily ingest
+  media from other tenants (cf.
+  [<a href="https://github.com/opencast/opencast/security/advisories/GHSA-qm6v-cg9v-53j3">GHSA-qm6v-cg9v-53j3</a>]).</li>
+</ul>
+</li>
+<li>Bug fixes:<ul>
+<li>Series only being marked as deleted without actually being removed
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3635">#3635</a>]).</li>
+<li>Invalid ACLs submitted to api-endpoint being stored
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3679">#3679</a>]).</li>
+<li>Possible race condition when updating ACLs of newly created series
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3680">#3680</a>]).</li>
+<li>Failing video image extraction when the video track is shorter than the audio track
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3707">#3707</a>]).</li>
+<li>Fallback tracks not being used in the <code>partial-publish</code> workflow
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3708">#3708</a>]).</li>
+<li>Missing tags when encoding multiple qualities with the encode WOH
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3639">#3639</a>]).</li>
+</ul>
+</li>
+<li>New features and updates:<ul>
+<li>Check if user can be loaded before starting a workflow
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3661">#3661</a>]).</li>
+<li>The metadata in the video editor can now be saved individually
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3715">#3715</a>]).</li>
+<li>Make creation of default external API group configurable
+  (cf. [<a href="https://github.com/opencast/opencast/pull/3682">#3682</a>]).</li>
+</ul>
+</li>
 </ul>
 <h2 id="additional-notes-about-116">Additional Notes about 11.6</h2>
 <ul>
