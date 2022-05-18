@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Data Types - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Data Types", url: "#_top", children: [
+              {title: "Basic", url: "#basic" },
+              {title: "Extended", url: "#extended" },
+              {title: "Date and Time", url: "#date-and-time" },
+              {title: "Recurrence Rule", url: "#recurrence-rule" },
+              {title: "Metadata Catalogs", url: "#metadata-catalogs" },
+              {title: "Access Control Lists", url: "#access-control-lists" },
+              {title: "Workflow", url: "#workflow" },
+              {title: "Statistics", url: "#statistics" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../glossary/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../glossary/" class="btn btn-xs btn-link">
+        Glossary
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security-api/" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="data-types">Data Types</h1>
+<p>This page defines data types that are commonly used by many External API requests. The page is divided in several
+sections that start with general information about how the types are supposed to work.</p>
+<div class="toc">
+<ul>
+<li><a href="#data-types">Data Types</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#extended">Extended</a><ul>
+<li><a href="#array">array</a></li>
+<li><a href="#object">object</a></li>
+<li><a href="#file">file</a></li>
+<li><a href="#flavor">flavor</a></li>
+<li><a href="#property">property</a></li>
+</ul>
+</li>
+<li><a href="#date-and-time">Date and Time</a></li>
+<li><a href="#recurrence-rule">Recurrence Rule</a></li>
+<li><a href="#metadata-catalogs">Metadata Catalogs</a><ul>
+<li><a href="#fields">fields</a></li>
+<li><a href="#values">values</a></li>
+<li><a href="#catalog">catalog</a></li>
+<li><a href="#catalogs">catalogs</a></li>
+</ul>
+</li>
+<li><a href="#access-control-lists">Access Control Lists</a><ul>
+<li><a href="#ace">ace</a></li>
+<li><a href="#acl">acl</a></li>
+</ul>
+</li>
+<li><a href="#workflow">Workflow</a><ul>
+<li><a href="#workflow_retry_strategy">workflow_retry_strategy</a></li>
+<li><a href="#workflow_state">workflow_state</a></li>
+<li><a href="#workflow_operation_state">workflow_operation_state</a></li>
+<li><a href="#operation_definition">operation_definition</a></li>
+<li><a href="#operation_instance">operation_instance</a></li>
+</ul>
+</li>
+<li><a href="#statistics">Statistics</a><ul>
+<li><a href="#parameters">parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="basic">Basic</h2>
+<p>This section defines basic data types used in the External API specification.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">An UTF-8 encoded string</td>
+</tr>
+<tr>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left"><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">An integer number, i.e. [-][0-9]+[0-9]*</td>
+</tr>
+</tbody>
+</table>
+<h2 id="extended">Extended</h2>
+<p>This section describes extended data types used in the External API specification.</p>
+<h3 id="array">array</h3>
+<p>The External API makes use of JSON arrays often. We indicate the element type in the brackets, e.g.
+<a href="#array"><code>array[string]</code></a>.</p>
+<p>The empty array [] is allowed.</p>
+<p><strong>Examples</strong></p>
+<pre><code>[&quot;String1&quot;, &quot;String2&quot;]
+</code></pre>
+<pre><code>[]
+</code></pre>
+<h3 id="object">object</h3>
+<p>The External API makes use of JSON objects.</p>
+<p>The empty object {} might be allowed.</p>
+<p><strong>Examples</strong></p>
+<pre><code>{
+  &quot;myObject1&quot;: {
+    &quot;key&quot;: &quot;value&quot;;
+  },
+  &quot;myObject2&quot;: {
+    &quot;array&quot;: [1, 2, 3]
+  },
+  &quot;valid&quot;: false
+}
+</code></pre>
+<pre><code>{}
+</code></pre>
+<h3 id="file">file</h3>
+<p>This data type indicates that a file is needed as parameter.</p>
+<h3 id="flavor">flavor</h3>
+<p>Opencast uses flavors to locate tracks, attachments and catalogs associated to events. Flavors have a type and a
+subtype and are written in the form <code>type</code> + "/" + <code>subtype</code>.</p>
+<p><a href="#flavor"><code>flavor</code></a> ::= <code>type</code> + "/" + <code>subtype</code> whereas both <code>type</code> and <code>subtype</code> consist of ([a-z][A-Z][1-9])+([a-z][A-Z][1-9][+-])*</p>
+<p><strong>Example</strong></p>
+<pre><code>dublincore/episode
+</code></pre>
+<h3 id="property">property</h3>
+<p>Opencast often uses sets of key-value pairs to associate properties to objects. The External API uses
+JSON objects to represent those properties. Both the name of the JSON object field and its value are of type <code>string</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;key&quot;: &quot;value&quot;,
+  &quot;live&quot;: &quot;true&quot;
+}
+</code></pre>
+<h2 id="date-and-time">Date and Time</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Encoding</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="#date-and-time"><code>date</code></a></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a></td>
+<td align="left">Date</td>
+</tr>
+<tr>
+<td align="left"><a href="#date-and-time"><code>datetime</code></a></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a></td>
+<td align="left">Date and Time</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong></p>
+<p><a href="#date-and-time"><code>date</code></a>:</p>
+<pre><code>2018-03-11
+</code></pre>
+<p><a href="#date-and-time"><code>datetime</code></a>:</p>
+<pre><code>2018-03-11T13:23:51Z
+</code></pre>
+<h2 id="recurrence-rule">Recurrence Rule</h2>
+<p>To define a set of recurring events within a given time period, Opencast uses recurrence rules.</p>
+<p>For more details about reccurrence rules, please refer to the
+<a href="https://tools.ietf.org/html/rfc5545">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>&quot;rrule&quot;:&quot;FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=16;BYMINUTE=0&quot;
+</code></pre>
+<p>Please note that <code>BYHOUR</code> is specified in UTC.</p>
+<h2 id="metadata-catalogs">Metadata Catalogs</h2>
+<p>The External API is designed to take full advantage of the powerful metadata facilities of Opencast.</p>
+<p>Opencast distinguishes between bibliographic metadata and technical metadata:</p>
+<ul>
+<li><em>Bibliographic metadata</em> is supposed to describe the associated objects and to be used to present those objects to
+    endusers (e.g. in a video portal).</li>
+<li><em>Technical metadata</em> is used by Opencast to manage objects (e.g. permissions, processing, scheduling)</li>
+</ul>
+<p>For events and series, Opencast manages bibliographic metadata in metadata catalogs. There are two kind of metadata
+catalogs:</p>
+<ul>
+<li>The default metadata catalogs for events (<code>dublincore/episode</code>) and series (<code>dublincore/series</code>)</li>
+<li>An arbitrary number of configurable extended metadata catalogs can be configured for both events and series</li>
+</ul>
+<p>While the extended metadata can be fully configured, the default metadata catalogs are supposed to hold a minimum
+set of defined metadata fields.</p>
+<p>As the metadata catalogs are configurable, the External API provides means of gathering the metadata catalog
+configuration.</p>
+<p>This is done by <a href="../events-api/#metadata">"/api/events/{event_id}/metadata"</a> and
+<a href="../series-api/#metadata">"/api/series/{series_id}/metdata"</a>. Those requests return self-describing metadata catalogs
+that do not just contain the values of all metadata fields but also a list of available metadata fields and their
+configuration.</p>
+<p>Note that the Opencast configuration defines which metadata catalogs are available for events and series.</p>
+<p>The following sections define data types that are used to manage metadata catalogs.</p>
+<h3 id="fields">fields</h3>
+<p>Each metadata catalogs has a list of metadata fields that is described as array of JSON objects with the following
+fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Optional</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>id</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Technical identifier of the metadata field</td>
+</tr>
+<tr>
+<td align="left"><code>value</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Current value of the metadata field</td>
+</tr>
+<tr>
+<td align="left"><code>label</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Displayable name of the metadata field (i18n)</td>
+</tr>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Type of the metadata field</td>
+</tr>
+<tr>
+<td align="left"><code>readOnly</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether this metadata field is read-only</td>
+</tr>
+<tr>
+<td align="left"><code>required</code></td>
+<td align="left">no</td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether this metadata field is mandatory</td>
+</tr>
+<tr>
+<td align="left"><code>collection</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Pre-defined list of values as JSON object</td>
+</tr>
+<tr>
+<td align="left"><code>translatable</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether the field <code>value</code> supports i18n</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;readOnly&quot;: false,
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+    &quot;type&quot;: &quot;text&quot;,
+    &quot;value&quot;: &quot;Test Event Title&quot;,
+    &quot;required&quot;: true
+  },
+  {
+    &quot;translatable&quot;: true,
+    &quot;readOnly&quot;: false,
+    &quot;id&quot;: &quot;language&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.LANGUAGE&quot;,
+    &quot;type&quot;: &quot;text&quot;,
+    &quot;value&quot;: &quot;&quot;,
+    &quot;required&quot;: false
+  },
+  {
+    &quot;translatable&quot;: true,
+    &quot;readOnly&quot;: false,
+    &quot;id&quot;: &quot;license&quot;,
+    &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.LICENSE&quot;,
+    &quot;type&quot;: &quot;text&quot;,
+    &quot;value&quot;: &quot;&quot;,
+    &quot;required&quot;: false
+  },
+  [...]
+]
+</code></pre>
+<h3 id="values">values</h3>
+<p>To modifiy values of metadata catalogs, a JSON array with JSON objects contained the following fields is used:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Required</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>id</code></td>
+<td align="left">yes</td>
+<td align="left">The technical identifier of the metadata field</td>
+</tr>
+<tr>
+<td align="left"><code>value</code></td>
+<td align="left">yes</td>
+<td align="left">The value of the metadata field</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>Fields which are not included in <code>catalog_values</code> will not be updated</li>
+<li>Attempting to write readonly fields will result in error</li>
+<li>Attempting to write empty values to a required field will result in error</li>
+</ul>
+<pre><code>[
+  {
+    &quot;id&quot;: &quot;title&quot;,
+    &quot;value&quot;: &quot;Captivating title - edited&quot;
+  },
+  {
+    &quot;id&quot;: &quot;creator&quot;,
+    &quot;value&quot;: [&quot;John Clark&quot;, &quot;Thiago Melo Costa&quot;]
+  },
+  {
+    &quot;id&quot;: &quot;description&quot;,
+    &quot;value&quot;: &quot;A great description - edited&quot;
+  }
+]
+</code></pre>
+<h3 id="catalog">catalog</h3>
+<p>Besides the metadata configuration, the full metadata catalog configuration includes some additional fields
+describing the catalog itself:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">label</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">Displayable name of the metadata catalog</td>
+</tr>
+<tr>
+<td align="left">flavor</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The flavor of the metadata catalog</td>
+</tr>
+<tr>
+<td align="left">fields</td>
+<td align="left"><a href="#fields"><code>fields</code></a></td>
+<td align="left">An array of JSON objects describing the metadata field configurations of the metadata catalogs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>  {
+    &quot;flavor&quot;: &quot;dublincore/episode&quot;,
+    &quot;title&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.EPISODE&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;readOnly&quot;: false,
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;value&quot;: &quot;Test 1&quot;,
+        &quot;required&quot;: true
+      },
+      [...]
+    ]
+  }
+]
+
+</code></pre>
+<h3 id="catalogs">catalogs</h3>
+<p>The metadata configuration including all metadata catalogs of a given objects is returned as JSON array whereas
+its elements are of type <a href="#catalog"><code>catalog</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;flavor&quot;: &quot;dublincore/episode&quot;,
+    &quot;title&quot;: &quot;EVENTS.EVENTS.DETAILS.CATALOG.EPISODE&quot;,
+    &quot;fields&quot;: [
+      {
+        &quot;readOnly&quot;: false,
+        &quot;id&quot;: &quot;title&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.TITLE&quot;,
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;value&quot;: &quot;Test 1&quot;,
+        &quot;required&quot;: true
+      },
+      {
+        &quot;readOnly&quot;: false,
+        &quot;id&quot;: &quot;subjects&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.SUBJECT&quot;,
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;value&quot;: [],
+        &quot;required&quot;: false
+      },
+      {
+        &quot;readOnly&quot;: false,
+        &quot;id&quot;: &quot;description&quot;,
+        &quot;label&quot;: &quot;EVENTS.EVENTS.DETAILS.METADATA.DESCRIPTION&quot;,
+        &quot;type&quot;: &quot;text_long&quot;,
+        &quot;value&quot;: &quot;&quot;,
+        &quot;required&quot;: false
+      },
+      [...]
+    ]
+  }
+]
+
+</code></pre>
+<h2 id="access-control-lists">Access Control Lists</h2>
+<p>Opencast uses access control lists (ACL) to manage permissions of objects. Each access control list is associated to
+exactly one object and consists of a list of access control entries (ACE).
+The access control entries are a list of triples &lt;<code>role</code>, <code>action</code>, <code>allow</code>&gt; which read like "Users with role
+<code>role</code> are allowed to perform action <code>action</code> on the associate object if <code>allow</code> is true".</p>
+<p>Opencast defines the following ACL actions:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Action</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>read</code></td>
+<td align="left">Read access</td>
+</tr>
+<tr>
+<td align="left"><code>write</code></td>
+<td align="left">Write access</td>
+</tr>
+</tbody>
+</table>
+<p>Depending on the configuration of Opencast, there can be additional ACL actions.</p>
+<h3 id="ace">ace</h3>
+<p>The access control entries are represented as JSON objects with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">ACE field</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>role</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The role this ACE affects</td>
+</tr>
+<tr>
+<td align="left"><code>action</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The actions this ACE affects</td>
+</tr>
+<tr>
+<td align="left"><code>allow</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether role is allowed to perform the action</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code>  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  }
+</code></pre>
+<h3 id="acl">acl</h3>
+<p>The access control lists are represented as JSON arrays with element type <a href="#ace"><code>ace</code></a>.</p>
+<p><strong>Example</strong></p>
+<pre><code>[
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;write&quot;,
+    &quot;role&quot;: &quot;ROLE_ADMIN&quot;
+  },
+  {
+    &quot;allow&quot;: true,
+    &quot;action&quot;: &quot;read&quot;,
+    &quot;role&quot;: &quot;ROLE_USER&quot;
+  }
+]
+</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="workflow_retry_strategy">workflow_retry_strategy</h3>
+<p>The retry strategy of a workflow operation definition in case of an error. The following values are possible:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>none</code></td>
+<td align="left">no retry</td>
+</tr>
+<tr>
+<td align="left"><code>retry</code></td>
+<td align="left">restart the operation</td>
+</tr>
+<tr>
+<td align="left"><code>hold</code></td>
+<td align="left">keep the operation in hold state</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow_state">workflow_state</h3>
+<p>The state the workflow instance is currently in. The following values are possible:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>instantiated</code></td>
+<td align="left">The workflow instance was instantiated, but is not yet running</td>
+</tr>
+<tr>
+<td align="left"><code>running</code></td>
+<td align="left">The workflow instance is running</td>
+</tr>
+<tr>
+<td align="left"><code>stopped</code></td>
+<td align="left">The workflow instance was stopped</td>
+</tr>
+<tr>
+<td align="left"><code>paused</code></td>
+<td align="left">The workflow instance was paused</td>
+</tr>
+<tr>
+<td align="left"><code>succeeded</code></td>
+<td align="left">The workflow instance has succeeded</td>
+</tr>
+<tr>
+<td align="left"><code>failed</code></td>
+<td align="left">The workflow instance has failed</td>
+</tr>
+<tr>
+<td align="left"><code>failing</code></td>
+<td align="left">The workflow instance has failed and is currently running the error handling workflow</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow_operation_state">workflow_operation_state</h3>
+<p>The state the workflow operation instance is currently in. The following values are possible:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>instantiated</code></td>
+<td align="left">The workflow operation instance was instantiated, but is not yet running</td>
+</tr>
+<tr>
+<td align="left"><code>running</code></td>
+<td align="left">The workflow operation instance is running</td>
+</tr>
+<tr>
+<td align="left"><code>paused</code></td>
+<td align="left">The workflow operation instance was paused</td>
+</tr>
+<tr>
+<td align="left"><code>succeeded</code></td>
+<td align="left">The workflow operation instance has succeeded</td>
+</tr>
+<tr>
+<td align="left"><code>failed</code></td>
+<td align="left">The workflow operation instance has failed</td>
+</tr>
+<tr>
+<td align="left"><code>skipped</code></td>
+<td align="left">The workflow operation instance was skipped</td>
+</tr>
+<tr>
+<td align="left"><code>retry</code></td>
+<td align="left">The workflow operation instance has failed and a retry is currently running</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operation_definition">operation_definition</h3>
+<p>The workflow operation_definition entries are represented as JSON objects with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>operation</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The operation of this workflow operation definition</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow operation definition</td>
+</tr>
+<tr>
+<td align="left"><code>configuration</code></td>
+<td align="left"><a href="#property"><code>property</code></a></td>
+<td align="left">The configuration for this workflow operation definition</td>
+</tr>
+<tr>
+<td align="left"><code>if</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The condition of this workflow operation definition that is required to be true for this operation to be executed</td>
+</tr>
+<tr>
+<td align="left"><code>unless</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The condition of this workflow operation definition that is required to be false for this operation to be executed</td>
+</tr>
+<tr>
+<td align="left"><code>fail_workflow_on_error</code></td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether an error during this workflow operation definition fails the workflow</td>
+</tr>
+<tr>
+<td align="left"><code>error_handler_workflow</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The identifier of the exception handler workflow of this workflow operation definition</td>
+</tr>
+<tr>
+<td align="left"><code>retry_strategy</code></td>
+<td align="left"><a href="#workflow_retry_strategy"><code>workflow_retry_strategy</code></a></td>
+<td align="left">The retry strategy of this workflow operation definition in case of an error</td>
+</tr>
+<tr>
+<td align="left"><code>max_attempts</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The number of attempts made to execute this workflow operation definition</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operation_instance">operation_instance</h3>
+<p>The workflow operation_instance entries are represented as JSON objects with the following fields:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>identifier</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The unique identifier of this workflow operation instance (equals the job identifier)</td>
+</tr>
+<tr>
+<td align="left"><code>operation</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The operation of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The description of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>configuration</code></td>
+<td align="left"><a href="#property"><code>property</code></a></td>
+<td align="left">The configuration for this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>state</code></td>
+<td align="left"><a href="#workflow_operation_state"><code>workflow_operation_state</code></a></td>
+<td align="left">The state of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>start</code></td>
+<td align="left"><a href="#date-and-time"><code>datetime</code></a></td>
+<td align="left">The start date and time of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>completion</code></td>
+<td align="left"><a href="#date-and-time"><code>datetime</code></a></td>
+<td align="left">The completion date and time of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>time_in_queue</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The number of milliseconds this workflow operation instance waited in a service queue</td>
+</tr>
+<tr>
+<td align="left"><code>host</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The host that executed this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>if</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The condition of this workflow operation instance that is required to be true for this operation to be executed</td>
+</tr>
+<tr>
+<td align="left"><code>unless</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The condition of this workflow operation instance that is required to be false for this operation to be executed</td>
+</tr>
+<tr>
+<td align="left"><code>fail_workflow_on_error</code></td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether an error during this workflow operation instance fails the workflow</td>
+</tr>
+<tr>
+<td align="left"><code>error_handler_workflow</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The identifier of the exception handler workflow of this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>retry_strategy</code></td>
+<td align="left"><a href="#workflow_retry_strategy"><code>workflow_retry_strategy</code></a></td>
+<td align="left">The retry strategy of this workflow operation instance in case of an error</td>
+</tr>
+<tr>
+<td align="left"><code>max_attempts</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The number of attempts made to execute this workflow operation instance</td>
+</tr>
+<tr>
+<td align="left"><code>failed_attempts</code></td>
+<td align="left"><a href="#basic"><code>integer</code></a></td>
+<td align="left">The number of failed attempts to execute this workflow operation instance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="statistics">Statistics</h2>
+<h3 id="parameters">parameters</h3>
+<p>The Statistics endpoint can list the available statistics providers. Optionally, the endpoint provides information
+about supported data query parameters using this JSON object.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The name of the parameter to be used in requests</td>
+</tr>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left"><a href="#basic"><code>string</code></a></td>
+<td align="left">The type of this parameter to be used in requests</td>
+</tr>
+<tr>
+<td align="left"><code>optional</code></td>
+<td align="left"><a href="#basic"><code>boolean</code></a></td>
+<td align="left">Whether the parameter must be specified in queries</td>
+</tr>
+<tr>
+<td align="left"><code>values</code></td>
+<td align="left"><a href="#basic"><code>array</code></a></td>
+<td align="left">Values to be used for enumeration types (only for type <code>enumeration</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The following types are available:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code></td>
+<td align="left">UTF-8 encoded string</td>
+</tr>
+<tr>
+<td align="left"><code>date</code></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> encoded date</td>
+</tr>
+<tr>
+<td align="left"><code>datetime</code></td>
+<td align="left"><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> encoded date and time</td>
+</tr>
+<tr>
+<td align="left"><code>integer</code></td>
+<td align="left">An integer number, i.e. [-][0-9]+[0-9]*</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="left"><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>enumeration</code></td>
+<td align="left">One of the values provided by the field <code>values</code></td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../glossary/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../glossary/" class="btn btn-xs btn-link">
+        Glossary
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security-api/" class="btn btn-xs btn-link">
+        Security API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/types.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

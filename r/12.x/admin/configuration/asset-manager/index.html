@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Asset Manager - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Asset Manager Configuration", url: "#_top", children: [
+              {title: "How can I use a different storage backend?", url: "#how-can-i-use-a-different-storage-backend" },
+              {title: "REST Endpoints", url: "#rest-endpoints" },
+              {title: "Config Options", url: "#config-options" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../elasticsearch/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../elasticsearch/" class="btn btn-xs btn-link">
+        Elasticsearch
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../firewall/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../firewall/" class="btn btn-xs btn-link">
+        Firewall
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="asset-manager-configuration">Asset Manager Configuration</h1>
+<h3 id="how-can-i-use-a-different-storage-backend">How can I use a different storage backend?</h3>
+<p>Configure an alternate storage backend, and then either use the REST endpoints or the
+<a href="../../workflowoperationhandlers/move-storage-woh/">Move Storage</a> workflow operation as part of a workflow.  Note that
+the REST endpoints trigger workflows, the workflow operation handlers are generally only useful as part of an automated
+storage tiering system.</p>
+<h3 id="rest-endpoints">REST Endpoints</h3>
+<p>The REST endpoints can be accessed from <code>$server_url/assets/docs</code>. The value of <code>$server_url</code> is set during
+<a href="../basic/">basic configuration</a>. There is no other current user interface for storage tiering at this time.</p>
+<h2 id="config-options">Config Options</h2>
+<h3 id="file-system-based-asset-store">File System Based Asset Store</h3>
+<p>Configure the file system based asset store in <code>custom.properties</code>.</p>
+<ul>
+<li><code>org.opencastproject.episode.rootdir</code>
+   The path where the file system based asset store of the default implementation stores the assets. This key is optional.</li>
+<li><code>org.opencastproject.storage.dir</code>
+  This is Opencast’s general config key to configure the base path of everything storage related.
+  If no storage directory is configured explicitly, the file system based asset store will use
+  <code>${org.opencastproject.storage.dir}/archive</code> as its base path.</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../elasticsearch/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../elasticsearch/" class="btn btn-xs btn-link">
+        Elasticsearch
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../firewall/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../firewall/" class="btn btn-xs btn-link">
+        Firewall
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/asset-manager.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
