@@ -37,6 +37,9 @@
               {title: "Setting-up Another Maven Repository", url: "#setting-up-another-maven-repository" },
               {title: "Prefer a Specific Repository", url: "#prefer-a-specific-repository" },
               {title: "Pushing artifacts to a Maven repository", url: "#pushing-artifacts-to-a-maven-repository" },
+              {title: "Pushing Snapshots", url: "#pushing-snapshots" },
+              {title: "Pushing Releases", url: "#pushing-releases" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
         ];
 
@@ -206,14 +209,14 @@ correctly placed prior to pushing to the mainline Nexus repository.</p>
       &lt;/profiles&gt;
     &lt;/settings&gt;
 </code></pre>
-<h5 id="pushing-snapshots">Pushing Snapshots</h5>
+<h2 id="pushing-snapshots">Pushing Snapshots</h2>
 <p>Snapshots are pushed automatically by the CI servers.  For historical purposes, this is accomplished by:</p>
 <pre><code class="language-bash">mvn deploy
 </code></pre>
 <p>To verify, your artifacts can be found <a href="https://oss.sonatype.org/content/repositories/snapshots/org/opencastproject/">here</a>
 and <a href="https://oss.sonatype.org/content/groups/staging/org/opencastproject/">here</a>.  Note that you cannot (easily) drop
 bad snapshots.  Instead, fix it and redeploy!</p>
-<h5 id="pushing-releases">Pushing Releases</h5>
+<h2 id="pushing-releases">Pushing Releases</h2>
 <p>Note: Please read this section entirely before running any commands.  Maven Central does not allow you to change a
 release once it has been closed!</p>
 <p>Pushing releases is similar to snapshots, with the added requirements that you also push:</p>
@@ -237,7 +240,7 @@ correct the issue locally, and redeploy.  Once this succeeds, you have two optio
 <pre><code class="language-bash">mvn nexus-staging:release
 </code></pre>
 <p>to permanently release the binaries in their current states.</p>
-<h5 id="troubleshooting">Troubleshooting</h5>
+<h2 id="troubleshooting">Troubleshooting</h2>
 <p>Sometimes the deploy or close will fail, timing out after 5 minutes waiting for Sonatype.  It will complain about
 violations of deploy rules - this may or may not actually be true.  If you're confident that this is caused by a simple
 timeout and not something you have done use one of the following.</p>
