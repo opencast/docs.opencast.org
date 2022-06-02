@@ -1,9 +1,9 @@
-commit 2fb4ff229957c736241190fd9b05476445fda210
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Thu Jun 2 07:18:55 2022 -0600
+commit a276247396d661892e6593f952d19193dd1c95df
+Author: Gregor Eichelberger <gregor.eichelberger@tuwien.ac.at>
+Date:   Sun May 29 23:54:52 2022 +0200
 
-    Further fixes to the tests. (#3828)
+    remove OAI-PMH servlet unregister on destroy
     
-    This adds additional checks, and streamlines the support code I added
-    
-    Fixes #3814
+    The OAI-PMH servlet gets registered as OSGi service. The pax web
+    whiteboard extender picks up the servlet and takes care of the OSGi
+    lifecycle. After a servlet gets destroyed, it unregisters the service.
