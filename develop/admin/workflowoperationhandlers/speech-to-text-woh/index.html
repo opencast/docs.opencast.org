@@ -111,7 +111,7 @@ only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. T
 <tr>
 <td>target-flavor</td>
 <td>yes</td>
-<td>Flavor of the produced subtitle file</td>
+<td>Flavor of the produced subtitle file. The subflavor supports the language-code placeholder <code>#{lang}</code></td>
 </tr>
 <tr>
 <td>target-element</td>
@@ -121,7 +121,12 @@ only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. T
 <tr>
 <td>language-code</td>
 <td>no</td>
-<td>The language of the video or audio source (default is "eng). It has to match the name of the language model directory. See 'vosk-cli'.</td>
+<td>The language of the video or audio source (default is "eng"). It has to match the name of the language model directory. See 'vosk-cli'.</td>
+</tr>
+<tr>
+<td>language-fallback</td>
+<td>no</td>
+<td>The fallback value if the dublin core/media package language field is not present. (default is "eng")</td>
 </tr>
 <tr>
 <td>target-tags</td>
@@ -148,6 +153,17 @@ for the <code>language-code</code> field.</p>
     &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
     &lt;configuration key=&quot;language-code&quot;&gt;eng&lt;/configuration&gt;
   &lt;/configurations&gt;
+&lt;/operation&gt;
+
+&lt;operation
+    id=&quot;speechtotext&quot;
+    description=&quot;Generates subtitles for video and audio files, derive language-code from metadata&quot;&gt;
+    &lt;configurations&gt;
+      &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+#{lang}&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-element&quot;&gt;attachment&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
+    &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 
