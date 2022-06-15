@@ -36,7 +36,7 @@
           {title: "Upgrading Opencast from 11.x to 12.x", url: "#_top", children: [
               {title: "Database Migration", url: "#database-migration" },
               {title: "MariaDB Connection Configuration", url: "#mariadb-connection-configuration" },
-              {title: "Optional: Delete Workflow Service Solr Index", url: "#optional-delete-workflow-service-solr-index" },
+              {title: "Optional: Delete Solr Index", url: "#optional-delete-solr-index" },
               {title: "Optional: Remove ActiveMQ", url: "#optional-remove-activemq" },
           ]},
         ];
@@ -95,41 +95,89 @@ please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
-<li>Read the release notes (especially the section of behaviour changes)</li>
+<li>Read the <a href="../releasenotes/">release notes</a> (especially the section of behaviour changes)</li>
 <li>Review the configuration changes and adjust your configuration accordingly</li>
-<li>Do the <a href="#database-migration">database migration</a></li>
-<li>Update MariaDB connection configuration</li>
-<li>Clean up old indexes</li>
-<li>Remove ActiveMQ</li>
-<li>Start Opencast if you haven't already done so</li>
+<li><a href="#database-migration">Migrate the database</a></li>
+<li><a href="#mariadb-connection-configuration">Update MariaDB connection configuration</a></li>
+<li><a href="#optional-delete-solr-index">Clean up old indexes</a></li>
+<li><a href="#optional-remove-activemq">Remove ActiveMQ</a></li>
+<li>Start Opencast</li>
 </ol>
 <h2 id="database-migration">Database Migration</h2>
-<p>Upgrading to Opencast 12 requires a database migration, as some tables have changed.
-Migration scripts can be found in <code>doc/upgrade/11_to_12/</code>.
+<p>Upgrading to Opencast 12 requires a database migration as some tables have changed.
+Migration scripts can be found in
+<a href="https://github.com/opencast/opencast/tree/r/12.x/docs/upgrade/11_to_12"><code>doc/upgrade/11_to_12/</code></a>.
 There are separate scripts for MariaDB and PostgreSQL.</p>
 <div class=warn>
-TODO: Explain how to use the Python scripts.
+Back-up your database before starting the migration.
 </div>
 
+<p>To start the migration, first make sure you have Python ≥ 3.6 installed on your system.
+You can run these scripts from any of your systems as long as it can establish a connection to your database.
+You only have to run these scripts once.</p>
+<p>To upgrade, choose the script for the database type you are running,
+either <code>workflows_postgresql.py</code> or <code>workflows_mariadb.py</code>
+and open the file with an editor. Adjust the connection settings located near the top of the file:</p>
+<pre><code class="language-py"># Vars
+user = &quot;opencast&quot;
+password = &quot;dbpassword&quot;
+host = &quot;127.0.0.1&quot;
+database = &quot;opencast&quot;
+</code></pre>
+<p>Next, install the Python dependencies listed at the top of the migration script you want to use.
+You can do this in a virtual Python environment if you do not want to install them globally:</p>
+<pre><code class="language-sh">python3 -m venv venv
+. ./venv/bin/activate
+# you might need to have a MariaDB/PostgrSQL client installed
+pip install psycopg2-binary
+# or for MariaDB
+pip install mysql-connector-python
+</code></pre>
+<p>Alternatively to using <code>pip</code>, use your system's package manager, e.g.:</p>
+<pre><code>dnf install python3-psycopg2
+</code></pre>
+<p>Finally, run the script to start the migration.
+Depending on the amount of workflows in your system, this might take some time:</p>
+<pre><code class="language-sh"># PostgreSQL
+python3 workflows_postgresql.py
+# MariaDB
+python3 workflows_mariadb.py
+</code></pre>
+<p>Wait for this to finish before starting Opencast.</p>
 <h2 id="mariadb-connection-configuration">MariaDB Connection Configuration</h2>
 <p>This only applies if you use MariaDB or MySQL.</p>
-<p>The syntax oof the JDBC connection configuration for MariaDB has slightly changed to an update of the MariaDB
+<p>The syntax of the JDBC connection configuration for MariaDB has slightly changed to an update of the MariaDB
 Connector/J in <code>etc/custom.properties</code>, please use <code>jdbc:mariadb:</code> instead of <code>jdbc:mysql:</code>:</p>
 <pre><code class="language-properties">org.opencastproject.db.jdbc.url=jdbc:mariadb://localhost/opencast?useMysqlMetadata=true
 </code></pre>
-<h2 id="optional-delete-workflow-service-solr-index">Optional: Delete Workflow Service Solr Index</h2>
+<h2 id="optional-delete-solr-index">Optional: Delete Solr Index</h2>
 <p>Starting with Opencast 12, the workflow and series services do not store data in Solr anymore.
 Therefore, the index can be deleted to save on disk space.
-Unless you setup Solr yourself, the index can likely be found under
-<code>/var/lib/opencast/solr-indexes/workflows/</code> and
-<code>/var/lib/opencast/solr-indexes/series/</code>.</p>
-<div class=warn>
-TODO: Explain where (on which nodes) these are located exactly.
-</div>
-
+Do <em>not</em> delete the search Solr index.
+Unless you setup Solr yourself, the index should be located on the following nodes and paths:</p>
+<ul>
+<li>The workflow Solr index was located on the admin or allinone nodes at
+  <code>/var/lib/opencast/solr-indexes/workflows/</code></li>
+<li>The series Solr index was located on the admin or allinone nodes at
+  <code>/var/lib/opencast/solr-indexes/series/</code>.</li>
+</ul>
 <h2 id="optional-remove-activemq">Optional: Remove ActiveMQ</h2>
 <p>Starting with version 12, Opencast does no longer require ActiveMQ.
 You can stop and remove the service from your Opencast cluster unless you need it for anything else.</p>
+<p>For example, to remove this on Debian or CentOS, run something like:</p>
+<pre><code class="language-sh"># Debian, Ubuntu, …
+apt purge activemq-dist
+
+# RHEL, CentOS, …
+dnf remove activemq-dist
+
+# Old RHEL, CentOS, …
+yum remove activemq-dist
+</code></pre>
+<p>You can also potentially remove old data from:</p>
+<pre><code>/etc/activemq*
+/var/lib/activemq
+</code></pre>
 
   <br>
     
