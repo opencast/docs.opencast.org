@@ -34,7 +34,10 @@
         
         var pageToc = [
           {title: "Opencast 12: Release Notes", url: "#_top", children: [
-              {title: "Major Changes, New Features, \u2026", url: "#major-changes-new-features" },
+              {title: "Features", url: "#features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "Behavior changes", url: "#behavior-changes" },
+              {title: "API changes", url: "#api-changes" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
           ]},
@@ -88,15 +91,77 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-12-release-notes">Opencast 12: Release Notes</h1>
-<div class=warn>
-Opencast 12 is not yet released!
-</div>
-
-<h2 id="major-changes-new-features">Major Changes, New Features, …</h2>
-<div class=warn>
-Go through patches and look at notes in `releasenotes` folder.
-</div>
-
+<h2 id="features">Features</h2>
+<ul>
+<li>Opencast 12 ships Paella Player 6.5.6 as its new default player.</li>
+<li>Paella Player 7 supporting new features like CSS customization is now included and
+  <a href="../modules/paella.player7/configuration/">can be configured as an alternative player</a>.</li>
+<li>Upgrade the <a href="../modules/editor/">Standalone Video Editor</a> to
+  <a href="https://github.com/opencast/opencast-editor/releases/tag/2022-06-15">version 2022-06-15</a>.</li>
+<li>Upgrade <a href="../modules/studio/">Opencast Studio</a> to
+  <a href="https://github.com/elan-ev/opencast-studio/releases/tag/2022-06-15">version 2022-06-15</a>
+  coming with plenty new accessibility features.</li>
+<li>You can now define workflows in YAML. An
+  <a href="https://github.com/opencast/opencast/blob/r/12.x/etc/workflows/fast.yaml">example workflow written in YAML</a> is provided.
+  <a href="../configuration/workflow/#using-yaml-files-with-workflows">Documentation is available</a>.</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>ActiveMQ is no longer required by Opencast. It is safe to uninstall.</li>
+<li>In case a request to Elasticsearch fails because of an
+  ElasticsearchStatusException, you can now configure Opencast to try again.
+  For this, set <code>max.retry.attempts.[get|update]</code> in
+  <code>etc/org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code>
+  to something higher than 0. Set <code>retry.waiting.period.[get|update]</code> to a time
+  period in ms to wait between retries (default: 1 second) so you don't
+  overwhelm Elasticsearch.
+  Both parameters can be configured separately for read-only actions and those
+  that also update or delete, since arguably the success of the latter is more
+  important. Changing this config does not require a restart of Opencast. See
+  our <a href="../configuration/elasticsearch/">Elasticsearch docs</a> for more details.</li>
+<li>The Series Service does not require a Solr Index anymore, simplifying the
+  installation of Opencast.</li>
+<li>The Workflow Service does not require a Solr Index anymore, simplifying the
+  installation of Opencast.</li>
+<li>Workflows' data is now atomically stored in the database instead of XML to
+  improve access speed. [<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>]</li>
+<li>You can now specify a fallback language and use a placeholder in the Vosk-based
+  <a href="../workflowoperationhandlers/speech-to-text-woh/">Speech to Text Workflow Operation Handler</a>.</li>
+<li>Improved performance when rebuilding the Elasticsearch event index. [<a href="https://github.com/opencast/opencast/pull/3775">#3775</a>]</li>
+<li>Documentation for developers and testers has been added explaining how to
+  <a href="https://docs.opencast.org/r/12.x/developer/explore-h2-database/">explore Opencast's H2 database</a>.</li>
+</ul>
+<h2 id="behavior-changes">Behavior changes</h2>
+<ul>
+<li>Due to the lack of usage and thus testing, official support of Opencast for
+  MySQL databases is dropped. Please use MariaDB or PostegreSQL instead.
+  This does not mean that Opencast will stop working with MySQL immediately,
+  but we like to highlight that developers are not spending any time on testing
+  this, nor do we provide any configuration examples or support if additional
+  steps may be necessary.</li>
+<li>The syntax of the JDBC connection configuration for MariaDB has slightly
+  changed to an update of the MariaDB Connector/J. When upgrading make sure
+  to follow the <a href="../upgrade/">upgrade guide</a>.</li>
+<li>Events for the same location can now be scheduled without a buffer time between them. [<a href="https://github.com/opencast/opencast/pull/1370/files">#1370</a>]</li>
+<li>Changed inbox behaviour for additional files for scheduled events. [<a href="https://github.com/opencast/opencast/pull/3687">#3687</a>]</li>
+<li>Identifiers for auto-generated capture series are now generated slightly
+  different. This may cause new series to be generated for capture agents in
+  some cases. [<a href="https://github.com/opencast/opencast/pull/3810">#3810</a>]</li>
+</ul>
+<h2 id="api-changes">API changes</h2>
+<ul>
+<li>Important: The endpoint for querying workflows has been removed from the
+  External API.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/3204">#3204</a>] removes the fulltext
+  search query from the series endpoint and adds it to the
+  <a href="https://docs.opencast.org/r/12.x/developer/#api/series-api/">External API</a>.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>] removes the
+  <code>tasks.json</code> endpoint from the admin interface job endpoint.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>] adds an endpoint to
+  check for active workflows on a mediapackage to the workflow service.</li>
+<li>The endpoint to search through workflows has been removed from the workflow
+  service.</li>
+</ul>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
