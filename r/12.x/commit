@@ -1,5 +1,18 @@
-commit fab1d009a37e87b2b51e7f171f11dc32eaf534f6
+commit 6c6c7d027a1a99e69184c62011cca2e792dc3dae
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Sat Jun 25 00:16:24 2022 +0200
+Date:   Mon Jun 27 12:36:47 2022 +0200
 
-    Merge r/11.x into r/12.x
+    Use Local Index References (#3832)
+    
+    Services now track their index on their own and use it to push updates
+    into the index if things change. For example, when a new workflow is
+    started.
+    
+    For reindexing, an external index was still passed to the service
+    though. That's pretty weird since that could mean that the same service
+    would write to completely different indexes in different situations,
+    but expecting that the data would end up at the same place.
+    
+    In practice this did not really matter since the same index was passed
+    to the `repopulate()` method which was tracked internally anyway. Still,
+    it makes more sense to always use the tracked index.
