@@ -1,18 +1,9 @@
-commit 6c6c7d027a1a99e69184c62011cca2e792dc3dae
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Mon Jun 27 12:36:47 2022 +0200
+commit 2d80161122de8dd2677c60cf67e8494982f5aa79
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Tue Jun 28 15:23:33 2022 +0200
 
-    Use Local Index References (#3832)
+    Allow Inbox Scanner to parse date formats
     
-    Services now track their index on their own and use it to push updates
-    into the index if things change. For example, when a new workflow is
-    started.
+    Resolves #3817.
     
-    For reindexing, an external index was still passed to the service
-    though. That's pretty weird since that could mean that the same service
-    would write to completely different indexes in different situations,
-    but expecting that the data would end up at the same place.
-    
-    In practice this did not really matter since the same index was passed
-    to the `repopulate()` method which was tracked internally anyway. Still,
-    it makes more sense to always use the tracked index.
+    Per default, the DateTimeFormatter expects some form of time when formatting. This explicitly sets time fields to zero if they are not included in the given pattern.
