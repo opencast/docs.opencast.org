@@ -163,6 +163,26 @@ have to publish it manually when he is done editing it.</p>
 <td><code>1000</code></td>
 <td>How many events are allowed to be created at maximum.</td>
 </tr>
+<tr>
+<td>no-suffix</td>
+<td><code>true</code></td>
+<td>Boolean to decide if the number suffix (<code>copy #</code>) is not attached (true ... no attachment, false ...<code>copy #</code> is attached)</td>
+</tr>
+<tr>
+<td>set-series-id</td>
+<td><code>3547a900-e0ee-4e3f-9e67-2157cd42c700</code></td>
+<td>Id of the series the copied events should be added to</td>
+</tr>
+<tr>
+<td>set-title</td>
+<td><code>copy of mediapackage</code></td>
+<td>Title of the newly created events. Default to original event title. If <code>no-suffix</code> is set to <code>false</code> a <code>copy #</code> will be attached</td>
+</tr>
+<tr>
+<td>set-start-date-time</td>
+<td><code>2021-12-02T22:22:22</code></td>
+<td>Date and time to be set on the newly created events. Default to orignial event date.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
@@ -175,7 +195,11 @@ have to publish it manually when he is done editing it.</p>
     &lt;configuration key="source-flavors"&gt;*/*&lt;/configuration&gt;
     &lt;configuration key="number-of-events"&gt;${numberOfEvents}&lt;/configuration&gt;
     &lt;configuration key="max-number-of-events"&gt;1000&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;&lt;/configuration&gt; 
+    &lt;configuration key="no-suffix"&gt;false&lt;/configuration
+    &lt;configuration key="set-series-id"&gt;${seriesId}&lt;/configuration&gt;
+    &lt;configuration key="set-title"&gt;${mpTitle}&lt;/configuration&gt;
+    &lt;configuration key="set-start-date-time"&gt;${startDateTime}&lt;/configuration&gt;
     &lt;configuration key="property-namespaces"&gt;
       org.opencastproject.assetmanager.security
     &lt;/configuration&gt;
