@@ -88,6 +88,34 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 about decision making</a>.</p>
 <p>The following list contains a list of passed proposals for reference.</p>
 <h2 id="passed-proposals">Passed Proposals</h2>
+<h3 id="opensearch-support">Opensearch Support</h3>
+<p>Proposed by Greg Logan <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#103;&#114;&#101;&#103;&#111;&#114;&#121;&#100;&#108;&#111;&#103;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, passed on Wed, June 22 2022</p>
+<pre><code class="language-no-highlight">Hi all,
+
+As we probably all know, Elasticsearch did some goofy things with their
+licensing, and a fork (Opensearch) ended up starting up.  Opensearch 1.x is
+protocol compatible with Elasticsearch 7 series releases, of which 7.10.2
+appears to be the last one with the older license.  There is an Opensearch 2.x
+branch which is not compatible[1].
+
+Since long term we're probably going to be migrating to Opensearch, and
+Opensearch is drop-in compatible I'm going to file a pull request with the
+appropriate bits to enable proper testing going forward.  The pull request for
+this is forthcoming.
+
+I'm also going to #propose that we add formal support for Opensearch to
+Opencast 12.0, deprecate Elasticsearch support in Opencast 13.0, and finally
+remove it in Opencast 14.0.  This gives us the motivation to get 2.x support
+going sooner than later so we don't get hugely behind, while also giving us
+fallback where we can stick to an older version of Opensearch if we don't
+actually get that done.
+
+Proposal closes END 2022-06-22
+
+G
+
+1: https://opensearch.org/faq/#q1.9, also personal testing
+</code></pre>
 <h3 id="drop-official-mysql-support">Drop official MySQL support</h3>
 <p>Proposed by Lars Kiesow <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#107;&#105;&#101;&#115;&#111;&#119;&#64;&#117;&#111;&#115;&#46;&#100;&#101;">&#108;&#107;&#105;&#101;&#115;&#111;&#119;&#64;&#117;&#111;&#115;&#46;&#100;&#101;</a>, passed on Wed, February 16 2022</p>
 <pre><code class="language-no-highlight">Hi everyone,
