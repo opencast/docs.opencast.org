@@ -1,8 +1,9 @@
-commit 4781576e80ce308d48e45a3777afb5e5b9344376
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Thu Jul 14 10:11:42 2022 -0600
+commit 692dae7605cc60d5b1926cf781ecbe68066103ac
+Author: Gregor Eichelberger <gregor.eichelberger@tuwien.ac.at>
+Date:   Wed Jul 6 17:00:05 2022 +0200
 
-    Merge branch 'add-event-from-existing-event' of Arnei/opencast into r/12.x
+    handle process stdout and stderr
     
-    Pull request #3906
-      Add "Create new event with metadata from another event" button to Admin UI
+    If the buffer allocated for standard output/error is full,
+    the started process will wait forever if the buffer's content is never consumed.
+    On Linux-based systems, the pipe has a buffer size of 65,536 bytes.
