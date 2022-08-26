@@ -39,6 +39,7 @@
               {title: "Logging During Builds", url: "#logging-during-builds" },
               {title: "Building single modules", url: "#building-single-modules" },
               {title: "Attaching a Remote Debugger to Karaf", url: "#attaching-a-remote-debugger-to-karaf" },
+              {title: "Adding Dummy Capture Agent", url: "#adding-dummy-capture-agent" },
           ]},
         ];
 
@@ -166,6 +167,20 @@ The recommended way is to enable the debug mode in the <code>setenv</code> file,
 <p>For more information on remote debugging with Karaf you can visit <a href="https://karaf.apache.org/manual/latest/#_debugging">this
 site.</a></p>
 <p>It is <strong>not recommended</strong> to enable remote debugging on production systems!</p>
+<h2 id="adding-dummy-capture-agent">Adding Dummy Capture Agent</h2>
+<p>In the case that is needed, you can create a dummy capture agent with testing porpurses.
+To add a dummy CA, go to the API Docs page in Opencast and enter a new capture agent in:</p>
+<pre><code>{opencast-url}/docs.html?path=/capture-admin#setAgentStateConfiguration-4
+</code></pre>
+<p><strong>Name:</strong> Any name of your desire.</p>
+<p><strong>Configuration:</strong></p>
+<pre><code>{
+"key": "capture.device.names",
+"value": "presentation,presenter"
+}
+</code></pre>
+<p>Click on <code>submit</code> and is ready to go.</p>
+<p>Additionaly you can call this REST endpoint directly using <code>CURL</code> for example.</p>
 
   <br>
     
