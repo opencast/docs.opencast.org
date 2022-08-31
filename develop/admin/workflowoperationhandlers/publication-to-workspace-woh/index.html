@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "PublicationToWorkspaceWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Publication to Workspace Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="publicationtoworkspaceworkflowoperationhandler">PublicationToWorkspaceWorkflowOperationHandler</h1>
+    <h1 id="publication-to-workspace-workflow-operation">Publication to Workspace Workflow Operation</h1>
+<p>ID: <code>publication-channel-to-workspace</code></p>
 <h2 id="description">Description</h2>
-<p>The PublicationToWorkspaceWorkflowOperationHandler can be used to copy the content from publication channels to workspace.
+<p>The Publication to Workspace operation can be used to copy content from publication channels to the workspace.
 With this workflow one can copy or manipulate published elements without re-encoding.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -103,38 +104,36 @@ With this workflow one can copy or manipulate published elements without re-enco
 <tbody>
 <tr>
 <td>publication-channel</td>
-<td>engage-player, internal, oaipmh</td>
-<td>the publication-channel</td>
+<td>engage-player</td>
+<td>The publication-channel</td>
 </tr>
 <tr>
 <td>source-flavors</td>
 <td>presenter/delivery</td>
-<td>the "," separated source flavor list to move</td>
+<td>Comma-separated list of flavors identifying elements to copy</td>
 </tr>
 <tr>
 <td>source-tags</td>
 <td>engage-download</td>
-<td>the "," separated source tag list to move</td>
+<td>Comma-separated list of tags identifying elements to copy</td>
 </tr>
 <tr>
 <td>target-tags</td>
 <td>archive</td>
-<td>the "," separated list of tags to add to the moved elements</td>
+<td>Comma-separated list of tags to add to copied elements</td>
 </tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>  &lt;operation id=&quot;publication-channel-to-workspace&quot;
-      description=&quot;Copy publication channel to workspace&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;&gt;
-    &lt;configurations&gt;
-      &lt;configuration key=&quot;source-channel&quot;&gt;engage-player&lt;/configuration&gt;
-      &lt;configuration key=&quot;source-flavors&quot;&gt;presenter-delivery,presentation-delivery&lt;/configuration&gt;
-      &lt;configuration key=&quot;source-tags&quot;&gt;engage-download,engage-streaming&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
-    &lt;/configurations&gt;
-  &lt;/operation&gt;
+<pre><code class="language-xml">&lt;operation id=&quot;publication-channel-to-workspace&quot;
+           description=&quot;Copy publication channel to workspace&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-channel&quot;&gt;engage-player&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/delivery,presentation/delivery&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags&quot;&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
 
   <br>

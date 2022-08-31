@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>RHEL/CentOS 8 - Administration Guide</title>
+    <title>RHEL/CentOS Stream 8/9 - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Install from Repository (Red Hat Enterprise Linux 8.x, CentOS 8.x)", url: "#_top", children: [
+          {title: "Install from Repository (Red Hat Enterprise Linux, CentOS Stream, \u2026", url: "#_top", children: [
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Opencast", url: "#install-opencast" },
@@ -93,13 +93,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="install-from-repository-red-hat-enterprise-linux-8x-centos-8x">Install from Repository (Red Hat Enterprise Linux 8.x, CentOS 8.x)</h1>
-<blockquote>
-<p><em>This guide is for EL8 only. There is a separate <a href="../rpm-el7/">CentOS 7 and Red Hat Enterprise Linux 7 guide</a>.</em></p>
-</blockquote>
-<p>This guide is based on an RPM software repository available for Red Hat-based Linux distributions provided by <a href="https://uni-osnabrueck.de">Osnabrück
-University</a>. This repository provides preconfigured Opencast installations and all necessary
-3rd-party-tools.</p>
+    <h1 id="install-from-repository-red-hat-enterprise-linux-centos-stream">Install from Repository (Red Hat Enterprise Linux, CentOS Stream, …</h1>
+<p>This guide is based on an RPM software repository available for Red Hat based Linux distributions provided by <a href="https://uni-osnabrueck.de">Osnabrück
+University</a> and <a href="https://elan-ev.de">ELAN e.V.</a>.
+This repository provides preconfigured Opencast installations and all necessary 3rd-party-tools.</p>
 <div class=warn>
   <b>Opencast 13</b> is not yet available.
 </div>
@@ -109,14 +106,16 @@ University</a>. This repository provides preconfigured Opencast installations an
 if you like to see how this works before you try it yourself.</p>
 </blockquote>
 <h2 id="currently-supported">Currently Supported</h2>
-<ul>
-<li>CentOS 8.x (x86_64)</li>
-<li>Red Hat Enterprise Linux 8.x (x86_64)</li>
-</ul>
-<p>Other architectures like i386, i686, arm, … are not supported.</p>
+<p>We frequently test on CentOS Stream 8/9 and infrequently test on Red Hat Enterprise Linux 8/9,
+trying to ensure that installations on those systems work without problems.
+Since Rocky Linux and AlmaLinux OS are intended to be fully compatible to RHEL,
+those distributions should work as well.
+But we don't test against those.</p>
+<p>We support only the x86_64 architecture.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories:</p>
-<pre><code class="language-sh">dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-13/noarch/opencast-repository-13-1.el8.noarch.rpm
+<pre><code class="language-sh">dnf install -y \
+  &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-13/noarch/opencast-repository-13-1.el$(rpm -E %rhel).noarch.rpm&quot;
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
@@ -189,7 +188,8 @@ If you are performing this on a production system, please ensure you have valid 
 <pre><code class="language-sh">systemctl stop opencast.service
 </code></pre>
 <p>Then, update the repository:</p>
-<pre><code class="language-sh">dnf install -y https://pkg.opencast.org/rpms/release/el/8/oc-13/noarch/opencast-repository-13-1.el8.noarch.rpm
+<pre><code class="language-sh">dnf install -y \
+  &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-13/noarch/opencast-repository-13-1.el$(rpm -E %rhel).noarch.rpm&quot;
 </code></pre>
 <p>Upgrade to the new Opencast package by running:</p>
 <pre><code class="language-sh">dnf update
@@ -249,7 +249,7 @@ rm -rf /var/log/opencast
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/rpm-el8.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/rpm-el.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
