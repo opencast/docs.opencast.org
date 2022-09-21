@@ -1,5 +1,10 @@
-commit f19c0c7f6421fb46f7c1e06a0d987941ffb348be
+commit 276f0de530ab0ec7bc0ec8fe733b9a6c24a59b3c
 Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Mon Sep 19 16:16:36 2022 +0200
+Date:   Mon Sep 19 15:11:38 2022 +0200
 
-    Remove unused scheduler conflict configuration
+    Ignore NoSuchFileException when cleaning directories
+    
+    The `RecursiveDirectoryCleaner` is used to clean up the workspace and
+    working file repository. If multiple Openacst instances run on a shared
+    file system, one could delete files before the other, leading to a
+    `NoSuchFileException`. These can be ignored as the file is already deleted.
