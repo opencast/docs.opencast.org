@@ -1,10 +1,9 @@
-commit 276f0de530ab0ec7bc0ec8fe733b9a6c24a59b3c
+commit 63d525371c5110f77d5a9c5d2c208066b6c388ba
 Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Mon Sep 19 15:11:38 2022 +0200
+Date:   Thu Sep 15 21:05:07 2022 +0200
 
-    Ignore NoSuchFileException when cleaning directories
+    Fix check if all workflows were loaded when using YAML
     
-    The `RecursiveDirectoryCleaner` is used to clean up the workspace and
-    working file repository. If multiple Openacst instances run on a shared
-    file system, one could delete files before the other, leading to a
-    `NoSuchFileException`. These can be ignored as the file is already deleted.
+    The `WorkflowDefinitionScanner` only checked for XML file when
+    determining if all workflows where loaded. OC 12 also supports YAML
+    files.
