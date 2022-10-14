@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "TagByDCTermWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Tag-By-DC-Term Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,14 +87,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="tagbydctermworkflowoperationhandler">TagByDCTermWorkflowOperationHandler</h1>
+    <h1 id="tag-by-dc-term-workflow-operation">Tag-By-DC-Term Workflow Operation</h1>
+<p>ID: <code>tag-by-dcterm</code></p>
 <h2 id="description">Description</h2>
-<p>With the TagByDCTermWorkflowOperationHandler it's possible to select various media package elements and then modify
+<p>With the <code>tag-by-dcterm</code> opweation it's possible to select various media package elements and then modify
 their tag set and / or set their flavor according to whether a Dublin Core term in a catalog has a specific value.</p>
 <p>So for example it's possible to pick elements like the Dublin Core catalogs that have been added to the media package
 at the beginning of the workflow and tag them, so they can be picked up by operations later on or even an application
 that harvests the mediapackage from a publication channel.</p>
-<p>In combination with <a href="../configure-by-dcterm-woh/">ConfigureByDCTermWorkflowOperationHandler</a> workflows can be controlled
+<p>In combination with <a href="../configure-by-dcterm-woh/"><code>configure-by-dcterm</code> operation</a> workflows can be controlled
 by the metadata contained within the Dublin core catalogs.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <p>Tags and flavors can be used in combination.</p>
@@ -164,7 +165,7 @@ by the metadata contained within the Dublin core catalogs.</p>
 </tr>
 </tbody>
 </table>
-<p>Note: see <a href="../tag-woh/">TagWorkflowOperationHandler</a> for further explanation of the source/target-flavor/tags</p>
+<p>Note: see <a href="../tag-woh/"><code>tag</code> operation</a> for further explanation of the source/target-flavor/tags</p>
 <h3 id="dccatalog">dccatalog</h3>
 <p>The type of Dublin Core catalog in which to look for the <code>dcterm</code>. This will usually be <code>episode</code> or <code>series</code>.</p>
 <h3 id="dcterm">dcterm</h3>
@@ -179,19 +180,16 @@ the <code>default-value</code> and apply the tags if they match. This allows an 
 defined. For example if you have mediapackages that were created before additional metadata was added to the episode
 catalog you may want to imply that the <code>audience</code> term has a value of <code>all-enrolled</code>.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="tag-by-dcterm"
-  max-attempts="2"
-  fail-on-error="true"
-  exception-handler-workflow="error"
-  description="Tagging media package elements according to dcterm"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;tag-by-dcterm&quot;
+    description=&quot;Tagging media package elements according to dcterm&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavors"&gt;dublincore/*,security/*&lt;/configuration&gt;
-    &lt;configuration key="dccatalog"&gt;episode&lt;/configuration&gt;
-    &lt;configuration key="dcterm"&gt;audience&lt;/configuration&gt;
-    &lt;configuration key="match-value"&gt;learning-difficulties&lt;/configuration&gt;
-    &lt;configuration key="default-value"&gt;all-enrolled&lt;/confiuration&gt;
-    &lt;configuration key="target-tags"&gt;+publishBeforeEditing&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;dublincore/*,security/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;dccatalog&quot;&gt;episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;dcterm&quot;&gt;audience&lt;/configuration&gt;
+    &lt;configuration key=&quot;match-value&quot;&gt;learning-difficulties&lt;/configuration&gt;
+    &lt;configuration key=&quot;default-value&quot;&gt;all-enrolled&lt;/confiuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;+publishBeforeEditing&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

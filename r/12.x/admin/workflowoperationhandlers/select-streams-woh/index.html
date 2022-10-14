@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "SelectTracksWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Select Tracks Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Workflow Properties", url: "#workflow-properties" },
@@ -90,9 +90,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="selecttracksworkflowoperationhandler">SelectTracksWorkflowOperationHandler</h1>
+    <h1 id="select-tracks-workflow-operation">Select Tracks Workflow Operation</h1>
+<p>ID: <code>select-tracks</code></p>
 <h2 id="description">Description</h2>
-<p>The SelectTracksWorkflowOperationHandler can be used in case not all source tracks should be processed. For example,
+<p>The select-tracks operation can be used in case not all source tracks should be processed. For example,
 given a recording with a presenter and a presentation track, the final recording to be published should only include the
 video stream of the presenter track and the audio stream of the presentation track.</p>
 <p>The workflow operation will use workflow properties set by the Opencast video editor to determine which tracks should be
@@ -161,7 +162,7 @@ packages without an audio stream or with more than one audio stream, the behavio
 omitted. The same applies to media packages for which there is only one audio stream, and it already belongs to the
 track with flavor type given by <code>force-target</code> (or <code>presenter</code> if that parameter is omitted).</p>
 <p>If, however, there is only one non-hidden audio stream and it does <em>not</em> belong to the track given by <code>force-target</code>,
-then the WOH will “move” the audio stream to this target track. Specifically, it will mux the video stream of
+then the operation will “move” the audio stream to this target track. Specifically, it will mux the video stream of
 <code>force-target</code> with the audio stream it found. Then, it removes the audio stream from the original track.</p>
 <p>For example, consider a media package with two tracks, <em>presenter</em> and <em>presentation</em>. Both of these tracks have
 audio components, however the <em>presenter</em> audio stream is hidden. This WOH will mux <em>presentations</em>'s audio stream
@@ -197,15 +198,13 @@ the same as if the parameter were omitted.</p>
 </table>
 <p>Note that those encoding profiles are included in the default configuration of Opencast.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="select-tracks"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Select tracks for further processing"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;select-tracks&quot;
+    description=&quot;Select tracks for further processing&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;*/work&lt;/configuration&gt;
-    &lt;configuration key="audio-muxing"&gt;force&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;*/work&lt;/configuration&gt;
+    &lt;configuration key=&quot;audio-muxing&quot;&gt;force&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

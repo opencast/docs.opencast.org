@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ProbeResolutionWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Probe Resolution Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="proberesolutionworkflowoperationhandler">ProbeResolutionWorkflowOperationHandler</h1>
+    <h1 id="probe-resolution-workflow-operation">Probe Resolution Workflow Operation</h1>
+<p>ID: <code>probe-resolution</code></p>
 <h2 id="description">Description</h2>
-<p>The ProbeResolutionWorkflowOperationHandler analyzes specified tracks in the mediapackage and sets workflow instance
+<p>The probe-resolution operation analyzes specified tracks in the mediapackage and sets workflow instance
 variables based on the video resolution and the mapping set-up.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -127,23 +128,21 @@ which matches a <code>var:VARNAME</code>, the value from that configuration key 
 <p>Note that if there are multiple video streams with one flavor, only the information from the last video stream are
 taken.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="probe-resolution"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Set control variables based on video resolution"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;probe-resolution&quot;
+    description=&quot;Set control variables based on video resolution&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key="var:aspect"&gt;1280x720,1920x1080,2592x1080&lt;/configuration&gt;
-    &lt;configuration key="val:aspect"&gt;16/9&lt;/configuration&gt;
-    &lt;configuration key="var:is_720"&gt;1280x720&lt;/configuration&gt;
-    &lt;configuration key="var:is_1080"&gt;1920x1080,2592x1080&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;var:aspect&quot;&gt;1280x720,1920x1080,2592x1080&lt;/configuration&gt;
+    &lt;configuration key=&quot;val:aspect&quot;&gt;16/9&lt;/configuration&gt;
+    &lt;configuration key=&quot;var:is_720&quot;&gt;1280x720&lt;/configuration&gt;
+    &lt;configuration key=&quot;var:is_1080&quot;&gt;1920x1080,2592x1080&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <p>If a video track with a resolution of 1280x720 is passed to this operation as <code>presentation/source</code>, the resulting
 variables would be:</p>
-<pre><code>presentation_source_is_720=true
+<pre><code class="language-properties">presentation_source_is_720=true
 presentation_source_aspect=16/9
 </code></pre>
 

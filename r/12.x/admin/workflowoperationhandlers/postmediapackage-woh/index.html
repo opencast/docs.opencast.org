@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "PostMediapackageWorkflowHandler", url: "#_top", children: [
+          {title: "Post Media Package Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,11 +87,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="postmediapackageworkflowhandler">PostMediapackageWorkflowHandler</h1>
+    <h1 id="post-media-package-workflow-operation">Post Media Package Workflow Operation</h1>
+<p>ID: <code>post-mediapackage</code></p>
 <h2 id="description">Description</h2>
-<p>This Workflow Operation Handler can be used to send a POST request containing an XML/JSON representation of the
-Mediapackage processed by the workflow to an external webservice. The service supports HTTP Basic and Digest
-Authentication.</p>
+<p>This workflow operation can be used to send a POST request containing an XML/JSON representation of the
+media package processed by the workflow to an external web service. the service supports HTTP Basic and Digest
+authentication.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -136,21 +137,19 @@ Authentication.</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-    id="post-mediapackage"
-    fail-on-error="false"
-    exception-handler-workflow="error"
-    description="Sending MediaPackage to Lernfunk3"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="url"&gt;http://example.com:5000/&lt;/configuration&gt;
-        &lt;configuration key="format"&gt;xml&lt;/configuration&gt;
-        &lt;configuration key="debug"&gt;no&lt;/configuration&gt;
-        &lt;configuration key="mediapackage.type"&gt;search&lt;/configuration&gt;
-        &lt;configuration key="auth.enabled"&gt;yes&lt;/configuration&gt;
-        &lt;configuration key="auth.username"&gt;exportuser&lt;/configuration&gt;
-        &lt;configuration key="auth.password"&gt;secret&lt;/configuration&gt;
-        &lt;configuration key="+source_system"&gt;video.example.com&lt;/configuration&gt;
-    &lt;/configurations&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;post-mediapackage&quot;
+    description=&quot;Sending MediaPackage to Lernfunk3&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;url&quot;&gt;http://example.com:5000/&lt;/configuration&gt;
+    &lt;configuration key=&quot;format&quot;&gt;xml&lt;/configuration&gt;
+    &lt;configuration key=&quot;debug&quot;&gt;no&lt;/configuration&gt;
+    &lt;configuration key=&quot;mediapackage.type&quot;&gt;search&lt;/configuration&gt;
+    &lt;configuration key=&quot;auth.enabled&quot;&gt;yes&lt;/configuration&gt;
+    &lt;configuration key=&quot;auth.username&quot;&gt;exportuser&lt;/configuration&gt;
+    &lt;configuration key=&quot;auth.password&quot;&gt;secret&lt;/configuration&gt;
+    &lt;configuration key=&quot;+source_system&quot;&gt;video.example.com&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 
