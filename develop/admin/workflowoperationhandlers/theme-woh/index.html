@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ThemeWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Theme Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Workflow Properties", url: "#workflow-properties" },
               {title: "Parameter Table", url: "#parameter-table" },
@@ -88,9 +88,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="themeworkflowoperationhandler">ThemeWorkflowOperationHandler</h1>
+    <h1 id="theme-workflow-operation">Theme Workflow Operation</h1>
+<p>ID: <code>theme</code></p>
 <h2 id="description">Description</h2>
-<p>The ThemeWorkflowOperation loads workflow properties and adds elements to the media package if available.
+<p>The theme operation loads workflow properties and adds elements to the media package if available.
 This information can be used within workflow definitions to actually implement themes.</p>
 <p><strong>Bumpers</strong></p>
 <p>The property <em>theme_bumper_active</em> indicates whether the theme defines a bumper video. If true, the bumper video
@@ -104,10 +105,9 @@ property <em>theme_title_slide_uploaded</em> indicates whether the image needed 
 of the title slide should be extracted from a video track or has been uploaded. In the later case,
 the background image is added to the media package with the flavor <em>title-slide-flavor</em> and/or tags <em>title-slide-tags</em>.</p>
 <p><strong>Watermark</strong></p>
-<p>The property <em>theme_watermark_active</em> indicates whether the theme defines a watermark. If true, the watermark image
-is added to the media package with the flavor <em><em>watermark-flavor</em> and/or tags </em>watermark-tags<em>.
-Additionally, a watermark layout compatible to the CompositeWorkflowOperation is added as property
-</em>watermark_layout_variable*.</p>
+<p>The property <code>theme_watermark_active</code> indicates whether the theme defines a watermark.
+If true, the watermark is added to the media package with the flavor <code>watermark-flavor</code> and/or tags <code>watermark-tags</code>.
+Additionally, a watermark layout compatible to the composite operation is added as property <code>watermark_layout_variable</code>.</p>
 <h2 id="workflow-properties">Workflow Properties</h2>
 <p>The ThemeWorkflowOperation will set the following workflow properties:</p>
 <table>
@@ -144,8 +144,8 @@ Additionally, a watermark layout compatible to the CompositeWorkflowOperation is
 </tr>
 </tbody>
 </table>
-<p>Note: The property <em>theme_active</em> can be used to test whether a theme has any active settings, i.e.
-at least one of the properties <em>theme_*_active</em> is true.</p>
+<p>Note: The property <code>theme_active</code> can be used to test whether a theme has any active settings,
+i.e. at least one of the properties <code>theme_*_active</code> is true.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -205,20 +205,19 @@ at least one of the properties <em>theme_*_active</em> is true.</p>
 </table>
 <p>* Mandatory configuration key (in case the feature is active)</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="theme"
-  exception-handler-workflow="partial-error"
-  description="Apply the theme"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;theme&quot;
+    description=&quot;Apply the theme&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="bumper-flavor"&gt;branding/bumper&lt;/configuration&gt;
-    &lt;configuration key="bumper-tags"&gt;archive&lt;/configuration&gt;
-    &lt;configuration key="trailer-flavor"&gt;branding/trailer&lt;/configuration&gt;
-    &lt;configuration key="trailer-tags"&gt;archive&lt;/configuration&gt;
-    &lt;configuration key="title-slide-flavor"&gt;branding/titleslide&lt;/configuration&gt;
-    &lt;configuration key="title-slide-tags"&gt;archive&lt;/configuration&gt;
-    &lt;configuration key="watermark-flavor"&gt;branding/titleslide&lt;/configuration&gt;
-    &lt;configuration key="watermark-tags"&gt;archive&lt;/configuration&gt;
-    &lt;configuration key="watermark-layout-variable"&gt;theme_watermark_layout&lt;/configuration&gt;
+    &lt;configuration key=&quot;bumper-flavor&quot;&gt;branding/bumper&lt;/configuration&gt;
+    &lt;configuration key=&quot;bumper-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;trailer-flavor&quot;&gt;branding/trailer&lt;/configuration&gt;
+    &lt;configuration key=&quot;trailer-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;title-slide-flavor&quot;&gt;branding/titleslide&lt;/configuration&gt;
+    &lt;configuration key=&quot;title-slide-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-flavor&quot;&gt;branding/titleslide&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-layout-variable&quot;&gt;theme_watermark_layout&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

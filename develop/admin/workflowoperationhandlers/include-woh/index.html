@@ -88,7 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="include-workflow-operation">Include Workflow Operation</h1>
-<p><code>Id: include</code></p>
+<p>ID: <code>include</code></p>
 <h2 id="description">Description</h2>
 <p>The Include operation can be used to add a workflow definition to the current workflow. This enables re-usable
 sequences of operations to be factored out and allows better structuring of complex workflows.</p>
@@ -110,13 +110,18 @@ sequences of operations to be factored out and allows better structuring of comp
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="include"
-  description="Remove temporary processing artifacts"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;include&quot;
+    description=&quot;Remove temporary processing artifacts&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="workflow-id"&gt;partial-cleanup&lt;/configuration&gt;
+    &lt;configuration key=&quot;workflow-id&quot;&gt;partial-cleanup&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
+</code></pre>
+<pre><code class="language-yml">- id: include
+  description: Include clean-up workflow
+  configurations:
+    workflow-id: partial-cleanup
 </code></pre>
 
   <br>

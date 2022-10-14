@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ZipWorkflowOperation", url: "#_top", children: [
+          {title: "Zip Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -77,11 +77,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="zipworkflowoperation">ZipWorkflowOperation</h1>
+    <h1 id="zip-workflow-operation">Zip Workflow Operation</h1>
+<p>ID: <code>zip</code></p>
 <h2 id="description">Description</h2>
-<p>The ZipWorkflowOperationHandler creates a zip archive including all elements of the current media package that are
-specified in the operation configuration. It then adds the archive to the media package as an attachment with the given
-flavor and tags and by default stores the zip file in the working file repository's "zip" collection.</p>
+<p>The <code>zip</code> oeration creates a zip archive including all elements of the current media package that are specified in the
+operation configuration. It then adds the archive to the media package as an attachment with the given flavor and tags
+and by default stores the zip file in the working file repository's "zip" collection.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -133,16 +134,24 @@ flavor and tags and by default stores the zip file in the working file repositor
   processing time. That is why activating this is usually not recommended.</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="zip"
-  description="Creating zipped recording archive"&gt;
+<pre><code class="language-xml">&lt;operation
+  id=&quot;zip&quot;
+  description=&quot;Creating zipped recording archive&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="zip-collection"&gt;failed.zips&lt;/configuration&gt;
-    &lt;configuration key="include-flavors"&gt;*/source,dublincore/*&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;all/zip&lt;/configuration&gt;
-    &lt;configuration key="compression"&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;zip-collection&quot;&gt;failed.zips&lt;/configuration&gt;
+    &lt;configuration key=&quot;include-flavors&quot;&gt;*/source,dublincore/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;all/zip&lt;/configuration&gt;
+    &lt;configuration key=&quot;compression&quot;&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
+</code></pre>
+<pre><code class="language-yml">- id: zip
+  description: Creating zipped recording archive
+  configurations:
+    - zip-collection: failed.zips
+    - include-flavors: */source,dublincore/*
+    - target-flavor: all/zip
+    - compression: false
 </code></pre>
 
   <br>

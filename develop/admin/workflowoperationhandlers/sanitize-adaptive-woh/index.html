@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "SanitizeAdaptiveWorkflowHandler", url: "#_top", children: [
+          {title: "Sanitize Adaptive Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="sanitizeadaptiveworkflowhandler">SanitizeAdaptiveWorkflowHandler</h1>
+    <h1 id="sanitize-adaptive-workflow-operation">Sanitize Adaptive Workflow Operation</h1>
+<p>ID: <code>sanitize-adaptive</code></p>
 <h2 id="description">Description</h2>
-<p>The SanitizeAdaptiveWorkflowHandler is used to fix references to media files in a playlist.
+<p>The sanitize adaptive operation is used to fix references to media files in a playlist.
 When files are ingested, they are put into system created and uniquely named directories.
 This code will attempt to match the referenced files by changing the references in the playlists.
 All the file names must be unique.
@@ -123,16 +124,14 @@ Currently only HLS is supported</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-    id="sanitize-adaptive"
-    fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Fix uploaded HLS files "&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presenter/ingested&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;engage&lt;/configuration&gt;
-    &lt;/configurations&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;sanitize-adaptive&quot;
+    description=&quot;Fix uploaded HLS files &quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/ingested&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/delivery&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;engage&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 

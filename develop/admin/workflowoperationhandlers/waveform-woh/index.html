@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "WaveformWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Waveform Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="waveformworkflowoperationhandler">WaveformWorkflowOperationHandler</h1>
+    <h1 id="waveform-workflow-operation">Waveform Workflow Operation</h1>
+<p>ID: <code>waveform</code></p>
 <h2 id="description">Description</h2>
-<p>The waveform operation creates an image showing the temporal audio activity within the recording like this:</p>
+<p>The <code>waveform</code> operation creates an image showing the temporal audio activity within the recording like this:</p>
 <p><img alt="waveform" src="../waveform.png" /></p>
 <p>The implementation uses an FFmpeg filter that produces a waveform PNG image file from an audio/video file with at least
 one audio channel.</p>
@@ -158,31 +159,26 @@ one audio channel.</p>
 <td>Color of waveform image, see <a href="https://www.ffmpeg.org/ffmpeg-all.html#Color">ffmpeg.org/ffmpeg-all.html#Color</a></td>
 <td>black</td>
 </tr>
-<tr>
-<td>Additional notes:</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<p>Additional notes:</p>
 <ul>
 <li>All media, that match either source-flavors or source tags will be processed.</li>
 <li>Using a wildcard in the <code>target-flavor</code> will cause the main flavor of the input being used.</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="waveform"
-  description="Generating waveform"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;waveform&quot;
+    description=&quot;Generating waveform&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;*/audio&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;*/waveform&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;preview&lt;/configuration&gt;
-    &lt;configuration key="pixels-per-minute"&gt;200&lt;/configuration&gt;
-    &lt;configuration key="min-width"&gt;5000&lt;/configuration&gt;
-    &lt;configuration key="max-width"&gt;20000&lt;/configuration&gt;
-    &lt;configuration key="height"&gt;60&lt;/configuration&gt;
-    &lt;configuration key="color"&gt;black&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/audio&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;*/waveform&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;preview&lt;/configuration&gt;
+    &lt;configuration key=&quot;pixels-per-minute&quot;&gt;200&lt;/configuration&gt;
+    &lt;configuration key=&quot;min-width&quot;&gt;5000&lt;/configuration&gt;
+    &lt;configuration key=&quot;max-width&quot;&gt;20000&lt;/configuration&gt;
+    &lt;configuration key=&quot;height&quot;&gt;60&lt;/configuration&gt;
+    &lt;configuration key=&quot;color&quot;&gt;black&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

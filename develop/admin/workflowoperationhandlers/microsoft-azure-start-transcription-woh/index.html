@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Microsoft Azure Start Transcription", url: "#_top", children: [
+          {title: "Microsoft Azure Start Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Example", url: "#example" },
@@ -87,7 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="microsoft-azure-start-transcription">Microsoft Azure Start Transcription</h1>
+    <h1 id="microsoft-azure-start-transcription-workflow-operation">Microsoft Azure Start Transcription Workflow Operation</h1>
+<p>ID: <code>microsoft-azure-start-transcription</code></p>
 <h2 id="description">Description</h2>
 <p>Microsoft Azure Start Transcription invokes the Azure Speech-to-Text service by passing a file with an audio track
 to be translated to text.</p>
@@ -130,19 +131,15 @@ to be translated to text.</p>
 </table>
 <p><strong>One of source-flavor or source-tag must be specified.</strong></p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">    &lt;!-- Start Microsoft Azure transcription job --&gt;
-    &lt;operation
-        id=&quot;microsoft-azure-start-transcription&quot;
-        fail-on-error=&quot;true&quot;
-        exception-handler-workflow=&quot;partial-error&quot;
-        description=&quot;Start Microsoft Azure transcription job&quot;&gt;
-      &lt;configurations&gt;
-        &lt;!--  Skip this operation if flavor already exists. Used for cases when mediapackage already has captions. --&gt;
-        &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+de-DE&lt;/configuration&gt;
-        &lt;configuration key=&quot;language-code&quot;&gt;de-DE&lt;/configuration&gt;
-        &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/prepared&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;microsoft-azure-start-transcription&quot;
+    description=&quot;Start Microsoft Azure transcription job&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+de-DE&lt;/configuration&gt;
+    &lt;configuration key=&quot;language-code&quot;&gt;de-DE&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/prepared&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
 
   <br>

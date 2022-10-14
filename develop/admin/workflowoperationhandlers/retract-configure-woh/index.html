@@ -33,10 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ConfigurableRetractWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Configurable Retract Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameters", url: "#parameters" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="configurableretractworkflowoperationhandler">ConfigurableRetractWorkflowOperationHandler</h1>
+    <h1 id="configurable-retract-workflow-operation">Configurable Retract Workflow Operation</h1>
+<p>ID: <code>retract-configure</code></p>
 <h2 id="description">Description</h2>
-<p>The ConfigurableRetractWorkflowOperationHandler retracts the published elements from a configured publication.</p>
+<p>The configurable retract operation retracts the published elements from a configured publication.</p>
 <p>If the elements have been added to the Publication using "with-published-elements", as in the case with the external
 api, they haven't actually been published so it is unnecessary to have a retract-configuration. Adding a retraction
 won't cause any errors, it will just skip those elements.</p>
@@ -121,26 +122,23 @@ mandatory.</p>
 </tbody>
 </table>
 <p>Setting <code>retract-streaming</code> to true only makes sense if you've published streaming elements for this channel before.</p>
-<h2 id="operation-examples">Operation Examples</h2>
-<h4 id="retract-from-internal-channel">Retract from Internal Channel</h4>
-<pre><code>&lt;!-- Remove the internal publication if the mediapackage is being deleted. --&gt;
-&lt;operation
-  id="retract-configure"
-  exception-handler-workflow="partial-error"
-  description="Retract from internal publication channel"&gt;
+<h2 id="operation-example">Operation Example</h2>
+<p>Retract from internal channel:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;retract-configure&quot;
+    description=&quot;Retract from internal publication channel&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;internal&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h4 id="retract-from-external-api">Retract from External API</h4>
-<pre><code>&lt;operation
-  id="retract-configure"
-  exception-handler-workflow="partial-error"
-  description="Retract from external api publication channel"&gt;
+<p>Retract from external API:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;retract-configure&quot;
+    description=&quot;Retract from external api publication channel&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
-    &lt;configuration key="retract-streaming"&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;api&lt;/configuration&gt;
+    &lt;configuration key=&quot;retract-streaming&quot;&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

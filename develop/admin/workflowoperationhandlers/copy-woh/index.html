@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "CopyWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Copy Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Target Filenames", url: "#target-filenames" },
@@ -88,9 +88,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="copyworkflowoperationhandler">CopyWorkflowOperationHandler</h1>
+    <h1 id="copy-workflow-operation">Copy Workflow Operation</h1>
+<p>ID: <code>copy</code></p>
 <h2 id="description">Description</h2>
-<p>The CopyWorkflowOperationHandler can be used to copy media package elements to a given target directory.</p>
+<p>The copy operation can be used to copy media package elements to a given target directory.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -138,16 +139,15 @@ from the media package element URI) to <em>target-filename</em>. In case the <em
 media package elements, a sequentially increasing integer number (starting at 1) can be used within <em>target-filename</em> in
 Java string formatting manner to ensure unique filenames.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation id="copy"
-         description="Copy sources to my disk"
-         fail-on-error="true"
-         exception-handler-workflow="partial-error"&gt;
-&lt;configurations&gt;
-  &lt;configuration key="source-flavors"&gt;presenter/source, presentation/source&lt;/configuration&gt;
-  &lt;configuration key="target-directory"&gt;/mnt/mydisk&lt;/configuration&gt;
-&lt;/configurations&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;copy&quot;
+    description=&quot;Copy sources to my disk&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/source, presentation/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-directory&quot;&gt;/mnt/mydisk&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
-<p></operation></p>
 
   <br>
     

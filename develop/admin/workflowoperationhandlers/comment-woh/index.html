@@ -33,10 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "CommentWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Comment Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="commentworkflowoperationhandler">CommentWorkflowOperationHandler</h1>
+    <h1 id="comment-workflow-operation">Comment Workflow Operation</h1>
+<p>ID: <code>comment</code></p>
 <h2 id="description">Description</h2>
-<p>The CommentWorkflowOperationHandler can be used to create, resolve or delete comments for events within workflows.</p>
+<p>The comment operation can be used to create, resolve or delete comments for events within workflows.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -126,25 +127,25 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
    or reason and description). If more than one comment matches the parameters, only the first matching comment will be
    resolved or deleted.</li>
 </ul>
-<h2 id="operation-examples">Operation Examples</h2>
+<h2 id="operation-example">Operation Example</h2>
 <p>Create a comment:</p>
-<pre><code>&lt;operation
-  id="comment"
-  description="Mark the recording for cutting"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;comment&quot;
+    description=&quot;Mark the recording for cutting&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="action"&gt;create&lt;/configuration&gt;
-    &lt;configuration key="reason"&gt;EVENTS.EVENTS.DETAILS.COMMENTS.REASONS.CUTTING&lt;/configuration&gt;
-    &lt;configuration key="description"&gt;Recording has not been cut yet.&lt;/configuration&gt;
+    &lt;configuration key=&quot;action&quot;&gt;create&lt;/configuration&gt;
+    &lt;configuration key=&quot;reason&quot;&gt;EVENTS.EVENTS.DETAILS.COMMENTS.REASONS.CUTTING&lt;/configuration&gt;
+    &lt;configuration key=&quot;description&quot;&gt;Recording has not been cut yet.&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <p>Resolve a comment:</p>
-<pre><code>&lt;operation
-  id="comment"
-  description="Resolve the cutting flag"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;comment&quot;
+    description=&quot;Resolve the cutting flag&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="action"&gt;resolve&lt;/configuration&gt;
-    &lt;configuration key="reason"&gt;EVENTS.EVENTS.DETAILS.COMMENTS.REASONS.CUTTING&lt;/configuration&gt;
+    &lt;configuration key=&quot;action&quot;&gt;resolve&lt;/configuration&gt;
+    &lt;configuration key=&quot;reason&quot;&gt;EVENTS.EVENTS.DETAILS.COMMENTS.REASONS.CUTTING&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
