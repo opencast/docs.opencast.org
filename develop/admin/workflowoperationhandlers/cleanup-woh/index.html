@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "CleanupWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Cleanup Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,7 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="cleanupworkflowoperationhandler">CleanupWorkflowOperationHandler</h1>
+    <h1 id="cleanup-workflow-operation">Cleanup Workflow Operation</h1>
+<p>ID: <code>cleanup</code></p>
 <h2 id="description">Description</h2>
 <p>This operation removes all files from the workspace and the working file repository which belong to media package
 elements of the running workflow unless their flavor is matched by the value configured in <code>preserve-flavors</code>.  It is
@@ -131,14 +132,13 @@ usually used as last workflow operation in a workflow to ensure that temporary p
   while still removing all files.</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="cleanup"
-  fail-on-error="false"
-  description="Remove temporary processing artifacts"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;cleanup&quot;
+    description=&quot;Remove temporary processing artifacts&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="preserve-flavors"&gt;security/*&lt;/configuration&gt;
-    &lt;configuration key="delete-external"&gt;true&lt;/configuration&gt;
-    &lt;configuration key="delay"&gt;5&lt;/configuration&gt;
+    &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;delay&quot;&gt;5&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

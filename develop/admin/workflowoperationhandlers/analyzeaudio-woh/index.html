@@ -33,11 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "AnalyzeAudioWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Analyze Audio Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
-              {title: "Missing Encoding Profiles", url: "#missing-encoding-profiles" },
+              {title: "Encoding Profiles", url: "#encoding-profiles" },
           ]},
         ];
 
@@ -88,9 +88,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="analyzeaudioworkflowoperationhandler">AnalyzeAudioWorkflowOperationHandler</h1>
+    <h1 id="analyze-audio-workflow-operation">Analyze Audio Workflow Operation</h1>
+<p>ID: <code>analyze-audio</code></p>
 <h2 id="description">Description</h2>
-<p>The AnalyzeAudioWorkflowOperationHandler analyzes the first audio stream of a video or audio track through SoX
+<p>The abalyze audio operation analyzes the first audio stream of a video or audio track through SoX
 (http://sox.sourceforge.net/) and writes the result back to the given track.</p>
 <p>This workflow operation handler can be used with audio and/or video files. At least one audio stream must be available
 otherwise nothing happens. Here are the internal steps done by the different inputs:</p>
@@ -165,22 +166,20 @@ otherwise nothing happens. Here are the internal steps done by the different inp
 </table>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
-  id=&quot;analyze-audio&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Analyze audio stream&quot;&gt;
+    id=&quot;analyze-audio&quot;
+    description=&quot;Analyze audio stream&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;source-flavor&quot;&gt;*/work&lt;/configuration&gt;
     &lt;configuration key=&quot;force-transcode&quot;&gt;true&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h2 id="missing-encoding-profiles">Missing Encoding Profiles</h2>
+<h2 id="encoding-profiles">Encoding Profiles</h2>
 <p>Some of the encoding profiles necessary for this operation are not included
 in Opencast per default, but the operation will not work without them.
 You need to include the following encoding profiles by copy and pasting them in
 a <code>.properties</code> file in the <code>etc/encoding</code> folder of your installation.</p>
-<pre><code class="language-xml"># SoX Audio only (strip video)
+<pre><code class="language-properties"># SoX Audio only (strip video)
 profile.sox-audio-only.work.name = sox audio only
 profile.sox-audio-only.work.input = visual
 profile.sox-audio-only.work.output = audio

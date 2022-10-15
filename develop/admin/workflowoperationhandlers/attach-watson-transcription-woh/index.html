@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Attach Watson Transcription", url: "#_top", children: [
+          {title: "Attach Watson Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Example", url: "#example" },
@@ -87,10 +87,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="attach-watson-transcription">Attach Watson Transcription</h1>
+    <h1 id="attach-watson-transcription-workflow-operation">Attach Watson Transcription Workflow Operation</h1>
+<p>ID: <code>attach-watson-transcription</code></p>
 <h2 id="description">Description</h2>
-<p>The Attach Watson Transcription converts the results file received from the IBM Watson Speech-to-Text service in json
-format, converts it to the desired caption format, and adds it to the media package.</p>
+<p>The attach Watson transcription operation converts the results file received from the IBM Watson Speech-to-Text service
+in json format, converts it to the desired caption format, and adds it to the media package.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -131,9 +132,7 @@ format, converts it to the desired caption format, and adds it to the media pack
 <h2 id="example">Example</h2>
 <pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;
 &lt;operation id=&quot;attach-watson-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Attach captions/transcription&quot;&gt;
+    description=&quot;Attach captions/transcription&quot;&gt;
   &lt;configurations&gt;
     &lt;!-- This is filled out by the transcription service when starting this workflow so just use this as is --&gt;
     &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
@@ -146,9 +145,7 @@ format, converts it to the desired caption format, and adds it to the media pack
 
 &lt;!-- Merge caption/transcript to existing publication and republish --&gt;
 &lt;operation id=&quot;publish-engage&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Distribute and publish to engage server&quot;&gt;
+    description=&quot;Distribute and publish to engage server&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;download-source-tags&quot;&gt;engage-download&lt;/configuration&gt;
     &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;

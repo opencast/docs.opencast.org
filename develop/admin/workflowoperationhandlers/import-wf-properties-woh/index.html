@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ImportWfPropertiesWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Import Workflow Properties Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,12 +87,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="importwfpropertiesworkflowoperationhandler">ImportWfPropertiesWorkflowOperationHandler</h1>
+    <h1 id="import-workflow-properties-workflow-operation">Import Workflow Properties Workflow Operation</h1>
+<p>ID: <code>import-wf-properties</code></p>
 <h2 id="description">Description</h2>
-<p>The ImportWfPropertiesWorkflowOperationHandler loads workflow properties from a Java properties file and sets
+<p>The import workflow properties operation loads workflow properties from a Java properties file and sets
 the corresponding workflow instance variables so that the properties can be use to control workflow execution.</p>
 <p>In case that no properties are found in <code>source-flavor</code>, the workflow operation will just skip.</p>
-<p>Note that the <a href="../export-wf-properties-woh/">ExportWfPropertiesWorkflowOperationHandler</a> can be used to export workflow
+<p>Note that the <a href="../export-wf-properties-woh/">export workflow properties operation</a> can be used to export workflow
 properties to a Java properties file.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -118,13 +119,11 @@ properties to a Java properties file.</p>
 </table>
 <p>* mandatory configuration key</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="import-wf-properties"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Load processing settings"&gt;
+<pre><code class="language-xml">  &lt;operation
+    id=&quot;import-wf-properties&quot;
+    description=&quot;Load processing settings&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;processing/defaults&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;processing/defaults&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

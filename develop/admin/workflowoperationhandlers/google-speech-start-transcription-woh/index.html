@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Google Speech Start Transcription", url: "#_top", children: [
+          {title: "Google Speech Start Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Example", url: "#example" },
@@ -87,7 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="google-speech-start-transcription">Google Speech Start Transcription</h1>
+    <h1 id="google-speech-start-transcription-workflow-operation">Google Speech Start Transcription Workflow Operation</h1>
+<p>ID: <code>google-speech-start-transcription</code></p>
 <h2 id="description">Description</h2>
 <p>Google speech Start Transcription invokes the Google Speech-to-Text service by passing an audio file to be translated to 
 text.</p>
@@ -130,38 +131,34 @@ text.</p>
 </table>
 <p><strong>One of source-flavor or source-tag must be specified.</strong></p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">    &lt;!--  Encode audio to flac --&gt;
-    &lt;operation
-      id=&quot;encode&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Extract audio for transcript generation&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-flavor&quot;&gt;audio/flac&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-tags&quot;&gt;transcript&lt;/configuration&gt;
-        &lt;configuration key=&quot;encoding-profile&quot;&gt;audio-flac&lt;/configuration&gt;
-        &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt; 
+<pre><code class="language-xml">&lt;!--  Encode audio to flac --&gt;
+&lt;operation
+    id=&quot;encode&quot;
+    description=&quot;Extract audio for transcript generation&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;audio/flac&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;transcript&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profile&quot;&gt;audio-flac&lt;/configuration&gt;
+    &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt; 
 
-    &lt;!-- Start Google Speech transcription job --&gt;
-    &lt;operation
-      id=&quot;google-speech-start-transcription&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Start Google Speech transcription job&quot;&gt;
-      &lt;configurations&gt;
-        &lt;!--  Skip this operation if flavor already exists. Used for cases when mp already has captions. --&gt;
-        &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/timedtext&lt;/configuration&gt;
-        &lt;configuration key=&quot;language-code&quot;&gt;en-US&lt;/configuration&gt;
-        &lt;!-- Audio to be translated, produced in the previous compose operation --&gt;
-        &lt;configuration key=&quot;source-tag&quot;&gt;transcript&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+&lt;!-- Start Google Speech transcription job --&gt;
+&lt;operation
+    id=&quot;google-speech-start-transcription&quot;
+    description=&quot;Start Google Speech transcription job&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!--  Skip this operation if flavor already exists. Used for cases when mp already has captions. --&gt;
+    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/timedtext&lt;/configuration&gt;
+    &lt;configuration key=&quot;language-code&quot;&gt;en-US&lt;/configuration&gt;
+    &lt;!-- Audio to be translated, produced in the previous compose operation --&gt;
+    &lt;configuration key=&quot;source-tag&quot;&gt;transcript&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
-<h4 id="encoding-profile-used-in-example-above">Encoding profile used in example above</h4>
-<pre><code>profile.audio-flac.name = audio-flac
+<h3 id="encoding-profile-used-in-example-above">Encoding profile used in example above</h3>
+<pre><code class="language-properties">profile.audio-flac.name = audio-flac
 profile.audio-flac.input = stream
 profile.audio-flac.output = audio
 profile.audio-flac.suffix = -audio.flac

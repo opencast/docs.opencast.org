@@ -88,7 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="duplicate-event-workflow-operation">Duplicate Event Workflow Operation</h1>
-<p><code>Id: duplicate-event</code></p>
+<p>ID: <code>duplicate-event</code></p>
 <h2 id="description">Description</h2>
 <p>The duplicate event operation can be used to duplicate an event by copying an existing one. The main use case are events,
 which contain a series of different presentations which were all recorded with just one recording. In order to create
@@ -106,12 +106,12 @@ have to publish it manually when he is done editing it.</p>
 </thead>
 <tbody>
 <tr>
-<td>duplicate_media_package_<em>number</em>_id</td>
+<td><code>duplicate_media_package_*number*_id</code></td>
 <td><code>duplicate_media_package_1_id=e72f2265-472a-49ae-bc04-8301d94b4b1a</code></td>
 <td>Media package ID of the duplicated event</td>
 </tr>
 <tr>
-<td>duplicate_media_package_ids</td>
+<td><code>duplicate_media_package_ids</code></td>
 <td><code>duplicate_media_package_ids=e72f2265-472a-49ae-bc04-8301d94b4b1a, a32e2265-472a-49ae-bc04-8351d94b4b1c</code></td>
 <td>comma separated list of Media package IDs of the duplicated event</td>
 </tr>
@@ -186,24 +186,20 @@ have to publish it manually when he is done editing it.</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="duplicate-event"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Duplicate event"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;duplicate-event&quot;
+    description=&quot;Duplicate event&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavors"&gt;*/*&lt;/configuration&gt;
-    &lt;configuration key="number-of-events"&gt;${numberOfEvents}&lt;/configuration&gt;
-    &lt;configuration key="max-number-of-events"&gt;1000&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;&lt;/configuration&gt; 
-    &lt;configuration key="no-suffix"&gt;false&lt;/configuration
-    &lt;configuration key="set-series-id"&gt;${seriesId}&lt;/configuration&gt;
-    &lt;configuration key="set-title"&gt;${mpTitle}&lt;/configuration&gt;
-    &lt;configuration key="set-start-date-time"&gt;${startDateTime}&lt;/configuration&gt;
-    &lt;configuration key="property-namespaces"&gt;
-      org.opencastproject.assetmanager.security
-    &lt;/configuration&gt;
-    &lt;configuration key="copy-number-prefix"&gt;copy&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;*/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;number-of-events&quot;&gt;${numberOfEvents}&lt;/configuration&gt;
+    &lt;configuration key=&quot;max-number-of-events&quot;&gt;1000&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;&lt;/configuration&gt; 
+    &lt;configuration key=&quot;no-suffix&quot;&gt;false&lt;/configuration
+    &lt;configuration key=&quot;set-series-id&quot;&gt;${seriesId}&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-title&quot;&gt;${mpTitle}&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-start-date-time&quot;&gt;${startDateTime}&lt;/configuration&gt;
+    &lt;configuration key=&quot;property-namespaces&quot;&gt;org.opencastproject.assetmanager.security&lt;/configuration&gt;
+    &lt;configuration key=&quot;copy-number-prefix&quot;&gt;copy&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

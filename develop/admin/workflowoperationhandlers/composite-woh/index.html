@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Composite Workflow Operation Handler", url: "#_top", children: [
+          {title: "Composite Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Output Resolution", url: "#output-resolution" },
@@ -89,9 +89,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="composite-workflow-operation-handler">Composite Workflow Operation Handler</h1>
+    <h1 id="composite-workflow-operation">Composite Workflow Operation</h1>
+<p>ID: <code>composite</code></p>
 <h2 id="description">Description</h2>
-<p>The CompositeWorkflowOperationHandler is used to composite two videos (upper and lower) and an optional watermark into
+<p>The composite operation is used to composite two videos (upper and lower) and an optional watermark into
 one video, including encoding to different formats. The audio track is taken from both videos by default. Everything is
 done using FFmpeg. The composition can be done in various layout formats e.g. side by side or picture in picture. The
 layout has to be defined in JSON format and is described in section "Layout Definition". For some general information
@@ -321,34 +322,32 @@ upper video and an optional specification for the watermark. The specifications 
 }
 </code></pre>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="composite"
-  fail-on-error="true"
-  exception-handler-workflow="error"
-  description="Composite"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;composite&quot;
+    description=&quot;Composite&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor-upper"&gt;presentation/trimmed&lt;/configuration&gt;
-    &lt;configuration key="source-flavor-lower"&gt;presenter/trimmed&lt;/configuration&gt;
-    &lt;configuration key="source-tags-upper"&gt;comp,rss&lt;/configuration&gt;
-    &lt;configuration key="source-tags-lower"&gt;comp,rss&lt;/configuration&gt;
-    &lt;configuration key="source-tags-watermark"&gt;branding&lt;/configuration&gt;
-    &lt;configuration key="source-flavor-watermark"&gt;image/work&lt;/configuration&gt;
-    &lt;configuration key="source-url-watermark"&gt;file:///Users/me/logo.jpg&lt;/configuration&gt;
-    &lt;configuration key="encoding-profile"&gt;composite&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;composite,rss,atom,archive&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;composite/delivery&lt;/configuration&gt;
-    &lt;configuration key="output-resolution"&gt;1920x1080&lt;/configuration&gt;
-    &lt;configuration key="output-background"&gt;red&lt;/configuration&gt;
-    &lt;configuration key="layout"&gt;topleft&lt;/configuration&gt;
-    &lt;configuration key="layout-topleft"&gt;
-      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":1.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":1.0}}};
-      {"horizontalCoverage":0.2,"anchorOffset":{"referring":{"left":0.0,"top":0.0},"offset":{"y":-20,"x":-20},"reference":{"left":0.0,"top":0.0}}};
-      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":0.0},"offset":{"y":20,"x":20},"reference":{"left":1.0,"top":0.0}}}
+    &lt;configuration key=&quot;source-flavor-upper&quot;&gt;presentation/trimmed&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor-lower&quot;&gt;presenter/trimmed&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags-upper&quot;&gt;comp,rss&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags-lower&quot;&gt;comp,rss&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags-watermark&quot;&gt;branding&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor-watermark&quot;&gt;image/work&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-url-watermark&quot;&gt;file:///Users/me/logo.jpg&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profile&quot;&gt;composite&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;composite,rss,atom,archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;composite/delivery&lt;/configuration&gt;
+    &lt;configuration key=&quot;output-resolution&quot;&gt;1920x1080&lt;/configuration&gt;
+    &lt;configuration key=&quot;output-background&quot;&gt;red&lt;/configuration&gt;
+    &lt;configuration key=&quot;layout&quot;&gt;topleft&lt;/configuration&gt;
+    &lt;configuration key=&quot;layout-topleft&quot;&gt;
+      {&quot;horizontalCoverage&quot;:1.0,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:1.0},&quot;offset&quot;:{&quot;y&quot;:-20,&quot;x&quot;:-20},&quot;reference&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:1.0}}};
+      {&quot;horizontalCoverage&quot;:0.2,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:0.0,&quot;top&quot;:0.0},&quot;offset&quot;:{&quot;y&quot;:-20,&quot;x&quot;:-20},&quot;reference&quot;:{&quot;left&quot;:0.0,&quot;top&quot;:0.0}}};
+      {&quot;horizontalCoverage&quot;:1.0,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:0.0},&quot;offset&quot;:{&quot;y&quot;:20,&quot;x&quot;:20},&quot;reference&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:0.0}}}
     &lt;/configuration&gt;
-    &lt;configuration key="layout-topright"&gt;
-      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":1.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":1.0}}};
-      {"horizontalCoverage":0.2,"anchorOffset":{"referring":{"left":1.0,"top":0.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":0.0}}};
-      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":0.0,"top":0.0},"offset":{"y":20,"x":20},"reference":{"left":0.0,"top":0.0}}}
+    &lt;configuration key=&quot;layout-topright&quot;&gt;
+      {&quot;horizontalCoverage&quot;:1.0,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:1.0},&quot;offset&quot;:{&quot;y&quot;:-20,&quot;x&quot;:-20},&quot;reference&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:1.0}}};
+      {&quot;horizontalCoverage&quot;:0.2,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:0.0},&quot;offset&quot;:{&quot;y&quot;:-20,&quot;x&quot;:-20},&quot;reference&quot;:{&quot;left&quot;:1.0,&quot;top&quot;:0.0}}};
+      {&quot;horizontalCoverage&quot;:1.0,&quot;anchorOffset&quot;:{&quot;referring&quot;:{&quot;left&quot;:0.0,&quot;top&quot;:0.0},&quot;offset&quot;:{&quot;y&quot;:20,&quot;x&quot;:20},&quot;reference&quot;:{&quot;left&quot;:0.0,&quot;top&quot;:0.0}}}
     &lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
