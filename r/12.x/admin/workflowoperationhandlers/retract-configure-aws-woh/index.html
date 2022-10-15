@@ -33,10 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ConfigurableAWSS3RetractWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Configurable AWS/S3 Retract Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameters", url: "#parameters" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -87,9 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="configurableawss3retractworkflowoperationhandler">ConfigurableAWSS3RetractWorkflowOperationHandler</h1>
+    <h1 id="configurable-awss3-retract-workflow-operation">Configurable AWS/S3 Retract Workflow Operation</h1>
+<p>ID: <code>retract-configure-aws</code></p>
 <h2 id="description">Description</h2>
-<p>The ConfigurableAWSS3RetractWorkflowOperationHandler retracts the published elements from a configured publication.</p>
+<p>The configurable AWS/S3 retract operation retracts the published elements from a configured publication.</p>
 <p>If the elements have been added to the Publication using "with-published-elements", as in the case with the external
 api, they haven't actually been published so it is unnecessary to have a retract-configuration. Adding a retraction
 won't cause any errors, it will just skip those elements.</p>
@@ -114,25 +115,22 @@ mandatory.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="operation-examples">Operation Examples</h2>
-<h4 id="retract-from-internal-channel">Retract from Internal Channel</h4>
-<pre><code>&lt;!-- Remove the internal publication if the mediapackage is being deleted. --&gt;
-&lt;operation
-  id="retract-configure-aws"
-  exception-handler-workflow="partial-error"
-  description="Retract from internal publication channel using AWS S3"&gt;
+<h2 id="operation-example">Operation Example</h2>
+<p>Retract from internal channel:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;retract-configure-aws&quot;
+    description=&quot;Retract from internal publication channel using AWS S3&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;internal&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h4 id="retract-from-external-api">Retract from External API</h4>
-<pre><code>&lt;operation
-  id="retract-configure-aws"
-  exception-handler-workflow="partial-error"
-  description="Retract from external api publication channel using AWS S3"&gt;
+<p>Retract from external API:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;retract-configure-aws&quot;
+    description=&quot;Retract from external api publication channel using AWS S3&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;api&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

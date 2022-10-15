@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Google Speech Attach Transcription", url: "#_top", children: [
+          {title: "Google Speech Attach Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Example", url: "#example" },
@@ -87,7 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="google-speech-attach-transcription">Google Speech Attach Transcription</h1>
+    <h1 id="google-speech-attach-transcription-workflow-operation">Google Speech Attach Transcription Workflow Operation</h1>
+<p>ID: <code>google-speech-attach-transcription</code></p>
 <h2 id="description">Description</h2>
 <p>Google Speech Attach Transcription converts the json format file received from the Google Speech-to-Text service 
 into the desired caption format and adds it to the media package.</p>
@@ -135,46 +136,28 @@ into the desired caption format and adds it to the media package.</p>
 </tbody>
 </table>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml"> &lt;!-- Attach caption/transcript --&gt;
+<pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;&lt;G
+&lt;operation id=&quot;google-speech-attach-transcription&quot;
+    description=&quot;Attach captions/transcription&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
+    &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
+    &lt;configuration key=&quot;line-size&quot;&gt;100&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/timedtext&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 
-    &lt;operation id=&quot;google-speech-attach-transcription&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot; 
-      description=&quot;Attach captions/transcription&quot;&gt;
-      &lt;configurations&gt;
-        &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
-        &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-        &lt;configuration key=&quot;line-size&quot;&gt;100&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/timedtext&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Publish to engage player --&gt;
-
-    &lt;operation id=&quot;publish-engage&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Distribute and publish to engage server&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;download-source-flavors&quot;&gt;dublincore/*,security/*,captions/*&lt;/configuration&gt;
-        &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
-        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Publish to oaipmh --&gt;
-
-    &lt;operation
-      id=&quot;republish-oaipmh&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Update recording metadata in default OAI-PMH repository&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;dublincore/*,security/*,captions/*&lt;/configuration&gt;
-        &lt;configuration key=&quot;repository&quot;&gt;default&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+&lt;!-- Publish to engage player --&gt;
+&lt;operation id=&quot;publish-engage&quot;
+    description=&quot;Distribute and publish to engage server&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;download-source-flavors&quot;&gt;dublincore/*,security/*,captions/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
 
   <br>

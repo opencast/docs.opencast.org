@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ConfigureByDCTermWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Configure by DCTerm Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,7 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="configurebydctermworkflowoperationhandler">ConfigureByDCTermWorkflowOperationHandler</h1>
+    <h1 id="configure-by-dcterm-workflow-operation">Configure by DCTerm Workflow Operation</h1>
+<p>ID: <code>configure-by-dcterm</code></p>
 <h2 id="description">Description</h2>
 <p>With the ConfigureByDCTermWorkflowOperationHandler it's possible to create a workflow configuration property according
 to whether a Dublin Core term in a catalog has a specific value. So for example it's possible to control a workflow so
@@ -159,32 +160,30 @@ configuration properties can be used to modify the execution of subsequent opera
 will be evaluated as <code>false</code> in practice the only useful value which can set is <code>true</code>.  However operation <code>if</code>
 conditions can be negated though so it is possible to skip subsequent operations on matched <code>dcterm</code>  value.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="configure-by-dcterm"
-  fail-on-error="true"
-  description="Configure publication channel by dcterm"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;configure-by-dcterm&quot;
+    description=&quot;Configure publication channel by dcterm&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="dccatalog"&gt;episode&lt;/configuration&gt;
-    &lt;configuration key="dcterm"&gt;audience&lt;/configuration&gt;
-    &lt;configuration key="match-value"&gt;private&lt;/configuration&gt;
-    &lt;configuration key="publishPrivate"&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;dccatalog&quot;&gt;episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;dcterm&quot;&gt;audience&lt;/configuration&gt;
+    &lt;configuration key=&quot;match-value&quot;&gt;private&lt;/configuration&gt;
+    &lt;configuration key=&quot;publishPrivate&quot;&gt;true&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 
 ...
 
 &lt;operation
-   id="publish-engage"
-   if="${publishPrivate}"
-   description="Publish to internal audience only"&gt;
+   id=&quot;publish-engage&quot;
+   if=&quot;${publishPrivate}&quot;
+   description=&quot;Publish to internal audience only&quot;&gt;
    ...
 &lt;/operation&gt;
 
-
 &lt;operation
-   id="publish-youtube"
-   if="NOT ${publishPrivate}"
-   description="Publish to global audience"&gt;
+   id=&quot;publish-youtube&quot;
+   if=&quot;NOT ${publishPrivate}&quot;
+   description=&quot;Publish to global audience&quot;&gt;
    ...
 &lt;/operation&gt;
 </code></pre>

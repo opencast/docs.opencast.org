@@ -27,7 +27,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Concat Workflow Operation Handler", url: "#_top", children: [
+          {title: "Concat Workflow Operation", url: "#_top", children: [
               {title: "General Mode", url: "#general-mode" },
               {title: "Same Codec Mode", url: "#same-codec-mode" },
               {title: "Usage", url: "#usage" },
@@ -67,8 +67,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       </a>
 </div>
 </div>
-<h1 id="concat-workflow-operation-handler">Concat Workflow Operation Handler</h1>
-<p>The <em>concat</em> operation handler has been created to concatenate multiple video tracks into one video track.</p>
+<h1 id="concat-workflow-operation">Concat Workflow Operation</h1>
+<p>ID: <code>concat</code></p>
+<p>The concat operation has been created to concatenate multiple video tracks into one video track.</p>
 <p>For a concatenation of two video files to work, both files need to have the same format (timebase, resolution, codecs,
 frame rate, etc.). This workflow operation has two modes to deal with this restriction:</p>
 <ul>
@@ -235,10 +236,8 @@ video-201711201040.mp4
 <p>Example of a concat operation in a workflow definition.</p>
 <pre><code class="language-xml">&lt;!-- Add intro and outro part to the presenter track --&gt;
 &lt;operation
-  id="concat"
-  fail-on-error="true"
-  exception-handler-workflow="error"
-  description="Concatenate the presenter track and the intro/outro videos."&gt;
+    id="concat"
+    description="Concatenate the presenter track and the intro/outro videos."&gt;
   &lt;configurations&gt;
     &lt;configuration key="source-flavor-part-0"&gt;intro/source&lt;/configuration&gt;
     &lt;configuration key="source-flavor-part-1"&gt;presenter/trimmed&lt;/configuration&gt;
@@ -255,7 +254,7 @@ video-201711201040.mp4
 <h2 id="encoding-profile">Encoding Profile</h2>
 <p>The encoding profile command must contain the #{concatCommand} parameter which will set all input and possibly filter
 commands required for this operation:</p>
-<pre><code>profile.concat.ffmpeg.command = #{concatCommand} \
+<pre><code class="language-properties">profile.concat.ffmpeg.command = #{concatCommand} \
   … #{out.dir}/#{out.name}#{out.suffix}
 </code></pre>
 <br/>

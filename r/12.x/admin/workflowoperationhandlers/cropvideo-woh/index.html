@@ -33,9 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Crop Workflow operation", url: "#_top", children: [
+          {title: "Crop Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Example for crop-video in a workflow", url: "#example-for-crop-video-in-a-workflow" },
+              {title: "Example", url: "#example" },
           ]},
         ];
 
@@ -86,7 +87,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="crop-workflow-operation">Crop Workflow operation</h1>
+    <h1 id="crop-workflow-operation">Crop Workflow Operation</h1>
+<p>ID: <code>crop</code></p>
+<h2 id="description">Description</h2>
 <p>The plugin provides the workflow operation <code>crop-video</code>. This workflow operation executes FFmpeg command <code>cropdetect</code>.
 <code>cropdetect</code> checks for black bars on the sides of the track of the workflow instance. If <code>cropdetect</code> is successful,
 then FFmpeg command <code>crop</code> is executed. <code>crop</code> removes these black bars.</p>
@@ -117,11 +120,10 @@ then FFmpeg command <code>crop</code> is executed. <code>crop</code> removes the
 </tr>
 </tbody>
 </table>
-<h2 id="example-for-crop-video-in-a-workflow">Example for crop-video in a workflow</h2>
+<h2 id="example">Example</h2>
 <pre><code class="language-xml">&lt;operation
-  id=&quot;crop-video&quot;
-  fail-on-error=&quot;false&quot;
-  description=&quot;Detecting black bars in presentation track&quot;&gt;
+    id=&quot;crop-video&quot;
+    description=&quot;Detecting black bars in presentation track&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
     &lt;configuration key=&quot;target-tags&quot;&gt;engage-download&lt;/configuration&gt;

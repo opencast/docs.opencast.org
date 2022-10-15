@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "InspectWorkflowOperation", url: "#_top", children: [
+          {title: "Inspect Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -87,11 +87,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="inspectworkflowoperation">InspectWorkflowOperation</h1>
+    <h1 id="inspect-workflow-operation">Inspect Workflow Operation</h1>
+<p>ID: <code>inspect</code></p>
 <h2 id="description">Description</h2>
-<p>The InspectWorkflowOperation is used to inspect all tracks of a media package. It tries to verify if they are valid
-media tracks.
-The InspectWorkflowOperation will also set the duration and creation date of the dublincore/episode catalog
+<p>The inspect operation is used to inspect all tracks of a media package.
+It tries to verify if they are valid media tracks.
+The inspect operation will also set the duration and creation date of the <code>dublincore/episode</code> catalog
 (if available) to the media package duration and media package creation date.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -137,16 +138,14 @@ computation power.</p>
 <p>The inspection service will try to fill empty metadata fields. It will not overwrite any existing values except when
 you specify the option <code>overwrite</code> as <code>true</code>.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-    id="inspect"
-    fail-on-error="true"
-    exception-handler-workflow="error"
-    description="Inspecting mediapackage track elements"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="overwrite"&gt;false&lt;/configuration&gt;
-        &lt;configuration key="accept-no-media"&gt;false&lt;/configuration&gt;
-        &lt;configuration key="accurate-frame-count"&gt;false&lt;/configuration&gt;
-    &lt;/configurations&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;inspect&quot;
+    description=&quot;Inspecting mediapackage track elements&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;overwrite&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;accept-no-media&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;accurate-frame-count&quot;&gt;false&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 

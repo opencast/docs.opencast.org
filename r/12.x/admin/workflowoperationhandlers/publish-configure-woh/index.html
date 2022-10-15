@@ -33,13 +33,13 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "ConfigurablePublishWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Configurable Publish Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Mode", url: "#mode" },
               {title: "URL Pattern Variables", url: "#url-pattern-variables" },
               {title: "Publication Channel Labels and Icons", url: "#publication-channel-labels-and-icons" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -90,7 +90,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="configurablepublishworkflowoperationhandler">ConfigurablePublishWorkflowOperationHandler</h1>
+    <h1 id="configurable-publish-workflow-operation">Configurable Publish Workflow Operation</h1>
+<p>ID: <code>publish-configure</code></p>
 <h2 id="description">Description</h2>
 <p>The <code>ConfigurablePublishWorkflowOperationHandler</code> will distribute the given elements and create a publication element 
 for them. By default it will retract all published download elements before publishing anew.</p>
@@ -255,44 +256,41 @@ with <code>_</code> (underscore).</p>
 administrative user interface will label these channels "Custom". You can specify both a label and an icon for each
 custom publication channels in the configuration files <code>etc/listproviders/publication.channel.labels.properties</code> and
 <code>etc/listproviders/publication.channel.icons.properties</code>.</p>
-<h2 id="operation-examples">Operation Examples</h2>
-<h3 id="internal-channel">Internal Channel</h3>
-<pre><code>&lt;operation
-  id="publish-configure"
-  exception-handler-workflow="partial-error"
-  description="Publish to internal channel"&gt;
+<h2 id="operation-example">Operation Example</h2>
+<p>Publish to internal channel:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;publish-configure&quot;
+    description=&quot;Publish to internal channel&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="download-source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
-    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
-    &lt;configuration key="url-pattern"&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
+    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;internal&lt;/configuration&gt;
+    &lt;configuration key=&quot;url-pattern&quot;&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h3 id="external-api">External API</h3>
-<pre><code>&lt;operation
-  id="publish-configure"
-  exception-handler-workflow="partial-error"
-  description="Publish to external api publication channel"&gt;
+<p>Publish to external API:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;publish-configure&quot;
+    description=&quot;Publish to external api publication channel&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
-    &lt;configuration key="mimetype"&gt;application/json&lt;/configuration&gt;
-    &lt;configuration key="download-source-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
-    &lt;configuration key="url-pattern"&gt;http://api.oc.org/api/events/${event_id}&lt;/configuration&gt;
-    &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;api&lt;/configuration&gt;
+    &lt;configuration key=&quot;mimetype&quot;&gt;application/json&lt;/configuration&gt;
+    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key=&quot;url-pattern&quot;&gt;http://api.oc.org/api/events/${event_id}&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;true&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
-<h3 id="meta-publication">Meta publication</h3>
-<p>Meta publications are URL only publications as reference to external systems like media portal.</p>
-<pre><code>&lt;operation
-  id="publish-configure"
-  exception-handler-workflow="partial-error"
-  description="Publish to meta publication channel"&gt;
+<p>Create a meta publication.
+A reference to external systems like a media portal:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;publish-configure&quot;
+    description=&quot;Publish to meta publication channel&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="channel-id"&gt;edu-reference&lt;/configuration&gt;
-    &lt;configuration key="mimetype"&gt;text/html&lt;/configuration&gt;
-    &lt;configuration key="url-pattern"&gt;https://org.mediaportal.edu/events/${event_id}&lt;/configuration&gt;
-    &lt;configuration key="check-availability"&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;channel-id&quot;&gt;edu-reference&lt;/configuration&gt;
+    &lt;configuration key=&quot;mimetype&quot;&gt;text/html&lt;/configuration&gt;
+    &lt;configuration key=&quot;url-pattern&quot;&gt;https://org.mediaportal.edu/events/${event_id}&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

@@ -33,11 +33,12 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "PrepareAVWorkflowOperation", url: "#_top", children: [
+          {title: "Prepare-AV Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
               {title: "Audio Muxing", url: "#audio-muxing" },
+              {title: "Example", url: "#example" },
           ]},
         ];
 
@@ -88,9 +89,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="prepareavworkflowoperation">PrepareAVWorkflowOperation</h1>
+    <h1 id="prepare-av-workflow-operation">Prepare-AV Workflow Operation</h1>
+<p>ID: <code>prepare-av</code></p>
 <h2 id="description">Description</h2>
-<p>The PrepareAVWorkflowOperation works is like this:</p>
+<p>The prepare-av operation works is like this:</p>
 <p>If there are two tracks with the same flavor, and one of them contains a video stream only, while the other contains an
 audio stream only, the implementation will call the composer's "mux" method, with the result that the audio will be
 muxed with the video, using the video's movie container.</p>
@@ -153,21 +155,19 @@ in the pipeline (encoding to flash, mjpeg etc.).</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="prepare-av"
-  fail-on-error="true"
-  exception-handler-workflow="error"
-  description="Preparing presenter audio and video work versions"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;prepare-av&quot;
+    description=&quot;Preparing presenter audio and video work versions&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;presenter/work&lt;/configuration&gt;
-    &lt;configuration key="rewrite"&gt;false&lt;/configuration&gt;
-    &lt;configuration key="audio-muxing-source-flavors"&gt;*/?,*/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/work&lt;/configuration&gt;
+    &lt;configuration key=&quot;rewrite&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;audio-muxing-source-flavors&quot;&gt;*/?,*/*&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <h2 id="audio-muxing">Audio Muxing</h2>
-<p>The PrepareAVWorkflowOperation can be used for audio muxing in case a matching source video track has no audio. Audio
+<p>The prepare-av operation can be used for audio muxing in case a matching source video track has no audio. Audio
 muxing is performed as described below:</p>
 <p>In case the <em>source-flavor</em> matches to exactly two tracks whereas one track is a video-only track and the other is an
 audio-only track, those tracks will be merged into a single audio-video track.</p>
@@ -182,11 +182,9 @@ defines the search order of how to find an audio track.</p>
 <p>Note: In case that a flavor used with <em>audio-muxing-source-flavors</em> matches to multiple tracks within the media package
 resulting in a list of matching tracks, the search order within that list is undefined, i.e. PrepareAVWorkflowOperation
 will just pick any of those tracks that has audio.</p>
-<h3 id="example">Example</h3>
-<pre><code>[...]
-&lt;configuration key="source-flavor"&gt;presenter/*&lt;/configuration&gt;
-&lt;configuration key="audio-muxing-source-flavors"&gt;presenter-audio/?, presentation/?,presentation/*,?/audio,*/*&lt;/configuration&gt;
-[...]
+<h2 id="example">Example</h2>
+<pre><code class="language-xml">&lt;configuration key=&quot;source-flavor&quot;&gt;presenter/*&lt;/configuration&gt;
+&lt;configuration key=&quot;audio-muxing-source-flavors&quot;&gt;presenter-audio/?, presentation/?,presentation/*,?/audio,*/*&lt;/configuration&gt;
 </code></pre>
 <p>Let's assume that exactly one video-only track of flavor presenter/source in the media package and another track of
 flavor audio/track that has audio.</p>

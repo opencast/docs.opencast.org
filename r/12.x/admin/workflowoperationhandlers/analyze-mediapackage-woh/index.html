@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "AnalyzeMediapackageWorkflowOperationHandler", url: "#_top", children: [
+          {title: "Analyze Media Package Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Workflow Instance Variables", url: "#workflow-instance-variables" },
               {title: "Parameter Table", url: "#parameter-table" },
@@ -88,9 +88,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="analyzemediapackageworkflowoperationhandler">AnalyzeMediapackageWorkflowOperationHandler</h1>
+    <h1 id="analyze-media-package-workflow-operation">Analyze Media Package Workflow Operation</h1>
+<p>ID: <code>analyze-mediapackage</code></p>
 <h2 id="description">Description</h2>
-<p>The AnalyzeMediapackageWorkflowOperationHandler analyzes the mediapackage and sets workflow instance
+<p>The analyze media package operation  analyzes the mediapackage and sets workflow instance
 variables based on the content of the medapackage. These variables can then be used to control if workflow
 operations should be executed or skipped.</p>
 <h2 id="workflow-instance-variables">Workflow Instance Variables</h2>
@@ -104,12 +105,12 @@ operations should be executed or skipped.</p>
 </thead>
 <tbody>
 <tr>
-<td><em>flavor</em>_exists</td>
+<td><code>*flavor*_exists</code></td>
 <td><code>presenter_source_exists=true</code></td>
 <td>Whether an element with given flavor is in the mediapackage.</td>
 </tr>
 <tr>
-<td><em>flavor</em>_type</td>
+<td><code>*flavor*_type</code></td>
 <td><code>presenter_source_type=Track</code></td>
 <td>The type of the element with the given flavor. Possible values are: <code>Attachment</code>, <code>Catalog</code>, <code>Track</code>.</td>
 </tr>
@@ -140,17 +141,13 @@ operations should be executed or skipped.</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code>&lt;operation
-  id="analyze-mediapackage"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Analyze media package and set control variables"&gt;
-  &lt;configurations&gt;
-  &lt;/configurations&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;analyze-mediapackage&quot;
+    description=&quot;Analyze media package and set control variables&quot;&gt;
 &lt;/operation&gt;
 </code></pre>
 <p>The operation will create workflow instance variables like this:</p>
-<pre><code>dublincore_episode_exists=true
+<pre><code class="language-properties">dublincore_episode_exists=true
 dublincore_episode_type=Catalog
 presentation_source_exists=true
 presentation_source_type=Track

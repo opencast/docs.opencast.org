@@ -88,6 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="image-convert-workflow-operation">Image-Convert Workflow Operation</h1>
+<p>ID: <code>image-convert</code></p>
 <h2 id="description">Description</h2>
 <p>The Image-Convert workflow operation allows source images to be converted into target images with different encoding
 settings. One example is the conversion of preview images into different formats.</p>
@@ -147,22 +148,21 @@ settings. One example is the conversion of preview images into different formats
 <p>This operation would convert all image attachments with flavor matches <code>*/preview</code> and tag <code>player</code> into two different
 formats described by the encoding profiles <code>preview-regular.image</code> and <code>preview-small.image</code>.
 The produced image attachments will have an flavor with the subtype <code>preview+player</code>.</p>
-<pre><code>&lt;operation
-  id="image-convert"
-  exception-handler-workflow="error"
-  description="Resize images to fixed size"&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;image-convert&quot;
+    description=&quot;Resize images to fixed size&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key="source-tags"&gt;player&lt;/configuration&gt;
-    &lt;configuration key="source-flavors"&gt;*/preview&lt;/configuration&gt;
-    &lt;configuration key="tags-and-flavors"&gt;true&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;*/preview+player&lt;/configuration&gt;
-    &lt;configuration key="encoding-profiles"&gt;preview-regular.image,preview-small.image&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-tags&quot;&gt;player&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;*/preview&lt;/configuration&gt;
+    &lt;configuration key=&quot;tags-and-flavors&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;*/preview+player&lt;/configuration&gt;
+    &lt;configuration key=&quot;encoding-profiles&quot;&gt;preview-regular.image,preview-small.image&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <h3 id="encoding-profile-example">Encoding Profile Example</h3>
-<pre><code># Player preview image regular size
+<pre><code class="language-properties"># Player preview image regular size
 profile.preview-regular.image.name = player preview image regular size
 profile.preview-regular.image.input = image
 profile.preview-regular.image.output = image

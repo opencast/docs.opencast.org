@@ -34,8 +34,9 @@
         
         var pageToc = [
           {title: "Execute Once Workflow Operation", url: "#_top", children: [
-              {title: "Parameter table", url: "#parameter-table" },
-              {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
           ]},
         ];
 
@@ -86,13 +87,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h2 id="execute-once-workflow-operation">Execute Once Workflow Operation</h2>
+    <h1 id="execute-once-workflow-operation">Execute Once Workflow Operation</h1>
+<p>ID: <code>execute-once</code></p>
+<h2 id="description">Description</h2>
 <p>This operation handler runs a single command with multiple MediaPackage elements as arguments. The command
 may be used to create a new mediapackage element, or to add configuration properties to the running workflow.</p>
 <p>To run a command for each element in a MediaPackage, use the <a href="../execute-many-woh/">Execute Many</a> operation.</p>
 <p>Commands run by this operation handler must first be included in the <code>commands.allowed</code> list in the
 <a href="../../modules/execute/#service-configuration">Execute Service</a> configuration.</p>
-<h3 id="parameter-table">Parameter table</h3>
+<h2 id="parameter-table">Parameter Table</h2>
 <p>All parameters are empty by default if not specified. The special parameters <code>#id</code>, <code>#flavor</code> and <code>#out</code> are described
 in <a href="../../modules/execute/#parameter-substitution">Execute Service: Parameter Substitution</a></p>
 <table>
@@ -158,16 +161,14 @@ in <a href="../../modules/execute/#parameter-substitution">Execute Service: Para
 <p>If <code>set-workflow-properties</code> is true, the command should write a plain-text properties file to the location specified by
 <code>#{out}</code> in the key-value format supported by the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java
 Properties</a> class, for example:</p>
-<pre><code>key1=value1
+<pre><code class="language-properties">key1=value1
 key2=value2
 </code></pre>
-<h3 id="operation-examples">Operation Examples</h3>
+<h2 id="operation-example">Operation Example</h2>
 <p>Run a command which combines two tracks into a new track:</p>
-<pre><code>&lt;operation
-  id=&quot;execute-once&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Run command&quot;&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;execute-once&quot;
+    description=&quot;Run command&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;exec&quot;&gt;ges-launch&lt;/configuration&gt;
     &lt;configuration key=&quot;params&quot;&gt;-e #{flavor(presenter/source)} 0 5m14s #{flavor(presentation/source)} 0 14s&lt;/configuration&gt;
@@ -180,11 +181,9 @@ key2=value2
 </code></pre>
 <p>Run a command which inspects a mediapackage and adds new configuration properties to the running workflow, leaving the
 mediapackage unchanged:</p>
-<pre><code>&lt;operation
-  id=&quot;execute-once&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Inspect media and update workflow properties&quot;&gt;
+<pre><code class="language-xml">&lt;operation
+    id=&quot;execute-once&quot;
+    description=&quot;Inspect media and update workflow properties&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;exec&quot;&gt;/usr/local/bin/oc-inspect.sh&lt;/configuration&gt;
     &lt;configuration key=&quot;params&quot;&gt;#{out} #{id}&lt;/configuration&gt;
