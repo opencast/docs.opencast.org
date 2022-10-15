@@ -1,9 +1,11 @@
-commit d3114f706ca2ec87a12adec82a746cf494a0346e
-Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Sat Oct 8 21:20:50 2022 +0200
+commit baa7e1566aa711d55e3855a4cd69067d83b0fcdc
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Sat Oct 15 17:48:24 2022 +0200
 
-    Skip check if user has global admin role
+    WebVTT subtitle editing in the video editor backend (#3606)
     
-    When reindexing the current user could belong to a different
-    organization. This user usually has the global admin role and should
-    thus still be able to query the event index.
+    This patch modifies the video editor service to be able to cut subtitle tracks based on the WebVTT format.
+    
+    As FFmpeg is severely limited in how it allows cutting subtitles (does not work with filters), this parses the WebVTT subtitles into a list container to allow for fine-grained editing by the video editor. The WebVTT parser is still rather rudimentary, but should not fail as long as the given WebVTT file is valid.
+    
+    The video editor now discriminates between the usual audio/video elements and reference elements (aka everything that is not explicitly specified to be an audio or video element). Within the reference elements, it looks for `.vtt` files and cuts them according to the SMIL.
