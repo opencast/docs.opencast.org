@@ -48,6 +48,7 @@
           ]},
           {title: "Media", url: "#media", children: [
               {title: "GET /api/events/{event_id}/media", url: "#get-apieventsevent_idmedia" },
+              {title: "POST /api/events/{event_id}/track", url: "#post-apieventsevent_idtrack" },
           ]},
           {title: "Metadata", url: "#metadata", children: [
               {title: "GET /api/events/{event_id}/metadata", url: "#get-apieventsevent_idmetadata" },
@@ -129,6 +130,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li><a href="#media">Media</a><ul>
 <li><a href="#get-apieventsevent_idmedia">GET /api/events/{event_id}/media</a></li>
+<li><a href="#post-apieventsevent_idtrack">POST /api/events/{event_id}/track</a></li>
 </ul>
 </li>
 <li><a href="#metadata">Metadata</a><ul>
@@ -1430,6 +1432,54 @@ convenience method to avoid having to build and post a complete access control l
   }
 ]
 </code></pre>
+<h3 id="post-apieventsevent_idtrack">POST /api/events/{event_id}/track</h3>
+<p>Adds the given track to the given flavor in the event. </p>
+<table>
+<thead>
+<tr>
+<th align="left">Path Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>event_id</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Event identifier</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Multipart Form Parameters</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>flavor</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">Denotes type and subtype, e.g. 'captions/source+en'</td>
+</tr>
+<tr>
+<td align="left"><code>overwriteExisting</code></td>
+<td align="left"><a href="../types/#basic"><code>boolean</code></a></td>
+<td align="left">If true, all other tracks in the specified flavor are REMOVED</td>
+</tr>
+<tr>
+<td align="left"><code>track</code></td>
+<td align="left"><a href="../types/#file"><code>file</code></a></td>
+<td align="left">The track file</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The track was added successfully.<br/>
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br/>
+<code>404 (NOT FOUND)</code>: The specified event does not exist.<br/></p>
 <h1 id="metadata">Metadata</h1>
 <p>This section describes how to use the External API to work with metadata catalogs associated to events.</p>
 <p>Opencast manages the bibliographic metadata of series using metadata catalogs which are identified by flavors.
