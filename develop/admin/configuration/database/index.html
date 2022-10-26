@@ -109,12 +109,12 @@ We also do not test this, and hence do not guarantee that this will work.</p>
 <h2 id="step-1-select-a-database">Step 1: Select a Database</h2>
 <p>The EclipseLink JPA implementation which is used in Opencast supports several different databases, although
 some databases might require additional drivers.
-Official support only exists for MariaDB, MySQL, PostgreSQL and H2.
+Official support only exists for MariaDB, PostgreSQL and H2.
 Other database engines are not tested and specific issues will likely not be addressed.</p>
 <ul>
 <li><strong>MariaDB</strong> is the recommended database engine.
   It is used by most adopters and is well tested.</li>
-<li><strong>PostgreSQL</strong> support is experimental.</li>
+<li><strong>PostgreSQL</strong> is fully supported and a production ready alternative.</li>
 <li><strong>H2</strong> is not suitable for anything but testing and development.
   It cannot be used in distributed environments.</li>
 </ul>
@@ -166,7 +166,6 @@ For more details on MariaDB user creation, have a look at <a href="https://maria
 <pre><code class="language-sh">% systemctl restart mariadb.service
 </code></pre>
 <h3 id="postgresql">PostgreSQL</h3>
-<p>Opencast's official PostgreSQL support is still marked as experimental.</p>
 <p>Install PostgreSQL, create a database and a user.
 You may need to enable password authentication in your <code>pg_hba.conf</code> first.
 Please refer to the PostgreSQL documentation for more details.</p>
@@ -208,7 +207,7 @@ org.opencastproject.db.jdbc.pass=opencast_password
 One exception to this is the OAI-PMH publication database which requires an additional trigger.
 Trying to generate the schema automatically will most likely fail.</p>
 <p>If you want to use OAI-PMH, you must create the necessary table manually.</p>
-<p>Use the following code to generate the OAI-PMH database table on MariaDB/MySQL.
+<p>Use the following code to generate the OAI-PMH database table on MariaDB.
 PostgreSQL is not yet supported.</p>
 <pre><code class="language-sql">CREATE TABLE oc_oaipmh (
   mp_id VARCHAR(128) NOT NULL,
