@@ -36,7 +36,7 @@
           {title: "Microsoft Azure Start Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Example", url: "#example" },
+              {title: "Examples", url: "#examples" },
           ]},
         ];
 
@@ -127,19 +127,47 @@ to be translated to text.</p>
 <td>EMPTY</td>
 <td>en-US, <a href="https://docs.microsoft.com/de-de/azure/cognitive-services/speech-service/language-support?tabs=speechtotext#speech-to-text">supported languages</a></td>
 </tr>
+<tr>
+<td>auto-detect-language</td>
+<td>Activate automatic language detection by Azure. Optional. Overrides the language set in <code>language-code</code>. If set, will override the value in the configuration</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>auto-detect-languages</td>
+<td>A list of language codes. MUST be set if not set already in service configuration. The Azure language auto detection chooses from the given list and cannot detect any language not in the given list. The list needs to have at least one element and can have at most four elements.</td>
+<td>EMPTY</td>
+<td>en-US,de-DE,it-IT</td>
+</tr>
 </tbody>
 </table>
 <p><strong>One of source-flavor or source-tag must be specified.</strong></p>
-<h2 id="example">Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;microsoft-azure-start-transcription&quot;
-    description=&quot;Start Microsoft Azure transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+de-DE&lt;/configuration&gt;
-    &lt;configuration key=&quot;language-code&quot;&gt;de-DE&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/prepared&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<h2 id="examples">Examples</h2>
+<pre><code class="language-xml">    &lt;!-- Start Microsoft Azure transcription job --&gt;
+    &lt;operation
+        id=&quot;microsoft-azure-start-transcription&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Start Microsoft Azure transcription job&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!--  Skip this operation if flavor already exists. Used for cases when mediapackage already has captions. --&gt;
+        &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+de-DE&lt;/configuration&gt;
+        &lt;configuration key=&quot;language-code&quot;&gt;de-DE&lt;/configuration&gt;
+        &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/prepared&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<pre><code class="language-xml">    &lt;!-- Start Microsoft Azure transcription job, auto detect language --&gt;
+    &lt;operation
+        id=&quot;microsoft-azure-start-transcription&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Start Microsoft Azure transcription job&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;auto-detect-language&quot;&gt;true&lt;/configuration&gt;
+        &lt;configuration key=&quot;auto-detect-languages&quot;&gt;es-ES,fr-FR,nl-NL,ja-JP&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
 </code></pre>
 
   <br>
