@@ -1,25 +1,5 @@
-commit 0f671301da36b6a43bb715cda78baa9dfb30eb03
+commit c70772fe8751fd99eb75c59f55906cd76c1ca919
 Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
-Date:   Wed Nov 16 15:17:48 2022 +0100
+Date:   Wed Nov 16 15:28:10 2022 +0100
 
-    Simplify ldap user directory implementation (#4383)
-    
-    * simplify ldap user directory implementation
-    
-    Reuse logic of OpencastLdapAuthoritiesPopulator implementation in opencast's user directory.
-    
-    * remove mixing ldap authorities with internal ones
-    
-    The OpencastLdapAuthoritiesPopulator returned a mixture of LDAP and
-    internal authorities. The OpencastLdapAuthoritiesPopulator achieved
-    this by retrieving the user object via the security service.
-    This prevents reusing the populator in the LDAP user directory implementation
-    because it results in a recursion.
-    
-    * Add UserDetailsContextMapper implementation
-    
-    Providing the UserDetailsContextMapper as an alternative to the
-    LdapAuthoritiesMapper offers all opencast roles instead of only roles
-    derived from LDAP. The OpencastUserDetailsMapper provides a
-    UserDetails object from Opencast's UserDetailsService, aka
-    UserAndRoleDirectoryServiceImpl.
+    enrich ldap userdetails with name and mail (#4440)
