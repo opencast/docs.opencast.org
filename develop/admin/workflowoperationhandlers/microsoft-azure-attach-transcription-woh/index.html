@@ -112,7 +112,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <td>target-flavor</td>
 <td>The flavor of the caption/transcription file generated. Mandatory.</td>
 <td>EMPTY</td>
-<td>captions/vtt+en-us</td>
+<td>captions/vtt+en-US</td>
+</tr>
+<tr>
+<td>replace-with-language</td>
+<td>Text to replace a placeholder in target-flavor with. Optional</td>
+<td>EMPTY</td>
+<td>en-US</td>
 </tr>
 <tr>
 <td>target-tag</td>
@@ -122,6 +128,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tr>
 </tbody>
 </table>
+<p>'target_flavor' allows a placeholder of the form <code>____</code> (e.g. <code>captions/vtt+____</code>). If auto detection was used in the
+start WOH, the placeholder will be replaced with the detected language. Alternatively, you can override that by 
+setting <code>replace-with-language</code>. If neither is set, the placeholder will simply be removed.</p>
 <h2 id="example">Example</h2>
 <pre><code class="language-xml">&lt;operation
     id=&quot;microsoft-azure-attach-transcription&quot;
