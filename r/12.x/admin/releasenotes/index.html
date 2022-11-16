@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 12: Release Notes", url: "#_top", children: [
+              {title: "Opencast 12.5", url: "#opencast-125" },
               {title: "Opencast 12.4", url: "#opencast-124" },
               {title: "Opencast 12.3", url: "#opencast-123" },
               {title: "Opencast 12.2", url: "#opencast-122" },
@@ -92,6 +93,39 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-12-release-notes">Opencast 12: Release Notes</h1>
+<h2 id="opencast-125">Opencast 12.5</h2>
+<p>The fifth maintenance release of Opencast 12.</p>
+<p>Security related changes are:</p>
+<ul>
+<li>Paella Player 6: Validate redirect to login page</li>
+</ul>
+<p>Notable changes are:</p>
+<ul>
+<li>Tobira: The harvesting API now identifies the master playlist of events with
+  multiple HLS streams. This is needed for example when you are using the
+  <code>multiencode</code> operation; without this information, the quality selection in
+  Paella can't work in Tobira.
+  (See also <a href="https://github.com/elan-ev/tobira/issues/573">elan-ev/tobira#573</a>.)
+  If this affects you, you need to re-synchronize your Tobira instance
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4370">#4370</a>]).</li>
+<li>Fix for wrong type handling in the encode WOH
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4382">#4382</a>]).</li>
+<li>Fix for live publications not being retracted
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4250">#4250</a>]).</li>
+<li>Azure transcription service improvements
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4441">#4441</a>]).</li>
+<li>Editor: Let Editor know if files are available locally
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4411">#4411</a>]).</li>
+<li>LDAP: Do not add the roleprefix to extra roles
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4377">#4377</a>]).</li>
+<li>E-Mail: Use UTF-8 as charset for HTML mails
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4375">#4375</a>]).</li>
+</ul>
+<p>New Features and updates:
+- Initialization of new event ACL with series ACL in the Admin UI is now configurable
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4249">#4249</a>]).</p>
+<p>There are more bug fixes.
+See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
 <h2 id="opencast-124">Opencast 12.4</h2>
 <p>The fourth maintenance release of Opencast 12.
 Notable changes are:</p>
