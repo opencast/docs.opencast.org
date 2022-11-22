@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Message Broker - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Message Broker";
+    var mkdocs_page_input_path = "configuration/message-broker.md";
+    var mkdocs_page_url = "/configuration/message-broker/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Administration Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../release.notes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Installation Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-fedora/">RPM Fedora</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RPM RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Source Debian/Ubuntu</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">Source RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-macosx/">Source Mac OS X</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Message Broker</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#message-broker-configuration">Message Broker Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#required-version">Required Version</a></li>
+        
+            <li><a class="toctree-l4" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#configuration">Configuration</a></li>
+        
+            <li><a class="toctree-l4" href="#security">Security</a></li>
+        
+            <li><a class="toctree-l4" href="#firewall">Firewall</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security/">Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security.cas/">Security - CAS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration.files.and.keys/">Configuration Files and Keys</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Module Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.architecture/">Player - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.core.reference/">Player - Core Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.events/">Player - Events</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.storage/">Player - Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugins/">Player - Plugins</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugin.development/">Player - Plugin Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.testing/">Player - Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.url.parameter/">Player - URL Parameters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Video Editor - Setup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.manual/">Video Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Video Editor - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Upgrade</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../upgrade/">Upgrading Home</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handlers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Workflow Operation Handler Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip WOH</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Message Broker</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/configuration/message-broker.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="message-broker-configuration">Message Broker Configuration</h1>
+<p>Since version 2, Opencast Matterhorn requires an Apache ActiveMQ message broker as message relay for the administrative
+user interface. ActiveMQ can either be set up to run on its own machine or on one of the existing Matterhorn nodes
+(usually the admin node).</p>
+<h3 id="required-version">Required Version</h3>
+<ul>
+<li>ActiveMQ 5.10 or above should work.</li>
+<li>ActiveMQ 5.6 will not work.</li>
+<li>Versions in between are untested.</li>
+</ul>
+<h3 id="installation">Installation</h3>
+<ul>
+<li>If you use the Matterhorn RPM repository, simply install the <code>activemq-dist</code> package.</li>
+<li>If you are running RHEL, CentOS or Fedora you can use the <a href="https://copr.fedoraproject.org/coprs/lkiesow/apache-activemq-dist/">ActiveMQ-dist Copr RPM repository
+   </a></li>
+<li>You can download binary distributions from the <a href="http://activemq.apache.org/download.html">Apache ActiveMQ website</a></li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p>What you basically need to do:</p>
+<ul>
+<li>Set-up required message queues for Matterhorn</li>
+<li>Point all your Matterhorn nodes to your message broker.</li>
+</ul>
+<p>The first task is easy. Matterhorn comes with a ActiveMQ configuration file, located at
+<code>docs/scripts/activemq/activemq.xml</code> (RPM repo: <code>/usr/share/matterhorn/docs/scripts/activemq/activemq.xml</code>). This file
+will give you a basic configuration with all queues set-up and accepting connections from all hosts over TCP port
+61616.<code>Simply replace the default ActiveMQ configuration, usually located at</code>/etc/activemq/activemq.xml`, with this
+file.</p>
+<p>Then configure the ActiveMQ connectvion in the <code>config.properties</code>. The default configuration points to a local
+installation of ActiveMQ, but that can be changed with:</p>
+<pre><code>activemq.broker.url = failover://tcp://example.opencast.org:61616
+</code></pre>
+<h3 id="security">Security</h3>
+<p>ActiveMQ can secure its message queues with user name and password access. This section will go through the steps of
+setting up a configured username and password. On the <a href="http://activemq.apache.org/security.html">ActiveMQ security site</a>
+there are more details about using alternative authentication and authorization providers.</p>
+<h4 id="create-activemq-admin-user">Create ActiveMQ Admin User</h4>
+<p>First, you need to create a new user that will have access to the queues. This is configured in the <code>users.properties</code>
+configuration file in the configuration directory for ActiveMQ. It is a list of the format <code>username = password</code> so, for
+example, we could create a new admin user with the following file contents:</p>
+<pre><code>admin=password
+</code></pre>
+<h4 id="create-activemq-admin-group">Create ActiveMQ Admin Group</h4>
+<p>The next step is to provide a group that will have our user in it and will secure access to the message queues. This is
+configured in the file <code>groups.properties</code> in the configuration directory for ActiveMQ. It is a list of the format
+<code>group = user1,user2,…</code>. For example:</p>
+<pre><code>groups=user1,user2,user3
+</code></pre>
+<p>To set-up our new user to be a part of the admins group:</p>
+<pre><code>admins=admin
+</code></pre>
+<h4 id="configure-users-and-groups-configuration-files">Configure Users and Groups Configuration Files</h4>
+<p>Next, we need to make sure that ActiveMQ is using our <code>users.properties</code> and <code>groups.properties</code> files to authenticate
+and authorize users. The <code>login.config</code> file should be in the ActivemQ configuration directory and contain:</p>
+<pre><code>activemq {
+    org.apache.activemq.jaas.PropertiesLoginModule required
+    org.apache.activemq.jaas.properties.user="users.properties"
+    org.apache.activemq.jaas.properties.group="groups.properties";
+};
+</code></pre>
+<h4 id="configure-message-broker-security">Configure Message Broker Security</h4>
+<p>The final step to secure the ActiveMQ queues is to limit them with a group. This can be done by editing the
+<code>activemq.xml</code> configuration file in the ActiveMQ configuration directory. Inside this configuration file, we need to
+add some XML in between the tags:</p>
+<pre><code>&lt;broker&gt;&lt;/broker&gt;
+</code></pre>
+<p>We will add the following plugin configuration:</p>
+<pre><code>&lt;plugins&gt;
+    &lt;jaasAuthenticationPlugin configuration="activemq" /&gt;
+    &lt;authorizationPlugin&gt;
+        &lt;map&gt;
+            &lt;authorizationMap&gt;
+                &lt;authorizationEntries&gt;
+                    &lt;authorizationEntry queue="&gt;" read="admins" write="admins" admin="admins" /&gt;
+                    &lt;authorizationEntry topic="&gt;" read="admins" write="admins" admin="admins" /&gt;
+                    &lt;authorizationEntry topic="ActiveMQ.Advisory.&gt;" read="admins" write="admins" admin="admins"/&gt;
+                &lt;/authorizationEntries&gt;
+            &lt;/authorizationMap&gt;
+        &lt;/map&gt;
+    &lt;/authorizationPlugin&gt;
+&lt;/plugins&gt;
+</code></pre>
+<p>The <code>jaasAuthenticationPlugin</code> configures the broker to use our <code>login.config</code> file to do the authentication.</p>
+<pre><code>&lt;jaasAuthenticationPlugin configuration="activemq" /&gt;
+</code></pre>
+<p>The property:</p>
+<pre><code>configuration=activemq
+</code></pre>
+<p>needs to match the name given for surrounding object in <code>login.config</code> i.e. activemq{};</p>
+<p>The <code>authorizationEntry</code> gives read, write and admin access to only those members in the group admins for queues and topics.</p>
+<h5 id="configure-matterhorn-to-connect-with-username-and-password-to-message-broker">Configure Matterhorn to Connect with Username and Password to Message Broker</h5>
+<p>Now that we have secured the queues, Opencast will complain that it is unable to connect, using the current username and
+password. The username and password used above need to be added to the <code>config.properties</code> file of Opencast.  There are
+two properties to set:</p>
+<pre><code>activemq.broker.username=admin
+activemq.broker.password=password
+</code></pre>
+<h2 id="firewall">Firewall</h2>
+<p>Do not forget that ActiveMQ uses the TCP port 61616 (default configuration) for communication.  You probably want to
+allow communication over this port in your firewall on a distributed setup, or to explicitly forbid public access on an
+all-in-one installation.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../encoding/" class="btn btn-neutral float-right" title="Encoding">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../database/" class="btn btn-neutral" title="Database"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../database/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../encoding/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

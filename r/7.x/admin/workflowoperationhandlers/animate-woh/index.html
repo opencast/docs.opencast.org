@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Animate - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Animate Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Synfig Files", url: "#synfig-files" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../snapshot-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../snapshot-woh/" class="btn btn-xs btn-link">
+        Asset Snapshot
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../analyzeaudio-woh/" class="btn btn-xs btn-link">
+        Analyze Audio
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="animate-workflow-operation">Animate Workflow Operation</h1>
+<p>ID: <code>animate</code></p>
+<h2 id="description">Description</h2>
+<p>The animate operation can be used to generate an animated video clip using <a href="https://synfig.org">Synfig</a>. It can
+automatically including episode and series metadata (e.g. the title) into the animation. For example, this can be used
+to automatically generate custom intro videos.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>required</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>animation-files</td>
+<td>yes</td>
+<td>The source animation file to use</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>yes</td>
+<td>Flavor of the generated video</td>
+</tr>
+<tr>
+<td>width</td>
+<td>no</td>
+<td>Width of the generated video</td>
+</tr>
+<tr>
+<td>height</td>
+<td>no</td>
+<td>Height of the generated video</td>
+</tr>
+<tr>
+<td>fps</td>
+<td>no</td>
+<td>FPS of the generated video</td>
+</tr>
+<tr>
+<td>cmd-args</td>
+<td>no</td>
+<td>Custom synfig arguments. Will override all arguments except input and output file</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>no</td>
+<td>Tags for the generated video</td>
+</tr>
+</tbody>
+</table>
+<h2 id="synfig-files">Synfig Files</h2>
+<p>Synfig animation files used for input must be saved uncompressed or the metadata replacement will not work. Uncompressed
+files usually have the file extension <code>.sif</code> and <em>not</em> <code>.sifz</code>.</p>
+<h3 id="metadata-replacements">Metadata Replacements</h3>
+<p>You can use all metadata fields present in the episode and series DublinCore catalogs of an event. In SynfigStudio, just
+use placeholders of the following form:</p>
+<pre><code>'{{' ['series' | 'episode'] '.' DC-FIELD '}}'
+</code></pre>
+<p>Here are some common examples:</p>
+<ul>
+<li><code>{{episode.title}}</code></li>
+<li><code>{{episode.creator}}</code></li>
+<li><code>{{series.title}}</code></li>
+</ul>
+<h2 id="operation-examples">Operation Examples</h2>
+<pre><code class="language-XML">&lt;operation
+  id=&quot;animate&quot;
+  description=&quot;Create animated video clip&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;animation-file&quot;&gt;/path/to/animation.sif&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presentation/intro&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../snapshot-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../snapshot-woh/" class="btn btn-xs btn-link">
+        Asset Snapshot
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../analyzeaudio-woh/" class="btn btn-xs btn-link">
+        Analyze Audio
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/animate-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

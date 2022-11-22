@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Send Email - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Send Email Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Variable Substitution", url: "#variable-substitution" },
+              {title: "Examples", url: "#examples_2" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../series-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../series-woh/" class="btn btn-xs btn-link">
+        Series
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../select-streams-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../select-streams-woh/" class="btn btn-xs btn-link">
+        Select Streams
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="send-email-workflow-operation">Send Email Workflow Operation</h1>
+<p>ID: <code>send-email</code></p>
+<h2 id="description">Description</h2>
+<p>The send-email operation invokes the SMTP Service to send an email with the parameters provided.
+It is useful to send email notifications when some operation(s) have been completed or some error(s) have occurred in a
+workflow.</p>
+<p>The email body, if not specified by body or body-template-file, will consist of a single line of the form:
+<code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code>.</p>
+<p>Freemarker templates can be used in the following fields to allow replacement with values obtained from the workflow or
+media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker template
+file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body.</p>
+<p>User names can be provided in <code>to</code>, <code>cc</code>, or <code>bcc</code> in lieu of email addresses so that the user directory is searched
+and that user's email address is used (see Example 5).</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>description</th>
+<th>default value</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>Email body content.<br>Takes precedence over body-template-file.</td>
+<td><code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code></td>
+<td>Lecture 1 (4bf316fc-ea78-4903-b00e-9976b0912e4d)</td>
+</tr>
+<tr>
+<td>body-template-file</td>
+<td>Name of file that will be used as a template for the content of the email body.</td>
+<td>EMPTY</td>
+<td>templateName</td>
+</tr>
+<tr>
+<td>subject</td>
+<td>Email subject.</td>
+<td>EMPTY</td>
+<td>Operation has been completed</td>
+</tr>
+<tr>
+<td>to</td>
+<td>The field <code>to</code> of the email<br>i.e. the comma separated list of email accounts the email will be sent to.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>cc</td>
+<td>The field <code>cc</code> of the email<br>i.e. the comma separated list of email accounts that will receive a carbon copy of the email.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>bcc</td>
+<td>The field <code>bcc</code> of the email<br>i.e. the comma separated list of email accounts that will receive a blind carbon copy of the email.</td>
+<td>EMPTY</td>
+<td>email-account@email-domain.org,second-account@second-domain.org</td>
+</tr>
+<tr>
+<td>use-html</td>
+<td>Flag to indicate that the email content should be displayed as 'text/html'</td>
+<td>false</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>address-separator</td>
+<td>Separator to use for splitting a string into separate email addresses</td>
+<td><code>, &lt;tab&gt;</code></td>
+<td><code>,</code></td>
+</tr>
+<tr>
+<td>skip-invalid-address</td>
+<td>If the operation should skip invalid addresses instead of failing</td>
+<td>false</td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Some other email parameters can be customized in the SMTP Service configuration</strong></p>
+<h2 id="variable-substitution">Variable Substitution</h2>
+<p>The template will have access to the media package, workflow instance (including its configuration properties and last
+failed operation), catalogs, and any incidents. Fields should be tested for null/empty values before being used.</p>
+<h3 id="media-package-information">Media Package Information</h3>
+<p>Use <code>${mediaPackage.FIELD}</code></p>
+<h4 id="examples">Examples</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>media package id</td>
+<td>${mediaPackage.identifier}</td>
+</tr>
+<tr>
+<td>recording title</td>
+<td>${mediaPackage.title}</td>
+</tr>
+<tr>
+<td>recording date and time</td>
+<td>${mediaPackage.date?datetime?iso_utc} - See Freemarker manual for date manipulation <br>(extract date only, time only, format, etc)</td>
+</tr>
+<tr>
+<td>series title</td>
+<td>${mediaPackage.seriesTitle}</td>
+</tr>
+<tr>
+<td>series id</td>
+<td>${mediaPackage.series}</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow-information">Workflow Information</h3>
+<p>Use <code>${workflow.FIELD}</code></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>workflow id</td>
+<td>${workflow.id}</td>
+</tr>
+<tr>
+<td>workflow template id</td>
+<td>${workflow.template}</td>
+</tr>
+<tr>
+<td>workflow state</td>
+<td>${workflow.state}</td>
+</tr>
+<tr>
+<td>workflow title</td>
+<td>${workflow.title}</td>
+</tr>
+<tr>
+<td>workflow description</td>
+<td>${workflow.description}</td>
+</tr>
+<tr>
+<td>id of parent workflow</td>
+<td>${workflow.parentId}</td>
+</tr>
+<tr>
+<td>name of workflow creator</td>
+<td>${workflow.creatorName}</td>
+</tr>
+<tr>
+<td>workflow organization</td>
+<td>${workflow.organizationId}</td>
+</tr>
+</tbody>
+</table>
+<p>Note that some of these values may not exist depending on the workflow.</p>
+<h3 id="workflow-configuration-properties">Workflow Configuration Properties</h3>
+<p>Use <code>${workflowConfig['PROPERTY']}</code></p>
+<h3 id="last-failed-operation">Last Failed Operation</h3>
+<p>Operation that caused the workflow to fail. Should be tested before accessing any of its fields:</p>
+<pre><code>&lt;#if failedOperation?has_content&gt;Workflow failed in operation: ${failedOperation.template}&lt;!--#if--&gt;
+</code></pre>
+<h3 id="incidents">Incidents</h3>
+<p>In your email template:</p>
+<pre><code>&lt;#if incident?has_content&gt;
+  &lt;#list incident as inc&gt;
+    &lt;#list inc.details as dets&gt;${dets.b}&lt;/#list&gt;
+  &lt;/#list&gt;
+&lt;/#if&gt;
+</code></pre>
+<h3 id="catalog-fields">Catalog fields</h3>
+<p>Use <code>${catalogs['SUBTYPE']['FIELD']}</code></p>
+<h4 id="examples_1">Examples</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>episode creator</td>
+<td>${catalogs['episode']['creator']}</td>
+</tr>
+<tr>
+<td>episode title</td>
+<td>${catalogs['episode']['title']}</td>
+</tr>
+<tr>
+<td>series creator</td>
+<td>${catalogs['series']['creator']}</td>
+</tr>
+<tr>
+<td>series title</td>
+<td>${catalogs['series']['title']}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples_2">Examples</h2>
+<h3 id="example-1">Example 1</h3>
+<p>Media package title in subject field, default email body.</p>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sending email to user after media package is published&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;to&quot;&gt;email-account@email-domain.org&lt;/configuration&gt;
+    &lt;!-- This is going to be replaced with the media package title --&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${mediaPackage.title} has been published&lt;/configuration&gt;
+    &lt;!-- Neither body or body-template-file specified so default body &lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)&lt;br&gt;is sent --&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h3 id="example-2">Example 2</h3>
+<p>To and subject are inline templates; the email body uses a template file named sample stored in<code>…/etc/email</code>:</p>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sending email to user before holding for edit&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- This is going to be replaced with the episode catalog publisher field, which in this example it is assumed
+    it contains a notification email address --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${catalogs['episode']['publisher']}&lt;/configuration&gt;
+    &lt;!-- This is going to be replaced with the episode catalog title field --&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${catalogs['episode']['title']} is ready for EDIT&lt;/configuration&gt;
+    &lt;!-- Email body is going to be built using the sample template found in &lt;config_dir&gt;/etc/email --&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;sample&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h4 id="template-sample">Template: sample</h4>
+<p>The contents of the <code>…/etc/email/sample</code> email template:</p>
+<pre><code>Event Details
+&lt;#if catalogs['series']?has_content&gt;
+Series Title: ${catalogs['series']['title']}
+Instructor: ${catalogs['series']['contributor']}
+&lt;/#if&gt;
+Media Package Id: ${mediaPackage.identifier}
+Title: ${mediaPackage.title}
+Workflow Id: ${workflow.id}
+Event Date: ${mediaPackage.date?datetime?iso_local}
+</code></pre>
+<h3 id="example-3">Example 3</h3>
+<p>Email address entered via admin UI as a workflow configuration parameter:</p>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;false&quot;
+  exception-handler-workflow=&quot;email-error&quot;
+  description=&quot;Sends email&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${workflowConfig['emailAddress']}&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;Media package has been published&lt;/configuration&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;sample&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>Workflow Configuration Panel:</p>
+<pre><code class="language-xml">&lt;configuration_panel&gt;
+&lt;![CDATA[
+   &lt;!-- Add after the other configuration fields (Holds, Archive, etc) --&gt;
+   &lt;fieldset&gt;
+      &lt;legend&gt;Notification&lt;/legend&gt;
+      &lt;ul class=&quot;oc-ui-form-list&quot;&gt;
+        &lt;li class=&quot;ui-helper-clearfix&quot;&gt;
+          &lt;label class=&quot;scheduler-label&quot;&gt;
+            &lt;span class=&quot;color-red&quot;&gt;* &lt;/span&gt;&lt;span id=&quot;i18n_email_label&quot;&gt;Email Address&lt;/span&gt;:
+          &lt;/label&gt;
+          &lt;span id=&quot;emailconfig&quot;&gt;
+            &lt;input id=&quot;emailAddress&quot; name=&quot;emailAddress&quot; type=&quot;text&quot; class=&quot;configField&quot;
+                   value=&quot;my-email-account@my-email-domain.org&quot;/&gt;
+          &lt;/span&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/fieldset&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+
+      // Add email variable
+      var emailAddress = $('input#emailAddress');
+
+      // Register email configuration property
+      ocWorkflowPanel.registerComponents = function(components){
+        /* components with keys that begin with 'org.opencastproject.workflow.config' will be passed
+         * into the workflow. The component's nodeKey must match the components array key.
+         *
+         * Example:'org.opencastproject.workflow.config.myProperty' will be availible at ${my.property}
+         */
+        // After the other components (Hold, Archive, etc), add:
+        components['org.opencastproject.workflow.config.emailAddress'] = new ocAdmin.Component(
+          ['emailAddress'],
+          {key: 'org.opencastproject.workflow.config.emailAddress'},
+          {getValue: function(){ return this.fields.emailAddress.value;}
+          });
+
+          //etc...
+      }
+      ocWorkflowPanel.setComponentValues = function(values, components){
+        // After the other components (Hold, Archive, etc), add:
+        components['org.opencastproject.workflow.config.emailAddress'].setValue(
+          values['org.opencastproject.workflow.config.emailAddress']);
+      }
+    &lt;/script&gt;
+]]&gt;
+&lt;/configuration_panel&gt;
+</code></pre>
+<h3 id="example-4">Example 4</h3>
+<p>In error handling workflow (email-error):</p>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;send-email&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;error&quot;
+  description=&quot;Sends email&quot;&gt;
+    &lt;configurations&gt;
+    &lt;!-- Note that you can use variable substitution in to, subject, body
+         e.g. ${(catalogs['episode']['FIELD']!'root@localhost'}  --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;root@localhost&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;Failure processing a mediapackage&lt;/configuration&gt;
+    &lt;configuration key=&quot;body-template-file&quot;&gt;errorDetails&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h4 id="template-errordetails">Template: errorDetails</h4>
+<p>The contents of the <config_dir>/etc/email/errorDetails email template:</p>
+<pre><code>Error Details
+
+&lt;#if catalogs['series']?has_content&gt;
+Course: ${catalogs['series']['subject']!'series subject missing'}-${catalogs['series']['title']!'series title missing'}
+Instructor: ${catalogs['series']['contributor']!'instructor missing'}
+&lt;/#if&gt;
+Title: ${catalogs['episode']['title']!'title missing'}
+Event Date: ${mediaPackage.date?datetime?iso_local}
+
+&lt;#if failedOperation?has_content&gt;
+  Workflow failed in operation: ${failedOperation.position}-${failedOperation.template}
+  Started: ${failedOperation.dateStarted?datetime?iso_local}
+  Ended: ${failedOperation.dateCompleted?datetime?iso_local}
+  Execution Host: ${failedOperation.executionHost}
+&lt;/#if&gt;
+
+Logged incident of the error looks like this:
+
+&lt;#if incident?has_content&gt;
+  &lt;#list incident as inc&gt;
+    &lt;#list inc.details as dets&gt;${dets.b} &lt;/#list&gt;
+  &lt;/#list&gt;
+&lt;/#if&gt;
+</code></pre>
+<h3 id="example-5">Example 5</h3>
+<p>The user name is stored in the episode dublin core <code>contributor</code> field. There's a user <code>jharvard</code> with email
+<code>jharvard@harvard.edu</code> defined in the system. The message will be sent to <code>jharvard@harvard.edu</code>:</p>
+<pre><code class="language-xml">   &lt;operation
+      id=&quot;send-email&quot;
+      fail-on-error=&quot;false&quot;
+      description=&quot;Notify user associated to this recording that it is ready to be trimmed&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;to&quot;&gt;${(catalogs['episode']['contributor'])}&lt;/configuration&gt;
+        &lt;configuration key=&quot;subject&quot;&gt;Recording is ready for EDIT&lt;/configuration&gt;
+        &lt;configuration key=&quot;body-template-file&quot;&gt;eventDetails&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<h4 id="episode-dublin-core">Episode Dublin Core</h4>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;dublincore xmlns=&quot;http://www.opencastproject.org/xsd/1.0/dublincore/&quot;
+    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+    &lt;dcterms:contributor&gt;jharvard&lt;/dcterms:contributor&gt;
+    &lt;dcterms:created&gt;2018-05-01T16:14:00Z&lt;/dcterms:created&gt;
+    &lt;dcterms:extent xsi:type=&quot;dcterms:ISO8601&quot;&gt;PT17M1.933S&lt;/dcterms:extent&gt;
+    &lt;dcterms:isPartOf&gt;20180229999&lt;/dcterms:isPartOf&gt;
+    &lt;dcterms:spatial&gt;classroom-20&lt;/dcterms:spatial&gt;
+    &lt;dcterms:temporal&gt;start=2018-05-01T16:14:00Z; end=2018-05-01T16:31:00Z;
+        scheme=W3C-DTF;&lt;/dcterms:temporal&gt;
+    &lt;dcterms:title&gt;Test Lecture&lt;/dcterms:title&gt;
+&lt;/dublincore&gt;
+</code></pre>
+<h3 id="example-6">Example 6</h3>
+<p>Send an email to the user which started the workflow.
+Requires the user account to have a valid email address.</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;send-email&quot;
+    description=&quot;Sending email to user after media package is published&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- Lookup email address of the creator --&gt;
+    &lt;configuration key=&quot;to&quot;&gt;${workflow.creatorName}&lt;/configuration&gt;
+    &lt;configuration key=&quot;subject&quot;&gt;${mediaPackage.title} has been published&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../series-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../series-woh/" class="btn btn-xs btn-link">
+        Series
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../select-streams-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../select-streams-woh/" class="btn btn-xs btn-link">
+        Select Streams
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/send-email-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

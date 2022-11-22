@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>YouTube Publication - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "YouTube Publication Configuration", url: "#_top", children: [
+              {title: "Before you start", url: "#before-you-start" },
+              {title: "Google Developers Configuration", url: "#google-developers-configuration" },
+              {title: "YouTube configuration in Opencast", url: "#youtube-configuration-in-opencast" },
+              {title: "Activate YouTube publication in Opencast", url: "#activate-youtube-publication-in-opencast" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../../workflowoperationhandlers/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../../workflowoperationhandlers/">
+        Overview
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../streaming-wowza/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../streaming-wowza/">
+        Wowza Streaming Distribution Service
+      </a>
+</div>
+</div>
+<h1 id="youtube-publication-configuration">YouTube Publication Configuration</h1>
+<p>This page documents the configuration for Opencast module <strong>publication-service-youtube-v3</strong>.</p>
+<h2 id="before-you-start">Before you start</h2>
+<p>You need to meet these requirements to make a YouTube Publication:</p>
+<ul>
+<li>Google Account</li>
+<li>YouTube Channel to make the publication</li>
+</ul>
+<h2 id="google-developers-configuration">Google Developers Configuration</h2>
+<p>Below is a summarized version of <a href="https://developers.google.com/youtube/registering_an_application">Google's quickstart page</a>.  If these
+instructions do not work for you, or are unclear please let us know - Google has a habit of changing its configuration
+pages and we don't always notice!</p>
+<h3 id="create-new-google-project">Create new Google Project</h3>
+<ul>
+<li>Login to Google account</li>
+<li>Navigate to the <a href="https://console.developers.google.com/project"><strong>Google Developers Console</strong></a></li>
+<li>Click <strong>Create Project</strong> and follow the instructions</li>
+<li>Navigate to the <a href="https://console.developers.google.com/apis/credentials"><strong>Google Credentials Console</strong></a></li>
+<li>Select <strong>OAuth constent screen</strong></li>
+<li>Configure the API Consent Screen, you will need to set the Product name</li>
+<li>Select <strong>Credentials</strong></li>
+<li>Select <strong>Create Credentials</strong>, specifically OAuth Client ID</li>
+<li>Select <strong>Other</strong> application type</li>
+</ul>
+<h3 id="save-client-id-in-json-format">Save Client ID in JSON Format</h3>
+<ul>
+<li>Download the client information in JSON format by clicking <strong>Download JSON</strong><ul>
+<li>This currently looks like an arrow pointing downwards on the rightmost portion of the client id row</li>
+</ul>
+</li>
+<li>Save the JSON file to <code>${karaf.etc}/youtube-v3/client-secrets-youtube-v3.json</code> (Usually this is
+  <code>etc/youtube-v3/client-secrets-youtube-v3.json</code>)</li>
+</ul>
+<h3 id="enable-api">Enable API</h3>
+<ul>
+<li>Naviate to the <a href="https://console.developers.google.com/apis/dashboard"><strong>Google API Dashboard</strong></a></li>
+<li>Click <strong>Enable APIs and Services</strong> in the navigation pane</li>
+<li>Use the filter to find and enable <strong>YouTube Data API v3</strong></li>
+</ul>
+<h3 id="enable-the-publication-service">Enable the publication service</h3>
+<ul>
+<li>In <code>etc/org.opencastproject.publication.youtube.YouTubeV3PublicationServiceImpl.cfg</code> set <code>org.opencastproject.publication.youtube.enabled=true</code></li>
+<li>Update the category, keywords, default privacy, and default playlist variables as required</li>
+</ul>
+<h2 id="youtube-configuration-in-opencast">YouTube configuration in Opencast</h2>
+<p>With the JSON file created and saved previously, you have to proceed as described:</p>
+<ul>
+<li>
+<p>Start Opencast server (Restart Opencast in case was running)</p>
+<p><strong>Note:</strong> Until this service is fully configured, Opencast will not start completely. In case you
+want to abort the configuration, you only need to delete the JSON file and restart Opencast.</p>
+</li>
+<li>
+<p>In the command line, enter the command to view the extended status of the Opencast service:</p>
+<pre><code># systemctl status opencast -l
+</code></pre>
+<p>This command will show parts of the Opencast logs in which you should see an URL that you have to copy to a browser.</p>
+</li>
+<li>
+<p>The web page will ask for your Google account (you have to use the account with which you created the developer
+  project earlier) followed by access settings and settings for the channel you want to publish to.</p>
+</li>
+<li>
+<p>Once you have accepted the access, you will receive an answer like:</p>
+<pre><code>Received verification code. Closing…
+</code></pre>
+</li>
+<li>
+<p>Now verify that Opencast has received the access key and that it has been saved in
+  <code>data/opencast/youtube-v3/data-store/store.</code></p>
+</li>
+<li>
+<p>Restart Opencast</p>
+</li>
+</ul>
+<h2 id="activate-youtube-publication-in-opencast">Activate YouTube publication in Opencast</h2>
+<p>Opencast can now publish to YouTube. The last step is to activate this feature. For this you have to create a new
+workflow or modify an existing one.</p>
+<ul>
+<li>
+<p>Open the workflows <code>etc/opencast/workflows/ng-schedule-and-upload.xml</code> and <code>etc/opencast/workflows/ng-publish.xml</code></p>
+</li>
+<li>
+<p>In the file, modify the <code>&lt;configuration_panel&gt;</code> and enable the YouTube option, like this:</p>
+<pre><code>&lt;input id="publishToYouTube" name="publishToYouTube" type="checkbox" class="configField" value="true"
+       disabled="disabled" /&gt;
+</code></pre>
+</li>
+</ul>
+<p>becomes</p>
+<pre><code>    &lt;input id="publishToYouTube" name="publishToYouTube" type="checkbox" class="configField" value="true"/&gt;
+</code></pre>
+<ul>
+<li>
+<p>Open the workflows <code>etc/opencast/workflows/ng-retract.xml</code></p>
+</li>
+<li>
+<p>In the file, modify the <code>&lt;configuration_panel&gt;</code> and enable the YouTube option, like this:</p>
+<pre><code>&lt;input id="retractFromYouTube" type="checkbox" class="configField" value="true" disabled="disabled" /&gt;
+</code></pre>
+</li>
+</ul>
+<p>becomes</p>
+<pre><code>    &lt;input id="retractFromYouTube" type="checkbox" checked="checked" class="configField" value="true" /&gt;
+</code></pre>
+<p>Opencast will detect the new workflow without restart, with that you can select the new workflow with the YouTube option
+enabled.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../../workflowoperationhandlers/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../../workflowoperationhandlers/">
+        Overview
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../streaming-wowza/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../streaming-wowza/">
+        Wowza Streaming Distribution Service
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/youtubepublication.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

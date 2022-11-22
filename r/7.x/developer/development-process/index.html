@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Development - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Development Process", url: "#_top", children: [
+              {title: "Contributing Code", url: "#contributing-code" },
+              {title: "Git Repository Branching Model", url: "#git-repository-branching-model" },
+              {title: "Release Process", url: "#release-process" },
+              {title: "Quality Assurance", url: "#quality-assurance" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
+        Reviewing, Merging and Declining Pull Requests
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../installation/source-linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../installation/source-linux/" class="btn btn-xs btn-link">
+        Installation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="development-process">Development Process</h1>
+<p>This document defines rules and recommendations for Opencast development. In particular, it defines how patches can be
+contributed, how they are merged and how releases are done.</p>
+<p><em>If this document does not answer all of your questions, here is how you can get further help:</em></p>
+<ul>
+<li><em>Ask on the <a href="https://groups.google.com/a/opencast.org/forum/#!forum/dev">Opencast Development List</a></em></li>
+<li><em>Chat with developers on <a href="http://webchat.freenode.net/?channels=opencast">IRC (#opencast on Freenode)</a></em></li>
+<li><em>Join our weekly technical meeting (see lists or IRC)</em></li>
+</ul>
+<h2 id="contributing-code">Contributing Code</h2>
+<p>Opencast sources can be found on <a href="https://github.com/opencast">GitHub</a> and some of its ancillary projects
+on <a href="https://bitbucket.org/opencast-community/">BitBucket</a>. The easiest way to contribute code to the project
+is by creating a pull request against the project's official repository. More details about the structure
+of this repository are explained later in this guide.</p>
+<h3 id="jira-and-github">Jira and GitHub</h3>
+<ul>
+<li>
+<p>Opencast uses <a href="https://opencast.jira.com">Jira</a> for tracking issues. Each pull request should be accompanied by a
+  ticket in Jira. The issue identifier should also be used in the title of the pull request and the commits. E.g.:
+  <code>MH-12345, Fixing Something Somewhere</code>. Creating a Jira ticket is usually the first step when fixing something.</p>
+</li>
+<li>
+<p>Opencast uses <a href="https://github.com/opencast">GitHub</a> for code hosting. Please
+  <a href="https://help.github.com/articles/fork-a-repo/">fork</a> the <a href="https://github.com/opencast/opencast">official repository</a>
+  on GitHub to <a href="https://help.github.com/articles/creating-a-pull-request/">create pull requests</a> from your repository
+  which will show up on the project's list of open pull requests.</p>
+</li>
+<li>
+<p>All open pull requests are listed on the <a href="http://pullrequests.opencast.org">Opencast Pull Request Filter</a>. It
+  mighttake a couple of minutes for a new pull request to show up.</p>
+</li>
+</ul>
+<h3 id="bugfix-vs-feature">Bugfix vs Feature</h3>
+<p>Opencast distinguishes between bug fix and feature pull requests.</p>
+<ul>
+<li>
+<p>Features are <em>only</em> allowed to be merged into <code>develop</code>, which will let them automatically become part of the next
+  major/minor release, given that the release branch for the next release has not been cut yet. If possible, please name
+  branches containing features according to the pattern <code>f/MH-XXXXX-short-description</code>, where MH-XXXXX is the relevant
+  Jira ticket.</p>
+</li>
+<li>
+<p>Bug fixes can be merged both into <code>develop</code> and into release branches. If possible, please name branches containing
+  bug fixes according to the pattern <code>t/MH-XXXXX-short-description</code>, where MH-XXXXX is the relevant Jira ticket.</p>
+</li>
+</ul>
+<h3 id="reviews">Reviews</h3>
+<p>Before a patch is merged, it needs to be reviewed by a committer. The reviewer makes sure that the patch merges
+without conflicts, that it works as expected and that it does not break anything else.</p>
+<p>If the reviewer discovers any kind of issue, he should comment on the pull request in GitHub, so that the author can
+fix the problem.</p>
+<p>For more details about the review and merge process, have a look at <a href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull
+Requests</a>.</p>
+<h4 id="pull-request-guidelines">Pull Request Guidelines</h4>
+<p>When reviewing a pull request, it is always easier if the reviewer knows what the ticket is about, and has a rough idea
+of what work has been done.  To this end, there are a few expectations for all pull requests:</p>
+<ul>
+<li>For each pull request a JIRA ticket should be created</li>
+<li>The JIRA ticket and JIRA ticket title should be the pull request title</li>
+<li>The pull request description should contain a summary of the work done, along with reasoning for any major change<ul>
+<li>The JIRA ticket should contain the same information</li>
+</ul>
+</li>
+<li>For feature pull requests, accompanying documentation should be included</li>
+<li>It is encouraged, but not required that the pull request have a clean commit history</li>
+<li>In the case of major user interface changes, it is good practice to include screenshots of the affect sections of
+  the interface</li>
+<li>If you add or modify any external libraries ensure that those additions and modifications are also applied to the
+  NOTICES file</li>
+<li>Any actions that would be required for a version upgrade (e.g: from 3.x to 4.x) must be documented in
+  docs/guides/admin/docs/upgrade.md</li>
+<li>The commands <code>mvn clean install</code>, <code>mvn javadoc:javadoc javadoc:aggregate</code>, and <code>mvn site</code> should all succeed</li>
+<li>The licenses of any external libraries used in the pull request comply with the <a href="../license/">licensing rules</a> both
+  in terms of the license itself as well as its listing in NOTICES</li>
+</ul>
+<p>While a committer may accept a patch even if it does not meet these expectations, it is encouraged that anyone filing
+a pull request ensures that they meet these expectations.</p>
+<h2 id="git-repository-branching-model">Git Repository Branching Model</h2>
+<p>While the Opencast repository and branching model is inspired by
+<a href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>, there have been some distinct changes to how release
+branches are used and releases are tagged. The purpose of this is mainly to support multiple, simultaneous versions and
+maintenance releases.</p>
+<p>Swift overview:</p>
+<ul>
+<li>The <code>develop</code> branch represents the latest state of development. Features may be merged into this branch and into
+  this branch only. Release branches are branched off from <code>develop</code>. It is basically the preparation for the next big
+  release at all times.</li>
+<li>The release branches are named <code>r/&lt;a&gt;.&lt;b&gt;.x</code> (e.g. <code>r/1.6.x</code>). They are the latest state of development for a
+  specific release. Only bug fixes and no features may be added to these branches. All beta versions, release
+  candidates and final releases are made from these branches. The branch lives on as long as there may be additional
+  maintenance releases for a given version.</li>
+<li>Git tags are created to indicate official releases. These may be:<ul>
+<li><code>x.y.z-betaX</code> marks a beta release. This is usually a version which may still have bugs but is good enough for
+  testing, so that further issues or bugs can be identified before an actual release.</li>
+<li><code>x.y.z-rcX</code> marks a release candidate. This is a version that seems to be ready to be released as a final
+  version. It will become the final version if testing does not reveal any severe issues.</li>
+<li><code>x.y.z</code> marks a final release.</li>
+</ul>
+</li>
+</ul>
+<p>To get a closer look at the branching model, let us consider a simple example with a single release:</p>
+<pre><code>develop ---*----*----*------*------- ... -----------*--&gt;
+            \       /      /                       /
+    r/1.6.x  *-----*------*-------------*---------*----- ... ---*--&gt;
+                           \             \         \             \
+                1.6.0-beta1 *   1.6.0-rc1 *   1.6.0 *       1.6.1 *
+</code></pre>
+<p>As described above, <code>develop</code> is the branch used for preparing the next version. At some point marked in the release
+schedule, the release branch is cut from <code>develop</code>. This action also marks the feature freeze for such Opencast version,
+i.e. the moment when no new features will be included in that specific version. This is because all the new features
+must be merged only into the <code>develop</code> branch; therefore, the release branches (such as <code>r/1.6.x</code> in our example) can
+only contain features that were merged before the branch was forked off. Any features merged after the creation of the
+release branch can only make it into the next release, but not into this one.</p>
+<p>After the release branch is cut, the development on the <code>develop</code> branch may continue as before. Features can (and
+should) be merged without waiting for the next version to be released. Thus, the creation of a release branch also marks
+the beginning of the development for the next version.</p>
+<p>In contrast to that, only bug fixes may be merged into the release branch. At this point, the code contained in this
+branch should be tested, so that bugs can be identified and fixed. The release manager can tag different beta versions
+during the QA process (such as <code>1.6.0-beta1</code>) to mark the code evolution as bug fixes are merged. Once the branch status
+seems to be stable enough to be released, a release candidate (RC) is tagged and tested (<code>1.6.0-rc1</code>). New RCs can be
+tagged as long as new issues are found and fixed. When no severe issues are found, the final release is tagged.</p>
+<p>During the whole process the release manager will regularly merge back the release branch into <code>develop</code> or, if
+existent, the next active release branch so that bug fixes from the release branch will automatically become part of the
+next Opencast versions and finally <code>develop</code>, without having to create additional pull requests. For example, a pull
+request may be merged into <code>r/3.x</code>, <code>r/3.x</code> will then be merged into <code>develop</code> or, if it already exists, <code>r/4.x</code> and
+from there into <code>develop</code>. That way patches bubble through all newer versions and finally end up in <code>develop</code>.</p>
+<p>The releases themselves are not part of the release branch. Instead, the release manager branches off, makes the
+necessary changes to the pom files (and possibly the UI) and creates a separately tagged commit.</p>
+<p>Finally, after a release is done, more bug fixes may be added to the release branch. The release manager should identify
+if there are enough commits to be put into a maintenance release.</p>
+<p>Even after an Opencast version has been released, more bugs may be found and fixes for them merged into the release
+branch. When the release manager considers that the number or importance of such bug fixes is sufficient, he may decide
+to create a new maintenance release. The version <code>1.6.1</code> above is an example of that.</p>
+<h2 id="release-process">Release Process</h2>
+<p>As indicated above, the release cycle of a new Opencast version starts when a release branch is cut. The new features
+merged into <code>develop</code> afterwards will be part of the next version, but not the one just cut.</p>
+<p>This is why the position of release manager for the next Opencast version should be assigned at this point. The current
+release manager should therefore ask for volunteers in the mailing lists. For more details about the rights and
+responsibilities of a release manager, please have a look at the <a href="../release-manager/">Release Manager Guide</a>.</p>
+<h3 id="preparations">Preparations</h3>
+<p>The first phase of the release consists of adding new features and defining the release schedule. It is the duty of the
+release manager to orchestrate this. This does not necessarily mean that release managers merge or review pull requests,
+but that they talk to developers and ensure the merge process is driven forward.</p>
+<h4 id="release-schedule">Release Schedule</h4>
+<p>Releases should happen twice a year, usually within a time span of 9.5 months between the cut of the previous release
+branch and the final release. The release manager should create a release schedule as soon as possible, identifying when
+the release branch is cut and when the final release will happen. Additionally, he should coordinate with the QA manager
+to identify phases for internal and public testing.</p>
+<p>Usually, a release schedule will look like this:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>What is happening</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>April 6th</td>
+<td>Feature Freeze <em>(release branch is cut)</em></td>
+</tr>
+<tr>
+<td>April 6th - 24th</td>
+<td>Internal QA and bug fixing phase</td>
+</tr>
+<tr>
+<td>&nbsp; <em>April 11th - 17th</em></td>
+<td>Review Test Cases <em>(handles by a dedicated team)</em></td>
+</tr>
+<tr>
+<td>&nbsp; <em>April 18th - 24th</em></td>
+<td>Documentation Review</td>
+</tr>
+<tr>
+<td>April 25th - May 15th</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>May 15th - June 1st</td>
+<td>Additional bug fixing phase</td>
+</tr>
+<tr>
+<td>&nbsp; <em>May 25th - June 1st</em></td>
+<td>Translation week <em>(encourage translators to do their work)</em></td>
+</tr>
+<tr>
+<td>June 2nd - June 12th</td>
+<td>Final QA phase <em>(checking release readiness)</em></td>
+</tr>
+<tr>
+<td>June 15th</td>
+<td>Final Release</td>
+</tr>
+</tbody>
+</table>
+<h3 id="release-branch">Release Branch</h3>
+<p>The release branch is created from <code>develop</code>. The release branch is named <code>r/A.B.x</code> (e.g. <code>r/2.1.x</code>) to indicate that it
+is the origin of all releases with the major and minor version of <code>A.B</code>. The creation of the release branch marks the
+feature freeze for a given version, as no more features can be merged into a release branch.</p>
+<p>To ensure that all fixes that go into the release branch will become part of <code>develop</code> (and thus part of the next version
+of Opencast) with a minimum amount of work, the release manager will merge the release branch into <code>develop</code> on a
+regular basis. He may request assistance from certain developers in case of merge conflicts. This process continues until
+the next release branch is cut.</p>
+<h3 id="tags">Tags</h3>
+<p>Git tags are used to mark explicit Opencast versions or releases. Here is how a release should look like in the history:</p>
+<pre><code>r/A.B.x  ------------(A)----&gt;
+                       \
+           A.B.0-beta1 (B)
+</code></pre>
+<p>To create a version based on a given state of the release branch (commit A), the release manager will branch off from
+this commit, make the necessary version changes to all <code>pom.xml</code> files and to the UI and create a commit and a <em>signed</em>
+git tag on this commit. He would then push the commit and the tag (not the branch) to the community repository.</p>
+<p>For more details about how to create a release, have a look at the <a href="../release-manager/">Release Manager Guide</a>.</p>
+<h4 id="beta-versionsrelease-candidates">Beta Versions/Release Candidates</h4>
+<p>A beta release (<code>A.B.C-betaX</code>) should be cut before the public QA phase. It indicates a specific version of Opencast for
+users to test. It is expected to still have bugs. Beta releases should continue until all bugs with a severity of
+<code>Blocker</code> have been fixed.</p>
+<p>If the code seems to be ready for a release, a <em>release candidate</em> (<code>A.B.C-rcX</code>) should be cut for final testing. The
+commit from which a release candidate is created is expected to become the final release if no severe bugs are found.</p>
+<h4 id="final-release">Final Release</h4>
+<p>Once a release candidate seems to be stable during the QA phase (no issues left marked as <code>Blocker</code>), the release manager
+will propose this release candidate to become the final release. If the proposal is approved (i.e. no serious bugs are
+found before the proposal deadline is met), the final release is then created from the same commit the
+release candidate was cut from.</p>
+<h3 id="maintenance-releases">Maintenance Releases</h3>
+<p>After a final release, additional issues may show up. These issues may be fixed on the ongoing release branch and at
+some point released as maintenance release.</p>
+<p>There is usually no release schedule for maintenance releases. It is up to the release manager to decide when it is
+worthwhile to create a maintenance release with the fixes for bugs affecting a given release. He would then announce his
+intention to create such a release, cut a release candidate and, should no severe issues with this candidate show up, cut
+the maintenance release.</p>
+<h2 id="quality-assurance">Quality Assurance</h2>
+<p>As any piece of software, Opencast may contain bugs. It is the duty of the whole community to identify these bugs,
+report them and possibly fix them to improve Opencast as product.</p>
+<p>Additionally, before releasing a new version of Opencast, the current release manager and quality assurance manager will
+coordinate test phases dedicated to new releases in order to identify possible problems ahead of time. The whole
+community will be requested to participate in this testing.</p>
+<h3 id="reporting-bugs">Reporting Bugs</h3>
+<p>If you identify any bugs, please report them! To do that, register yourself in the <a href="https://opencast.jira.com">Opencast
+Jira</a> and create a new ticket. Please describe in detail how to reproduce the problem and
+especially set the <em>Affects Version</em> and "Fix Version", where <em>Fix Version</em> should be the next Opencast release.</p>
+<p>If in doubt of any items in the ticket, please assign it for review to either the current release manager or to the
+quality assurance manager. They will check the issue fields and adjust <em>fix version</em>, <em>severity</em>, etc. if necessary.</p>
+<h4 id="security-issues">Security Issues</h4>
+<p>If you discover a problem that has severe implications for system security, please do not publish this information on
+list. Instead, send a report of the problem to <em>security@opencast.org</em>. The message will be forwarded to the private
+committers list, where the issue will be discussed. Once a patch for the problem is ready, a security notice will be
+released along with it.</p>
+<h3 id="unit-tests">Unit Tests</h3>
+<p>All Opencast modules should have built-in unit tests to check that they are actually doing what they are supposed to do
+and that code patches do not break the existing functionality. These tests are automatically run whenever the project is
+built. If building repeatedly fails due to test failures, then something is most likely wrong. Please report this as a
+severe bug.</p>
+<h3 id="user-tests">User Tests</h3>
+<p>Before each major release, the release and quality assurance managers will ask the whole community to participate in
+the execution of a set of manual tests. These tests are designed to check that important functionalities of Opencast
+work as expected even if users are in slightly different environments or choose different methods to achieve a certain
+goal.</p>
+<p>Such a call for participation will usually be raised both on the lists, the technical and the adopters meeting.  If it
+is possible for you to participate, please do so. Identifying possible problems early will immensely benefit the release
+process.</p>
+<h3 id="test-server">Test Server</h3>
+<p>Some institutions provide public testing infrastructure for Opencast. Use them to try out the most recent development
+version of Opencast. They are meant for testing. Do not fear to break them.  If you manage to do it, please contact the
+QA manager or send a notice to the list.</p>
+<p>Remember that they are usually not running a stable version of Opencast but the latest development release (beta version
+or release candidate) instead. If you discover any bugs on these systems, please take a minute to report them.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
+        Reviewing, Merging and Declining Pull Requests
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../installation/source-linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../installation/source-linux/" class="btn btn-xs btn-link">
+        Installation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/development-process.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

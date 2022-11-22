@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Reviewing, Merging and Declining Pull Requests - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Reviewing, Merging and Declining Pull Requests";
+    var mkdocs_page_input_path = "reviewing-and-merging.md";
+    var mkdocs_page_url = "/reviewing-and-merging/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development/">Development</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Reviewing, Merging and Declining Pull Requests</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#reviewing-merging-and-declining-pull-requests">Reviewing, Merging and Declining Pull Requests</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#reviewing-rules">Reviewing Rules</a></li>
+        
+            <li><a class="toctree-l4" href="#reviewing-a-pull-request">Reviewing a Pull Request</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../release-manager/">Release Manager</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/nexus/">Nexus Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development Process &raquo;</li>
+        
+      
+    
+    <li>Reviewing, Merging and Declining Pull Requests</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs/src/default/docs/reviewing-and-merging.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="reviewing-merging-and-declining-pull-requests">Reviewing, Merging and Declining Pull Requests</h1>
+<p>Before a patch is merged into an official branch, it needs to be reviewed by a committer. During a
+review, the reviewer is tries to make sure that the patch merges without conflicts, that it works as expected and that
+it does not break anything else.</p>
+<p>If the reviewer discovers any kind of issue, he should leave a comment in the pull request view of BitBucket and let the
+contributor fix the problem. Reviewer and contributor should work together to fix any problem with the pull requests
+before it is ready to go into the codebase.</p>
+<h2 id="reviewing-rules">Reviewing Rules</h2>
+<ul>
+<li>Reviews and merges need to be done by committers.</li>
+<li>Reviewers should come from a different institution than the contributor.</li>
+<li>To assign yourself as a reviewer, add a comment to the BitBucket pull request like “<code>I will //review// this</code>”. The
+   use of <code>//review//</code> will make the <a href="http://pullrequests.opencast.org">pull request filter</a> pick up the author of this
+   comment as reviewer.</li>
+<li>Pull requests for bug fixes or documentation may be reviewed and merged out of order.</li>
+<li>Feature pull requests have to be merged in order unless their contributor or reviewer decide to temporarily skip it.
+   Such a decision has to be justified by the existence of unresolved issues in that particular pull request.</li>
+<li>There is a so-called “merge ticket” in Jira for <code>develop</code> and for each release branch. Committers must not merge code
+   into these branches unless they are the assignee of the corresponding ticket.</li>
+<li>By default, the merge ticket for <code>develop</code> should be always assigned to the reviewer of the next feature pull request
+   to be merged.</li>
+<li>The merge ticket for <code>develop</code>, can be temporarily taken by anyone for merging a bug fix after coordinating this with
+   the current assignee of the ticket</li>
+<li>No features can be merged in the release branches, so the merge tickets corresponding to a release branch will be
+   unassigned by default. Reviewers merging bug fixes must assign the ticket to themselves before doing so, and then
+   leave it unassigned after finishing.</li>
+<li>The release ticket should not be unassigned for longer than 72 hours in which case the release manager should assign
+   it to the reviewer of the next pull request in line.</li>
+<li>After taking up a review (or being assigned to one), a basic review has to be done within the following 14 days for a
+   bug fix or 21 days for a feature. A basic review means that either some issues should be pointed out or the pull
+   request should be approved.</li>
+<li>No pull request shall be without a reviewer for more than 14 days. If no committer is willing to take up the review
+   on their own, the review will be assigned.</li>
+<li>Any committer may merge an arbitrary set of <em>approved</em> pull requests, even if he is not the official reviewer, given
+   that:<ul>
+<li>The committer sends an announcement to the development list 24 hours in advance, including a list of the pull
+  requests to be merged and no other committer objects to that.</li>
+<li>The committer checks that all the patches are working (which basically means to review the patch set as a whole).</li>
+</ul>
+</li>
+<li>A reviewer may decline a pull request if issues were pointed out but were neither fixed nor discussed for more than
+   14 days. It is generally suggested to try to contact the contributor before declining the pull request and to
+   additionally bring the problem up at the technical meeting.</li>
+</ul>
+<h2 id="reviewing-a-pull-request">Reviewing a Pull Request</h2>
+<p>There is no list of things you are required to do as reviewer of a pull request. Our primary goals in doing reviews for
+all pull requests are to ensure that:</p>
+<ul>
+<li>There are no bugs in the pull request<ul>
+<li>The feature works as advertised</li>
+<li>It does not break any other features</li>
+</ul>
+</li>
+<li>There are no obvious legal problems<ul>
+<li><a href="../license/">Licenses seem to be fine</a></li>
+<li>Licenses are added to the <code>NOTICES</code> file</li>
+</ul>
+</li>
+<li>Feature documentation is in place</li>
+<li>An upgrade path exists (usually relevant for database changes)</li>
+</ul>
+<p>The exact review process heavily depends on the type, size and purpose of the pull request. For example, it does not
+make sense to run the unit or integration tests for pull requests containing documentation only. Instead, reviewers
+should run <code>mkdocs</code> to build the documentation.</p>
+<p>Here are some things a reviewer should usually do:</p>
+<ul>
+<li>Check if code looks sensible (e.g. no nonsensical files, no obvious formatting errors, no large binary files, …)</li>
+<li>Perform the merge locally to make sure there are no conflicts</li>
+<li>Build Opencast with the <code>-Dall</code> flag (build all modules) and tests enabled (default). If you have some more time
+   (e.g. lunch break), clear your local Maven repository (usually <code>~/.m2</code>) before starting the build process</li>
+<li>Locally run Opencast to make sure it still works after the merge</li>
+<li>Make sure the issue has been fixed (as described in the pull request and/or the Jira ticket) or the feature does
+   what it is supposed to</li>
+<li>Check and build the documentation</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../release-manager/" class="btn btn-neutral float-right" title="Release Manager">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../development/" class="btn btn-neutral" title="Development"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../development/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../release-manager/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

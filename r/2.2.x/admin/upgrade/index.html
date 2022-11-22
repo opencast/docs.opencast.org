@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Upgrade - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Upgrade";
+    var mkdocs_page_input_path = "upgrade.md";
+    var mkdocs_page_url = "/upgrade/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Upgrade</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#upgrading-opencast-from-21-to-22">Upgrading Opencast From 2.1 To 2.2</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#additional-notes-about-224">Additional notes about 2.2.4</a></li>
+        
+            <li><a class="toctree-l3" href="#database-migration">Database Migration</a></li>
+        
+            <li><a class="toctree-l3" href="#system-account">System Account</a></li>
+        
+            <li><a class="toctree-l3" href="#scheduled-events">Scheduled Events</a></li>
+        
+            <li><a class="toctree-l3" href="#distribution-artifacts-migration">Distribution Artifacts Migration</a></li>
+        
+            <li><a class="toctree-l3" href="#configuration-changes">Configuration Changes</a></li>
+        
+            <li><a class="toctree-l3" href="#how-to-upgrade">How to Upgrade</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../configuration/acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../configuration/workflow/">Workflow</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/append-woh/">Append</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/caption-woh/">Caption</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/republish-woh/">Republish</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/trim-woh/">Trim</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Upgrade</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/upgrade.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="upgrading-opencast-from-21-to-22">Upgrading Opencast From 2.1 To 2.2</h1>
+<p>This guide describes how to upgrade Opencast 2.1.x to 2.2.x. In case you need information about how to upgrade older
+versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
+<h2 id="additional-notes-about-224">Additional notes about 2.2.4</h2>
+<p>Opencast 2.2.4 fixes a security issue related to the Solr search index which in some cases <em>ma</em>y cause authenticated
+users to get read access to content of other users. We recommend to re-build the Solr search index
+(<code>…/data/solr-indexes/search</code>). The easiest way is to just delete that directory and re-start Opencast which causes an
+automatic re-build.</p>
+<h2 id="database-migration">Database Migration</h2>
+<p>You will find the database migration script in <code>/docs/upgrade/2.1_to_2.2/&lt;vendor&gt;.sql</code></p>
+<p><em>Notice:</em> We highly recommend to use MariaDB 10.0+ instead of MySQL 5.5+, as the migration scripts for MariaDB are
+much more robust.</p>
+<p>Switch to the directory that contains the mysql5.sql or mariadb10.sql file and run the MySQL/MariaDB client with the
+database user and switch to the database you want to use (<code>opencast</code>):</p>
+<pre><code>mysql -u opencast -p opencast
+</code></pre>
+<p>Run the ddl script:</p>
+<pre><code>mysql&gt; source mariadb10.sql;
+</code></pre>
+<p>or</p>
+<pre><code>mysql&gt; source mysql5.sql;
+</code></pre>
+<p>With the mysql5 script, you might encounter errors in the logs about missing INDEXes and non existing FOREIGN KEYS. You
+can probably ignore these errors. If your MySQL database is not working afterwards we can only recommend trying MariaDB.
+You should not use the shell import of the SQL script for MySQL, as unlike with the SOURCE command, the processing of
+the script in the shell will stop, as soon as an error is encountered.</p>
+<h2 id="system-account">System Account</h2>
+<p>If you are upgrading from Opencast 1.x or 2.0 to 2.2 you should notice that the default username of the digest user
+has changed. You should stick to your current username (<code>matterhorn_system_account</code>) as otherwise the creating user for
+some jobs cannot be found.</p>
+<h2 id="scheduled-events">Scheduled Events</h2>
+<p>It is highly recommended that you don't have scheduled jobs left in your system before the migration, as the migration
+of scheduled events sometimes fails.</p>
+<h2 id="distribution-artifacts-migration">Distribution Artifacts Migration</h2>
+<p>With the introduction of stream security in Opencast 2.2, the distribution URLs have changed to provide a clearer
+separation between artefacts of different tenants present in the system. In particular, now the tenant's name will be
+part of all its artifacts' URLs. This change makes it easier to protect the distributed artifacts from being accessed by
+a tenant they do not belong to. It affects all the Opencast deployments, even if only one tenant (the "default
+organization") is defined or even if the Stream Security mechanism is not active.</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<ul>
+<li>
+<p>In <code>org.opencastproject.organization-mh_default_org.cfg</code> the keyboard shortcut identifiers (starting with
+  <code>prop.player.shortcut.*</code>) have been changed and some new shortcuts for the zoom feature have been added.  If you want
+  to re-use the config file from your 2.1 installation, please update this section.</p>
+</li>
+<li>
+<p>The configuration key <code>promiscuous-audio-muxing</code> of WOH prepare-av has been replaced by the more generic configuration
+  key <code>audio-muxing-source-flavors</code>. In case your custom workflows contain <code>promiscuous-audio-muxing=true</code>, replace that
+  key by <code>audio-muxing-source-flavors=?/*,*/*</code> which is semantically equivalent.</p>
+</li>
+<li>
+<p>In case that you want to use a custom workflow for retracting events, you must tag it <code>delete-ng</code>.You need such a
+  workflow to be able to delete events that have been published. There is a default workflow for this.</p>
+</li>
+<li>
+<p>The names of the following configuration properties found in <code>org.opencastproject.organization-mh_default_org.cfg</code>
+  have been changed:</p>
+<table>
+<thead>
+<tr>
+<th>Old name</th>
+<th>New name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prop.org.opencastproject.admin.documentation.url</td>
+<td>prop.org.opencastproject.admin.help.documentation.url</td>
+</tr>
+<tr>
+<td>prop.org.opencastproject.admin.restdocs.url</td>
+<td>prop.org.opencastproject.admin.help.restdocs.url</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>The Opencast logos defined in <code>org.opencastproject.organization-mh_default_org.cfg</code> have been changed.  The old logos
+  have been removed from Opencast.</p>
+</li>
+<li>
+<p>Several default values (mostly <code>custom.properties</code>) have been moved from the configuration files into the code and
+  have been commented out in the configuration.</p>
+</li>
+</ul>
+<h2 id="how-to-upgrade">How to Upgrade</h2>
+<ol>
+<li>Check out/download Opencast 2.2</li>
+<li>Stop your current Opencast instance</li>
+<li>Back up Opencast files and database (optional)</li>
+<li>Run the appropriate database upgrade script<ul>
+<li><code>/docs/upgrade/2.1_to_2.2/</code></li>
+</ul>
+</li>
+<li>Review the configuration changes and adjust your configuration accordingly</li>
+<li>Update the third party tools as documented in the <a href="../installation/">installation docs</a>.</li>
+<li>Build Opencast 2.1</li>
+<li>Delete the <code>adminui</code> directory in your Opencast data directory.</li>
+<li>Start Opencast using the interactive script in <code>bin/start-opencast</code></li>
+<li>
+<p>Log-in to the Karaf console on your node where the search service is running (usually presentation node) 
+    and install the opencast-migration feature by entering: <code>feature:install opencast-migration</code></p>
+<blockquote>
+<p><em>Make sure that your current engage search index contains all episodes. Retracted recordings will not be 
+migrated.</em></p>
+</blockquote>
+</li>
+<li>
+<p>Check the logs for errors!</p>
+</li>
+<li>Restart Opencast service - you do not need to use the interactive start script.</li>
+<li>
+<p>Reconstruct the Admin UI search index. There are two ways to reconstruct the index:</p>
+<ul>
+<li>By opening <code>http://my.opencast-server.tld:8080/admin-ng/index/recreateIndex</code> in your browser.
+     The resulting page is empty but should return an HTTP status 200 (OK).</li>
+<li>By using the REST documentation, open "Admin UI - Index Endpoint" and use the testing form on <code>/recreateIndex</code>.
+     The resulting page is empty but should return an HTTP status 200 (OK).
+     You can find the REST documentation in the help-section of the Admin UI behind the <em>?</em>-symbol.</li>
+</ul>
+</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../changelog/" class="btn btn-neutral float-right" title="Changelog">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../releasenotes/" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../releasenotes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../changelog/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

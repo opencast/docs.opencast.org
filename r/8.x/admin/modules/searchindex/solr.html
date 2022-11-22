@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Solr - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Solr Configuration", url: "#_top", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Obtaining the software", url: "#obtaining-the-software" },
+              {title: "Deploy solr to tomcat", url: "#deploy-solr-to-tomcat" },
+              {title: "Configure solr", url: "#configure-solr" },
+              {title: "Start the server", url: "#start-the-server" },
+              {title: "Secure the solr server", url: "#secure-the-solr-server" },
+              {title: "Configure Opencast", url: "#configure-opencast" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="elasticsearch.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="elasticsearch.html" class="btn btn-xs btn-link">
+        Elasticsearch
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="index.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="index.html" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="solr-configuration">Solr Configuration</h1>
+<p><em>Opencast has Solr included by default. This guide is only needed, if you want to run Solr on a separate server.</em></p>
+<p><strong>The software versions in these instructions are not the only versions that will work, they are just the version tested
+when this document was written.  Newer versions of both Tomcat and Solr are highly recommended.</strong></p>
+<h2 id="introduction">Introduction</h2>
+<p>Opencast services use filesystem, relational database, and/or search indexes to store and retrieve information. In
+order to cluster services across multiple servers, we must provide shared storage solutions for each of these
+technologies. We do this with NFS or ZFS for filesystems, JDBC for relational databases, and solr for search indexes. If
+you plan on clustering either the workflow service or the search service, you must configure Opencast to use remote
+solr servers as described below, otherwise no further action is required.</p>
+<h2 id="obtaining-the-software">Obtaining the software</h2>
+<p>Solr runs in any modern servlet environment such as Apache Tomcat 7. Download and unpack Tomcat.</p>
+<pre><code>$ curl -O http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.5-beta/bin/apache-tomcat-7.0.5.zip
+$ unzip apache-tomcat-7.0.5.zip
+</code></pre>
+<p>Download solr from the closest mirror and unpack the zip file. Make sure the permissions are set properly (the zip file
+doesn't retain proper unix permissions)</p>
+<pre><code>$ curl -O http://archive.apache.org/dist/lucene/solr/1.4.1/apache-solr-1.4.1.zip
+$ unzip apache-solr-1.4.1.zip
+$ chmod 755 apache-tomcat-7.0.5/bin/*
+</code></pre>
+<h2 id="deploy-solr-to-tomcat">Deploy solr to tomcat</h2>
+<p>Copy the solr example war file to tomcat's webapps directory and expand the war file.</p>
+<pre><code>$ unzip apache-solr-1.4.1/example/webapps/solr.war -d apache-tomcat-7.0.5/webapps/solr/
+</code></pre>
+<h2 id="configure-solr">Configure solr</h2>
+<p>Add the solr config files to the solr webapp in tomcat. If you are setting up the search service, use the solr config
+from the search module.</p>
+<pre><code>$ cd apache-tomcat-7.0.5
+$ cp -R [opencast source]/modules/search-service-impl/src/main/resources/solr solr
+</code></pre>
+<p>Alternatively, if this is the solr index supporting the workflow service, copy those files instead:</p>
+<pre><code>$ cd apache-tomcat-7.0.5
+$ cp -R [opencast source]/modules/workflow-service-impl/src/main/resources/solr solr
+</code></pre>
+<p>Edit the dataDir setting in solr/conf/solrconfig.xml to specify the directory you want to use for the index files.</p>
+<h3 id="dependency-of-the-workflow-index"><em>Dependency of the workflow index</em></h3>
+<p><em>The index has a dependency on a Opencast class. The easiest way of getting rid of this dependency is providing a .jar
+file with that class within a directory named lib in the solr folder (you may need to create it if it does not exist).
+The .jar file can be the compiled solr bundle. Placing the jar in the main Tomcat lib directory does not
+work.</em></p>
+<h2 id="start-the-server">Start the server</h2>
+<pre><code>$ bin/startup.sh
+Using CATALINA_BASE:   /Users/josh/Desktop/apache-tomcat-7.0.5
+Using CATALINA_HOME:   /Users/josh/Desktop/apache-tomcat-7.0.5
+Using CATALINA_TMPDIR: /Users/josh/Desktop/apache-tomcat-7.0.5/temp
+Using JRE_HOME:        /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
+</code></pre>
+<p>You should see that the solr server is running on http://localhost:8080/solr</p>
+<p><img alt="SOLR welcome page" src="solr1.png" /></p>
+<p>You can use the admin screen to monitor the server or make ad-hoc queries:</p>
+<p><img alt="SOLR admin" src="solr2.png" /></p>
+<p><img alt="SOLR XML" src="solr3.png" /></p>
+<h2 id="secure-the-solr-server">Secure the solr server</h2>
+<p>Just like with a relational database server, it is critical that you limit access to the solr server. Opencast's
+communication with solr servers is unauthenticated, so you must secure a firewall on the solr servers that accepts HTTP
+requests only from Opencast servers. If these servers were publicly accessible, anyone could make changes to
+Opencast data from outside Opencast itself.</p>
+<h2 id="configure-opencast">Configure Opencast</h2>
+<p>Set the URL to this solr server in Opencast's custom.properties file:</p>
+<pre><code>org.opencastproject.search.solr.url=http://your.solr.server.edu:8080/solr/
+</code></pre>
+<p>If this solr server is supporting clustered workflow services:</p>
+<pre><code>org.opencastproject.workflow.solr.url==http://your.solr.server.edu:8080/solr/
+</code></pre>
+<p><em>It is important to understand that a solr server provides exactly one schema, and one schema only. If you want to
+cluster both the workflow service and the search service, you will need two separate solr servers. These solr servers
+can run on the same machine, but each will needs its own servlet container and port.</em></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="elasticsearch.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="elasticsearch.html" class="btn btn-xs btn-link">
+        Elasticsearch
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="index.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="index.html" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/searchindex/solr.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

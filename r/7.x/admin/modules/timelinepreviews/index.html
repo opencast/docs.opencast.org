@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Timeline Previews - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Timeline Previews Configuration", url: "#_top", children: [
+              {title: "Configuration", url: "#configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        Transcripts (IBM Watson)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../textextraction/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../textextraction/" class="btn btn-xs btn-link">
+        Text Extraction
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="timeline-previews-configuration">Timeline Previews Configuration</h1>
+<p>The Timeline previews service generates timeline preview images from a given video.
+These are shown above the timeline of the video in the engage player.</p>
+<p>The generation of these images is done using FFmpeg and all preview images are stored in one image file. To achieve
+this, several FFmpeg video filters are combined:
+- <strong>fps</strong>: to specify how many preview images should be generated. As the length of track is known and the desired
+  number of preview images is configured in the workflow operation handler, it can be calculated how many seconds each
+  preview image should represent. If 1 divided by that duration in seconds is set as fps value, FFmpeg will generate the
+  desired amount of preview images.
+- <strong>scale</strong>: to achieve the desired output image resolution. This filter will scale the input video, so that the
+  generated images will have that resolution. If one of the values is set to -1, the filter will use a value that
+  maintains the aspect ratio of the input image.
+- <strong>tile</strong>: to tile all remaining frames together. This filter will put the preview images into one image file. The grid
+  size can be set and is currently always quadratic, which means the number of lines and the number of columns are both
+  the rounded up square root of the desired number of images.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The resolution, the output format and the mimetype can be configured in
+<code>etc/org.opencastproject.timelinepreviews.ffmpeg.TimelinePreviewsServiceImpl.cfg</code>.</p>
+<p>Width of the resolution of a single preview image in pixels (defaults to 160).</p>
+<pre><code>resolutionX = 160
+</code></pre>
+<p>Height of the resolution of a single preview image in pixels (defaults to -1).
+If not set or set to -1, it will be set automatically to preserve the original aspect ratio.</p>
+<pre><code>resolutionY = -1
+</code></pre>
+<p>Output file format for the timeline previews image file (defaults to ".png").</p>
+<pre><code>outputFormat = ".png"
+</code></pre>
+<p>Mimetype for the output image (defaults to "image/png").</p>
+<pre><code>mimetype = "image/png"
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        Transcripts (IBM Watson)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../textextraction/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../textextraction/" class="btn btn-xs btn-link">
+        Text Extraction
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/timelinepreviews.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

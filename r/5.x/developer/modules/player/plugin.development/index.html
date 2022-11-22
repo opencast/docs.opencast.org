@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Plugin Development - Opencast - Developer Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../../../css/style-guide.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Plugin Development";
+    var mkdocs_page_input_path = "modules/player/plugin.development.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Process</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-process/">Development</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../release-manager/">Release Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../qa-coordinator/">QA Coordinator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../security/">Security Issues</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../code-style/">Code Style</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../documentation/">Documentation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Decision Making</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/consensus-building/">Consensus Building</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/voting/">Voting</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Environment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-environment/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-environment-docker/">With Docker</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../committer/">Committers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">Licenses and Legal Matters</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../governance/">Governance</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../localization/">Localization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../packaging/">Packaging</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../proposal-log/">Proposal Log</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../asset-manager/">Asset Manager</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../scheduler/">Scheduler</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../../">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Administrative user Interface</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Style Guide</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../capture-agent/">Capture Agent</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Player</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../events/">Events</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../storage/">Storage</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Plugin Development</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#plugin-archetype">Plugin Archetype</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#generating-a-new-plugin">Generating a new plugin</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#project-properties">Project Properties</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example-plugin">Example Plugin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#debugging">Debugging</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../testing/">Testing</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Infrastructure</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/notes/">Notes</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/maven-repository/">Maven Repository</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">External API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/usage/">Usage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/authorization/">Authorization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/base-api/">Base API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/events-api/">Events API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/series-api/">Series API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/groups-api/">Groups API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/security-api/">Security API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/types/">Data Types</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/glossary/">Glossary</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Player &raquo;</li>
+        
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Plugin Development</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/modules/player/plugin.development.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="how-to-create-a-new-plugin">How To Create A New Plugin</h1>
+<h2 id="plugin-archetype">Plugin Archetype</h2>
+<p>The <a href="http://maven.apache.org/archetype/maven-archetype-plugin/">Maven Archetype Plugin</a> provides a convenient mechanism
+for automatically generating projects. Project templates are called Archetypes and they are basically maven artifacts of
+a special kind of packaging, ‘maven-archetype’.</p>
+<p>With the Theodul Plugin Archetype you can create a new plugin project in no time and start writing the plugin’s business
+logic right away, without caring about the POM or SCR component declarations.</p>
+<h3 id="installation">Installation</h3>
+<p>The Theodul Plugin Archetype is included in the Opencast source code (Theodul Player branch) in the modules directory.
+To make the artifact available on your system you need to install it like any other atrifacts. In the Opencast source
+directory type:</p>
+<pre><code>&gt; cd modules/engage-theodul-plugin-archetype
+&gt; mvn install
+</code></pre>
+<p>After successful build and installation the archetype is available in your system.</p>
+<h3 id="generating-a-new-plugin">Generating a new plugin</h3>
+<p>To generate a new plugin project simply go to the modules directory inside the Opencast source directory and type:</p>
+<pre><code>&gt; mvn archetype:generate -DarchetypeGroupId=org.opencastproject -DarchetypeArtifactId=theodul-plugin
+</code></pre>
+<p>Provided the archetype is installed maven will now ask you for the properties configuration for the new project:</p>
+<pre><code>[INFO] Generating project in Interactive mode
+[INFO] Archetype [org.opencastproject:theodul-plugin:1.5-SNAPSHOT] found in catalog local
+Define value for property 'groupId': : org.opencastproject
+Define value for property 'artifactId': : engage-theodul-plugin-test
+Define value for property 'version': 1.0-SNAPSHOT: : 1.5-SNAPSHOT
+Define value for property 'package': org.opencastproject: : org.opencastproject.engage.theodul.plugin.custom.test
+Define value for property 'plugin_description': : A test plugin
+Define value for property 'plugin_name': : testName
+Define value for property 'plugin_type': : custom
+Define value for property 'plugin_version': : 0.1
+Define value for property 'plugin_rest': : false
+Confirm properties configuration:
+groupId: org.opencastproject
+artifactId: engage-theodul-plugin-test
+version: 1.5-SNAPSHOT
+package: org.opencastproject.engage.theodul.plugin.test
+plugin_description: A test plugin
+plugin_name: test
+plugin_rest: true
+ Y: : y
+[INFO] ----------------------------------------------------------------------------
+[INFO] Using following parameters for creating project from Archetype: theodul-plugin:1.5-SNAPSHOT
+[INFO] ----------------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: org.opencastproject
+[INFO] Parameter: artifactId, Value: engage-theodul-plugin-test
+[INFO] Parameter: version, Value: 1.5-SNAPSHOT
+[INFO] Parameter: package, Value: org.opencastproject.engage.theodul.plugin.test
+[INFO] Parameter: packageInPathFormat, Value: org/opencastproject/engage/theodul/plugin/test
+[INFO] Parameter: package, Value: org.opencastproject.engage.theodul.plugin.test
+[INFO] Parameter: version, Value: 1.5-SNAPSHOT
+[INFO] Parameter: plugin_description, Value: A test plugin
+[INFO] Parameter: plugin_name, Value: test
+[INFO] Parameter: groupId, Value: org.opencastproject
+[INFO] Parameter: plugin_rest, Value: true
+[INFO] Parameter: artifactId, Value: engage-theodul-plugin-test
+[INFO] project created from Archetype in dir: /home/wulff/code/UOS/plugin-archetype/test/engage-theodul-plugin-test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3:39.195s
+[INFO] Finished at: Thu Jan 23 15:48:37 CET 2014
+[INFO] Final Memory: 15M/308M
+[INFO] ------------------------------------------------------------------------
+</code></pre>
+<p>There you go, the newly created plugin project is waiting to be filled with life in the directory that is named after
+the atrifactId you entered before.</p>
+<h3 id="project-properties">Project Properties</h3>
+<p>In addition to the above explanation, here is a description of the properties you have to specify when generating a new
+project with the Theodul Plugin Archetype:</p>
+<h4 id="groupid">groupId</h4>
+<p>Maven group ID. For the Opencast developers this is</p>
+<pre><code>org.opencastproject
+</code></pre>
+<h4 id="artifactid">artifactId</h4>
+<p>Maven artifact ID. Name by which your project is identified as an artifact by maven. Think of it as the project name. It
+will also be used as the name for your projects root directory. During the course of the Theodul project the following
+naming scheme came up:</p>
+<pre><code>engage-theodul-plugin-&lt;plugin type&gt;-&lt;plugin name&gt;
+</code></pre>
+<h4 id="version">version</h4>
+<p>The project version. For Opencast developers: simply put in the version of the Opencast source tree your are working
+on.</p>
+<h4 id="package">package</h4>
+<p>The Java package in which the source for the back end part of your plugin will live. The following scheme is used by the
+Theodul developers:</p>
+<pre><code>org.opencastproject.engage.theodul.plugin.&lt;plugin type&gt;.&lt;plugin name&gt;
+</code></pre>
+<h4 id="plugin_version">plugin_version</h4>
+<p>The version of the plugin itself. This is not to be confused with the maven project version which will, for instance, be
+updated when the Opencast version changes.</p>
+<h4 id="plugin_type">plugin_type</h4>
+<p>The type of the plugin to be created. See https://opencast.jira.com/wiki/display/MH/Architecture
+Possible types are: custom, controls, timeline, video, description, tab</p>
+<h4 id="plugin_name">plugin_name</h4>
+<p>The name by which your plugin will be registered by the plugin manager when running.</p>
+<h4 id="plugin_description">plugin_description</h4>
+<p>(optional) A short description of the plugin. The description will be provided by the <a href="https://engagedevcamp.wordpress.com/2013/04/15/plugin-infrastructure/">plugin list endpoint
+</a> together with the other plugin data.</p>
+<h4 id="plugin_rest">plugin_rest</h4>
+<p>(boolean) Whether or not the plugin should provide a Opencast Rest endpoint. If set to true, the Java class that makes
+up the back end part of your plugin will be augmented with the annotations necessary to work as a Rest endpoint provider
+in Opencast. Also an example endpoint (GET:sayHello) will be generated.</p>
+<h2 id="example-plugin">Example Plugin</h2>
+<p>Have a look at the <a href="https://bitbucket.org/CallToPower/theodul-snowshowcase-plugin">snow showcase example plugin (custom)</a>.</p>
+<h2 id="debugging">Debugging</h2>
+<p>To display debug information in the developer console, add the following parameters to the URL:</p>
+<p><strong>Display debug information</strong></p>
+<pre><code>&amp;debug=true
+</code></pre>
+<p><strong>Display event debug information</strong></p>
+<pre><code>&amp;debugEvents=true
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../testing/" class="btn btn-neutral float-right" title="Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../storage/" class="btn btn-neutral" title="Storage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../storage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../testing/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

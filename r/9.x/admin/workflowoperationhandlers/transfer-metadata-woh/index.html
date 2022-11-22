@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Transfer Metadata - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Transfer Metadata Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../theme-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../theme-woh/">
+        Theme
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../timelinepreviews-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../timelinepreviews-woh/">
+        Timelinepreviews
+      </a>
+</div>
+</div>
+<h1 id="transfer-metadata-workflow-operation">Transfer Metadata Workflow Operation</h1>
+<h2 id="description">Description</h2>
+<p>The transfer metadata operation allows to transfer arbitrary metadata fields from one metadata catalog to another one.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration key</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor</td>
+<td>dublincore/episode</td>
+<td>The catalog from which the metadata is copied</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>myterms/episode</td>
+<td>The catalog to which the data is copied</td>
+</tr>
+<tr>
+<td>source-element</td>
+<td>{http://purl.org/dc/terms/}creator</td>
+<td>The XML element to copy</td>
+</tr>
+<tr>
+<td>target-element</td>
+<td>{http://purl.org/dc/terms/}creator</td>
+<td>The XML element to which the values are copied</td>
+</tr>
+<tr>
+<td>force</td>
+<td>false</td>
+<td>Overwrite existing targets</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>,</td>
+<td>Join multiple values by set delimiter</td>
+</tr>
+<tr>
+<td>target-prefix</td>
+<td>dcterms</td>
+<td>Prefix to use for the given namespace</td>
+</tr>
+</tbody>
+</table>
+<h3 id="force">force</h3>
+<p>By default, the operation will fail if a target element already exists at the specified location. If <code>force</code> is set, all
+existing target elements will be removed before copying the new elements.</p>
+<h3 id="concat">concat</h3>
+<p>If multiple source elements are selected (e.g. the title in multiple languages), by default, all elements are copied to
+the destination. The language information are preserved in this operation. If <code>concat</code> is defined, the value of this
+option will be used as a delimiter for joining all selected source elements and only ever one element will be written.
+All language information for this combined element will be discarded in the process.</p>
+<h3 id="target-prefix">target-prefix</h3>
+<p>This option lets you specify the XML namespace identifier for the target elements namespace. For example, Opencast
+usually uses <code>dcterms</code> for elements from the set of DublinCore terms, resulting in elements like <code>&lt;dcterms:creator&gt;</code>.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+  id="transfer-metadata"
+  description="Transfer dcterms:creator to myterms:owner"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;dublincore/episode&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;myterms/episode&lt;/configuration&gt;
+    &lt;configuration key="source-element"&gt;{http://purl.org/dc/terms/}creator&lt;/configuration&gt;
+    &lt;configuration key="target-element"&gt;{http://my-institution.edu/metadata}owner&lt;/configuration&gt;
+    &lt;configuration key="force"&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../theme-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../theme-woh/">
+        Theme
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../timelinepreviews-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../timelinepreviews-woh/">
+        Timelinepreviews
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/transfer-metadata-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

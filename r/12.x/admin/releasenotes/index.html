@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Notes - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Opencast 12: Release Notes", url: "#_top", children: [
+              {title: "Opencast 12.5", url: "#opencast-125" },
+              {title: "Opencast 12.4", url: "#opencast-124" },
+              {title: "Opencast 12.3", url: "#opencast-123" },
+              {title: "Opencast 12.2", url: "#opencast-122" },
+              {title: "Opencast 12.1", url: "#opencast-121" },
+              {title: "Opencast 12.0", url: "#opencast-120" },
+              {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release Managers", url: "#release-managers" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-12-release-notes">Opencast 12: Release Notes</h1>
+<h2 id="opencast-125">Opencast 12.5</h2>
+<p>The fifth maintenance release of Opencast 12.</p>
+<p>Security related changes are:</p>
+<ul>
+<li>Paella Player 6: Validate redirect to login page</li>
+</ul>
+<p>Notable changes are:</p>
+<ul>
+<li>Tobira: The harvesting API now identifies the master playlist of events with
+  multiple HLS streams. This is needed for example when you are using the
+  <code>multiencode</code> operation; without this information, the quality selection in
+  Paella can't work in Tobira.
+  (See also <a href="https://github.com/elan-ev/tobira/issues/573">elan-ev/tobira#573</a>.)
+  If this affects you, you need to re-synchronize your Tobira instance
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4370">#4370</a>]).</li>
+<li>Fix for wrong type handling in the encode WOH
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4382">#4382</a>]).</li>
+<li>Fix for live publications not being retracted
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4250">#4250</a>]).</li>
+<li>Azure transcription service improvements
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4441">#4441</a>]).</li>
+<li>Editor: Let Editor know if files are available locally
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4411">#4411</a>]).</li>
+<li>LDAP: Do not add the roleprefix to extra roles
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4377">#4377</a>]).</li>
+<li>E-Mail: Use UTF-8 as charset for HTML mails
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4375">#4375</a>]).</li>
+</ul>
+<p>New Features and updates:
+- Initialization of new event ACL with series ACL in the Admin UI is now configurable
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4249">#4249</a>]).</p>
+<p>There are more bug fixes.
+See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<h2 id="opencast-124">Opencast 12.4</h2>
+<p>The fourth maintenance release of Opencast 12.
+Notable changes are:</p>
+<ul>
+<li><a href="../modules/editor/">Stand-Alone Video Editor</a>: Edit subtitles and create thumbnails.<ul>
+<li>Both features are disabled by default and will require additional configuration.</li>
+</ul>
+</li>
+<li>Stand-Alone Video Editor: Usability and accessibility improvements (tooltips, high contrast mode) and bug fixes</li>
+<li>Paella Player 7: Updates</li>
+<li>Admin UI: Save button for event/series "Access policy"-tab</li>
+<li>Bug fixes</li>
+</ul>
+<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<h2 id="opencast-123">Opencast 12.3</h2>
+<p>The third maintenance release of Opencast 12.
+Notable changes are:</p>
+<ul>
+<li>Added Tobira connector to allow Opencast to work with the new video portal</li>
+<li>Fixed deletion of scheduled events</li>
+<li>Fix MariaDB upgrade script</li>
+</ul>
+<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<h2 id="opencast-122">Opencast 12.2</h2>
+<p>The second maintenance release of Opencast 12.
+Notable changes:</p>
+<ul>
+<li>New Opencast Studio version including dark mode feature</li>
+<li>Fix OAI-PMH</li>
+<li>Update CAS documentation</li>
+<li>Bugfix update the MariaDB database driver (again)</li>
+<li>Use an event title fallback from Dublin Core catalog while publishing to
+  Engage</li>
+<li>Update the migration script installation instructions, which will otherwise
+  fail with newer versions of the MariaDB Python connector</li>
+</ul>
+<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<h2 id="opencast-121">Opencast 12.1</h2>
+<p>The first maintenance release of Opencast 12.
+Notable changes:</p>
+<ul>
+<li>New editor version including dark mode feature</li>
+<li>Updated Paella Player 7 beta version</li>
+<li>Fix email sending</li>
+<li>Fix MariaDB database driver</li>
+<li>Allow creating a new event with metadata from another event</li>
+<li>Azure transcription integration</li>
+</ul>
+<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<h2 id="opencast-120">Opencast 12.0</h2>
+<h3 id="features">Features</h3>
+<ul>
+<li>Opencast 12 ships Paella Player 6.5.6 as its new default player.</li>
+<li>Paella Player 7 supporting new features like CSS customization is now included and
+  <a href="../modules/paella.player7/configuration/">can be configured as an alternative player</a>.</li>
+<li>Upgrade the <a href="../modules/editor/">Standalone Video Editor</a> to
+  <a href="https://github.com/opencast/opencast-editor/releases/tag/2022-06-15">version 2022-06-15</a>.</li>
+<li>Upgrade <a href="../modules/studio/">Opencast Studio</a> to
+  <a href="https://github.com/elan-ev/opencast-studio/releases/tag/2022-06-15">version 2022-06-15</a>
+  coming with plenty new accessibility features.</li>
+<li>You can now define workflows in YAML. An
+  <a href="https://github.com/opencast/opencast/blob/r/12.x/etc/workflows/fast.yaml">example workflow written in YAML</a> is provided.
+  <a href="../configuration/workflow/#using-yaml-files-with-workflows">Documentation is available</a>.</li>
+<li>The new <a href="../workflowoperationhandlers/publication-to-workspace-woh/">publication to workspace workflow operation handler</a>
+  allows you to copy media package elements from existing publications
+  [<a href="https://github.com/opencast/opencast/pull/3554">#3554</a>].</li>
+</ul>
+<h3 id="improvements">Improvements</h3>
+<ul>
+<li>ActiveMQ is no longer required by Opencast. It is safe to uninstall.</li>
+<li>In case a request to Elasticsearch fails because of an
+  ElasticsearchStatusException, you can now configure Opencast to try again.
+  For this, set <code>max.retry.attempts.[get|update]</code> in
+  <code>etc/org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code>
+  to something higher than 0. Set <code>retry.waiting.period.[get|update]</code> to a time
+  period in ms to wait between retries (default: 1 second) so you don't
+  overwhelm Elasticsearch.
+  Both parameters can be configured separately for read-only actions and those
+  that also update or delete, since arguably the success of the latter is more
+  important. Changing this config does not require a restart of Opencast. See
+  our <a href="../configuration/elasticsearch/">Elasticsearch docs</a> for more details.</li>
+<li>The Series Service does not require a Solr Index anymore, simplifying the
+  installation of Opencast.</li>
+<li>The Workflow Service does not require a Solr Index anymore, simplifying the
+  installation of Opencast.</li>
+<li>Workflows' data is now atomically stored in the database instead of XML to
+  improve access speed. [<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>]</li>
+<li>You can now specify a fallback language and use a placeholder in the Vosk-based
+  <a href="../workflowoperationhandlers/speech-to-text-woh/">Speech to Text Workflow Operation Handler</a>.</li>
+<li>Improved performance when rebuilding the Elasticsearch event index. [<a href="https://github.com/opencast/opencast/pull/3775">#3775</a>]</li>
+<li>Documentation for developers and testers has been added explaining how to
+  <a href="https://docs.opencast.org/r/12.x/developer/explore-h2-database/">explore Opencast's H2 database</a>.</li>
+</ul>
+<h3 id="behavior-changes">Behavior changes</h3>
+<ul>
+<li>Due to the lack of usage and thus testing, official support of Opencast for
+  MySQL databases is dropped. Please use MariaDB or PostegreSQL instead.
+  This does not mean that Opencast will stop working with MySQL immediately,
+  but we like to highlight that developers are not spending any time on testing
+  this, nor do we provide any configuration examples or support if additional
+  steps may be necessary.</li>
+<li>The syntax of the JDBC connection configuration for MariaDB has slightly
+  changed to an update of the MariaDB Connector/J. When upgrading make sure
+  to follow the <a href="../upgrade/">upgrade guide</a>.</li>
+<li>Events for the same location can now be scheduled without a buffer time between them. [<a href="https://github.com/opencast/opencast/pull/1370/files">#1370</a>]</li>
+<li>Changed inbox behaviour for additional files for scheduled events. [<a href="https://github.com/opencast/opencast/pull/3687">#3687</a>]</li>
+<li>Identifiers for auto-generated capture series are now generated slightly
+  different. This may cause new series to be generated for capture agents in
+  some cases. [<a href="https://github.com/opencast/opencast/pull/3810">#3810</a>]</li>
+</ul>
+<h3 id="api-changes">API changes</h3>
+<div class=warn>
+The endpoint for querying workflows has been completely removed from the External API.
+It was conflicting with our removal of Solr.
+We tried making sure that no one was using this, but if we missed you and you desperately need it, please reach out.
+We will then see what we can reasonaably do about this.
+</div>
+
+<ul>
+<li>[<a href="https://github.com/opencast/opencast/pull/3204">#3204</a>] removes the fulltext
+  search query from the series endpoint and adds it to the
+  <a href="https://docs.opencast.org/r/12.x/developer/#api/series-api/">External API</a>.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>] removes the
+  <code>tasks.json</code> endpoint from the admin interface job endpoint.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/3376">#3376</a>] adds an endpoint to
+  check for active workflows on a mediapackage to the workflow service.</li>
+<li>The endpoint to search through workflows has been removed from the workflow
+  service.</li>
+</ul>
+<h2 id="release-schedule">Release Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>May 18, 2022</td>
+<td>Cutting the release branch</td>
+</tr>
+<tr>
+<td>May 23, 2022</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>May 30, 2022</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>June 15, 2022</td>
+<td>Release of Opencast 12.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release Managers</h2>
+<ul>
+<li>Felix Pahlow (Martin-Luther-University of Halle-Wittenberg)</li>
+<li>Lars Kiesow (ELAN e.V.)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/releasenotes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

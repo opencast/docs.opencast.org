@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 5.x to 6", url: "#_top", children: [
+              {title: "How to Upgrade", url: "#how-to-upgrade" },
+              {title: "Database Migration", url: "#database-migration" },
+              {title: "Rebuild Elasticsearch Index", url: "#rebuild-elasticsearch-index" },
+              {title: "Configuration Changes", url: "#configuration-changes" },
+              {title: "Security Configuration Changes", url: "#security-configuration-changes" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-5x-to-6">Upgrading Opencast from 5.x to 6</h1>
+<p>This guide describes how to upgrade Opencast 5.x to 6.0. In case you need information about how to upgrade older
+versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
+<h2 id="how-to-upgrade">How to Upgrade</h2>
+<ol>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast 5.x with 6.x</li>
+<li>Back-up Opencast files and database (optional)</li>
+<li><a href="#database-migration">Upgrade the database</a></li>
+<li><a href="#rebuild-elasticsearch-index">Rebuild Elasticsearch index</a></li>
+<li>Review the <a href="#configuration-changes">configuration</a> and <a href="#security-configuration-changes">security configuration
+   changes</a> and adjust your configuration accordingly</li>
+</ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>The new asset manager extensions require a database migration. The migration should be very fast and uncritical but as
+with all database migrations, we recommend to make a database backup before attempting the upgrade regardless.</p>
+<p>You can find the database upgrade script in <code>docs/upgrade/5_to_6/</code>.</p>
+<h2 id="rebuild-elasticsearch-index">Rebuild Elasticsearch Index</h2>
+<h3 id="admin-interface">Admin Interface</h3>
+<p>The update requires an Elasticsearch index rebuild. For that, stop Opencast, delete the index directory at <code>data/index</code>,
+restart Opencast and make an HTTP POST request to <code>/admin-ng/index/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/admin-ng/index/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+<code>/recreateIndex</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="external-api">External API</h3>
+<p>If you are using the External API, then also trigger a rebuilt of its index by sending an HTTP POST request to
+<code>/api/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/api/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+<code>/recreateIndex</code>.</p>
+<p>In both cases you should again get a 200 HTTP status.</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>The Paella Player configuration has been updated for version 6.0.x.</p>
+<h2 id="security-configuration-changes">Security Configuration Changes</h2>
+<p>The tenant security configuration (e.g. <code>etc/security/mh_default_org.xml</code>) has been changed and
+([<a href="https://opencast.jira.com/browse/MH-13082">MH-13082</a>][<a href="https://github.com/opencast/opencast/pull/449">#449</a>]).  The
+LTI OAuth configuration part was moved to separate configuration files, but all Opencast nodes must adapt the
+configuration changes, regardless of whether the LTI is used or not.</p>
+<p>The configuration file <code>etc/org.opencastproject.kernel.security.LtiLaunchAuthenticationHandler.cfg</code> introduces the LTI
+authentication configurations.  It is now possible to define multiple trusted OAuth consumer keys.  Some other security
+related configurations are also added. Please consult the <a href="../modules/ltimodule/#configure-lti-optional">LTI configuration guide
+</a> for the complete documentation.</p>
+<p>In the configuration file <code>etc/org.opencastproject.kernel.security.OAuthConsumerDetailsService.cfg</code> one or more OAuth
+consumer keys and their secrets can be defined.  Please consult the <a href="../modules/ltimodule/#configure-oauth-authentication">LTI configuration guide
+</a> for the complete documentation.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Execute Once - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Execute Once Workflow Operation", url: "#_top", children: [
+              {title: "Parameter table", url: "#parameter-table" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../execute-many-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../execute-many-woh/" class="btn btn-xs btn-link">
+        Execute Many
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../error-resolution-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../error-resolution-woh/" class="btn btn-xs btn-link">
+        Error Resolution
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="execute-once-workflow-operation">Execute Once Workflow Operation</h2>
+<p>This operation handler runs a single command with multiple MediaPackage elements as arguments. The command
+may be used to create a new mediapackage element, or to add configuration properties to the running workflow.</p>
+<p>To run a command for each element in a MediaPackage, use the <a href="../execute-many-woh/">Execute Many</a> operation.</p>
+<p>Commands run by this operation handler must first be included in the <code>commands.allowed</code> list in the
+<a href="../../modules/execute/#service-configuration">Execute Service</a> configuration.</p>
+<h3 id="parameter-table">Parameter table</h3>
+<p>All parameters are empty by default if not specified. The special parameters <code>#id</code>, <code>#flavor</code> and <code>#out</code> are described
+in <a href="../../modules/execute/#parameter-substitution">Execute Service: Parameter Substitution</a></p>
+<table>
+<thead>
+<tr>
+<th>Configuration keys</th>
+<th>Example</th>
+<th>Description</th>
+<th>Required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exec</td>
+<td>qtfaststart</td>
+<td>The command to run</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>params</td>
+<td>-f -t 15 <nobr>#{flavor(presentation/distribute)}</nobr> #{out}</td>
+<td>The arguments to the command. This string allows some placeholders for input and output MediaPackage elements (see Parameter Substitution)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>load</td>
+<td>1.5</td>
+<td>A floating point estimate of the load imposed on the node by this job</td>
+<td>No</td>
+</tr>
+<tr>
+<td>set-workflow-properties</td>
+<td>true / false</td>
+<td>Import workflow properties from the output file</td>
+<td>No</td>
+</tr>
+<tr>
+<td>output-filename</td>
+<td>outfile.mp4</td>
+<td>Specifies the name of the file created by the command (if any), without path information. Used as the last part of the #{out} parameter</td>
+<td>No</td>
+</tr>
+<tr>
+<td>expected-type</td>
+<td>Track</td>
+<td>Specifies the type of MediaPackage element produced by the command: Manifest, Timeline, Track, Catalog, Attachment, Publication, Other</td>
+<td>Required if output- filename is present</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>presentation/processed</td>
+<td>Specifies the flavor of the resulting Mediapackage element created by the command. If no new element is created, this parameter is ignored.</td>
+<td>Required if output- filename is present</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>execservice, -trim</td>
+<td>List of tags that will be applied to the resulting Mediapackage element. Tags starting with "-" will be deleted from the element instead, if present. The resulting element may be the same as the input element.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>If <code>set-workflow-properties</code> is true, the command should write a plain-text properties file to the location specified by
+<code>#{out}</code> in the key-value format supported by the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java
+Properties</a> class, for example:</p>
+<pre><code>key1=value1
+key2=value2
+</code></pre>
+<h3 id="operation-examples">Operation Examples</h3>
+<p>Run a command which combines two tracks into a new track:</p>
+<pre><code>&lt;operation
+  id=&quot;execute-once&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;error&quot;
+  description=&quot;Run command&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;exec&quot;&gt;ges-launch&lt;/configuration&gt;
+    &lt;configuration key=&quot;params&quot;&gt;-e #{flavor(presenter/source)} 0 5m14s #{flavor(presentation/source)} 0 14s&lt;/configuration&gt;
+    &lt;configuration key=&quot;output-filename&quot;&gt;result.avi&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;output/joined&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;joined, -tojoin&lt;/configuration&gt;
+    &lt;configuration key=&quot;expected-type&quot;&gt;Track&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>Run a command which inspects a mediapackage and adds new configuration properties to the running workflow, leaving the
+mediapackage unchanged:</p>
+<pre><code>&lt;operation
+  id=&quot;execute-once&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;error&quot;
+  description=&quot;Inspect media and update workflow properties&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;exec&quot;&gt;/usr/local/bin/oc-inspect.sh&lt;/configuration&gt;
+    &lt;configuration key=&quot;params&quot;&gt;#{out} #{id}&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-workflow-properties&quot;&gt;true&lt;/configuration&gt;
+    &lt;configuration key=&quot;output-filename&quot;&gt;wf.properties&lt;/configuration&gt;
+    &lt;configuration key=&quot;expected-type&quot;&gt;Attachment&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../execute-many-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../execute-many-woh/" class="btn btn-xs btn-link">
+        Execute Many
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../error-resolution-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../error-resolution-woh/" class="btn btn-xs btn-link">
+        Error Resolution
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/execute-once-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

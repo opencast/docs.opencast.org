@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Asset Manager - Opencast - Developer Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../css/style-guide.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Asset Manager";
+    var mkdocs_page_input_path = "asset-manager.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Process</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../development-process/">Development</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../release-manager/">Release Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../qa-coordinator/">QA Coordinator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../security/">Security Issues</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../code-style/">Code Style</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../documentation/">Documentation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Decision Making</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../decision-making/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../decision-making/lazy-consensus/">Lazy Consensus</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../decision-making/consensus-building/">Consensus Building</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../decision-making/voting/">Voting</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Environment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../development-environment/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../development-environment-docker/">With Docker</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../committer/">Committers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">Licenses and Legal Matters</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../localization/">Localization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../packaging/">Packaging</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../proposal-log/">Proposal Log</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Asset Manager</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#high-level-view">High Level View</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#default-implementation">Default Implementation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#assetstore">AssetStore</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#database">Database</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#security">Security</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#taking-snapshots">Taking Snapshots</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#working-with-properties">Working with Properties</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#deleting-properties">Deleting Properties</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#value-types">Value Types</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#decomposing-properties">Decomposing properties</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#using-propertyschema">Using PropertySchema</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-and-running-queries">Creating and Running Queries</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#a-note-on-immutability">A note on immutability</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#accessing-query-results">Accessing Query Results</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deleting-snapshots">Deleting Snapshots</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#query-language-reference">Query Language Reference</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../scheduler/">Scheduler</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Administrative user Interface</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Style Guide</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/capture-agent/">Capture Agent</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Player</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Infrastructure</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../infrastructure/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../infrastructure/notes/">Notes</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../infrastructure/maven-repository/">Maven Repository</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">External API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/usage/">Usage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/authorization/">Authorization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/base-api/">Base API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/events-api/">Events API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/series-api/">Series API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/groups-api/">Groups API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/security-api/">Security API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/types/">Data Types</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/glossary/">Glossary</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Asset Manager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/asset-manager.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="asset-manager">Asset Manager</h1>
+<h2 id="architecture">Architecture</h2>
+<h3 id="modules">Modules</h3>
+<p>The AssetManager consists of the following modules:</p>
+<ul>
+<li><code>asset-manager-api</code>
+An API module defining the core AssetManager functions, properties and the query language.</li>
+<li><code>asset-manager-impl</code>
+The default implementation of the AssetManager as an OSGi service, containing the storage API for pluggable asset stores.</li>
+<li><code>asset-manager-storage-fs</code>
+The default  implementation of the AssetStore. Depends on asset-manager-impl.</li>
+<li><code>asset-manager-util</code>
+Additional functionality for the AssetManager providing utilities such as starting workflows on archived snapshots, etc.</li>
+<li><code>asset-manager-workflowoperation</code>
+A workflow operation handler to take media package snapshots of a media package from inside a running workflow.</li>
+</ul>
+<h3 id="high-level-view">High Level View</h3>
+<p>TODO Describes components and how they relate.</p>
+<h3 id="classes">Classes</h3>
+<p>TODO Most important classes and how they relate</p>
+<h2 id="default-implementation">Default Implementation</h2>
+<h3 id="assetstore">AssetStore</h3>
+<p>Assets are stored in the following directory structure.</p>
+<pre><code>$BASE_PATH
+ |— &lt;organization_id&gt;
+     |— &lt;media_package_id&gt;
+         |— &lt;version&gt;
+             |— manifest.xml
+             |— &lt;media_package_element_id&gt;.&lt;ext&gt;
+</code></pre>
+<h3 id="database">Database</h3>
+<hr />
+<p>The asset manager uses four tables</p>
+<ul>
+<li><code>mh_assets_snapshot</code>
+  Manages snapshots. Each snapshot may be linked to zero or more assets.</li>
+<li><code>mh_assets_asset</code>
+  Manages the assets of a snapshot.</li>
+<li><code>mh_assets_properties</code>
+  Manages the properties. This table is indirectly linked to the snapshot table via column <code>mediapackage_id</code>.</li>
+<li><code>mh_assets_version_claim</code>
+  Manages the next free version number per episode.</li>
+</ul>
+<h3 id="security">Security</h3>
+<p>TODO</p>
+<h2 id="usage">Usage</h2>
+<h3 id="taking-snapshots">Taking Snapshots</h3>
+<p>TODO</p>
+<h3 id="working-with-properties">Working with Properties</h3>
+<p>Properties are associated with an episode, not a single snapshot. They act as annotations helping services to work with
+saved media packages without having to implement their own storage layer. Properties are typed and can be used to create
+queries.</p>
+<h4 id="getting-started">Getting Started</h4>
+<p>Let's start with an fictious example of an ApprovalService. The approval service keeps track of approvals given by an
+editor to publish a media package. Only approved media packages may be published and the editor should also be able to
+leave a comment defining a publication as prohibited. Here, three properties are needed, an approval flag, a text field
+for comments and a time stamp for the date of approval. The following code snippet sets a property on an episode, with
+am referring to the AssetManager and mp the media package id of type String of the episode.</p>
+<pre><code>AssetManager am = …;
+String mp = …; // a media package id
+am.setProperty(Property.mk(PropertyId.mk(
+  mp, "org.opencastproject.approval", "approval"),
+  Value.mk(true)));
+</code></pre>
+<p>It is recommended to use namespace names after the service's package name, in the example:
+<code>org.opencastproject.approval</code>. This code looks overly verbose. Also you need to deal with namespace names and property
+names directly. That's cumbersome and error prone even though you might intoduce constants for them. To help remedy this
+situation a little helper class class <code>PropertySchema</code> exists. It is strongly recommended to make use of it. Here's how
+it goes.</p>
+<pre><code>static class ApprovalPops extends PropertySchema {
+ public ApprovalProps(AQueryBuilder q) {
+   super(q, "org.opencastproject.approval");
+ }
+
+ public PropertyField&lt;Boolean&gt; approved() {
+   return booleanProp("approved");
+ }
+
+ public PropertyField&lt;String&gt; comment() {
+   return stringProp("comment");
+ }
+
+ public PropertyField&lt;Date&gt; date() {
+   return dateProp("date");
+ }
+}
+</code></pre>
+<p>Now you can set properties like this.</p>
+<pre><code>am.setProperty(p.approved().mk(mp, false));
+am.setProperty(p.comment().mk(mp, "Audio quality is too poor!"));
+am.setProperty(p.date().mk(mp, new Date());
+</code></pre>
+<p>Now, if you want to find all episodes that have been rejected you need to create and run the following query.</p>
+<pre><code>AQueryBuilder q = am.createQuery();
+AResult r = q.select(q.snapshot()).where(p.approved().eq(true)).run();
+</code></pre>
+<p>This query yields all snapshots of all episodes that have been approved. But that's not exactly what we want as we are
+only interested in the latest snapshot generated when we re-run the approval process, and resetting all previous
+approvals.</p>
+<pre><code>q.select(q.snapshot())
+  .where(p.approved().eq(true).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>This will only return the latest version of each episode. However, along with the information of the approved
+episodes,we want to display when they were approved. Looking at the AResult and ARecord interfaces it seems that
+properties need to be selected in order to fetch them.</p>
+<pre><code>q.select(q.snapshot(), q.properties())
+  .where(p.approved().eq(true).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>Here we go. Now we can access all properties stored with the returned snapshots. Now, let's assume other services make
+heavy use of properties too. This may cause serious database IO if we always select all properties like we did using the
+q.properties() target. Let's do better.</p>
+<pre><code>q.select(q.snapshot(), q.propertiesOf("org.opencastproject.approval"))
+  .where(p.approved().eq(true).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>This will return only the properties of our service's namespace. But do we have to deal with namespace strings again?
+No.</p>
+<pre><code>q.select(q.snapshot(), q.propertiesOf(p.allProperties()))
+  .where(p.approved().eq(true).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>Our implementation of <code>PropertySchema</code> provides as with a ready to use target for the properties of our namespace only.
+In our use case we could reduce IO even further since we're only interested in the date property.</p>
+<pre><code>q.select(q.snapshot(), q.propertiesOf(p.date().target()))
+  .where(p.approved().eq(true).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>This is the query returns only the latest snapshots of all episodes being approved together with the date of approval.
+Now that you've seen how to create properties let's move on to delete them again.</p>
+<h4 id="deleting-properties">Deleting Properties</h4>
+<p>Properties are deleted pretty much like they are queried, using a delete query.</p>
+<pre><code>q.delete(q.propertiesOf(p.allProperties())).run();
+</code></pre>
+<p>The above query deletes all properties that belong to schema p from all episodes. If you want to restrict deletion to a
+single episode, add an id predicate to the where clause.</p>
+<pre><code>q.delete(q.propertiesOf(p.allProperties()))
+  .where(q.mediaPackageId(mpId))
+  .run();
+</code></pre>
+<p>Deleting just a single property from all episodes is also possible.</p>
+<pre><code>q.delete(p.approved()).run();
+</code></pre>
+<p>Or multiple properties at once.</p>
+<pre><code>q.delete(p.approved(), p.comment()).run();
+</code></pre>
+<p>Please see the query API documentation for further information.</p>
+<h4 id="value-types">Value Types</h4>
+<p>The following type are available for properties:</p>
+<ul>
+<li>Long</li>
+<li>String</li>
+<li>Date</li>
+<li>Boolean</li>
+<li>Version
+  Version is the AssetManager type that abstracts a snapshot version.</li>
+</ul>
+<h4 id="decomposing-properties">Decomposing properties</h4>
+<p>Since properties are type safe they cannot be accessed directly.
+If you know the type of the property you can access its value using a type evidence constant.</p>
+<pre><code>String string = p.getValue().get(Value.STRING);
+Boolean bool = p.getValue().get(Value.BOOLEAN);
+</code></pre>
+<p>Type evidence constants are defined in class <code>Value</code>. If the type is unknown since you are iterating a mixed collection
+of values, for example if you need to decompose the value. Decomposition is the act of pattern matching against the
+value's type. Each case is handled by a different function, all returning the same type. Let's say you are iterating
+over a collection of values and want to print them, formatted, to the console. All <code>handle*</code> parameters are functions of
+type <code>Fn</code> taking the raw value as input and returning a String.</p>
+<pre><code>List&lt;Value&gt; vs = …;
+for (Value v : vs) {
+  String f = v.decompose(
+    handleStringFn,
+    handleDateFn,
+    handleLongFn,
+    handleBooleanFn,
+    handleVersionFn);
+  System.out.println(f);
+}
+</code></pre>
+<p>The class <code>org.opencastproject.assetmanager.api.fn.Properties</code> contains various utility functions to help extracting
+values from properties.</p>
+<h4 id="using-propertyschema">Using PropertySchema</h4>
+<p>You've already seen that a property is constructed from a media package id, a namespace, a property name and a value.
+Since this is a bit cumbersome, the API features an abstract base class to construct property schemas. The resulting
+schema implementations encapsulate all the string constants so that you don't have to deal with them manually. Please
+see the example in the <em>Getting Started</em> section. It is strongly recommended to work with schemas as much as possible.</p>
+<h3 id="creating-and-running-queries">Creating and Running Queries</h3>
+<p>Creating and running a query is a two step process. First, you create a new <code>AQueryBuilder</code>.</p>
+<pre><code>AQueryBuilder q = am.createQuery();
+</code></pre>
+<p>Next, you build a query like this.</p>
+<pre><code>ASelectQuery s = q.select(q.snapshot())
+  .where(q.mediaPackageId(mpId).and(q.version().isLatest());
+</code></pre>
+<p>Now it's time to actually run the query against the database.</p>
+<pre><code>AResult r = s.run();
+</code></pre>
+<p>All this can, of course, be done in a single statement, but it has been broken up in several steps  to show you the
+intermediate types.</p>
+<pre><code>am.createQuery()
+  .select(q.snapshot())
+  .where(q.mediaPackageId(mpId).and(q.version().isLatest())
+  .run();
+</code></pre>
+<p>The result set <code>r</code> contains the retrieved data encapsulated in stream of <code>ARecord</code> objects. If nothing matched the given
+predicates then a call to r.getRecords() yields an empty stream. Please note that even though a <code>Stream</code> is returned, it
+does not mean that the result set is actually streamed—or lazily loaded—from the database. The <code>Stream</code> interface is
+just far more powerful than the collection types from JCL.</p>
+<h4 id="a-note-on-immutability">A note on immutability</h4>
+<p>Please note that all classes of the query API are immutable and therefore safe to be used in a concurrent environment.
+Whenever you call a factory method on an instance of one of the query classes a new instance is yielded. They never
+mutate state.</p>
+<h3 id="accessing-query-results">Accessing Query Results</h3>
+<p>Running a query yields an object of type <code>AResult</code> which in turn yields the found result records. Besides it also
+provides some general result metadata like the set limit, offset etc. An <code>ARecord</code> holds the found snapshots and
+properties, depending on the select targets and the predicates. If no snapshots have been selected then, none will be
+returned here. The same holds true for properties. However, an <code>ARecord</code> instance holding the media package id is
+created regardless of the requested targets. The typical pattern to access query results is to iterate over the stream
+of records. This can be accomplished using a simple for loop or one of the functional methods that the <code>Stream</code> type
+provides, e.g. map over the elements of a stream to create a new one. For easy access to fetched resources you may wrap
+the result in an enrichment.</p>
+<pre><code>AResult r = …;
+RichAResult rr = Enrichments.enrich(r);
+</code></pre>
+<p><code>RichAResult</code> features methods to directly access all fetched snapshots and properties.</p>
+<h3 id="deleting-snapshots">Deleting Snapshots</h3>
+<p>This works exactly like deleting properties, except that you need to specify snapshots instead of properties.
+Please note that it's also possible to specify snapshots and properties simultanously.</p>
+<pre><code>q.delete("owner", q.snapshot()).where(q.version().isLatest().not()).run();
+</code></pre>
+<p>The above query deletes all snapshots but the latest. This is a good query to free up some disc space.</p>
+<p>Snapshots can only be deleted per owner.</p>
+<h3 id="query-language-reference">Query Language Reference</h3>
+<p>The query API features</p>
+<ul>
+<li>select clause and targets</li>
+<li>where clause with boolean and relational operations, nesting of boolean operations</li>
+<li>selecting by properties</li>
+<li>order-by clause</li>
+<li>querying and deleting</li>
+</ul>
+<p>Please see the API doc for further information about the various elements and how to create them.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../scheduler/" class="btn btn-neutral float-right" title="Scheduler">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../proposal-log/" class="btn btn-neutral" title="Proposal Log"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../proposal-log/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../scheduler/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Events - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Theodul Pass Player - Events", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="storage.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="storage.html" class="btn btn-xs btn-link">
+        Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="core.reference.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="core.reference.html" class="btn btn-xs btn-link">
+        Core Reference
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="theodul-pass-player-events">Theodul Pass Player - Events</h1>
+<p>A Theodul Pass Player plugin can trigger and/or subscribe to events.</p>
+<p>An event is defined in the events section of the plugin and looks like this:</p>
+<pre><code>NAME: new Engage.Event("MODULE:NAME", "DESCRIPTION", "OPTION")
+</code></pre>
+<p>The event has the event name "MODULE:NAME", the description DESCRIPTION and one of the options "trigger", "handler" or
+"both" as OPTION. When the plugin just triggers the event, the option is "trigger", when it just handles the events the
+option is "handler" and when it does both - trigger and handle it - the option is "both".</p>
+<p>An event can be triggered via</p>
+<pre><code>Engage.trigger(plugin.events.NAME.getName(), [parameter(s)]);
+</code></pre>
+<p>and can be subscribed to via</p>
+<pre><code>Engage.on(plugin.events.NAME.getName(), function () {});
+</code></pre>
+<p>The following list contains all events of the Core + of all official plugins, sorted alphabetically after "Event name"
+for version 1.0 of Feb 12, 2015.</p>
+<p>Currently official plugins are</p>
+<ul>
+<li>Controls</li>
+<li>MHConnection</li>
+<li>Notifications</li>
+<li>Usertracking</li>
+<li>Description</li>
+<li>Description (Tab)</li>
+<li>Slide text (Tab)</li>
+<li>Shortcuts (Tab)</li>
+<li>Timeline statistics</li>
+<li>Videodisplay</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Event name</th>
+<th>Additional parameters</th>
+<th>Description</th>
+<th>Triggered in</th>
+<th>Handled in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>coreInit</td>
+<td>Core:init</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>plugin_load_done</td>
+<td>Core:plugin_load_done</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Core, Controls, MHConnection, Notifications, Usertracking, Description, Description (Tab), Slide text (Tab), Shortcuts (Tab), Timeline statistics, Videodisplay</td>
+</tr>
+<tr>
+<td>timelineplugin_closed</td>
+<td>Engage:timelineplugin_closed</td>
+<td><em>Note: No "Engage Event", just use as string, example: Engage.on("Engage:timelineplugin_closed", function() {});</em></td>
+<td>when the timeline plugin container closed</td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>timelineplugin_opened</td>
+<td>Engage:timelineplugin_opened</td>
+<td><em>Note: No "Engage Event", just use as string, example: Engage.on("Engage:timelineplugin_opened", function() {});</em></td>
+<td>when the timeline plugin container opened</td>
+<td>Core</td>
+<td>Timeline statistics</td>
+</tr>
+<tr>
+<td>getMediaInfo</td>
+<td>MhConnection:getMediaInfo</td>
+<td></td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+</tr>
+<tr>
+<td>getMediaPackage</td>
+<td>MhConnection:getMediaPackage</td>
+<td></td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+</tr>
+<tr>
+<td>mediaPackageModelError</td>
+<td>MhConnection:mediaPackageModelError</td>
+<td></td>
+<td></td>
+<td>MHConnection</td>
+<td>Core, Controls, Notifications, Usertracking, Description, Description (Tab), Slide text (Tab), Shortcuts (Tab), Timeline statistics, Videodisplay</td>
+</tr>
+<tr>
+<td>customError</td>
+<td>Notification:customError</td>
+<td>msg: The message to display</td>
+<td>an error occurred</td>
+<td>Core, Controls, Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customNotification</td>
+<td>Notification:customNotification</td>
+<td>msg: The message to display</td>
+<td>a custom message</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customOKMessage</td>
+<td>Notification:customOKMessage</td>
+<td>msg: The message to display</td>
+<td>a custom message with an OK button</td>
+<td>Controls</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>customSuccess</td>
+<td>Notification:customSuccess</td>
+<td>msg: The message to display</td>
+<td>a custom success message</td>
+<td>Core, Controls</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>segmentMouseout</td>
+<td>Segment:mouseOut</td>
+<td>no: Segment number</td>
+<td>the mouse is off a segment</td>
+<td>Controls, Slide text (Tab)</td>
+<td>Controls, Slide text (Tab)</td>
+</tr>
+<tr>
+<td>segmentMouseover</td>
+<td>Segment:mouseOver</td>
+<td>no: Segment number</td>
+<td>the mouse is over a segment</td>
+<td>Controls, Slide text (Tab)</td>
+<td>Controls, Slide text (Tab)</td>
+</tr>
+<tr>
+<td>sliderMousein</td>
+<td>Slider:mouseIn</td>
+<td></td>
+<td>the mouse entered the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderMouseout</td>
+<td>Slider:mouseOut</td>
+<td></td>
+<td>the mouse is off the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderMousemove</td>
+<td>Slider:mouseMoved</td>
+<td>timeInMs: The time on the hovered position in ms</td>
+<td>the mouse is moving over the slider</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderStart</td>
+<td>Slider:start</td>
+<td></td>
+<td>slider started</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>sliderStop</td>
+<td>Slider:stop</td>
+<td>time: The time the slider stopped at</td>
+<td>slider stopped</td>
+<td>Controls</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>aspectRatioSet</td>
+<td>Video:aspectRatioSet</td>
+<td>as: (array) as[0] = width, as[1] = height, as[2] = aspect ratio in %</td>
+<td>the aspect ratio has been calculated</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>audioCodecNotSupported</td>
+<td>Video:audioCodecNotSupported</td>
+<td></td>
+<td>when the audio codec seems not to be supported by the browser</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td>Video:autoplay</td>
+<td></td>
+<td>autoplay the video</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>bufferedAndAutoplaying</td>
+<td>Video:bufferedAndAutoplaying</td>
+<td></td>
+<td>buffering successful, was playing, autoplaying now</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>bufferedButNotAutoplaying</td>
+<td>Video:bufferedButNotAutoplaying</td>
+<td></td>
+<td>buffering successful, was not playing, not autoplaying now</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>buffering</td>
+<td>Video:buffering</td>
+<td></td>
+<td>video is buffering</td>
+<td>Videodisplay</td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>ended</td>
+<td>Video:ended</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>video ended</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>fullscreenCancel</td>
+<td>Video:fullscreenCancel</td>
+<td></td>
+<td>cancel fullscreen</td>
+<td>Controls, Videodisplay</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>fullscreenChange</td>
+<td>Video:fullscreenChange</td>
+<td></td>
+<td>a fullscreen change happened</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>fullscreenEnable</td>
+<td>Video:fullscreenEnable</td>
+<td></td>
+<td>enable fullscreen</td>
+<td>Controls, Core</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>isAudioOnly</td>
+<td>Video:isAudioOnly</td>
+<td>audio: true if audio only, false else</td>
+<td>whether it's audio only or not</td>
+<td>Videodisplay</td>
+<td>Controls, Notifications</td>
+</tr>
+<tr>
+<td>initialSeek</td>
+<td>Video:initialSeek</td>
+<td>time: The time to seek to</td>
+<td>Seeks initially after all plugins have been loaded after a short delay</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>mute</td>
+<td>Video:mute</td>
+<td></td>
+<td>mute</td>
+<td>Videodisplay</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>muteToggle</td>
+<td>Video:muteToggle</td>
+<td></td>
+<td>toggle mute and unmute</td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>nextChapter</td>
+<td>Video:nextChapter</td>
+<td></td>
+<td>Core</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>numberOfVideodisplaysSet</td>
+<td>Video:numberOfVideodisplaysSet</td>
+<td>no: Number of videodisplays</td>
+<td>the number of videodisplays has been set</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>pause</td>
+<td>Video:pause</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>pauses the video</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Core, Controls, Videodisplay</td>
+<td>Controls, Videodisplay</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>play</td>
+<td>Video:play</td>
+<td>triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>plays the video</td>
+<td>Core, Controls, Videodisplay</td>
+<td>Controls,Videodisplay</td>
+</tr>
+<tr>
+<td>playPause</td>
+<td>Video:playPause</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>previousChapter</td>
+<td>Video:previousChapter</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td></td>
+</tr>
+<tr>
+<td>playbackRateChanged</td>
+<td>Video:playbackRateChanged</td>
+<td>rate: The video playback rate (0.0-x, default: 1.0)</td>
+<td>The video playback rate changed</td>
+<td>Controls</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>playbackRateIncrease</td>
+<td>Video:playbackRateIncrease</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>playbackRateDecrease</td>
+<td>Video:playbackRateDecrease</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>playerLoaded</td>
+<td>Video:playerLoaded</td>
+<td></td>
+<td>player loaded successfully</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>ready</td>
+<td>Video:ready</td>
+<td></td>
+<td>all videos loaded successfully</td>
+<td>Videodisplay</td>
+<td>Controls, Notifications</td>
+</tr>
+<tr>
+<td>seek</td>
+<td>Video:seek</td>
+<td>time: Current time in seconds    seek video to a given position in seconds</td>
+<td>Core, Controls, Slide text (Tab)</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>seekLeft</td>
+<td>Video:seekLeft</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>seekRight</td>
+<td>Video:seekRight</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Videodisplay</td>
+</tr>
+<tr>
+<td>synchronizing</td>
+<td>Video:synchronizing</td>
+<td></td>
+<td>synchronizing videos with the master video</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>timeupdate</td>
+<td>Video:timeupdate</td>
+<td>time: Current time in seconds, triggeredByMaster: Whether or not the event has been triggered by master</td>
+<td>a timeupdate happened</td>
+<td>Videodisplay</td>
+<td>Controls, Usertracking</td>
+</tr>
+<tr>
+<td>qualitySet</td>
+<td>Video:qualitySet</td>
+<td>quality: the quality that has been set    a video quality has been set</td>
+<td>Controls</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>unmute</td>
+<td>Video:unmute</td>
+<td></td>
+<td>unmute</td>
+<td>Controls</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>usingFlash</td>
+<td>Video:usingFlash</td>
+<td>flash: true if flash is being used, false else</td>
+<td>flash is being used</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>videoFormatsFound</td>
+<td>Video:videoFormatsFound</td>
+<td>format: array of video formats    if different video formats (qualities) have been found</td>
+<td>Videodisplay</td>
+<td>Controls</td>
+<td></td>
+</tr>
+<tr>
+<td>volumechange</td>
+<td>Video:volumechange</td>
+<td>vol: Current volume (0 is off (muted), 1.0 is all the way up, 0.5 is half way)</td>
+<td>a volume change happened</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>volumeDown</td>
+<td>Video:volumeDown</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Controls</td>
+</tr>
+<tr>
+<td>volumeGet</td>
+<td>Video:volumeGet</td>
+<td>callback: A callback function with the current volume as a parameter</td>
+<td>get the volume</td>
+<td>Videodisplay</td>
+<td></td>
+</tr>
+<tr>
+<td>volumeSet</td>
+<td>Video:volumeSet</td>
+<td>percentAsDecimal: Volume to set (0 is off (muted), 1.0 is all the way up, 0.5 is half way)</td>
+<td>set the volume</td>
+<td>Controls</td>
+<td>Controls, Videodisplay</td>
+</tr>
+<tr>
+<td>volumeUp</td>
+<td>Video:volumeUp</td>
+<td></td>
+<td></td>
+<td>Core</td>
+<td>Controls</td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="storage.html" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="storage.html" class="btn btn-xs btn-link">
+        Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="core.reference.html" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="core.reference.html" class="btn btn-xs btn-link">
+        Core Reference
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/modules/player/events.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

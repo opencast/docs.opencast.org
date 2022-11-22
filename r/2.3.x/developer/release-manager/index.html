@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Release Manager - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../css/style-guide.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Release Manager";
+    var mkdocs_page_input_path = "release-manager.md";
+    var mkdocs_page_url = "/release-manager/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../development-process/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Release Manager</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#release-manager-guide">Release Manager Guide</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#role">Role</a></li>
+        
+            <li><a class="toctree-l4" href="#duties">Duties</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Decision Making</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../decision-making/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/lazy-consensus/">Lazy Consensus</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/consensus-building/">Consensus Building</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decision-making/voting/">Voting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../development-environment/">Development Environment</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../localization/">Localization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Admin UI</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Style Guide</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../modules/stream-security/">Stream Security</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../infrastructure/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/notes/">Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../infrastructure/nexus/">Nexus Maven Repository</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../api/">Introduction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/usage/">Usage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authentication/">Authentication</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/authorization/">Authorization</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/glossary/">Glossary</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/base-api/">Base API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/events-api/">Events API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/series-api/">Series API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/groups-api/">Groups API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../api/security-api/">Security API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development Process &raquo;</li>
+        
+      
+    
+    <li>Release Manager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs/src/default/docs/release-manager.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="release-manager-guide">Release Manager Guide</h1>
+<h2 id="role">Role</h2>
+<p>The release manager is ultimately responsible for making sure that the development process is being followed during his
+or her release.</p>
+<p>The release manager has the following duties:</p>
+<ul>
+<li>To ensure that the release measures up to the quality expected by the community.</li>
+<li>To ensure that the development process is followed and amended if required.</li>
+<li>To ensure that the release is timely and does not languish in process.</li>
+<li>To encourage committers to be involved in testing and fixing of bugs.</li>
+</ul>
+<p>It is in the release manager's responsibility to force decisions around the release, help negotiate the acceptance or
+rejection of contributions and to provide regular updates about the release on list and during the weekly technical and
+monthly adopter meetings. It is important to note that, while the release manager drives the release process, the
+committer body is in charge of both the work and the decision making, meaning that votes and successful proposals from
+this body take precedence over a release managers decision.</p>
+<p>The release manager does not have to be a committer. In case the release manager is not, a committer must agree to be
+the proxy release manager for communication on the confidential committers list.</p>
+<p>A release manager can abandon the release at any time, giving up their duties and privileges of being the release
+manager. The committer list must then either vote within 72 hours on a new release manager, or consider the release
+abandoned (the major, minor, and maintenance numbers remain unchanged).</p>
+<h2 id="duties">Duties</h2>
+<h3 id="setting-release-schedule">Setting Release Schedule</h3>
+<p>Releases should happen twice a year, usually within a time span of 9.5 months between the cut of the previous release
+branch and the final release. The release manager should create a release schedule as soon as possible.
+For more details about the release schedule, have a look at the <a href="../development-process/">Development Process</a></p>
+<h3 id="creation-of-release-branch">Creation of Release Branch</h3>
+<p>According to the set release schedule, at one point a release branch should be cut, effectively marking a feature freeze
+for a given release.</p>
+<p>Once a release process has started, a branch should be created with the proposed version number of that release. This
+branch is created off of <code>develop</code> and should be named <code>r/X.Y.x</code> (e.g. <code>r/2.1.x</code> for the Opencast 2.1 release branch).
+In the following command, we assume that the release branch for 2.1 is to be created. For other versions, please adjust
+the version number accordingly.</p>
+<p>Create the Branch:</p>
+<ol>
+<li>
+<p>Grab the merge ticket for <code>develop</code>. You are going to make changes there and it becomes ugly if someone else changes
+   something at the same time.</p>
+</li>
+<li>
+<p>Check out <code>develop</code> and make sure it has the latest state (replace <code>&lt;remote&gt;</code> with your remote name for the community
+   repository):</p>
+<pre><code>git checkout develop
+git pull &lt;remote&gt; develop
+</code></pre>
+</li>
+<li>
+<p>Create and push release branch:</p>
+<pre><code>git checkout -b r/2.1.x
+git push &lt;remote&gt; r/2.1.x
+</code></pre>
+</li>
+<li>
+<p>Make sure you did not modify any files. If you did, stash those changes.</p>
+</li>
+<li>
+<p>That is it for the release branch. Now lets make sure we update the versions in <code>develop</code> in preparation for the next
+   release:</p>
+<pre><code>git checkout develop
+for i in `find . -name pom.xml`; do \
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.2-SNAPSHOT&lt;!--' $i; done
+</code></pre>
+</li>
+<li>
+<p>Have a look at the changes. Make sure no library version we use has the version <code>2.1-SNAPSHOT</code> and was accidentally
+   changed. Also make sure that nothing else was modified:</p>
+<pre><code>git diff
+</code></pre>
+</li>
+<li>
+<p>Check again for unwanted changes.</p>
+</li>
+<li>
+<p>If everything looks fine, commit everything and push it to the community repository:</p>
+<pre><code>git commit -as
+git push &lt;remote--&gt; develop
+</code></pre>
+</li>
+<li>
+<p>Finally change the <code>fixVersion</code> and <code>summary</code> on the merge ticket for 2.1 and create a new one for develop.</p>
+</li>
+</ol>
+<p>At this point, the developer community should then be notified. Consider using the following as a template email:</p>
+<pre><code>To: matterhorn@opencast.org
+Subject: Release Branch for Opencast &lt;VERSION&gt; Cut
+
+Hi everyone,
+it is my pleasure to announce that the &lt;VERSION&gt; release branch has now been
+cut, available as r/&lt;VERSION&gt;. Pull requests for bug fixes are to be made
+against this branch.
+
+Remember that the release schedule for this release:
+
+  &lt;RELEASE_SCHEDULE&gt;
+
+As always, we hope to have a lot of people testing this version, especially
+during the public QA phase.  Please report any bugs or issues you encounter.
+</code></pre>
+<h3 id="adjust-pull-request-filter">Adjust Pull Request Filter</h3>
+<p>The <a href="http://pullrequests.opencast.org">Opencast pull request filter</a> links the versions currently in development. The
+merge ticket identifier needs to be added to that filter. As release manager, please talk to the <a href="https://bitbucket.org/opencast-community/opencast-infrastructure">administrator
+</a> of that tool to ensure the ticket is added.</p>
+<h3 id="release-documentation">Release Documentation</h3>
+<p>The <a href="http://docs.opencast.org">Opencast release documentation</a> will be built automatically from available release tags.
+However, new branches need to be included.  As release manager, please talk to the <a href="https://bitbucket.org/opencast-community/opencast-infrastructure">administrator
+</a> of that
+tool to ensure the ticket is added.</p>
+<h3 id="moderation-of-peer-reviews">Moderation of Peer Reviews</h3>
+<p>Apart from creating branches and tags, one of the most important things for release managers to do is to ensure that
+pull requests for the release are going forward. This does not mean that the release manager has to do the reviews, but
+he should talk to developers, remind them about outstanding reviews and help to resolve possible issues.</p>
+<h3 id="merging-release-branch-into-develop">Merging Release Branch Into Develop</h3>
+<p>To not have to merge bug fixes into several branches and create several pull requests, the release manager should merge
+the release branch back into <code>develop</code> on a regular basis. It is encouraged to do that frequently, to not let the
+branches diverge too much and to avoid possible merge conflicts.</p>
+<p>To merge the release branch into <code>develop</code>. As example, we do that for 2.1. Please adjust the version accordingly:</p>
+<ol>
+<li>
+<p>Grab the merge ticket for <code>develop</code>. You are not doing any changes to the release branch, so you will not need that
+   merge ticket. If someone else holds the merge ticket for a feature pull request, talk to that person that you will
+   temporarily steal the ticket.</p>
+</li>
+<li>
+<p>Update release branch:</p>
+<pre><code>git checkout r/2.1.x
+git pull &lt;remote&gt; r/2.1.x
+</code></pre>
+</li>
+<li>
+<p>Update <code>develop</code>:</p>
+<pre><code>git checkout develop
+git pull &lt;remote&gt; develop
+</code></pre>
+</li>
+<li>
+<p>Merge the release branch. Not that if large merge conflicts arise, you may ask for help from the people creating the
+   problematic patches:</p>
+<pre><code>git merge r/2.1.x
+</code></pre>
+</li>
+<li>
+<p>Push updated branch into the community repository:</p>
+<pre><code>git push &lt;remote&gt; develop
+</code></pre>
+</li>
+<li>
+<p>Leave a comment in the merge ticket and assign it back to the next pull request in line on <code>develop</code>.</p>
+</li>
+</ol>
+<h3 id="beta-versions-and-release-candidates">Beta Versions and Release Candidates</h3>
+<p>For testing purposes, the release manager should regularly create beta versions. Especially before the public QA phase,
+a beta version should exist. Additionally, he should create a release candidate for testing before proposing that a
+release be cut.</p>
+<p>Create a version/tag. Again, version 2.1 is used as example. Please adjust the version accordingly:</p>
+<ol>
+<li>
+<p>Switch to release branch you want to create the beta from:</p>
+<pre><code>git checkout r/2.1.x
+</code></pre>
+</li>
+<li>
+<p>Switch to a new branch to create the release (name does not really matter):</p>
+<pre><code>git checkout -b r/2.1.0-beta1
+</code></pre>
+</li>
+<li>
+<p>Make version changes for release. You can use <code>sed</code> to make things easier. Please make sure, the changes are correct:</p>
+<pre><code>for i in `find . -name pom.xml`; do \
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.1.0-beta1&lt;!--' $i; done
+</code></pre>
+</li>
+<li>
+<p>Commit changes and create release tag:</p>
+<pre><code>git commit -asS -m 'Opencast 2.1.0-beta1'
+git tag -s 2.1.0-beta1
+</code></pre>
+</li>
+<li>
+<p>Switch back to release branch and push tags:</p>
+<pre><code>git checkout r/2.1.x
+git push &lt;remote--&gt; 2.1.0-beta1:2.1.0-beta1
+</code></pre>
+</li>
+<li>
+<p>You can remove the new branch afterwards:</p>
+<pre><code>git branch -D r/2.1.0-beta1
+</code></pre>
+</li>
+</ol>
+<p>For a release candidate, instead of <code>A.B.C-betaX</code> the tag should be named <code>A.B.C-rcX</code>.</p>
+<p>At this point the developer community should then be notified. Consider using the following email template:</p>
+<pre><code>To: matterhorn@opencast.org
+Subject: &lt;VERSION&gt; Available for testing!
+
+Hi everyone,
+I am pleased to announce that Opencast &lt;VERSION&gt; is now available for
+testing. Please download the source from BitBucket [1] or use git to check
+out the tag.
+
+Issue Count:
+
+  Blockers   &lt;BLOCKER_COUNT&gt;
+  Critical   &lt;CRITICAL_ISSUE_COUNT&gt;
+  Major      &lt;MAJOR_ISSUE_COUNT&gt;
+  Minor      &lt;MINOR_ISSUE_COUNT&gt;
+
+Please test this release as thoroughly as
+possible.
+
+[1] https://bitbucket.org/opencast-community/matterhorn/downloads
+</code></pre>
+<p>If the version is a release candidate, you probably want to highlight that there are no <em>Blockers</em> left at the moment
+and <em>#propose</em> this to become the final release.</p>
+<h3 id="releasing">Releasing</h3>
+<p>Once the proposal for a release candidate to become the final release has passed, the release manager should create the
+final release. In the following example, again, version 2.1 is used. Please adjust the version accordingly. We also
+assume the final release should be based on <code>2.1.0-rc2</code>.</p>
+<ol>
+<li>
+<p>Check which commit the release candidate was based on:</p>
+<pre><code>git merge-base 2.1.0-rc2 r/2.1.x
+  060dfc3e2328518ae402846577fc6e7ce3b650d7
+</code></pre>
+</li>
+<li>
+<p>Switch to commit you want to create the release from:</p>
+<pre><code>git checkout 060dfc3e2328518ae402846577fc6e7ce3b650d7
+</code></pre>
+</li>
+<li>
+<p>Switch to a new branch to create the release (name does not really matter):</p>
+<pre><code>git checkout -b r/2.1.0
+</code></pre>
+</li>
+<li>
+<p>Add release notes and commit them:</p>
+<pre><code>vim docs/guides/admin/docs/release.notes.md
+git commit docs/guides/admin/docs/release.notes.md -sS
+</code></pre>
+</li>
+<li>
+<p>Merge release notes into release branch:</p>
+<pre><code>git checkout r/2.1.x
+git merge r/2.1.0
+git checkout r/2.1.0
+</code></pre>
+</li>
+<li>
+<p>Make version changes for release. You can use <code>sed</code> to make things easier. Please make sure, the changes are correct:</p>
+<pre><code>for i in `find . -name pom.xml`; do \
+  sed -i 's/&lt;version&gt;2.1-SNAPSHOT&lt;!--&lt;version--&gt;2.1.0&lt;!--' $i; done
+</code></pre>
+</li>
+<li>
+<p>Commit changes and create release tag:</p>
+<pre><code>git commit -asS -m 'Opencast 2.1.0'
+git tag -s 2.1.0
+</code></pre>
+</li>
+<li>
+<p>Switch back to release branch, push release notes and tags:</p>
+<pre><code>git checkout r/2.1.x
+git push &lt;remote--&gt; 2.1.0:2.1.0
+git push &lt;remote&gt; r/2.1.x
+</code></pre>
+</li>
+<li>
+<p>You can remove the new branch afterwards:</p>
+<pre><code>git branch -D r/2.1.0
+</code></pre>
+</li>
+</ol>
+<p>Finally, send a release notice to list. You may use the following template:</p>
+<pre><code>To: matterhorn@opencast.org
+Subject: Opencast &lt;VERSION&gt; Released
+Hi all,
+it is my pleasure to announce that Opencast &lt;VERSION&gt; has been released and
+can be downloaded from BitBucket [1] or checked out via git.
+
+The documentation for this release can be found at [http://docs.opencast.org].
+
+Issue Count:
+
+  Blockers   0
+  Critical   &lt;CRITICAL_ISSUE_COUNT&gt;
+  Major      &lt;MAJOR_ISSUE_COUNT&gt;
+  Minor      &lt;MINOR_ISSUE_COUNT&gt;
+
+To all committers and involved contributors, thank you for all your work.
+This could not have happened without you and I am glad we were able to work
+together and get this release out.
+
+[1] https://bitbucket.org/opencast-community/matterhorn/downloads
+</code></pre>
+<h3 id="appointment-of-next-release-manager">Appointment of Next Release Manager</h3>
+<h4 id="identification-of-a-volunteer">Identification of a volunteer</h4>
+<p>After the release branch is cut, all work on <code>develop</code> is effectively the preparation for the next release. At this
+point, the release manager sends an inquiry to the users, developers and community list to identify a volunteer for the
+job of release manager for the next release.</p>
+<p>For that, this email template may be used:</p>
+<pre><code>To: matterhorn@opencast.org
+Subject: Opencast &lt;NEXT_RELEASE_VERSION&gt; release manager wanted
+
+Hi everyone,
+as release manager of Opencast &lt;VERSION&gt; release, it is my duty to announce
+that the Opencast community is looking for a release manager of the upcoming
+&lt;NEXT_RELEASE_VERSION&gt; release between now and &lt;INTENDED RELEASE DATE&gt;
+(release date).
+
+Note that the release manager's duties do not contain a lot of technical
+work. Instead, they focus on motivation, coordination, and ensuring that the
+development process [1] is being followed. The role of the release manager
+is described in more detail in the Opencast development documentation wiki
+[2].
+
+The job does not have to be done by one person alone and it has proven good
+practice to have two people fill this job as co-release managers to help
+keep up the process during vacation, sickness and in case of local
+emergencies.
+
+I am looking forward to your applications on list, please voice your
+interest no later than &lt;TWO WEEKS FROM NOW&gt;.
+
+[1] http://docs.opencast.org/develop/developer/development/
+[2] http://docs.opencast.org/develop/developer/release-manager/
+</code></pre>
+<h4 id="initiate-the-vote">Initiate the Vote</h4>
+<p>In the case where someone steps up and offers to fill in the role of a release manager for the upcoming release, a vote
+is held on the committers list to determine whether the candidate is deemed suitable for the position. Should there be
+more than one candidate wanting to become the release manager for the next release, the candidate with the largest
+number of votes and no “-1” gets elected.</p>
+<p>This email template may be used to initiate the vote:</p>
+<pre><code>To: committers@opencast.org
+Subject: [#proposal] Vote on Release Managers of Opencast &lt;NEXT_RELEASE_VERSION&gt;
+
+Hi everyone,
+after roughly two weeks of looking for candidates for the position of the
+release manager of the upcoming Opencast &lt;NEXT_RELEASE_VERSION&gt; release, I
+am happy to announce that the following Opencast members have volunteered
+for the position and have expressed the intention of sharing the position as
+release managers:
+
+  &lt;Name, Institition&gt;
+  &lt;Name, Institution&gt;
+
+As the release manager of Opencast &lt;BRANCH_VERSION_FINAL&gt; and in accordance
+with the development process [1], I hereby open the vote on accepting the
+applications of &lt;Name(s)&gt;. The vote will be open for the coming 72h.
+
+[1] http://docs.opencast.org/develop/developer/development/
+</code></pre>
+<h4 id="announcing-election-results">Announcing Election Results</h4>
+<p>Once the vote has been held, the current release manager announces the elected release manager on list, and the newly
+elected release manager is expected to start work on the release shortly after.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../decision-making/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../reviewing-and-merging/" class="btn btn-neutral" title="Reviewing, Merging and Declining Pull Requests"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../reviewing-and-merging/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../decision-making/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Speech to Text - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Speech to Text Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Requirements", url: "#requirements" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Start Watson Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="speech-to-text-workflow-operation">Speech to Text Workflow Operation</h1>
+<p>ID: <code>speechtotext</code></p>
+<h2 id="description">Description</h2>
+<p>The speech to text operation can be used to generate subtitles for Videos or Audio files. Currently, there is
+only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. The subtitles file format ist WebVTT.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>required</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor</td>
+<td>yes</td>
+<td>The source media package to use</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>yes</td>
+<td>Flavor of the produced subtitle file. The subflavor supports the language-code placeholder <code>#{lang}</code></td>
+</tr>
+<tr>
+<td>target-element</td>
+<td>no</td>
+<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment'. The default is "attachment".</td>
+</tr>
+<tr>
+<td>language-code</td>
+<td>no</td>
+<td>The language of the video or audio source (default is "eng"). It has to match the name of the language model directory. See 'vosk-cli'.</td>
+</tr>
+<tr>
+<td>language-fallback</td>
+<td>no</td>
+<td>The fallback value if the dublin core/media package language field is not present. (default is "eng")</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>no</td>
+<td>Tags for the subtitle file</td>
+</tr>
+</tbody>
+</table>
+<h2 id="requirements">Requirements</h2>
+<p>In order for it to work, you have to install the vosk-cli package. Installation instructions can be found at
+<a href="https://github.com/elan-ev/vosk-cli">github.com/elan-ev/vosk-cli</a>.</p>
+<h2 id="operation-examples">Operation Examples</h2>
+<p>If you want to display the subtitles in the Paella player, the WebVTT files have to be published and
+the target SubFlavor has to be configured like this: <code>vtt+LANG</code>, where <code>LANG</code> is
+the language option, that will be displayed in the Paella player. Please note the description above
+for the <code>language-code</code> field.</p>
+<pre><code class="language-XML">&lt;operation
+    id=&quot;speechtotext&quot;
+    description=&quot;Generates subtitles for video and audio files&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+en&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-element&quot;&gt;attachment&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
+    &lt;configuration key=&quot;language-code&quot;&gt;eng&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+
+&lt;operation
+    id=&quot;speechtotext&quot;
+    description=&quot;Generates subtitles for video and audio files, derive language-code from metadata&quot;&gt;
+    &lt;configurations&gt;
+      &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+#{lang}&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-element&quot;&gt;attachment&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
+    &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Start Watson Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/speech-to-text-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

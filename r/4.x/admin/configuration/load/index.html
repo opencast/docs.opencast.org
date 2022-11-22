@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Load - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Load";
+    var mkdocs_page_input_path = "configuration/load.md";
+    var mkdocs_page_url = "/configuration/load/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/ansible/">Ansible</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation with Docker</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-manager/">Asset Manager</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../asset-upload-ui/">Manual Asset Upload</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Load</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#load-configuration">Load Configuration</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#background-what-is-a-load-value">Background: What is a load value</a></li>
+        
+            <li><a class="toctree-l4" href="#step-1-determine-your-load-values">Step 1: Determine your load values</a></li>
+        
+            <li><a class="toctree-l4" href="#step-2-setting-the-load-values-for-system-jobs">Step 2: Setting the load values for system jobs</a></li>
+        
+            <li><a class="toctree-l4" href="#step-3-setting-the-load-values-for-encoding-profiles">Step 3: Setting the load values for encoding profiles</a></li>
+        
+            <li><a class="toctree-l4" href="#step-4-restart-opencast">Step 4: Restart Opencast</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#troubleshooting">Troubleshooting</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#help-my-system-has-deadlocked-or-there-are-jobs-which-are-always-queued-even-if-the-system-is-otherwise-idle">Help, my system has deadlocked, or there are jobs which are always queued even if the system is otherwise idle</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../external-api/">External API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../oaipmh/">OAI-PMH</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../version-support/">Version Support</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/execute/">Execute Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.piwik.tracking/">Piwik Tracking</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/waveform/">Waveform Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishaws-woh/">Publish AWS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Load</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/load.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="load-configuration">Load Configuration</h1>
+<p>This guide will help you to set up the load configuration settings which are strongly recommended for each Opencast
+installation.  These settings control how many jobs are running on your various hardware nodes.  These settings can be
+left at their defaults initially, but as your installation grows you will likely wish to fine-tune these to get the best
+performance you can out of your hardware.</p>
+<h2 id="background-what-is-a-load-value">Background: What is a load value</h2>
+<p>Every job obviously imposes a certain amount of load on its processing system, the question is how can we quantify this?
+The settings this document will walk you through are estimates of the load placed on your system(s) by each job type.
+This means that every individual instance of that job type will count for a certain amount of load, and Opencast will
+refuse to process more than a certain configurable amount of load at any given time on a given node.  These loads are
+tracked on a per-node basis, so a job running on one node imposes no load on another.</p>
+<p>As an example, say we have a worker with 8 cores.  With Opencast 1.x all jobs, even expensive jobs like encoding, had an
+effective load value of 1.0.  This meant that Opencast would schedule up to 8 encodes on worker 1! Obviously this is not
+ideal, since most encoding jobs consume multiple cores.  Since Opencast 2.1 you can now specify on an encoding profile
+level how much load is imposed on a node.  Likewise, all other jobs (video segmentation, publishing, etc) also now have
+configurable loads.</p>
+<p>Job loads can be any floating point value between 0.0, and Java's MAXFLOAT.  Fractional loads are supported, since many
+of the jobs that Opencast spawns as a regular part of its workflows are very small.  There is no sanity checking for the
+configured loads, aside from assuring they are not negative.  This means that improperly set load values can cause
+deadlocks!  Fortunately, this is easy to fix.  See Troubleshooting for more details.</p>
+<h2 id="step-1-determine-your-load-values">Step 1: Determine your load values</h2>
+<p>This is a very subjective process, but is arguably the most imporant: How much load does each job and encoding profile
+add to your system? We have tried our best to set useful loads for each job, however these are only estimates.  If your
+installation has, for example, hardware assisted encoding then your encoding jobs may be very inexpensive.  In general,
+it is safe to assume that the first load value from the output of <code>uptime</code> is a good estimate of the load imposed by a
+job.</p>
+<p>Note: These job loads are specific for each <em>node</em> in the cluster.  This means that for any given job, each node can
+have a different load value associated.  For instance, if worker A has no job load specified for its encoding profiles,
+and worker B has job loads specified then any encoding jobs dispatched to A will have a load of 1.0, and jobs dispatched
+to B will have a different, presumably higher load.  There are edge cases where this may be useful, but is most cases
+this will only cause confusion.  It is therefore highly recommended that these settings be put into your configuration
+management system, and be applied on a cluster level to ensure consistency across all nodes.</p>
+<h2 id="step-2-setting-the-load-values-for-system-jobs">Step 2: Setting the load values for system jobs</h2>
+<p>Each Opencast instance has its own maximum load.  By default this is set to the number of CPU cores present in the 
+system.  If you wish to change this, set the <code>org.opencastproject.server.maxload</code> key in config.properties to the 
+maximum load you want this node to accept.  Keep in mind that exceeding the number of CPU cores present in the system is
+not recommended.</p>
+<p>The load values for the non-encoding jobs are set in the etc/services files.  Look for files containing the prefix 
+<code>job.load</code>.  These configuration keys control the load for each job type.  For example, the 
+<code>job.load.download.distribute</code> configuration key controls the load placed on the system when a download distribution job
+is running.  The current files with relevant configuration keys are:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Controls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.caption.impl.CaptionServiceImpl.cfg</td>
+<td>Caption convertion services</td>
+</tr>
+<tr>
+<td>org.opencastproject.composer.impl.ComposerServiceImpl.cfg</td>
+<td>Caption embedding services</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.acl.AclDistributionService.cfg</td>
+<td>ACL file distribution</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.distribution.streaming.StreamingDistributionService.cfg</td>
+<td>Streaming distribution</td>
+</tr>
+<tr>
+<td>org.opencastproject.distribution.download.DownloadDistributionServiceImpl.cfg</td>
+<td>Download distribution</td>
+</tr>
+<tr>
+<td>org.opencastproject.execute.impl.ExecuteServiceImpl.cfg</td>
+<td>Execute service</td>
+</tr>
+<tr>
+<td>org.opencastproject.ingest.impl.IngestServiceImpl.cfg</td>
+<td>Ingest services</td>
+</tr>
+<tr>
+<td>org.opencastproject.inspection.ffmpeg.MediaInspectionServiceImpl.cfg</td>
+<td>Media inspection using ffmpeg</td>
+</tr>
+<tr>
+<td>org.opencastproject.inspection.impl.MediaInspectionServiceImpl.cfg</td>
+<td>Media inspection using mediainfo</td>
+</tr>
+<tr>
+<td>org.opencastproject.publication.youtube.YouTubePublicationServiceImpl.cfg</td>
+<td>Youtube distribution</td>
+</tr>
+<tr>
+<td>org.opencastproject.publication.youtube.YouTubeV3PublicationServiceImpl.cfg</td>
+<td>Youtube distribution</td>
+</tr>
+<tr>
+<td>org.opencastproject.search.impl.SearchServiceImpl.cfg</td>
+<td>Matterhorn engage index jobs</td>
+</tr>
+<tr>
+<td>org.opencastproject.silencedetection.impl.SilenceDetectionServiceImpl.cfg</td>
+<td>Silence detection</td>
+</tr>
+<tr>
+<td>org.opencastproject.textanalyzer.impl.TextAnalyzerServiceImpl.cfg</td>
+<td>Text analysis, including slide OCR</td>
+</tr>
+<tr>
+<td>org.opencastproject.videoeditor.impl.VideoEditorServiceImpl.cfg</td>
+<td>Video editor</td>
+</tr>
+<tr>
+<td>org.opencastproject.videosegmenter.ffmpeg.VideoSegmenterServiceImpl.cfg</td>
+<td>Video segmentation</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Ingest jobs are a special case in Opencast.  Because of their immediate nature there is no way to limit the number
+of running jobs.  However, these jobs will block other jobs from running on the ingest/admin nodes if enough ingests
+running concurrently.</p>
+<h2 id="step-3-setting-the-load-values-for-encoding-profiles">Step 3: Setting the load values for encoding profiles</h2>
+<p>Each encoding profile can have a load value associated with it.  By default, we have not set any, which means that the
+default value of 1.0 is used.  To set the load associated with a profile, you simply add a .jobload key to the profile.
+For example, the composite encoding profile is prefixed with <code>profile.composite.http</code>.  If we want to set a different
+job load than 1.0, we would create the <code>profile.composite.http.jobload</code> key, and set it to an appropriate job value.</p>
+<h2 id="step-4-restart-opencast">Step 4: Restart Opencast</h2>
+<p>Many of these configuration files are only read on startup, so restarting Opencast is strongly recommended.</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<h2 id="help-my-system-has-deadlocked-or-there-are-jobs-which-are-always-queued-even-if-the-system-is-otherwise-idle">Help, my system has deadlocked, or there are jobs which are always queued even if the system is otherwise idle</h2>
+<p>This can be caused by setting a job weight that exceeds the maximum load for <em>all</em> services of a given type.  For
+example, if you have a single worker with 8 cores and set an encoding job to have a jobload of 9.  Fortunately, there is
+a simple resolution to this issue.  Jobs which have already been created do <em>not</em> update their load values, even after
+restarting Opencast.  To resolve a deadlock caused by job loads follow these instructions.  First determine the queued
+job's ID from the admin UI.  This will be an integer greater than zero.  We will call this $jobid.  Once you have the
+job ID, follow these steps:</p>
+<ul>
+<li>Stop Opencast</li>
+<li>Log into your database</li>
+<li>Make sure you are using the right schema.  Currently the default is called <code>opencast</code></li>
+<li>Update the job's load<ul>
+<li>This will look something like <code>UPDATE mh_job SET job\_load=0.0 WHERE id=$jobid</code></li>
+</ul>
+</li>
+<li>Log out of your database</li>
+<li>Change the load specified in the configuration file to an appropriate value<ul>
+<li>This may need to happen across all nodes!</li>
+</ul>
+</li>
+<li>Restart Opencast</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../logging.and.privacy/" class="btn btn-neutral float-right" title="Logging and Privacy">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../encoding/" class="btn btn-neutral" title="Encoding"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../encoding/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../logging.and.privacy/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

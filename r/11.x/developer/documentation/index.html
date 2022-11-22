@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Documentation - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Documentation", url: "#_top", children: [
+              {title: "Package Level Documentation", url: "#package-level-documentation" },
+              {title: "Classes", url: "#classes" },
+              {title: "Methods", url: "#methods" },
+              {title: "REST Endpoints", url: "#rest-endpoints" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../decision-making/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../decision-making/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../code-style/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../code-style/" class="btn btn-xs btn-link">
+        Code Style
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="documentation">Documentation</h1>
+<p>One important measurement for code quality is its documentation. This is especially the case for open source projects
+that count on the support of external developers and a strong community around the code base.  With that in mind, here
+are some of the goals you should keep in mind when working within the Opencast codebase.</p>
+<h2 id="package-level-documentation">Package Level Documentation</h2>
+<p>Package documentation should cover the general concepts that are being used throughout the package, along with the
+principal interfaces and classes that are being used.  A good example is provided by the <a href="http://java.sun.com/javase/6/docs/api/javax/sql/package-summary.html#package_description">Java 6 sql package description
+</a>.</p>
+<h3 id="where-does-the-documentation-go">Where does the documentation go?</h3>
+<p>The package information should be put into a file called <code>package-info.java</code> and reside in the root of the package.
+Generally, the package-info is a java class itself consisting of documentation and package declaration only.
+Documentation can be found <a href="http://java.sun.com/j2se/1.5.0/docs/tooldocs/windows/javadoc.html#packagecomment">here</a>.</p>
+<h3 id="checklist">Checklist</h3>
+<p>In order to achieve decent package documentation, make sure your documentation answers the following questions:</p>
+<ul>
+<li>What problem domain does your package deal with?</li>
+<li>Are there any concepts that the developer should understand?</li>
+<li>What are the different strategies that your package might implement?</li>
+<li>What are the entry points into your package in terms of interfaces and classes?</li>
+<li>What best practices are there to use the package?</li>
+<li>What major requirements need to be met before being able to use the package?</li>
+<li>Is there related external documentation (rfc, specifications) that should be linked?</li>
+</ul>
+<h2 id="classes">Classes</h2>
+<p>By looking at the documentation of a class or an interface, the developer should have a clear idea as to how the class
+can be used, what pitfalls there might be in terms of threading, performance etc. Again, a good example can be found in
+the <a href="http://java.sun.com/javase/6/docs/api/java/net/URL.html">Url class</a> of the Java Development Kit.</p>
+<h3 id="documentation-body">Documentation Body</h3>
+<ul>
+<li>Has a one-sentence description been given on what the class does or describe?</li>
+<li>Is there a description of concepts that should be known to users of the class?</li>
+<li>Are there possible pitfalls in the area of threading, transactions or performance?</li>
+<li>Are any other issues covered that might arise when using the class?</li>
+<li>Have any constraints be documented, like special behaviour of the <code>equals()</code> method?</li>
+<li>Are best practices on how to use the class documented?</li>
+</ul>
+<h3 id="tags">Tags</h3>
+<ul>
+<li>Are there related classes or external resources that should be linked using <code>@see</code>?</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<p>As with type documentation, the notes on a method should consist of instructions on what to expect in terms of behaviour
+when the method is called. Also, the user should be informed about any constraints that might apply to the objects
+state, the format of input parameters etc. As an example, take a look at the <a href="http://java.sun.com/javase/6/docs/api/java/net/URL.html#URL(java.lang.String,%20java.lang.String,%20int,%20java.lang.String)">constructor for the URL class
+</a>
+of the Java Development Kit.</p>
+<h3 id="documentation-body_1">Documentation Body</h3>
+<ul>
+<li>In general, what does the method do?</li>
+<li>Are there any requirements regarding the format of the input parameters?</li>
+<li>What does the method return with respect to input parameter values or state?</li>
+<li>If applicable, are there any constraints regarding an objects state?</li>
+<li>How are special parameter values (e.g. <code>null</code>) handled?</li>
+<li>Does the user know what exceptions are thrown under which circumstances?</li>
+</ul>
+<h3 id="tags_1">Tags</h3>
+<ul>
+<li>Are the input parameters documented using the <code>@param</code> tag?</li>
+<li>Is the return value documented using the <code>@return</code> tag?</li>
+<li>Are there related methods that should be linked using <code>@see</code>?</li>
+<li>Are the exceptions documented with <code>@throws</code>?</li>
+</ul>
+<h2 id="rest-endpoints">REST Endpoints</h2>
+<p>All Opencast REST endpoints must display HTML formatted documentation at the <code>/docs</code> path.</p>
+<p>Please be sure that your documentation includes:</p>
+<ul>
+<li>An entry for each path pattern, categorized as read and write paths.</li>
+<li>Descriptions for each path pattern, including:<ul>
+<li>The HTTP method (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, …)</li>
+<li>Required and optional parameters</li>
+<li>The expected input, including data formats and headers</li>
+<li>The expected output, including data formats, headers, and HTTP response codes</li>
+</ul>
+</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../decision-making/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../decision-making/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../code-style/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../code-style/" class="btn btn-xs btn-link">
+        Code Style
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/documentation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

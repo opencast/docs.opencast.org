@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Notes - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Opencast 7: Release Notes", url: "#_top", children: [
+              {title: "New Features", url: "#new-features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "Configuration changes", url: "#configuration-changes" },
+              {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes About 7.1", url: "#additional-notes-about-71" },
+              {title: "Additional Notes About 7.2", url: "#additional-notes-about-72" },
+              {title: "Additional Notes About 7.3", url: "#additional-notes-about-73" },
+              {title: "Additional Notes About 7.4", url: "#additional-notes-about-74" },
+              {title: "Additional Notes About 7.5", url: "#additional-notes-about-75" },
+              {title: "Additional Notes About 7.6", url: "#additional-notes-about-76" },
+              {title: "Additional Notes About 7.7", url: "#additional-notes-about-77" },
+              {title: "Additional Notes about 7.8", url: "#additional-notes-about-78" },
+              {title: "Additional Notes about 7.9", url: "#additional-notes-about-79" },
+              {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release Managers", url: "#release-managers" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-7-release-notes">Opencast 7: Release Notes</h1>
+<h2 id="new-features">New Features</h2>
+<ul>
+<li>Overhaul of the permission management with the newly added possibility to define how access control lists are
+  evaluated and how series permission changes are populated to episodes. For more details take a look at the <a href="../configuration/acl/">access
+  control configuration guide</a>.</li>
+<li>Update Elasticsearch and make it possible to run Elasticsearch as an external service.</li>
+<li>Per-Tenant Capture Agent Users</li>
+<li>Asset manager snaphots clean-up to remove older snapshots for a given media package. In some cases, this can
+  drastically reduce Opencast's storage consumption. This feature is implemented as an option for the
+  <a href="../workflowoperationhandlers/asset-delete-woh/">asset-delete workflow operation handler</a>.</li>
+<li>Allow the workflow to select the audio track for composite video</li>
+<li>Add multi-tenant support for all list providers</li>
+<li>Make waveform size configurable</li>
+<li>Create a generic user interface configuration service</li>
+<li>In the events table add a link to the series details</li>
+<li>Add internationalization support for series LTI tools</li>
+<li>Display creator of workflow</li>
+<li>Allow the ingest service to make authenticated requests to other servers</li>
+<li>Some modules are now plugins. These are not started by default to reduce the amount of code running unnecessarily.
+  They can easily be enabled in <code>etc/org.apache.karaf.features.cfg</code>. Modified modules are:<ul>
+<li>Moodle user directory</li>
+<li>Sakai user directory</li>
+</ul>
+</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>Improved performance when scheduling new events or checking for conflicts (reducing the time for adding
+multiple schedules by up to 90%).</li>
+</ul>
+<h2 id="configuration-changes">Configuration changes</h2>
+<ul>
+<li><code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> has a new option <code>maintenance</code> which temporarily
+  disables the scheduler if set to <code>true</code>.</li>
+<li><code>KARAF_NOROOT</code> is now set to <code>true</code> by default, preventing Opencast to be started as root user unless the
+  configuration is changed.</li>
+<li>The default configuration for the Paella player has been moved to <code>etc/ui-config/mh_default_org/paella/config.json</code></li>
+<li>By default, metadata catalogs and attachments sent by capture agents are discarded since this data is usually
+  controlled by Opencast and the routing through capture agents which existed for historical reasons was just an
+  additional source for errors. If you rely on the old behavior, it can be configured in
+  <code>etc/org.opencastproject.ingest.impl.IngestServiceImpl.cfg</code>.</li>
+<li>By default, the Paella player now respects all tracks published to engage instead of having a hard-coded filter for
+  tracks with the sub-flavor <code>delivery</code> only.</li>
+<li>The structure of the configuration files concerning URL signing has changed. See the
+<a href="../configuration/stream-security/">stream security configuration</a> for more details.</li>
+</ul>
+<h2 id="api-changes">API changes</h2>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13397">MH-13397</a>:</p>
+<ul>
+<li>Modified GET /recordings/{id}/technical.json: Removed field <code>optOut</code></li>
+<li>Removed GET /recordings/{id}/optOut</li>
+<li>Removed GET /recordings/{id}/reviewStatus</li>
+<li>Removed PUT /recordings/{id}/reviewStatus</li>
+<li>Modified POST /recordings: Removed form parameter <code>optOut</code></li>
+<li>Modified POST /recordings/multiple: Removed form parameter <code>optOut</code></li>
+<li>Modified PUT /recordings/{id}: Removed form parameters <code>optOut</code> and <code>updateOptOut</code></li>
+<li>Removed GET /series/{id}/optOut</li>
+</ul>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13446">MH-13446</a>:</p>
+<ul>
+<li>Removed GET /acl-manager/transitions.json</li>
+<li>Removed GET /acl-manager/transitionsfor.json</li>
+<li>Removed POST /acl-manager/episode/{id}</li>
+<li>Removed POST /acl-manager/series/{id}</li>
+<li>Modified POST /acl-manager/apply/episode/{id}: Removed form parameters workflowDefinitionId and workflowParams</li>
+<li>Modified POST /acl-manager/apply/series/{id}: Removed form parameters workflowDefinitionId and workflowParams</li>
+<li>Removed DELETE /acl-manager/episode/{transitionId}</li>
+<li>Removed DELETE /acl-manager/series/{transitionId}</li>
+<li>Removed PUT /acl-manager/episode/{transitionId}</li>
+<li>Removed PUT /acl-manager/series/{transitionId}</li>
+</ul>
+<h2 id="additional-notes-about-71">Additional Notes About 7.1</h2>
+<p>Opencast 7.1 is the first maintenance release for Opencast 7. It fixes a bug with the scheduler migration which may have
+caused minor issues for old, processed events which were missing some metadata. If you have already migrated to
+Opencast 7.0 and experience this problem, simply re-start the scheduler migration and re-build the index once more.</p>
+<h2 id="additional-notes-about-72">Additional Notes About 7.2</h2>
+<p>Opencast 7.2 fixes a bug in the video editor configuration present in Opencast 7.0 to 7.1 which will cause Opencast to
+always silently skip the video editor and publish the whole video. The problem was introduced by <a href="https://github.com/opencast/opencast/pull/944">a fix in the default
+workflows</a> and later fixed again by a <a href="https://github.com/opencast/opencast/pull/1013">configuration change therein
+</a>. If you use the default workflows, please make sure to update to the
+latest state of the workflows.</p>
+<p>If you use your own workflow and did not adapt the first patch, you should not be affected by this problem at all. If
+you are, just make sure that source and target smil flavor for the editor workflow operation are identical like it is
+ensured <a href="https://github.com/opencast/opencast/pull/1013">by the official fix</a>. A proper solution not relying on specific
+configurations and less error prone is in work and will be added to the upcoming major Opencast release.</p>
+<h2 id="additional-notes-about-73">Additional Notes About 7.3</h2>
+<p>Opencast 7.3 fixes a bug where the audio-source-name parameter of the composite operation defaults to none instead of
+"dual" in distributed systems, causing the resulting video to have no audio. A workaround for this problem entails
+setting audio-source-name to "dual" explicitly. Additionally this release fixes another problem in the composite WOH
+where using the watermark tool causes the operation to fail.</p>
+<p>This release also solves a major problem during the index rebuild of the workflow service where the process will
+sometimes fail with an OutOfMemory error because it's attempting to load all workflows at once. This problem is averted
+by loading and processing the workflows in increments instead. If you encountered this problem or plan to update to 7
+and have a lot of workflows in your system, you should update to 7.3.</p>
+<p>7.3 also ensures that the start dates shown in the events table and in the event details are once more consistent by
+using the bibliographic for both instead of showing the technical date in the events table since this can't be updated
+via UI for uploaded events and leads to confusion.</p>
+<p>Last but not least this release also fixes a known security vulnerability in Apache Santuario, so it is encouraged to
+update.</p>
+<h2 id="additional-notes-about-74">Additional Notes About 7.4</h2>
+<p>Opencast 7.4 brings a performance fix for some queries in the search API that can cause Opencast to run out of memory.</p>
+<p>This release also gives back a patch that was in version 6.x that allows to filter capture agent roles for ACLs and
+fixes the date cell of the events overview table in the admin UI.</p>
+<p>Finally, Opencast 7.4 also brings an update to the CAS security example that was out of date.</p>
+<h2 id="additional-notes-about-75">Additional Notes About 7.5</h2>
+<p>Opencast 7.5 fixes behaviour where the bibliographic date was not changed when changing the technical date via Rest.
+Also an option was added to disable thumbnail generation in the video editor because it can lead to performance issues.</p>
+<h2 id="additional-notes-about-76">Additional Notes About 7.6</h2>
+<p>Opencast 7.6 fixes a number of security issues. Upgrading is strongly recommended.
+Take a look at the <a href="https://github.com/opencast/opencast/security/advisories">security advisories</a> for more details.</p>
+<p>One change is that the OAI-PMH endpoint is no longer publicly accessible by default.
+If you need it to be, you can easily change that in the security configuration at <code>etc/security/mh_default_org.xml</code>.</p>
+<h3 id="fixed-security-issues">Fixed Security Issues</h3>
+<ul>
+<li>CVE-2020-5231 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-94qw-r73x-j7hg">Users with ROLE_COURSE_ADMIN can create new users
+  </a></li>
+<li>CVE-2020-5206 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-vmm6-w4cf-7f3x">Authentication Bypass For Endpoints With Anonymous Access
+  </a></li>
+<li>CVE-2020-5222 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-mh8g-hprg-8363">Hard-Coded Key Used For Remember-me Token
+  </a></li>
+<li>CVE-2020-5230 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-w29m-fjp4-qhmq">Unsafe Identifiers
+  </a></li>
+<li>CVE-2020-5228 – <a href="https://github.com/opencast/opencast/security/advisories/GHSA-6f54-3qr9-pjgj">Public Access Via OAI-PMH
+  </a></li>
+</ul>
+<h2 id="additional-notes-about-77">Additional Notes About 7.7</h2>
+<p>Opencast 7.7 brings better ACLs handling, remember-me authentication fix and other minor
+improvements.</p>
+<h2 id="additional-notes-about-78">Additional Notes about 7.8</h2>
+<p>Opencast 7.8 contains multiple fixes for the Theodul Player to better support Audio-Only files. Additionally some other
+bugs were resolved and dependencies were updated to address security issues.</p>
+<h2 id="additional-notes-about-79">Additional Notes about 7.9</h2>
+<p>Opencast 7.9 contains an <a href="https://github.com/opencast/opencast/security/advisories/GHSA-44cw-p2hm-gpf6">important security fix
+</a> regarding host verification.
+Upgrading is strongly recommended. If you use self-signed certificates, you now need to properly import them.
+Additionally, the UI of the docs were improved and and the Spring snapshot repository was removed to resolve build
+problems.</p>
+<h2 id="release-schedule">Release Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>April 1st 2019</td>
+<td>Feature Freeze</td>
+</tr>
+<tr>
+<td>May 6th - May 12th 2019</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>May 13th - May 26th 2019</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>June 13th 2019</td>
+<td>Release of Opencast 7.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release Managers</h2>
+<ul>
+<li>Maximiliano Lira Del Canto (University of Cologne)</li>
+<li>Katrin Ihler (ELAN e.V.)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/releasenotes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

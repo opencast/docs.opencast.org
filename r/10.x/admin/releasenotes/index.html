@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Notes - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Opencast 10: Release Notes", url: "#_top", children: [
+              {title: "Features", url: "#features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "Behaviour changes", url: "#behaviour-changes" },
+              {title: "API changes", url: "#api-changes" },
+              {title: "Additional Notes about 10.14", url: "#additional-notes-about-1014" },
+              {title: "Additional Notes about 10.13", url: "#additional-notes-about-1013" },
+              {title: "Additional Notes about 10.12", url: "#additional-notes-about-1012" },
+              {title: "Additional Notes about 10.11", url: "#additional-notes-about-1011" },
+              {title: "Additional Notes about 10.10", url: "#additional-notes-about-1010" },
+              {title: "Additional Notes about 10.9", url: "#additional-notes-about-109" },
+              {title: "Additional Notes about 10.8", url: "#additional-notes-about-108" },
+              {title: "Additional Notes about 10.7", url: "#additional-notes-about-107" },
+              {title: "Additional Notes about 10.6", url: "#additional-notes-about-106" },
+              {title: "Additional Notes about 10.5", url: "#additional-notes-about-105" },
+              {title: "Additional Notes about 10.4", url: "#additional-notes-about-104" },
+              {title: "Additional Notes about 10.3", url: "#additional-notes-about-103" },
+              {title: "Additional Notes about 10.2", url: "#additional-notes-about-102" },
+              {title: "Additional Notes about 10.1", url: "#additional-notes-about-101" },
+              {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release managers", url: "#release-managers" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-10-release-notes">Opencast 10: Release Notes</h1>
+<h2 id="features">Features</h2>
+<ul>
+<li>New <em>conditional-config</em> workflow operation handler, used to evaluate a list of conditions and set
+  a workflow configuration variable accordingly.</li>
+<li>Opencast 10 <a href="https://github.com/opencast/opencast/pull/2694">adds JVM metrics to the metrics endpoint</a>
+  so you can monitor Opencast's memory and CPU behavior more closely using Prometheus.</li>
+<li>Updated Opencast Studio to 2021-06-11</li>
+<li>Update to Elasticsearch 7.10.2</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li><a href="https://github.com/opencast/opencast/pull/2019">#2019</a>: The full list of Opencast users can now be reduced in the
+  admin UI's filtering tool using a regular expression</li>
+<li><a href="https://github.com/opencast/opencast/pull/2619">#2619</a>: Autoconfigure job dispatching so that non-admin nodes do not
+  dispatch jobs by default</li>
+<li><a href="https://github.com/opencast/opencast/pull/2554">#2554</a>: Retract publications before deleting events rather than
+  leaving the publications hanging with no easy way to remove them</li>
+<li>Improvements to Elasticsearch indexing <a href="https://github.com/opencast/opencast/pull/2211">#2211</a>, etc</li>
+<li><a href="https://github.com/opencast/opencast/pull/2677">#2677</a>: Add 'latest' as a target verison for moving between asset
+  manager storages</li>
+<li>Library updates across the project</li>
+</ul>
+<h2 id="behaviour-changes">Behaviour changes</h2>
+<ul>
+<li>The default visibility of events and series in the admin interface has changed so that users will not only see
+  entities they have write access to. This obviously has no effect on admin users since they have write access to
+  everything anyway.</li>
+<li>Paella's internal user tracking is now disabled by default since it is seldom used and can put a lot of stress on the
+  database.</li>
+<li>Opencast 10 now requires JDK 11</li>
+</ul>
+<h2 id="api-changes">API changes</h2>
+<ul>
+<li>Rename value for <code>sort</code> parameter in search API from <code>DATE_PUBLISHED</code> to <code>DATE_MODIFIED</code>.</li>
+<li>[<a href="https://github.com/opencast/opencast/pull/2644">#2644</a>]: Use millisecond precision in Solr date range queries</li>
+</ul>
+<h2 id="additional-notes-about-1014">Additional Notes about 10.14</h2>
+<p>This release adds plaholder support in video filenames for the rename-files operation, as well as an updated Terms
+of Use.  This will trigger the registration screen again for your admin user.</p>
+<h2 id="additional-notes-about-1013">Additional Notes about 10.13</h2>
+<p>This release resolves a few URL signing issues, as well as updating the default Paella configuration file to match
+Paella 6.5.6.</p>
+<h2 id="additional-notes-about-1012">Additional Notes about 10.12</h2>
+<p>This release upgrades Paella from 6.4.4 to 6.5.6 to repair HLS functionality.  This release also updates the editor and
+studio to their latest releases.</p>
+<h2 id="additional-notes-about-1011">Additional Notes about 10.11</h2>
+<p>This release downgrades Paella from 6.5.5 to 6.4.4 to HLS videos not loading on slow connections.</p>
+<h2 id="additional-notes-about-1010">Additional Notes about 10.10</h2>
+<p>This release adds the Rename Files workflow operation handler, and resolves an issue in the admin UI's metadata display
+along with a number of other, minor bug fixes.</p>
+<h2 id="additional-notes-about-109">Additional Notes about 10.9</h2>
+<p>This fix is mainly bugfixes, with the notable exception of <a href="https://github.com/opencast/opencast/pull/3305">#3305</a> which
+updates our logging system yet again.</p>
+<h2 id="additional-notes-about-108">Additional Notes about 10.8</h2>
+<p>This release contains a security fix:</p>
+<ul>
+<li>Further mitigation for Log4Shell (CVE-2021-45105)</li>
+</ul>
+<p>Like the previous release this is an out-of-order patch to address and resolve a further vulnerability discovered
+by security researchers. Unlike the previous release it not only provides an updated version of Pax Logging, but
+also entirely removes the replaced bundles from Opencast's assemblies to avoid confusion if people do find the old,
+vulnerable version of Log4J somewhere on the filesystem, even though it is not used.</p>
+<h2 id="additional-notes-about-107">Additional Notes about 10.7</h2>
+<p>This release contains an updated version of Pax Logging, which provides Opencast's Log4j functionality.  Earlier
+versions are affected by the Log4Shell vulnerability, which was partially mitigated in 10.6 by
+<a href="https://github.com/opencast/opencast/security/advisories/GHSA-mf4f-j588-5xm8">GHSA-mf4f-j588-5xm8</a>.  Further
+vulnerability discoveries by security researchers have rendered the previous mitigations ineffective.  Normally
+we would wait for our underlying runtime (Apache Karaf) to update, however in light of the severity of these issues
+we have issued an out-of-order patch to address, and resolve, these concerns immediately.</p>
+<h2 id="additional-notes-about-106">Additional Notes about 10.6</h2>
+<p>This release fixes several bugs.  This release also contains fixes for three security issues.  The simplest of these
+was fixed in 9.10 and merged forward to this release.  This fix is:</p>
+<ul>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-mf4f-j588-5xm8">GHSA-mf4f-j588-5xm8</a>:
+  Apache Log4j Remote Code Execution</li>
+</ul>
+<p>The other two security related issues are:</p>
+<ul>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-hcxx-mp6g-6gr9">GHSA-hcxx-mp6g-6gr9</a>:
+  Opencast publishes global system account credentials</li>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-59g4-hpg3-3gcp">GHSA-59g4-hpg3-3gcp</a>:
+  Files Accessible to External Parties</li>
+</ul>
+<p>Notably, these last two issues could completely expose all secrets in your production system.  You should consider
+changing them.</p>
+<h2 id="additional-notes-about-105">Additional Notes about 10.5</h2>
+<p>This release fixes several bugs.  Notably, this should drastically speed up audio normalization.</p>
+<h2 id="additional-notes-about-104">Additional Notes about 10.4</h2>
+<p>This release fixes bugs and a startup issue.  Some adopters were experiencing startup issues due to the JWT
+authentication module being installed by default.  This release removes that module for default configurations.</p>
+<h2 id="additional-notes-about-103">Additional Notes about 10.3</h2>
+<p>This release fixes a number of bugs.  This release also includes <a href="https://github.com/opencast/opencast/pull/2964">a fix</a>
+which prevents ActiveMQ from eventually blocking operations.  This fix must be manually deployed.  Please follow the
+existing the <a href="../configuration/message-broker/">message broker</a> configuration instructions with the updated file.</p>
+<h2 id="additional-notes-about-102">Additional Notes about 10.2</h2>
+<p>This release fixes a number of bugs including two very important fixes related Extron SMP capture agent compatibility
+and problems during publication.</p>
+<p><strong>Manual action required if upgrading from Opencast 10.1</strong>:
+Opencast 10.1 contains a bug which can cause problems with republishing events.
+If you never ran 10.1 in production, e.g. upgraded from 9.7 to 10.2, no manual action is required.</p>
+<p>If you have, to fix the problem, you will need to re-write the search service's Solr entries set in Opencast 10.1
+by re-indexing those events. To re-index, stop your presentation/allinone node,
+remove <code>&lt;karaf-data&gt;/solr-indexes/search</code> (often <code>/var/lib/opencast/solr-indexes/search</code>)
+and restart Opencast. The re-index progress will be logged. Once Opencast is up again, everything should be fine.
+All other indexes are not effected.</p>
+<p>More details can be found at <a href="https://github.com/opencast/opencast/pull/2923">pull request #2923</a>.</p>
+<h2 id="additional-notes-about-101">Additional Notes about 10.1</h2>
+<p>This release contains many bugfixes.  In particular, the email libraries are now working properly! You might also
+encounter issues with updating the Elasticsearch indices with 10.0, especially when deleting elements, that are fixed
+with this minor release.</p>
+<p>From this release onwards there's also no longer the need to run the Elasticsearch index rebuild separately for each
+service to avoid concurrency issues. Instead, you can simply use the /admin-ng/index/recreateIndex or /api/recreateIndex
+endpoints to trigger the complete rebuild and be sure that everything will happen in order, since there is no longer any
+asynchronicity involved.</p>
+<h2 id="release-schedule">Release Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>May 18, 2021</td>
+<td>Feature freeze</td>
+</tr>
+<tr>
+<td>May 24, 2021</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>May 31, 2021</td>
+<td>Public QA</td>
+</tr>
+<tr>
+<td>June 15, 2021</td>
+<td>Release of Opencast 10.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release managers</h2>
+<ul>
+<li>Greg Logan</li>
+<li>Per Pascal Seeland (University of Stuttgart)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/releasenotes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

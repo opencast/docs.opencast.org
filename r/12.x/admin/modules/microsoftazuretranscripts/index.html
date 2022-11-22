@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Transcripts (Microsoft Azure) - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Transcripts (Automated by Microsoft Azure)", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Workflow Operations", url: "#workflow-operations" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../videoeditor.setup/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../videoeditor.setup/" class="btn btn-xs btn-link">
+        Setup
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        Transcripts (IBM Watson)
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="transcripts-automated-by-microsoft-azure">Transcripts (Automated by Microsoft Azure)</h1>
+<h2 id="overview">Overview</h2>
+<p>The Microsoft Azure Transcription Service invokes the Azure Speech-to-Text service via its Java SDK to transcribe audio
+ to text.</p>
+<p>During the execution of an Opencast workflow, a file containing the audio to be transcribed is streamed to the
+Microsoft Azure Speech-to-Text service. Results are converted to WebVTT or SRT format 
+and attached to the media package.</p>
+<p><strong>Note that because Speech-to-Text services require a significant amount of time to process a recording, 
+we do not wait for it to finish before proceeding with the rest of Opencast's normal processing.
+This means that the transcription process is run asynchronously.</strong></p>
+<ul>
+<li>Workflow 1 runs:<ul>
+<li>Speech-to-Text job is started</li>
+<li>Workflow finishes</li>
+</ul>
+</li>
+</ul>
+<p>Speech-to-Text job finishes, workflow 2 is started.</p>
+<ul>
+<li>Workflow 2 runs:<ul>
+<li>File is attached to media package</li>
+<li>Media package is republished with captions/transcripts</li>
+</ul>
+</li>
+</ul>
+<p>Microsoft Azure Speech-to-Text service documentation, including which languages are currently supported, can be found
+ <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=speechtotext#speech-to-text">here</a>.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="step-1-get-azure-subscription-credentials">Step 1: Get Azure subscription credentials</h3>
+<ul>
+<li><a href="https://azure.microsoft.com/en-US/free/cognitive-services/">Create an Azure subscription</a></li>
+<li><a href="https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices">Create a speech resource</a></li>
+<li>Get the subscription key and region. After your Speech resource is deployed, select 'Go to resource' to view and 
+manage keys. For more information about Cognitive Services resources, see 
+<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Clinux#get-the-keys-for-your-resource">here</a></li>
+</ul>
+<h3 id="step-2-install-gstreamer">Step 2: Install GStreamer</h3>
+<p>The Microsoft speech-to-text client uses GStreamer to transcode audio stream.
+Therefore, GStreamer must be installed on your Opencast admin node.
+On Debian based systems, you can do that by running:</p>
+<pre><code class="language-shell">sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+</code></pre>
+<p>On Red Hat based systems, run:</p>
+<pre><code class="language-shell">sudo yum install gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plugins-bad-free gstreamer1-plugins-ugly-free
+</code></pre>
+<h3 id="step-3-configure-the-microsoft-azure-transcription-service">Step 3: Configure the Microsoft Azure Transcription Service</h3>
+<p>Edit  <em>etc/org.opencastproject.transcription.microsoftazure.MicrosoftAzureTranscriptionServiec.cfg</em>:</p>
+<ul>
+<li>Set <em>enabled</em>=true</li>
+<li>Use service credentials obtained above to set <em>subscription.key</em> and <em>region</em></li>
+<li>All other settings are optional and explained in the config file</li>
+</ul>
+<h3 id="step-4-add-a-workflow-operations-or-create-new-workflow-to-start-transcription">Step 4: Add a workflow operations or create new workflow to start transcription</h3>
+<p>The workflow below is a minimal working example for an event that has a video file in the <code>presenter/source</code> flavor.
+You do not necessarily need an extra workflow, and instead you can integrate the parts you need into your own. The
+relevant operations are <code>microsoft-azure-start-transcription</code> to start the transcription and <code>snapshot</code>, so a second
+workflow can retrieve the mediapackage to attach captions/transcriptions</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+
+  &lt;id&gt;microsoft-azure-transcription&lt;/id&gt;
+  &lt;title&gt;Microsoft Azure Transcription Testing Workflow&lt;/title&gt;
+  &lt;tags&gt;
+    &lt;tag&gt;upload&lt;/tag&gt;
+    &lt;tag&gt;schedule&lt;/tag&gt;
+    &lt;tag&gt;archive&lt;/tag&gt;
+  &lt;/tags&gt;
+  &lt;displayOrder&gt;100&lt;/displayOrder&gt;
+  &lt;description&gt;
+    Microsoft Azure Transcription Testing Workflow
+  &lt;/description&gt;
+
+  &lt;operations&gt;
+
+    &lt;operation
+        id=&quot;defaults&quot;
+        description=&quot;Applying default configuration values&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!-- The language code for the language spoken in the source file --&gt;
+        &lt;configuration key=&quot;language-code&quot;&gt;de-DE&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Start Microsoft Azure transcription job --&gt;
+    &lt;operation
+        id=&quot;microsoft-azure-start-transcription&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Start Microsoft Azure transcription job&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!--  Skip this operation if flavor already exists. Used for cases when mediapackage already has captions. --&gt;
+        &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+${language-code}&lt;/configuration&gt;
+        &lt;configuration key=&quot;language-code&quot;&gt;${language-code}&lt;/configuration&gt;
+        &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Publish preview internal --&gt;
+    &lt;operation
+        id=&quot;publish-configure&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Publish to preview publication channel&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;download-source-flavors&quot;&gt;*/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;channel-id&quot;&gt;internal&lt;/configuration&gt;
+        &lt;configuration key=&quot;url-pattern&quot;&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
+        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Publish to engage player --&gt;
+    &lt;operation
+        id=&quot;publish-engage&quot;
+        max-attempts=&quot;2&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Publishing to Engage&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;download-source-flavors&quot;&gt;dublincore/*,security/*,*/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;download-source-tags&quot;&gt;engage-download&lt;/configuration&gt;
+        &lt;configuration key=&quot;streaming-source-tags&quot;&gt;engage-streaming&lt;/configuration&gt;
+        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+
+    &lt;!-- Save the language-code to the mediapackage, so the attach workflow knows how to flavor the transcription file --&gt;
+    &lt;operation
+        id=&quot;export-wf-properties&quot;
+        fail-on-error=&quot;false&quot;
+        description=&quot;Export workflow settings to Java properties file&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;wf-properties/language&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
+        &lt;configuration key=&quot;keys&quot;&gt;language-code&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Archive the current state of the media package --&gt;
+    &lt;operation
+        id=&quot;snapshot&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Archiving&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;*/source,dublincore/*,security/*&lt;/configuration&gt;
+        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Clean up the working file repository --&gt;
+    &lt;operation
+        id=&quot;cleanup&quot;
+        fail-on-error=&quot;false&quot;
+        description=&quot;Cleaning up&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
+        &lt;!-- FixMe Don't clean up ACLs until workflow service no longer looks for them in the WFR. --&gt;
+        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+
+</code></pre>
+<h3 id="step-5-add-a-workflow-to-attach-transcriptions">Step 5: Add a workflow to attach transcriptions</h3>
+<p>A sample attach workflow that works together with the workflow from Step 3. Attaches the generated transcription
+to the mediapackages and republishes it. Copy it into a new file under
+<code>etc/workflows/microsoft-azure-attach-transcripts.xml</code> in your Opencast installation.</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+  &lt;id&gt;microsoft-azure-attach-transcripts&lt;/id&gt;
+  &lt;title&gt;Attach caption/transcripts generated by Microsoft Azure&lt;/title&gt;
+  &lt;description&gt;Attach automated transcription generated by the Microsoft Azure service. This is an internal workflow, started by the Transcription Service.
+  &lt;/description&gt;
+  &lt;configuration_panel /&gt;
+
+  &lt;operations&gt;
+
+    &lt;!-- Import the language code used in the start workflow --&gt;
+    &lt;operation
+        id=&quot;import-wf-properties&quot;
+        fail-on-error=&quot;true&quot;
+        exception-handler-workflow=&quot;partial-error&quot;
+        description=&quot;Load language setting&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavor&quot;&gt;wf-properties/language&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Attach caption/transcript --&gt;
+    &lt;operation id=&quot;microsoft-azure-attach-transcription&quot;
+               fail-on-error=&quot;true&quot;
+               exception-handler-workflow=&quot;partial-error&quot;
+               description=&quot;Attach captions/transcription&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
+        &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
+        &lt;!-- Set the flavor to something the Paella player will parse --&gt;
+        &lt;!-- Using the language code here is not necessary, but nice to have --&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+${language-code}&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Publish to engage player --&gt;
+    &lt;operation id=&quot;publish-engage&quot;
+               fail-on-error=&quot;true&quot;
+               exception-handler-workflow=&quot;partial-error&quot;
+               description=&quot;Distribute and publish to engage server&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;download-source-flavors&quot;&gt;dublincore/*,security/*,captions/*&lt;/configuration&gt;
+        &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Archive media package --&gt;
+    &lt;operation id=&quot;snapshot&quot;
+               fail-on-error=&quot;true&quot;
+               exception-handler-workflow=&quot;partial-error&quot;
+               description=&quot;Archive media package&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;*/*&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Clean up work artifacts --&gt;
+    &lt;operation
+        id=&quot;cleanup&quot;
+        fail-on-error=&quot;false&quot;
+        description=&quot;Remove temporary processing artifacts&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
+        &lt;!-- FixMe Don't clean up ACLs until workflow service no longer looks for them in the WFR. --&gt;
+        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
+
+</code></pre>
+<h2 id="workflow-operations">Workflow Operations</h2>
+<ul>
+<li><a href="../../workflowoperationhandlers/microsoft-azure-attach-transcription-woh/">microsoft-azure-attach-transcription</a></li>
+<li><a href="../../workflowoperationhandlers/microsoft-azure-start-transcription-woh/">microsoft-azure-start-transcription</a></li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../videoeditor.setup/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../videoeditor.setup/" class="btn btn-xs btn-link">
+        Setup
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        Transcripts (IBM Watson)
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/microsoftazuretranscripts.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Google Speech Start Transcription - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Google Speech Start Transcription", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Example", url: "#example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../httpnotify-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../httpnotify-woh/" class="btn btn-xs btn-link">
+        HTTP Notify
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../google-speech-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../google-speech-attach-transcription-woh/" class="btn btn-xs btn-link">
+        Google Speech Attach Transcription
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="google-speech-start-transcription">Google Speech Start Transcription</h1>
+<h2 id="description">Description</h2>
+<p>Google speech Start Transcription invokes the Google Speech-to-Text service by passing an audio file to be translated to 
+text.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>description</th>
+<th>default value</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor</td>
+<td>The flavor of the audio file to be sent for translation.</td>
+<td>EMPTY</td>
+<td>presenter/delivery</td>
+</tr>
+<tr>
+<td>source-tag</td>
+<td>The flavor of the audio file to be sent for translation.</td>
+<td>EMPTY</td>
+<td>transcript</td>
+</tr>
+<tr>
+<td>skip-if-flavor-exists</td>
+<td>If this flavor already exists in the media package, skip this operation.<br/>To be used when the media package already has a transcript file. Optional</td>
+<td>false</td>
+<td>captions/timedtext</td>
+</tr>
+<tr>
+<td>language-code</td>
+<td>The language code to use for the transcription. Optional. If set, it will override the configuration language code</td>
+<td>EMPTY</td>
+<td>en-US, supported language: https://cloud.google.com/speech-to-text/docs/languages</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One of source-flavor or source-tag must be specified.</strong></p>
+<h2 id="example">Example</h2>
+<pre><code class="language-xml">    &lt;!--  Encode audio to flac --&gt;
+    &lt;operation
+      id=&quot;encode&quot;
+      fail-on-error=&quot;true&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Extract audio for transcript generation&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;audio/flac&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;transcript&lt;/configuration&gt;
+        &lt;configuration key=&quot;encoding-profile&quot;&gt;audio-flac&lt;/configuration&gt;
+        &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt; 
+
+    &lt;!-- Start Google Speech transcription job --&gt;
+    &lt;operation
+      id=&quot;google-speech-start-transcription&quot;
+      fail-on-error=&quot;true&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Start Google Speech transcription job&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!--  Skip this operation if flavor already exists. Used for cases when mp already has captions. --&gt;
+        &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/timedtext&lt;/configuration&gt;
+        &lt;configuration key=&quot;language-code&quot;&gt;en-US&lt;/configuration&gt;
+        &lt;!-- Audio to be translated, produced in the previous compose operation --&gt;
+        &lt;configuration key=&quot;source-tag&quot;&gt;transcript&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<h4 id="encoding-profile-used-in-example-above">Encoding profile used in example above</h4>
+<pre><code>profile.audio-flac.name = audio-flac
+profile.audio-flac.input = stream
+profile.audio-flac.output = audio
+profile.audio-flac.suffix = -audio.flac
+profile.audio-flac.mimetype = audio/flac
+profile.audio-flac.ffmpeg.command = -i /#{in.video.path} -ac 1 #{out.dir}/#{out.name}#{out.suffix}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../httpnotify-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../httpnotify-woh/" class="btn btn-xs btn-link">
+        HTTP Notify
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../google-speech-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../google-speech-attach-transcription-woh/" class="btn btn-xs btn-link">
+        Google Speech Attach Transcription
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/google-speech-start-transcription-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Publish Configure - Opencast - Administration Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Publish Configure";
+    var mkdocs_page_input_path = "workflowoperationhandlers/publish-configure-woh.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../releasenotes/">Release Notes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../upgrade/">Upgrade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">Changelog</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Installation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/multiple-servers/">Multiple Servers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation from Source</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation from Package</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation with Docker</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Configuration</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/basic/">Basic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/database/">Database</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">HTTPS</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/https/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/asset-manager/">Asset Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/message-broker/">Message Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/metadata/">Metadata</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/asset-upload-ui/">Manual Asset Upload</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/encoding/">Encoding</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/load/">Load</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/user-statistics.and.privacy/">Logging and Privacy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Authentication, Autorization and User Management</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../configuration/security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/workflow/">Workflow</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/external-api/">External API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../configuration/oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../version-support/">Version Support</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/execute/">Execute Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/liveschedule/">Live Schedule</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/ltimodule/">LTI Module</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/mediamodule.configuration/">Media Module</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Player</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/paella.player/">Paella player</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/searchindex/">Search Index</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/textextraction/">Text Extraction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/timelinepreviews/">Timeline Previews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Video Editor</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/videosegmentation/">Video Segmentation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/waveform/">Waveform Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/youtubepublication/">YouTube Publication</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Workflow Operation Handler</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retry-strategies/">Retry Strategies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../analyze-tracks-woh/">Analyze Tracks</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../analyzeaudio-woh/">Analyze Audio</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../animate-woh/">Animate</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../snapshot-woh/">Asset Snapshot</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../asset-delete-woh/">Asset Delete</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cleanup-woh/">Cleanup</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../comment-woh/">Comment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../compose-woh/">Compose</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../composite-woh/">Composite</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../concat-woh/">Concat</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../copy-woh/">Copy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../clone-woh/">Clone</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../coverimage-woh/">Cover Image</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../defaults-woh/">Defaults</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../duplicate-event-woh/">Duplicate Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../editor-woh/">Editor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../encode-woh/">Encode</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../error-resolution-woh/">Error Resolution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../execute-once-woh/">Execute Once</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../execute-many-woh/">Execute Many</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../export-wf-properties-woh/">Export Workflow Properties</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../extracttext-woh/">Extract Text</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../failing-woh/">Failing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../httpnotify-woh/">HTTP Notify</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../image-woh/">Image</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../imagetovideo-woh/">Image to Video</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../import-wf-properties-woh/">Import Workflow Properties</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../incident-woh/">Incident</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../include-woh/">Include</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../ingestdownload-woh/">Ingest-Download</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../inspect-woh/">Inspect</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../log-woh/">Log</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../normalizeaudio-woh/">Normalize Audio</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../partial-import-woh/">Partial Import</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../postmediapackage-woh/">Post Media Package</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../prepareav-woh/">Prepare A/V</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../probe-resolution-woh/">Probe Resolution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../publish-aws-woh/">Publish AWS</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Publish Configure</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#description">Description</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#parameter-table">Parameter Table</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mode">Mode</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#url-pattern-variables">URL Pattern Variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#publication-channel-labels-and-icons">Publication Channel Labels and Icons</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#operation-examples">Operation Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#internal-channel">Internal Channel</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#external-api">External API</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../publish-engage-woh/">Publish Engage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../publish-oaipmh-woh/">Publish OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../publish-youtube-woh/">Publish YouTube</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../republish-oaipmh-woh/">Republish OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retract-engage-woh/">Retract Engage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retract-configure-woh/">Retract Configure</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retract-oaipmh-woh/">Retract OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../retract-youtube-woh/">Retract YouTube</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../segmentpreviews-woh/">Segment Previews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../segmentvideo-woh/">Segment Video</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../send-email-woh/">Send Email</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../series-woh/">Series</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../silence-woh/">Silence</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../start-watson-transcription-woh/">Start Watson Transcription</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tag-woh/">Tag</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../timelinepreviews-woh/">Timelinepreviews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../theme-woh/">Theme</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../waveform-woh/">Waveform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../zip-woh/">Zip</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workflow Operation Handler &raquo;</li>
+        
+      
+    
+    <li>Publish Configure</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/workflowoperationhandlers/publish-configure-woh.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="configurablepublishworkflowoperationhandler">ConfigurablePublishWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The <code>ConfigurablePublishWorkflowOperationHandler</code> will distribute the given elements and create a publication element for
+it. By default it will retract all publications before publishing anew.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<p>These are the keys that are configured through the workflow definition. At least one media package element must match
+the supplied <code>source-flavors</code> or <code>source-tags</code> or else the operation will not know what to publish. The <code>channel-id</code> and
+<code>url-pattern</code> are also mandatory.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Example</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channel-id</td>
+<td>Id of the channel to publish to</td>
+<td><code>internal</code></td>
+<td></td>
+</tr>
+<tr>
+<td>mimetype</td>
+<td>Mime type of the published element</td>
+<td><code>text/html</code></td>
+<td>Type of last distributed element</td>
+</tr>
+<tr>
+<td>source-flavors</td>
+<td>Flavors of the media package elements to publish</td>
+<td><code>*/trimmed</code></td>
+<td></td>
+</tr>
+<tr>
+<td>source-tags</td>
+<td>Tags of the media package elements to publish</td>
+<td><code>engage</code></td>
+<td></td>
+</tr>
+<tr>
+<td>url-pattern</td>
+<td>Pattern to create the URI for the published from</td>
+<td><code>ftp://…/${event_id}</code></td>
+<td></td>
+</tr>
+<tr>
+<td>with-published-elements</td>
+<td>Use the current contents of the media package instead of publishing elements to a channel</td>
+<td><code>true</code></td>
+<td></td>
+</tr>
+<tr>
+<td>check-availability</td>
+<td>Check if the media is reachable after publication</td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>strategy</td>
+<td>Strategy for when there is already published material</td>
+<td><code>fail</code></td>
+<td><code>retract</code></td>
+</tr>
+<tr>
+<td>mode</td>
+<td>How elements are distributed</td>
+<td><code>mixed</code></td>
+<td><code>bulk</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mode">Mode</h2>
+<p>The configuration key <code>mode</code> can be used to control how media package elements are being distributed:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>single</td>
+<td>For each media package element, a job is created</td>
+</tr>
+<tr>
+<td>mixed</td>
+<td>One job for all media package elements that are not tracks and one job per track</td>
+</tr>
+<tr>
+<td>bulk</td>
+<td>One job for all media package elements</td>
+</tr>
+</tbody>
+</table>
+<p>This allows you to choose a lot of jobs and parallelism (<code>single</code>), just one job and no parallelism (<code>bulk</code>)
+or something in between (<code>mixed</code>). The best choice depends on your setup.</p>
+<h2 id="url-pattern-variables">URL Pattern Variables</h2>
+<p>These are the variables available in the <code>url-pattern</code> configuration. They will be replaced with the value during the
+execution of the workflow operation.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>${element_uri}</code></td>
+<td>URI of the last media package element</td>
+<td><code>http://ex.com/files/mediap...xy.mp4</code></td>
+</tr>
+<tr>
+<td><code>${event_id}</code></td>
+<td>The event (media package) identifier</td>
+<td><code>18633e04-1a3f-4bbb-a72a-99c15deba1b9</code></td>
+</tr>
+<tr>
+<td><code>${player_path}</code></td>
+<td>The player path for the event</td>
+<td><code>/engage/theodul/ui/core.html?id=</code></td>
+</tr>
+<tr>
+<td><code>${publication_id}</code></td>
+<td>The id of this publication.</td>
+<td><code>54f6c12d-8e68-4ec8-badf-cd045b33d01e</code></td>
+</tr>
+<tr>
+<td><code>${series_id}</code></td>
+<td>The id of the series if available</td>
+<td><code>36f3c5d8-ad4d-4dab-beb1-1400ffab4a69</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="publication-channel-labels-and-icons">Publication Channel Labels and Icons</h2>
+<p>Using this workflow operation, you can create arbitrary custom publication channels. Without further action, the
+administrative user interface will label these channels "Custom". You can specify both a label and an icon for each
+custom publication channels in the configuration files <code>etc/listproviders/publication.channel.labels.properties</code> and
+<code>etc/listproviders/publication.channel.icons.properties</code>.</p>
+<h2 id="operation-examples">Operation Examples</h2>
+<h3 id="internal-channel">Internal Channel</h3>
+<pre><code>&lt;operation
+  id="publish-configure"
+  exception-handler-workflow="partial-error"
+  description="Publish to internal channel"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-tags"&gt;engage,atom,rss&lt;/configuration&gt;
+    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
+    &lt;configuration key="url-pattern"&gt;http://localhost:8080/admin-ng/index.html#/events/events/${event_id}/tools/playback&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h3 id="external-api">External API</h3>
+<pre><code>&lt;operation
+  id="publish-configure"
+  exception-handler-workflow="partial-error"
+  description="Publish to external api publication channel"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
+    &lt;configuration key="mimetype"&gt;application/json&lt;/configuration&gt;
+    &lt;configuration key="source-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
+    &lt;configuration key="url-pattern"&gt;http://api.oc.org/api/events/${event_id}&lt;/configuration&gt;
+    &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../publish-engage-woh/" class="btn btn-neutral float-right" title="Publish Engage">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../publish-aws-woh/" class="btn btn-neutral" title="Publish AWS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../publish-aws-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../publish-engage-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

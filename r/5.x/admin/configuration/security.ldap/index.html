@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>LDAP Authentication and Authorization (without CAS) - Opencast - Administration Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "LDAP Authentication and Authorization (without CAS)";
+    var mkdocs_page_input_path = "configuration/security.ldap.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../releasenotes/">Release Notes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../upgrade/">Upgrade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">Changelog</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Installation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/multiple-servers/">Multiple Servers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation from Source</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/source-linux/">Linux</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation from Package</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/debs/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Installation with Docker</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../installation/docker-local/">Testing Locally</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Configuration</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../basic/">Basic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../database/">Database</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">HTTPS</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../https/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../https/nginx/">Using Nginx</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../https/opencast.only/">Internal HTTPS</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../https/migration/">Migrating old content to HTTPS</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../asset-manager/">Asset Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../message-broker/">Message Broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../metadata/">Metadata</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../asset-upload-ui/">Manual Asset Upload</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../encoding/">Encoding</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../load/">Load</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../user-statistics.and.privacy/">Logging and Privacy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../multi.tenancy/">Multi Tenancy</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Authentication, Autorization and User Management</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../acl/">Access Control Lists</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../security.aai/">Authentication and Authorization Infrastructure (AAI)</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">LDAP Authentication and Authorization (without CAS)</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-an-ldap-provider">Set up an LDAP provider</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#step-1">Step 1</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-2">Step 2</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-3"> Step 3</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-4">Step 4</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#combination-with-existing-authorization-mechanisms">Combination with Existing authorization Mechanisms</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#adding-more-ldap-servers">Adding more LDAP servers</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../security.user.moodle/">Moodle User Provider</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../security.user.sakai/">Sakai User Provider</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../workflow/">Workflow</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../external-api/">External API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../version-support/">Version Support</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/awss3distribution/">AWS S3 Distribution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/execute/">Execute Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/liveschedule/">Live Schedule</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/ltimodule/">LTI Module</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/mediamodule.configuration/">Media Module</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Player</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player.matomo.tracking/">Matomo Tracking</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/paella.player/">Paella player</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/searchindex/">Search Index</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/textextraction/">Text Extraction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/timelinepreviews/">Timeline Previews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/watsontranscripts/">Transcripts (IBM Watson)</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Video Editor</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/videosegmentation/">Video Segmentation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/waveform/">Waveform Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/adaptivestreaming-wowza/">Wowza Adaptive Streaming Distribution Service</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/youtubepublication/">YouTube Publication</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Workflow Operation Handler</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retry-strategies/">Retry Strategies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/animate-woh/">Animate</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/snapshot-woh/">Asset Snapshot</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/asset-delete-woh/">Asset Delete</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/attach-watson-transcription-woh/">Attach Watson Transcription</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/configure-by-dcterm-woh/">Configure-By-DCTerm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/clone-woh/">Clone</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/duplicate-event-woh/">Duplicate Event</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/error-resolution-woh/">Error Resolution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/execute-once-woh/">Execute Once</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/execute-many-woh/">Execute Many</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/export-wf-properties-woh/">Export Workflow Properties</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/failing-woh/">Failing</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/import-wf-properties-woh/">Import Workflow Properties</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/include-woh/">Include</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/log-woh/">Log</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/probe-resolution-woh/">Probe Resolution</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/publish-aws-woh/">Publish AWS</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/publish-configure-woh/">Publish Configure</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/publish-engage-woh/">Publish Engage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/publish-oaipmh-woh/">Publish OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/republish-oaipmh-woh/">Republish OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retract-aws-woh/">Retract AWS S3 and Cloudfront</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retract-engage-woh/">Retract Engage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retract-configure-woh/">Retract Configure</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retract-oaipmh-woh/">Retract OAI-PMH</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/send-email-woh/">Send Email</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/start-watson-transcription-woh/">Start Watson Transcription</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/tag-by-dcterm-woh/">Tag-By-DCTerm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/timelinepreviews-woh/">Timelinepreviews</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/theme-woh/">Theme</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Authentication, Autorization and User Management &raquo;</li>
+        
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>LDAP Authentication and Authorization (without CAS)</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/security.ldap.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="ldap-authentication-and-authorization-without-cas">LDAP Authentication and Authorization (without CAS)</h1>
+<hr />
+<blockquote>
+<p><em>This page describes how to use only an LDAP server to authenticate users in Opencast. If you just want to use LDAP</em>
+<em>as an identity provider for another authentication mechanism, such as a CAS server, this guide does not apply to</em>
+<em>you.</em></p>
+<p><em>You may find the instructions to configure an LDAP-backed CAS server <a href="../security.cas/">here</a>.</em></p>
+</blockquote>
+<hr />
+<blockquote>
+<p><em>The variable <code>$OPENCAST_ETC</code> used below stands for the location of Opencast's configuration folder within your</em>
+<em>system. Its location varies depending on whether Opencast was installed from source or a packaged version (e.g. RPM)</em>
+<em>was used:</em></p>
+<ul>
+<li><em><strong>Source installation:</strong> The <code>etc</code> folder within the directory containing the Opencast code.</em></li>
+<li><strong><em>Packaged installation:</em></strong> A subdirectory of your system's usual configuration directory, most likely<em>
+</em><code>/etc/opencast</code>.*</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="set-up-an-ldap-provider">Set up an LDAP provider</h2>
+<h3 id="step-1">Step 1</h3>
+<p>Opencast's <code>security.xml</code> files are located in the folder <code>$OPENCAST_ETC/security</code>. In a single-tenant deployment, the
+file is named <code>$OPENCAST_ETC/security/mh_default_org.xml</code> for the default organization. In a multi-tenant installation,
+or when a non-default organization is used, the file(s) are <code>$OPENCAST_ETC/security/&lt;organization_id&gt;.xml</code>.</p>
+<p>You should make a backup copy of the file and substitute it with the sample file named <code>security_sample_ldap.xml-example</code>.
+In other words:</p>
+<pre><code>$&gt; cd $OPENCAST_ETC/security
+$&gt; mv mh_default_org.xml mh_default_org.xml.old
+$&gt; cp security_sample_ldap.xml-example mh_default_org.xml
+</code></pre>
+<p>The sample file should be exactly the same as the replaced security file, except for the parts only relevant to the
+LDAP which will be discussed below. If you have done custom modifications to your security file, please make sure to
+incorporate them to the new file, too.</p>
+<h3 id="step-2">Step 2</h3>
+<p>Add the necessary configuration values to the LDAP section of the new security file.</p>
+<p>The first relevant section defines a context source. This contains the basic login information that enables Opencast to
+request information about users from the LDAP server in order to authenticate them.</p>
+<pre><code>&lt;bean id="contextSource"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;!-- URL of the LDAP server --&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;!-- "Distinguished name" for the unprivileged user --&gt;
+  &lt;!-- This user is merely to perform searches in the LDAP to find the users to login --&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;!-- Password of the user above --&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>The next part tells the system how to search for users in the LDAP server:</p>
+<pre><code>&lt;constructor-arg&gt;
+  &lt;bean class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+    &lt;constructor-arg ref="contextSource" /&gt;
+    &lt;property name="userDnPatterns"&gt;
+      &lt;list&gt;
+        &lt;!-- Dn patterns to search for valid users. Multiple "&lt;value&gt;" tags are allowed --&gt;
+        &lt;value&gt;uid={0},ou=Group,dc=my-institution,dc=country&lt;/value&gt;
+      &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;!-- If your user IDs are not part of the user Dn's, you can use a search filter to find them --&gt;
+    &lt;!-- This property can be used together with the "userDnPatterns" above --&gt;
+    &lt;!--
+    &lt;property name="userSearch"&gt;
+      &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+        &lt; ! - - Base Dn from where the users will be searched for - - &gt;
+        &lt;constructor-arg index="0" value="ou=GroupName,dc=my-institution,dc=country" /&gt;
+        &lt; ! - - Filter to located valid users. Use {0} as a placeholder for the login name - - &gt;
+        &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+        &lt;constructor-arg ref="contextSource" /&gt;
+      &lt;/bean&gt;
+    &lt;/property&gt;
+    --&gt;
+  &lt;/bean&gt;
+&lt;/constructor-arg&gt;
+</code></pre>
+<p>As the previous snippet shows, there are two alternative ways to find users in your LDAP:</p>
+<ul>
+<li><strong>Using the property userDnPatterns:</strong> This property accepts a list of search patterns to match against the user's
+DN. The patterns will be tried in order until a match is found. The placeholder <code>{0}</code> can be used to represent the
+username in such patterns.</li>
+<li><strong>Using a userSearch filter:</strong> With the previous approach, it is not possible to find users whose login name is not
+    part of their DN. In such cases, you can use the userSearch property, that allows you to search the users based on a
+    filter. The filter requires three parameters:<ul>
+<li>The first parameter specifies the "root node" where the searches will start from.</li>
+<li>The second one specifies the filter, where, again, the placeholder <code>{0}</code> will be substituted by the username
+  during the searches.</li>
+<li>The third parameter should be the contextSource defined above.</li>
+</ul>
+</li>
+</ul>
+<p>Both methods are not mutually exclusive --i.e. both can be activated at the same time, even though only the first one
+is uncommented in the sample file because it is the most usual.</p>
+<p>The last constructor argument is defined as follows:</p>
+<pre><code>&lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
+&lt;constructor-arg ref="authoritiesPopulator" /&gt;
+</code></pre>
+<p>, which refers to the following definition:</p>
+<pre><code>&lt;osgi:reference id="authoritiesPopulator" cardinality="1..1"
+                interface="org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator"
+                filter="(instanceId=theId)"/&gt;
+</code></pre>
+<p>You may edit <code>theId</code> to any value, ideally one that is descriptive of the LDAP connection being configured. The same
+value used here must be set as the <code>org.opencastproject.userdirectory.ldap.id</code> in the LDAP configuration file described
+below.</p>
+<h3 id="step-3"><a name="cfg"></a> Step 3</h3>
+<p>Make a copy of the file <code>$OPENCAST_ETC/org.opencastproject.userdirectory.ldap.cfg.template</code> in the same directory and
+rename it as:</p>
+<pre><code>org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg
+</code></pre>
+<p>, where <code>&lt;ID&gt;</code> is a unique identifier for each LDAP connection. This identifier is only use to distinguish between the
+files and is not used internally. It might have any value, but for the sake of clarity, it is recommended to use the
+same value as in the <code>org.opencastproject.userdirectory.ldap.id</code> parameter in the file.</p>
+<h3 id="step-4">Step 4</h3>
+<p>Edit the parameters in the file with your particular configuration. Unfortunately, some of those are duplicated in the
+<code>security.xml</code> file, but this situation cannot currently be avoided.</p>
+<p>The parameters that are exclusive to this <code>.cfg</code> file control the user authorization, i.e. how the roles obtained from
+the LDAP are handled and assigned to the users. Please refer to the documentation in the file itself to know the meaning
+of these parameters and how to use them.</p>
+<p><strong>IMPORTANT</strong>: The <code>org.opencastproject.userdirectory.ldap.id</code> parameter in the file must be configured to the same
+value as the ID of the OSGI reference in the <code>security.xml</code> file above (at the end of the step #2).</p>
+<h2 id="combination-with-existing-authorization-mechanisms">Combination with Existing authorization Mechanisms</h2>
+<p>In the default configuration included in the <code>security_sample_ldap.xml-example</code> file, the LDAP is tried after the
+normal authorization mechanisms (i.e. the database). This means that if a user is present in both the database and the
+LDAP, the database will take precedence. The order is determined by the order in which the authentication providers
+appear on the security file. The relevant snippet is this:</p>
+<pre><code>&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;  # \
+    &lt;sec:password-encoder hash="md5"&gt;                                  # |
+      &lt;sec:salt-source user-property="username" /&gt;                     # -&gt; These lines must be moved as a block
+    &lt;/sec:password-encoder&gt;                                            # |
+  &lt;/sec:authentication-provider&gt;                                       # /
+  &lt;sec:authentication-provider ref="ldapAuthProvider" /&gt;               # The LDAP provider appears in the second position, therefore it is the second provider to consider
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<p>By switching the position of the authentication providers, you will give them more or less priority.</p>
+<h2 id="adding-more-ldap-servers">Adding more LDAP servers</h2>
+<p>More LDAP servers can be added to the configuration by including the LDAP-related sections as many times as necessary
+with their corresponding configurations. The new authentication providers must also be added to the providers list
+at the bottom of the file. Please see the example below:</p>
+<pre><code>&lt;bean id="contextSource"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;!-- URL of the LDAP server --&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;!-- "Distinguished name" for the unprivileged user --&gt;
+  &lt;!-- This user is merely to perform searches in the LDAP to find the users to login --&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;!-- Password of the user above --&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="ldapAuthProvider"
+  class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean
+      class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+      &lt;constructor-arg ref="contextSource" /&gt;
+      &lt;property name="userDnPatterns"&gt;
+        &lt;list&gt;
+          &lt;!-- Dn patterns to search for valid users. Multiple "&lt;value&gt;" tags are allowed --&gt;
+          &lt;value&gt;uid={0},ou=Group,dc=my-institution,dc=country&lt;/value&gt;
+        &lt;/list&gt;
+     &lt;/property&gt;
+     &lt;!-- If your user IDs are not part of the user Dn's, you can use a search filter to find them --&gt;
+     &lt;!-- This property can be used together with the "userDnPatterns" above --&gt;
+     &lt;!--
+     &lt;property name="userSearch"&gt;
+       &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+         &lt; ! - - Base Dn from where the users will be searched for - - &gt;
+         &lt;constructor-arg index="0" value="ou=GroupName,dc=my-institution,dc=country" /&gt;
+         &lt; ! - - Filter to located valid users. Use {0} as a placeholder for the login name - - &gt;
+         &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+         &lt;constructor-arg ref="contextSource" /&gt;
+       &lt;/bean&gt;
+      &lt;/property&gt;
+     --&gt;
+    &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+  &lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
+  &lt;constructor-arg ref="authoritiesPopulator" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- PLEASE NOTE: The ID below must be changed for each context source instance --&gt;
+&lt;bean id="contextSource2"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- PLEASE NOTE: The ID below must be changed for each LDAP authentication provider instance --&gt;
+&lt;bean id="ldapAuthProvider2"
+  class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean
+      class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+      &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
+      &lt;constructor-arg ref="contextSource2" /&gt;
+       &lt;property name="userDnPatterns"&gt;
+        &lt;list&gt;
+          &lt;value&gt;uid={0},ou=OtherGroup,dc=my-other-institution,dc=other-country&lt;/value&gt;
+        &lt;/list&gt;
+       &lt;/property&gt;
+    &lt;property name="userSearch"&gt;
+      &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+        &lt;constructor-arg index="0" value="ou=OtherGroup,dc=my-other-institution,dc=other-country" /&gt;
+        &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+             &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
+        &lt;constructor-arg ref="contextSource2" /&gt;
+         &lt;/bean&gt;
+       &lt;/property&gt;
+     &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+  &lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
+  &lt;!-- PLEASE NOTE: the ref below must match the corresponding authoritiesPopulator --&gt;
+  &lt;constructor-arg ref="authoritiesPopulator2" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- [ ... SKIPPED LINES ... ] --&gt;
+
+&lt;osgi:reference id="authoritiesPopulator" cardinality="1..1"
+                interface="org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator"
+                filter="(instanceId=theId)"/&gt;
+&lt;osgi:reference id="authoritiesPopulator2" cardinality="1..1"
+                interface="org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator"
+                filter="(instanceId=theId2)"/&gt;
+
+&lt;!-- [ ... SKIPPED LINES ... ] --&gt;
+
+&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;
+    &lt;sec:password-encoder hash="md5"&gt;
+      &lt;sec:salt-source user-property="username" /&gt;
+    &lt;/sec:password-encoder&gt;
+  &lt;/sec:authentication-provider&gt;
+  &lt;!-- PLEASE NOTE: In this example, the 2nd LDAP provider defined in the file has more priority that the first one --&gt;
+  &lt;sec:authentication-provider ref="ldapAuthProvider2" /&gt;
+  &lt;sec:authentication-provider ref="ldapAuthProvider" /&gt;
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<p>Then, a separate <code>.cfg</code> must be generated for each of the configured providers, as explained <a href="#cfg">here</a>. Please make
+sure to configure the <code>org.opencastproject.userdirectory.ldap.id</code> parameter correctly. In this case, the values should
+be <code>theId</code> and <code>theId2</code>, respectively.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../security.user.moodle/" class="btn btn-neutral float-right" title="Moodle User Provider">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../security.cas/" class="btn btn-neutral" title="Central Authentication Service (CAS)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../security.cas/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../security.user.moodle/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

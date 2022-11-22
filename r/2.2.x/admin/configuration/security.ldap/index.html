@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>LDAP Authentication and Authorization (without CAS) - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "LDAP Authentication and Authorization (without CAS)";
+    var mkdocs_page_input_path = "configuration/security.ldap.md";
+    var mkdocs_page_url = "/configuration/security.ldap/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">LDAP Authentication and Authorization (without CAS)</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#ldap-authentication-and-authorization-without-cas">LDAP Authentication and Authorization (without CAS)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#authentication">Authentication</a></li>
+        
+            <li><a class="toctree-l5" href="#authorization">Authorization</a></li>
+        
+            <li><a class="toctree-l5" href="#combination-with-existing-authorization-mechanisms">Combination with Existing authorization Mechanisms</a></li>
+        
+            <li><a class="toctree-l5" href="#adding-more-ldap-servers">Adding more LDAP servers</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+        
+          <li>Security &raquo;</li>
+        
+      
+    
+    <li>LDAP Authentication and Authorization (without CAS)</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/configuration/security.ldap.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="ldap-authentication-and-authorization-without-cas">LDAP Authentication and Authorization (without CAS)</h1>
+<blockquote>
+<p><em>This page describes how to use only an LDAP server to authenticate users in Opencast. If you just want to use LDAP</em>
+<em>as an identity provider for another authentication mechanism, such as a CAS server, this guide does not apply to</em>
+<em>you.</em></p>
+<p><em>You may find the instructions to configure an LDAP-backed CAS server <a href="../security.cas/">here</a>.</em></p>
+</blockquote>
+<h2 id="authentication">Authentication</h2>
+<p>In order to authenticate your Opencast users using an LDAP server, you must follow the following steps:</p>
+<h3 id="step-1">Step 1</h3>
+<p>In a single-tenant deployment, your <code>security.xml</code> file is under <code>OPENCAST_HOME/security/mh_default_org.xml</code>. In an
+RPM-based installation, it is located in <code>/etc/opencast/security/mh_default_org.xml</code>. You should make a backup copy of
+the file and substitute it by the sample file named <code>security_sample_ldap.xml-example</code>. In other words:</p>
+<pre><code>$&gt; cd etc/security
+$&gt; mv mh_default_org.xml mh_default_org.xml.old
+$&gt; cp security_sample_ldap.xml-example mh_default_org.xml
+</code></pre>
+<p>The sample file should be exactly the same as the default security file, except for the parts only relevant to the
+LDAP. If you have done custom modifications to your security file, make sure to incorporate them to the new file, too.</p>
+<h3 id="step-2">Step 2</h3>
+<p>Add the necessary configuration values to the LDAP section of the new security file. The comments should be
+self-explanatory.</p>
+<p>The first relevant section defines a context source. This contains the basic login information that enables Opencast to
+request user information to the LDAP server in order to authenticate them.</p>
+<pre><code>&lt;bean id="contextSource"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;!-- URL of the LDAP server --&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;!-- "Distinguished name" for the unprivileged user --&gt;
+  &lt;!-- This user is merely to perform searches in the LDAP to find the users to login --&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;!-- Password of the user above --&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>The next part tells the system how to search for users in the LDAP server:</p>
+<pre><code>&lt;constructor-arg&gt;
+  &lt;bean class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+    &lt;constructor-arg ref="contextSource" /&gt;
+    &lt;property name="userDnPatterns"&gt;
+      &lt;list&gt;
+        &lt;!-- Dn patterns to search for valid users. Multiple "&lt;value&gt;" tags are allowed --&gt;
+        &lt;value&gt;uid={0},ou=Group,dc=my-institution,dc=country&lt;/value&gt;
+      &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;!-- If your user IDs are not part of the user Dn's, you can use a search filter to find them --&gt;
+    &lt;!-- This property can be used together with the "userDnPatterns" above --&gt;
+    &lt;!--
+    &lt;property name="userSearch"&gt;
+      &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+        &lt; ! - - Base Dn from where the users will be searched for - - &gt;
+        &lt;constructor-arg index="0" value="ou=GroupName,dc=my-institution,dc=country" /&gt;
+        &lt; ! - - Filter to located valid users. Use {0} as a placeholder for the login name - - &gt;
+        &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+        &lt;constructor-arg ref="contextSource" /&gt;
+      &lt;/bean&gt;
+    &lt;/property&gt;
+    --&gt;
+  &lt;/bean&gt;
+&lt;/constructor-arg&gt;
+</code></pre>
+<p>As the previous snippet shows, there are two alternative ways to find users in your LDAP:</p>
+<ul>
+<li><strong>Using the property userDnPatterns:</strong> This property accepts a list of search patterns to match against the user's
+DN. The patterns will be tried in order until a match is found. The placeholder <code>{0}</code> can be used to represent the
+username in such patterns.</li>
+<li><strong>Using a userSearch filter:</strong> With the previous approach, it is not possible to find users whose login name is not
+part of their DN. In such cases, you can use the userSearch property, that allows you to search the users based on a
+filter. The filter requires three parameters:<ul>
+<li>The first parameter specifies the "root node" where the searches will start from.</li>
+<li>The second one specifies the filter, where, again, the placeholder <code>{0}</code> will be substituted by the username
+during the searches.</li>
+<li>The third parameter should be the contextSource defined above.</li>
+</ul>
+</li>
+</ul>
+<p>Both methods are not mutually exclusive --i.e. both can be activated at the same time, even though only the first one
+is uncommented in the sample file because it is the most usual.</p>
+<h2 id="authorization">Authorization</h2>
+<p>Now the system knows all the information necessary to authenticate users against the LDAP, but also need some
+authorization information, to tell which services the user is allowed to use and which resources is allowed to see
+and/or modify.</p>
+<h3 id="step-1_1">Step 1</h3>
+<p>The following snippet in the <code>security.xml</code> file provides the necessary information to map LDAP attributes to roles
+during authentication and in single-machine environments.</p>
+<pre><code>&lt;constructor-arg&gt;
+  &lt;!-- Get the authorities (roles) according to a certain attribute in the authenticated user --&gt;
+  &lt;bean class="org.opencastproject.kernel.userdirectory.LdapAttributeAuthoritiesPopulator"&gt;
+    &lt;constructor-arg&gt;
+      &lt;!-- List of attribute names in the user from which roles will be created --&gt;
+      &lt;!-- The specified attributes must meet few requirements:
+             * They may be single-valued or multivalued
+             * They may contain single roles or comma-separated role lists
+
+           The attributes read will be processed in the following way:
+             * Whitespace will converted to underscores ("_")
+             * Sequences of underscores ("_") will be collapsed into a single one.
+      --&gt;
+      &lt;list&gt;
+        &lt;value&gt;attributeName1&lt;/value&gt;
+        &lt;value&gt;attributeName2&lt;/value&gt;
+      &lt;/list&gt;
+    &lt;/constructor-arg&gt;
+    &lt;!-- Whether or not to make all the extracted roles uppercase. 'true' by default. --&gt;
+    &lt;!-- &lt;property name="convertToUpperCase" value="true"/&gt; --&gt;
+
+    &lt;!-- Define a prefix to be appended to every role extracted from the LDAP. --&gt;
+    &lt;!-- The convertToUpperCase property also affects the prefix --&gt;
+    &lt;!-- &lt;property name="rolePrefix" value=""/&gt; --&gt;
+
+    &lt;!-- Additional roles that will be added to those obtained from the attributes above --&gt;
+    &lt;!-- The convertToUpperCase and rolePrefix properties also affect the roles indicated here--&gt;
+    &lt;!-- &lt;property name="additionalAuthorities"&gt;
+      &lt;set&gt;
+        &lt;value&gt;additional_authority_1&lt;/value&gt;
+        &lt;value&gt;additional_authority_2&lt;/value&gt;
+      &lt;/set&gt;
+    &lt;/property&gt; --&gt;
+  &lt;/bean&gt;
+&lt;/constructor-arg&gt;
+</code></pre>
+<p>As you can see, the sample file is quite self-explanatory: a list of attribute names is provided, each of which will
+contain the roles this user will be assigned to. These attributes may be multivalued (i.e. they may appear several
+times in the user) and/or they may contain a comma-separated list of roles. The syntax of the roles found will be
+checked so that they contain no whitespaces (they will be substituted by underscore characters  -"_"-) and all the
+resulting underscore sequences will be collapsed to a single character. The resulting roles will be converted to
+uppercase and finally assigned to the user.</p>
+<p>Apart from the previous processing, a series of properties may be used to further customize the role syntax. In
+particular, a prefix can be defined, which will be appended to every role obtained using the process described above.
+The role capitalisation can also be disabled if desired.</p>
+<p>Finally, it is possible to define an additional set of roles that will be appended to the list obtained by inspecting
+the LDAP according to the configuration. In other words, every user will have, at least, the roles defined in this
+list. The roles will be processed in the same way as the roles obtained from the LDAP server.</p>
+<h3 id="step-2_1">Step 2</h3>
+<blockquote>
+<p><em>This step is only necessary in Opencast deployments along multiple machines.</em></p>
+</blockquote>
+<p>Edit the file <code>etc/org.opencastproject.userdirectory.ldap.cfg</code> and include the same authentication
+parameters as in the <code>security.xml</code> file. The contents should be self-explanatory:</p>
+<pre><code># In order to configure one or more LDAP configurations, set the "instances" field to the correct value
+# and add the property keys by appending the respective number to it.
+instances=0
+
+#
+# The property keys that can be used when setting up LDAP connections.  Be careful not to include spaces.
+#
+keys=org.opencastproject.userdirectory.ldap.url,org.opencastproject.userdirectory.ldap.searchbase,\
+org.opencastproject.userdirectory.ldap.searchfilter,org.opencastproject.userdirectory.ldap.cache.size,\
+ org.opencastproject.userdirectory.ldap.cache.expiration,org.opencastproject.userdirectory.ldap.roleattributes,\
+org.opencastproject.userdirectory.ldap.org
+
+#
+# First sample configuration
+#
+
+# The URL to the LDAP server
+#org.opencastproject.userdirectory.ldap.url.1=ldap://ldap.berkeley.edu
+
+# The user and password used for LDAP authentication.  If left commented, the LDAP provider will use an anonymous bind.
+# If uncommenting these, add them to the keys at the bottom of this file.
+#org.opencastproject.userdirectory.ldap.userDn.1=
+#org.opencastproject.userdirectory.ldap.password.1=
+
+# The base path within LDAP to search for users
+#org.opencastproject.userdirectory.ldap.searchbase.1=ou=people,dc=berkeley,dc=edu
+
+# The search filter to use for identifying users by ID
+#org.opencastproject.userdirectory.ldap.searchfilter.1=(uid={0})
+
+# The maximum number of users to cache
+#org.opencastproject.userdirectory.ldap.cache.size.1=1000
+
+# The maximum number of minutes to cache a user
+#org.opencastproject.userdirectory.ldap.cache.expiration.1=5
+
+# The comma-separated list of attributes that will be translated into roles. Note that the attributes will be prefixed
+# with the string "ROLE_" and the attribute value will be transformed to upper case.
+#org.opencastproject.userdirectory.ldap.roleattributes.1=berkeleyEduAffiliations,departmentNumber
+
+# The organization for this provider
+#org.opencastproject.userdirectory.ldap.org.1=mh_default_org
+</code></pre>
+<h2 id="combination-with-existing-authorization-mechanisms">Combination with Existing authorization Mechanisms</h2>
+<p>In the default configuration included in the <code>security_sample_ldap.xml-example</code> file, the LDAP is tried after the
+normal authorization mechanisms (i.e. the database). This means that if a user is present in both the database and the
+LDAP, the database will take precedence. The order is determined by the order in which the authentication providers
+appear on the security file. The relevant snippet is this:</p>
+<pre><code>&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;  # \
+    &lt;sec:password-encoder hash="md5"&gt;                                  # |
+      &lt;sec:salt-source user-property="username" /&gt;                     # -&gt; These lines must be moved as a block
+    &lt;/sec:password-encoder&gt;                                            # |
+  &lt;/sec:authentication-provider&gt;                                       # /
+  &lt;sec:authentication-provider ref="ldapAuthProvider" /&gt;               # The LDAP provider appears in the second position, therefore it is the second provider to consider
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<p>By switching the position of the authentication providers, you will give them more or less priority.</p>
+<h2 id="adding-more-ldap-servers">Adding more LDAP servers</h2>
+<p>More LDAP servers can be added to the configuration by including the LDAP-related sections as many times as necessary
+with their corresponding configurations. All the defined authentication providers must be added to the providers list
+at the bottom of the file. Please see the example below:</p>
+<pre><code>&lt;bean id="contextSource"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;!-- URL of the LDAP server --&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;!-- "Distinguished name" for the unprivileged user --&gt;
+  &lt;!-- This user is merely to perform searches in the LDAP to find the users to login --&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;!-- Password of the user above --&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="ldapAuthProvider"
+  class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean
+      class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+      &lt;constructor-arg ref="contextSource" /&gt;
+      &lt;property name="userDnPatterns"&gt;
+        &lt;list&gt;
+          &lt;!-- Dn patterns to search for valid users. Multiple "&lt;value&gt;" tags are allowed --&gt;
+          &lt;value&gt;uid={0},ou=Group,dc=my-institution,dc=country&lt;/value&gt;
+        &lt;/list&gt;
+     &lt;/property&gt;
+     &lt;!-- If your user IDs are not part of the user Dn's, you can use a search filter to find them --&gt;
+     &lt;!-- This property can be used together with the "userDnPatterns" above --&gt;
+     &lt;!--
+     &lt;property name="userSearch"&gt;
+       &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+         &lt; ! - - Base Dn from where the users will be searched for - - &gt;
+         &lt;constructor-arg index="0" value="ou=GroupName,dc=my-institution,dc=country" /&gt;
+         &lt; ! - - Filter to located valid users. Use {0} as a placeholder for the login name - - &gt;
+         &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+         &lt;constructor-arg ref="contextSource" /&gt;
+       &lt;/bean&gt;
+      &lt;/property&gt;
+     --&gt;
+    &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+  &lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
+  &lt;constructor-arg&gt;
+    &lt;!-- Get the authorities (roles) according to a certain attribute in the authenticated user --&gt;
+    &lt;bean class="org.opencastproject.kernel.userdirectory.LdapAttributeAuthoritiesPopulator"&gt;
+      &lt;constructor-arg&gt;
+        &lt;!-- List of attribute names in the user from which roles will be created --&gt;
+        &lt;!-- The specified attributes must meet few requirements:
+               * They may be single-valued or multivalued
+               * They may contain single roles or comma-separated role lists
+
+          The attributes read will be processed in the following way:
+               * Whitespace will converted to underscores ("_")
+               * Sequences of underscores ("_") will be collapsed into a single one.
+        --&gt;
+        &lt;list&gt;
+          &lt;value&gt;attributeName1&lt;/value&gt;
+          &lt;value&gt;attributeName2&lt;/value&gt;
+        &lt;/list&gt;
+      &lt;/constructor-arg&gt;
+      &lt;!-- Whether or not to make all the extracted roles uppercase. 'true' by default. --&gt;
+      &lt;!-- &lt;property name="convertToUpperCase" value="true"/&gt; --&gt;
+
+      &lt;!-- Define a prefix to be appended to every role extracted from the LDAP. --&gt;
+      &lt;!-- The convertToUpperCase property also affects the prefix --&gt;
+      &lt;!-- &lt;property name="rolePrefix" value=""/&gt; --&gt;
+
+      &lt;!-- Additional roles that will be added to those obtained from the attributes above --&gt;
+      &lt;!-- The convertToUpperCase and rolePrefix properties also affect the roles indicated here--&gt;
+      &lt;!-- &lt;property name="additionalAuthorities"&gt;
+        &lt;set&gt;
+          &lt;value&gt;additional_authority_1&lt;/value&gt;
+          &lt;value&gt;additional_authority_2&lt;/value&gt;
+        &lt;/set&gt;
+      &lt;/property&gt;
+      --&gt;
+    &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+&lt;/bean&gt;
+
+&lt;!-- PLEASE NOTE: The ID below must be changed for each context source instance --&gt;
+&lt;bean id="contextSource2"
+  class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+  &lt;constructor-arg value="ldap://myldapserver:myport" /&gt;
+  &lt;property name="userDn" value="uid=user-id,ou=GroupName,dc=my-institution,dc=country" /&gt;
+  &lt;property name="password" value="mypassword" /&gt;
+&lt;/bean&gt;
+
+&lt;!-- PLEASE NOTE: The ID below must be changed for each LDAP authentication provider instance --&gt;
+&lt;bean id="ldapAuthProvider2"
+  class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean
+      class="org.springframework.security.ldap.authentication.BindAuthenticator"&gt;
+      &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
+      &lt;constructor-arg ref="contextSource2" /&gt;
+       &lt;property name="userDnPatterns"&gt;
+        &lt;list&gt;
+          &lt;value&gt;uid={0},ou=OtherGroup,dc=my-other-institution,dc=other-country&lt;/value&gt;
+        &lt;/list&gt;
+       &lt;/property&gt;
+    &lt;property name="userSearch"&gt;
+      &lt;bean name="filterUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+        &lt;constructor-arg index="0" value="ou=OtherGroup,dc=my-other-institution,dc=other-country" /&gt;
+        &lt;constructor-arg index="1" value="(uid={0})" /&gt;
+             &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
+        &lt;constructor-arg ref="contextSource2" /&gt;
+         &lt;/bean&gt;
+       &lt;/property&gt;
+     &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean class="org.opencastproject.kernel.userdirectory.LdapAttributeAuthoritiesPopulator"&gt;
+      &lt;constructor-arg&gt;
+        &lt;list&gt;
+          &lt;value&gt;otherAttributeName1&lt;/value&gt;
+          &lt;value&gt;otherAttributeName2&lt;/value&gt;
+        &lt;/list&gt;
+      &lt;/constructor-arg&gt;
+   &lt;property name="rolePrefix" value="my_prefix_"/&gt;
+   &lt;property name="additionalAuthorities"&gt;
+     &lt;set&gt;
+       &lt;value&gt;default_role_1&lt;/value&gt;
+       &lt;value&gt;default_role_2&lt;/value&gt;
+     &lt;/set&gt;
+   &lt;/property&gt;
+    &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+&lt;/bean&gt;
+
+&lt;!-- [ ... SKIPPED LINES ... ] --&gt;
+
+&lt;sec:authentication-manager alias="authenticationManager"&gt;
+  &lt;sec:authentication-provider user-service-ref="userDetailsService"&gt;
+    &lt;sec:password-encoder hash="md5"&gt;
+      &lt;sec:salt-source user-property="username" /&gt;
+    &lt;/sec:password-encoder&gt;
+  &lt;/sec:authentication-provider&gt;
+  &lt;!-- PLEASE NOTE: In this example, the 2nd LDAP provider defined in the file has more priority that the first one --&gt;
+  &lt;sec:authentication-provider ref="ldapAuthProvider2" /&gt;
+  &lt;sec:authentication-provider ref="ldapAuthProvider" /&gt;
+&lt;/sec:authentication-manager&gt;
+</code></pre>
+<p>In multi-machine installations, remember to include the additional LDAP server(s) in the
+<code>etc/factories/org.opencastproject.userdirectory.ldap.properties</code> file.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../stream-security/" class="btn btn-neutral float-right" title="Stream Security">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../security.cas/" class="btn btn-neutral" title="Central Authentication Service (CAS)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../security.cas/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../stream-security/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

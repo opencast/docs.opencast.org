@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Composite - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Composite";
+    var mkdocs_page_input_path = "workflowoperationhandlers/composite-woh.md";
+    var mkdocs_page_url = "/workflowoperationhandlers/composite-woh/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../upgrade/">Upgrade</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Source</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Debian/Ubuntu</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/source-macosx/">MacOS X</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Installation from Package (RPM)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-fedora/">Fedora</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RHEL/CentOS</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/metadata/">Metadata</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/load/">Load</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security/">General Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.cas/">Central Authentication Service (CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/security.ldap/">LDAP Authentication and Authorization (without CAS)</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/stream-security/">Stream Security</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../configuration/acl/">Access Control Lists</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/external-api/">External API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS Feed</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/ltimodule/">LTI Module</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Player</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.configuration/">Configuration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/player.url.parameter/">URL Parameters</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/stream-security/">Stream Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Video Editor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Setup</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Architecture</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube Publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handler</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyze-tracks-woh/">Analyze Tracks</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analyzeaudio-woh/">Analyze Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../archive-woh/">Archive</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cleanup-woh/">Cleanup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../comment-woh/">Comment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../compose-woh/">Compose</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Composite</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#composite-workflow-operation-handler">Composite Workflow Operation Handler</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#description">Description</a></li>
+        
+            <li><a class="toctree-l4" href="#parameter-table">Parameter Table</a></li>
+        
+            <li><a class="toctree-l4" href="#layout-definition">Layout Definition</a></li>
+        
+            <li><a class="toctree-l4" href="#operation-example">Operation Example</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../concat-woh/">Concat</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../copy-woh/">Copy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../coverimage-woh/">Cover Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../defaults-woh/">Defaults</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editor-woh/">Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../email-woh/">Email</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encode-woh/">Encode</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../export-wf-properties-woh/">Export Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../extracttext-woh/">Extract Text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../httpnotify-woh/">HTTP Notify</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image-woh/">Image</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../imagetovideo-woh/">Image to Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../import-wf-properties-woh/">Import Workflow Properties</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../incident-woh/">Incident</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ingestdownload-woh/">Ingest-Download</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../inspect-woh/">Inspect</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalizeaudio-woh/">Normalize Audio</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partial-import-woh/">Partial Import</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../postmediapackage-woh/">Post Media Package</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../prepareav-woh/">Prepare A/V</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publishconfigure-woh/">Publish Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../publishengage-woh/">Publish Engage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../retractconfigure-woh/">Retract Configure</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentpreviews-woh/">Segment Previews</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../segmentvideo-woh/">Segment Video</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../series-woh/">Series</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../silence-woh/">Silence</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tag-woh/">Tag</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../theme-woh/">Theme</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../waveform-woh/">Waveform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../zip-woh/">Zip</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Workflow Operation Handler &raquo;</li>
+        
+      
+    
+    <li>Composite</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/workflowoperationhandlers/composite-woh.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="composite-workflow-operation-handler">Composite Workflow Operation Handler</h1>
+<h2 id="description">Description</h2>
+<p>The CompositeWorkflowOperationHandler is used to composite two videos (upper and lower) and an optional watermark into
+one video, including encoding to different formats. The audio track is always taken from the lower video. Everything is
+done using FFmpeg. The composition can be done in various layout formats e.g. side by side or picture in picture. The
+layout has to be defined in JSON format and is described in section "Layout Definition". For some general information
+about layouts see Opencast Composer Layout Module.</p>
+<p>The internal ffmpeg command is using the following filters: scale for scaling the videos, pad for defining the output
+dimension including the background color, movie for adding additional videos and images and overlay for aligning the
+videos and images to the output dimension. More info can be found here: https://trac.ffmpeg.org/wiki/FilteringGuide</p>
+<h3 id="sample-complex-composite-filter-command">Sample complex composite filter command</h3>
+<pre><code>-filter:v "[in]scale=640:480,pad=1920:1080:20:20:black[lower];movie=test.mp4,scale=640:480[upper];movie=watermark.jpg[watermark];[lower][upper]overlay=200:200[video];[video][watermark]overlay=main_w-overlay_w-20:20[out]" sidebyside.mp4
+</code></pre>
+<h2 id="parameter-table">Parameter Table</h2>
+<p>Tags and flavors can be used in combination.</p>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>value type (EBNF)</th>
+<th>example</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-tags-upper</td>
+<td>String , { "," , String }</td>
+<td>comp,rss</td>
+<td>The "tag" of the upper track to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-flavor-upper</td>
+<td>MediaPackageElementFlavor</td>
+<td>presenter/trimmed</td>
+<td>The "flavor" of the upper track to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-tags-lower</td>
+<td>String , { "," , String }</td>
+<td>comp,rss</td>
+<td>The "tag" of the lower track to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-flavor-lower</td>
+<td>MediaPackageElementFlavor</td>
+<td>presenter/trimmed</td>
+<td>The "flavor" of the lower track to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-tags-watermark</td>
+<td>String , { "," , String }</td>
+<td>branding</td>
+<td>The "tag" of the attachment image to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-flavor-watermark</td>
+<td>MediaPackageElementFlavor</td>
+<td>image/work</td>
+<td>The "flavor" of the attachment image to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>source-url-watermark</td>
+<td>URL</td>
+<td>file:///Users/me/logo.jpg</td>
+<td>The "URL" of the fallback image to use as a source input.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>String , { "," , String }</td>
+<td>composite,rss,atom,archive</td>
+<td>The tags to apply to the compound video track.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>* <strong>target-flavor</strong></td>
+<td>MediaPackageElementFlavor</td>
+<td>composite/delivery</td>
+<td>The flavor to apply to the compound video track.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>* <strong>encoding-profile</strong></td>
+<td>String</td>
+<td>composite</td>
+<td>The encoding profile to use.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>* <strong>output-resolution</strong></td>
+<td>width , "x" , height</td>
+<td>1900x1080</td>
+<td>The resulting resolution of the compound video e.g. 1900x1080.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>output-background</td>
+<td>String</td>
+<td>red</td>
+<td>The resulting background color of the compound video http://www.ffmpeg.org/ffmpeg-utils.html#Color.</td>
+<td>black</td>
+</tr>
+<tr>
+<td>layout</td>
+<td>name</td>
+<td>Json , ";" , Json , [ ";" , Json ]</td>
+<td>The layout name to use or a semi-colon separated JSON layout definition (lower video, upper video, optional watermark). If a layout name is given than the corresponding layout-{name} key must be defined.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>layout-single</td>
+<td>name</td>
+<td>Json , ";" , Json , [ ";" , Json ]</td>
+<td>Layout to be used in case of one input video track (see <em>layout</em>)</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>layout-dual</td>
+<td>name</td>
+<td>Json , ";" , Json , [ ";" , Json ]</td>
+<td>Layout to be used in case of two input video tracks (see <em>layout</em>). Defaults to value of <em>layout</em> if not set.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>layout-{name}</td>
+<td>Json , ";" , Json , [ ";" , Json ]</td>
+<td>Define semi-colon separated JSON layouts (lower video, upper video, optional watermark) to provide by name.</td>
+<td>EMPTY</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>* <strong>mandatory</strong></p>
+<p>Notes:</p>
+<ul>
+<li>At least one of the configuration keys <em>layout</em>, <em>layout-single</em>, or <em>layout-multiple</em> must be set</li>
+</ul>
+<h2 id="layout-definition">Layout Definition</h2>
+<p>The layout definitions are provided as JSON. Each definition consist of the layout specifications for the lower and
+upper video and an optional specification for the watermark. The specifications have to be separated by comma.</p>
+<p><strong>It is always ensured that the media does not exceed the canvas. Offset and scaling is adjusted appropriately.</strong></p>
+<p>A single layout is specified as follows:</p>
+<pre><code>{
+  // How much of the canvas shall be covered. [0.0 - 1.0]
+  // 1.0 means that the media is scaled to cover the complete width of the canvas keeping the aspect ratio.
+  "horizontalCoverage": Double,
+  // The offset between the anchor points of the media and the canvas
+  "anchorOffset": {
+    // The anchor point of the media. [0.0 - 1.0]
+    // (0.0, 0.0) is the upper left corner, (1.0, 1.0) is the lower right corner.
+    // (0.5, 0.5) is the center.
+    "referring": {
+      "left": Double,
+      "top": Double
+    },
+    // The anchor point of the canvas.
+    "reference": {
+      "left": Double,
+      "top": Double
+    },
+    // The offset between the two anchor points.
+    "offset": {
+      "y": Integer,
+      "x": Integer
+    }
+  }
+}
+
+// Example.
+// The media is scaled to cover the whole width of the canvas and is placed in the upper left corner.
+{
+  "horizontalCoverage": 1.0,
+  "anchorOffset": {
+    "referring": {
+      "left": 0.0,
+      "top": 0.0
+    },
+    "offset": {
+      "y": 0,
+      "x": 0
+    },
+    "reference": {
+      "left": 0.0,
+      "top": 0.0
+    }
+  }
+}
+
+// Example.
+// The media is scaled to cover 20% of the width of the canvas and is placed in the lower right corner
+// with an offset of -10px on both x and y axis so that it does not touch the canvas' border.
+{
+  "horizontalCoverage": 0.2,
+  "anchorOffset": {
+    "referring": {
+      "left": 1.0,
+      "top": 1.0
+    },
+    "offset": {
+      "y": -10,
+      "x": -10
+    },
+    "reference": {
+      "left": 1.0,
+      "top": 1.0
+    }
+  }
+}
+</code></pre>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="composite"
+  fail-on-error="true"
+  exception-handler-workflow="error"
+  description="Composite"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor-upper"&gt;presentation/trimmed&lt;/configuration&gt;
+    &lt;configuration key="source-flavor-lower"&gt;presenter/trimmed&lt;/configuration&gt;
+    &lt;configuration key="source-tags-upper"&gt;comp,rss&lt;/configuration&gt;
+    &lt;configuration key="source-tags-lower"&gt;comp,rss&lt;/configuration&gt;
+    &lt;configuration key="source-tags-watermark"&gt;branding&lt;/configuration&gt;
+    &lt;configuration key="source-flavor-watermark"&gt;image/work&lt;/configuration&gt;
+    &lt;configuration key="source-url-watermark"&gt;file:///Users/me/logo.jpg&lt;/configuration&gt;
+    &lt;configuration key="encoding-profile"&gt;composite&lt;/configuration&gt;
+    &lt;configuration key="target-tags"&gt;composite,rss,atom,archive&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;composite/delivery&lt;/configuration&gt;
+    &lt;configuration key="output-resolution"&gt;1900x1080&lt;/configuration&gt;
+    &lt;configuration key="output-background"&gt;red&lt;/configuration&gt;
+    &lt;configuration key="layout"&gt;topleft&lt;/configuration&gt;
+    &lt;configuration key="layout-topleft"&gt;
+      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":1.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":1.0}}};
+      {"horizontalCoverage":0.2,"anchorOffset":{"referring":{"left":0.0,"top":0.0},"offset":{"y":-20,"x":-20},"reference":{"left":0.0,"top":0.0}}};
+      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":0.0},"offset":{"y":20,"x":20},"reference":{"left":1.0,"top":0.0}}}
+    &lt;/configuration&gt;
+    &lt;configuration key="layout-topright"&gt;
+      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":1.0,"top":1.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":1.0}}};
+      {"horizontalCoverage":0.2,"anchorOffset":{"referring":{"left":1.0,"top":0.0},"offset":{"y":-20,"x":-20},"reference":{"left":1.0,"top":0.0}}};
+      {"horizontalCoverage":1.0,"anchorOffset":{"referring":{"left":0.0,"top":0.0},"offset":{"y":20,"x":20},"reference":{"left":0.0,"top":0.0}}}
+    &lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../concat-woh/" class="btn btn-neutral float-right" title="Concat">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../compose-woh/" class="btn btn-neutral" title="Compose"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../compose-woh/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../concat-woh/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

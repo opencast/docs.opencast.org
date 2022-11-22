@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Notes - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Opencast 6: Release Notes", url: "#_top", children: [
+              {title: "New Features", url: "#new-features" },
+              {title: "Improvements", url: "#improvements" },
+              {title: "Configuration changes", url: "#configuration-changes" },
+              {title: "Additional Notes about 6.1", url: "#additional-notes-about-61" },
+              {title: "Additional Notes about 6.2", url: "#additional-notes-about-62" },
+              {title: "Additional Notes about 6.3", url: "#additional-notes-about-63" },
+              {title: "Additional Notes about 6.4", url: "#additional-notes-about-64" },
+              {title: "Additional Notes about 6.5", url: "#additional-notes-about-65" },
+              {title: "Additional Notes about 6.6", url: "#additional-notes-about-66" },
+              {title: "Release Schedule", url: "#release-schedule" },
+              {title: "Release Managers", url: "#release-managers" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-6-release-notes">Opencast 6: Release Notes</h1>
+<h2 id="new-features">New Features</h2>
+<ul>
+<li>
+<p><strong>Asset Manager Storage Layers</strong> - The Asset Manager now supports multiple storage layers natively.  This allows
+  users to move data from local storage to remote storage within Opencast.  These moves can be triggered manually, or
+  via a built-in timer.  Currently we support local file storage, and AWS S3 storage.</p>
+</li>
+<li>
+<p><strong>Video Editor - Thumbnails</strong> - When displaying lists of videos, thumbnails are usually used to make such lists more
+  appealing. The video editor allows the user to choose between the default thumbnail (automatically created), a
+  snapshot thumbnail (extract at current position from video stream) or an uploaded thumbnail.  This allows the user to
+  get the best thumbnails for his videos with as little effort as possible.</p>
+</li>
+<li>
+<p><strong>Video Editor - Track selection</strong> - In case multiple tracks have been ingested, the video editor allows the user to
+  choose which tracks should be processed. In case of a dual track lecture recording, the presenter track could be
+  exluded from publication in case the recorded person would want this.</p>
+</li>
+<li>
+<p><strong>Keyboard Shortcuts</strong> - A per page keyboard shortcut list is available so that users can at any time and page see
+  what keyboard shortcuts are currenlty available.</p>
+</li>
+<li>
+<p><strong>External API 1.1.0</strong> - For the first time, Opencast takes advantage of its state-of-the-art versioned API by
+  introducing the External API 1.1.0.  The new version extends the API to support scheduling of events and access to
+  workflows.  The filter and sort facilities have been extended and additional fields are directly delivered by some
+  core requests with allows clients to access them way faster.  The External API 1.0.0 is still supported relieving
+  existing clients from the need to be timely adapted.</p>
+</li>
+<li>
+<p><strong>Processing Settings Persistency</strong> - A new persistence layer for processing settings has been introduced. This allows
+  the Admin UI to not just provide processing settings as input when starting workflows, but also to display processing
+  settings on event basis.</p>
+</li>
+<li>
+<p><strong>Capture Agent Access Management</strong> - The Admin UI now supports access management for capture agents. This features
+  addresses the need to allow unprivileged users to access the Admin UI to manage their own content and cut videos
+  without allowing them to schedule events or change the scheduling as this task is usually in the responsibility of a
+  dedicated team.  It is also possible to permit users access to specific subsets of the available capture agents.</p>
+</li>
+<li>
+<p><strong>New Workflow Operation Handler</strong></p>
+<ul>
+<li><strong>demux</strong> can be used to demux multiple streams from a container into seperate containers</li>
+<li><strong>image-convert</strong> can convert multiple source images into multiple target images with different encoding</li>
+<li><strong>mattermost-notify</strong> sends notification to services like Mattermost or Slack</li>
+<li><strong>move-to-remote</strong> moves files in the asset manager from one storage system to another</li>
+<li><strong>multi-encode</strong> allows encoding of multiple source tracks into multiple target tracks with differnet encoding</li>
+<li><strong>process-smil</strong> edits media files based on descriptions from a SMIL file</li>
+<li><strong>select-tracks</strong> can filter source tracks based on workflow properties</li>
+<li><strong>start-workflow</strong> allows a workflow to start another workflow</li>
+</ul>
+</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<p>A non-comprehensive list of improvements:</p>
+<ul>
+<li>The event counters are now fully configurable</li>
+<li>Workflows can be stopped and deleted in the Admin UI</li>
+<li>Multiple scheduled events can be edited at once</li>
+<li>Deleting Series now warns if series contains events. You can configure if the user is allowed to
+  delete a series containing events in the series endpoint config file.</li>
+<li>The video editor can be opened while an event is processed</li>
+<li>Add Moodle groups to Moodle role provider</li>
+<li>The order of appearance of workflows can be configured</li>
+<li>Ability to send HTML emails</li>
+<li>Ability for blacklisting languages from the admin UI</li>
+<li>Update LTI Series Tool</li>
+<li>Pre-fill creator metadata field with actual user when creating a new event</li>
+<li>Video editor improvements</li>
+<li>Intuitive Merging of Video Segments</li>
+<li>Add new modal to edit multiple scheduled events at once</li>
+<li>Add ability to hide read-only series and events for unprivileged users</li>
+<li>Lossless Concat Operation</li>
+<li>Update Paella Player to 6.0.x</li>
+</ul>
+<h2 id="configuration-changes">Configuration changes</h2>
+<ul>
+<li>
+<p>The tracking options defaults have changed to be more aware of the European Union's General Data Protection
+  Regulation. Note that this is <a href="../configuration/user-statistics.and.privacy/">still configurable</a>.</p>
+</li>
+<li>
+<p>The role <code>ROLE_UI_EVENTS_DETAILS_GENERAL_VIEW</code> for viewing the publications (previously general) tab in the event
+  details modal has been renamed to <code>ROLE_UI_EVENTS_DETAILS_PUBLICATIONS_VIEW</code> for consistency.</p>
+</li>
+<li>
+<p>The introduction of capture agent access management implies that unprivileged users do not have access to any capture
+  agents by default.  To allow otherwise unprivileged users to interact with event scheduling, you need to configure
+  their access permissions appropriately. For more details, take a look at the <a href="../../user/advanced/capture-agent-access/">capture agent access management
+  documentation</a>.</p>
+</li>
+</ul>
+<h2 id="additional-notes-about-61">Additional Notes about 6.1</h2>
+<p>Opencast 6.1 contains a number of bug fixes, some of which are security relevant. The following known vulnerabilities
+within Opencast's <code>com.fasterxml.jackson.core:jackson-databind</code> dependency have been fixed by this release:
+<code>CVE-2018-19361</code>, <code>CVE-2018-19362</code>, <code>CVE-2018-19360</code>.</p>
+<h2 id="additional-notes-about-62">Additional Notes about 6.2</h2>
+<p>Opencast 6.2 contains a number of bug fixes for the Opencast 6.x line of releases.</p>
+<h2 id="additional-notes-about-63">Additional Notes about 6.3</h2>
+<p>Opencast 6.3 contains a number of performance improvements and additional minor bug fixes for the Opencast 6.x line of
+releases.</p>
+<h2 id="additional-notes-about-64">Additional Notes about 6.4</h2>
+<p>Opencast 6.4 contains a number of bug fixes, some of which are security relevant. The following known vulnerability
+within Opencast's <code>org.springframework.security.oauth:spring-security-oauth</code> dependency have been fixed by this release:
+<code>CVE-2019-3778</code>.</p>
+<h2 id="additional-notes-about-65">Additional Notes about 6.5</h2>
+<p>Opencast 6.5 contains a change to the job dispatching logic, which will change how your cluster dispatches jobs to its
+workers.  This change means that workers with a higher maximum load will absorb more work before workers with lower
+maximum loads will accept heavy workloads.  This change does not require any configuration changes, however you may
+notice large changes in processing load distribution depending on your cluster configuration.</p>
+<h2 id="additional-notes-about-66">Additional Notes about 6.6</h2>
+<p>Opencast 6.6 fixes a bug in the video editor configuration present in Opencast 6.5 which will cause Opencast to always
+silently skip the video editor and publish the whole video. The problem was introduced by <a href="https://github.com/opencast/opencast/pull/944">a fix in the default
+workflows</a> and later fixed again by a <a href="https://github.com/opencast/opencast/pull/1013">configuration change therein
+</a>. If you use the default workflows, please make sure to update to the
+latest state of the workflows.</p>
+<p>If you use your own workflow and did not adapt the first patch, you should not be affected by this problem at all. If
+you are, just make sure that source and target smil flavor for the editor workflow operation are identical like it is
+ensured <a href="https://github.com/opencast/opencast/pull/1013">by the official fix</a>. A proper solution not relying on specific
+configurations and less error prone is in work and will be added to the upcoming major Opencast release.</p>
+<h2 id="release-schedule">Release Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sep 25th 2018</td>
+<td>Feature Freeze</td>
+</tr>
+<tr>
+<td>Oct 29th - Nov 4th 2018</td>
+<td>Translation week</td>
+</tr>
+<tr>
+<td>Nov 5th - Nov 18th 2018</td>
+<td>Public QA phase</td>
+</tr>
+<tr>
+<td>Dec 10th 2018</td>
+<td>Release of Opencast 6.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="release-managers">Release Managers</h2>
+<ul>
+<li>Matthias Neugebauer (University of Münster)</li>
+<li>Lars Kiesow (ELAN e.V.)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/releasenotes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

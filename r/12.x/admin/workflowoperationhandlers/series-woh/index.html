@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Series - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Series Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Allowed Namespaces", url: "#allowed-namespaces" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../send-email-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../send-email-woh/" class="btn btn-xs btn-link">
+        Send Email
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="series-workflow-operation">Series Workflow Operation</h1>
+<p>ID: <code>series</code></p>
+<h2 id="description">Description</h2>
+<p>The series operation will apply a series to the mediapackage.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>series</td>
+<td><code>0d06537e-09d3-420c-8314-a21e45c5d032</code></td>
+<td>The optional series identifier. If empty the current series of the medipackage will be taken.</td>
+<td></td>
+</tr>
+<tr>
+<td>attach</td>
+<td><code>creativecommons/*,dublincore/*</code></td>
+<td>The flavors of the series catalogs to attach to the mediapackage.</td>
+<td></td>
+</tr>
+<tr>
+<td>apply-acl</td>
+<td><code>true</code></td>
+<td>Whether the ACL should be applied or not.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>copy-metadata</td>
+<td><code>{http://purl.org/dc/terms/}title, isPartOf</code></td>
+<td>A comma-separated list of metadata fields (possibly "expanded") to be transferred from the series catalog to the episode catalog if they do not exist in the latter.</td>
+<td></td>
+</tr>
+<tr>
+<td>default-namespace</td>
+<td>http://purl.org/dc/elements/1.1/</td>
+<td>The default namespace to use when the metadata fields in the <code>copy-metadata</code> property are not fully "expanded".</td>
+<td><code>http://purl.org/dc/terms/</code> (DublinCore Term namespace)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="about-expanded-names">About Expanded Names</h3>
+<p>Expanded names are qualified XML terms where the prefix has been expanded to the full namespace it represents. For
+convention, they are written as:</p>
+<pre><code>{namespace}localname
+</code></pre>
+<p>… where <code>namespace</code> is the full namespace (not a prefix like in XML documents) and <code>localname</code> is the term itself.</p>
+<p>Some examples of expanded names are:</p>
+<ul>
+<li><code>{http://purl.org/dc/terms/}title</code></li>
+<li><code>{http://mediapackage.opencastproject.org}mediapackage</code></li>
+<li><code>{}term-with-an-empty-namespace</code></li>
+</ul>
+<p>The value of the <code>copy-metadata</code> may contain expanded and non-expanded names. In the latter case, the names will be
+expanded using the provided namespace, if any, or the DublinCore namespace by default.</p>
+<p>Please note that:</p>
+<ol>
+<li>An empty namespace (such as in <code>{}example</code>) is still a namespace. That means that the default namespace will not be
+   substituted in this case and the term will be handled "as-is", i.e. with an empty namespace.</li>
+<li>Most of the terms used by Opencast belong to the DublinCore namespace, so using non-expanded names and the default
+   namespace should be sufficient. However, custom metadata fields may be in a different namespace which must be
+   explicitly specified.</li>
+</ol>
+<h2 id="allowed-namespaces">Allowed Namespaces</h2>
+<p>For technical reasons, namespaces need to be pre-registered in Opencast to be used. That is why only a defined set of
+namespaces can be used in this operation. The allowed namespaces are:</p>
+<ul>
+<li>DublinCore Terms: <code>http://purl.org/dc/terms/</code></li>
+<li>DublinCore Elements 1.1: <code>http://purl.org/dc/elements/1.1/</code></li>
+<li>Opencast Properties: <code>http://www.opencastproject.org/</code></li>
+</ul>
+<h2 id="operation-examples">Operation Examples</h2>
+<pre><code class="language-XML">&lt;operation
+    id=&quot;series&quot;
+    description=&quot;Applying series to mediapackage&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;series&quot;&gt;0d06537e-09d3-420c-8314-a21e45c5d032&lt;/configuration&gt;
+    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
+    &lt;configuration key=&quot;apply-acl&quot;&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<pre><code class="language-XML">&lt;operation
+    id=&quot;series&quot;
+    description=&quot;Applying series to mediapackage&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
+    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;copy-metadata&quot;&gt;contributor, license&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<pre><code class="language-XML">&lt;operation
+    id=&quot;series&quot;
+    description=&quot;Applying series to mediapackage&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;attach&quot;&gt;dublincore/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
+    &lt;configuration key=&quot;copy-metadata&quot;&gt;{http://purl.org/dc/terms/}contributor custom1 custom2&lt;/configuration&gt;
+    &lt;configuration key=&quot;default-namespace&quot;&gt;http://www.opencastproject.org/&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../send-email-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../send-email-woh/" class="btn btn-xs btn-link">
+        Send Email
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/series-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

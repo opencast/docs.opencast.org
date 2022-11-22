@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Silence - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "SilenceDetectionWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Start Watson Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../series-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../series-woh/" class="btn btn-xs btn-link">
+        Series
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="silencedetectionworkflowoperationhandler">SilenceDetectionWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The silence operation performs a silence detection on an audio-only input file.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavors</td>
+<td><code>*/audio</code></td>
+<td>The input parameter source-flavors takes one flavor/sub-type or multiple input flavors with the *-operator followed by the sub-type</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>reference-tracks-flavour</td>
+<td><code>*/preview</code></td>
+<td>The input parameter reference-tracks-flavour is the subtype of the media files that should be included in the provided SMIL file. The * should not be modified here. In most cases it is not important which reference-tracks-flavour is selected as long as all relevant flavors are available within this feature. "preview" is not a bad choice as all files available within the video editor UI are also available with this flavor, unlike "source" where not all flavors may be available, as some recorders record all streams to one file and the tracks are separated afterwards. The editor operation afterwards will anyway try to select the best available quality.</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>smil-flavor-subtype</td>
+<td><code>smil</code></td>
+<td>The output parameter is smil-flavor-subtype which provides the modificatory for the flavor subtype after this operation. The main flavor will be consistent and only the subtype will be replaced.</td>
+<td>EMPTY</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code>&lt;operation
+  id="silence"
+  description="Executing silence detection"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavors"&gt;*/audio&lt;/configuration&gt;
+    &lt;configuration key="smil-flavor-subtype"&gt;smil&lt;/configuration&gt;
+    &lt;configuration key="reference-tracks-flavor"&gt;*/preview&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Start Watson Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../series-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../series-woh/" class="btn btn-xs btn-link">
+        Series
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/silence-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

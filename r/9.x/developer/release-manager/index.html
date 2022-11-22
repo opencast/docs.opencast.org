@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Release Manager - Developer Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Release Manager Guide", url: "#_top", children: [
+              {title: "Responsibilities", url: "#responsibilities" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../qa-coordinator/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../qa-coordinator/" class="btn btn-xs btn-link">
+        QA Coordinator
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
+        Reviewing, Merging and Declining Pull Requests
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="release-manager-guide">Release Manager Guide</h1>
+<p>The single most important duty of release managers is to keep an eye on their release, notify the community about
+possible problems in a timely manner and encourage community members to help out if needed. While working on Opencast's
+code is often done as well during the release process, for release managers this is secondary to the communication and
+management role and with few exceptions no requirement for this position.</p>
+<p>The community has a number of expectations for release managers, and their handling of the problems which may arise
+during the release cycle. The core of these expectations are:</p>
+<ul>
+<li>The development process should be followed or amended if required</li>
+<li>The release should be on time</li>
+<li>The release should not have any critical technical, usability or security issues</li>
+</ul>
+<p>This means that release managers may need to force decisions around the release, help negotiate the acceptance or
+rejection of contributions and provide regular updates about the release on list and during the technical and adopter
+meetings. It is important to note that, while release managers drive the release process, the committer body is in
+charge of both the work and the decision making, meaning that votes and successful proposals from this body take
+precedence over release manager decisions.</p>
+<h2 id="responsibilities">Responsibilities</h2>
+<p>While a general rule is certainly just to look out for the release, work together with the community to make the release
+work properly and be pragmatic about the process, there are a few tasks which really can only be done by release
+managers.</p>
+<p>For all of these tasks, it's generally a good idea to look at previous releases and at their solutions for the tasks.
+Often, completing the task is simply a matter of repeating or updating previous work (e.g. advance the previous release
+schedule by six months).</p>
+<h3 id="release-notes">Release Notes</h3>
+<p>It's usually a good idea to create or clean the release notes page early in the release cycle. This allows for a place
+to put the release schedule, short descriptions of features or noteworthy configuration changes early on.</p>
+<h3 id="the-release-schedule">The  Release Schedule</h3>
+<p>Releases should happen twice a year, usually within a time span of 9.5 months between the cut of the previous release
+branch and the final release. The release managers should create a release schedule as soon as possible, announce it on
+list and publish it on the release notes page.</p>
+<h3 id="release-branch">Release Branch</h3>
+<p>According to the set release schedule, at one point a release branch should be cut, effectively marking a feature freeze
+for a given release.  This branch is split off <code>develop</code> and should be named <code>r/N.x</code> (e.g. <code>r/6.x</code> for the Opencast 6
+release branch).</p>
+<p>Example on how to create the Opencast 7 release branch:</p>
+<ol>
+<li>
+<p>Check out <code>develop</code> and make sure it has the latest state (replace <code>&lt;remote&gt;</code> with your remote name for the community
+   repository):</p>
+<pre><code>git checkout develop
+git pull &lt;remote&gt; develop
+</code></pre>
+</li>
+<li>
+<p>Make sure you did not modify any files. If you did, stash those changes:</p>
+<pre><code>git status   # check for modified files
+git stash    # stash them if necessary
+</code></pre>
+</li>
+<li>
+<p>Create and push the new release branch:</p>
+<pre><code>git checkout -b r/7.x
+git push &lt;remote&gt; r/7.x
+</code></pre>
+</li>
+<li>
+<p>That is it for the release branch. Now update the versions in <code>develop</code> in preparation for the next release:</p>
+<pre><code>git checkout develop
+mvn versions:set -DnewVersion=8-SNAPSHOT versions:commit
+</code></pre>
+</li>
+<li>
+<p>Have a look at the changes. Make sure that nothing else was modified:</p>
+<pre><code>git diff
+git status | grep modified: | grep -v pom.xml   # this should have no output
+</code></pre>
+</li>
+<li>
+<p>If everything looks fine, commit the changes and push it to the community repository:</p>
+<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git commit -s -m 'Bumping pom.xml Version Numbers'
+git push &lt;remote&gt; develop
+</code></pre>
+</li>
+</ol>
+<p>At this point, the developer community should then be notified by writing an email like the following to the developers
+list:</p>
+<pre><code class="language-no-highlight">To: dev@opencast.org
+Subject: Release Branch for Opencast &lt;version&gt; Cut
+
+Hi everyone,
+the Opencast &lt;version&gt; release branch (r/&lt;version&gt;) has been
+cut.  Pull requests for bug fixes may still be made against
+this branch but, as usual, features should go into develop
+instead.
+
+Remember the release schedule for this release:
+
+  &lt;release_schedule&gt;
+
+As always, we hope to have a lot of people testing this
+version, especially during the public QA phase. Please
+report any bugs or issues you encounter.
+
+For testing, you may use https://stable.opencast.org if you
+do not want to set up a test server yourself. The server is
+reset on a daily basis and will follow the new release
+branch with its next rebuild.
+
+Additionally, look out for announcements regarding container
+and package builds for testing on list if you want to run
+your own system but do not want to build Opencast from
+source.
+</code></pre>
+<h3 id="status-of-translations">Status of Translations</h3>
+<p>After the release branch is cut, the release managers should check if there are languages to be in- or excluded for the
+upcoming release as specified by the <a href="../localization/">criteria in the localization documentation</a> and notify the
+community about the status of Opencast's translations if necessary.</p>
+<p>Example announcement for included languages:</p>
+<pre><code class="language-no-highlight">To: users@opencast.org
+Subject: Opencast &lt;VERSION&gt;: Translation Status
+
+Hi everyone,
+while checking the translation statuses of the languages
+available on Crowdin[1], we have found that the following
+languages meet the criteria to be included in Opencast
+&lt;VERSION&gt;:
+
+- &lt;LANGUAGE1&gt; (&lt;PERCENTAGE1&gt;)
+- &lt;LANGUAGE2&gt; (&lt;PERCENTAGE2&gt;)
+- ....
+
+
+[1] Opencast on Crowdin
+    https://crowdin.com/project/opencast-community
+[2] Inclusion and exclusion of translations
+    https://docs.opencast.org/develop/developer/localization/#inclusion-and-exclusion-of-translations
+</code></pre>
+<p>Example announcement for endangered languages:</p>
+<pre><code class="language-no-highlight">To: users@opencast.org
+Subject: Opencast &lt;VERSION&gt;: &lt;LANGUAGE&gt; Translation Endangered
+
+Hi everyone,
+while checking the &lt;LANGUAGE&gt; translation status of
+Opencast, we have found that it is only &lt;PERCENTAGE&gt;
+translated.
+
+This is not enough to justify its inclusion in the upcoming
+Opencast release[1], meaning that the &lt;LANGUAGE&gt; translation
+is in danger of being removed in Opencast &lt;VERSION&gt; if its
+status stays the same.
+
+To save the &lt;LANGUAGE&gt; translation from removal, it needs to
+be translated at least 90% before &lt;DATE&gt;.
+
+Sincerely,
+Your Opencast &lt;VERSION&gt; Release Managers
+
+[1] Inclusion and Exclusion of Translations
+    https://docs.opencast.org/develop/developer/localization/#inclusion-and-exclusion-of-translations
+</code></pre>
+<p>A specific translation week may be announced using an email
+like this:</p>
+<pre><code class="language-no-highlight">To: users@opencast.org
+Subject: Opencast &lt;version&gt;: Translation Week
+
+Hi everyone,
+starting on &lt;date&gt; the Opencast &lt;version&gt; translation week
+will take place, during which we particular focus on
+improving Opencast's translations.
+
+
+Can I help?
+-----------
+
+Everybody that speaks a different language or dialect and
+feels confident enough to participate can participate.
+
+
+How can I help?
+---------------
+
+We use Crowdin [1] to manage translations. Please sign up
+and request to help with a particular language.
+
+
+What is the current status?
+---------------------------
+
+Fully translated:
+
+- …
+
+Mostly translated (&gt;80% translated):
+
+- …
+
+Endangered translations (≤80% translated):
+
+- …
+
+Note that we can add any additional languages you are
+willing to translate.
+
+If you have any additional questions, please do not hesitate
+to ask.
+
+[1] https://crowdin.com/project/opencast-community
+</code></pre>
+<h3 id="moderation-of-peer-reviews">Moderation of Peer Reviews</h3>
+<p>Release managers should regularly check open pull requests for possible problems (no reviewers, discussions in need of
+moderation, issues that should be raised to community awareness, …) and bring these up in the technical meeting, on the
+developer list or wherever appropriate.</p>
+<h3 id="merging-release-branches">Merging Release Branches</h3>
+<p>To not have to merge bug fixes into several branches and create several pull requests, the release branch should be
+merged down on a regular basis. Assuming, for example, that <code>r/6.x</code> is the latest release branch, merges should happen
+like this:</p>
+<pre><code>r/5.x → r/6.x → develop
+</code></pre>
+<p>While any committer may do this at any time, it is good practice for release managers to do this for their release
+branches on a regular basis.</p>
+<p>For example, to merge the latest release branch into <code>develop</code>, follow these steps:</p>
+<ol>
+<li>
+<p>Update your local repository</p>
+<pre><code>git fetch &lt;remote&gt;
+</code></pre>
+</li>
+<li>
+<p>Update <code>develop</code>:</p>
+<pre><code>git checkout develop
+git merge &lt;remote&gt;/develop   # this should be a fast-forward merge
+</code></pre>
+</li>
+<li>
+<p>Merge the release branch. Note that if large merge conflicts arise, you may ask for help from the people creating the
+   problematic patches:</p>
+<pre><code>git merge &lt;remote&gt;/r/6.x
+</code></pre>
+</li>
+<li>
+<p>Push the updated branch into the community repository:</p>
+<pre><code>git push &lt;remote&gt; develop
+</code></pre>
+</li>
+</ol>
+<h3 id="updating-translations">Updating Translations</h3>
+<p>Updating the <a href="../localization/">localization translations</a> is automated for existing translation files. If new files need
+to be added, it is something that should happen early during the release process. If files need to be removed, this
+needs to be done manually.</p>
+<h3 id="releasing">Releasing</h3>
+<p>The following steps outline the necessary steps for cutting the final release:</p>
+<ol>
+<li>
+<p>Switch to and update your release branch and ensure the latest state of the previous release branch is merged:</p>
+<pre><code>git checkout r/6.x
+git fetch &lt;remote&gt;
+git merge &lt;remote&gt;/r/6.x
+git merge &lt;remote&gt;/r/5.x
+</code></pre>
+</li>
+<li>
+<p>Add the release notes, and update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
+   </a> is a convenient tool
+   for this.</p>
+<pre><code>cd docs/guides/admin/docs/
+vim releasenotes.md
+vim changelog.md
+git commit -S releasenotes.md changelog.md -m 'Updated Release Notes'
+git push &lt;remote&gt; r/6.x
+</code></pre>
+</li>
+<li>
+<p>Switch to a new branch to create the release (name does not really matter):</p>
+<pre><code>git checkout -b tmp-6.0
+</code></pre>
+</li>
+<li>
+<p>Make the version changes for the release:</p>
+<pre><code>mvn versions:set -DnewVersion=6.0 versions:commit
+</code></pre>
+</li>
+<li>
+<p>Have a look at the changes. Make sure that nothing else was modified:</p>
+<pre><code>git diff
+git status | grep modified: | grep -v pom.xml   # this should yield no output
+</code></pre>
+</li>
+<li>
+<p>Commit the changes and create a release tag:</p>
+<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git commit -S -m 'Opencast 6.0'
+git tag -s 6.0
+</code></pre>
+</li>
+<li>
+<p>Push the tag to the community repository (you can remove the branch afterwards):</p>
+<pre><code>git push &lt;remote&gt; 6.0:6.0
+</code></pre>
+</li>
+<li>
+<p>Push the built artifacts to Maven. Bug the QA Coordinator to do this so that he remembers to set this up from the CI
+    servers. If you want to do this yourself please read the <a href="../infrastructure/maven-repository/#pushing-to-maven-central">infra documentation</a>.</p>
+</li>
+<li>
+<p>Create a new release on GitHub using the <a href="https://github.com/opencast/opencast/releases">graphical user interface</a>
+    to upload the distribution tarballs.</p>
+</li>
+</ol>
+<p>Finally, send a release notice to Opencast's announcement list. Note that posting to this list is restricted to those
+who need access to avoid general discussions on that list. In case you do not already have permissions to post on this
+list, please ask to be given permission. For the message, you may use the following template:</p>
+<pre><code class="language-no-highlight">To: announcements@opencast.org
+Subject: Opencast &lt;VERSION&gt; Released
+
+Hi everyone,
+it is my pleasure to announce that Opencast &lt;VERSION&gt; has
+been released:
+
+  https://github.com/opencast/opencast/releases
+
+The documentation for this release can be found at:
+
+  https://docs.opencast.org/r/&lt;VERSION&gt;/admin/
+
+RPM and Debian packages as well as Docker images will be
+available soon. Watch for announcements on the users list.
+
+To all committers and involved contributors, thank you for
+all your work. This could not have happened without you and
+I am glad we were able to work together and get this release
+out.
+</code></pre>
+<h3 id="appointment-of-next-release-manager">Appointment of Next Release Manager</h3>
+<p>After the release branch is cut, all work on <code>develop</code> is effectively the preparation for the next release. At this
+point, the release managers should send an inquiry to the development list to identify volunteers for the next release.</p>
+<p>For that, this email template may be used:</p>
+<pre><code class="language-no-highlight">To: dev@opencast.org
+Subject: Opencast &lt;NEXT_RELEASE&gt; release managers wanted
+
+Hi everyone,
+the Opencast community is looking for release managers for
+the upcoming &lt;NEXT_RELEASE&gt; (Feature freeze around &lt;DATE&gt;,
+release around &lt;DATE&gt;).
+
+Note that the release manager's job contains very little
+technical work. Instead, they mostly focus on motivation and
+coordination of the community during the release phase. The
+role of release managers is described in more detail in the
+Opencast development documentation:
+
+  https://docs.opencast.org/develop/developer/release-manager/
+
+In the past, it has proven good practice to have two people
+fill this job as co-release managers to help keep up the
+process during vacation, sickness and in case of local
+emergencies.
+
+I am looking forward to your applications on list, please
+voice your interest until &lt;DATE&gt;.
+</code></pre>
+<p>In the case where someone steps up and offers to fill in the role of a release manager for the upcoming release, a vote
+is held on the committers list to determine whether the candidates are deemed suitable for the position.</p>
+<p>This email template may be used to initiate the vote:</p>
+<pre><code class="language-no-highlight">To: committers@opencast.org
+Subject: [#vote] Vote on Release Managers of Opencast &lt;NEXT_RELEASE&gt;
+
+Hi everyone,
+I am happy to announce that the following community members
+have volunteered themselves for the position of the Opencast
+&lt;NEXT_RELEASE&gt; release manager and have expressed the
+intention of sharing the position:
+
+  &lt;NAME, INSTITITION&gt;
+  &lt;NAME, INSTITUTION&gt;
+
+I hereby open the vote on accepting them for this position.
+The vote will be open for the coming 72h.
+</code></pre>
+<p>Once the voting is complete, the result should be announced on the development list:</p>
+<p>As an example:</p>
+<pre><code class="language-no-highlight">To: dev@opencast.org
+Subject: Release Managers of Opencast &lt;NEXT_RELEASE&gt;
+
+Hi everyone,
+it is my pleasure to announce that the following people have
+been elected to be the release managers for the upcoming
+Opencast &lt;NEXT_RELEASE&gt; release:
+
+  &lt;NAME, INSTITUTION&gt;
+  &lt;NAME, INSTITUTION&gt;
+
+We wish to thank them for volunteering, and hope the release
+goes smoothly!
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../qa-coordinator/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../qa-coordinator/" class="btn btn-xs btn-link">
+        QA Coordinator
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../reviewing-and-merging/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../reviewing-and-merging/" class="btn btn-xs btn-link">
+        Reviewing, Merging and Declining Pull Requests
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/release-manager.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 6.x to 7.x", url: "#_top", children: [
+              {title: "How to Upgrade", url: "#how-to-upgrade" },
+              {title: "Database Migration", url: "#database-migration" },
+              {title: "Removal of Deprecated Access Control Rules Set", url: "#removal-of-deprecated-access-control-rules-set" },
+              {title: "Scheduler Migration", url: "#scheduler-migration" },
+              {title: "Update Player Links", url: "#update-player-links" },
+              {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-6x-to-7x">Upgrading Opencast from 6.x to 7.x</h1>
+<p>This guide describes how to upgrade Opencast 6.x to 7.x. In case you need information about how to upgrade older
+versions of Opencast, please refer to the <a href="https://docs.opencast.org">old release notes</a>.</p>
+<h2 id="how-to-upgrade">How to Upgrade</h2>
+<ol>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast 6.x with 7.x</li>
+<li>Optionally back-up Opencast files and database</li>
+<li><a href="#database-migration">Upgrade the database</a></li>
+<li>Optionally <a href="#removal-of-deprecated-access-control-rule-set">check for old ACL rule sets</a></li>
+<li><a href="#scheduler-migration">Migrate the scheduled events</a></li>
+<li>Optionally <a href="#update-player-links">update the player links</a></li>
+<li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
+<li>Review the configuration changes and adjust your configuration accordingly</li>
+</ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>As part of performance optimizations, some tables were modified. This requires a database schema update. Also, one table
+is no longer needed and can be dropped. As with all database migrations, we strongly recommend to create a database
+backup before attempting the upgrade.</p>
+<p>You can find the database upgrade script in <code>docs/upgrade/6_to_7/</code>. This script is suitable for both, MariaDB and
+MySQL.</p>
+<h2 id="removal-of-deprecated-access-control-rules-set">Removal of Deprecated Access Control Rules Set</h2>
+<p>Opencast 7 finally removes the long-since deprecated <code>security/xacml</code> flavor for access control lists. This had not been
+used since before Opencast 1.2 (we could not track down its exact deprecation date due to its age). Additionally, all
+rule-sets which had been modified since had also been automatically been updated to <code>security/xacml+series</code> which
+serves as replacement for the old flavor.</p>
+<p>In case Opencast still encounters such a rule set, it will now be ignored and access will be denied by default. A simple
+update of the permissions would fix this if that is required.</p>
+<p>Due to the extreme unlikeliness of anyone encountering this problem, there is no automatic migration. In case you run a
+system migrated from a pre-1.2 Matterhorn, you can make sure that there are no old rule-sets left using the following
+SQL queries:</p>
+<pre><code class="language-sql">-- Check OAI-PMH publications:
+select * from oc_oaipmh_elements where flavor = 'security/xacml';
+-- Check engage publications:
+select * from oc_search where mediapackage_xml like '%&quot;security/xacml&quot;%';
+-- Check asset manager:
+select * from oc_assets_snapshot where mediapackage_xml like '%&quot;security/xacml&quot;%';
+</code></pre>
+<h2 id="scheduler-migration">Scheduler Migration</h2>
+<p>The way the scheduler stores its data was changed in Opencast 7 to improve performance when checking for conflicts.
+The necessary database schema changes are part of the upgrade script in <code>docs/upgrade/6_to_7/</code>.</p>
+<p>Additionally, old events need to be migrated to the new structure to preserve metadata related to scheduling. For this,
+set the <code>maintenance</code> configuration option of <code>etc/org.opencastproject.scheduler.impl.SchedulerServiceImpl.cfg</code> to
+<code>true</code> and start opencast.  The migration will start automatically. Wait until the migration is complete. Once complete,
+the opencast log will contain a line saying <code>Finished migrating scheduled events</code>. Check if there were any errors during
+the migration. If not, stop opencast and change <code>maintenance</code> back to <code>false</code> to put the scheduler back into its normal
+mode of operation.</p>
+<p>You should avoid running Opencast 7 without migrating the scheduled events first. Otherwise, your capture agents may
+fetch an empty calendar.</p>
+<h2 id="update-player-links">Update Player Links</h2>
+<blockquote>
+<p>This step is optional</p>
+</blockquote>
+<p>Opencast 7 comes with the capability of dynamically switching the configured player without requiring the republication
+of all published material by providing the dynamic target <code>https://example.opencast.org/play/&lt;id&gt;</code>. This new target
+will be used for all new engage publications.</p>
+<p>But old publications still reference the players directly in the admin interface and the external API. This does not
+pose any immediate problem unless you actually want to switch players in which case you would need to republish the
+material once to update the publication links.</p>
+<p>Alternatively, you can rewrite the old links all at once without re-publication using the following method:<br />
+<em>Hint: replace the '...' with the actual path to your installation-storage</em></p>
+<ol>
+<li>
+<p>Find the archive directory and run the following command (replacing <code>&lt;playerlink&gt;</code>):</p>
+<pre><code>sed -i 's_&lt;playerlink&gt;_/play/_g' .../archive/*/*/*/manifest.xml
+</code></pre>
+<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
+<pre><code>sed -i 's_/engage/theodul/ui/core.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+sed -i 's_/paella/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+sed -i 's_/engage/ui/watch.html?id=_/play/_g' .../archive/*/*/*/manifest.xml
+</code></pre>
+</li>
+<li>
+<p>Run the following SQL commands on your opencast database (replacing <code>&lt;playerlink&gt;</code>):</p>
+<pre><code>UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '&lt;playerlink&gt;', '/play/')
+  WHERE INSTR(mediapackage_xml, '&lt;playerlink&gt;') &gt; 0;
+</code></pre>
+<p>For Theodul, Paella and the Engage player the specific commands would be:</p>
+<pre><code>UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/engage/theodul/ui/core.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/engage/theodul/ui/core.html?id=') &gt; 0;
+UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/paella/ui/watch.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/paella/ui/watch.html?id=') &gt; 0;
+UPDATE oc_assets_snapshot
+  SET mediapackage_xml =
+  REPLACE(mediapackage_xml, '/engage/ui/watch.html?id=', '/play/')
+  WHERE INSTR(mediapackage_xml, '/engage/ui/watch.html?id=') &gt; 0;
+</code></pre>
+</li>
+</ol>
+<p>Please ensure to execute these steps before rebuilding the index.</p>
+<h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
+<p>Due to <a href="https://opencast.jira.com/browse/MH-13396">MH-13396</a>, the configuration of the Elasticsearch indexes of both
+the admin ui and the external API have changed. Therefore, those indexes both need to be rebuilt.</p>
+<h3 id="admin-interface">Admin Interface</h3>
+<p>Stop Opencast, delete the index directory at <code>data/index</code>, restart Opencast and make an HTTP POST request to
+<code>/admin-ng/index/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/admin-ng/index/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Admin UI - Index Endpoint” section and use the testing form on
+<code>/recreateIndex</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="external-api">External API</h3>
+<p>If you are using the External API, then also trigger a rebuilt of its index by sending an HTTP POST request to
+<code>/api/recreateIndex</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i --digest -u &lt;digest_user&gt;:&lt;digest_password&gt; -H "X-Requested-Auth: Digest" -s -X POST \
+  https://example.opencast.org/api/recreateIndex
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “External API - Base Endpoint” section and use the testing form on
+<code>/recreateIndex</code>.</p>
+<p>In both cases you should again get a 200 HTTP status.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

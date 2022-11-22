@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Access Control Lists - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Access Control List Configuration", url: "#_top", children: [
+              {title: "ACL Templates", url: "#acl-templates" },
+              {title: "Additional ACL Actions", url: "#additional-acl-actions" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../security.aai/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../security.aai/" class="btn btn-xs btn-link">
+        Authentication and Authorization Infrastructure (AAI)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security/" class="btn btn-xs btn-link">
+        General Security
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="access-control-list-configuration">Access Control List Configuration</h1>
+<p>This document describes configuration options considering the access control lists (ACL) used by
+Opencast for authorization.</p>
+<h2 id="acl-templates">ACL Templates</h2>
+<p>On startup, Opencast loads all ACL templates found in <code>/opt/opencast/etc/acl/</code>.</p>
+<p>Notes:</p>
+<ul>
+<li>ACL templates can also be created and managed directly in the Admin UI</li>
+</ul>
+<h2 id="additional-acl-actions">Additional ACL Actions</h2>
+<p>Opencast uses to ACL actions to authorize roles to perform specific actions on a given object:</p>
+<ul>
+<li><code>read</code> allows the role to access to object</li>
+<li><code>write</code> allows the role to modify the object</li>
+</ul>
+<p>Those built-in actions are known to Opencast.</p>
+<p>In case you need other ACL actions, you can configure additional ACL actions in
+<code>/opt/opencast/etc/listprovides/acl.additional.actions.properties</code>. Those additional ACL actions are not affecting the way
+Opencast treats objects but are simply just forwarded to publication channels so that third-party applications
+(expecting those specific ACL actions) can implement the respective authorization logic.</p>
+<p>Example:</p>
+<pre><code>list.name=ACL.ACTIONS
+# This list provider allows you to configure custom actions that can be added
+# to ACLs. The default actions are read and write.
+# The pattern for adding them is
+# UI_LABEL=actionId
+#
+Upload=myorg_upload
+Download=myorg_downlaod
+</code></pre>
+<p>In the example above, the two additional ACL actions <code>Upload</code> and <code>Download</code> have been configured.
+The ACL editor of the Admin UI will allow the user to set those actions.</p>
+<p>Notes:</p>
+<ul>
+<li>To ensure compatibility with future Opencast versions, it is highly recommended to use a prefix for your
+customized additional actions in case later Opencast versions would introduce an action with the same name</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../security.aai/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../security.aai/" class="btn btn-xs btn-link">
+        Authentication and Authorization Infrastructure (AAI)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security/" class="btn btn-xs btn-link">
+        General Security
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/acl.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

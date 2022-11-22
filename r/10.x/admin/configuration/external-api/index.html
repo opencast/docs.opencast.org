@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>External API - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "External API Configuration", url: "#_top", children: [
+              {title: "Authentication", url: "#authentication" },
+              {title: "Authorization", url: "#authorization" },
+              {title: "Testing", url: "#testing" },
+              {title: "Accessing Distribution Artefacts", url: "#accessing-distribution-artefacts" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../oaipmh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../oaipmh/" class="btn btn-xs btn-link">
+        OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../workflow/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../workflow/" class="btn btn-xs btn-link">
+        Workflow
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="external-api-configuration">External API Configuration</h1>
+<p>The External API is an integral part of Opencast and therefore does not need to be enabled. To be able to access the
+External API, you need to configure a user that is authorized to do so.</p>
+<p>Perform the following steps to get the External API running:</p>
+<ol>
+<li>Enable basic authentication (see section Authentication)</li>
+<li>Create a new user or choose an existing user (administrative user interface)</li>
+<li>Authorize the user to access the External API (see section Authorization)</li>
+<li>Test whether access works (see section Testing)</li>
+</ol>
+<h2 id="authentication">Authentication</h2>
+<p>The External API currently only supports basic authentication. To enable basic authentication, uncomment the following
+blocks in <code>/etc/security/mh_default_org.xml</code>:</p>
+<pre><code>&lt;!-- Basic authentication
+&lt;sec:custom-filter after="BASIC_AUTH_FILTER" ref="basicAuthenticationFilter" /&gt;
+--&gt;
+
+&lt;!-- Basic authentication
+&lt;bean id="basicEntryPoint" class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint"&gt;
+  &lt;property name="realmName" value="Opencast"/&gt;
+&lt;/bean&gt;
+--&gt;
+
+&lt;!-- Basic authentication
+&lt;bean id="basicAuthenticationFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter"&gt;
+  &lt;property name="authenticationManager" ref="authenticationManager"/&gt;
+  &lt;property name="authenticationEntryPoint" ref="basicEntryPoint"/&gt;
+&lt;/bean&gt;
+--&gt;
+</code></pre>
+<p><strong>Note:</strong> Since basic authentication involves sending unencrypted passwords over the network, it is strongly
+recommended to use HTTPS.</p>
+<h2 id="authorization">Authorization</h2>
+<p>The External API supports fine-grained access control on request level allowing it to be tailored to your
+specific needs. A number of roles are used to authorize access to individual endpoints. Those roles can be configured
+directly in the Opencast administrative user interface.</p>
+<p><strong>Note:</strong> Users owning the role ROLE_ADMIN have full access to the External API.</p>
+<p><strong>Base API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API</td>
+<td>GET</td>
+<td>/api<br>/api/info/*<br>/api/info/me/*<br>/api/version<br>/api/version/*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Events API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_EVENTS_CREATE</td>
+<td>POST</td>
+<td>/api/events</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_VIEW</td>
+<td>GET</td>
+<td>/api/events<br>/api/events/*<br></td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_EDIT</td>
+<td>PUT<br>POST</td>
+<td>/api/events/*<br><br>/api/events/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_DELETE</td>
+<td>DELETE</td>
+<td>/api/events/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_ACL_VIEW</td>
+<td>GET</td>
+<td>/api/events/*/acl</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_ACL_EDIT</td>
+<td>PUT<br>POST</td>
+<td>/api/events/*/acl<br>/api/events/*/acl/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_ACL_DELETE</td>
+<td>DELETE</td>
+<td>/api/events/*/acl/*/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_MEDIA_VIEW</td>
+<td>GET</td>
+<td>/api/events/*/media<br>/api/events/*/media/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_METADATA_VIEW</td>
+<td>GET</td>
+<td>/api/events/*/metadata<br>/api/events/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_METADATA_EDIT</td>
+<td>PUT</td>
+<td>/api/events/*/metadata<br>/api/events/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_METADATA_DELETE</td>
+<td>DELETE</td>
+<td>/api/events/*/metadata<br>/api/events/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_PUBLICATIONS_VIEW</td>
+<td>GET</td>
+<td>/api/events/*/publications<br>/api/events/*/publications/*</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_SCHEDULING_EDIT</td>
+<td>PUT</td>
+<td>/api/events/*/scheduling</td>
+</tr>
+<tr>
+<td>ROLE_API_EVENTS_SCHEDULING_VIEW</td>
+<td>GET</td>
+<td>/api/events/*/scheduling</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Series API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_SERIES_CREATE</td>
+<td>POST</td>
+<td>/api/series</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_VIEW</td>
+<td>GET</td>
+<td>/api/series<br>/api/series/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_EDIT</td>
+<td>PUT</td>
+<td>/api/series/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_ACL_VIEW</td>
+<td>GET</td>
+<td>/api/series/*/acl</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_ACL_EDIT</td>
+<td>PUT</td>
+<td>/api/series/*/metadata<br>/api/series/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_METADATA_VIEW</td>
+<td>GET</td>
+<td>/api/series/*/metadata<br>/api/series/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_METADATA_EDIT</td>
+<td>PUT</td>
+<td>/api/series/*/metadata<br>/api/series/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_METADATA_DELETE</td>
+<td>DELETE</td>
+<td>/api/series/*/metadata<br>/api/series/*/metadata/*</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_PROPERTIES_VIEW</td>
+<td>GET</td>
+<td>/api/series/*/properties</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_PROPERTIES_EDIT</td>
+<td>PUT</td>
+<td>/api/series/*/properties</td>
+</tr>
+<tr>
+<td>ROLE_API_SERIES_DELETE</td>
+<td>DELETE</td>
+<td>/api/series/*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Statistics API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_STATISTICS_VIEW</td>
+<td>GET</td>
+<td>/api/statistics/providers<br>/api/statistics/providers/*</td>
+</tr>
+<tr>
+<td>ROLE_API_STATISTICS_VIEW</td>
+<td>POST</td>
+<td>/api/statistics/data/query</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Groups API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_GROUPS_CREATE</td>
+<td>POST</td>
+<td>/api/groups</td>
+</tr>
+<tr>
+<td>ROLE_API_GROUPS_VIEW</td>
+<td>GET</td>
+<td>/api/groups<br>/api/groups/*</td>
+</tr>
+<tr>
+<td>ROLE_API_GROUPS_EDIT</td>
+<td>PUT<br>POST</td>
+<td>/api/groups/*<br>/api/groups/*/members/*</td>
+</tr>
+<tr>
+<td>ROLE_API_GROUPS_DELETE</td>
+<td>DELETE</td>
+<td>/api/groups/*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Security API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_SECURITY_EDIT</td>
+<td>POST</td>
+<td>/api/security/sign</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Agents API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_CAPTURE_AGENTS_VIEW</td>
+<td>GET</td>
+<td>/api/agents</br>/api/agents/*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Administrative API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_ADMIN</td>
+<td>POST</td>
+<td>/api/recreateIndex</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Workflow API</strong></p>
+<table>
+<thead>
+<tr>
+<th>ROLE</th>
+<th>METHOD</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROLE_API_WORKFLOW_INSTANCE_CREATE</td>
+<td>POST</td>
+<td>/api/workflow</td>
+</tr>
+<tr>
+<td>ROLE_API_WORKFLOW_INSTANCE_VIEW</td>
+<td>GET</td>
+<td>/api/workflow<br>/api/workflow/*</td>
+</tr>
+<tr>
+<td>ROLE_API_WORKFLOW_INSTANCE_EDIT</td>
+<td>PUT</td>
+<td>/api/workflow/*</td>
+</tr>
+<tr>
+<td>ROLE_API_WORKFLOW_INSTANCE_DELETE</td>
+<td>DELETE</td>
+<td>/api/workflow/*</td>
+</tr>
+<tr>
+<td>ROLE_API_WORKFLOW_DEFINITION_VIEW</td>
+<td>GET</td>
+<td>/api/workflow-definitions<br>/api/workflow-definitions/*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>User- and Role-switching</strong></p>
+<p>The External API supports user- and role-switching, i.e. it is possible to perform requests on behalf of another
+user or role. The be able to perform this kind of requests, the user doing the actual requests needs to own ROLE_SUDO.</p>
+<p>For more details on this API, please take a look at the developer documentation under External API.</p>
+<h2 id="testing">Testing</h2>
+<pre><code>curl -u &lt;api-user&gt;:&lt;api-user-passowrd&gt; &lt;admin-node&gt;/api/info/me
+</code></pre>
+<p>should return a JSON containing information about the user <em>api-user</em>.</p>
+<h2 id="accessing-distribution-artefacts">Accessing Distribution Artefacts</h2>
+<p>A major use case of the External API is to provide External Applications secure access to distribution artefacts.</p>
+<p>For this purpose, Opencast comes with a special workflow operation: WOH publish-configure
+(see <a href="../../workflowoperationhandlers/publish-configure-woh/">ConfigurablePublishWorkflowOperationHandler</a>)
+creates publication elements that do not just contain a single URL to the publication channel,
+but also contain URLs for each of the attachments and tracks that have been published.</p>
+<p><strong>Note:</strong> Secure access to distribution artefacts requires stream security to be enabled,
+see <a href="../stream-security/">Stream Security Configuration</a>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../oaipmh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../oaipmh/" class="btn btn-xs btn-link">
+        OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../workflow/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../workflow/" class="btn btn-xs btn-link">
+        Workflow
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/external-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

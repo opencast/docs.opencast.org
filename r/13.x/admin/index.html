@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Administration Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Opencast 13 Administration Guide", url: "#_top", children: [
+              {title: "The Software", url: "#the-software" },
+              {title: "Release Documentation", url: "#release-documentation" },
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script>
+      <script src="javascript/popper.js"></script>
+      <script src="javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+        <img class="wm-top-logo" src="./opencast-white.svg"/>
+      
+      <div class="wm-top-title">
+        Administration Guide<br>
+        
+      </div>
+    </a>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/opencast/opencast">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="releasenotes/" class="wm-article-link wm-toc-text">Release Notes</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="upgrade/" class="wm-article-link wm-toc-text">Upgrade</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="changelog/" class="wm-article-link wm-toc-text">Changelog</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Installation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="installation/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="installation/server-requirements/" class="wm-article-link wm-toc-text">Hardware Requirements</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="installation/multiple-servers/" class="wm-article-link wm-toc-text">Multiple Servers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Installation from Source</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/source-linux/" class="wm-article-link wm-toc-text">Linux</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/source-macosx/" class="wm-article-link wm-toc-text">MacOS X</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Installation from Package</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/debs/" class="wm-article-link wm-toc-text">Debian/Ubuntu</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/rpm-fedora/" class="wm-article-link wm-toc-text">Fedora</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/rpm-el7/" class="wm-article-link wm-toc-text">RHEL/CentOS 7</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/rpm-el/" class="wm-article-link wm-toc-text">RHEL/CentOS Stream 8/9</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Installation via script</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/ansible/" class="wm-article-link wm-toc-text">Ansible</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Installation with Docker</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="installation/docker-local/" class="wm-article-link wm-toc-text">Testing Locally</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Configuration</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/basic/" class="wm-article-link wm-toc-text">Basic</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/database/" class="wm-article-link wm-toc-text">Database</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">HTTPS</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/nginx/" class="wm-article-link wm-toc-text">Using Nginx</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/apache-httpd/" class="wm-article-link wm-toc-text">Using Apache httpd</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/opencast.only/" class="wm-article-link wm-toc-text">Internal HTTPS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/migration/" class="wm-article-link wm-toc-text">Migrating old content to HTTPS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/https/self-signed-certificates/" class="wm-article-link wm-toc-text">Self-Signed Certificates</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/firewall/" class="wm-article-link wm-toc-text">Firewall</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/asset-manager/" class="wm-article-link wm-toc-text">Asset Manager</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/elasticsearch/" class="wm-article-link wm-toc-text">Elasticsearch</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/opensearch/" class="wm-article-link wm-toc-text">Opensearch</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/metadata/" class="wm-article-link wm-toc-text">Metadata</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/encoding/" class="wm-article-link wm-toc-text">Encoding</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/inbox/" class="wm-article-link wm-toc-text">Inbox</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/listproviders/" class="wm-article-link wm-toc-text">List Providers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/load/" class="wm-article-link wm-toc-text">Load</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/log/" class="wm-article-link wm-toc-text">Logging</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/user-statistics.and.privacy/" class="wm-article-link wm-toc-text">User Statistics and Privacy Configuration</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/multi.tenancy/" class="wm-article-link wm-toc-text">Multi Tenancy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Authentication, Authorization and User Management</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security/" class="wm-article-link wm-toc-text">General Security</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/acl/" class="wm-article-link wm-toc-text">Access Control Lists</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.aai/" class="wm-article-link wm-toc-text">Authentication and Authorization Infrastructure (AAI)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.cas/" class="wm-article-link wm-toc-text">Central Authentication Service (CAS)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.ldap/" class="wm-article-link wm-toc-text">LDAP Authentication and Authorization (without CAS)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.jwt/" class="wm-article-link wm-toc-text">JWT-based Authentication and Authorization (e.g. for OIDC)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.user.moodle/" class="wm-article-link wm-toc-text">Moodle User Provider</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.user.sakai/" class="wm-article-link wm-toc-text">Sakai User Provider</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.user.brightspace/" class="wm-article-link wm-toc-text">Brightspace User Provider</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/security.user.canvas/" class="wm-article-link wm-toc-text">Canvas User Provider</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/serving-static-files/" class="wm-article-link wm-toc-text">Serving Static Files</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/stream-security/" class="wm-article-link wm-toc-text">Stream Security</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/workflow/" class="wm-article-link wm-toc-text">Workflow</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/external-api/" class="wm-article-link wm-toc-text">External API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/oaipmh/" class="wm-article-link wm-toc-text">OAI-PMH</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/monitoring/" class="wm-article-link wm-toc-text">External Monitoring</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="configuration/trim-segments/" class="wm-article-link wm-toc-text">Trim Segments</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Admin UI Configuration</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/event-filters/" class="wm-article-link wm-toc-text">Event Filters</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/asset-upload/" class="wm-article-link wm-toc-text">Manual Asset Upload</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/languages/" class="wm-article-link wm-toc-text">Languages</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/statistics/" class="wm-article-link wm-toc-text">Statistics</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/thumbnails/" class="wm-article-link wm-toc-text">Thumbnails</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/role-based-visibility/" class="wm-article-link wm-toc-text">Role-based Visibility</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/admin-ui/capture-agent-access/" class="wm-article-link wm-toc-text">Capture-Agent Access</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 "><a href="version-support/" class="wm-article-link wm-toc-text">Version Support</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Modules</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/plugin-management/" class="wm-article-link wm-toc-text">Plugin Management</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/atomrss/" class="wm-article-link wm-toc-text">Atom/RSS Feed</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Amazon Services</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/awss3archive/" class="wm-article-link wm-toc-text">Amazon S3 Archive Storage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/awss3distribution/" class="wm-article-link wm-toc-text">Amazon S3 Distribution</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/execute/" class="wm-article-link wm-toc-text">Execute Service</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/liveschedule/" class="wm-article-link wm-toc-text">Live Schedule</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/ltimodule/" class="wm-article-link wm-toc-text">LTI Module</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/mediamodule.configuration/" class="wm-article-link wm-toc-text">Media Module</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/metrics/" class="wm-article-link wm-toc-text">Metrics (OpenMetrics, Prometheus)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Player</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player.configuration/" class="wm-article-link wm-toc-text">Configuration</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player.url.parameter/" class="wm-article-link wm-toc-text">URL Parameters</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/player.matomo.tracking/" class="wm-article-link wm-toc-text">Matomo Tracking</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Paella player</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/paella.player/configuration/" class="wm-article-link wm-toc-text">Configuration</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/paella.player/url.parameter/" class="wm-article-link wm-toc-text">URL Parameters</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Paella plugins</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.descriptionPlugin/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.descriptionPlugin</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.downloadsPlugin/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.downloadsPlugin</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.episodesFromSeries/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.episodesFromSeries</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.loader/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.loader</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.logIn/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.logIn</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.searchPlugin/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.searchPlugin</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.transcriptionTabBarPlugin/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.transcriptionTabBarPlugin</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="modules/paella.player/plugins/es.upv.paella.opencast.userTrackingSaverPlugIn/" class="wm-article-link wm-toc-text">es.upv.paella.opencast.userTrackingSaverPlugIn</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Paella player 7</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/paella.player7/configuration/" class="wm-article-link wm-toc-text">Configuration</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Search Index</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/searchindex/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/searchindex/solr/" class="wm-article-link wm-toc-text">Solr</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="configuration/elasticsearch/" class="wm-article-link wm-toc-text">Elasticsearch</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/editor/" class="wm-article-link wm-toc-text">Stand-alone Video Editor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/stream-security/" class="wm-article-link wm-toc-text">Stream Security</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/studio/" class="wm-article-link wm-toc-text">Studio</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Termination State</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/terminationstate/" class="wm-article-link wm-toc-text">Basic</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/terminationstate.aws.autoscaling/" class="wm-article-link wm-toc-text">AWS AutoScaling</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/textextraction/" class="wm-article-link wm-toc-text">Text Extraction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/timelinepreviews/" class="wm-article-link wm-toc-text">Timeline Previews</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/amberscripttranscripts/" class="wm-article-link wm-toc-text">Transcripts (AmberScript)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/googlespeechtranscripts/" class="wm-article-link wm-toc-text">Transcripts (Google Speech)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/watsontranscripts/" class="wm-article-link wm-toc-text">Transcripts (IBM Watson)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/microsoftazuretranscripts/" class="wm-article-link wm-toc-text">Transcripts (Microsoft Azure)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Video Editor</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/videoeditor.setup/" class="wm-article-link wm-toc-text">Setup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="modules/videoeditor.architecture/" class="wm-article-link wm-toc-text">Architecture</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/videosegmentation/" class="wm-article-link wm-toc-text">Video Segmentation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/waveform/" class="wm-article-link wm-toc-text">Waveform Service</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/streaming-wowza/" class="wm-article-link wm-toc-text">Wowza Streaming Distribution Service</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="modules/youtubepublication/" class="wm-article-link wm-toc-text">YouTube Publication</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Workflow Operation Handler</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retry-strategies/" class="wm-article-link wm-toc-text">Retry Strategies</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/add-catalog-woh/" class="wm-article-link wm-toc-text">Add Catalog</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/analyze-tracks-woh/" class="wm-article-link wm-toc-text">Analyze Tracks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/analyze-mediapackage-woh/" class="wm-article-link wm-toc-text">Analyze Mediapackage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/analyzeaudio-woh/" class="wm-article-link wm-toc-text">Analyze Audio</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/animate-woh/" class="wm-article-link wm-toc-text">Animate</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/amberscript-start-transcription-woh/" class="wm-article-link wm-toc-text">AmberScript Start Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/amberscript-attach-transcription-woh/" class="wm-article-link wm-toc-text">AmberScript Attach Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/assert-woh/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/snapshot-woh/" class="wm-article-link wm-toc-text">Asset Snapshot</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/asset-delete-woh/" class="wm-article-link wm-toc-text">Asset Delete</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/attach-watson-transcription-woh/" class="wm-article-link wm-toc-text">Attach Watson Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/cleanup-woh/" class="wm-article-link wm-toc-text">Cleanup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/comment-woh/" class="wm-article-link wm-toc-text">Comment</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/composite-woh/" class="wm-article-link wm-toc-text">Composite</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/concat-woh/" class="wm-article-link wm-toc-text">Concat</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/conditional-config-woh/" class="wm-article-link wm-toc-text">Conditional Config</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/configure-by-dcterm-woh/" class="wm-article-link wm-toc-text">Configure-By-DCTerm</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/copy-woh/" class="wm-article-link wm-toc-text">Copy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/clone-woh/" class="wm-article-link wm-toc-text">Clone</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/coverimage-woh/" class="wm-article-link wm-toc-text">Cover Image</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/cropvideo-woh/" class="wm-article-link wm-toc-text">Crop Video</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/cut-marks-to-smil-woh/" class="wm-article-link wm-toc-text">Cut Marks To Smil</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/defaults-woh/" class="wm-article-link wm-toc-text">Defaults</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/demux-woh/" class="wm-article-link wm-toc-text">Demux</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/duplicate-event-woh/" class="wm-article-link wm-toc-text">Duplicate Event</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/editor-woh/" class="wm-article-link wm-toc-text">Editor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/encode-woh/" class="wm-article-link wm-toc-text">Encode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/error-resolution-woh/" class="wm-article-link wm-toc-text">Error Resolution</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/execute-once-woh/" class="wm-article-link wm-toc-text">Execute Once</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/execute-many-woh/" class="wm-article-link wm-toc-text">Execute Many</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/export-wf-properties-woh/" class="wm-article-link wm-toc-text">Export Workflow Properties</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/extracttext-woh/" class="wm-article-link wm-toc-text">Extract Text</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/google-speech-attach-transcription-woh/" class="wm-article-link wm-toc-text">Google Speech Attach Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/google-speech-start-transcription-woh/" class="wm-article-link wm-toc-text">Google Speech Start Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/httpnotify-woh/" class="wm-article-link wm-toc-text">HTTP Notify</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/image-woh/" class="wm-article-link wm-toc-text">Image</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/image-convert-woh/" class="wm-article-link wm-toc-text">Image convert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/imagetovideo-woh/" class="wm-article-link wm-toc-text">Image to Video</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/import-wf-properties-woh/" class="wm-article-link wm-toc-text">Import Workflow Properties</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/incident-woh/" class="wm-article-link wm-toc-text">Incident</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/include-woh/" class="wm-article-link wm-toc-text">Include</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/ingestdownload-woh/" class="wm-article-link wm-toc-text">Ingest-Download</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/inspect-woh/" class="wm-article-link wm-toc-text">Inspect</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/log-woh/" class="wm-article-link wm-toc-text">Log</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/notification/" class="wm-article-link wm-toc-text">Mattermost Notification Module</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/metadata-to-acl/" class="wm-article-link wm-toc-text">Metadata to ACL</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/move-storage-woh/" class="wm-article-link wm-toc-text">Move Storage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/microsoft-azure-attach-transcription-woh/" class="wm-article-link wm-toc-text">Microsoft Azure Attach Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/microsoft-azure-start-transcription-woh/" class="wm-article-link wm-toc-text">Microsoft Azure Start Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/multiencode-woh/" class="wm-article-link wm-toc-text">Multiencode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/normalizeaudio-woh/" class="wm-article-link wm-toc-text">Normalize Audio</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/partial-import-woh/" class="wm-article-link wm-toc-text">Partial Import</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/postmediapackage-woh/" class="wm-article-link wm-toc-text">Post Media Package</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/prepareav-woh/" class="wm-article-link wm-toc-text">Prepare A/V</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/probe-resolution-woh/" class="wm-article-link wm-toc-text">Probe Resolution</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/process-smil-woh/" class="wm-article-link wm-toc-text">Process Smil</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publication-to-workspace-woh/" class="wm-article-link wm-toc-text">Publication to Workspace</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-configure-aws-woh/" class="wm-article-link wm-toc-text">Publish Configure AWS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-configure-woh/" class="wm-article-link wm-toc-text">Publish Configure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-engage-aws-woh/" class="wm-article-link wm-toc-text">Publish Engage AWS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-engage-woh/" class="wm-article-link wm-toc-text">Publish Engage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-oaipmh-woh/" class="wm-article-link wm-toc-text">Publish OAI-PMH</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/publish-youtube-woh/" class="wm-article-link wm-toc-text">Publish YouTube</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/rename-files-woh/" class="wm-article-link wm-toc-text">Rename Files</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/republish-oaipmh-woh/" class="wm-article-link wm-toc-text">Republish OAI-PMH</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-engage-aws-woh/" class="wm-article-link wm-toc-text">Retract Engage AWS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-engage-woh/" class="wm-article-link wm-toc-text">Retract Engage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-configure-aws-woh/" class="wm-article-link wm-toc-text">Retract Configure AWS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-configure-woh/" class="wm-article-link wm-toc-text">Retract Configure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-oaipmh-woh/" class="wm-article-link wm-toc-text">Retract OAI-PMH</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-partial-aws-woh/" class="wm-article-link wm-toc-text">Retract Partial AWS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-partial-woh/" class="wm-article-link wm-toc-text">Retract Partial</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/retract-youtube-woh/" class="wm-article-link wm-toc-text">Retract YouTube</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/sanitize-adaptive-woh/" class="wm-article-link wm-toc-text">Sanitize Adaptive</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/segmentpreviews-woh/" class="wm-article-link wm-toc-text">Segment Previews</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/segmentvideo-woh/" class="wm-article-link wm-toc-text">Segment Video</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/select-streams-woh/" class="wm-article-link wm-toc-text">Select Tracks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/select-version-woh/" class="wm-article-link wm-toc-text">Select Version</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/send-email-woh/" class="wm-article-link wm-toc-text">Send Email</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/series-woh/" class="wm-article-link wm-toc-text">Series</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/silence-woh/" class="wm-article-link wm-toc-text">Silence</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/speech-to-text-woh/" class="wm-article-link wm-toc-text">Speech to Text</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/start-watson-transcription-woh/" class="wm-article-link wm-toc-text">Start Watson Transcription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/start-workflow-woh/" class="wm-article-link wm-toc-text">Start Workflow</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/statistics-writer/" class="wm-article-link wm-toc-text">Statistics Writer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/tag-woh/" class="wm-article-link wm-toc-text">Tag</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/tag-by-dcterm-woh/" class="wm-article-link wm-toc-text">Tag-By-DCTerm</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/timelinepreviews-woh/" class="wm-article-link wm-toc-text">Timelinepreviews</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/transfer-metadata-woh/" class="wm-article-link wm-toc-text">Transfer Metadata</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/theme-woh/" class="wm-article-link wm-toc-text">Theme</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/video-grid-woh/" class="wm-article-link wm-toc-text">Video Grid</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/waveform-woh/" class="wm-article-link wm-toc-text">Waveform</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="workflowoperationhandlers/zip-woh/" class="wm-article-link wm-toc-text">Zip</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="releasenotes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-13-administration-guide">Opencast 13 Administration Guide</h1>
+<p>Welcome to the Opencast Universe! Opencast is an open-source enterprise level lecture recording system. The core of the
+system delivers functionality for scheduling, media encoding, editing and content delivery. For lecture capture,
+Opencast provides capture agent software and third party appliances are available. An awesome community provides new
+features and support.</p>
+<h2 id="the-software">The Software</h2>
+<p>Opencast contains everything you need for scheduling captures, trimming, captioning, and conversion of output media to
+several formats and our engage components.  The core can be deployed on one (all-in-one deployment) or many (distributed
+deployment) Linux servers so your Opencast installation can grow with the needs of your university.</p>
+<h2 id="release-documentation">Release Documentation</h2>
+<p>The Opencast Release Documentation is the official Opencast documentation for each release. It contains:</p>
+<ul>
+<li><a href="releasenotes/">Release Notes</a><ul>
+<li><a href="upgrade/">Upgrade</a></li>
+<li><a href="changelog/">Changelog</a></li>
+</ul>
+</li>
+<li><a href="installation/">Installation Guides</a></li>
+<li><a href="configuration/">Configuration Guides</a><ul>
+<li><a href="configuration/basic/">Basic Configuration</a></li>
+<li><a href="configuration/database/">Database Configuration</a></li>
+<li><a href="configuration/https/">HTTPS Configuration</a></li>
+<li><a href="configuration/workflow/">Workflow Configuration</a></li>
+<li><a href="configuration/encoding/">Encoding Configuration</a></li>
+<li><a href="configuration/">more...</a></li>
+</ul>
+</li>
+<li><a href="modules/">Module Documentation</a><ul>
+<li><a href="modules/plugin-management/">Plugin Management</a></li>
+<li><a href="modules/atomrss/">Atom and RSS Feed</a></li>
+<li><a href="modules/awss3distribution/">AWS S3 Distribution</a></li>
+<li><a href="modules/mediamodule.configuration/">Media Module</a></li>
+<li><a href="modules/metrics/">Metrics (OpenMetrics, Prometheus)</a></li>
+<li><a href="modules/stream-security/">Stream Security</a></li>
+<li><a href="modules/editor/">Stand-alone Video Editor</a></li>
+<li><a href="modules/studio/">Studio</a></li>
+<li><a href="modules/textextraction/">Text Extraction</a></li>
+<li><a href="modules/videosegmentation/">Video Segmentation</a></li>
+<li><a href="modules/youtubepublication/">YouTube Publication</a></li>
+<li><a href="modules/">more...</a></li>
+</ul>
+</li>
+<li><a href="version-support/">Version Support</a></li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="releasenotes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
+<!--
+MkDocs version : 1.4.2
+Build Date UTC : 2022-11-21 05:21:23.753454+00:00
+-->

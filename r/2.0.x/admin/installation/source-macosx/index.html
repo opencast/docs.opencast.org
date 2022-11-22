@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Source Mac OS X - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Source Mac OS X";
+    var mkdocs_page_input_path = "installation/source-macosx.md";
+    var mkdocs_page_url = "/installation/source-macosx/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Administration Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../release.notes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Installation Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rpm-fedora/">RPM Fedora</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rpm-rhel-sl-centos/">RPM RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../source-debian-ubuntu/">Source Debian/Ubuntu</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../source-rhel-sl-centos/">Source RHEL/CentOS</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Source Mac OS X</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#install-from-source-mac-os-x">Install from Source (Mac OS X)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#preparation">Preparation</a></li>
+        
+            <li><a class="toctree-l4" href="#install-dependencies">Install Dependencies</a></li>
+        
+            <li><a class="toctree-l4" href="#building-opencast">Building Opencast</a></li>
+        
+            <li><a class="toctree-l4" href="#configure">Configure</a></li>
+        
+            <li><a class="toctree-l4" href="#running-opencast">Running Opencast</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../configuration/">Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/security/">Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/security.cas/">Security - CAS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/workflow/">Workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../configuration/configuration.files.and.keys/">Configuration Files and Keys</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Module Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.architecture/">Player - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.core.reference/">Player - Core Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.events/">Player - Events</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.storage/">Player - Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugins/">Player - Plugins</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugin.development/">Player - Plugin Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.testing/">Player - Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.url.parameter/">Player - URL Parameters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Video Editor - Setup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.manual/">Video Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Video Editor - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Upgrade</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../upgrade/">Upgrading Home</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handlers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Workflow Operation Handler Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip WOH</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Installation &raquo;</li>
+        
+      
+    
+    <li>Source Mac OS X</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/installation/source-macosx.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="install-from-source-mac-os-x">Install from Source (Mac OS X)</h1>
+<p>This document will help you install and run Matterhorn on the Mac OS X operating system.
+Tested on OS X 10.9 Mavericks.</p>
+<blockquote>
+<p><em>The installation on Mac OS X is not officially supported. Use this at your own risk.</em></p>
+</blockquote>
+<h2 id="preparation">Preparation</h2>
+<h3 id="create-matterhorn-installation-directory">Create Matterhorn installation directory</h3>
+<pre><code>sudo mkdir -p /opt/matterhorn
+sudo chown $USER:$GROUPS /opt/matterhorn
+</code></pre>
+<h3 id="check-out-matterhorn-source">Check out Matterhorn source</h3>
+<p>You can get the Matterhorn source code by either downloading a tarball of the source code or by cloning the Git repository. The latter option is more flexible, it is easier to upgrade and in general preferred for developers. The prior option, the tarball download, needs less tools and you don't have to download nearly as much as with Git.</p>
+<p>Using the tarball:</p>
+<p>Select the tarball for the version you want to install from
+https://bitbucket.org/opencast-community/matterhorn/downloads#tag-downloads</p>
+<pre><code># Download desired tarball
+curl -O https://bitbucket.org/opencast-community/matterhorn/...
+tar xf develop.tar.gz
+mv opencast-community-matterhorn-* /opt/matterhorn/
+</code></pre>
+<p>Cloning the Git repository:</p>
+<pre><code>cd /opt
+git clone https://bitbucket.org/opencast-community/matterhorn.git
+cd opencast
+git checkout r/2.0.x
+</code></pre>
+<h2 id="install-dependencies">Install Dependencies</h2>
+<p>Please make sure to install the following dependencies.</p>
+<p>Required:</p>
+<pre><code>Xcode
+jdk 7 or jdk 8
+ffmpeg &gt;= 2.5
+maven &gt;= 3.1
+</code></pre>
+<p>Required (not necessarily on the same machine):</p>
+<pre><code>ActiveMQ &gt;= 5.10 (older versions untested)
+</code></pre>
+<p>Required for text extraction (recommended):</p>
+<pre><code>tesseract &gt;= 3
+</code></pre>
+<p>Required for hunspell based text filtering (optional):</p>
+<pre><code>hunspell &gt;= 1.2.8
+</code></pre>
+<p>Required for audio normalization (optional):</p>
+<pre><code>sox &gt;= 14.4
+</code></pre>
+<h3 id="dependency-download">Dependency Download</h3>
+<p>You can download Xcode in the Mac App Store. JDK 8 for OS X is available from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle</a>.</p>
+<h4 id="using-homebrew">Using Homebrew</h4>
+<p>Homebrew is a package manager for OS X. For installation instruction see <a href="http://brew.sh/">their website</a>.</p>
+<pre><code>brew install maven
+brew install ffmpeg
+brew install apache-activemq
+# Optional
+brew install tesseract
+brew install hunspell
+brew install sox
+</code></pre>
+<h4 id="using-pre-built-binaries">Using pre-built binaries</h4>
+<p>Pre-built versions of most dependencies can be downloaded from the respective project website:</p>
+<ul>
+<li><a href="https://maven.apache.org/download.cgi">Get Apache Maven</a></li>
+<li><a href="http://ffmpeg.org/download.html">Get FFmpeg</a></li>
+<li><a href="http://activemq.apache.org/download.html">Get Apache ActiveMQ</a></li>
+</ul>
+<h2 id="building-opencast">Building Opencast</h2>
+<p>Compile the source code:</p>
+<pre><code>cd /opt/matterhorn
+mvn clean install -DdeployTo=/opt/matterhorn
+</code></pre>
+<blockquote>
+<p><em>Please be patient, as building matterhorn for the first time will take quite long.</em></p>
+</blockquote>
+<h2 id="configure">Configure</h2>
+<p>Please follow the steps of the <a href="../../configuration/basic/">Basic Configuration guide</a>. It will help you to set your host name, login information, etc.
+As specified in the guide, make sure you replace the default ActiveMQ configuration with the one provided in <code>docs/scripts/activemq/activemq.xml</code>. If you installed ActiveMQ using homebrew, you can find the installation path with <code>brew info activemq</code>.</p>
+<h2 id="running-opencast">Running Opencast</h2>
+<p>Make sure you have ActiveMQ running (unless you're running it on a different machine). Then you can start Opencast using the start-matterhorn script.</p>
+<pre><code>activemq start
+cd /opt/matterhorn
+sudo ./bin/start-matterhorn
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../configuration/" class="btn btn-neutral float-right" title="Configuration Home">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../source-rhel-sl-centos/" class="btn btn-neutral" title="Source RHEL/CentOS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../source-rhel-sl-centos/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../configuration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

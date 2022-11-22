@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Video Grid - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "VideoGridWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Example", url: "#example" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../waveform-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../waveform-woh/">
+        Waveform
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../theme-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../theme-woh/">
+        Theme
+      </a>
+</div>
+</div>
+<h1 id="videogridworkflowoperationhandler">VideoGridWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The VideoGridWorkflowOperationHandler offers a way to combine several, partially simultaneously
+playing videos into a single video file. For example, the webcam feeds during a video conference
+can be combined by this WOH. The resulting video puts each input video on a grid that dynamically
+resizes based on the number of inputs videos currently active. Which input video is active when
+is defined through a SMIL catalogue from e.g. a partial ingest.</p>
+<p>If the SMIL defines a section where there are no videos active, the background color will be shown
+instead for the duration of the section. This also holds true for potentially empty beginning and end 
+sections, ensuring that a final single video is as long as the overall duration defined in the SMIL 
+(e.g. if the first input video becomes active at 30 seconds, the first generated output is a 30 second
+long video of the background color). The background color is also shown whenever the input videos cannot
+fully fill up the available space.</p>
+<p>This WOH relies on the inspect service for enriching generated, temporary video files with metadata.
+Furthermore, it relies on the composers concat service to combine temporary video files into
+a single output file.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>source-flavors</strong>*</td>
+<td>presenter/source</td>
+<td>Flavors containing all the video tracks to be combined.</td>
+</tr>
+<tr>
+<td><strong>source-smil-flavor</strong>*</td>
+<td>smil/source+partial</td>
+<td>Flavor containing the SMIL specifying when each video track is active. The example shows the flavor used by partial ingest.</td>
+</tr>
+<tr>
+<td><strong>concat-encoding-profile</strong>*</td>
+<td>concat-samecodec.work</td>
+<td>Encoding profile used for the final concatenation.</td>
+</tr>
+<tr>
+<td>resolution</td>
+<td>1280x720</td>
+<td>Resolution of the output. Example value is the default.</td>
+</tr>
+<tr>
+<td>background-color</td>
+<td>0xFFFFFF</td>
+<td>The color used to fill space not occupied by input videos in the output. Example value is the default.</td>
+</tr>
+<tr>
+<td><strong>target-flavor</strong>*</td>
+<td>presenter/partial</td>
+<td>Flavor containing the output video tracks.</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>archive</td>
+<td>Tag(s) to add to the output track. Default is <code>null</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>* <strong>required keys</strong></p>
+<h2 id="example">Example</h2>
+<p>For this example, let us assume that our source-flavor contains three videos. The SMIL file from our
+source-smil-flavor defines the duration for the final video as 3 (units of time). It also defines the start
+time and end time for each individual video, as seen below:</p>
+<p><img alt="Figure 1" src="../video-grid-woh-figure-1.png"/></p>
+<p>Every time a video starts or ends, it marks the beginning of a new section. For each section, a video is
+generated. In our case, this happens three times, so three videos are generated. The image below shows 
+how the videos from our source-flavor are arranged in each section.</p>
+<p><img alt="Figure 2" src="../video-grid-woh-figure-2.png"/></p>
+<p>Finally, the videos for each section are combined into one final, single video file.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+    id="video-grid"
+    description="Generate sections of the final video"
+    fail-on-error="true"
+    exception-handler-workflow="partial-error"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key="source-smil-flavor"&gt;smil/source+partial&lt;/configuration&gt;
+    &lt;configuration key="target-flavor"&gt;presenter/partial&lt;/configuration&gt;
+    &lt;configuration key="concat-encoding-profile"&gt;concat-samecodec.work&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../waveform-woh/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../waveform-woh/">
+        Waveform
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../theme-woh/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../theme-woh/">
+        Theme
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/video-grid-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Log - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Log", url: "#_top", children: [
+              {title: "Graylog", url: "#graylog" },
+              {title: "Example Configuration", url: "#example-configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../user-statistics.and.privacy/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../user-statistics.and.privacy/" class="btn btn-xs btn-link">
+        User Statistics and Privacy Configuration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../load/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../load/" class="btn btn-xs btn-link">
+        Load
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="log">Log</h1>
+<p>The settings for logging can be found in:</p>
+<pre><code>.../etc/org.ops4j.pax.logging.cfg
+</code></pre>
+<p>Each Log4J appender can be configured in a similar fashion to the graylog example down below. The following
+requirements have to be met:
+* It needs to be a Log4J appender
+* The used bundle needs to be a fragment-bundle</p>
+<h2 id="graylog">Graylog</h2>
+<p>To have all log data available and accessible in one central location one can use graylog. A guide to install
+graylog can be found <a href="http://docs.graylog.org/en/stable/">here</a>.</p>
+<p>Add gelfj-X.X.X.jar (works up to version 1.1.14) to the appropriate folder in the karaf system folder (e.g. <code>/system/org/graylog2/gelfj/X.X.X/gelfj-X.X.X.jar</code>)
+The directory has the same structure as a maven repository!</p>
+<p>It is important that the appender jar is a valid fragment-bundle of <code>org.ops4j.pax.logging.pax-logging-service</code>.</p>
+<p>That means the jar MANIFEST.MF must contain this section <code>Fragment-Host: org.ops4j.pax.logging.pax-logging-service</code>.</p>
+<p>Add the following line at the beginning of the startup.properties file:</p>
+<pre><code>mvn\:org.graylog2/gelfj/X.X.X = 7
+</code></pre>
+<p>We use startlevel <code>7</code> here, because it's need to be loaded before the <code>pax-logging</code>.</p>
+<p>Add this custom logging configuration example to the org.ops4j.pax.logging.cfg file</p>
+<pre><code># Async wrapper for send queue in case of GELF destination is unavailable
+log4j.appender.gelfasync=org.apache.log4j.AsyncAppender
+log4j.appender.gelfasync.blocking=false
+log4j.appender.gelfasync.bufferSize=20000
+log4j.appender.gelfasync.appenders=gelf
+
+# Define the GELF destination
+log4j.appender.gelf=org.graylog2.log.GelfAppender
+log4j.appender.gelf.graylogHost=&lt;HOSTNAME OF GRAYLOG INPUT&gt;
+log4j.appender.gelf.graylogPort=&lt;PORT OF GRAYLOG INPUT&gt;
+log4j.appender.gelf.originHost=&lt;NAME OF SERVICE&gt;
+log4j.appender.gelf.facility=karaf
+log4j.appender.gelf.layout=org.apache.log4j.PatternLayout
+log4j.appender.gelf.extractStacktrace=true
+log4j.appender.gelf.addExtendedInformation=true
+log4j.appender.gelf.includeLocation=true
+log4j.appender.gelf.additionalFields={'environment': 'EXAMPLE-ENV', 'application': 'EXAMPLE-APP'}
+</code></pre>
+<p><em>Note:</em> The default protocol is UDP to use TCP instead, prefix hostname with <code>tcp:</code>.</p>
+<p>Add the new appender to the rootLogger</p>
+<pre><code>log4j.rootLogger=WARN, stdout, osgi:*, gelfasync
+</code></pre>
+<h2 id="example-configuration">Example Configuration</h2>
+<pre><code># Define the GELF destination
+log4j.appender.gelf=org.graylog2.log.GelfAppender
+log4j.appender.gelf.graylogHost=tcp:graylog.opencast.org
+log4j.appender.gelf.graylogPort=12290
+log4j.appender.gelf.originHost=test.opencast.org
+log4j.appender.gelf.facility=karaf
+log4j.appender.gelf.layout=org.apache.log4j.PatternLayout
+log4j.appender.gelf.extractStacktrace=true
+log4j.appender.gelf.addExtendedInformation=true
+log4j.appender.gelf.includeLocation=true
+log4j.appender.gelf.additionalFields={'environment': 'OPENCAST-TEST-ENV', 'application': 'OC-ADMIN'}
+</code></pre>
+<p>You can find further gelf appender documentation <a href="https://github.com/t0xa/gelfj">here</a>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../user-statistics.and.privacy/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../user-statistics.and.privacy/" class="btn btn-xs btn-link">
+        User Statistics and Privacy Configuration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../load/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../load/" class="btn btn-xs btn-link">
+        Load
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/log.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

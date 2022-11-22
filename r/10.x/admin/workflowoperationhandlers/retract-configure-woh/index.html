@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Retract Configure - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "ConfigurableRetractWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameters", url: "#parameters" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-link">
+        Retract OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../retract-engage-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../retract-engage-woh/" class="btn btn-xs btn-link">
+        Retract Engage
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="configurableretractworkflowoperationhandler">ConfigurableRetractWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>The ConfigurableRetractWorkflowOperationHandler retracts the published elements from a configured publication.</p>
+<p>If the elements have been added to the Publication using "with-published-elements", as in the case with the external
+api, they haven't actually been published so it is unnecessary to have a retract-configuration. Adding a retraction
+won't cause any errors, it will just skip those elements.</p>
+<h2 id="parameters">Parameters</h2>
+<p>These are the keys that can be configured for the workflow operation in the workflow definition.  The <code>channel-id</code> is
+mandatory.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Example</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channel-id</td>
+<td>The id of the channel to retract from</td>
+<td><code>internal</code></td>
+<td></td>
+</tr>
+<tr>
+<td>retract-streaming</td>
+<td>Whether to retract streaming elements as well</td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<p>Setting <code>retract-streaming</code> to true only makes sense if you've published streaming elements for this channel before.</p>
+<h2 id="operation-examples">Operation Examples</h2>
+<h4 id="retract-from-internal-channel">Retract from Internal Channel</h4>
+<pre><code>&lt;!-- Remove the internal publication if the mediapackage is being deleted. --&gt;
+&lt;operation
+  id="retract-configure"
+  exception-handler-workflow="partial-error"
+  description="Retract from internal publication channel"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;internal&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<h4 id="retract-from-external-api">Retract from External API</h4>
+<pre><code>&lt;operation
+  id="retract-configure"
+  exception-handler-workflow="partial-error"
+  description="Retract from external api publication channel"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="channel-id"&gt;api&lt;/configuration&gt;
+    &lt;configuration key="retract-streaming"&gt;false&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../retract-oaipmh-woh/" class="btn btn-xs btn-link">
+        Retract OAI-PMH
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../retract-engage-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../retract-engage-woh/" class="btn btn-xs btn-link">
+        Retract Engage
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/retract-configure-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

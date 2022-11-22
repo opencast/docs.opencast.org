@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Configuration Files and Keys - Opencast - Administration Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Configuration Files and Keys";
+    var mkdocs_page_input_path = "configuration/configuration.files.and.keys.md";
+    var mkdocs_page_url = "/configuration/configuration.files.and.keys/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Administration Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Administration Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../release.notes/">Release Notes</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Installation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../installation/">Installation Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/multiple-servers/">Multiple Servers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-fedora/">RPM Fedora</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/rpm-rhel-sl-centos/">RPM RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-debian-ubuntu/">Source Debian/Ubuntu</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-rhel-sl-centos/">Source RHEL/CentOS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../installation/source-macosx/">Source Mac OS X</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Configuration</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../basic/">Basic</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../database/">Database</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../message-broker/">Message Broker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../encoding/">Encoding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../logging.and.privacy/">Logging and Privacy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../multi.tenancy/">Multi Tenancy</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security/">Security</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../security.cas/">Security - CAS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../workflow/">Workflow</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Configuration Files and Keys</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#configuration-files-and-keys">Configuration Files and Keys</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#watch-folders">Watch Folders</a></li>
+        
+            <li><a class="toctree-l4" href="#configuration-files">Configuration Files</a></li>
+        
+            <li><a class="toctree-l4" href="#security">Security</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Modules</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../modules/">Module Configuration Home</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/atomrss/">Atom/RSS</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/mediamodule.configuration/">Media Module Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.architecture/">Player - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.core.reference/">Player - Core Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.events/">Player - Events</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.storage/">Player - Storage</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugins/">Player - Plugins</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.plugin.development/">Player - Plugin Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.testing/">Player - Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.configuration/">Player - Configuration</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/player.url.parameter/">Player - URL Parameters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/searchindex/">Search Index</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/textextraction/">Text Extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.setup/">Video Editor - Setup</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.manual/">Video Editor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videoeditor.architecture/">Video Editor - Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/videosegmentation/">Video Segmentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../modules/youtubepublication/">YouTube publication</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Upgrade</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../upgrade/">Upgrading Home</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Workflow Operation Handlers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/">Workflow Operation Handler Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/analyzeaudio-woh/">Analyze audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/append-woh/">Append WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/archive-woh/">Archive WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/caption-woh/">Caption WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/compose-woh/">Compose WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/composite-woh/">Composite WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/concat-woh/">Concat WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/defaults-woh/">Defaults WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/editor-woh/">Editor WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/email-woh/">Email WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/extracttext-woh/">Extract Text WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/httpnotify-woh/">HTTP Notify WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/image-woh/">Image WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/imagetovideo-woh/">Image to Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/incident-woh/">Incident WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/ingestdownload-woh/">Ingest-Download WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/inspect-woh/">Inspect WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/normalizeaudio-woh/">Normalize Audio WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/postmediapackage-woh/">Post Media Package WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/prepareav-woh/">Prepare A/V WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/publishengage-woh/">Publish Engage WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/republish-woh/">Republish WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentpreviews-woh/">Segment Previews WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/segmentvideo-woh/">Segment Video WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/series-woh/">Series WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/silence-woh/">Silence WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/tag-woh/">Tag WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/trim-woh/">Trim WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/waveform-woh/">Waveform WOH</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../workflowoperationhandlers/zip-woh/">Zip WOH</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Administration Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Configuration &raquo;</li>
+        
+      
+    
+    <li>Configuration Files and Keys</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs/src/default/docs/configuration/configuration.files.and.keys.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="configuration-files-and-keys">Configuration Files and Keys</h1>
+<p>This document will help you get an overview of the existing Matterhorn configuration files and watch folders.</p>
+<h2 id="watch-folders">Watch Folders</h2>
+<p>Watch folders allow you to quickly augment Matterhorn's existing behavior, simply by adding new configuration files. Below is a list of default watch folders.</p>
+<h3 id="encoding-profiles">Encoding Profiles</h3>
+<p>Default and custom encoding profiles should be placed in <felix_home>/etc/encoding. The file names should follow the pattern *.properties.</p>
+<h3 id="atom-and-rss-feeds">Atom and RSS Feeds</h3>
+<p>Default and custom feed definitions should be placed in <felix_home>/etc/feeds. The file names should follow the pattern *.xml.</p>
+<h3 id="workflow-definitions">Workflow Definitions</h3>
+<p>Custom workflow definitions should be placed in <felix_home>/etc/workflows. The file names should follow the pattern *.xml.</p>
+<h3 id="osgi-bundles">OSGi Bundles</h3>
+<p>Additional OSGi bundles should be placed in <felix_home>/lib/matterhorn. <felix_home>/etc/load should be reserved for the default configuration.</p>
+<h3 id="inbox">Inbox</h3>
+<p>Media files placed in <felix_home>/inbox will be copied to the Matterhorn working file repository and made available in the Admin Tools &gt; Uploading Recording user interface, via the File Location menu.</p>
+<p><em>Queued media files are write-protected, copied to the working file repository and then deleted from the inbox.</em></p>
+<h2 id="configuration-files">Configuration Files</h2>
+<p>Configuration files use key-value pairs to determine Matterhorn's runtime behavior.</p>
+<h3 id="etcconfigproperties"><felix_home>/etc/config.properties</h3>
+<p><em>config.properties</em> is the primary Matterhorn configuration file.</p>
+<h4 id="bundle-configuration-properties">Bundle Configuration Properties</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.osgi.service.http.port</td>
+<td>Port number of http services</td>
+<td>8080</td>
+</tr>
+<tr>
+<td>org.osgi.service.http.port.secure</td>
+<td>Port number of https services</td>
+<td>8443</td>
+</tr>
+<tr>
+<td>org.osgi.service.http.secure.enabled</td>
+<td>Toggle https services</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, edit Apache's httpd.conf to reroute Matterhorn to port 80:</p>
+<pre><code>ProxyPass / http://localhost:8080/
+ProxyPassReverse / http://localhost:8080/
+</code></pre>
+<h4 id="opencast-matterhorn-configuration">Opencast Matterhorn Configuration</h4>
+<h5 id="general">General</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.server.url</td>
+<td>URL of Matterhorn http services</td>
+<td>http://localhost:8080 e.g. org.opencastproject.server.url=http://matterhorn1.telavivuniv.org</td>
+</tr>
+<tr>
+<td>org.opencastproject.serviceregistry.url</td>
+<td>URL of the service registry, if not running in the local JVM</td>
+<td>This value is needed only if the host does not have access to the relational database (see JDBC settings below).  This is common for capture agents, but not for servers.</td>
+</tr>
+<tr>
+<td>org.opencastproject.server.maxload</td>
+<td>The maximum number of concurrent jobs this server should attempt to run</td>
+<td>Defaults to the number of processing cores available to the JVM, as reported by Runtime.availableProcessors()</td>
+</tr>
+<tr>
+<td>org.opencastproject.storage.dir</td>
+<td>Base path of Matterhorn data file structure. Note: This must be changed on a production server so that media will not disappear on reboot.</td>
+<td>${java.io.tmpdir}/opencast</td>
+</tr>
+<tr>
+<td>org.opencastproject.security.config</td>
+<td>Path to Matterhorn security configuration file</td>
+<td>conf/security.xml</td>
+</tr>
+<tr>
+<td>org.opencastproject.security.digest.user</td>
+<td>Digest authentication privileged user name</td>
+<td>matterhorn_system_account</td>
+</tr>
+<tr>
+<td>org.opencastproject.security.digest.pass</td>
+<td>Digest authentication privileged user password</td>
+<td>CHANGE_ME</td>
+</tr>
+<tr>
+<td>org.opencastproject.anonymous.feedback.url</td>
+<td>The project-wide feedback service, used to help the community understand how Matterhorn is deployed "in the wild.  For more information on this feature, see the Project Feedback Service documentation</td>
+<td>No Feedback</td>
+</tr>
+</tbody>
+</table>
+<h5 id="streaming">Streaming</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.streaming.url</td>
+<td>URL of Red5 streaming server</td>
+<td>rtmp://localhost/matterhorn-engage</td>
+</tr>
+<tr>
+<td>org.opencastproject.streaming.directory</td>
+<td>Path to published streaming media</td>
+<td>${org.opencastproject.storage.dir}/streams</td>
+</tr>
+<tr>
+<td>org.opencastproject.streaming.flvcompatibility</td>
+<td>Some newer streaming server versions expect an "flv:" tag within the rtmp URL. Not every RTMP-streaming server is compatible with this (i.e. nginx), so this is the compatibility mode to the old syntax. true = without "flv:" tag - old syntax, false = with "flv:" tag - new syntax</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h5 id="database">Database</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.db.ddl.generation</td>
+<td>Toggle generation of database description language</td>
+<td>true</td>
+</tr>
+<tr>
+<td>org.opencastproject.db.vendor</td>
+<td>Database vendor type</td>
+<td>HSQL</td>
+</tr>
+<tr>
+<td>org.opencastproject.db.jdbc.driver</td>
+<td>Fully-qualified name of database adapter</td>
+<td>org.h2.Driver</td>
+</tr>
+<tr>
+<td>org.opencastproject.db.jdbc.url</td>
+<td>URL of database, using the jdbc:<type>:// protocol</td>
+<td>jdbc:h2:${org.opencastproject.storage.dir}/db;LOCK_MODE=1;MVCC=TRUE</td>
+</tr>
+<tr>
+<td>org.opencastproject.db.jdbc.user</td>
+<td>Privileged database user name</td>
+<td>sa</td>
+</tr>
+<tr>
+<td>org.opencastproject.db.jdbc.pass</td>
+<td>Privileged database user password</td>
+<td>sa</td>
+</tr>
+</tbody>
+</table>
+<h5 id="distribution">Distribution</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.download.directory</td>
+<td>Path to published progressive media</td>
+<td>${org.opencastproject.storage.dir}/downloads</td>
+</tr>
+</tbody>
+</table>
+<h5 id="search">Search</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.search.solr.dir</td>
+<td>Path to search index files</td>
+<td>${org.opencastproject.storage.dir}/searchindex</td>
+</tr>
+</tbody>
+</table>
+<h5 id="working-file-repository">Working File Repository</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.file.repo.path</td>
+<td>Path to Matterhorn working file repository</td>
+<td>${org.opencastproject.storage.dir}/files</td>
+</tr>
+</tbody>
+</table>
+<h5 id="workspace">Workspace</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.workspace.rootdir</td>
+<td>Path to the workspace root directory</td>
+<td>${org.opencastproject.storage.dir}/workspace</td>
+</tr>
+</tbody>
+</table>
+<h5 id="workflow">Workflow</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.workflow.default.definition</td>
+<td>ID of default workflow definition</td>
+<td>full</td>
+</tr>
+<tr>
+<td>org.opencastproject.workflow.solr.dir</td>
+<td>If using a local workflow search index, this is the directory to use for storage of the embedded solr server's index files</td>
+<td>${org.opencastproject.storage.dir}/workflow</td>
+</tr>
+<tr>
+<td>org.opencastproject.workflow.solr.url</td>
+<td>If using a remote workflow search index, this is the URL to the remote solr server.  Configure either this value or org.opencastproject.workflow.solr.dir but not both.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="inbox_1">Inbox</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>org.opencastproject.inbox.threads</td>
+<td>The number of mediapackages to ingest concurrently from the watch folder</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="etcloadorgopencastprojectorganization-mh_default_orgcfg"><felix_home>/etc/load/org.opencastproject.organization-mh_default_org.cfg</h3>
+<p><strong>org.opencastproject.organization-mh_default_org.cfg</strong> defines the default tennant in a multi tennant setup. If you don't have a multi-tennant setup this is the file for you to edit.</p>
+<h4 id="servers-and-urls">Servers and URLs</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prop.org.opencastproject.admin.ui.url</td>
+<td>The URL to the administrative tools.  This sets the URL for the "Adminstrative Tools" link on the Matterhorn welcome page.</td>
+<td>The local server URL, or ${org.opencastproject.server.url}</td>
+</tr>
+<tr>
+<td>prop.org.opencastproject.engage.ui.url</td>
+<td>The URL to the engage tools.  This sets the URL for the "Engage Tools" link on the Matterhorn welcome page.</td>
+<td>The local server URL, or ${org.opencastproject.server.url}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="security">Security</h2>
+<h3 id="etcsecuritymh_default_orgxml"><felix_home>/etc/security/mh_default_org.xml</h3>
+<p><em>mh_default_org.xml</em> defines the Matterhorn access policy using the <a href="http://static.springsource.org/spring-security/site/">Spring Security</a> framework XML schema.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../modules/" class="btn btn-neutral float-right" title="Module Configuration Home">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../workflow/" class="btn btn-neutral" title="Workflow"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/admin/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../workflow/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../modules/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

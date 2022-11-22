@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Add Catalog - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AddCatalogWorkflowOperationHandler", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-link">
+        Analyze Tracks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../retry-strategies/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../retry-strategies/" class="btn btn-xs btn-link">
+        Retry Strategies
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="addcatalogworkflowoperationhandler">AddCatalogWorkflowOperationHandler</h1>
+<h2 id="description">Description</h2>
+<p>This operation adds a catalog to the media package of the running workflow.
+The catalog to add is specified by path. Additionally the name, flavor and tags of the catalog can be configured.
+If a catalog of the same flavor already exits in the media package,
+the parameter <code>catalog-type-collision-behavior</code> specifies how this case is handled.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>Configuration Key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>catalog-path</code></td>
+<td><code>${karaf.etc}/catalogs/default_dublincore.xml</code></td>
+<td>Path to the catalog</td>
+</tr>
+<tr>
+<td><code>catalog-flavor</code></td>
+<td><code>dublincore/episode</code></td>
+<td>Flavor of the catalog</td>
+</tr>
+<tr>
+<td><code>catalog-name</code></td>
+<td><code>dublincore.xml</code></td>
+<td>Name of the catalog</td>
+</tr>
+<tr>
+<td><code>catalog-tags</code></td>
+<td><code>archive,dublincore</code></td>
+<td>List of tags, separated by commas</td>
+</tr>
+<tr>
+<td><code>catalog-type-collision-behavior</code></td>
+<td><code>keep</code></td>
+<td>How a collision is handled (more information below)</td>
+</tr>
+</tbody>
+</table>
+<p>All parameters are mandatory except <code>catalog-tags</code>.</p>
+<h3 id="catalog-type-collision-behavior">catalog-type-collision-behavior</h3>
+<p>If the flavor of the new catalog and the flavor of an already existing catalog match,
+the <code>catalog-type-collision-behavior</code> specifies how this situation is handled.
+There are multiple supported options:
+- <code>keep</code>: The new catalog is added despite the collision. This results in two catalogs of the same type coexisting.
+- <code>skip</code>: The addition of the new catalog is skipped, the new catalog is not added.
+- <code>fail</code>: The workflow operation fails with an error, depending on the your configurations the complete workflow is aborted.</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;add-catalog&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;Add catalog to media package&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;catalog-path&quot;&gt;${karaf.etc}/catalogs/default_dublincore.xml&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-flavor&quot;&gt;dublincore/episode&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-name&quot;&gt;dublincore.xml&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-tags&quot;&gt;archive,dublincore&lt;/configuration&gt;
+    &lt;configuration key=&quot;catalog-type-collision-behavior&quot;&gt;keep&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-link">
+        Analyze Tracks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../retry-strategies/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../retry-strategies/" class="btn btn-xs btn-link">
+        Retry Strategies
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/add-catalog-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

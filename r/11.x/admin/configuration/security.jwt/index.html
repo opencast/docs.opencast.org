@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>JWT-based Authentication and Authorization (e.g. for OIDC) - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Configuration for JWT-based Authentication and Authorization", url: "#_top", children: [
+              {title: "Prerequisites", url: "#prerequisites" },
+              {title: "Enable Karaf Feature", url: "#enable-karaf-feature" },
+              {title: "Spring Security Configuration", url: "#spring-security-configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../security.user.moodle/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../security.user.moodle/" class="btn btn-xs btn-link">
+        Moodle User Provider
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security.ldap/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security.ldap/" class="btn btn-xs btn-link">
+        LDAP Authentication and Authorization (without CAS)
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="configuration-for-jwt-based-authentication-and-authorization">Configuration for JWT-based Authentication and Authorization</h1>
+<div class=warn>
+The JWT authentication and authorization is still <b>beta</b>.
+</div>
+
+<p>This page describes how to configure Opencast to enable authentication and authorization based on
+<a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Tokens (JWTs)</a>. With this feature, a login-mechanism based
+on the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> protocol can be configured, since OIDC uses JWTs.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This guide assumes that a JWT provider is already setup and Opencast receives the JWT within an HTTP request header. 
+In order to integrate Opencast with an OIDC provider you could use the
+<a href="https://github.com/oauth2-proxy/oauth2-proxy">oauth2-proxy</a>.</p>
+<h2 id="enable-karaf-feature">Enable Karaf Feature</h2>
+<p>The JWT authentication and authorization is disabled by default and needs to be enabled before it can be used.
+For this, make sure the Karaf feature <code>opencast-security-jwt</code> boots when starting Opencast.</p>
+<p>For this, edit the configuration file <code>etc/org.apache.karaf.features.cfg</code> and add the feature:</p>
+<pre><code>  …
+  http-whiteboard/4.2.9, \
+  opencast-admin/11.0.0, \
+  opencast-security-jwt/11.0.0, \
+  bundle/4.2.9, \
+  …
+</code></pre>
+<p>Make sure to specify the correct version.
+The version should always be identical to the one from the main Opencast feature.</p>
+<h2 id="spring-security-configuration">Spring Security Configuration</h2>
+<p>In order to active JWT-based authentication and authorization, you will need to uncomment and adapt the following
+sections found in <code>etc/security/mh_default_org.xml</code>. Some of the options are configured with the
+<a href="https://docs.spring.io/spring-framework/docs/3.0.x/reference/expressions.html">Spring Expression Language (SpEL)</a>.</p>
+<ul>
+<li>Enable the <code>preauthAuthProvider</code>.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- Uncomment this if using Shibboleth or JWT authentication --&gt;
+&lt;sec:authentication-provider ref=&quot;preauthAuthProvider&quot; /&gt;
+</code></pre>
+<ul>
+<li>Enable the <code>userReferenceProvider</code>.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- Uncomment to enable external users e.g. used together with shibboleth or JWT --&gt;
+&lt;osgi:reference id=&quot;userReferenceProvider&quot; cardinality=&quot;1..1&quot;
+                interface=&quot;org.opencastproject.userdirectory.api.UserReferenceProvider&quot; /&gt;
+</code></pre>
+<ul>
+<li>Enable the JWT header authentication filter.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- JWT header authentication filter --&gt;
+&lt;sec:custom-filter ref=&quot;jwtHeaderFilter&quot; position=&quot;PRE_AUTH_FILTER&quot;/&gt;
+</code></pre>
+<ul>
+<li>Add the configured <code>jwtHeaderFilter</code> to the filters list of the <code>authenticationFilters</code> bean.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- Uncomment the line below to support JWT. --&gt;
+&lt;ref bean=&quot;jwtHeaderFilter&quot; /&gt;
+</code></pre>
+<ul>
+<li>Configure the <code>jwtHeaderFilter</code> bean.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- General JWT header extraction filter --&gt;
+&lt;bean id=&quot;jwtHeaderFilter&quot; class=&quot;org.opencastproject.security.jwt.JWTRequestHeaderAuthenticationFilter&quot;&gt;
+  &lt;!-- Name of the HTTP request header that contains the JWT (default: SM_USER) --&gt;
+  &lt;property name=&quot;principalRequestHeader&quot; value=&quot;Authorization&quot;/&gt;
+  &lt;!-- Prefix string occurring before the JWT value within the configured header (default: null) --&gt;
+  &lt;property name=&quot;principalPrefix&quot; value=&quot;Bearer &quot;/&gt;
+  &lt;property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot; /&gt;
+  &lt;property name=&quot;loginHandler&quot; ref=&quot;jwtLoginHandler&quot; /&gt;
+  &lt;!-- Throws an exception if a request is missing the configured header (default: true) --&gt;
+  &lt;property name=&quot;exceptionIfHeaderMissing&quot; value=&quot;false&quot; /&gt;
+  &lt;!-- Logs the header contents for debug purposes (default: false) --&gt;
+  &lt;property name=&quot;debug&quot; value=&quot;false&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<ul>
+<li>Configure the <code>jwtLoginHandler</code>. For the JWT validation, either configure the <code>secret</code> property for JWTs signed with
+  a symmetric algorithm or configure the <code>jwksUrl</code> for JWTs signed with an asymmetric algorithm. The <code>jwksUrl</code> should
+  provide the <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key Set (JWKS)</a>. If both <code>secret</code> and <code>jwksUrl</code>
+  are specified an exception is thrown and the login mechanism will not be activated. So make sure to configure only one
+  of them.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- JWT login handler --&gt;
+&lt;bean id=&quot;jwtLoginHandler&quot; class=&quot;org.opencastproject.security.jwt.DynamicLoginHandler&quot;&gt;
+  &lt;property name=&quot;userDetailsService&quot; ref=&quot;userDetailsService&quot; /&gt;
+  &lt;property name=&quot;userDirectoryService&quot; ref=&quot;userDirectoryService&quot; /&gt;
+  &lt;property name=&quot;securityService&quot; ref=&quot;securityService&quot; /&gt;
+  &lt;property name=&quot;userReferenceProvider&quot; ref=&quot;userReferenceProvider&quot; /&gt;
+  &lt;!-- JWKS URL to use for JWT validation (asymmetric algorithms) (default: null) --&gt;
+  &lt;property name=&quot;jwksUrl&quot; value=&quot;https://auth.example.org/.well-known/jwks.json&quot; /&gt;
+  &lt;!-- How many minutes to cache a fetched JWKS before re-fetching (default: 1440) --&gt;
+  &lt;property name=&quot;jwksCacheExpiresIn&quot; value=&quot;1440&quot; /&gt;
+  &lt;!-- Secret to use for JWT validation (symmetric algorithms) (default: null) --&gt;
+  &lt;property name=&quot;secret&quot; value=&quot;***&quot; /&gt; &lt;-- Change this
+  &lt;property name=&quot;expectedAlgorithms&quot; ref=&quot;jwtExpectedAlgorithms&quot; /&gt;
+  &lt;property name=&quot;claimConstraints&quot; ref=&quot;jwtClaimConstraints&quot; /&gt;
+  &lt;!-- Mapping used to extract the username from the JWT (default: null) --&gt;
+  &lt;property name=&quot;usernameMapping&quot; value=&quot;['username'].asString()&quot; /&gt;
+  &lt;!-- Mapping used to extract the name from the JWT (default: null) --&gt;
+  &lt;property name=&quot;nameMapping&quot; value=&quot;['name'].asString()&quot; /&gt;
+  &lt;!-- Mapping used to extract the email from the JWT (default: null) --&gt;
+  &lt;property name=&quot;emailMapping&quot; value=&quot;['email'].asString()&quot; /&gt;
+  &lt;property name=&quot;roleMappings&quot; ref=&quot;jwtRoleMappings&quot; /&gt;
+  &lt;!-- JWT cache holds already validated JWTs to not always re-validate in subsequent requests --&gt;
+  &lt;!-- Maximum number of validated JWTs to cache (default: 500) --&gt;
+  &lt;property name=&quot;jwtCacheSize&quot; value=&quot;500&quot; /&gt;
+  &lt;!-- How many minutes to cache a JWT before re-validating (default: 60) --&gt;
+  &lt;property name=&quot;jwtCacheExpiresIn&quot; value=&quot;60&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<ul>
+<li>Configure the <code>jwtExpectedAlgorithms</code> list. This list holds the allowed algorithms with which a valid JWT may be
+  signed (<code>alg</code> claim).</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- The signing algorithms expected for the JWT signature --&gt;
+&lt;util:list id=&quot;jwtExpectedAlgorithms&quot; value-type=&quot;java.lang.String&quot;&gt;
+  &lt;value&gt;RS256&lt;/value&gt;
+&lt;/util:list&gt;
+</code></pre>
+<ul>
+<li>Configure the <code>jwtClaimConstraints</code> list. This list contains claim constraints that are expected to be fulfilled by
+  a valid JWT. If you are using JWTs for OpenID Connect, see the
+  <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation">specification</a> for claims that must be
+  validated.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- The claim constraints that are expected to be fulfilled by the JWT --&gt;
+&lt;util:list id=&quot;jwtClaimConstraints&quot; value-type=&quot;java.lang.String&quot;&gt;
+  &lt;value&gt;containsKey('iss')&lt;/value&gt;
+  &lt;value&gt;containsKey('aud')&lt;/value&gt;
+  &lt;value&gt;containsKey('username')&lt;/value&gt;
+  &lt;value&gt;containsKey('name')&lt;/value&gt;
+  &lt;value&gt;containsKey('email')&lt;/value&gt;
+  &lt;value&gt;containsKey('domain')&lt;/value&gt;
+  &lt;value&gt;containsKey('affiliation')&lt;/value&gt;
+  &lt;value&gt;['iss'].asString() eq 'https://auth.example.org'&lt;/value&gt;
+  &lt;value&gt;['aud'].asString() eq 'client-id'&lt;/value&gt;
+  &lt;value&gt;['username'].asString() matches '.*@example\.org'&lt;/value&gt;
+  &lt;value&gt;['domain'].asString() eq 'example.org'&lt;/value&gt;
+  &lt;value&gt;['affiliation'].asList(T(String)).contains('faculty@example.org')&lt;/value&gt;
+&lt;/util:list&gt;
+</code></pre>
+<ul>
+<li>Configure the <code>jwtRoleMappings</code> list. This list contains expressions used to construct Opencast roles from JWT
+  claims.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- The mapping from JWT claims to Opencast roles --&gt;
+&lt;util:list id=&quot;jwtRoleMappings&quot; value-type=&quot;java.lang.String&quot;&gt;
+  &lt;value&gt;'ROLE_JWT_USER'&lt;/value&gt;
+  &lt;value&gt;'ROLE_JWT_USER_' + ['username'].asString()&lt;/value&gt;
+  &lt;value&gt;('ROLE_JWT_OWNER_' + ['username'].asString()).replaceAll(&quot;[^a-zA-Z0-9]&quot;,&quot;_&quot;).toUpperCase()&lt;/value&gt;
+  &lt;value&gt;['domain'] != null ? 'ROLE_JWT_ORG_' + ['domain'].asString() + '_MEMBER' : null&lt;/value&gt;
+  &lt;value&gt;['username'].asString() eq ('j_doe01@example.org') ? 'ROLE_ADMIN' : null&lt;/value&gt;
+  &lt;value&gt;['affiliation'].asList(T(String)).contains('faculty@example.org') ? 'ROLE_GROUP_JWT_TRAINER' : null&lt;/value&gt;
+&lt;/util:list&gt;
+</code></pre>
+<ul>
+<li>Enable single log out (optional). Make sure to comment out the standard <code>logoutSuccessHandler</code> (otherwise the
+  standard logout mechanism will still be active and the configured logout URL will not be used). Some authentication
+  providers allow to specify a redirection URL to which the user is redirected after a successful logout (e.g. using an
+  URL parameter like <code>rd</code>). Make sure to change the URL in the example below.</li>
+</ul>
+<pre><code class="language-xml">&lt;!-- Enables log out --&gt;
+&lt;!-- &lt;sec:logout success-handler-ref=&quot;logoutSuccessHandler&quot; /&gt; --&gt;
+
+&lt;!-- JWT single log out --&gt;
+&lt;sec:logout logout-success-url=&quot;https://auth.example.org/sign_out?rd=http://www.opencast.org&quot; /&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../security.user.moodle/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../security.user.moodle/" class="btn btn-xs btn-link">
+        Moodle User Provider
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../security.ldap/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../security.ldap/" class="btn btn-xs btn-link">
+        LDAP Authentication and Authorization (without CAS)
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/security.jwt.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

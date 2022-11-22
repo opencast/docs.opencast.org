@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Development - Opencast - Developer Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../../../css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../../../css/style-guide.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Development";
+    var mkdocs_page_input_path = "modules/admin-ui/development.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Process</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-process/">Development</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../release-manager/">Release Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../qa-coordinator/">QA Coordinator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../security/">Security Issues</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../code-style/">Code Style</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../documentation/">Documentation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Decision Making</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/consensus-building/">Consensus Building</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../decision-making/voting/">Voting</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Environment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-environment/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../development-environment-docker/">With Docker</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../committer/">Committers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">Licenses and Legal Matters</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../governance/">Governance</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../localization/">Localization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../packaging/">Packaging</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../proposal-log/">Proposal Log</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../asset-manager/">Asset Manager</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../scheduler/">Scheduler</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../../">Overview</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Administrative user Interface</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Development</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Style Guide</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../style/">Overview</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../capture-agent/">Capture Agent</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Player</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/events/">Events</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../player/testing/">Testing</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Infrastructure</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/notes/">Notes</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../infrastructure/maven-repository/">Maven Repository</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">External API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/usage/">Usage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/authorization/">Authorization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/base-api/">Base API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/events-api/">Events API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/series-api/">Series API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/groups-api/">Groups API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/security-api/">Security API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/types/">Data Types</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/glossary/">Glossary</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Administrative user Interface &raquo;</li>
+        
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Development</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/modules/admin-ui/development.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="coding-principles">Coding Principles</h2>
+<dl>
+  <dt>Modularity</dt>
+  <dd>Reusable interface components to build out new views based on the existing code structure.</dd>
+  <dt>Validation</dt>
+  <dd>All code languages are HTML5 and CSS3 and adhere to W3C standards.</dd>
+  <dt>Extension</dt>
+  <dd>For ease of UI and UX changes the styling elements are driven by SASS CSS pre-compiler.</dd>
+</dl>
+
+<h2 id="style-guide">Style Guide</h2>
+<p>The style guide defines a set of guidelines that the design follows to maintain a consistent look and feel.
+It is defined to be flexible, easy to update and consistent. Before delving deeper into the UI or
+developing additional features we recommend familiarizing yourself with some of the items.</p>
+<h2 id="modifying-sources">Modifying Sources</h2>
+<p>When you make changes to the sources, it should be sufficient to rebuild the
+Admin UI NG module and copy the packaged module file into the Opencast assembly.</p>
+<p>Example:</p>
+<pre><code class="language-bash">cd modules/admin-ui
+mvn install
+cp ./target/admin-ui-2.2-SNAPSHOT.jar ../../build/opencast-dist-allinone-2.2-SNAPSHOT/system/org/opencastproject/admin-ui/2.2-SNAPSHOT/admin-ui-2.2-SNAPSHOT.jar
+</code></pre>
+<p><em>Note: Before you run <code>mvn install</code> from a module's root directory,
+please make sure that you have built the complete software at least once
+--i.e. you should have already run <code>mvn install</code> from the repository root
+at some point.</em></p>
+<p><em>Note: In the example above, the paths are for a specific Opencast version.
+Your paths might look different.</em></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li>
+<p>Checkout and build Opencast.</p>
+</li>
+<li>
+<p>You will need to install <a href="https://nodejs.org">NodeJS</a> (which includes npm).</p>
+</li>
+<li>
+<p>Before setting up the local server ensure that your npm is up-to-date (this might require <code>sudo</code> on certain systems):</p>
+<pre><code>npm update -g npm
+</code></pre>
+</li>
+</ol>
+<p>You can also run a local version of <a href="http://gruntjs.com">Grunt</a> and <a href="https://nodejs.org">NodeJS</a> from the Opencast module:</p>
+<pre><code class="language-bash">cd modules/admin-ui
+export PATH=node:node_modules/grunt-cli/bin:node_modules/karma/bin:$PATH
+</code></pre>
+<p><em>Note: The node and node_modules folders are created during the Maven build process.</em></p>
+<p><em>Note: We already had reports of Grunt behaving differently on different systems.
+Watch out for local or system-wide installations of Grunt and/or NodeJS as they can
+change the build behavior of Admin UI NG.</em></p>
+<h2 id="debugging-javascript-unit-tests">Debugging Javascript unit tests</h2>
+<p>Our Javascript unit tests are built in <a href="http://jasmine.github.io/">Jasmine</a> (a behavior-driven development framework for
+testing JavaScript code), and live in <code>modules/admin-ui/src/test/resources/test/unit</code>.</p>
+<p>Occasionally something breaks, or you need to disable or focus on a single test.
+While reading the Jasmine, Karma and Grunt docs are encouraged, here are a
+few common recipes that might be useful:</p>
+<h3 id="disabling-a-unit-test-temporarily">Disabling a unit test temporarily</h3>
+<p>Add <code>x</code> to the broken test. For example:</p>
+<table>
+<thead>
+<tr>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>it('runs a test', function () {</code></td>
+<td><code><strong style="color:#000">x</strong>it('runs a test', function () {</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="running-a-single-unit-test">Running a single unit test</h3>
+<p>Add <code>f</code> (for focus) to the relevant test.  For example:</p>
+<table>
+<thead>
+<tr>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>it('runs a test', function () {</code></td>
+<td><code><strong style="color:#000">f</strong>it('runs a test', function () {</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="triggering-a-browser-debugging-session">Triggering a browser debugging session</h3>
+<p>This triggers an instance of the selected browser(s) to open and begin running
+the tests.  There will be a <code>Debug</code> button which will open another tab where the JavaScript has not been minified,
+ use this second tab for debugging. Refreshing the debugging page will rerun the tests.</p>
+<p>To run Karma</p>
+<ul>
+<li>
+<p><span style="display:inline-block; width:70px;">Chrome</span>
+<code>npm run test-chrome</code></p>
+</li>
+<li>
+<p><span style="display:inline-block; width:70px;">Firefox</span>
+<code>npm run test-firefox</code></p>
+</li>
+<li>
+<p><span style="display:inline-block; width:70px;">IE</span>
+<code>npm run test-ie</code></p>
+</li>
+</ul>
+<p>Additional browsers are supported, the full list can be found at <a href="https://karma-runner.github.io/1.0/config/browsers.html">https://karma-runner.github.io/</a>.</p>
+<h2 id="live-working-with-a-running-opencast">Live working with a running Opencast</h2>
+<p>In order to speed up the UI development process, you can test the code without
+building the module with Maven. There is a Grunt task for starting a standalone web server offering the UI from
+the source and a separate task that will monitoring any change to the Sass, JavaScript and HTML files and reload the
+page dynamically.</p>
+<p><em>Be warned that some functionality in this live setup can be limited.
+Before reporting an issue, please test if you can reproduced the issue with a built Opencast.</em></p>
+<p>This setup may be configured as follows:</p>
+<ol>
+<li>
+<p>Follow the instructions in the Prerequisites section.</p>
+</li>
+<li>
+<p>Start your Opencast instance.</p>
+</li>
+<li>
+<p>Change to the Admin UI module directory.</p>
+<pre><code>cd modules/admin-ui
+</code></pre>
+</li>
+<li>
+<p>Install project dependencies.</p>
+<pre><code>npm install
+</code></pre>
+</li>
+<li>
+<p>Start the standalone web server by running:</p>
+<pre><code>grunt proxy --proxy.host=http://localhost:8080 --proxy.username=opencast_system_account --proxy.password=CHANGE_ME
+</code></pre>
+</li>
+</ol>
+<p><em>Note: host, username and password have to match your configuration <code>../etc/custom.properties</code></em></p>
+<p>Grunt should print out the <a href="http://localhost:9000">URL</a> where you can see the standalone page running
+from source.</p>
+<pre><code>Started connect web server on http://localhost:9000
+</code></pre>
+<p>To run the watcher that updates the displayed page dynamically, run in the same folder:</p>
+<pre><code>grunt watch
+</code></pre>
+<p>Which should then display:</p>
+<pre><code>Running &quot;watch&quot; task
+Waiting...
+</code></pre>
+<p>The watch process monitors the <code>js</code>,<code>scss</code> and <code>sass</code> files for changes and should dynamically reload the page.</p>
+<p><em>Note: A refresh of the page might be required to start the live reload script</em></p>
+<h2 id="live-working-with-a-mockup">Live working with a Mockup</h2>
+<p>If you do not want to keep a running Opencast instance for developing the
+Admin UI NG, you can start a mockup.</p>
+<p><em>Be warned that <strong>a lot</strong> of this mockup's functionality acts very differently from
+an actual Opencast instance</em></p>
+<p>This setup may be configured as follows:</p>
+<ol>
+<li>
+<p>Follow the instructions in the Prerequisites section.</p>
+</li>
+<li>
+<p>Change to the Admin UI module directory.</p>
+<pre><code>cd modules/admin-ui
+</code></pre>
+</li>
+<li>
+<p>Install project dependencies.</p>
+<pre><code>npm install
+</code></pre>
+</li>
+<li>
+<p>Start the mockup webserver by running:</p>
+<pre><code>grunt serve
+</code></pre>
+</li>
+</ol>
+<p>Grunt should print out the <a href="http://localhost:9000">URL</a> where you can see the standalone page running
+from source.</p>
+<pre><code>Started connect web server on http://localhost:9000
+</code></pre>
+<p>If you make changes to the Admin UI NG source files, the page should auto reload to display the changes.</p>
+<h2 id="update-node-dependencies">Update Node Dependencies</h2>
+<p>Installing <code>npm-check-updates</code> and running it at the start of developing / improving a component can ensure that the
+node modules stays up-to-date and dependency bugs are reduced.</p>
+<p><em>Note: Test the build (<code>mvn install</code>, <code>npm install</code>, <code>grunt</code>) thoroughly when upgrading modules as this might cause some
+unexpected build failures (resetting the grunt version to "grunt": "^0.4.0" might resolve some of the initial issues).</em></p>
+<ol>
+<li>
+<p>Installation.</p>
+<pre><code>npm install -g npm-check-updates
+</code></pre>
+</li>
+<li>
+<p>Show any new dependencies for the project in the current directory.</p>
+<pre><code>ncu
+</code></pre>
+</li>
+<li>
+<p>Upgrade a project's package file.</p>
+<pre><code>ncu -u
+</code></pre>
+</li>
+</ol>
+<p>A detailed reference of the command-line tool can be found at
+<a href="https://www.npmjs.com/package/npm-check-updates">https://www.npmjs.com/package/npm-check-updates</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../style/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../style/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

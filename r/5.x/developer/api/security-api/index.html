@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Security API - Opencast - Developer Guide</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../../css/font-awesome.min.css" rel="stylesheet" />
+  <link href="../../css/style-guide.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Security API";
+    var mkdocs_page_input_path = "api/security-api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Process</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../development-process/">Development</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../release-manager/">Release Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../qa-coordinator/">QA Coordinator</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../security/">Security Issues</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../code-style/">Code Style</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../documentation/">Documentation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Decision Making</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../decision-making/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../decision-making/lazy-consensus/">Lazy Consensus</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../decision-making/consensus-building/">Consensus Building</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../decision-making/voting/">Voting</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development Environment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../development-environment/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../development-environment-docker/">With Docker</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../committer/">Committers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../license/">Licenses and Legal Matters</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../governance/">Governance</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../localization/">Localization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../packaging/">Packaging</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../proposal-log/">Proposal Log</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../asset-manager/">Asset Manager</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../scheduler/">Scheduler</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Administrative user Interface</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/admin-ui/development/">Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Style Guide</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/">Overview</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/color-palette/">Color Palette</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/typeface/">Typeface</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/view-structure/">View Structure</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/spacing/">Logo</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/navigation/">Navigation</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/modals/">Modals</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/forms/">Forms</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/icons/">Icons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/buttons/">Buttons</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/dropdowns/">Dropdowns</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/alerts-indicators/">Alerts and Indicators</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/admin-ui/style/references/">References</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/capture-agent/">Capture Agent</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Player</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/architecture/">Architecture</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/core.reference/">Core Reference</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/events/">Events</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/storage/">Storage</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/plugin.development/">Plugin Development</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../modules/player/testing/">Testing</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/stream-security/">Stream Security</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../modules/oaipmh/">OAI-PMH</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Infrastructure</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/notes/">Notes</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/maven-repository/">Maven Repository</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">External API</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../authorization/">Authorization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../base-api/">Base API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../events-api/">Events API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../series-api/">Series API</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../groups-api/">Groups API</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Security API</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#best-practices">Best practices</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#performance">Performance</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#caching">Caching</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#secure-access-by-source-ip">Secure access by source IP</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#url-signing">URL Signing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#post-apisecuritysign">POST /api/security/sign</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../types/">Data Types</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../glossary/">Glossary</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>External API &raquo;</li>
+        
+      
+    
+    <li>Security API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/edit/master/docs/api/security-api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="security-api">Security API</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Opencast is distributing encoded media to download and streaming servers to make that media available to end users. At
+the same time, that media needs to be protected such that - once provided a link to the download and/or streaming
+representations - only authorized users are able to consume it.</p>
+<p>This is achieved by handing signed URLs to end users which are validated by the distribution servers and become invalid
+after a given period of time (usually 1 hour, depending on the server configuration).</p>
+<p>As a consequence, users of the External API who are presenting URLs to distributed media for playback will need to make
+sure that those urls are signed, otherwise the distribution servers will refuse to deliver the content and respond with
+a <code>401 NOT AUTHORIZED</code> status.</p>
+<h3 id="best-practices">Best practices</h3>
+<p>The use of signed URLs requires a set of best practices to be followed when clients interact with the External API,
+most notably in the area of performance and caching.</p>
+<h4 id="performance">Performance</h4>
+<p>When consuming URLs that need to be signed before handing them to the user, client implementors may be inclinded to use
+the <code>sign=true</code> parameter for the events queries to request all URLs to be already signed. On one hand, this saves the
+client implementation from having to explicitly sign those URLs that users are visiting for playback. On the other hand,
+signing URLs introduces an overhead to performance for the pre-signing of all urls that are sent to the client, so in
+these cases it will be important to make sure not to transfer large lists <em>and</em> require presigning.</p>
+<h4 id="caching">Caching</h4>
+<p>One obvious caveat when using pre-signed URLs is the use of cached responses. As described above, signed URLs have a
+maxmimum life time and therefore need to be refreshed on a regular basis so that a user's request to play back a
+recording won't be rejected by the distribution servers.</p>
+<h4 id="secure-access-by-source-ip">Secure access by source IP</h4>
+<p>The signing facility of the security API provides the ability to sign URLs and restrict that URL to a given IP address.</p>
+<p>Even though this greatly increases security in sense that signed URLs can only be accessed from that device, it is
+important to note that in many network setups, source IP addresses of network packets will undergo network address
+translation (NAT) with NAT replacing the original source address from private networks with a single public address,
+thereby diminishing the security impact of adding the source IP address immensely.</p>
+<h2 id="url-signing">URL Signing</h2>
+<h3 id="post-apisecuritysign">POST /api/security/sign</h3>
+<p>Returns a signed URL that can be played back for the indicated period of time, while access is optionally restricted to
+the specified IP address.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Form Parameters</th>
+<th align="left">Required</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>url</code></td>
+<td align="left">yes</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The URL to be signed</td>
+</tr>
+<tr>
+<td align="left"><code>valid-until</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time until when the signed URL is valid</td>
+</tr>
+<tr>
+<td align="left"><code>valid-source</code></td>
+<td align="left">no</td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The IP address from which the url can be accessed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A JSON object containing the signed URL or an error message is returned:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>url</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">The signed URL</td>
+</tr>
+<tr>
+<td align="left"><code>valid-until</code></td>
+<td align="left"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td align="left">The date and time until when the signed URL is valid</td>
+</tr>
+</tbody>
+</table>
+<p>In case of an error:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>error</code></td>
+<td align="left"><a href="../types/#basic"><code>string</code></a></td>
+<td align="left">An error message describing the error</td>
+</tr>
+</tbody>
+</table>
+<p><code>401 (NOT AUTHORIZED)</code>: The caller is not authorized to have the link signed.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;valid-until&quot;: &quot;2018-03-19T13:08:39Z&quot;,
+  &quot;url&quot;:&quot;http://localhost?policy=eyJTdGF0ZW1lbnQiOnsiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTUyMTQ2NDkxOTI4NH0sIlJlc291cmNlIjoiaHR0cDpcL1wvbG9jYWxob3N0In19&amp;keyId=demoKeyOne&amp;signature=717dd8f958a15c1cdb7e88a61417a07bb6a1e6238d9293805cc0893f798a07e8&quot;
+}
+</code></pre>
+<p>Error example:</p>
+<pre><code>{
+  &quot;error&quot;: &quot;Given URL cannot be signed&quot;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../types/" class="btn btn-neutral float-right" title="Data Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../groups-api/" class="btn btn-neutral" title="Groups API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/developer/docs/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../groups-api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../types/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

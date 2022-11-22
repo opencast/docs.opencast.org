@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 10.x to 11.x", url: "#_top", children: [
+              {title: "Database Migration", url: "#database-migration" },
+              {title: "Elasticsearch Migration", url: "#elasticsearch-migration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-10x-to-11x">Upgrading Opencast from 10.x to 11.x</h1>
+<p>This guide describes how to upgrade Opencast 10.x to 11.x.
+In case you need information about how to upgrade older versions of Opencast,
+please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<ol>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast with the new version</li>
+<li>Read the release notes (especially the section of behaviour changes)</li>
+<li>Review the configuration changes and adjust your configuration accordingly</li>
+<li>Do the <a href="#database-migration">database migration</a></li>
+<li><a href="#elasticsearch-migration">Migrate, rebuild or rename Elasticsearch index</a></li>
+<li>Start Opencast if you haven't already done so</li>
+</ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>Upgrading to Opencast 11 requires a DB migration, as some tables have changed slightly.
+Migration scripts can be found in <code>doc/upgrade/10_to_11/</code>.
+There are separate scripts for MariaDB/MySQL (<code>mysql5.sql</code>) and PostgreSQL (<code>postgresql.sql</code>).</p>
+<h2 id="elasticsearch-migration">Elasticsearch Migration</h2>
+<p>In Opencast 11, instead of having two separate Elasticsearch indices for the Admin UI and the External API that share
+most of their content, there will be only one index supporting both. Since this index will have a new name, this index
+will either have to be rebuilt from scratch (<a href="#option-1-rebuild">Option 1</a>), or you can migrate your Admin UI index
+(<a href="#option-2-migration">Option 2</a>), since its structure is completely identical to the new index.
+However, if you don't care about accuracy, you could just keep using the Admin UI index
+(<a href="#option-3-keep-the-admin-ui-index">Option 3</a>).</p>
+<p>Please read all options and commit to one before taking any action.</p>
+<h3 id="option-1-rebuild">Option 1: Rebuild</h3>
+<p>Start your new Opencast and make an HTTP POST request to <code>/index/rebuild</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i -u &lt;admin_user&gt;:&lt;password&gt; -s -X POST https://example.opencast.org/index/rebuild
+</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Index Endpoint” section and use the testing form on
+<code>/rebuild</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
+<h3 id="option-2-migration">Option 2: Migration</h3>
+<p><strong>Some important notices before you start:</strong></p>
+<ul>
+<li>Please take a quick look at the scripts before using them and adjust them if needed.</li>
+<li>Do not start your new Opencast before or during migration of the index (at least on the Admin node)!
+  Starting Opencast before migration will create a new empty index which will later cause the cloning process to fail.
+  (To fix this, delete all subindices of the new index - <code>opencast_event</code>, <code>opencast_series</code>, <code>opencast_theme</code>,
+  <code>opencast_version</code> - before attempting migration again. You could use a <strong>modified</strong> version of
+  <code>delete-old-indices.sh</code> to do this or pick out the relevant commands and do it manually.
+  <em>Make sure you remove the correct subindices for the new index, not the old ones!</em>)
+  Running Opencast during migration (whether with the new or old indices) can result in inconsistent data during
+  cloning. Do not do this!</li>
+<li>By default the cloning process will not copy over the index metadata and the two index settings <code>number_of_replicas</code>
+  and <code>auto_expand_replicas</code>. The script will set <code>number_of_replicas</code> to 0 (assuming you have a single node) and
+  <code>auto_expand_replicas</code> to false (the default). This should be fine for most people, but if you have a more intricate
+  setup, you might need to change these.</li>
+<li>The cleanup script will also attempt to delete the group indices that are no longer used since OC 10. If you started
+with OC 10 or already removed them, this will fail, but that's okay.</li>
+<li><strong>Before removing the old indices, please start Opencast and test the new index first!</strong></li>
+</ul>
+<p>To migrate your index, you can use the <code>migrate-indices.sh</code> bash script contained in
+<a href="https://github.com/opencast/opencast/blob/develop/docs/upgrade/10_to_11/"><code>docs/upgrade/10_to_11/</code></a>.
+This will clone the Admin UI index to an index with the new name. If your storage supports hardlinks, the cloning
+process should be pretty quick.</p>
+<p>If you then want to clean up the old indices, you can use <code>delete-old-indices.sh</code> for this.</p>
+<h3 id="option-3-keep-the-admin-ui-index">Option 3: Keep the Admin UI index</h3>
+<p>If you don't have time for either and if you don't care about having an exact index identifier in your Elasticsearch,
+you could also just set <code>index.identifier</code> in <code>org.opencastproject.elasticsearch.index.ElasticsearchIndex</code> to "adminui"
+to keep using the old admin ui index. Do this before starting Opencast to avoid creating a new index.</p>
+<p>The external API index can then be removed. (Please be aware that the External API index cannot be used any longer since
+it doesn't contain the themes.) You can use a <strong>modified</strong> version of <code>delete-old-indices.sh</code> to do this (make sure
+to remove only the External API sub indices and <em>not</em> the Admin UI ones you're currently using!)</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

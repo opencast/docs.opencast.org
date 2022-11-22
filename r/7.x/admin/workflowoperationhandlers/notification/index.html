@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Mattermost Notification Module - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Mattermost Notification", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "List of configuration options", url: "#list-of-configuration-options" },
+              {title: "Example for mattermost-notify operation", url: "#example-for-mattermost-notify-operation" },
+              {title: "List of parameters", url: "#list-of-parameters" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../move-storage-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../move-storage-woh/" class="btn btn-xs btn-link">
+        Move Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../log-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../log-woh/" class="btn btn-xs btn-link">
+        Log
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="mattermost-notification">Mattermost Notification</h1>
+<h2 id="description">Description</h2>
+<p>The MattermostNotificationOperationHander sends a notification to a channel of Mattermost or similar applications,
+like Slack, with the chosen parameters provided. It is useful to send such notifications when some operation(s) have
+been completed or some error has occurred in a workflow.
+The notification message can be freely chosen. You can use different parameters which will be replaced with the
+corresponding metadata of the current workflow instance (see List of parameters).</p>
+<h2 id="list-of-configuration-options">List of configuration options</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>description</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>URL of the mattermost webhook</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>message</td>
+<td>Message that will be send</td>
+<td>EMPTY</td>
+</tr>
+<tr>
+<td>method</td>
+<td>HTTP method that will be used</td>
+<td>post</td>
+</tr>
+<tr>
+<td>max-retry</td>
+<td>Value for the number of attempts for a request</td>
+<td>5</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>Maximum time to wait for client to excecute a request</td>
+<td>10 * 1000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-for-mattermost-notify-operation">Example for mattermost-notify operation</h2>
+<pre><code class="language-XML">  &lt;operation
+      id=&quot;mattermost-notify&quot;
+      fail-on-error=&quot;false&quot;
+      exception-handler-workflow=&quot;error&quot;
+      description=&quot;Notify Mattermost about error&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;url&quot;&gt;insert-url-of-mattermost-webhook&lt;/configuration&gt;
+        &lt;configuration key=&quot;message&quot;&gt;Error at Workflow %i (%t) State: %s&lt;/configuration&gt;
+        &lt;configuration key=&quot;method&quot;&gt;post&lt;/configuration&gt;
+        &lt;configuration key=&quot;max-retry&quot;&gt;3&lt;/configuration&gt;
+        &lt;configuration key=&quot;timeout&quot;&gt;5&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<h2 id="list-of-parameters">List of parameters</h2>
+<p>All parameters (%<letter>) will be substituted with corresponding metadata of the current workflow instance.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Metadata</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%t</td>
+<td>Title of workflow</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>ID of workflow</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>State of workflow</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>ID of current workflow operation</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>ID of Mediapackage</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>Title of Mediapackage</td>
+</tr>
+<tr>
+<td>%C</td>
+<td>Creators of Mediapackage</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>Contributors of Mediapackage</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>Date of Mediapackage</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>Duration of Mediapackage</td>
+</tr>
+<tr>
+<td>%L</td>
+<td>License of Mediapackage</td>
+</tr>
+<tr>
+<td>%l</td>
+<td>Language of Mediapackage</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>Series-Title of Mediapackage</td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../move-storage-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../move-storage-woh/" class="btn btn-xs btn-link">
+        Move Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../log-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../log-woh/" class="btn btn-xs btn-link">
+        Log
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/notification.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

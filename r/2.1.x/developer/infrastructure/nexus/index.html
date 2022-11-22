@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Nexus Maven Repository - Opencast - Developer Guide</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Nexus Maven Repository";
+    var mkdocs_page_input_path = "infrastructure/nexus.md";
+    var mkdocs_page_url = "/infrastructure/nexus/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Opencast - Developer Guide</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Process</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../development/">Development</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../reviewing-and-merging/">Reviewing, Merging and Declining Pull Requests</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../release-manager/">Release Manager</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">Licenses and Legal Matters</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../packaging/">Packaging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../proposal-log/">Proposal Log</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Infrastructure</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../">Overview</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Nexus Maven Repository</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#opencast-nexus-maven-repository">Opencast Nexus (Maven Repository)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#geoip-server-set-up">GeoIP Server Set-up</a></li>
+        
+            <li><a class="toctree-l4" href="#adding-libraries-to-the-repository">Adding Libraries To The Repository</a></li>
+        
+            <li><a class="toctree-l4" href="#setting-up-another-nexus-server">Setting-up Another Nexus Server</a></li>
+        
+            <li><a class="toctree-l4" href="#use-a-specific-opencast-nexus">Use a Specific Opencast Nexus</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Opencast - Developer Guide</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Infrastructure &raquo;</li>
+        
+      
+    
+    <li>Nexus Maven Repository</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs/src/default/docs/infrastructure/nexus.md"
+          class="icon icon-bitbucket"
+        > Edit on Bitbucket</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="opencast-nexus-maven-repository">Opencast Nexus (Maven Repository)</h1>
+<p>The Maven Nexus server maintains a copy of all the Java dependencies used by Opencast.  The Opencast project has several
+Nexus servers located around the world. For an up-to-date list of servers as well as their current status and your
+automatic selection, have a look at the <a href="http://nexus.opencast.org">Nexus GeoIP Redirect Service</a>.</p>
+<h2 id="geoip-server-set-up">GeoIP Server Set-up</h2>
+<p>The main entry point for retrieving artifacts is nexus.opencast.org, which runs a <a href="https://github.com/lkiesow/geoip-gateway">GeoIP based Gateway service
+</a> to probe which Nexus server is likely the best to use for that request and
+then redirects the request accordingly.</p>
+<p>The Nexus servers are configured to retrieve and cache artifacts from:</p>
+<ul>
+<li>Apache Snapshots</li>
+<li>Codehaus Snapshots</li>
+<li>Maven Central</li>
+<li><em>Opencast Master</em></li>
+</ul>
+<p><em>Opencast Master</em> is a special repository pointing to the <a href="http://nexus.virtuos.uos.de">Opencast Nexus server hosted at the University of Osnabrück
+</a>. It does not only cache other repositories but also host Opencast internal artifacts.
+Since all other repositories will automatically retrieve artifacts from this repository, uploading artifacts to this
+repository will suffice to distribute them in the whole Nexus infrastructure.</p>
+<h2 id="adding-libraries-to-the-repository">Adding Libraries To The Repository</h2>
+<ol>
+<li>Login as an administrator on the <a href="http://nexus.virtuos.uos.de">Opencast Nexus Master</a></li>
+<li>Select repository</li>
+<li>Select the artifact upload tab</li>
+<li>Fill in the details and upload the file</li>
+</ol>
+<p><em>As result of the Nexus caching mechanism, it might take up to 48h until the artifacts are distributed to all Nexus
+repository nodes.</em></p>
+<h2 id="setting-up-another-nexus-server">Setting-up Another Nexus Server</h2>
+<p>Having a Nexus server run in your local network can significantly improve the speed artifacts are retrieved while
+building Opencast.</p>
+<h3 id="set-up-using-docker">Set-up Using Docker</h3>
+<p>There is a preconfigured Docker image for a Nexus server set-up for Opencast. To run an Opencast Nexus using Docker,
+follow these steps:</p>
+<pre><code>docker pull lkiesow/opencast-nexus-oss
+docker run \
+   --name opencast-nexus-oss \
+   -p 8081:8081 \
+  -v /place/for/nexus/data/on/host/machine:/var/lib/nexus-oss \
+  lkiesow/opencast-nexus-oss
+</code></pre>
+<ul>
+<li>The <code>-p</code> option will map the internal port of the Nexus server in Docker to the port on the host machine.</li>
+<li>The <code>-v</code> option will mount the folder <code>/place/for/nexus/data</code> from the Docker host machine to <code>/var/lib/nexus-oss</code>
+  container. This will keep all your runtime data our of the container and you can then later upgrade to a new Nexus
+  version by just getting a new container.</li>
+</ul>
+<p>Make sure to log-in and change the password for the user <code>admin</code> as soon as your Nexus is running. To do that, head to
+<code>http://localhost:8081/nexus</code> and log-in as user <code>admin</code> using the password <code>admin123</code>.</p>
+<h3 id="update-using-docker">Update Using Docker</h3>
+<p>If you followed the set-up guide above, the main configuration, along with all the Nexus data is stored on the host
+machine. Hence we just need to get the latest Docker image and replace the Nexus container:</p>
+<pre><code>docker rm -f opencast-nexus-oss
+docker pull lkiesow/opencast-nexus-oss
+docker run \
+   --name opencast-nexus-oss \
+   -p 8081:8081 \
+  -v /place/for/nexus/data/on/host/machine:/var/lib/nexus-oss \
+  lkiesow/opencast-nexus-oss
+</code></pre>
+<h3 id="set-up-using-rpms">Set-up Using RPMs</h3>
+<p>For Nexus-OSS, there is a <a href="https://copr.fedorainfracloud.org/coprs/lkiesow/nexus-oss/">Fedora Copr repository available</a>
+for CentOS/RHEL 7.x and the latest Fedora versions. You can use these to easily istall Nexus.</p>
+<p>First, enable the repository. For CentOS/RHEL 7.x this would be:</p>
+<pre><code>curl -o /etc/yum.repos.d/lkiesow-nexus-oss-epel-7.repo \
+  https://copr.fedorainfracloud.org/coprs/lkiesow/nexus-oss/repo/epel-7/lkiesow-nexus-oss-epel-7.repo
+</code></pre>
+<p>Then istall Nexus-OSS:</p>
+<pre><code>yum install nexus-oss
+</code></pre>
+<p>Download the <a href="../nexus.xml">configuration file</a> and place it in <code>/var/lib/nexus-oss/conf/</code>:</p>
+<pre><code>mkdir -p /var/lib/nexus-oss/conf/
+cp nexus.xml /var/lib/nexus-oss/conf/nexus.xml
+</code></pre>
+<p>Finally, activate the service:</p>
+<pre><code>systemctl start nexus-oss
+systemctl enable nexus-oss
+</code></pre>
+<p>Make sure to log-in and change the password for the user <code>admin</code> as soon as your Nexus is running. To do that, head to
+<code>http://localhost:8081/nexus</code> and log-in as user <code>admin</code> using the password <code>admin123</code>.</p>
+<h2 id="use-a-specific-opencast-nexus">Use a Specific Opencast Nexus</h2>
+<p>If you did set-up a local Nexus repository you can add a custom Maven configuration to overwrite the global nexus server
+settings. To do that, create a user specific Maven settings file in <code>~/.m2/settings.xml</code> like this:</p>
+<pre><code>&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+  http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;set-opencast-nexus&lt;/id&gt;
+      &lt;properties&gt;
+        &lt;opencast.nexus.url&gt;http://nexus.example.com&lt;/opencast.nexus.url&gt;
+      &lt;/properties&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;
+  &lt;activeProfiles&gt;
+    &lt;activeProfile&gt;set-opencast-nexus&lt;/activeProfile&gt;
+  &lt;/activeProfiles&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>This will let Maven overwrite the <code>opencast.nexus.url</code> property used by Opencast to determine the Nexus server during
+the build process.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://bitbucket.org/opencast-community/matterhorn/src/develop/docs/guides/developer/docs" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
+      
+      
+        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

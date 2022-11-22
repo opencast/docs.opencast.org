@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Internal HTTPS - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Enable HTTPS directly in Opencast", url: "#_top", children: [
+              {title: "Port-Forwarding required", url: "#port-forwarding-required" },
+              {title: "Creating the keystore", url: "#creating-the-keystore" },
+              {title: "Default to HTTPS", url: "#default-to-https" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../migration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../migration/" class="btn btn-xs btn-link">
+        Migrating old content to HTTPS
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../nginx/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../nginx/" class="btn btn-xs btn-link">
+        Using Nginx
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="enable-https-directly-in-opencast">Enable HTTPS directly in Opencast</h1>
+<p>In <code>opencast/etc/</code>, use the <code>org.ops4j.pax.web.cfg</code> file for
+configuration:</p>
+<pre><code># ...
+
+# Whether Opencast itself should handle HTTPS traffic.
+# Even if you set this to 'false',you can still use an HTTP proxy to handle SSL.
+org.osgi.service.http.secure.enabled=true
+
+# The secure server port to use if running Opencast with HTTPS (as opposed to
+# a proxy handling HTTPS).
+# Note that we use the docker proxy for the port-mapping from 8843 from within
+# the container to 443 at the host
+# Don't run Opencast with root privileges, which is a security issue
+org.osgi.service.http.port.secure=8443
+
+# Path to the keystore file.
+# Use the Java `keytool` to generate this file.
+# Example:
+#   keytool -genkey -keyalg RSA -validity 365 -alias serverkey \
+#     -keypass password -storepass password -keystore keystore.jks
+org.ops4j.pax.web.ssl.keystore=&lt;path_to_keystore&gt;
+
+# Password used for keystore integrity check.
+org.ops4j.pax.web.ssl.password=&lt;the_keystore_password&gt;
+
+# Password used for keystore.
+org.ops4j.pax.web.ssl.keypassword=&lt;the_key_password&gt;
+</code></pre>
+<h2 id="port-forwarding-required">Port-Forwarding required</h2>
+<p>Note that Opencast most likely can't bind to port 443. That's why you still
+need to reverse-proxy or port-forward if you want to avoid URLs with port
+specified like <code>https://host:8443/</code> which is technically perfectly okay but may
+confuse users or may be perceived as "ugly".</p>
+<p>Here is a non-comprehensive lists of tools and methods which can be used for
+port forwarding:</p>
+<h3 id="port-forwarding-with-iptables">Port-Forwarding with iptables</h3>
+<p>A rule like</p>
+<pre><code class="language-sh">iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8443
+# Allow also localhost traffic to use :443
+# iptables -A OUTPUT -t nat -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
+</code></pre>
+<p>should do the job after replacing <code>eth0</code> with the network interface your
+Opencast consumers will connect on. Note that you usually want to persist the
+rule.</p>
+<h3 id="port-forwarding-with-docker-proxy">Port-Forwarding with docker(-proxy)</h3>
+<p>When starting a container from an Opencast image, either insert a
+command line argument to docker run: <code>-p 443:8443</code> or add a <code>ports:</code>
+in <code>docker-compose.yaml</code>.</p>
+<h3 id="port-forwarding-with-sniproxy">Port-Forwarding with sniproxy</h3>
+<p><a href="https://github.com/dlundquist/sniproxy">Sniproxy</a> can be used as well,
+especially if you have multiple servers running on the same machine that handle
+HTTPS individually (no termination proxy).</p>
+<pre><code>user, pidfile, error_log ...
+
+listen 443 {
+    proto tls
+    table https_hosts
+    fallback 127.0.0.1:8443
+
+    access_log {
+        filename /var/log/sniproxy/https_access.log
+        priority notice
+    }
+}
+
+table https_hosts {
+    .*\.opencast\.example\.org 127.0.0.1:8443
+}
+</code></pre>
+<h2 id="creating-the-keystore">Creating the keystore</h2>
+<p>What you need, is the TLS private key and the certificate including the
+whole chain between the root certificate, all intermediates and the
+certificate itself.</p>
+<h3 id="obtaining-the-certificate-chain">Obtaining the certificate chain</h3>
+<p>If you only have the key and the certificate, I recommend
+<a href="https://certificatechain.io/">certificatechain.io</a> or
+<a href="https://github.com/zakjan/cert-chain-resolver">cert-chain-resolver</a>.
+The latter can be used as follows:</p>
+<pre><code class="language-bash"># Obtain the chain for cert.pem and save it at opencast.chain.pem.tmp
+# The -s command switch includes the root certificate; this is not
+# mandatory and might add some overhead
+cert-chain-resolver -s -o &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+
+# Verify the certificate using the chain
+openssl verify -crl_download -crl_check -untrusted &quot;opencast.chain.pem.tmp&quot; &quot;cert.pem&quot;
+</code></pre>
+<h3 id="create-the-p12-keystore">Create the p12 keystore</h3>
+<p>If the private key (assumed to be <code>key.pem</code>) is encrypted
+(password protected), issue the following command. Note that there
+are safer ways supplying the key's password to OpenSSL.</p>
+<pre><code class="language-bash">openssl pkcs12 \
+        -export \
+        -inkey &quot;key.pem&quot; \
+        -passin &quot;pass:&lt;the_keys_password&gt;&quot; \
+        -in &quot;opencast.chain.pem.tmp&quot; \
+        -name &quot;serverkey&quot; \
+        -out &quot;opencast.p12&quot; \
+        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+</code></pre>
+<p>In case the private key is not protected by password:</p>
+<pre><code class="language-bash">openssl pkcs12 \
+        -export \
+        -inkey &quot;key.pem&quot; \
+        -in &quot;opencast.chain.pem.tmp&quot; \
+        -name &quot;serverkey&quot; \
+        -out &quot;opencast.p12&quot; \
+        -passout &quot;pass:&lt;the_keystore_password&gt;&quot;
+</code></pre>
+<h3 id="import-the-p12-keystore-into-a-java-keystore">Import the p12 keystore into a Java keystore:</h3>
+<pre><code class="language-bash">keytool \
+        -importkeystore \
+        -srckeystore &quot;opencast.p12&quot; \
+        -srcstoretype &quot;pkcs12&quot; \
+        -srcstorepass &quot;&lt;the_keystore_password&gt;&quot; \
+        -destkeystore &quot;keystore.jks&quot; \
+        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+# print out details about the JKS built
+keytool \
+        -keystore &quot;keystore.jks&quot; \
+        -list \
+        -destalias serverkey \
+        -storepass &quot;&lt;the_keystore_password&gt;&quot;
+</code></pre>
+<p><a href="https://gist.github.com/pawohl/dd92ff4909e3e2704e36dec747ea238e">There exists a shell script automating that task
+</a>.</p>
+<h2 id="default-to-https">Default to HTTPS</h2>
+<p>When finished, restarted and verified that HTTPS works as expected,
+you can change Opencast's default URL to the HTTPS one.</p>
+<p>Set <code>org.opencastproject.server.url</code> to the  HTTPS-URL in
+<code>etc/custom.properties</code>.</p>
+<pre><code class="language-ini">org.opencastproject.server.url=https://opencast.example.com
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../migration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../migration/" class="btn btn-xs btn-link">
+        Migrating old content to HTTPS
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../nginx/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../nginx/" class="btn btn-xs btn-link">
+        Using Nginx
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/edit/master/docs/configuration/https/opencast.only.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
