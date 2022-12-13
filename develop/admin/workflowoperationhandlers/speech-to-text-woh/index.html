@@ -91,8 +91,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="speech-to-text-workflow-operation">Speech to Text Workflow Operation</h1>
 <p>ID: <code>speechtotext</code></p>
 <h2 id="description">Description</h2>
-<p>The speech to text operation can be used to generate subtitles for Videos or Audio files. Currently, there is
-only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. The subtitles file format ist WebVTT.</p>
+<p>The speech to text operation can be used to generate subtitles for Videos or Audio files. Currently, there are two STT
+engines available, <a href="../../modules/transcription.modules/whisper/">Whisper</a> and 
+<a href="../../modules/transcription.modules/vosk/">Vosk</a>. The subtitles file format ist WebVTT.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -121,12 +122,12 @@ only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. T
 <tr>
 <td>language-code</td>
 <td>no</td>
-<td>The language of the video or audio source (default is "eng"). It has to match the name of the language model directory. See 'vosk-cli'.</td>
+<td>The language of the video or audio source (default is "eng"). Vosk only: It has to match the name of the language model directory. See 'vosk-cli'.</td>
 </tr>
 <tr>
 <td>language-fallback</td>
 <td>no</td>
-<td>The fallback value if the dublin core/media package language field is not present. (default is "eng")</td>
+<td>The fallback value if the dublin core/media package language field is not present. (default is "eng") (Vosk Only)</td>
 </tr>
 <tr>
 <td>target-tags</td>
@@ -136,8 +137,7 @@ only <a href="https://alphacephei.com/vosk/">Vosk</a> available as STT Engine. T
 </tbody>
 </table>
 <h2 id="requirements">Requirements</h2>
-<p>In order for it to work, you have to install the vosk-cli package. Installation instructions can be found at
-<a href="https://github.com/elan-ev/vosk-cli">github.com/elan-ev/vosk-cli</a>.</p>
+<p>In order for it to work, you have to install the vosk-cli or whisper package</p>
 <h2 id="operation-examples">Operation Examples</h2>
 <p>If you want to display the subtitles in the Paella player, the WebVTT files have to be published and
 the target SubFlavor has to be configured like this: <code>vtt+LANG</code>, where <code>LANG</code> is
