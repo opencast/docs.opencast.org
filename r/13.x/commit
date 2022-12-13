@@ -1,5 +1,14 @@
-commit 30b99a55f4e5c1fd7b44e9dbcea3f577a5996ea9
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Dec 13 20:13:36 2022 +0100
+commit 77415e5398ccd8e961f2293b8cfb50b525871e51
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Fri Dec 9 15:23:05 2022 +0100
 
-    Merge r/12.x into r/13.x
+    Reduce number of snapshots taken in the new editor backend
+    
+    In the new editor backend, various functions would create snapshots if
+    run, e.g. the "Save subtitles"-function would create one and then the
+    "Save thumbnails"-function would create one as well. This changes
+    behaviour so that a snapshot is only taken once after all the
+    potentially snapshot worthy changes have been made.
+    
+    Does not solve the problem of metadata having their own endpoint for
+    saving, and thus causing another snapshot.
