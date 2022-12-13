@@ -96,7 +96,8 @@ The JWT authentication and authorization is still <b>beta</b>.
 <a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Tokens (JWTs)</a>. With this feature, a login-mechanism based
 on the <a href="https://openid.net/connect/">OpenID Connect (OIDC)</a> protocol can be configured, since OIDC uses JWTs.</p>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>This guide assumes that a JWT provider is already setup and Opencast receives the JWT within an HTTP request header. 
+<p>This guide assumes that a JWT provider is already setup and Opencast receives the JWT within an HTTP request header,
+or in a request parameter (i.e. a query parameter for <code>GET</code>-requests, and a form parameter for <code>POST</code>-requests).
 In order to integrate Opencast with an OIDC provider you could use the
 <a href="https://github.com/oauth2-proxy/oauth2-proxy">oauth2-proxy</a>.</p>
 <h2 id="enable-karaf-feature">Enable Karaf Feature</h2>
@@ -130,19 +131,16 @@ sections found in <code>etc/security/mh_default_org.xml</code>. Some of the opti
                 interface=&quot;org.opencastproject.userdirectory.api.UserReferenceProvider&quot; /&gt;
 </code></pre>
 <ul>
-<li>Enable the JWT header authentication filter.</li>
-</ul>
-<pre><code class="language-xml">&lt;!-- JWT header authentication filter --&gt;
-&lt;sec:custom-filter ref=&quot;jwtHeaderFilter&quot; position=&quot;PRE_AUTH_FILTER&quot;/&gt;
-</code></pre>
-<ul>
-<li>Add the configured <code>jwtHeaderFilter</code> to the filters list of the <code>authenticationFilters</code> bean.</li>
+<li>Add the configured <code>jwtHeaderFilter</code> and/or <code>jwtRequestParameterFilter</code> to the filters list
+  of the <code>preAuthenticationFilters</code> bean.</li>
 </ul>
 <pre><code class="language-xml">&lt;!-- Uncomment the line below to support JWT. --&gt;
 &lt;ref bean=&quot;jwtHeaderFilter&quot; /&gt;
+&lt;!-- Additionally/alternatively uncomment this to support passing a JWT in a URL parameter. --&gt;
+&lt;ref bean=&quot;jwtRequestParameterFilter&quot; /&gt;
 </code></pre>
 <ul>
-<li>Configure the <code>jwtHeaderFilter</code> bean.</li>
+<li>Configure the <code>jwtHeaderFilter</code> and/or <code>jwtRequestParameterFilter</code> beans.</li>
 </ul>
 <pre><code class="language-xml">&lt;!-- General JWT header extraction filter --&gt;
 &lt;bean id=&quot;jwtHeaderFilter&quot; class=&quot;org.opencastproject.security.jwt.JWTRequestHeaderAuthenticationFilter&quot;&gt;
@@ -154,6 +152,18 @@ sections found in <code>etc/security/mh_default_org.xml</code>. Some of the opti
   &lt;property name=&quot;loginHandler&quot; ref=&quot;jwtLoginHandler&quot; /&gt;
   &lt;!-- Throws an exception if a request is missing the configured header (default: true) --&gt;
   &lt;property name=&quot;exceptionIfHeaderMissing&quot; value=&quot;false&quot; /&gt;
+  &lt;!-- Logs the header contents for debug purposes (default: false) --&gt;
+  &lt;property name=&quot;debug&quot; value=&quot;false&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;!-- General JWT request parameter extraction filter --&gt;
+&lt;bean id=&quot;jwtRequestParameterFilter&quot; class=&quot;org.opencastproject.security.jwt.JWTRequestParameterAuthenticationFilter&quot;&gt;
+  &lt;!-- Name of the request parameter that contains the JWT (default: jwt) --&gt;
+  &lt;property name=&quot;parameterName&quot; value=&quot;jwt&quot; /&gt;
+  &lt;property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot; /&gt;
+  &lt;property name=&quot;loginHandler&quot; ref=&quot;jwtLoginHandler&quot; /&gt;
+  &lt;!-- Throws an exception if a request is missing the configured parameter (default: true) --&gt;
+  &lt;property name=&quot;exceptionIfParameterMissing&quot; value=&quot;false&quot; /&gt;
   &lt;!-- Logs the header contents for debug purposes (default: false) --&gt;
   &lt;property name=&quot;debug&quot; value=&quot;false&quot; /&gt;
 &lt;/bean&gt;
