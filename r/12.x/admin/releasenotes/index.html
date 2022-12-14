@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 12: Release Notes", url: "#_top", children: [
+              {title: "Opencast 12.6", url: "#opencast-126" },
               {title: "Opencast 12.5", url: "#opencast-125" },
               {title: "Opencast 12.4", url: "#opencast-124" },
               {title: "Opencast 12.3", url: "#opencast-123" },
@@ -93,6 +94,29 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-12-release-notes">Opencast 12: Release Notes</h1>
+<h2 id="opencast-126">Opencast 12.6</h2>
+<p>The sixth maintenance release of Opencast 12.</p>
+<p>Notable changes are:</p>
+<ul>
+<li>With a new authentication filter you can now accept JWTs not only from
+  request headers, but also from query and form parameters of a <code>GET</code> and
+  <code>POST</code>-request, respectively
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4412">#4412</a>]).</li>
+<li>There is a new <code>POST /redirect/get</code> endpoint which will redirect a user to a
+  given URL. Note that it only supports redirect to URLs that "live" on the
+  same server (relative URLs). This is useful for external applications which
+  can use it to implement patterns like Post/Redirect/Get, for example in the
+  context of an authentication scheme in combination with the new
+  <code>JWTRequestParameterAuthenticationFilter</code>
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4412">#4412</a>]).</li>
+<li>Fix <em>Go to Admin</em> and <em>Go to Media Module</em> buttons
+  (cf. [<a href="https://github.com/opencast/opencast/issues/3959">#3959</a>]).</li>
+<li>Fix Login redirect from Paella-Player 6
+  (cf. [<a href="https://github.com/opencast/opencast/issues/4493">#4493</a>]).</li>
+<li>Fix Paella Player not finding any video if audio or unsupported
+  media is delivered together with supported media in Paella Player 6
+  (cf. [<a href="https://github.com/opencast/opencast/pull/4486">#4486</a>]).</li>
+</ul>
 <h2 id="opencast-125">Opencast 12.5</h2>
 <p>The fifth maintenance release of Opencast 12.</p>
 <p>Security related changes are:</p>
