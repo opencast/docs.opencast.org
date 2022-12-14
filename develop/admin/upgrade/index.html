@@ -33,11 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 11.x to 12.x", url: "#_top", children: [
+          {title: "Upgrading Opencast from 12.x to 13.x", url: "#_top", children: [
+              {title: "Configuration Changes", url: "#configuration-changes" },
               {title: "Database Migration", url: "#database-migration" },
-              {title: "MariaDB Connection Configuration", url: "#mariadb-connection-configuration" },
-              {title: "Optional: Delete Solr Index", url: "#optional-delete-solr-index" },
-              {title: "Optional: Remove ActiveMQ", url: "#optional-remove-activemq" },
+              {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
           ]},
         ];
 
@@ -88,108 +87,127 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="upgrading-opencast-from-11x-to-12x">Upgrading Opencast from 11.x to 12.x</h1>
-<p>This guide describes how to upgrade Opencast 11.x to 12.x.
+    <h1 id="upgrading-opencast-from-12x-to-13x">Upgrading Opencast from 12.x to 13.x</h1>
+<p>This guide describes how to upgrade Opencast 12.x to 13.x.
 In case you need information about how to upgrade older versions of Opencast,
 please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
 <li>Read the <a href="../releasenotes/">release notes</a> (especially the section of behaviour changes)</li>
-<li>Review the configuration changes and adjust your configuration accordingly</li>
+<li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
 <li><a href="#database-migration">Migrate the database</a></li>
-<li><a href="#mariadb-connection-configuration">Update MariaDB connection configuration</a></li>
-<li><a href="#optional-delete-solr-index">Clean up old indexes</a></li>
-<li><a href="#optional-remove-activemq">Remove ActiveMQ</a></li>
 <li>Start Opencast</li>
+<li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
 </ol>
-<h2 id="database-migration">Database Migration</h2>
-<div class=warn>
-Bug in 12.2:
-Please use the latest version of the upgrade script linked below.
-Version 12.2 of the MariaDB variant contained a bug which would make the script exit successfully while doing nothing.
-</div>
-
-<p>Upgrading to Opencast 12 requires a database migration as some tables have changed.
-Migration scripts can be found in
-<a href="https://github.com/opencast/opencast/tree/r/12.x/docs/upgrade/11_to_12"><code>doc/upgrade/11_to_12/</code></a>.
-There are separate scripts for MariaDB and PostgreSQL.</p>
-<div class=warn>
-Back-up your database before starting the migration.
-</div>
-
-<p>To start the migration, first make sure you have Python ≥ 3.6 installed on your system.
-You can run these scripts from any of your systems as long as it can establish a connection to your database.
-You only have to run these scripts once.</p>
-<p>To upgrade, choose the script for the database type you are running,
-either <code>workflows_postgresql.py</code> or <code>workflows_mariadb.py</code>
-and open the file with an editor. Adjust the connection settings located near the top of the file:</p>
-<pre><code class="language-py"># Vars
-user = &quot;opencast&quot;
-password = &quot;dbpassword&quot;
-host = &quot;127.0.0.1&quot;
-database = &quot;opencast&quot;
-</code></pre>
-<p>Next, install the Python dependencies listed at the top of the migration script you want to use.
-You can do this in a virtual Python environment if you do not want to install them globally:</p>
-<pre><code class="language-sh">python3 -m venv venv
-. ./venv/bin/activate
-
-# you might need to have a MariaDB/PostgrSQL client installed
-
-# for PostgrSQL:
-pip install psycopg2-binary
-
-# or for MariaDB:
-pip install mysql_connector_python==8.0.29
-# NOTE: please don't install version 8.0.30, because the migration
-# script runs into errors with this version. Newer versions also were not tested yet.
-</code></pre>
-<p>Alternatively to using <code>pip</code>, use your system's package manager, e.g.:</p>
-<pre><code>dnf install python3-psycopg2
-</code></pre>
-<p>Finally, run the script to start the migration.
-Depending on the amount of workflows in your system, this might take some time:</p>
-<pre><code class="language-sh"># PostgreSQL
-python3 workflows_postgresql.py
-# MariaDB
-python3 workflows_mariadb.py
-</code></pre>
-<p>Wait for this to finish before starting Opencast.</p>
-<h2 id="mariadb-connection-configuration">MariaDB Connection Configuration</h2>
-<p>This only applies if you use MariaDB or MySQL.</p>
-<p>The syntax of the JDBC connection configuration for MariaDB has slightly changed to an update of the MariaDB
-Connector/J in <code>etc/custom.properties</code>, please use <code>jdbc:mariadb:</code> instead of <code>jdbc:mysql:</code>:</p>
-<pre><code class="language-properties">org.opencastproject.db.jdbc.url=jdbc:mariadb://localhost/opencast?useMysqlMetadata=true
-</code></pre>
-<h2 id="optional-delete-solr-index">Optional: Delete Solr Index</h2>
-<p>Starting with Opencast 12, the workflow and series services do not store data in Solr anymore.
-Therefore, the index can be deleted to save on disk space.
-Do <em>not</em> delete the search Solr index.
-Unless you setup Solr yourself, the index should be located on the following nodes and paths:</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p><code>etc/org.apache.felix.fileinstall-workflows.cfg</code>:</p>
 <ul>
-<li>The workflow Solr index was located on the admin or allinone nodes at
-  <code>/var/lib/opencast/solr-indexes/workflows/</code></li>
-<li>The series Solr index was located on the admin or allinone nodes at
-  <code>/var/lib/opencast/solr-indexes/series/</code>.</li>
+<li>The inclusion filter was adapted for YAML.</li>
 </ul>
-<h2 id="optional-remove-activemq">Optional: Remove ActiveMQ</h2>
-<p>Starting with version 12, Opencast does no longer require ActiveMQ.
-You can stop and remove the service from your Opencast cluster unless you need it for anything else.</p>
-<p>For example, to remove this on Debian or CentOS, run something like:</p>
-<pre><code class="language-sh"># Debian, Ubuntu, …
-apt purge activemq-dist
-
-# RHEL, CentOS, …
-dnf remove activemq-dist
-
-# Old RHEL, CentOS, …
-yum remove activemq-dist
+<p><code>etc/org.opencastproject.db.DBSessionFactoryImpl.cfg</code>:</p>
+<ul>
+<li>New configuration file allowing to adopt retry behavior for DB transactions.</li>
+</ul>
+<p><code>etc/org.opencastproject.ingest.impl.IngestServiceImpl.cfg</code>:</p>
+<ul>
+<li>New configuration options for allowing ingests from HTTP sources protected by basic auth.</li>
+</ul>
+<p><code>etc/org.opencastproject.liveschedule.impl.LiveScheduleServiceImpl.cfg</code>:</p>
+<ul>
+<li>Default streaming resolution was changed to 16:9.</li>
+</ul>
+<p><code>etc/org.opencastproject.organization-mh_default_org.cfg</code>:</p>
+<ul>
+<li>New configuration option to redirect Theodul requests to the configured default player.</li>
+<li>New configuration options for Admin UI keyboard shortcut.</li>
+</ul>
+<p><code>etc/org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>:</p>
+<ul>
+<li>New configuration file for Opencast plugins. LMS role provider (Brightspace, Canvas, Moodle and Sakai), transcription
+  services, the legacy annotation service and the Theodul player are now plugins and off by default. Note that the
+  Theodul player will be fully removed in Opencast 14. You may also refer to the <a href="../modules/plugin-management/">Plugin
+  Management</a> documentation.</li>
+</ul>
+<p><code>etc/org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>:</p>
+<ul>
+<li>New configuration file resulting out of an internal service registry refactoring. The <code>dispatch.interval</code> option,
+  previously configured in <code>etc/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg</code>, was moved to this
+  file.</li>
+</ul>
+<p><code>etc/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg</code>:</p>
+<ul>
+<li>The <code>dispatch.interval</code> option was moved to <code>etc/org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>.</li>
+<li>New configuration options for encoding specialized workers.</li>
+</ul>
+<p><code>etc/org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>:</p>
+<ul>
+<li>New configuration option for switching between Vosk and Whisper for creating automated subtitles. The default remains
+  Vosk.</li>
+</ul>
+<p><code>etc/org.opencastproject.speechtotext.impl.engine.WhisperEngine.cfg</code>:</p>
+<ul>
+<li>New configuration file for configuring Whisper.</li>
+</ul>
+<p><code>etc/org.opencastproject.transcription.amberscript.AmberscriptTranscriptionService.cfg</code>:</p>
+<ul>
+<li>The default documented workflow incorrectly included <code>.xml</code> in the name.</li>
+</ul>
+<p><code>etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-episode-common.cfg</code> and
+<code>etc/org.opencastproject.ui.metadata.CatalogUIAdapterFactory-series-common.cfg</code>:</p>
+<ul>
+<li>The organization was changed to the wildcard <code>*</code> as each tenant can now have a custom common metadata catalog.</li>
+</ul>
+<p><code>etc/org.opencastproject.userdirectory.ldap.cfg.template</code>:</p>
+<ul>
+<li>New configuration options for mapping LDAP attributes to user details.</li>
+</ul>
+<p><code>etc/org.opencastproject.videoeditor.impl.VideoEditorServiceImpl.cfg</code>:</p>
+<ul>
+<li>Default values for the fade between cuts as well as the used FFmpeg command were changed.</li>
+</ul>
+<p><code>etc/email/errorDetails</code>:</p>
+<ul>
+<li>The included metadata was changed to the new syntax.</li>
+</ul>
+<p><code>etc/listproviders/event.upload.asset.options.properties</code>:</p>
+<ul>
+<li><code>.f4v</code> was added as allowed file type.</li>
+</ul>
+<p><code>etc/security/mh_default_org.xml</code>:</p>
+<ul>
+<li>New role mappings for paths have been added.</li>
+<li>Basic auth entrypoint has been added to allow HTTP clients to force Opencast to use basic auth. Analogously to digest
+  auth, the <code>X-Requested-Auth: Basic</code> must be included in the request.</li>
+<li>LDAP configuration has been adapted.</li>
+</ul>
+<p>Workflow changes:</p>
+<ul>
+<li>The <code>failing</code> workflow operation is replaced by <code>assert</code>. Refer to the <a href="../workflowoperationhandlers/assert-woh/">Assert Workflow
+  Operation</a> documentation for more details.</li>
+<li>The <code>send-email</code> workflow operation no longer has the configuration option <code>use-html</code>. Instead you may now
+  additionally use the <code>body-html</code> or <code>body-html-template-file</code> options for passing an HTML template. If you configure
+  a text and HTML template, a multipart email including both will be created.</li>
+<li>The <code>send-email</code> workflow operation deprecates the <code>${catalogs['SUBTYPE']['FIELD']}</code> syntax in favor of
+  <code>${catalogs['FLAVOR']['FIELD']}</code> for including catalog values into templates. The old syntax may be removed from
+  future Opencast versions. Refer to the <a href="../workflowoperationhandlers/send-email-woh/">Send Email Workflow Operation</a>
+  documentation for more details.</li>
+<li><code>etc/workflows/partial-error.xml</code>, <code>etc/workflows/partial-publish.xml</code>, <code>etc/workflows/publish.xml</code> and
+  <code>etc/workflows/schedule-and-upload.xml</code> have been adapted to publish captions.</li>
+</ul>
+<h2 id="database-migration">Database Migration</h2>
+<p>You can find database upgrade scripts in <code>docs/upgrade/12_to_13/</code>. These scripts are suitable for both, MariaDB and
+PostgreSQL. Changes include DB schema optimizations as well as fixes for the new workflow tables.</p>
+<h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
+<p>The 13.0 release contains multiple changes to the Elasticsearch indexes an requires a rebuild.</p>
+<p>Start your new Opencast and make an HTTP POST request to <code>/index/rebuild</code>.</p>
+<p>Example (using cURL):</p>
+<pre><code>curl -i -u &lt;admin_user&gt;:&lt;password&gt; -s -X POST https://example.opencast.org/index/rebuild
 </code></pre>
-<p>You can also potentially remove old data from:</p>
-<pre><code>/etc/activemq*
-/var/lib/activemq
-</code></pre>
+<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
+“?” symbol at the top right corner). Then go to the “Index Endpoint” section and use the testing form on
+<code>/rebuild</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status.</p>
 
   <br>
     
