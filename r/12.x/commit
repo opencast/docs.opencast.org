@@ -1,9 +1,14 @@
-commit b25fe5481fce1b3314c558bf39dd00d88b07773c
-Author: Gregor Eichelberger <gregor.eichelberger@tuwien.ac.at>
-Date:   Thu Dec 15 14:18:06 2022 +0100
+commit fb7e6ae23158b778520e2939b453f2fde4423ea7
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Wed Dec 14 16:33:54 2022 +0100
 
-    Ensure segments.segment is array
+    Make event updating faster after changes to series metadata/ACL
     
-    The search endpoint does not return a list with a single object as an array.
-    Instead, it's represented as a JSON object. This fix ensures that
-    segments.segment is an array.
+    When there are changes to a series metadata or ACL, all events
+    belonging to that series need to updated as well. Currently, updating
+    events takes a very long time.
+    
+    This commit decreases the time required for updating somewhat by
+    increasing the polling interval with which Opencast checks if an
+    updating job has completed. From the default 5 seconds to 100 milli-
+    seconds.
