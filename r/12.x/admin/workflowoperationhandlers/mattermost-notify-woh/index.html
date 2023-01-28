@@ -33,11 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Mattermost Notification", url: "#_top", children: [
+          {title: "Mattermost Notification Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
-              {title: "List of configuration options", url: "#list-of-configuration-options" },
-              {title: "Example for mattermost-notify operation", url: "#example-for-mattermost-notify-operation" },
-              {title: "List of parameters", url: "#list-of-parameters" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+              {title: "Message Variables", url: "#message-variables" },
           ]},
         ];
 
@@ -88,14 +88,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="mattermost-notification">Mattermost Notification</h1>
+    <h1 id="mattermost-notification-workflow-operation">Mattermost Notification Workflow Operation</h1>
+<p>ID: <code>mattermost-notify</code></p>
 <h2 id="description">Description</h2>
-<p>The MattermostNotificationOperationHander sends a notification to a channel of Mattermost or similar applications,
+<p>The Mattermost notify operation sends a notification to a channel of Mattermost or similar applications,
 like Slack, with the chosen parameters provided. It is useful to send such notifications when some operation(s) have
-been completed or some error has occurred in a workflow.
-The notification message can be freely chosen. You can use different parameters which will be replaced with the
+been completed or some error has occurred in a workflow.</p>
+<p>The notification message can be freely chosen. You can use different parameters which will be replaced with the
 corresponding metadata of the current workflow instance (see List of parameters).</p>
-<h2 id="list-of-configuration-options">List of configuration options</h2>
+<h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
@@ -132,23 +133,22 @@ corresponding metadata of the current workflow instance (see List of parameters)
 </tr>
 </tbody>
 </table>
-<h2 id="example-for-mattermost-notify-operation">Example for mattermost-notify operation</h2>
-<pre><code class="language-XML">  &lt;operation
-      id=&quot;mattermost-notify&quot;
-      fail-on-error=&quot;false&quot;
-      exception-handler-workflow=&quot;error&quot;
-      description=&quot;Notify Mattermost about error&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;url&quot;&gt;insert-url-of-mattermost-webhook&lt;/configuration&gt;
-        &lt;configuration key=&quot;message&quot;&gt;Error at Workflow %i (%t) State: %s&lt;/configuration&gt;
-        &lt;configuration key=&quot;method&quot;&gt;post&lt;/configuration&gt;
-        &lt;configuration key=&quot;max-retry&quot;&gt;3&lt;/configuration&gt;
-        &lt;configuration key=&quot;timeout&quot;&gt;5&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;mattermost-notify&quot;
+    description=&quot;Notify Mattermost about error&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;url&quot;&gt;insert-url-of-mattermost-webhook&lt;/configuration&gt;
+    &lt;configuration key=&quot;message&quot;&gt;Error at Workflow %i (%t) State: %s&lt;/configuration&gt;
+    &lt;configuration key=&quot;method&quot;&gt;post&lt;/configuration&gt;
+    &lt;configuration key=&quot;max-retry&quot;&gt;3&lt;/configuration&gt;
+    &lt;configuration key=&quot;timeout&quot;&gt;5&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
 </code></pre>
-<h2 id="list-of-parameters">List of parameters</h2>
-<p>All parameters (%<letter>) will be substituted with corresponding metadata of the current workflow instance.</p>
+<h2 id="message-variables">Message Variables</h2>
+<p>All message variables (<code>%&lt;letter&gt;</code>) will be substituted with corresponding metadata of the current workflow instance
+when the message is being sent.</p>
 <table>
 <thead>
 <tr>
@@ -175,39 +175,39 @@ corresponding metadata of the current workflow instance (see List of parameters)
 </tr>
 <tr>
 <td>%I</td>
-<td>ID of Mediapackage</td>
+<td>ID of media package</td>
 </tr>
 <tr>
 <td>%T</td>
-<td>Title of Mediapackage</td>
+<td>Title of media package</td>
 </tr>
 <tr>
 <td>%C</td>
-<td>Creators of Mediapackage</td>
+<td>Creators of media package</td>
 </tr>
 <tr>
 <td>%c</td>
-<td>Contributors of Mediapackage</td>
+<td>Contributors of media package</td>
 </tr>
 <tr>
 <td>%D</td>
-<td>Date of Mediapackage</td>
+<td>Date of media package</td>
 </tr>
 <tr>
 <td>%d</td>
-<td>Duration of Mediapackage</td>
+<td>Duration of media package</td>
 </tr>
 <tr>
 <td>%L</td>
-<td>License of Mediapackage</td>
+<td>License of media package</td>
 </tr>
 <tr>
 <td>%l</td>
-<td>Language of Mediapackage</td>
+<td>Language of media package</td>
 </tr>
 <tr>
 <td>%S</td>
-<td>Series-Title of Mediapackage</td>
+<td>Series-Title of media package</td>
 </tr>
 </tbody>
 </table>
@@ -247,7 +247,7 @@ corresponding metadata of the current workflow instance (see List of parameters)
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/notification.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/mattermost-notify-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
