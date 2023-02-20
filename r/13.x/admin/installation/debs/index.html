@@ -40,6 +40,8 @@
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Elasticsearch", url: "#install-elasticsearch" },
               {title: "Install Opencast", url: "#install-opencast" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Start Opencast", url: "#start-opencast" },
               {title: "Advanced Installation", url: "#advanced-installation" },
               {title: "Point Revisions (Experts only)", url: "#point-revisions-experts-only" },
               {title: "Install 3rd-party-tools", url: "#install-3rd-party-tools" },
@@ -159,6 +161,10 @@ file at <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the
 <pre><code>-Dlog4j2.formatMsgNoLookups=true
 </code></pre>
 <p>This applies a mitigation for the security issue.  Once applied, you should restart Elasticsearch.</p>
+<p>Finally, make sure to start and enable the service:</p>
+<pre><code class="language-sh">systemctl start elasticsearch
+systemctl enable elasticsearch
+</code></pre>
 <h2 id="install-opencast">Install Opencast</h2>
 <h3 id="basic-installation">Basic Installation</h3>
 <p>For a basic installation (All-In-One) just run:</p>
@@ -167,16 +173,17 @@ file at <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the
 <p>This will install the default distribution of Opencast and all its dependencies, including the 3rd-Party-Tools.  Note
 that while the repository provides a packaged version of FFmpeg, your distribution may have a version which is
 pre-installed or otherwise takes precedence.  This version may work, however Opencast only formally supports the
-version(s) in the repository.  To install the Opencast version of ffmpeg add <code>ffmpeg-dist</code> to the end of the command above.</p>
-<p>At this point Opencast is installed and will work locally, but it is not completely configured.  Because additional configuration
-is required, Opencast is not configured to start automatically. Please follow the
-<a href="../../configuration/basic/">Basic Configuration guide</a>.  Once you are ready, enable Opencast and Elasticsearch to start on boot with:</p>
-<pre><code>    systemctl enable elasticsearch.service
-    systemctl enable opencast.service
-</code></pre>
-<p>then start them with:</p>
-<pre><code>    systemctl start elasticsearch.service
-    systemctl start opencast.service
+version(s) in the repository.  To install the Opencast version of ffmpeg add <code>ffmpeg-dist</code> to the end of the command above.
+For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Make sure to set your hostname, login information and other configuration details by following the</p>
+<ul>
+<li><a href="../../configuration/basic/">Basic Configuration guide</a></li>
+</ul>
+<h2 id="start-opencast">Start Opencast</h2>
+<p>Finally, start and enable Opencast by running:</p>
+<pre><code class="language-sh">systemctl start opencast.service
+systemctl enable opencast.service
 </code></pre>
 <h2 id="advanced-installation">Advanced Installation</h2>
 <p>While the basic installation will give you an all-in-one Opencast distribution which is nice for testing, you might
