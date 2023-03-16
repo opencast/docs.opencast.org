@@ -102,21 +102,31 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>To enable Whisper as for the <code>SpeechToText</code> WoH, follow these steps.</p>
 <ol>
 <li><a href="https://github.com/openai/whisper#setup">Install whisper</a> on the worker nodes.</li>
-<li>Enable whisper in <code>org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>.</li>
+<li>Enable whisper and set Job load in <code>org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>.</li>
 <li>Set the target model to use in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code>.</li>
 </ol>
 <h2 id="additional-notes">Additional Notes</h2>
 <ul>
-<li>Whisper can be run on CPU or GPU, the use of a GPU increase the performance dramatically, it is strong recommended to
-use a GPU with this engine.</li>
+<li>Whisper can be run on CPU or GPU, the use of a GPU increase the performance dramatically.</li>
 <li><a href="https://github.com/openai/whisper#available-models-and-languages">There are five languages models available to use</a>, 
 from the lightest (tiny) to the most complete (large), having a
-bigger model improves the accuracy but diminishes the processing speed.</li>
+bigger model improves the accuracy but diminishes processing speed.</li>
+<li>It's recommended to set a Job load for each machine. </li>
+<li>In the case that one want to use only one worker node with Whisper,
+one can set the job load to be bigger than the size on the non Whisper nodes. The whisper Job will only be run on 
+the Whisper machines (Whose nodes have higher job load set).</li>
+<li>Also, is a good idea on the Whisper node to configure it.<ul>
+<li>Avoid workflows failures over not enough memory with parallel transcriptions.</li>
+<li>Performance bottleneck with too many parallel transcriptions.</li>
+</ul>
+</li>
 </ul>
 <h4 id="not-yet-implemented">Not yet implemented</h4>
-<p>This is a list of features that are not implemented but are expected to be added in the near future.
-- Translation to english
-- Automatic language recognition and tagging</p>
+<p>This is a list of features that are not implemented, they will be added in the near future.</p>
+<ul>
+<li>Translation to English</li>
+<li>Automatic language recognition and tagging</li>
+</ul>
 
   <br>
     
