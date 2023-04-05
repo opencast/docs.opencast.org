@@ -126,16 +126,22 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 </tr>
 <tr>
 <td>language-fallback</td>
-<td>no</td>
-<td>The fallback value if the dublin core/media package language field is not present. (default is "eng") (Vosk Only)</td>
+<td>yes*</td>
+<td>The fallback value if the dublin core/media package language field is not present.</td>
 </tr>
 <tr>
 <td>target-tags</td>
 <td>no</td>
-<td>Tags for the subtitle file</td>
+<td>Tags for the subtitle file (Whisper only: Will add always the tag <code>lang:{code}</code> Where <code>code</code> can be by autodetection or from <code>language-code</code> parameter)</td>
+</tr>
+<tr>
+<td>translate</td>
+<td>no</td>
+<td>Transcription is translated into English (Whisper Only)</td>
 </tr>
 </tbody>
 </table>
+<p>*Vosk Only, default value can be modified on Vosk config file.</p>
 <h2 id="requirements">Requirements</h2>
 <p>In order for it to work, you have to install the vosk-cli or whisper package</p>
 <h2 id="operation-examples">Operation Examples</h2>
@@ -143,6 +149,7 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 the target SubFlavor has to be configured like this: <code>vtt+LANG</code>, where <code>LANG</code> is
 the language option, that will be displayed in the Paella player. Please note the description above
 for the <code>language-code</code> field.</p>
+<p>Paella Player also can detect the tag <code>lang:{code}</code> to show the language in the subtitle menu.</p>
 <pre><code class="language-XML">&lt;operation
     id=&quot;speechtotext&quot;
     description=&quot;Generates subtitles for video and audio files&quot;&gt;
@@ -154,8 +161,8 @@ for the <code>language-code</code> field.</p>
     &lt;configuration key=&quot;language-code&quot;&gt;eng&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
-
-&lt;operation
+</code></pre>
+<pre><code class="language-XML">&lt;operation
     id=&quot;speechtotext&quot;
     description=&quot;Generates subtitles for video and audio files, derive language-code from metadata&quot;&gt;
     &lt;configurations&gt;
