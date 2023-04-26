@@ -38,7 +38,7 @@
               {title: "Amazon Service Configuration", url: "#amazon-service-configuration" },
               {title: "Opencast Service Configuration", url: "#opencast-service-configuration" },
               {title: "Using S3 Archiving", url: "#using-s3-archiving" },
-              {title: "Migrating to S3 Archiving with Pre-Existing Data", url: "#migrating-to-s3-archiving-with-pre-existing-data" },
+              {title: "Manual S3 Archiving", url: "#manual-s3-archiving" },
           ]},
           {title: "S3 Storage Tiers", url: "#s3-storage-tiers", children: [
               {title: "S3 Glacier Flexible Retrieval and Deep Archive", url: "#s3-glacier-flexible-retrieval-and-deep-archive" },
@@ -186,16 +186,40 @@ for you.  It will create the bucket per its configuration, with private-only acc
 </tbody>
 </table>
 <h2 id="using-s3-archiving">Using S3 Archiving</h2>
-<p>There are two major methods to access S3 archiving features: manually, and via a workflow.  Amazon S3 archiving is not
-part of the default workflows and manual S3 offload is disabled by default.  To enable manual S3 offload you must edit
-the <code>offload.xml</code> workflow configuration file and change <code>var s3Enabled = false;</code> to <code>var s3Enabled = true;</code>.  To
-manually offload a media package follow the directions in the user documentation.</p>
-<p>To automatically offload a media package to S3 you must add the <code>move-storage</code> workflow operation to your workflow.
-The operation documentation can be found <a href="../../workflowoperationhandlers/move-storage-woh/">here</a>.</p>
-<h2 id="migrating-to-s3-archiving-with-pre-existing-data">Migrating to S3 Archiving with Pre-Existing Data</h2>
-<p>Archiving to S3 is a non-destructive operation in that it is safe to move archive files back and forth between local
-storage and S3.  To offload your local archive, select the workflow(s) and follow the manual offload steps described in
-the user documentation.</p>
+<p>S3 archiving is done on a Snapshot level, that is a mediapackage ID + version.  Because of the way that the Asset
+Manager handles snapshots, all newly created snapshots are <em>always</em> local.  Creating a snapshot of a mediapackage with
+non local data will download <em>all</em> related snapshots for that mediapackage which can incur significant costs.  S3
+archiving is meant to be a cost reduction, and storage expansion tool, rather than hot storage where lots of reads and
+writes will occur.  Therefore, most adopters do not want to immediately (ie, at the end of your default workflow)
+offload your recordings to S3!  Instead, we suggest using the <code>TimedMediaArchiver</code> as configured in
+<code>/etc/org.opencastproject.assetmanager.impl.TimedMediaArchiver.cfg</code> to offload your recordings after sufficient time that
+further modification of the recording is unlikely.</p>
+<p>If you do need to create an additional workflow, a substantially better approach than restoring snapshots involves
+using the <a href="../../workflowoperationhandlers/ingestdownload-woh/">ingest-download</a> workflow operation handler to download
+the relevant file(s) to the local workspace.  This dramatically speeds up snapshotting, and allows the operations which
+require local files to work properly without having to restore everything, and then re-archive to S3.</p>
+<h2 id="manual-s3-archiving">Manual S3 Archiving</h2>
+<p>Manually moving assets to and from S3 is done via a workflow operation handler added as part of a workflow.
+The workflow operation handler definition looks like this</p>
+<pre><code>    &lt;operation
+      id=&quot;move-storage&quot;
+      description=&quot;Offloading to AWS S3&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;target-storage&quot;&gt;aws-s3&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<p>Assets in S3 continue to be accessible to Opencast, however there may be cases where you wish to restore your content
+back to your local storage.  This can be accomplished using the same workflow operation definition as above, and
+changing the <code>target-storage</code> configuration value from <code>aws-s3</code> to <code>local-filesystem</code> like so</p>
+<pre><code>    &lt;operation
+      id=&quot;move-storage&quot;
+      description=&quot;Restoring from AWS S3&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;target-storage&quot;&gt;local-filesystem&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
 <h1 id="s3-storage-tiers">S3 Storage Tiers</h1>
 <p>S3 supports <a href="https://aws.amazon.com/s3/storage-classes/">storage tiering</a>, which can offer significant cost savings in
 return for substantially increased access times.  Opencast does not directly expose this functionality in the UI, but
