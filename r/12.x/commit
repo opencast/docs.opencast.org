@@ -1,7 +1,10 @@
-commit 85996069f3bb081c973a76cf681f24a3004d8591
-Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Wed Apr 26 18:47:24 2023 +0200
+commit 57481831e74211402e3d95d1eef14f7ffe72a3a9
+Author: Arnei <arnewilken@yahoo.de>
+Date:   Wed Apr 26 17:11:17 2023 +0200
 
-    Merge pull request #4721 from gregorydlogan/t/4704-clarify-s3-docs
+    Fix template losing user role when creating an event in the admin ui
     
-    Clarify S3 docs
+    A non-admin user creating an event/series through the create dialog in
+    the admin ui may accidentally remove his own role from the event because
+    selecting a template in the access policy tab will lose the users role,
+    thereby making them unable to access the event. This fixes that.
