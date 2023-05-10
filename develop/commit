@@ -1,14 +1,18 @@
-commit 0ab418378e9823e2be50c04e7f181fc547d15737
-Author: Miguel Escriva <miesgre@gmail.com>
-Date:   Wed May 10 14:17:46 2023 +0200
+commit 0d9d9bf05c0e148b8f0b20fb425bf132c5754aca
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Wed May 10 14:23:37 2023 +0200
 
-    Update Paella 7 default theme (#4943)
+    Make Composite Ffmpeg Command Configurable (#4878)
     
-    * Paella 7: Update default theme
+    If we want to use GPU's to encode composite videos, we need to change
+    the part of the ffmpeg command that is currently being constructed by
+    the workflow operation handler. This makes most of that configurable
+    (except for the audio mapping), by making use of conditional encoding
+    profile parameters similarly to the encode operation. It also adds a
+    bunch of other variables that the workflow operation handler fills
+    with information needed in the ffmpeg command.
     
-    * Paella 7: Fix CookieConsentButton.
-    Enable plugin only if cookieConsent is enabled
+    The `composite` encoding profile makes full use of the new configuration
+    options, while the `mp4-preview.dual` profile was simplified.
     
-    * Paella 7: check style
-    
-    * Change exit fullscreen icon
+    Additionally, this also reformats a table for aesthetic purposes only.

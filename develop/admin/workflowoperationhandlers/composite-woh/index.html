@@ -39,6 +39,7 @@
               {title: "Output Resolution", url: "#output-resolution" },
               {title: "Layout Definition", url: "#layout-definition" },
               {title: "Operation Example", url: "#operation-example" },
+              {title: "Encoding Profile Variables", url: "#encoding-profile-variables" },
           ]},
         ];
 
@@ -351,6 +352,101 @@ upper video and an optional specification for the watermark. The specifications 
     &lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
+</code></pre>
+<h2 id="encoding-profile-variables">Encoding Profile Variables</h2>
+<p>Since the composite operation supports diverse forms of input (single video with watermark, composite with or without
+watermark) that require different ffmpeg filters, the operation handler can make use of certain conditional variables in
+its encoding profile, similarly to the <a href="../encode-woh/">encode operation</a>.</p>
+<p>These variables are defined as <code>ffmpeg.command.&lt;variable name&gt;</code> and can then be used in the <code>ffmpeg.command</code> property.
+Defining these variables is optional; if it is known that the encoding profile will only be used with specific input,
+instead of defining conditional variables, the filters can simply be included in the main command.</p>
+<p>The following variables are currently supported:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if-single-stream</code></td>
+<td>The value is set if there is no upper video.</td>
+</tr>
+<tr>
+<td><code>if-dual-stream</code></td>
+<td>The value is set if there is both an upper and a lower video.</td>
+</tr>
+<tr>
+<td><code>if-watermark</code></td>
+<td>The value is set if a watermark is configured and the watermark exists.</td>
+</tr>
+<tr>
+<td><code>if-no-watermark</code></td>
+<td>The value is set if no watermark is configured / no watermark exists.</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, there are variables that can be used in the ffmpeg command, but not configured, since they are defined by
+the operation handler:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>audioMapping</code></td>
+<td>The audio mapping for dual-stream.</td>
+</tr>
+<tr>
+<td><code>scaleLower</code></td>
+<td>The dimensions for the lower video.</td>
+</tr>
+<tr>
+<td><code>padLower</code></td>
+<td>The padding for the lower video; contains the size of the new composite video as well as the position of the lower video and the background color.</td>
+</tr>
+<tr>
+<td><code>scaleUpper</code></td>
+<td>The dimensions for the upper video.</td>
+</tr>
+<tr>
+<td><code>upperFile</code></td>
+<td>The path to the upper video file.</td>
+</tr>
+<tr>
+<td><code>upperPosition</code></td>
+<td>The offset for the upper video.</td>
+</tr>
+<tr>
+<td><code>watermarkFile</code></td>
+<td>The path to the watermark file.</td>
+</tr>
+<tr>
+<td><code>watermarkPosition</code></td>
+<td>The position of the watermark.</td>
+</tr>
+</tbody>
+</table>
+<p>This example encoding profile uses all of those variables:</p>
+<pre><code class="language-properties">profile.composite.http.name = composite
+profile.composite.http.input = visual
+profile.composite.http.output = visual
+profile.composite.http.suffix = -compound.mkv
+profile.composite.http.ffmpeg.command.if-single-stream = -filter:v [in]scale=#{scaleLower},pad=#{padLower}
+profile.composite.http.ffmpeg.command.if-dual-stream = -i #{upperFile} -filter_complex \
+  [0:v]scale=#{scaleLower},pad=#{padLower}[lower];[1:v]scale=#{scaleUpper}[upper];[lower][upper]overlay=#{upperPosition}
+profile.composite.http.ffmpeg.command.if-watermark = \
+  [video];movie=#{watermarkFile}[watermark];[video][watermark]overlay=#{watermarkPosition}[out]
+profile.composite.http.ffmpeg.command.if-no-watermark = [out]
+profile.composite.http.ffmpeg.command = -i #{in.video.path} \
+  #{if-single-stream}#{if-dual-stream}#{if-watermark}#{if-no-watermark}#{audioMapping} \
+  -c:v libx264 -crf 10 -preset fast \
+  -c:a flac \
+  #{out.dir}/#{out.name}#{out.suffix}
 </code></pre>
 
   <br>
