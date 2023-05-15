@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Debian/Ubuntu - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Install from Repository (Debian, Ubuntu)", url: "#_top", children: [
+              {title: "Availability", url: "#availability" },
+              {title: "Currently Supported", url: "#currently-supported" },
+              {title: "Supported JDKs", url: "#supported-jdks" },
+              {title: "Activate Repository", url: "#activate-repository" },
+              {title: "Install Elasticsearch", url: "#install-elasticsearch" },
+              {title: "Install Opencast", url: "#install-opencast" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Start Opencast", url: "#start-opencast" },
+              {title: "Advanced Installation", url: "#advanced-installation" },
+              {title: "Point Revisions (Experts only)", url: "#point-revisions-experts-only" },
+              {title: "Install 3rd-party-tools", url: "#install-3rd-party-tools" },
+              {title: "Upgrading Major Versions", url: "#upgrading-major-versions" },
+              {title: "Uninstall Opencast", url: "#uninstall-opencast" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../rpm-fedora/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../rpm-fedora/" class="btn btn-xs btn-link">
+        Fedora
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../source-macosx/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../source-macosx/" class="btn btn-xs btn-link">
+        MacOS X
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="install-from-repository-debian-ubuntu">Install from Repository (Debian, Ubuntu)</h1>
+<p>There is a Debian software repository (DEB) available for Debian-based Linux distributions provided by Greg Logan, and
+hosted at University of Osnabrück. This repository provides prebuilt Opencast installations, including all
+3rd-Party-Tools. Using this method, you do not have to compile the software by yourself, but you still need to configure
+it.</p>
+<p>It may also be interesting for developers as all dependencies for Opencast usage, testing and development are provided
+by the Debian repository.</p>
+<h2 id="availability">Availability</h2>
+<p>Note that it may take some time (usually about a week after a new release is out) before the Debian packages are available.
+Watch for announcements on list or just check which versions are available in the repository.</p>
+<h2 id="currently-supported">Currently Supported</h2>
+<ul>
+<li>Debian 10 and newer amd64</li>
+<li>Ubuntu 18.04 and newer amd64</li>
+</ul>
+<h2 id="supported-jdks">Supported JDKs</h2>
+<p>For Opencast 10 and newer we support JDK 11 only.</p>
+<h2 id="activate-repository">Activate Repository</h2>
+<p>First you have to install the necessary repositories so that your package manager can access them:</p>
+<ul>
+<li>
+<p>Ensure https repositories are supported:</p>
+<pre><code>apt-get install apt-transport-https ca-certificates sudo wget gnupg2
+</code></pre>
+</li>
+<li>
+<p>Add Opencast repository:</p>
+<pre><code>echo "deb https://pkg.opencast.org/debian 14.x stable" | sudo tee /etc/apt/sources.list.d/opencast.list
+</code></pre>
+<p>It might take some time after the release of a new Opencast version before the Debs are moved to the stable
+repository. If you need the new release prior to its promotion to stable you can use the testing repository.
+Note that the testing repository is an additional repository and still requires the stable repository to be active.</p>
+<pre><code>echo "deb https://pkg.opencast.org/debian 14.x stable testing" | sudo tee /etc/apt/sources.list.d/opencast.list
+</code></pre>
+</li>
+<li>
+<p>Add the repository key to your apt keyring:</p>
+<pre><code>wget -qO - https://pkg.opencast.org/gpgkeys/opencast-deb.key | sudo apt-key add -
+</code></pre>
+</li>
+<li>
+<p>Update your package listing</p>
+<pre><code>apt-get update
+</code></pre>
+</li>
+</ul>
+<h2 id="install-elasticsearch">Install Elasticsearch</h2>
+<p>Starting with Opencast 9, Elasticsearch is now a dependency.  Our packages do not explicitly depend on Elasticsearch
+because it runs externally to Opencast.  By default we expect Elasticsearch to be running on the admin node, however
+you can configure the URL in Opencast's configuration files.</p>
+<p>In our repository we provide validated Elasticsearch packages copied from the upstream repository.  Installation can be
+accomplished by running the following:</p>
+<pre><code>apt-get install elasticsearch-oss
+</code></pre>
+<p>If you wish to use the upstream Elasticsearch repository directly be aware that Opencast only formally supports Elasticsearch
+versions with the same major and minor version values.  That is, if our 9.x repository has Elasticsearch 7.9.2 then
+Opencast only formally supports Elasticsearch versions starting with 7.9.</p>
+<p>The default Elasticsearch configuration should work for Opencast out of the box, however there is one change you should make.
+<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228">Log4Shell</a> affects Elasticsearch, and you should mitigate this by adding a
+file at <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the content:</p>
+<pre><code>-Dlog4j2.formatMsgNoLookups=true
+</code></pre>
+<p>This applies a mitigation for the security issue.  Once applied, you should restart Elasticsearch.</p>
+<p>Finally, make sure to start and enable the service:</p>
+<pre><code class="language-sh">systemctl start elasticsearch
+systemctl enable elasticsearch
+</code></pre>
+<h2 id="install-opencast">Install Opencast</h2>
+<h3 id="basic-installation">Basic Installation</h3>
+<p>For a basic installation (All-In-One) just run:</p>
+<pre><code>apt-get install opencast-14-allinone elasticsearch-oss
+</code></pre>
+<p>This will install the default distribution of Opencast and all its dependencies, including the 3rd-Party-Tools.  Note
+that while the repository provides a packaged version of FFmpeg, your distribution may have a version which is
+pre-installed or otherwise takes precedence.  This version may work, however Opencast only formally supports the
+version(s) in the repository.  To install the Opencast version of ffmpeg add <code>ffmpeg-dist</code> to the end of the command above.
+For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Make sure to set your hostname, login information and other configuration details by following the</p>
+<ul>
+<li><a href="../../configuration/basic/">Basic Configuration guide</a></li>
+</ul>
+<h2 id="start-opencast">Start Opencast</h2>
+<p>Finally, start and enable Opencast by running:</p>
+<pre><code class="language-sh">systemctl start opencast.service
+systemctl enable opencast.service
+</code></pre>
+<h2 id="advanced-installation">Advanced Installation</h2>
+<p>While the basic installation will give you an all-in-one Opencast distribution which is nice for testing, you might
+want to have more control over your system and deploy it over several machines by choosing which parts of Opencast you
+want to install. You can list all Opencast packages with:</p>
+<pre><code>apt-cache search opencast
+</code></pre>
+<p>This will list all available Opencast distributions in the form <code>opencast-&lt;version&gt;-&lt;dist-type&gt;</code></p>
+<p>Some available distributions are:</p>
+<ul>
+<li>opencast-X-allinone</li>
+<li>opencast-X-admin</li>
+<li>opencast-X-presentation</li>
+<li>opencast-X-worker</li>
+</ul>
+<p>…where <code>X</code> stands for a specific Opencast version. These packages will install the latest release for a given version,
+so opencast-14-admin will install the admin profile for Opencast 14.x.
+Once an update to Opencast 14 has been released an <code>apt-get update</code> followed by <code>apt-get upgrade</code>
+will upgrade you to the latest Opencast 14 release.</p>
+<p>To list all available packages and versions, use:</p>
+<pre><code>apt list 'opencast*'
+</code></pre>
+<h2 id="point-revisions-experts-only">Point Revisions (Experts only)</h2>
+<p>If for some reason you wish to install a specific point revision of Opencast, and the repository still hosts that point
+revision, you can select it by adding it, and the packaging build, to your <code>apt-get install</code> line.  For example:</p>
+<pre><code>apt-get install opencast-14-admin=14.0-2
+</code></pre>
+<p>Installs an Opencast 14.0 admin node, using the second build of that series.  Not all series have more than a single build,
+and older point revisions may be removed once superceded, so please explore the repository prior to attempting this.</p>
+<h2 id="install-3rd-party-tools">Install 3rd-party-tools</h2>
+<p>This step is optional and only recommended for those who want to build Opencast from source. If you install Opencast
+from the repository, all necessary dependencies will be installed automatically.</p>
+<p>You can install all necessary 3rd-Party-Tools for Opencast like this:</p>
+<pre><code>apt-get install ffmpeg-dist tesseract-ocr sox hunspell netcat
+</code></pre>
+<h2 id="upgrading-major-versions">Upgrading Major Versions</h2>
+<p>Note: All upgrade between major versions are required.  If you want to upgrade Opencast 8 to Opencast 10 you have to
+first upgrade to Opencast 9.</p>
+<p>While these packages will automatically upgrade you to the latest point version in a release series, they do not
+automatically upgrade you to the latest major version. In other words, if you install <code>opencast-9-admin</code> you get the
+latest 9.x release, not the latest 10.x release. To upgrade from one version to another you first stop Opencast:</p>
+<pre><code>    systemctl stop opencast.service
+</code></pre>
+<p>As a reminder, these instructions will change your Opencast installation, and files to a new version which is likely
+incompatible with older versions. If you are performing this on a production system, please ensure you have valid
+backups prior to taking the next steps.</p>
+<p>Uninstall your current Opencast packaging (using Opencast 8 as an example):</p>
+<pre><code>apt-get remove opencast-8-*
+</code></pre>
+<p>Then install the new version (using Opencast 9 as an example):</p>
+<pre><code>apt-get install opencast-9-allinone
+</code></pre>
+<p>At this point you must follow the relevant <a href="../../upgrade/">upgrade</a> instructions, prior to starting Opencast again.</p>
+<h2 id="uninstall-opencast">Uninstall Opencast</h2>
+<p>To uninstall Opencast, you can run:</p>
+<pre><code>apt-get remove 'opencast*'
+</code></pre>
+<p>This will not touch your created media files or modified configuration files.  If you want to remove them as well, you
+have to do that by yourself.</p>
+<pre><code># Remove media files
+sudo rm -rf /srv/opencast
+
+# Remove local db, search indexes and working files
+sudo rm -rf /var/lib/opencast
+
+# Remove configuration files
+sudo rm -rf /etc/opencast
+
+# Remove logs
+sudo rm -rf /var/log/opencast
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="missing-dependencies">Missing Dependencies</h3>
+<p>This repository expects that the <code>stable</code> section is always available, regardless of which version of Opencast you have
+installed.  The 3rd party tools (e.g. FFmpeg) may or may not be in the other sections, but if they are there it is
+only during a testing period for a new version.  For day-to-day use, please install them from <code>stable</code>!</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../rpm-fedora/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../rpm-fedora/" class="btn btn-xs btn-link">
+        Fedora
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../source-macosx/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../source-macosx/" class="btn btn-xs btn-link">
+        MacOS X
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/debs.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
