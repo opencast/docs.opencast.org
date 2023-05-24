@@ -38,6 +38,7 @@
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Requirements", url: "#requirements" },
               {title: "Operation Examples", url: "#operation-examples" },
+              {title: "Language code", url: "#language-code" },
           ]},
         ];
 
@@ -100,6 +101,7 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 <tr>
 <th>configuration keys</th>
 <th>required</th>
+<th>Example</th>
 <th>description</th>
 </tr>
 </thead>
@@ -107,37 +109,44 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 <tr>
 <td>source-flavor</td>
 <td>yes</td>
+<td>source/presenter</td>
 <td>The source media package to use</td>
 </tr>
 <tr>
 <td>target-flavor</td>
 <td>yes</td>
+<td>archive</td>
 <td>Flavor of the produced subtitle file. The subflavor supports the language-code placeholder <code>#{lang}</code></td>
 </tr>
 <tr>
 <td>target-element</td>
 <td>no</td>
+<td>attachment</td>
 <td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment'. The default is "attachment".</td>
 </tr>
 <tr>
 <td>language-code</td>
 <td>no</td>
+<td>de</td>
 <td>The language of the video or audio source (default is "eng"). Vosk only: It has to match the name of the language model directory. See 'vosk-cli'.</td>
 </tr>
 <tr>
 <td>language-fallback</td>
 <td>yes*</td>
+<td>en</td>
 <td>The fallback value if the dublin core/media package language field is not present.</td>
 </tr>
 <tr>
 <td>target-tags</td>
 <td>no</td>
-<td>Tags for the subtitle file (Whisper only: Will add always the tag <code>lang:{code}</code> Where <code>code</code> can be by autodetection or from <code>language-code</code> parameter)</td>
+<td>delivery/captions</td>
+<td>Tags for the subtitle file (Whisper only: If no <code>language-code</code>,the tag <code>lang:{code}</code> will be auto generated)</td>
 </tr>
 <tr>
 <td>translate</td>
 <td>no</td>
-<td>Transcription is translated into English (Whisper Only)</td>
+<td>true</td>
+<td>Transcription is translated into English, valid values <code>true</code> or <code>false</code> (Whisper Only)</td>
 </tr>
 </tbody>
 </table>
@@ -173,6 +182,9 @@ for the <code>language-code</code> field.</p>
     &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
+<h2 id="language-code">Language code</h2>
+<p>The accepted language code are the two letter codes defined in ISO 639-1. A reference list can be found here:</p>
+<p><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">List of ISO 639-1 codes</a></p>
 
   <br>
     
