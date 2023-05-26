@@ -116,15 +116,45 @@ an audio or video file to be transcribed and captioned.</p>
 </tr>
 <tr>
 <td>jobtype</td>
-<td>direct (automated, fast) or perfect (additional manual improvements, slow)</td>
+<td>direct (automated, fast) or perfect (additional manual improvements, slow).</td>
 <td>direct</td>
 <td>perfect</td>
 </tr>
 <tr>
 <td>language</td>
-<td>The target language for transcription.</td>
+<td>The assumed language for transcription.</td>
 <td>en</td>
 <td>nl</td>
+</tr>
+<tr>
+<td>speaker</td>
+<td>The number of speakers in the recording.</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>transcriptiontype</td>
+<td>transcription, captions or translatedSubtitles</td>
+<td>transcription</td>
+<td>captions</td>
+</tr>
+<tr>
+<td>glossary</td>
+<td>An ID of a custom glossary to use.</td>
+<td>-</td>
+<td>643966c3f3e91e0c96e9e060</td>
+</tr>
+<tr>
+<td>transcriptionstyle</td>
+<td>cleanread or verbatim</td>
+<td>cleanread</td>
+<td>verbatim</td>
+</tr>
+<tr>
+<td>targetlanguage</td>
+<td>The language of the resulting transcriptions.</td>
+<td>-</td>
+<td>en</td>
 </tr>
 <tr>
 <td>skip-if-flavor-exists</td>
@@ -147,6 +177,15 @@ an audio or video file to be transcribed and captioned.</p>
 <li>no</li>
 <li>sv</li>
 </ul>
+<h3 id="glossaries">Glossaries</h3>
+<p>The <code>glossary</code> ID needs to be a valid ID for a previously created custom glossary.
+See also https://amberscript.github.io/api-docs/#glossary.
+If this parameter is unset, the default configured in
+<code>etc/org.opencastproject.transcription.amberscript.AmberscriptTranscriptionService.cfg</code>
+is used.</p>
+<p>If you don't want to use a glossary in a specific workflow (instance)
+even though a fallback is configured in that file,
+you can provide an empty string as glossary ID, i.e. <code>glossary=""</code>.</p>
 
   <br>
     
