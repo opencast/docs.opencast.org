@@ -36,7 +36,6 @@
           {title: "Upgrading Opencast from 13.x to 14.x", url: "#_top", children: [
               {title: "Configuration Changes", url: "#configuration-changes" },
               {title: "Database Migration", url: "#database-migration" },
-              {title: "Rebuild the Elasticsearch Indexes", url: "#rebuild-the-elasticsearch-indexes" },
           ]},
         ];
 
@@ -98,23 +97,12 @@ please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <li><a href="#configuration-changes">Review the configuration changes and adjust your configuration accordingly</a></li>
 <li><a href="#database-migration">Migrate the database</a></li>
 <li>Start Opencast</li>
-<li><a href="#rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch indexes</a></li>
 </ol>
 <h2 id="configuration-changes">Configuration Changes</h2>
 <p>Workflow changes:</p>
 <h2 id="database-migration">Database Migration</h2>
 <p>You can find database upgrade scripts in <code>docs/upgrade/13_to_14/</code>. These scripts are suitable for both, MariaDB and
 PostgreSQL. Changes include DB schema optimizations as well as fixes for the new workflow tables.</p>
-<h2 id="rebuild-the-elasticsearch-indexes">Rebuild the Elasticsearch Indexes</h2>
-<p>The 14.0 release contains multiple changes to the Elasticsearch indexes an requires a rebuild.</p>
-<p>Start your new Opencast and make an HTTP POST request to <code>/index/rebuild</code>.</p>
-<p>Example (using cURL):</p>
-<pre><code>curl -i -u &lt;admin_user&gt;:&lt;password&gt; -s -X POST https://example.opencast.org/index/rebuild
-</code></pre>
-<p>You can also just open the REST documentation, which can be found under the “Help” section in the admin interface (the
-“?” symbol at the top right corner). Then go to the “Index Endpoint” section and use the testing form on
-<code>/rebuild</code> to issue a POST request.</p>
-<p>In both cases you should get a 200 HTTP status.</p>
 
   <br>
     
