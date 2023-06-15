@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Paella Player 7", url: "#_top", children: [
               {title: "Configuration", url: "#configuration" },
-              {title: "Change the default colors", url: "#change-the-default-colors" },
+              {title: "Customize the player", url: "#customize-the-player" },
               {title: "Select the Opencast Player", url: "#select-the-opencast-player" },
               {title: "Cookie consent", url: "#cookie-consent" },
           ]},
@@ -108,8 +108,50 @@ or <a href="https://github.com/polimediaupv/paella-core/blob/main/doc/index.md">
 <p>The configurations for the player are done for each tenant. So the configuration keys are located in
 <code>.../etc/ui-config/&lt;tenant&gt;/paella7/config.json</code></p>
 <p>The default tenant for opencast is <code>mh_default_org</code></p>
-<h2 id="change-the-default-colors">Change the default colors</h2>
-<p>To customize the theme modify the <code>.../etc/ui-config/&lt;tenant&gt;/paella7/custom_theme.css</code> file.</p>
+<h2 id="customize-the-player">Customize the player</h2>
+<p>Paella player can be customized using skin packages.</p>
+<p>Skin packages contain at least one skin configuration file, and additionally other files that are specified in the skin definition. The skin definition file is a <code>json</code> file with the following structure:</p>
+<pre><code class="language-json">{
+    &quot;styleSheets&quot;: [
+        &quot;style.css&quot;
+    ],
+    &quot;configOverrides&quot;: {
+        &quot;progressIndicator&quot;: {
+            &quot;inlineMode&quot;: true
+        },
+        &quot;videoContainer&quot;: {
+            &quot;overPlaybackBar&quot;: true
+        }
+    },
+    &quot;icons&quot;: [
+        {
+            &quot;plugin&quot;: &quot;es.upv.paella.playPauseButton&quot;,
+            &quot;identifier&quot;: &quot;play&quot;,
+            &quot;icon&quot;: &quot;play-icon.svg&quot;
+        }
+    ]
+}
+</code></pre>
+<p>The skin definition file is divided into three sections:</p>
+<ul>
+<li><code>styleSheets</code>: an array containing the list of style sheet files to be included when the skin is loaded. The file paths included here are relative to the skin definition file.</li>
+<li><code>configOverrides</code>: is a json with the same properties as the main configuration file. It should be noted that in this section it is possible to include any configuration option, and not only those related to the user interface. For example: it is possible to define plugins configuration. The elements defined in this section overwrite any attribute that also exists in the main configuration file. It is important to note that configuration attributes of type array overwrite the entire array defined in the configuration, i.e. they are not added to the main array, but replaced.</li>
+<li><code>icons</code>: is an array with the list of custom icons, in the form of objects with attributes <code>plugin</code>, <code>identifier</code> and <code>icon</code>. The file paths included here are relative to the skin definition file.</li>
+</ul>
+<p>For more information, see the paella 7 <a href="https://paellaplayer.upv.es/#/doc/skin_api.md">skin documentation</a>.</p>
+<p>You can create a new folder for you theme in <code>.../etc/ui-config/&lt;tenant&gt;/paella7/</code> with a file called <code>theme.json</code> and configure the theme you want to use in <code>config.json</code> file:</p>
+<pre><code class="language-json">{
+    ...
+    &quot;opencast&quot;: {
+        &quot;theme&quot;: &quot;custom_theme&quot;
+        ...
+    }
+    ...
+}
+</code></pre>
+<p>And create your custom theme: <code>.../etc/ui-config/&lt;tenant&gt;/paella7/custom_theme/theme.json</code>.
+As an example there is a basic example here: <code>.../etc/ui-config/&lt;tenant&gt;/paella7/custom_theme_example</code></p>
+<p>If no custom theme is found or there is an error loading the resources, the default opencast theme will be used.</p>
 <h2 id="select-the-opencast-player">Select the Opencast Player</h2>
 <p>To activate the player set for each tenant the property <code>prop.player</code> in the file <code>.../etc/org.opencastproject.organization-&lt;tenant&gt;.cfg</code>.</p>
 <pre><code>prop.player=/paella7/ui/watch.html?id=#{id}
