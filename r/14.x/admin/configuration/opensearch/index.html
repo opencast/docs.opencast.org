@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Opensearch - Administration Guide</title>
+    <title>OpenSearch - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Opensearch Configuration", url: "#_top", children: [
+          {title: "OpenSearch Configuration", url: "#_top", children: [
               {title: "Configuring External Nodes", url: "#configuring-external-nodes" },
               {title: "Version", url: "#version" },
           ]},
@@ -86,10 +86,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="opensearch-configuration">Opensearch Configuration</h1>
-<p>Opensearch powers the external API as well as the administrative user interface of Opencast.</p>
+    <h1 id="opensearch-configuration">OpenSearch Configuration</h1>
+<p>OpenSearch powers the external API as well as the administrative user interface of Opencast.</p>
 <h2 id="configuring-external-nodes">Configuring External Nodes</h2>
-<p>Opencast's Opensearch settings can be found in the <code>etc/custom.properties</code> configuration file.</p>
+<p>Opencast's OpenSearch settings can be found in the <code>etc/custom.properties</code> configuration file.</p>
 <p>Relevant configuration keys are:</p>
 <ul>
 <li><code>org.opencastproject.elasticsearch.server.hostname</code></li>
@@ -98,11 +98,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>org.opencastproject.elasticsearch.username</code></li>
 <li><code>org.opencastproject.elasticsearch.password</code></li>
 </ul>
-<p>Therefore only <code>admin</code>, <code>adminpresentation</code>, and <code>allinone</code> need to connect to Opensearch.</p>
-<p><code>username</code> and <code>password</code> are optional. If configured, requests to Opensearch are secured by
-HTTP basic authentication (which is unsecure without TLS encryption). Refer to <a href="https://opensearch.org/docs/latest/security-plugin/configuration/index/">the Opensearch
+<p>Therefore only <code>admin</code>, <code>adminpresentation</code>, and <code>allinone</code> need to connect to OpenSearch.</p>
+<p><code>username</code> and <code>password</code> are optional. If configured, requests to OpenSearch are secured by
+HTTP basic authentication (which is unsecure without TLS encryption). Refer to <a href="https://opensearch.org/docs/latest/security-plugin/configuration/index/">the OpenSearch
 documentation</a>
-to properly secure Opensearch.</p>
+to properly secure OpenSearch.</p>
 <p>Additionally, the following settings can be configured in
 <code>org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code>:
 * <code>index.indentifier</code>
@@ -112,13 +112,13 @@ to properly secure Opensearch.</p>
 * <code>retry.waiting.period.get</code>
 * <code>retry.waiting.period.update</code></p>
 <p>The identifier defines which index opencast is looking for. This might be interesting if you run an
-Opensearch cluster and want to follow a naming scheme. But you should be aware that the index actually consists of
+OpenSearch cluster and want to follow a naming scheme. But you should be aware that the index actually consists of
 multiple subindices whose identifiers will be appended to the base name with an _ (e.g. "opencast_event").
 If an index doesn't exist, Opencast will create it. The name is used for logging purposes only.</p>
 <p>The max retry attempts and the waiting periods will be used in case of an ElasticsearchStatusException, e.g. if there
 are too many concurrent requests. The retry behavior can be configured differently for get and update/delete requests.
 This way you could set more retry attempts for index updates because of the more serious consequences if those requests
-fail. The waiting period is used to not overwhelm the Opensearch with retry requests, making the problem worse. By
+fail. The waiting period is used to not overwhelm the OpenSearch with retry requests, making the problem worse. By
 default, no retry will be attempted.</p>
 <h2 id="version">Version</h2>
 <p>Please confer to the <a href="../../installation/source-linux/#install-dependencies">Linux installation guide</a>
