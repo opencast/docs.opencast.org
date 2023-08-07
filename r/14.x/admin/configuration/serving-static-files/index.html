@@ -97,10 +97,10 @@ makes them extremely hard to guess so that even when authentication checks are d
 a share link and no one can just browse all available files.</p>
 <p>Usually, at least the following paths are delivered by this service:</p>
 <ul>
-<li>/static/<strong>api</strong>/&lt;media-package-id>/…</li>
-<li>/static/<strong>engage-player</strong>/&lt;media-package-id>/…</li>
-<li>/static/<strong>internal</strong>/&lt;media-package-id>/…</li>
-<li>/static/<strong>oaipmh-default</strong>/&lt;media-package-id>/…</li>
+<li>/static/<strong>api</strong>/&lt;media-package-id&gt;/…</li>
+<li>/static/<strong>engage-player</strong>/&lt;media-package-id&gt;/…</li>
+<li>/static/<strong>internal</strong>/&lt;media-package-id&gt;/…</li>
+<li>/static/<strong>oaipmh-default</strong>/&lt;media-package-id&gt;/…</li>
 </ul>
 <h2 id="securing-static-files">Securing Static Files</h2>
 <p>The static file service has a plug-in mechanism which allows modules to claim specific patterns to protect its content.
@@ -124,14 +124,14 @@ publications.</p>
 control list which is checked by both user interfaces (really by the underlying search service). The search service
 contains a static file authorization plug-in which also checks the files used by those interfaces (preview images,
 videos, …) against the same access control lists, making sure that file links are not extracted and passed around.</p>
-<p>The pattern protected by the search service is /static/<strong>engage-player</strong>/&lt;media-package-id>/…</p>
+<p>The pattern protected by the search service is /static/<strong>engage-player</strong>/&lt;media-package-id&gt;/…</p>
 <p>For performance reasons, access control lists are cached for one minute per user, meaning that there may be a short
 delay when changing access control.</p>
 <h3 id="asset-manager-external-api-admin-interface-internal">Asset Manager (External API, Admin Interface, Internal)</h3>
 <p>The admin interface and external API have their own publication channels. Access to these resources is based on access
 control lists stored in the asset manager which therefore comes with a static file authorization plug-in.</p>
 <p>The patterns to protect can be configured. By default, the asset manager static file authorization plug-in will protect
-the URL pattern  /static/<strong>api</strong>/&lt;media-package-id>/… and /static/<strong>internal</strong>/&lt;media-package-id>/…</p>
+the URL pattern  /static/<strong>api</strong>/&lt;media-package-id&gt;/… and /static/<strong>internal</strong>/&lt;media-package-id&gt;/…</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>By default Opencast's static file service is reading files from the hard disk through its own code and then serving
 those files using the built-in Jetty HTTP server. This works perfectly fine, and is robust even on larger installations.
