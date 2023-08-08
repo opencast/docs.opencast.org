@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 13: Release Notes", url: "#_top", children: [
+              {title: "Opencast 13.9", url: "#opencast-139" },
               {title: "Opencast 13.8", url: "#opencast-138" },
               {title: "Opencast 13.7", url: "#opencast-137" },
               {title: "Opencast 13.6", url: "#opencast-136" },
@@ -96,6 +97,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-13-release-notes">Opencast 13: Release Notes</h1>
+<h2 id="opencast-139">Opencast 13.9</h2>
+<p>The ninth maintenance release of Opencast 13.</p>
+<p>The release fixes corrupt zip headers in the distributed jar files.
+This was causing Opencast to fail at startup in combination with a recent OpenJDK security update.</p>
+<p>The alternative to updating to this release is to run Java with <code>-Djdk.util.zip.disableZip64ExtraFieldValidation=true</code>.
+Setting this will disable the new security check.</p>
+<p>Additionally, the following changes are part of this release.</p>
+<ul>
+<li>Only show Asset Upload for options of correct type (<a href="https://github.com/opencast/opencast/pull/5117">#5117</a>)</li>
+<li>Index rebuild fixes (<a href="https://github.com/opencast/opencast/pull/5115">#5115</a>)</li>
+<li>Mark tag operation as skipped if nothing happened (<a href="https://github.com/opencast/opencast/pull/5108">#5108</a>)</li>
+</ul>
+<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
 <h2 id="opencast-138">Opencast 13.8</h2>
 <p>The eighth maintenance release of Opencast 13.</p>
 <ul>
