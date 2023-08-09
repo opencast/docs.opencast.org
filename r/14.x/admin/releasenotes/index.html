@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 14: Release Notes", url: "#_top", children: [
+              {title: "Opencast 14.2", url: "#opencast-142" },
               {title: "Opencast 14.1", url: "#opencast-141" },
               {title: "Opencast 14.0", url: "#opencast-140" },
               {title: "Release Schedule", url: "#release-schedule" },
@@ -89,6 +90,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-14-release-notes">Opencast 14: Release Notes</h1>
+<h2 id="opencast-142">Opencast 14.2</h2>
+<p>Opencast 14.2 is a minor release. The release fixes corrupt zip headers in the distributed jar files and elasticsearch
+package imports. This was causing Opencast to fail at startup in combination with a recent OpenJDK security update.</p>
+<p>The alternative to updating to this release is to run Java with <code>-Djdk.util.zip.disableZip64ExtraFieldValidation=true</code>.
+Setting this will disable the new security check.</p>
+<p>Additionally, the following changes are part of this release.</p>
+<ul>
+<li>Fix changed pax web config keys (<a href="https://github.com/opencast/opencast/pull/5124">#5124</a>)</li>
+<li>Upgrade Crowdin Integration (<a href="https://github.com/opencast/opencast/pull/5114">#5114</a>)</li>
+</ul>
+<p>See <a href="../changelog/#opencast-14.2">changelog</a> for a comprehensive list of changes.</p>
 <h2 id="opencast-141">Opencast 14.1</h2>
 <p>Opencast 14.1 is a minor release, containing documentation improvements and Paella Player 7 trimming URL parameter fix.
 For more details, make sure to check out the <a href="../modules/paella.player7/url.parameter/">documentation</a>.</p>
