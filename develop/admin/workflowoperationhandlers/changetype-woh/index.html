@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Cleanup - Administration Guide</title>
+    <title>Change Type - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Cleanup Workflow Operation", url: "#_top", children: [
+          {title: "Change Type Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
@@ -66,20 +66,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../comment-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../cleanup-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../comment-woh/" class="btn btn-xs btn-link">
-        Comment
+      <a href="../cleanup-woh/" class="btn btn-xs btn-link">
+        Cleanup
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../changetype-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../attach-watson-transcription-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../changetype-woh/" class="btn btn-xs btn-link">
-        Change Type
+        Previous</a><a href="../attach-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Attach Watson Transcription
       </a>
     </div>
     
@@ -87,58 +87,59 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="cleanup-workflow-operation">Cleanup Workflow Operation</h1>
-<p>ID: <code>cleanup</code></p>
+    <h1 id="change-type-workflow-operation">Change Type Workflow Operation</h1>
+<p>ID: <code>changetype</code></p>
 <h2 id="description">Description</h2>
-<p>This operation removes all files from the workspace and the working file repository which belong to media package
-elements of the running workflow unless their flavor is matched by the value configured in <code>preserve-flavors</code>.  It is
-usually used as last workflow operation in a workflow to ensure that temporary processing artefacts are removed.</p>
+<p>The change type workflow operation can be used to change the type of media package elements.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
 <th>Configuration Key</th>
-<th>Example</th>
 <th>Description</th>
-<th>Default</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>preserve-flavors</td>
-<td><code>security/*</code></td>
-<td>Comma-separated list of flavors to be preserved.</td>
-<td></td>
+<td>source-flavors</td>
+<td>The source flavor(s) to select from</td>
+<td>presenter/source</td>
 </tr>
 <tr>
-<td>delete-external</td>
-<td><code>true</code></td>
-<td>If files from external working file repositories should be deleted</td>
-<td><code>false</code></td>
+<td>source-tags</td>
+<td>Comma-separated list of source-tags</td>
+<td>archive</td>
 </tr>
 <tr>
-<td>delay</td>
-<td><code>5</code></td>
-<td>Seconds to wait before removing files</td>
-<td><code>1</code></td>
+<td>target-flavor*</td>
+<td>The target flavor</td>
+<td>presenter/target</td>
+</tr>
+<tr>
+<td>target-type*</td>
+<td>The target type</td>
+<td>track</td>
 </tr>
 </tbody>
 </table>
-<h3 id="notes">Notes</h3>
+<p>* mandatory configuration key</p>
+<p>Notes:</p>
 <ul>
-<li>If <code>delete-external</code> is set to <code>true</code>, the externally referenced media package elements will be removed from its
-  source where the value of <code>preserve-flavors</code> does not match</li>
-<li>If you have an shared working file repository setting <code>delete-external</code> to <code>false</code> will speed up the cleanup process
-  while still removing all files.</li>
+<li>Valid target types are: Track, Catalog, Attachment</li>
+<li><em>source-flavor</em> and <em>source-tags</em> may be used both together to select media package elements based on both flavors and
+  tags If <em>source-flavor</em> is not specified, all media package elements matching <em>source-tags</em> will be selected</li>
+<li>In case that neither <em>source-flavor</em> nor <em>source-tags</em> are specified, the operation will be skipped</li>
+<li>In case no media package elements match <em>source-flavor</em> and <em>source-tags</em>, the operation will be skipped</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
-    id=&quot;cleanup&quot;
-    description=&quot;Remove temporary processing artifacts&quot;&gt;
+    id=&quot;changetype&quot;
+    description=&quot;Change type of captions to track&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
-    &lt;configuration key=&quot;delay&quot;&gt;5&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;captions/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-type&quot;&gt;track&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -154,20 +155,20 @@ usually used as last workflow operation in a workflow to ensure that temporary p
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../comment-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../cleanup-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../comment-woh/" class="btn btn-xs btn-link">
-        Comment
+      <a href="../cleanup-woh/" class="btn btn-xs btn-link">
+        Cleanup
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../changetype-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../attach-watson-transcription-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../changetype-woh/" class="btn btn-xs btn-link">
-        Change Type
+        Previous</a><a href="../attach-watson-transcription-woh/" class="btn btn-xs btn-link">
+        Attach Watson Transcription
       </a>
     </div>
     
@@ -178,7 +179,7 @@ usually used as last workflow operation in a workflow to ensure that temporary p
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/cleanup-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/changetype-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
