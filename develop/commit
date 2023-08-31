@@ -1,50 +1,11 @@
-commit 700b4d5dda8db43deda03f4d345c1dc961d114de
+commit 3279665f57faac99ea95c00c93eac36cdb0d08f8
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Thu Aug 31 12:17:53 2023 +0200
+Date:   Thu Aug 31 12:24:22 2023 +0200
 
-    Subtitles as tracks in transcription services (#4842)
+    Refit editor endpoint for subtitles as tracks (#4626)
     
-    * Bring Amberscript transcription in line with subtitles as tracks
+    Does away with subtitle flavors, since track identifiers are now used
+    for matching subtitles between back- and frontend.
     
-    Changes the Attach WOH for Amberscript Transcription to be more in line
-    with the new subtitle rules. Particularly:
-    - Only takes one target flavor now (instead of multiple). Is required.
-    - Default output format is now vtt (via conversion).
-    
-    Due to lack of Amberscript access, this is not particularly well tested.
-    
-    * Bring Watson transcription in line with subtitles as tracks
-    
-    Changes the Attach WOH for Watson Transcription to be more in line
-    with the new subtitle rules. Particularly:
-    - Only takes one target flavor now (instead of multiple). Is required.
-    
-    Due to lack of Watson access, this is not particularly well tested.
-    
-    * Bring Google transcription in line with subtitles as tracks
-    
-    Only some changes to the documentation.
-    
-    * Bring Azure transcription in line with subtitles as tracks
-    
-    Changes the Attach WOH for Azure Transcription to be more in line
-    with the new subtitle rules.
-    
-    Due to lack of Azure access, this is not particularly well tested.
-    
-    * Bring SpeechToText transcription in line with subtitles as tracks
-    
-    Changes the SpeechToTextWorkflowOperationHandler to be more in line
-    with the new subtitle rules.
-    
-    * Generalize mediaPackageElement type in speech-to-text services
-    
-    For external speech-to-text services, Opencast would always attach the
-    resulting transcript as an attachment. With this commit, the Attach WOHs
-    can now set which MPE type they want, e.g. track.
-    
-    The Attach WOHs can now optionally take a desired type as a workflow
-    config key (although they will only accept 'attachment' or 'track').
-    The default type was changed from 'attachment' to 'track'.
-    
-    * Fix checkstyle
+    Adds tags for display and potential language matching purposes in the
+    frontend.
