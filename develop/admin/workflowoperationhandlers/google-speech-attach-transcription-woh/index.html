@@ -97,6 +97,7 @@ into the desired caption format and adds it to the media package.</p>
 <thead>
 <tr>
 <th>configuration keys</th>
+<th>required</th>
 <th>description</th>
 <th>default value</th>
 <th>example</th>
@@ -105,46 +106,59 @@ into the desired caption format and adds it to the media package.</p>
 <tbody>
 <tr>
 <td>transcription-job-id</td>
+<td>yes</td>
 <td>This is filled out by the transcription service when starting the workflow.</td>
 <td>EMPTY</td>
 <td><strong>Should always be "${transcriptionJobId}"</strong></td>
 </tr>
 <tr>
 <td>line-size</td>
-<td>The line size (number of characters) of the transcripts to display at a time. Optional.</td>
+<td>no</td>
+<td>The line size (number of characters) of the transcripts to display at a time.</td>
 <td>EMPTY</td>
 <td>100</td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>The flavor of the caption/transcription file generated. Mandatory.</td>
+<td>yes</td>
+<td>The flavor of the caption/transcription file generated.</td>
 <td>EMPTY</td>
-<td>captions/timedtext</td>
+<td>captions/source</td>
 </tr>
 <tr>
 <td>target-tag</td>
-<td>The tag to apply to the caption/transcription file generated. Optional.</td>
+<td>no</td>
+<td>The tag to apply to the caption/transcription file generated.*</td>
 <td>EMPTY</td>
-<td>archive</td>
+<td>archive,generator-type:auto</td>
 </tr>
 <tr>
 <td>target-caption-format</td>
-<td>The caption format to be generated. Optional. If not entered, the raw resulting file will be attached to the media package.</td>
+<td>no</td>
+<td>The caption format to be generated. If not entered, the raw resulting file will be attached to the media package.</td>
 <td>EMPTY</td>
 <td>vtt</td>
 </tr>
+<tr>
+<td>target-element-type</td>
+<td>no</td>
+<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
+<td>track</td>
+<td>track</td>
+</tr>
 </tbody>
 </table>
+<p>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;&lt;G
+<pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;
 &lt;operation id=&quot;google-speech-attach-transcription&quot;
     description=&quot;Attach captions/transcription&quot;&gt;
   &lt;configurations&gt;
     &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
     &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
     &lt;configuration key=&quot;line-size&quot;&gt;100&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/timedtext&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tag&quot;&gt;archive,generator-type:auto&lt;/configuration&gt;
     &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;

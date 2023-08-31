@@ -1,21 +1,50 @@
-commit 748256fe036ac611da03e97b316dc1d99aa3b94f
+commit 700b4d5dda8db43deda03f4d345c1dc961d114de
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Thu Aug 31 12:15:30 2023 +0200
+Date:   Thu Aug 31 12:17:53 2023 +0200
 
-    Add documentation on subtitles (#4627)
+    Subtitles as tracks in transcription services (#4842)
     
-    * Add documentation on subtitles
+    * Bring Amberscript transcription in line with subtitles as tracks
     
-    Adds a new documentation file about subtitles.
+    Changes the Attach WOH for Amberscript Transcription to be more in line
+    with the new subtitle rules. Particularly:
+    - Only takes one target flavor now (instead of multiple). Is required.
+    - Default output format is now vtt (via conversion).
     
-    * Add language code spec to docs
+    Due to lack of Amberscript access, this is not particularly well tested.
     
-    Removes Todos from the subtitles docs, and adds the IETF
-    BCP 47 language tag spec as the default we want to support.
-    Most technical meeting folks were in favor of it, and
-    my research indicates that this indeed seems to be best spec
-    for our use case.
+    * Bring Watson transcription in line with subtitles as tracks
     
-    * Fix OC version number in subtitles docs
+    Changes the Attach WOH for Watson Transcription to be more in line
+    with the new subtitle rules. Particularly:
+    - Only takes one target flavor now (instead of multiple). Is required.
     
-    Since we missed OC14, it's now OC15.
+    Due to lack of Watson access, this is not particularly well tested.
+    
+    * Bring Google transcription in line with subtitles as tracks
+    
+    Only some changes to the documentation.
+    
+    * Bring Azure transcription in line with subtitles as tracks
+    
+    Changes the Attach WOH for Azure Transcription to be more in line
+    with the new subtitle rules.
+    
+    Due to lack of Azure access, this is not particularly well tested.
+    
+    * Bring SpeechToText transcription in line with subtitles as tracks
+    
+    Changes the SpeechToTextWorkflowOperationHandler to be more in line
+    with the new subtitle rules.
+    
+    * Generalize mediaPackageElement type in speech-to-text services
+    
+    For external speech-to-text services, Opencast would always attach the
+    resulting transcript as an attachment. With this commit, the Attach WOHs
+    can now set which MPE type they want, e.g. track.
+    
+    The Attach WOHs can now optionally take a desired type as a workflow
+    config key (although they will only accept 'attachment' or 'track').
+    The default type was changed from 'attachment' to 'track'.
+    
+    * Fix checkstyle
