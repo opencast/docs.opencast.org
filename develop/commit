@@ -1,20 +1,26 @@
-commit ddb3f960710d9aa5b589ec492a15f9aa2efe010e
+commit 0b51b97dea84006d93b563ad1ba3041a396f0ada
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Thu Aug 31 12:12:23 2023 +0200
+Date:   Thu Aug 31 12:13:49 2023 +0200
 
-    Update tag support for subtitles as tracks in Paella Player (#4624)
+    Add captions as standard upload option in Admin UI (#4623)
     
-    * Update tag support for subtitles as tracks in Paella Player
+    * Add captions as standard upload option in Admin UI
     
-    Since the Paella Player already supports subtitles as tracks,
-    this merely adds some support for tags that will be
-    used with subtitles in the future.
+    This changes subtitles in the asset upload from attachments to tracks
+    and adds a subtitle upload to the source tab in the Admin UIs "Create
+    Event" dialog.
     
-    This also drops anything dfxp related, support for
-    subtitles as catalogs, and some unused
-    translation strings.
+    Furthermore, adds tag support to the asset upload. One can now add
+    multiple tags to their asset upload configuration.
     
-    * Add translations for subtitle display in Paella
+    Known issues:
+    - Adding multiple options for uploading subtitles (for e.g. multiple
+      languages) does not currently work. This is due to tracks in the same
+      flavor being overwritten.
     
-    Adds translation strings for the subtitle selection for "no language",
-    "unknown language" and "automatically generated".
+    * Add note about tags to config file
+    
+    Makes a comment about tags as a configuration value in
+    event.upload.asset.options.properties.
+    
+    * Set generator to consistently to "unknown"
