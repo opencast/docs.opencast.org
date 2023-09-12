@@ -37,7 +37,9 @@
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Variable Substitution", url: "#variable-substitution" },
+              {title: "Failed Operation Information", url: "#failed-operation-information" },
               {title: "Examples", url: "#examples_3" },
+              {title: "Appendix: Freemarker Variable Usage Guide", url: "#appendix-freemarker-variable-usage-guide" },
           ]},
         ];
 
@@ -97,9 +99,10 @@ workflow.</p>
 <p>The email body, if not specified by body or body-template-file, will consist of a single line of the form:
 <code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code>.</p>
 <p>Freemarker templates can be used in the following fields to allow replacement with values obtained from the workflow or
-media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker template
-file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body.</p>
-<p>User names can be provided in <code>to</code>, <code>cc</code>, or <code>bcc</code> in lieu of email addresses so that the user directory is searched
+media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker 
+template file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body. A more in deep explanation of how to use 
+Freemarker variables can be found in the <a href="#appendix-freemarker-variable-usage-guide">Appendix</a>.</p>
+<p>Usernames can be provided in <code>to</code>, <code>cc</code>, or <code>bcc</code> in lieu of email addresses so that the user directory is searched
 and that user's email address is used (see Example 5).</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
@@ -257,6 +260,49 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </tbody>
 </table>
 <p>Note that some of these values may not exist depending on the workflow.</p>
+<h2 id="failed-operation-information">Failed Operation Information</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>How To Get It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operation id</td>
+<td>${failedOperation.getId()}</td>
+</tr>
+<tr>
+<td>Template</td>
+<td>${failedOperation.template}</td>
+</tr>
+<tr>
+<td>Date started</td>
+<td>${failedOperation.getDateStarted?string("yyyy-MM-dd HH:mm:ss")}</td>
+</tr>
+<tr>
+<td>Date completed</td>
+<td>${failedOperation.getDateCompleted?string("yyyy-MM-dd HH:mm:ss")}</td>
+</tr>
+<tr>
+<td>Execution handling workflow</td>
+<td>${failedOperation.getExceptionHandlingWorkflow()}</td>
+</tr>
+<tr>
+<td>Execution host</td>
+<td>${failedOperation.executionHost}</td>
+</tr>
+<tr>
+<td>Failed attempts</td>
+<td>${failedOperation.failedAttempts}</td>
+</tr>
+<tr>
+<td>Max attempts</td>
+<td>${failedOperation.maxAttempts}</td>
+</tr>
+</tbody>
+</table>
 <h3 id="workflow-configuration-properties">Workflow Configuration Properties</h3>
 <p>Use <code>${workflowConfig['PROPERTY']}</code></p>
 <h3 id="last-failed-operation">Last Failed Operation</h3>
@@ -273,7 +319,8 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </code></pre>
 <h3 id="catalog-fields">Catalog fields</h3>
 <p>Use <code>${catalogs['FLAVOR']['FIELD']}</code></p>
-<p>Deprecation notice: Opencast versions before 13 used <code>${catalogs['SUBFLAVOR']['FIELD']}</code> for <code>dublincore/SUBFLAVOR</code> catalogs. This syntax is still accepted but deprecation. Future versions might remove support.</p>
+<p>Deprecation notice: Opencast versions before 13 used <code>${catalogs['SUBFLAVOR']['FIELD']}</code> for <code>dublincore/SUBFLAVOR</code> 
+catalogs. This syntax is still accepted but deprecation. Future versions might remove support.</p>
 <h4 id="examples_1">Examples</h4>
 <table>
 <thead>
@@ -330,7 +377,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
     &lt;configuration key=&quot;to&quot;&gt;email-account@email-domain.org&lt;/configuration&gt;
     &lt;!-- This is going to be replaced with the media package title --&gt;
     &lt;configuration key=&quot;subject&quot;&gt;${mediaPackage.title} has been published&lt;/configuration&gt;
-    &lt;!-- Neither body or body-template-file specified so default body &lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)&lt;br&gt;is sent --&gt;
+    &lt;!-- Neither body nor body-template-file specified so default body &lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)&lt;br&gt;is sent --&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -354,7 +401,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </code></pre>
 <h4 id="template-sample">Template: sample</h4>
 <p>The contents of the <code>…/etc/email/sample</code> email template:</p>
-<pre><code>Event Details
+<pre><code class="language-freemarker">Event Details
 &lt;#if catalogs['dublincore/series']?has_content&gt;
 Series Title: ${catalogs['dublincore/series']['title']}
 Instructor: ${catalogs['dublincore/series']['contributor']}
@@ -407,7 +454,7 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
         /* components with keys that begin with 'org.opencastproject.workflow.config' will be passed
          * into the workflow. The component's nodeKey must match the components array key.
          *
-         * Example:'org.opencastproject.workflow.config.myProperty' will be availible at ${my.property}
+         * Example:'org.opencastproject.workflow.config.myProperty' will be available at ${my.property}
          */
         // After the other components (Hold, Archive, etc), add:
         components['org.opencastproject.workflow.config.emailAddress'] = new ocAdmin.Component(
@@ -445,19 +492,19 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
 </code></pre>
 <h4 id="template-errordetails">Template: errorDetails</h4>
 <p>The contents of the <config_dir>/etc/email/errorDetails email template:</p>
-<pre><code>Error Details
+<pre><code class="language-freemarker">Error Details
 
 &lt;#if catalogs['dublincore/series']?has_content&gt;
-Course: ${catalogs['dublincore/series']['subject']!'series subject missing'}-${catalogs['dublincore/series']['title']!'series title missing'}
+Course: ${catalogs['dublincore/series']['subject']!'series subject missing'} - ${catalogs['dublincore/series']['title']!'series title missing'}
 Instructor: ${catalogs['dublincore/series']['contributor']!'instructor missing'}
 &lt;/#if&gt;
 Title: ${catalogs['dublincore/episode']['title']!'title missing'}
 Event Date: ${mediaPackage.date?datetime?iso_local}
 
 &lt;#if failedOperation?has_content&gt;
-  Workflow failed in operation: ${failedOperation.position}-${failedOperation.template}
-  Started: ${failedOperation.dateStarted?datetime?iso_local}
-  Ended: ${failedOperation.dateCompleted?datetime?iso_local}
+  Workflow failed in operation: ${failedOperation.getId()}-${failedOperation.template}
+  Started: ${failedOperation.dateStarted?string(&quot;yyyy-MM-dd HH:mm:ss&quot;)}
+  Ended: ${failedOperation.dateCompleted?string(&quot;yyyy-MM-dd HH:mm:ss&quot;)}
   Execution Host: ${failedOperation.executionHost}
 &lt;/#if&gt;
 
@@ -470,7 +517,7 @@ Logged incident of the error looks like this:
 &lt;/#if&gt;
 </code></pre>
 <h3 id="example-5">Example 5</h3>
-<p>The user name is stored in the episode dublin core <code>contributor</code> field. There's a user <code>jharvard</code> with email
+<p>The username is stored in the episode dublin core <code>contributor</code> field. There's a user <code>jharvard</code> with email
 <code>jharvard@harvard.edu</code> defined in the system. The message will be sent to <code>jharvard@harvard.edu</code>:</p>
 <pre><code class="language-xml">   &lt;operation
       id=&quot;send-email&quot;
@@ -498,7 +545,7 @@ Logged incident of the error looks like this:
 &lt;/dublincore&gt;
 </code></pre>
 <h3 id="example-6">Example 6</h3>
-<p>Send an email to the user which started the workflow.
+<p>Email the user which started the workflow.
 Requires the user account to have a valid email address.</p>
 <pre><code class="language-xml">&lt;operation
     id=&quot;send-email&quot;
@@ -510,6 +557,87 @@ Requires the user account to have a valid email address.</p>
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
+<h2 id="appendix-freemarker-variable-usage-guide">Appendix: Freemarker Variable Usage Guide</h2>
+<p>Freemarker is a powerful template engine that allows you to embed dynamic content in your templates. 
+One of the key features is its ability to handle variables. This guide will walk you through the basics of using 
+variables in Freemarker templates.</p>
+<h3 id="declaring-variables">Declaring Variables</h3>
+<p>In Freemarker, you don't explicitly declare variables. You usually pass them from your application code to the template. 
+However, you can also set local variables using the <code>&lt;#assign&gt;</code> directive:</p>
+<pre><code class="language-freemarker">&lt;#assign myVariable = &quot;Hello, World!&quot;&gt;
+</code></pre>
+<h3 id="accessing-variables">Accessing Variables</h3>
+<p>To access a variable, you can simply enclose its name in <code>${}</code>:</p>
+<pre><code class="language-freemarker">${myVariable}
+</code></pre>
+<h3 id="checking-for-null-or-empty-values">Checking for Null or Empty Values</h3>
+<p>Freemarker provides the <code>?has_content</code> built-in to check if a variable has content:</p>
+<pre><code class="language-freemarker">&lt;#if myVariable?has_content&gt;
+  ${myVariable}
+&lt;#else&gt;
+  Variable is empty or null.
+&lt;/#if&gt;
+</code></pre>
+<h3 id="default-values">Default Values</h3>
+<p>You can provide a default value for a variable using the <code>!</code> operator:</p>
+<pre><code class="language-freemarker">${myVariable!&quot;Default Value&quot;}
+</code></pre>
+<h3 id="nested-fields">Nested Fields</h3>
+<p>To access nested fields, you can use the dot notation:</p>
+<pre><code class="language-freemarker">${user.name}
+</code></pre>
+<p>And you can chain checks to avoid null pointer exceptions:</p>
+<pre><code class="language-freemarker">&lt;#if user?has_content &amp;&amp; user.name?has_content&gt;
+  ${user.name}
+&lt;#else&gt;
+  Name is not available.
+&lt;/#if&gt;
+</code></pre>
+<h3 id="formatting-dates">Formatting Dates</h3>
+<p>Freemarker allows you to format date variables using the <code>?string</code> built-in:</p>
+<pre><code class="language-freemarker">${dateVariable?string(&quot;yyyy-MM-dd&quot;)}
+</code></pre>
+<p>You can also specify the type of date-like value using <code>?date</code>, <code>?time</code>, or <code>?datetime</code>:</p>
+<pre><code class="language-freemarker">${dateVariable?datetime}
+</code></pre>
+<h3 id="lists-and-maps">Lists and Maps</h3>
+<p>You can iterate over lists and maps using the <code>&lt;#list&gt;</code> directive:</p>
+<pre><code class="language-freemarker">&lt;#list myList as item&gt;
+  ${item}
+&lt;/#list&gt;
+</code></pre>
+<p>For maps:</p>
+<pre><code class="language-freemarker">&lt;#list myMap?keys as key&gt;
+  ${key}: ${myMap[key]}
+&lt;/#list&gt;
+</code></pre>
+<h3 id="arithmetic-operations">Arithmetic Operations</h3>
+<p>Freemarker supports basic arithmetic operations:</p>
+<pre><code class="language-freemarker">${x + y}
+${x - y}
+${x * y}
+${x / y}
+</code></pre>
+<h3 id="conditional-statements">Conditional Statements</h3>
+<p>You can use <code>&lt;#if&gt;</code>, <code>&lt;#elseif&gt;</code>, and <code>&lt;#else&gt;</code> for conditional logic:</p>
+<pre><code class="language-freemarker">&lt;#if x &gt; y&gt;
+  X is greater.
+&lt;#elseif x == y&gt;
+  X and Y are equal.
+&lt;#else&gt;
+  Y is greater.
+&lt;/#if&gt;
+</code></pre>
+<h3 id="functions-and-macros">Functions and Macros</h3>
+<p>You can define reusable pieces of code using <code>&lt;#macro&gt;</code>:</p>
+<pre><code class="language-freemarker">&lt;#macro greet name&gt;
+  Hello, ${name}!
+&lt;/#macro&gt;
+
+&lt;@greet name=&quot;John&quot;/&gt;
+</code></pre>
+<p>This guide provides a quick overview of how to use variables in Freemarker. For more advanced topics and complete 
+documentation, you can refer to the <a href="https://freemarker.apache.org/docs/">official Freemarker documentation</a>.</p>
 
   <br>
     
