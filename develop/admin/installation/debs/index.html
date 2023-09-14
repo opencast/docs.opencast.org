@@ -39,6 +39,7 @@
               {title: "Supported JDKs", url: "#supported-jdks" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install OpenSearch", url: "#install-opensearch" },
+              {title: "Configure OpenSearch", url: "#configure-opensearch" },
               {title: "Install Opencast", url: "#install-opencast" },
               {title: "Configuration", url: "#configuration" },
               {title: "Start Opencast", url: "#start-opencast" },
@@ -154,9 +155,15 @@ accomplished by running the following:</p>
 </code></pre>
 <p>If you wish to use the upstream OpenSearch repository directly be aware that Opencast only supported with OpenSearch 1.x
 and will not work with OpenSearch 2.x yet.  Future support for this is forthcoming.</p>
-<p>The default OpenSearch configuration should work for Opencast out of the box, although we encourage you to set your
-index up in a secure manner.</p>
-<p>After installing an configuring make sure to start and enable the service:</p>
+<h2 id="configure-opensearch">Configure OpenSearch</h2>
+<p>After installing OpenSearch please make sure to follow their
+<a href="https://opensearch.org/docs/1.3/install-and-configure/install-opensearch/debian/">configuration documentation</a>
+to ensure that your OpenSearch instance is set up correctly and securely.  Once that setup is complete, ensure that
+your Opencast install matches your configured OpenSearch settings.  Notably, Opencast's current default assumes
+non-secured http rather than https, without a username and password.  Read the
+<a href="../../configuration/opensearch/">Opencast OpenSearch Documentation</a> to correctly configure Opencast's connection
+once Opencast has been installed below.</p>
+<p>After installing and configuring make sure to start and enable OpenSearch:</p>
 <pre><code class="language-sh">systemctl restart opensearch
 systemctl enable opensearch
 </code></pre>

@@ -38,6 +38,7 @@
               {title: "Advantages", url: "#advantages" },
               {title: "Enable Whisper engine", url: "#enable-whisper-engine" },
               {title: "Additional Notes", url: "#additional-notes" },
+              {title: "Whisper-ctranslate2", url: "#whisper-ctranslate2" },
           ]},
         ];
 
@@ -103,7 +104,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="enable-whisper-engine">Enable Whisper engine</h2>
 <p>To enable Whisper as for the <code>SpeechToText</code> WoH, follow these steps.</p>
 <ol>
-<li><a href="https://github.com/openai/whisper#setup">Install whisper</a> on the worker nodes.</li>
+<li><a href="https://github.com/openai/whisper#setup">Install whisper</a> on the worker nodes.<ul>
+<li>Or install <a href="https://github.com/Softcatala/whisper-ctranslate2">whisper-ctranslate2</a> for faster processing
+  on CPU.</li>
+</ul>
+</li>
 <li>Enable whisper and set Job load in <code>org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>.</li>
 <li>Set the target model to use in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code>.</li>
 </ol>
@@ -123,6 +128,18 @@ the Whisper machines (Whose nodes have higher job load set).</li>
 </ul>
 </li>
 </ul>
+<h2 id="whisper-ctranslate2">Whisper-ctranslate2</h2>
+<p><a href="https://github.com/Softcatala/whisper-ctranslate2">whisper-ctranslate2</a> offers the same command line interface
+as OpenAIs whisper, so it can easily be used in lieu of it. The main benefit of whisper-ctranslate2 is its
+out-of-the-box processing speed increase, especially on CPUs, compared to OpenAIs whisper. Otherwise the two
+should behave highly similar, so the above notes still apply.</p>
+<p>To use whisper-ctranslate2 instead of OpenAis whisper, change the <code>whisper.root.path</code> in
+<code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> to your installation path.</p>
+<p>Additional features:
+- Enabling quantization in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> can increase processing
+  speed even further.
+- Enabling Voice Activity Detection in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> can prevent
+  whisper from transcribing non-speech or silence.</p>
 
   <br>
     
