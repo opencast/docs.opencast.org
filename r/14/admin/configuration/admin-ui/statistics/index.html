@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Statistics - Administration Guide</title>
+<link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../../css/base.css" rel="stylesheet"/>
+<link href="../../../css/highlight.css" rel="stylesheet"/>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="../../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Overview", url: "#_top", children: [
+          ]},
+          {title: "Architecture", url: "#architecture", children: [
+          ]},
+          {title: "Configuration", url: "#configuration", children: [
+              {title: "InfluxDB Access", url: "#influxdb-access" },
+              {title: "Statistics Providers", url: "#statistics-providers" },
+              {title: "CSV Exports", url: "#csv-exports" },
+              {title: "Using the runningtotal provider", url: "#using-the-runningtotal-provider" },
+          ]},
+          {title: "Verifying Your Setup", url: "#verifying-your-setup", children: [
+          ]},
+        ];
+
+    </script>
+<script src="../../../js/base.js"></script>
+<script src="../../../javascript/extra.js"></script>
+<script src="../../../javascript/popper.js"></script>
+<script src="../../../javascript/tippy.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../thumbnails/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../thumbnails/">
+        Thumbnails
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../languages/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../languages/">
+        Languages
+      </a>
+</div>
+</div>
+<h1 id="overview">Overview</h1>
+<p>In Opencast, the "Statistics" feature can be seen as a set of charts which can be displayed in the Admin UI. Currently,
+statistics for three so-called "resource types" are available:</p>
+<ul>
+<li>Statistics for the resource type <strong>EPISODE</strong> are displayed in a tab in the event details dialog.</li>
+<li>Statistics for the resource type <strong>SERIES</strong> are displayed in a tab in the series details dialog.</li>
+<li>Statistics for the resource type <strong>ORGANIZATION</strong> are displayed in the "Statistics" menu of Opencast.</li>
+</ul>
+<p>These tabs/menus are only visible if the statistics feature is configured. For the statistics to work, you need a data
+source from which Opencast can retrieve the data to display. Currently, <a href="https://docs.influxdata.com/influxdb">InfluxDB</a>
+is the only supported data source.</p>
+<h1 id="architecture">Architecture</h1>
+<p>A complete setup consists of the following components:</p>
+<ul>
+<li>InfluxDB</li>
+<li>A source which actually generates your data</li>
+<li>A tool which ingests your data into InfluxDB</li>
+<li>Opencast</li>
+</ul>
+<p>For example, using Opencast's <a href="https://github.com/opencast/opencast-influxdb-adapter"><em>opencast-influxdb-adapter</em></a>, your
+architecture would look like this:</p>
+<div class="mermaid">graph LR
+  Webserver[Webserver Logs] --&gt; Adapter --&gt; InfluxDB --&gt; Opencast;
+</div>
+<p>Precisely, the Opencast bundle <code>opencast-statistics-provider-influx</code> is the one that needs to be able to connect to
+InfluxDB using http(s). So the node hosting this bundle needs network access to InfluxDB.</p>
+<h1 id="configuration">Configuration</h1>
+<p>Before configuring Opencast, you should have a running InfluxDB instance and should think about how you want your data
+to be written to InfluxDB and what your InfluxDB database schema should look like. Specifically, you should think about
+retention policies, measurement names, field/tag names and how much you want to
+<a href="https://docs.influxdata.com/influxdb/latest/guides/downsampling_and_retention/">downsample your data</a>. If you don't
+have any data in your InfluxDB, but want to verify your setup is working, there is some test data provided in the
+section <a href="#verify"><em>Verifying Your Setup</em></a>.</p>
+<h2 id="influxdb-access">InfluxDB Access</h2>
+<p>Opencast needs to know how to talk to your InfluxDB instance. Therefore, you should edit the configuration file
+<code>etc/org.opencastproject.statistics.provider.influx.StatisticsProviderInfluxService.cfg</code> and fill in your influx URI,
+username, password, and database name.</p>
+<h2 id="statistics-providers">Statistics Providers</h2>
+<p>To support the detailed configuration of the charts to be shown in the Admin UI, Opencast has a concept called
+<em>Statistics Providers</em>. Each statistics provider can be configured separately and for each provider, there is one chart
+displayed in the Admin UI.</p>
+<p>The configuration files of the providers have to be stored at <code>etc/statistics</code> and they have to follow a certain naming
+convention. Configuration files of providers using InfluxDB have to be named starting with <code>influx.</code>. All provider
+configurations have to be in json format. So e.g. <em>influx.views.episode.sum.json</em> would be a valid name.</p>
+<p>For each provider, the following properties have to be configured:</p>
+<ul>
+<li><strong><code>id</code></strong> has to be a unique identifier and can be chosen freely.</li>
+<li><strong><code>title</code></strong> is the title to be displayed with the chart. This can be a translation key.</li>
+<li><strong><code>description</code></strong> is the description to be displayed with the chart. This can be a translation key.</li>
+<li><strong><code>resourceType</code></strong> tells Opencast to which type of entity the chart refers to. Valid values are <code>EPISODE</code>, <code>SERIES</code>,
+  and<code>ORGANIZATION</code>. This is used by Opencast to decide where to display the chart.</li>
+<li><strong><code>sources</code></strong> is list of JSON objects, each containing the following fields:<ul>
+<li><strong><code>measurement</code></strong>, e.g. <code>infinite.impressions_daily</code> tells Opencast that your InfluxDB data retention policy is
+  named <code>infinite</code> and your InfluxDB measurement name is <code>impressions_daily</code>.</li>
+<li><strong><code>aggregation</code></strong>, e.g. <code>SUM</code> tells Opencast that InfluxDB's <code>SUM()</code> function should be used to calculate the
+  values to display in the chart.</li>
+<li><strong><code>aggregationVariable</code></strong>, e.g. <code>value</code> tells Opencast that the InfluxDB field which should be summed is named
+  <code>value</code>.</li>
+<li><strong><code>resourceIdName</code></strong>, e.g. <code>episodeId</code> tells Opencast that the InfluxDB tag identifying the resource type this
+   provider refers to is named <code>episodeId</code>.</li>
+<li><strong><code>resolutions</code></strong> is a list of resolutions supported by this provider. Opencast allows the user to select a
+  <em>resolution</em> with which the data is displayed. Valid values are <code>HOURLY</code>, <code>DAILY</code>, <code>WEEKLY</code>, <code>MONTHLY</code> and
+  <code>YEARLY</code>. E.g. when a chart shows data of two years, a <code>DAILY</code> resolution will lead to 2x365=730 values to be
+  plotted while a <code>MONTHLY</code> resolution would leave us with 24 values being plotted in the chart.</li>
+</ul>
+</li>
+<li><strong><code>type</code></strong> defines the structure of the data provided by this provider. Currently, <code>timeseries</code> and <code>runningtotal</code>
+  are supported.</li>
+</ul>
+<p>Here is an example json configuration for a provider which generates charts for episodes showing the number of views:</p>
+<p><code>etc/statistics/influx.views.episode.sum.json</code></p>
+<pre><code class="language-json">{
+  "id": "episode.views.sum.influx",
+  "title": "STATISTICS.TITLE.VIEWS_SUM",
+  "description": "STATISTICS.DESCRIPTION.VIEWS_SUM",
+  "resourceType": "EPISODE",
+  "sources": [{
+    "measurement": "infinite.impressions_daily",
+    "aggregation": "SUM",
+    "aggregationVariable": "value",
+    "resourceIdName": "episodeId",
+    "resolutions": [
+      "DAILY",
+      "WEEKLY",
+      "MONTHLY",
+      "YEARLY"
+    ]
+  }],
+  "type": "timeseries"
+}
+</code></pre>
+<h2 id="csv-exports">CSV Exports</h2>
+<p>Statistics can be exported to CSV files by clicking the "download" button in the top right corner of a graph. Per default,
+the export will contain the data which the graph currently displays. For series statistics, it is possible to change this
+behavior in the way that exported series statistics contain the data of all events of a series instead of just the top
+level series data. To enable this, it is necessary to specify which Statistics Provider should be used to get the episode
+data. See the configuration file <code>org.opencastproject.statistics.export.impl.StatisticsExportServiceImpl.cfg</code> for details.</p>
+<h2 id="using-the-runningtotal-provider">Using the <code>runningtotal</code> provider</h2>
+<p>The <code>runningtotal</code> statistics provider is a special type of time series statistics provider. To illustrate what it
+can be used for, let’s assume we want to track the number of hours of videos per organization (this is actually
+what the provider was initially designed for). We create a JSON file for the provider as such:</p>
+<pre><code class="language-json">{
+  "id": "organization.publishedhours.influx",
+  "title": "STATISTICS.TITLE.PUBLISHEDHOURS",
+  "description": "STATISTICS.DESCRIPTION.PUBLISHEDHOURS",
+  "resourceType": "ORGANIZATION",
+  "sources": [{
+    "measurement": "infinite.publishedhours",
+    "aggregation": "SUM",
+    "aggregationVariable": "hours",
+    "resourceIdName": "organizationId",
+    "resolutions": [
+      "DAILY",
+      "WEEKLY",
+      "MONTHLY",
+      "YEARLY"
+    ]
+  }],
+  "type": "runningtotal"
+}
+</code></pre>
+<p>Note that the published hours entries can be negative, in case we retract a video.</p>
+<p>When the <code>runningtotal</code> provider is asked to report on, for example, the monthly hours of video for a specific year,
+it will first take the sum of all video lengths <em>up until</em> that year. Then, for each month, it will take the sum of
+all the entries in that month, and add it to the previous value. And so on for the next months.</p>
+<p>To actually <em>write</em> these hours to the statistics data base, you have to add the <code>statistics-writer</code> workflow
+operation handler to your workflows. Specifically, somewhere in your publishing workflow, you have to add an entry
+such as this:</p>
+<pre><code class="language-XML">&lt;operation
+  id="statistics-writer"
+  fail-on-error="true"
+  exception-handler-workflow="partial-error"
+  description="Collect video statistics"&gt;
+  &lt;configurations&gt;
+    &lt;configuration key="flavor"&gt;presenter/video&lt;/configuration&gt;
+    &lt;configuration key="retract"&gt;false&lt;/configuration&gt;
+    &lt;configuration key="measurement-name"&gt;publishedhours&lt;/configuration&gt;
+    &lt;configuration key="organization-resource-id-name"&gt;organizationId&lt;/configuration&gt;
+    &lt;configuration key="length-field-name"&gt;hours&lt;/configuration&gt;
+    &lt;configuration key="temporal-resolution"&gt;hours&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>To <em>decrement</em> the running total of hours in the case of retractions, set the <code>retract</code> property to <code>true</code>.
+In the default case, or when the <code>retract</code> property is <code>false</code> the running total is not decremented when a
+retraction occurs.</p>
+<h1 id="verifying-your-setup">Verifying Your Setup<a name="verify"></a></h1>
+<p>If you want to test your setup, you can put the following test data into InfluxDB and check if Opencast displays all
+charts correctly. First, create a series and an event as part of that series using the Opencast Admin UI. Second, copy
+the test data to a file called <code>testdata.txt</code> and edit it to match your InfluxDB database schema. Make sure you replace
+the <code>episodeId</code>, <code>seriesId</code>, and <code>organizazionId</code> tag value with the correct identifiers of the test event/series you
+just created. Also make sure, that the tag names (e.g.) <code>episodeId</code> and the field name (<code>value</code>) match the ones you have
+specified in the <code>source</code> strings of your providers. Also, the database name, retention policy name and measurement name
+have to match your configuration.</p>
+<p>The InfluxDB test data could look like this:</p>
+<pre><code class="language-text"># DDL
+
+CREATE DATABASE opencast
+
+# DML
+
+# CONTEXT-DATABASE: opencast
+
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554468810
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554555210
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554641610
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554728010
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554814410
+impressions_daily,episodeId=6d3004a3-a581-4fdd-9dab-d4ed02f125f8,seriesId=5b421e3c-56a5-4c9e-86cd-bedcfa739cfa,organizationId=mh_default_org value=1 1554900810
+</code></pre>
+<p>The file format of the InfluxDB test data is described
+<a href="https://docs.influxdata.com/influxdb/latest/write_protocols/line_protocol_reference/">here</a>.</p>
+<p>You can import the test data into InfluxDB using the following command:</p>
+<p><code>influx -import -path=testdata.txt -precision=s -database=opencast</code></p>
+<p>Once you have imported your test data, you should be able to view the charts you have configured when accessing the
+event/series details of your test event or Opencast's statistics section.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../thumbnails/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../thumbnails/">
+        Thumbnails
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../languages/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../languages/">
+        Languages
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/statistics.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({
+    theme: "neutral"
+});</script></body>
+</html>

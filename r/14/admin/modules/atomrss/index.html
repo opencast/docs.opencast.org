@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Atom/RSS Feed - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Configure Atom and RSS Feeds", url: "#_top", children: [
+              {title: "Feed Catalog", url: "#feed-catalog" },
+              {title: "Defaults", url: "#defaults" },
+              {title: "Aggregation", url: "#aggregation" },
+              {title: "Custom", url: "#custom_1" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../awss3archive/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../awss3archive/" class="btn btn-xs btn-link">
+        Amazon S3 Archive Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../plugin-management/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../plugin-management/" class="btn btn-xs btn-link">
+        Plugin Management
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="configure-atom-and-rss-feeds">Configure Atom and RSS Feeds</h1>
+<p>This document will help you understand and configure the Opencast RSS and Atom feed catalog. The catalog supports
+multiple versions of each syndication format.</p>
+<h2 id="feed-catalog">Feed Catalog</h2>
+<p>The catalog is located at:</p>
+<pre><code>http://opencast.example.edu:8080/feeds
+</code></pre>
+<p>Individual feeds are located at:</p>
+<pre><code>http://opencast.example.edu:8080/feeds/&lt;feed_selector&gt;
+</code></pre>
+<h2 id="defaults">Defaults</h2>
+<p>The catalog contains the following default feeds:</p>
+<h3 id="latest">Latest</h3>
+<pre><code>http://demo.opencastproject.org/feeds/[atom|rss|*]/&lt;version_number&gt;/latest
+</code></pre>
+<p>Need an example? Visit http://demo.opencastproject.org/feeds/atom/1.0/latest</p>
+<h3 id="series">Series</h3>
+<pre><code>http://demo.opencastproject.org/feeds/[atom|rss|*]/&lt;version_number&gt;/series/&lt;series_id&gt;
+</code></pre>
+<h3 id="aggregation-of-a-set-of-series">Aggregation (of a set of series)</h3>
+<pre><code>http://demo.opencastproject.org/feeds/[atom|rss|*]/&lt;version_number&gt;/aggregated/&lt;name_of_configured_aggregation&gt;
+</code></pre>
+<h3 id="custom">Custom</h3>
+<pre><code>http://demo.opencastproject.org/feeds/[atom|rss|*]/&lt;version_number&gt;/custom/&lt;query&gt;
+</code></pre>
+<h2 id="aggregation">Aggregation</h2>
+<p>The feed allows administrators to pre-configure feeds for specific sets of series. Given the following configuration,
+http://opencast.example.edu:8080/feeds/aggregated/myseries would return the latest episodes from series <code>series_1</code> and
+<code>series_2</code>.</p>
+<p>The Opencast feed specifications are located in:</p>
+<pre><code>.../etc/feeds
+</code></pre>
+<p>Update aggregation.properties, the specification for an example feed aggregation:</p>
+<pre><code>feed.selector=myseries
+feed.series=series_1,series_2
+</code></pre>
+<h2 id="custom_1">Custom</h2>
+<p>The Opencast feed specifications are located in:</p>
+<pre><code>.../etc/feeds
+</code></pre>
+<p>Below is custom.properties, the default specification for an example custom feed of published episodes:</p>
+<pre><code>feed.class=org.opencastproject.feed.impl.CustomFeedService
+feed.uri=custom
+feed.size=20
+feed.query=dc_title-sum:{0}
+feed.name=Special episodes
+feed.description=Special collection of episodes
+feed.copyright=All rights reserved by The Opencast Project
+feed.home=/engage/ui
+feed.entry=/engage/ui/embed.html?id={0}
+feed.cover=/engage/feed-cover.png
+feed.rssflavors=presentation/delivery,presenter/delivery,presenter/feed+preview,presenter/search+preview
+feed.rsstags=rss
+feed.rssmediatype=video,audio
+feed.atomflavors=presentation/delivery,presenter/delivery,presenter/feed+preview,presenter/search+preview
+feed.atomtags=atom
+</code></pre>
+<h3 id="properties">Properties</h3>
+<p>The following properties are common to all feed specifications:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>feed.class</td>
+<td>Java implementation, e.g. LatestFeedService.</td>
+</tr>
+<tr>
+<td>feed.uri</td>
+<td>Feed location/identifier</td>
+</tr>
+<tr>
+<td>feed.size</td>
+<td>Maximum number of entries in the feed (default: 100). Set to 0 to include all available entries.</td>
+</tr>
+<tr>
+<td>feed.selector</td>
+<td>Feed route pattern, e.g. latest.</td>
+</tr>
+<tr>
+<td>feed.name</td>
+<td>Feed title</td>
+</tr>
+<tr>
+<td>feed.description</td>
+<td>Feed description</td>
+</tr>
+<tr>
+<td>feed.copyright</td>
+<td>Feed copyright notice</td>
+</tr>
+<tr>
+<td>feed.home</td>
+<td>Feed catalog homepage, e.g. http://www.opencastproject.org.</td>
+</tr>
+<tr>
+<td>feed.entry</td>
+<td>The route pattern used to generate links to individual enclosures, e.g. /engage/ui/embed.html?id={0}.</td>
+</tr>
+<tr>
+<td>feed.cover</td>
+<td>Feed image</td>
+</tr>
+<tr>
+<td>feed.rssflavors</td>
+<td>The RSS enclosure route pattern, e.g. presenter/delivery, selected according to their appearance.</td>
+</tr>
+<tr>
+<td>feed.rsstags</td>
+<td>A comma, semi-colon or space-separated list of tags used to filter available enclosures</td>
+</tr>
+<tr>
+<td>feed.rssmediatype</td>
+<td>A comma, semi-colon or space-separated list of tags used to decide whether to prefer video or audio enclosures</td>
+</tr>
+<tr>
+<td>feed.atomflavors</td>
+<td>The Atom enclosures route pattern, e.g. presenter/delivery.</td>
+</tr>
+<tr>
+<td>feed.atomtags</td>
+<td>A comma, semi-colon or space-separated list of tags used to filter available enclosures</td>
+</tr>
+</tbody>
+</table>
+<p>The following properties are specific to custom feeds:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>feed.query</td>
+<td>A custom Lucene query, matched again Java's MessageFormat using solr.</td>
+</tr>
+</tbody>
+</table>
+<p>The query <code>http://opencast.example.edu:8080/feeds/alphabetical/a</code> would return all episodes starting with the letter a.</p>
+<pre><code>feed.selector=alphabetical
+feed.query=dc_title:{0}*
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../awss3archive/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../awss3archive/" class="btn btn-xs btn-link">
+        Amazon S3 Archive Storage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../plugin-management/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../plugin-management/" class="btn btn-xs btn-link">
+        Plugin Management
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/atomrss.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

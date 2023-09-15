@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Google Speech Attach Transcription - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Google Speech Attach Transcription Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Example", url: "#example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../google-speech-start-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../google-speech-start-transcription-woh/" class="btn btn-xs btn-link">
+        Google Speech Start Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../extracttext-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../extracttext-woh/" class="btn btn-xs btn-link">
+        Extract Text
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="google-speech-attach-transcription-workflow-operation">Google Speech Attach Transcription Workflow Operation</h1>
+<p>ID: <code>google-speech-attach-transcription</code></p>
+<h2 id="description">Description</h2>
+<p>Google Speech Attach Transcription converts the json format file received from the Google Speech-to-Text service 
+into the desired caption format and adds it to the media package.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>required</th>
+<th>description</th>
+<th>default value</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transcription-job-id</td>
+<td>yes</td>
+<td>This is filled out by the transcription service when starting the workflow.</td>
+<td>EMPTY</td>
+<td><strong>Should always be "${transcriptionJobId}"</strong></td>
+</tr>
+<tr>
+<td>line-size</td>
+<td>no</td>
+<td>The line size (number of characters) of the transcripts to display at a time.</td>
+<td>EMPTY</td>
+<td>100</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>yes</td>
+<td>The flavor of the caption/transcription file generated.</td>
+<td>EMPTY</td>
+<td>captions/source</td>
+</tr>
+<tr>
+<td>target-tag</td>
+<td>no</td>
+<td>The tag to apply to the caption/transcription file generated.*</td>
+<td>EMPTY</td>
+<td>archive,generator-type:auto</td>
+</tr>
+<tr>
+<td>target-caption-format</td>
+<td>no</td>
+<td>The caption format to be generated. If not entered, the raw resulting file will be attached to the media package.</td>
+<td>EMPTY</td>
+<td>vtt</td>
+</tr>
+<tr>
+<td>target-element-type</td>
+<td>no</td>
+<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
+<td>track</td>
+<td>track</td>
+</tr>
+</tbody>
+</table>
+<p>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;
+&lt;operation id=&quot;google-speech-attach-transcription&quot;
+    description=&quot;Attach captions/transcription&quot;&gt;
+  &lt;configurations&gt;
+    &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
+    &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
+    &lt;configuration key=&quot;line-size&quot;&gt;100&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tag&quot;&gt;archive,generator-type:auto&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+
+&lt;!-- Publish to engage player --&gt;
+&lt;operation id=&quot;publish-engage&quot;
+    description=&quot;Distribute and publish to engage server&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;download-source-flavors&quot;&gt;dublincore/*,security/*,captions/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+    &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../google-speech-start-transcription-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../google-speech-start-transcription-woh/" class="btn btn-xs btn-link">
+        Google Speech Start Transcription
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../extracttext-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../extracttext-woh/" class="btn btn-xs btn-link">
+        Extract Text
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/google-speech-attach-transcription-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

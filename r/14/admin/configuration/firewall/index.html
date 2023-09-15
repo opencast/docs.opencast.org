@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>Firewall - Administration Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Firewall", url: "#_top", children: [
+              {title: "Suggested Firewall Configurations", url: "#suggested-firewall-configurations" },
+          ]},
+        ];
+
+    </script>
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
+<script src="../../javascript/popper.js"></script>
+<script src="../../javascript/tippy.js"></script>
+</meta></head>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+<div class="container-fluid wm-page-content">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../asset-manager/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../asset-manager/">
+        Asset Manager
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../https/self-signed-certificates/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../https/self-signed-certificates/">
+        Self-Signed Certificates
+      </a>
+</div>
+</div>
+<h1 id="firewall">Firewall</h1>
+<p>Opencast relies on a lot of network communication and although not strictly necessary,
+it usually makes sense to configure a firewall for additional protection</p>
+<p>This describes a lot of the communication happening between servers in the most common use cases.
+In certain set-ups and with certain types of integrations, these may deviate slightly.</p>
+<p>General rules are:</p>
+<ul>
+<li>Users communicate with Opencast via HTTP(S)</li>
+<li>Capture agents communicate with Opencast via HTTP(S)</li>
+<li>Opencast nodes communicate among each other via HTTP(S)</li>
+<li>Often OpenSearch runs on the admin node since this node communicates with these services exclusively</li>
+<li>All servers should get access to the storage infrastructure</li>
+<li>All Opencast nodes need database access</li>
+</ul>
+<p>A visual representation of the communication within a three-node cluster will look like this:</p>
+<div class="mermaid">graph LR
+
+  user(User) --&gt;|80, 443| oc1(Opencast Admin)
+  user -.-&gt;|80, 443| oc2(Opencast Worker)
+  user --&gt;|80, 443| oc3(Opencast Presentation)
+  oc1 &lt;--&gt;|80, 443| oc2
+  oc2 &lt;--&gt;|80, 443| oc3
+  oc3 &lt;--&gt;|80, 443| oc1
+  oc1 --&gt;|e.g. 3306| db(Database)
+  oc2 --&gt;|e.g. 3306| db
+  oc3 --&gt;|e.g. 3306| db
+  oc1 --&gt;|9200| os(OpenSearch)
+  oc1 --&gt; storage(Storage)
+  oc2 --&gt; storage
+  oc3 --&gt; storage
+  ca(Capture Agent) --&gt;|80, 443| oc1
+</div>
+<p>Notes:</p>
+<ul>
+<li>The numbers in the diagram describe TCP ports</li>
+<li>Communication between users and workers is often not necessary</li>
+<li>If you use a database other than MariaDB, the port may differ</li>
+</ul>
+<h2 id="suggested-firewall-configurations">Suggested Firewall Configurations</h2>
+<p>Note that none of these instructions take additional services like SSH into account.
+They are focused just on what Opencast needs for communication.</p>
+<h3 id="simple">Simple</h3>
+<p>For a very simple configuration catching most of the important attack vectors, implement the following firewall rules:</p>
+<ol>
+<li>Allow HTTP and HTTPS to all Opencast nodes from the outside</li>
+<li>Allow all TCP communication within the cluster</li>
+</ol>
+<h3 id="complex">Complex</h3>
+<p>If you want a more complex, stricter set of rules:</p>
+<ol>
+<li>Allow external HTTP and HTTPS communication to admin, presentation and possibly ingest</li>
+<li>Allow all Opencast nodes to access the database</li>
+<li>Allow the admin node to access OpenSearch</li>
+<li>Allow all nodes access to the storage infrastructure</li>
+</ol>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../asset-manager/">
+        Next
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../asset-manager/">
+        Asset Manager
+      </a>
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../https/self-signed-certificates/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../https/self-signed-certificates/">
+        Self-Signed Certificates
+      </a>
+</div>
+</div>
+<br/>
+</div>
+<footer class="container-fluid wm-page-content">
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/firewall.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({
+    theme: "neutral"
+});</script></body>
+</html>
