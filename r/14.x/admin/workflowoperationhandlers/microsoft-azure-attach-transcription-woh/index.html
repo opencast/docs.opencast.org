@@ -96,6 +96,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <thead>
 <tr>
 <th>configuration keys</th>
+<th>required</th>
 <th>description</th>
 <th>default value</th>
 <th>example</th>
@@ -104,33 +105,42 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tbody>
 <tr>
 <td>transcription-job-id</td>
+<td>yes</td>
 <td>This is filled out by the transcription service when starting the workflow.</td>
 <td>EMPTY</td>
 <td><strong>Should always be "${transcriptionJobId}"</strong></td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>The flavor of the caption/transcription file generated. Mandatory.</td>
+<td>yes</td>
+<td>The flavor of the caption/transcription file generated.</td>
 <td>EMPTY</td>
-<td>captions/vtt+en-US</td>
-</tr>
-<tr>
-<td>replace-with-language</td>
-<td>Text to replace a placeholder in target-flavor with. Optional</td>
-<td>EMPTY</td>
-<td>en-US</td>
+<td>captions/source</td>
 </tr>
 <tr>
 <td>target-tag</td>
-<td>The tag to apply to the caption/transcription file generated. Optional.</td>
+<td>no</td>
+<td>The tag to apply to the caption/transcription file generated.*</td>
 <td>EMPTY</td>
-<td>archive</td>
+<td>archive,generator-type:auto</td>
+</tr>
+<tr>
+<td>auto-set-language-tag</td>
+<td>no</td>
+<td>If autodetection was used, set a tag with the autodetected language.</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>target-element-type</td>
+<td>no</td>
+<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
+<td>track</td>
+<td>track</td>
 </tr>
 </tbody>
 </table>
-<p>'target_flavor' allows a placeholder of the form <code>____</code> (e.g. <code>captions/vtt+____</code>). If auto detection was used in the
-start WOH, the placeholder will be replaced with the detected language. Alternatively, you can override that by 
-setting <code>replace-with-language</code>. If neither is set, the placeholder will simply be removed.</p>
+<p>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
 <h2 id="example">Example</h2>
 <pre><code class="language-xml">&lt;operation
     id=&quot;microsoft-azure-attach-transcription&quot;
@@ -138,9 +148,8 @@ setting <code>replace-with-language</code>. If neither is set, the placeholder w
   &lt;configurations&gt;
     &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
     &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-    &lt;!-- Set the flavor to something the Paella player will parse --&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+en-us&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tag&quot;&gt;archive,generator-type:auto&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>

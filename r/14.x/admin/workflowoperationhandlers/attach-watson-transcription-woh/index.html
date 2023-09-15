@@ -66,12 +66,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../cleanup-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../changetype-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../cleanup-woh/" class="btn btn-xs btn-link">
-        Cleanup
+      <a href="../changetype-woh/" class="btn btn-xs btn-link">
+        Change Type
       </a>
     </div>
     
@@ -97,38 +97,51 @@ in json format, converts it to the desired caption format, and adds it to the me
 <thead>
 <tr>
 <th>configuration keys</th>
+<th>required</th>
 <th>description</th>
-<th>default value</th>
+<th>default</th>
 <th>example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>transcription-job-id</td>
+<td>yes</td>
 <td>This is filled out by the transcription service when starting the workflow.</td>
-<td>EMPTY</td>
+<td>${transcriptionJobId}</td>
 <td><strong>Should always be "${transcriptionJobId}"</strong></td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>The flavor of the caption/transcription file generated. Mandatory only if target-caption-format not informed.</td>
-<td>captions/<code>target-caption-format</code>+<code>language</code></td>
-<td>captions/vtt+en</td>
+<td>yes</td>
+<td>The flavor of the generated caption/transcription file.</td>
+<td>EMPTY</td>
+<td>captions/source</td>
 </tr>
 <tr>
 <td>target-tag</td>
-<td>The tag to apply to the caption/transcription file generated. Optional.</td>
+<td>no</td>
+<td>The tag to apply to the caption/transcription file generated.*</td>
 <td>EMPTY</td>
-<td>archive</td>
+<td>generator-type:auto</td>
 </tr>
 <tr>
 <td>target-caption-format</td>
-<td>The caption format to be generated. Optional. If not entered, the raw resulting file will be attached to the media package with the flavor <code>target-flavor</code>.</td>
-<td>EMPTY</td>
+<td>no</td>
+<td>The caption format to be generated.</td>
 <td>vtt</td>
+<td>vtt</td>
+</tr>
+<tr>
+<td>target-element-type</td>
+<td>no</td>
+<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
+<td>track</td>
+<td>track</td>
 </tr>
 </tbody>
 </table>
+<p>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
 <h2 id="example">Example</h2>
 <pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;
 &lt;operation id=&quot;attach-watson-transcription&quot;
@@ -136,10 +149,9 @@ in json format, converts it to the desired caption format, and adds it to the me
   &lt;configurations&gt;
     &lt;!-- This is filled out by the transcription service when starting this workflow so just use this as is --&gt;
     &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;archive&lt;/configuration&gt;
-    &lt;!-- Caption generated will have the default flavor based on the target-caption-format and language e.g. captions/vtt+en --&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tag&quot;&gt;engage-download,lang:en,generator-type:auto&lt;/configuration&gt;
     &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;engage-download&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 
@@ -165,12 +177,12 @@ in json format, converts it to the desired caption format, and adds it to the me
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../cleanup-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../changetype-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../cleanup-woh/" class="btn btn-xs btn-link">
-        Cleanup
+      <a href="../changetype-woh/" class="btn btn-xs btn-link">
+        Change Type
       </a>
     </div>
     
