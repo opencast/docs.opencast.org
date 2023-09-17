@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Security API - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Security API", url: "#_top", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "URL Signing", url: "#url-signing" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../workflow-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../workflow-api/" class="btn btn-xs btn-link">
+        Workflow API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../groups-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../groups-api/" class="btn btn-xs btn-link">
+        Groups API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="security-api">Security API</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Opencast is distributing encoded media to download and streaming servers to make that media available to end users. At
+the same time, that media needs to be protected such that - once provided a link to the download and/or streaming
+representations - only authorized users are able to consume it.</p>
+<p>This is achieved by handing signed URLs to end users which are validated by the distribution servers and become invalid
+after a given period of time (usually 1 hour, depending on the server configuration).</p>
+<p>As a consequence, users of the External API who are presenting URLs to distributed media for playback will need to make
+sure that those urls are signed, otherwise the distribution servers will refuse to deliver the content and respond with
+a <code>401 NOT AUTHORIZED</code> status.</p>
+<h3 id="best-practices">Best practices</h3>
+<p>The use of signed URLs requires a set of best practices to be followed when clients interact with the External API,
+most notably in the area of performance and caching.</p>
+<h4 id="performance">Performance</h4>
+<p>When consuming URLs that need to be signed before handing them to the user, client implementors may be inclinded to use
+the <code>sign=true</code> parameter for the events queries to request all URLs to be already signed. On one hand, this saves the
+client implementation from having to explicitly sign those URLs that users are visiting for playback. On the other hand,
+signing URLs introduces an overhead to performance for the pre-signing of all urls that are sent to the client, so in
+these cases it will be important to make sure not to transfer large lists <em>and</em> require presigning.</p>
+<h4 id="caching">Caching</h4>
+<p>One obvious caveat when using pre-signed URLs is the use of cached responses. As described above, signed URLs have a
+maxmimum life time and therefore need to be refreshed on a regular basis so that a user's request to play back a
+recording won't be rejected by the distribution servers.</p>
+<h4 id="secure-access-by-source-ip">Secure access by source IP</h4>
+<p>The signing facility of the security API provides the ability to sign URLs and restrict that URL to a given IP address.</p>
+<p>Even though this greatly increases security in sense that signed URLs can only be accessed from that device, it is
+important to note that in many network setups, source IP addresses of network packets will undergo network address
+translation (NAT) with NAT replacing the original source address from private networks with a single public address,
+thereby diminishing the security impact of adding the source IP address immensely.</p>
+<h2 id="url-signing">URL Signing</h2>
+<h3 id="post-apisecuritysign">POST /api/security/sign</h3>
+<p>Returns a signed URL that can be played back for the indicated period of time, while access is optionally restricted to
+the specified IP address.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Form Parameters</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>url</code></td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
+<td style="text-align: left;">The URL to be signed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>valid-until</code></td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td style="text-align: left;">The date and time until when the signed URL is valid</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>valid-source</code></td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
+<td style="text-align: left;">The IP address from which the url can be accessed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A JSON object containing the signed URL or an error message is returned:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>url</code></td>
+<td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
+<td style="text-align: left;">The signed URL</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>valid-until</code></td>
+<td style="text-align: left;"><a href="../types/#date-and-time"><code>datetime</code></a></td>
+<td style="text-align: left;">The date and time until when the signed URL is valid</td>
+</tr>
+</tbody>
+</table>
+<p>In case of an error:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>error</code></td>
+<td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
+<td style="text-align: left;">An error message describing the error</td>
+</tr>
+</tbody>
+</table>
+<p><code>401 (NOT AUTHORIZED)</code>: The caller is not authorized to have the link signed.</p>
+<p><strong>Example</strong></p>
+<pre><code>{
+  &quot;valid-until&quot;: &quot;2018-03-19T13:08:39Z&quot;,
+  &quot;url&quot;:&quot;http://localhost?policy=eyJTdGF0ZW1lbnQiOnsiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTUyMTQ2NDkxOTI4NH0sIlJlc291cmNlIjoiaHR0cDpcL1wvbG9jYWxob3N0In19&amp;keyId=demoKeyOne&amp;signature=717dd8f958a15c1cdb7e88a61417a07bb6a1e6238d9293805cc0893f798a07e8&quot;
+}
+</code></pre>
+<p>Error example:</p>
+<pre><code>{
+  &quot;error&quot;: &quot;Given URL cannot be signed&quot;
+}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../workflow-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../workflow-api/" class="btn btn-xs btn-link">
+        Workflow API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../groups-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../groups-api/" class="btn btn-xs btn-link">
+        Groups API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/api/security-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

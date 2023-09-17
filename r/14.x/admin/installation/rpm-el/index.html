@@ -101,10 +101,6 @@ This repository provides preconfigured Opencast installations and all necessary 
 <p>In addition to this guide, we have also recorded <a href="https://vt.uos.de/71hfc">a full installation done in 30 minutes</a>
 if you like to see how this works before you try it yourself.</p>
 </blockquote>
-<div class=warn>
-  <b>Opencast 15</b> is not yet available.
-</div>
-
 <h2 id="currently-supported">Currently Supported</h2>
 <p>We frequently test on CentOS Stream 8/9 and infrequently test on Red Hat Enterprise Linux 8/9,
 trying to ensure that installations on those systems work without problems.
@@ -114,7 +110,7 @@ But we don't test against those.</p>
 <p>We support only the x86_64 architecture.</p>
 <h2 id="activate-repository">Activate Repository</h2>
 <p>First you have to install the necessary repositories:</p>
-<pre><code class="language-sh">dnf install -y &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-15/noarch/opencast-repository-15-1.el$(rpm -E %rhel).noarch.rpm&quot;
+<pre><code class="language-sh">dnf install -y &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-14/noarch/opencast-repository-14-1.el$(rpm -E %rhel).noarch.rpm&quot;
 </code></pre>
 <p>It might take some time after the release of a new Opencast version before the RPMs are moved to the stable repository.
 Until then, you can use <code>/etc/yum.repos.d/opencast-testing.repo</code> instead to get the latest version.
@@ -177,9 +173,9 @@ Some commonly used distributions are:</p>
 <p>Packages will automatically upgrade to the latest minor version in a release series when running <code>dnf update</code>.
 They do not automatically upgrade the latest major version.
 This is intentional since additional migration steps might be required.
-For example, if you install Opencast 15.1,
-you get the latest 15.x release,
-but no 16.x release.</p>
+For example, if you install Opencast 14.1,
+you get the latest 14.x release,
+but no 15.x release.</p>
 <p>These instructions will upgrade Opencast to a new version which may be incompatible with older versions.
 Thus, a rollback might not be possible.
 If you are performing this on a production system, please ensure you have valid backups prior to taking the next steps.</p>
@@ -188,7 +184,7 @@ If you are performing this on a production system, please ensure you have valid 
 </code></pre>
 <p>Then, update the repository:</p>
 <pre><code class="language-sh">dnf install -y \
-  &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-15/noarch/opencast-repository-15-1.el$(rpm -E %rhel).noarch.rpm&quot;
+  &quot;https://pkg.opencast.org/rpms/release/el/$(rpm -E %rhel)/oc-14/noarch/opencast-repository-14-1.el$(rpm -E %rhel).noarch.rpm&quot;
 </code></pre>
 <p>Upgrade to the new Opencast package by running:</p>
 <pre><code class="language-sh">dnf update

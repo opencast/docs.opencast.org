@@ -96,7 +96,6 @@ to the media package.</p>
 <thead>
 <tr>
 <th>configuration keys</th>
-<th>required</th>
 <th>description</th>
 <th>default</th>
 <th>example</th>
@@ -105,42 +104,33 @@ to the media package.</p>
 <tbody>
 <tr>
 <td>transcription-job-id</td>
-<td>yes</td>
 <td>This is filled out by the transcription service when starting the workflow.</td>
-<td>-</td>
+<td>${transcriptionJobId}</td>
 <td><strong>Should always be "${transcriptionJobId}"</strong></td>
 </tr>
 <tr>
 <td>target-flavor</td>
-<td>yes</td>
-<td>The flavor to apply to the captions/transcriptions file.</td>
-<td>-</td>
-<td>captions/source</td>
+<td>The flavor to apply to the captions/transcriptions file. Optional.</td>
+<td>captions/srt</td>
+<td>captions/vtt+en</td>
 </tr>
 <tr>
 <td>target-tag</td>
-<td>no</td>
-<td>The tag to apply to the caption/transcription file generated.*</td>
+<td>The tag to apply to the caption/transcription file generated. Optional.</td>
 <td>-</td>
-<td>generator-type:auto</td>
+<td>engage-download</td>
 </tr>
 <tr>
 <td>target-caption-format</td>
-<td>no</td>
-<td>The caption format to be generated.</td>
-<td>vtt</td>
+<td>The caption format to be generated. Optional.</td>
 <td>srt</td>
-</tr>
-<tr>
-<td>target-element-type</td>
-<td>no</td>
-<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
-<td>track</td>
-<td>track</td>
+<td>vtt</td>
 </tr>
 </tbody>
 </table>
-<p>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
+<p>Note: If you set the language property in
+<code>org.opencastproject.transcription.amberscript.AmberscriptTranscriptionService.cfg</code> the target flavor will be appended
+by +<language> (e.g. <code>captions/srt+de</code>).</p>
 
   <br>
     

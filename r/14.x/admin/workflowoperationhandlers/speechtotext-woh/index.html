@@ -116,13 +116,13 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 <td>target-flavor</td>
 <td>yes</td>
 <td>archive</td>
-<td>Flavor of the produced subtitle file.</td>
+<td>Flavor of the produced subtitle file. The subflavor supports the language-code placeholder <code>#{lang}</code></td>
 </tr>
 <tr>
 <td>target-element</td>
 <td>no</td>
-<td>track</td>
-<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment'. The default is "track".</td>
+<td>attachment</td>
+<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment'. The default is "attachment".</td>
 </tr>
 <tr>
 <td>language-code</td>
@@ -140,7 +140,7 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 <td>target-tags</td>
 <td>no</td>
 <td>delivery/captions</td>
-<td>Tags for the subtitle file** (Whisper only: If no <code>language-code</code>,the tag <code>lang:{code}</code> will be auto generated)</td>
+<td>Tags for the subtitle file (Whisper only: If no <code>language-code</code>,the tag <code>lang:{code}</code> will be auto generated)</td>
 </tr>
 <tr>
 <td>translate</td>
@@ -150,18 +150,22 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
 </tr>
 </tbody>
 </table>
-<p><em>Vosk Only, default value can be modified on Vosk config file.
-</em>*For conventionally used tags see the general page on <a href="../../modules/subtitles">Subtitles</a>.</p>
+<p>*Vosk Only, default value can be modified on Vosk config file.</p>
 <h2 id="requirements">Requirements</h2>
 <p>In order for it to work, you have to install the vosk-cli or whisper package</p>
 <h2 id="operation-examples">Operation Examples</h2>
+<p>If you want to display the subtitles in the Paella player, the WebVTT files have to be published and
+the target SubFlavor has to be configured like this: <code>vtt+LANG</code>, where <code>LANG</code> is
+the language option, that will be displayed in the Paella player. Please note the description above
+for the <code>language-code</code> field.</p>
+<p>Paella Player also can detect the tag <code>lang:{code}</code> to show the language in the subtitle menu.</p>
 <pre><code class="language-XML">&lt;operation
     id=&quot;speechtotext&quot;
     description=&quot;Generates subtitles for video and audio files&quot;&gt;
   &lt;configurations&gt;
     &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-element&quot;&gt;track&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+en&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-element&quot;&gt;attachment&lt;/configuration&gt;
     &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
     &lt;configuration key=&quot;language-code&quot;&gt;eng&lt;/configuration&gt;
   &lt;/configurations&gt;
@@ -172,8 +176,8 @@ engines available, <a href="../../modules/transcription.modules/whisper/">Whispe
     description=&quot;Generates subtitles for video and audio files, derive language-code from metadata&quot;&gt;
     &lt;configurations&gt;
       &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-element&quot;&gt;track&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-flavor&quot;&gt;captions/vtt+#{lang}&lt;/configuration&gt;
+      &lt;configuration key=&quot;target-element&quot;&gt;attachment&lt;/configuration&gt;
       &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
     &lt;/configurations&gt;
 &lt;/operation&gt;
