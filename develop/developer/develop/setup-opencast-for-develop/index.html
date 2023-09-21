@@ -33,19 +33,13 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Developer Installation guide", url: "#_top", children: [
+          {title: "Developer Environment Setup", url: "#_top", children: [
               {title: "TL;DR", url: "#tldr" },
-              {title: "Configuring Git", url: "#configuring-git" },
               {title: "Clone Opencast", url: "#clone-opencast" },
               {title: "Install Dependencies", url: "#install-dependencies" },
-              {title: "Ubuntu 18.04", url: "#ubuntu-1804" },
-              {title: "Fedora", url: "#fedora" },
-              {title: "macOS 10.14", url: "#macos-1014" },
-              {title: "Build and Start Opencast", url: "#build-and-start-opencast" },
-              {title: "Modify Code and Build Changes", url: "#modify-code-and-build-changes" },
+              {title: "Build Opencast", url: "#build-opencast" },
               {title: "Common Build Errors or Fixes", url: "#common-build-errors-or-fixes" },
-              {title: "Intellij Idea IDE Community Edition (optional)", url: "#intellij-idea-ide-community-edition-optional" },
-              {title: "Visual Studio Code Editor (optional)", url: "#visual-studio-code-editor-optional" },
+              {title: "Recommended Development Tools", url: "#recommended-development-tools" },
           ]},
         ];
 
@@ -94,7 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="developer-installation-guide">Developer Installation guide</h1>
+    <h1 id="developer-environment-setup">Developer Environment Setup</h1>
 <p>These instructions outline how to install Opencast.
 This is meant for developers.
 For the installation of a production cluster, take a look at the admin guides.</p>
@@ -111,18 +105,7 @@ $ ./bin/start-opencast
 <li>username: admin</li>
 <li>password: opencast</li>
 </ul>
-<h2 id="configuring-git">Configuring Git</h2>
-<pre><code class="language-sh">$ git config --global user.name &quot;Example Name&quot;
-$ git config --global user.email example@domain.com
-$ ssh-keygen -t ed25519 -C &quot;Example Name &lt;example@domain.com&gt;&quot;
-$ cat ~/.ssh/id_ed25519.pub
-</code></pre>
-<p>Go to: <a href="https://github.com/settings/keys">Github</a>, click "New SSH Key" and paste your content of id_rsa.pub into the input field. It should look like:</p>
-<pre><code>ssh-ed25519 at9/q0tR69TqQvwnFZuat90k0PY+z7mTyLB7UZXDnmpNHkU/MzO...
-</code></pre>
-<p>Now press "Add SSH Key" and return to your terminal and:</p>
-<pre><code class="language-sh">$ ssh -T git@github.com
-</code></pre>
+<p>Where <code>*</code> is the version number of the distribution.</p>
 <h2 id="clone-opencast">Clone Opencast</h2>
 <p>You can get the Opencast source code by cloning the Git repository.</p>
 <p>Cloning the Git repository:</p>
@@ -152,107 +135,156 @@ hunspell &gt;= 1.2.8
 sox &gt;= 14.4
 synfig
 </code></pre>
-<h2 id="ubuntu-1804">Ubuntu 18.04</h2>
-<h3 id="update-system">Update System</h3>
-<pre><code class="language-sh">$ apt update
-$ apt upgrade -y
+<h2 id="build-opencast">Build Opencast</h2>
+<p>You can now build opencast by changing into your opencast directory and running:</p>
+<pre><code>$ mvn clean install [Options]
 </code></pre>
-<h3 id="install-packages-via-apt">Install Packages via APT</h3>
-<pre><code class="language-sh">$ apt install -y git openjdk-11-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+<p>After the successful compilation you can start opencast with:</p>
+<pre><code>$ ./build/opencast-dist-develop-*/bin/start-opencast
 </code></pre>
-<h3 id="install-nodejs-optional">Install NodeJS (optional)</h3>
-<pre><code class="language-sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-$ sudo apt-get install -y nodejs
+<p>Where <code>*</code> is the version number of the distribution.</p>
+<h3 id="build-options">Build options</h3>
+<h4 id="assembly-profiles">Assembly profiles</h4>
+<p>Besides the default <code>dist</code> Maven profile, you can specify other profiles to create different builds.
+Activate these profiles using:</p>
+<table>
+<thead>
+<tr>
+<th>profile</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-Pdev</code></td>
+<td>Create a single <code>allinone</code> distribution and unpack it</td>
+</tr>
+<tr>
+<td><code>-Pnone</code></td>
+<td>Do not create any distribution</td>
+</tr>
+</tbody>
+</table>
+<p>You can only use one of these profiles at a time.</p>
+<h4 id="build-options_1">Build options</h4>
+<p>The following options can be used to customize the build process. They can be used in combination with the assembly profiles.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-DtrimStackTrace=false</code></td>
+<td>Do not trim stack traces in the logs</td>
+</tr>
+<tr>
+<td><code>-DskipTests=true</code></td>
+<td>Skip tests</td>
+</tr>
+<tr>
+<td><code>-T 1.0C</code></td>
+<td>Use multiple threads for building (Experimental)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="build-single-modules">Build Single Modules</h3>
+<p>When working on a single Opencast module, it can be extremely helpful having the new built version automatically included in the Opencast OSGi infrastructure. This can be achieved by watching the module with the <a href="https://karaf.apache.org/manual/latest/commands/bundle-watch.html">bundle:watch</a> command in Karaf. The procedure would be as follows:</p>
+<ul>
+<li>Start Opencast and use <code>la -u</code> in the Karaf console to list all installed bundles/modules. Note down the IDs of the
+  bundles you want to watch.</li>
+<li>Use <code>bundle:watch IDs</code> to watch the desired modules, e.g. <code>bundle:watch 190 199</code></li>
+<li>Make your changes and rebuild the module (e.g. execute <code>mvn clean install</code> in the module folder).</li>
+<li>Watch how Karaf automatically redeploys the changed jars from your local Maven repository. You can verify that
+  everything went smoothly by checking the log with <code>log:tail</code>.</li>
+</ul>
+<p>To see this technique in action, you can watch the following short video:</p>
+<ul>
+<li><a href="https://asciinema.org/a/348132">Opencast development: Watch and reload modules</a></li>
+</ul>
+<p>The updated bundles are only available in the currently running Karaf instance. To create a Opencast version that contains your changes permanently, you have to run <code>mvn install</code> in the assemblies directory again. </p>
+<p>In several cases the <code>bundle:watch</code> can put Karaf in an unstable condition, as dependencies between bundles will not
+correctly be restored after the new bundle has been deployed.</p>
+<h3 id="examples">Examples</h3>
+<h4 id="build-enabling-multiple-threads-experimental">Build enabling multiple threads (Experimental)</h4>
+<p>Building with multiple threads decreases the build time significantly.
+If you want to enable multiple threads, you can use the following command:</p>
+<pre><code>$ mvn clean install -T 1.0C -DskipTests -Pnone 
+&amp;&amp; cd assemblies &amp;&amp; mvn install -T 1.0C -Dskiptests -Pdev  
+&amp;&amp; cd ..
+$ ./build/opencast-dist-develop-*/start-opencast
 </code></pre>
-<h3 id="install-and-start-elasticsearch-with-docker">Install and start Elasticsearch with Docker</h3>
-<p>You can use <code>docker-compose</code> to easily run Elasticsearch:</p>
-<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
-$ docker-compose up -d
-</code></pre>
-<p>To shut the services down again, run:</p>
-<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
-$ docker-compose down
-</code></pre>
-<h3 id="set-system-java-jdk">Set System Java JDK</h3>
-<p>Choose the Java Version 11 by entering:</p>
-<pre><code class="language-sh">$ update-alternatives --config java
-</code></pre>
-<h2 id="fedora">Fedora</h2>
-<h3 id="update-system_1">Update System</h3>
-<pre><code class="language-sh">$ dnf update -y
-</code></pre>
-<h3 id="install-dependencies_1">Install Dependencies</h3>
-<pre><code class="language-sh">$ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
-$ dnf group install 'Development Tools'
-$ dnf install -y ffmpeg maven tesseract hunspell sox synfig unzip gcc-c++ tar bzip2 nodejs
-</code></pre>
-<h2 id="macos-1014">macOS 10.14</h2>
-<h3 id="update-system_2">Update System</h3>
-<p>Try to install all updates via the App Store or the Apple Icon on the top left corner.</p>
-<h3 id="java-jdk-11">Java JDK 11</h3>
-<p>Install the JDK 11</p>
-<h3 id="xcode">XCode</h3>
-<p>Install XCode over the App Store. It will be needed for building and for git.</p>
-<h3 id="install-packages-via-homebrew">Install Packages via Homebrew</h3>
-<p>The Homebrew Project adds a package manager to Mac OS. You can install it by:</p>
-<pre><code class="language-sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-</code></pre>
-<p>You can now install needed packages:</p>
-<pre><code class="language-sh">$ brew install maven ffmpeg nodejs
-</code></pre>
-<h3 id="git-bash-completion">Git Bash Completion</h3>
-<p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux). If you want to use bash completion, you have to install it by</p>
-<pre><code class="language-sh">$ brew install bash-completion
-</code></pre>
-<p>Find the location of the configuration file</p>
-<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot;
-</code></pre>
-<p>Normally it should be in</p>
-<pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
-</code></pre>
-<p>Then add following line to the bash_profile in home</p>
-<pre><code>[ -f /usr/local/etc/bash_completion ] &amp;&amp; . /usr/local/etc/bash_completion
-</code></pre>
-<p>Finally apply your changes with</p>
-<pre><code>$ source /usr/local/etc/bash_completion.d/git-completion.bash
-</code></pre>
-<h2 id="build-and-start-opencast">Build and Start Opencast</h2>
-<hr />
-<p>You can build now opencast by changing your directory into your opencast location and by running:</p>
-<pre><code>$ mvn clean install
-</code></pre>
-<p>After the successfully compilation you can start opencast with:</p>
-<pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast
-</code></pre>
-<p>The <code>-Pdev</code> argument decreases the build time and skips the creation of multiple tarballs and turning on the developer tarball.</p>
-<pre><code>$ cd opencast &amp;&amp; mvn clean install -Pdev
-$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast
-</code></pre>
-<p>For further information visit <a href="../development-environment/">Development Environment</a>.</p>
-<h3 id="useful-commands-for-testing-purposes">Useful Commands for Testing Purposes</h3>
+<p>Multiple threads build have not been thoroughly tested and may cause runtime problems or unexpected behavior.
+We don't advise using this feature for production.</p>
+<h4 id="useful-commands-for-testing-purposes">Useful Commands for Testing Purposes</h4>
 <p>For a quick build, you can use the following command to skip Opencast's tests.</p>
 <pre><code>$ cd opencast
-$ mvn clean install -Pdev -DskipTests=true
+$ mvn clean install -Pdev -DskipTests
 </code></pre>
-<p>To see the whole stacktrace of the installation you can use the following command to disable the trimming.</p>
+<p>To see the whole <code>stacktrace</code> of the installation you can use the following command to disable the trimming.</p>
 <pre><code>$ cd opencast
 $ mvn clean install -DtrimStackTrace=false
 </code></pre>
 <p>If you want to start opencast in debug mode, you could use the debug argument:</p>
 <pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast debug
 </code></pre>
-<h2 id="modify-code-and-build-changes">Modify Code and Build Changes</h2>
-<hr />
-<p>After you modified your code you can go back to step "Build and Start Opencast" to rebuild Opencast.</p>
 <h2 id="common-build-errors-or-fixes">Common Build Errors or Fixes</h2>
-<hr />
 <h3 id="npm-access-error">NPM Access Error</h3>
-<p>To fix an npm access error (<a href="https://stackoverflow.com/questions/16151018/npm-throws-error-without-sudo">example</a>), you can run</p>
+<p>To fix a NPM access error (<a href="https://stackoverflow.com/questions/16151018/npm-throws-error-without-sudo">example</a>),
+ you can run</p>
 <pre><code>$ sudo chown -R $USER:$(id -gn $USER) ~/.config &amp;&amp; sudo chown -R $USER:$(id -gn $USER) ~/.npm
 </code></pre>
 <h3 id="jdk-version">JDK Version</h3>
-<p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE is configured to use JDK 1.8.0.</p>
-<h3 id="slow-idea-fix">Slow IDEA Fix</h3>
+<p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE uses JDK 11.</p>
+<h2 id="recommended-development-tools">Recommended Development Tools</h2>
+<p>While you can use any IDE or editor you like, we recommend the following tools.</p>
+<h3 id="intellij-idea-ide-community-edition">IntelliJ IDEA IDE Community Edition</h3>
+<p>Install it by downloading and following the manufacturer guide, select Community Edition:</p>
+<p><a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA Community Edition</a></p>
+<h4 id="import-opencast">Import Opencast</h4>
+<p>Follow the next steps, if you want to import opencast correctly</p>
+<ul>
+<li>Import project from external model</li>
+<li>Choose Maven</li>
+<li>Search for projects recursively</li>
+<li>Uncheck all listed profiles</li>
+<li>Check all projects to import</li>
+<li>Select JDK 11, it should be somewhere around <code>/usr/lib/jvm/java-11-openjdk</code> depending on your current system</li>
+</ul>
+<p>Now Idea should import the projects, it could take some time, you can make it faster by following <a href="#slow-intellij-idea-fix">this</a>.</p>
+<h4 id="setup-code-style">Setup Code Style</h4>
+<p>Import the opencast code style configuration by following the steps</p>
+<ul>
+<li>Go to settings</li>
+<li>Search for code style</li>
+<li>You should find it under Editor → Code Style</li>
+<li>Select Java and click on the gear icon</li>
+<li>Select Import Scheme and IntelliJ IDEA code style XML</li>
+<li>Import it from <code>opencast/docs/intellij_settings/codestyle.xml</code></li>
+</ul>
+<h4 id="setup-checkstyle">Setup CheckStyle</h4>
+<p>Check style is one of the tools we use to ensure code quality. Not following the check style rules will produce build errors.
+To use it in IntelliJ, follow these steps:</p>
+<ul>
+<li>Install the <a href="https://plugins.jetbrains.com/plugin/1065-checkstyle-idea">CheckStyle-IDEA plugin</a></li>
+<li>Configure the plugin:<ol>
+<li>Go to settings → Tools → Checkstyle</li>
+<li>Click on the plus icon</li>
+<li>Add a description</li>
+<li>Select “Use a local Checkstyle file“</li>
+<li>Fill the blanks:<ul>
+<li>checkstyle.header.file: <code>/docs/checkstyle/checkstyle-header.txt</code></li>
+<li>checkstyle.supressions.file: <code>/docs/checkstyle/checkstyle-suppressions.xml</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>To use the plugin, you can run manually the check-style plugin through the menu View → Tool Windows → Checkstyle.</p>
+<p>Now your IDE should be ready for developing.</p>
+<h4 id="slow-intellij-idea-fix">Slow IntelliJ IDEA Fix</h4>
 <p>Edit following file</p>
 <pre><code>$ sudo nano /etc/sysctl.conf
 </code></pre>
@@ -262,50 +294,19 @@ $ mvn clean install -DtrimStackTrace=false
 <p>Apply your changes with</p>
 <pre><code>$ sudo sysctl -p --system
 </code></pre>
-<h2 id="intellij-idea-ide-community-edition-optional">Intellij Idea IDE Community Edition (optional)</h2>
-<hr />
-<p>If you are currently on Fedora, you can install it with following command.
-Make sure, that the versions match, you probably have to change it depending on the most current version.</p>
-<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; wget https://download.jetbrains.com/idea/ideaIC-2019.2.tar.gz
-$ sudo tar -zxvf ideaIC-*.tar.gz -C /opt
-$ cd /opt &amp;&amp; sudo mv idea-IC-*/ idea &amp;&amp; sh /opt/idea/bin/idea.sh
-</code></pre>
-<p>Otherwise install it by downloading and following the manufacturer guide, select Community Edition:</p>
-<p><a href="https://www.jetbrains.com/idea/download/">IDEA Intellij Community Edition</a></p>
-<p>Follow the next steps, if you want to import opencast correctly</p>
+<h3 id="visual-studio-code-editor">Visual Studio Code Editor</h3>
+<p>We use VS code for mainly:</p>
 <ul>
-<li>Import project from external model</li>
-<li>Choose Maven</li>
-<li>Search for projects recursively</li>
-<li>Uncheck all listed profiles</li>
-<li>Check all projects to import</li>
-<li>Make sure not to select JDK 11, please select JDK 1.8.0, it should be somewhere around /usr/lib/jvm/java-1.8.0-openjdk depending on your current system</li>
+<li>Frontend development</li>
+<li>Configure files</li>
+<li>Markdown files</li>
+<li>And other simple tasks.</li>
 </ul>
-<p>Now Idea should import the projects, it could take some time, you can make it faster by following <a href="#slow-idea-fix">this</a>. </p>
-<p>Import the opencast code style configuration by following the steps</p>
-<ul>
-<li>Go to settings</li>
-<li>Search for code style</li>
-<li>You should find it under Editor-&gt;Code Style</li>
-<li>Select Java and click on the gear icon</li>
-<li>Select Import Scheme and Intellij IDEA code style XML</li>
-<li>Import it from opencast/docs/intellij_settings/codestyle.xml</li>
-</ul>
-<p>Now your IDE should be ready for developing.</p>
-<h2 id="visual-studio-code-editor-optional">Visual Studio Code Editor (optional)</h2>
-<hr />
-<p>If you are currently on Fedora, you can install it with</p>
-<pre><code>$ cd &amp;&amp; cd Downloads &amp;&amp; sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &amp;&amp; sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" &gt; /etc/yum.repos.d/vscode.repo' &amp;&amp; dnf check-update &amp;&amp; sudo dnf install code -y
-</code></pre>
-<p>Otherwise install it by downloading and following the manufacturer guide:</p>
-<p><a href="https://code.visualstudio.com/">Visual Studio Code</a></p>
-<p>After installation you can open a folder in bash with</p>
-<pre><code>$ code .
-</code></pre>
-<p>Recommended Extensions are</p>
+<p>Install it by downloading and following the <a href="https://code.visualstudio.com/">manufacturer guide</a>:</p>
+<p>Recommended Extensions are:</p>
 <ul>
 <li>ESLint by Dirk Baeumer</li>
-<li>AngularJs 1.x Code Snippets by alexandersage</li>
+<li>AngularJS 1.x Code Snippets by alexandersage</li>
 <li>Debugger for Chrome by Microsoft</li>
 </ul>
 

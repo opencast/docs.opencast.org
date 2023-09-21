@@ -33,11 +33,12 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Development Environment", url: "#_top", children: [
+          {title: "Developer Tips", url: "#_top", children: [
               {title: "Common Developer Pitfalls", url: "#common-developer-pitfalls" },
               {title: "Developer Builds", url: "#developer-builds" },
               {title: "Logging During Builds", url: "#logging-during-builds" },
               {title: "Building single modules", url: "#building-single-modules" },
+              {title: "Specific development environments tips", url: "#specific-development-environments-tips" },
           ]},
         ];
 
@@ -86,17 +87,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="development-environment">Development Environment</h1>
+    <h1 id="developer-tips">Developer Tips</h1>
 <h2 id="common-developer-pitfalls">Common Developer Pitfalls</h2>
 <p>Every development environment has its quirks, so here are a few which have been collected by the community:</p>
 <h3 id="general">General</h3>
 <ul>
-<li>Build Opencast, then open your IDE.  Opencast generates a number of classes as part of its build process (eg:
-  QSnapshotDto), which will not be found by your IDE and thus cause build errors.  It is possible to get your IDE
+<li>Build Opencast, then open your IDE.  Opencast generates a number of classes as part of its build process (e.g.
+  <code>QSnapshotDto</code>), which will not be found by your IDE and thus cause build errors.  It is possible to get your IDE
   to run the appropriate Maven lifecycle event, but that can be hit-and-miss in terms of functionality.</li>
 <li>If your IDE stubbornly refuses to acknowledge that a class exists, even when you're sure it's there, try closing your
-  IDE, then running <code>git clean -fdx</code>, then building.  This will ensure everything in your clone is up to date.  Also
+  IDE, then running <code>git clean -fdx</code>, then building.  This will ensure everything in your clone is up-to-date.  Also
   ensure you find your project workspace to make sure your IDE isn't keeping a cache of things.</li>
+<li>Check if you have selected the correct java version in your IDE. Opencast requires Java 11 or 17, but your IDE might have
+  selected a different version.</li>
 <li>Absolute worst case, remove your Maven cache (typically ~/.m2), and possibly your Node cache (typically ~/.npm) and
   repeat the above steps.  This is completely starting from scratch.</li>
 </ul>
@@ -106,7 +109,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 <h2 id="developer-builds">Developer Builds</h2>
 <p>Besides the default <code>dist</code> Maven profile, the assemblies project defines a second <code>dev</code> profile which will cause only
-one allinone distribution to be created. It is already unpacked and ready to be started. Activate the profile using:</p>
+one <code>allinone</code> distribution to be created. It is already unpacked and ready to be started. Activate the profile using:</p>
 <pre><code>mvn clean install -Pdev
 </code></pre>
 <p>The administrative user interface needs nodejs to build and phantomjs for testing purposes. These will be downloaded as
@@ -139,6 +142,64 @@ this changes permanently, you have to run <code>mvn clean install</code> in the 
 instance will be deleted by the new assembly!</p>
 <p>In several cases the <code>bundle:watch</code> can bring Karaf in an unstable condition, as dependencies between bundles will not
 correctly be restored, after the new bundle has been deployed.</p>
+<h2 id="specific-development-environments-tips">Specific development environments tips</h2>
+<h3 id="ubuntu-using-jdk-11">Ubuntu (Using JDK 11)</h3>
+<h4 id="update-system">Update System</h4>
+<pre><code class="language-sh">$ apt update
+$ apt upgrade -y
+</code></pre>
+<h4 id="install-packages-via-apt">Install Packages via APT</h4>
+<pre><code class="language-sh">$ apt install -y git openjdk-11-jdk maven gcc g++ build-essential cmake curl sox hunspell synfig ffmpeg
+</code></pre>
+<h4 id="install-nodejs-optional">Install NodeJS (optional)</h4>
+<pre><code class="language-sh">$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+</code></pre>
+<h4 id="install-and-start-elasticsearch-with-docker">Install and start Elasticsearch with Docker</h4>
+<p>You can use <code>docker compose</code> to easily run Elasticsearch:</p>
+<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
+$ docker compose up -d
+</code></pre>
+<p>To shut the services down again, run:</p>
+<pre><code class="language-sh">$ cd docs/scripts/devel-dependency-containers
+$ docker compose down
+</code></pre>
+<h4 id="set-system-java-jdk">Set System Java JDK</h4>
+<p>Choose the Java Version 11 by entering:</p>
+<pre><code class="language-sh">$ update-alternatives --config java
+</code></pre>
+<h3 id="macos">macOS</h3>
+<h4 id="update-system_1">Update System</h4>
+<p>Try to install all updates via the App Store or system settings.</p>
+<h4 id="java-jdk-11">Java JDK 11</h4>
+<p>Install the JDK 11
+It's recommended to use <a href="https://sdkman.io/">SDKMAN</a> to install and manage Java versions.</p>
+<h4 id="xcode">XCode</h4>
+<p>Install XCode over the App Store. It will be needed for building and for git.</p>
+<h4 id="install-packages-via-homebrew">Install Packages via Homebrew</h4>
+<p>The Homebrew Project adds a package manager to Mac OS. You can install it by:</p>
+<pre><code class="language-sh">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre>
+<p>You can now install needed packages:</p>
+<pre><code class="language-sh">$ brew install maven ffmpeg nodejs
+</code></pre>
+<h4 id="git-bash-completion">Git Bash Completion</h4>
+<p>In macOS you can not complete or suggest half typed commands with your Tab Key (like you probably know from linux).
+If you want to use bash completion, you have to install it by:</p>
+<pre><code class="language-sh">$ brew install bash-completion
+</code></pre>
+<p>Find the location of the configuration file</p>
+<pre><code class="language-sh">$ sudo find / -type f -name &quot;git-completion.bash&quot;
+</code></pre>
+<p>Normally it should be in</p>
+<pre><code>$ cp /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash /usr/local/etc/bash_completion.d/
+</code></pre>
+<p>Then add following line to the <code>bash_profile</code> in home</p>
+<pre><code>[ -f /usr/local/etc/bash_completion ] &amp;&amp; . /usr/local/etc/bash_completion
+</code></pre>
+<p>Finally, apply your changes with</p>
+<pre><code>$ source /usr/local/etc/bash_completion.d/git-completion.bash
+</code></pre>
 
   <br>
     
@@ -175,7 +236,7 @@ correctly be restored, after the new bundle has been deployed.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/develop/development-environment.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/develop/development-tips.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
