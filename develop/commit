@@ -1,15 +1,15 @@
-commit 6590beba98d6075df973960e60164e84fdbc9cb9
+commit a1000ff9ce188e25893a5243f98b93620c44b543
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Sep 29 09:44:42 2023 +0200
+Date:   Fri Sep 29 10:39:45 2023 +0200
 
-    Fix Translation Updates (#5256)
+    Extend Asset Upload Workflow for Captions (#5248)
     
-    This patch fixes the workflow downloading translation updates from
-    Crowdin and applying them to our codebase. There is a typo in one of the
-    variables causing the workflow to be invalid:
+    In accordance with the recent changes to subtitles in Opencast, captions
+    need special handling when they're uploaded to an existing event, e.g.
+    they must be cut. This extends the existing workflow to handle this use
+    case.
     
-        Invalid workflow file: .github/workflows/update-translations.yml#L41
+    **Attention:** This change depends on #5243 and #5247 to work and should
+    not be merged separately!
     
-        The workflow is not valid. .github/workflows/update-translations.yml
-        (Line: 41, Col: 24): Unrecognized named-value: 'secret'. Located at
-        position 1 within expression: secret.CROWDIN_TOKEN
+    Also contains a minor fix in another workflow.
