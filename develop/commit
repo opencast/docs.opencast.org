@@ -1,15 +1,11 @@
-commit a1000ff9ce188e25893a5243f98b93620c44b543
+commit 077ec1d4391f254f86c55960663080e4006b9c5b
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Sep 29 10:39:45 2023 +0200
+Date:   Fri Sep 29 11:04:40 2023 +0200
 
-    Extend Asset Upload Workflow for Captions (#5248)
+    Drop DeleteSnapshot Event Handler (#5233)
     
-    In accordance with the recent changes to subtitles in Opencast, captions
-    need special handling when they're uploaded to an existing event, e.g.
-    they must be cut. This extends the existing workflow to handle this use
-    case.
+    This patch removes the event triggered after deleting a snapshot. This
+    can easily be triggered thousands of times when cleaning up and nothing
+    in Opencast is actually using the event.
     
-    **Attention:** This change depends on #5243 and #5247 to work and should
-    not be merged separately!
-    
-    Also contains a minor fix in another workflow.
+    This fixes #5173
