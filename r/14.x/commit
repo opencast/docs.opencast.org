@@ -1,22 +1,13 @@
-commit 6f789ee17fe8c942ce7dccf678dc575663284a6b
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Sep 27 13:20:32 2023 +0200
+commit b4cd92732b834b2a572735949603fa869e539b77
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Fri Sep 29 10:39:19 2023 +0200
 
-    Improve asset manager event handler logging (#5259)
+    Extend analyze-mp for tag variables (#5243)
     
-    This actually logs what type of event has fired instead of just stating
-    that an event has fired.
+    This extends the analyze-mediapackage WOH so it can also create
+    variables containing whether elements with a specific flavor and tag
+    exist, for example `captions_source_hastag_archive`. This allows this
+    information to be used in workflow execution conditions.
     
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    These variables aren't created by default (because there can be a lot of
+    them), but only when `set-tag-variables` is true.
