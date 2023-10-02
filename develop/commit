@@ -1,135 +1,126 @@
-commit 4df0d90bb3904b5c9bede30b09c79984cc51c3b8
+commit 18f767c5a5b7aee2cda898dc2ee3886a4866d6d6
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Sun Oct 1 21:05:39 2023 +0200
+Date:   Mon Oct 2 12:59:57 2023 +0200
 
-    Bump @babel/eslint-parser from 7.22.11 to 7.22.15 in /modules/engage-paella-player-7 (#5293)
+    Bump sass from 1.66.1 to 1.68.0 in /modules/admin-ui-frontend (#5295)
     
-    Bumps
-    [@babel/eslint-parser](https://github.com/babel/babel/tree/HEAD/eslint/babel-eslint-parser)
-    from 7.22.11 to 7.22.15.
+    Bumps [sass](https://github.com/sass/dart-sass) from 1.66.1 to 1.68.0.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/babel/babel/releases"><code>@​babel/eslint-parser</code>'s
+    href="https://github.com/sass/dart-sass/releases">sass's
     releases</a>.</em></p>
     <blockquote>
-    <h2>v7.22.15 (2023-09-04)</h2>
-    <h4>:bug: Bug Fix</h4>
+    <h2>Dart Sass 1.68.0</h2>
+    <p>To install Sass 1.68.0, download one of the packages below and <a
+    href="https://katiek2.github.io/path-doc/">add it to your PATH</a>, or
+    see <a href="https://sass-lang.com/install">the Sass website</a> for
+    full installation instructions.</p>
+    <h1>Changes</h1>
     <ul>
-    <li><code>babel-core</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15923">#15923</a>
-    Only perform config loading re-entrancy check for cjs (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
+    <li>Fix the source spans associated with the <code>abs-percent</code>
+    deprecation.</li>
     </ul>
+    <h3>JS API</h3>
+    <ul>
+    <li>
+    <p>Non-filesystem importers can now set the
+    <code>nonCanonicalScheme</code> field, which declares that one or more
+    URL schemes (without <code>:</code>) will never be used for URLs
+    returned by the <code>canonicalize()</code> method.</p>
+    </li>
+    <li>
+    <p>Add a <code>containingUrl</code> field to the
+    <code>canonicalize()</code> and <code>findFileUrl()</code> methods of
+    importers, which is set to the canonical URL of the stylesheet that
+    contains the current load. For filesystem importers, this is always set;
+    for other importers, it's set only if the current load has no URL
+    scheme, or if its URL scheme is declared as non-canonical by the
+    importer.</p>
     </li>
     </ul>
-    <h4>:house: Internal</h4>
+    <h3>Dart API</h3>
     <ul>
-    <li><em>Every package</em>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15892">#15892</a> Add
-    explicit <code>.ts</code>/<code>.js</code> extension to all imports in
-    <code>src</code> (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p>Add <code>AsyncImporter.isNonCanonicalScheme</code>, which importers
+    (async or sync) can use to indicate that a certain URL scheme will never
+    be used for URLs returned by the <code>canonicalize()</code> method.</p>
+    </li>
+    <li>
+    <p>Add <code>AsyncImporter.containingUrl</code>, which is set during
+    calls to the <code>canonicalize()</code> method to the canonical URL of
+    the stylesheet that contains the current load. This is set only if the
+    current load has no URL scheme, or if its URL scheme is declared as
+    non-canonical by the importer.</p>
     </li>
     </ul>
-    <h4>Committers: 4</h4>
+    <h3>Embedded Sass</h3>
     <ul>
-    <li>Babel Bot (<a
-    href="https://github.com/babel-bot"><code>@​babel-bot</code></a>)</li>
-    <li>Huáng Jùnliàng (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    <li>Nicolò Ribaudo (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    <li><a
-    href="https://github.com/liuxingbaoyu"><code>@​liuxingbaoyu</code></a></li>
-    </ul>
-    <h2>v7.22.14 (2023-08-30)</h2>
-    <h4>:bug: Bug Fix</h4>
-    <ul>
-    <li><code>babel-preset-env</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15907">#15907</a>
-    Avoid dynamic require call in preset-env (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p>The <code>CalculationValue.interpolation</code> field is deprecated
+    and will be removed in a future version. It will no longer be set by the
+    compiler, and if the host sets it it will be treated as equivalent to
+    <code>CalculationValue.string</code> except that
+    <code>&quot;(&quot;</code> and <code>&quot;)&quot;</code> will be added
+    to the beginning and end of the string values.</p>
+    </li>
+    <li>
+    <p>Properly include TypeScript types in the <code>sass-embedded</code>
+    package.</p>
     </li>
     </ul>
-    <h4>:house: Internal</h4>
+    <p>See the <a
+    href="https://github.com/sass/dart-sass/blob/master/CHANGELOG.md#1680">full
+    changelog</a> for changes in earlier releases.</p>
+    <h2>Dart Sass 1.67.0</h2>
+    <p>To install Sass 1.67.0, download one of the packages below and <a
+    href="https://katiek2.github.io/path-doc/">add it to your PATH</a>, or
+    see <a href="https://sass-lang.com/install">the Sass website</a> for
+    full installation instructions.</p>
+    <h1>Changes</h1>
     <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15884">#15884</a>
-    Simplify parser errors creation (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p>All functions defined in CSS Values and Units 4 are now once again
+    parsed as calculation objects: <code>round()</code>, <code>mod()</code>,
+    <code>rem()</code>, <code>sin()</code>, <code>cos()</code>,
+    <code>tan()</code>, <code>asin()</code>, <code>acos()</code>,
+    <code>atan()</code>, <code>atan2()</code>, <code>pow()</code>,
+    <code>sqrt()</code>, <code>hypot()</code>, <code>log()</code>,
+    <code>exp()</code>, <code>abs()</code>, and <code>sign()</code>.</p>
+    <p>Unlike in 1.65.0, function calls are <em>not</em> locked into being
+    parsed as calculations or plain Sass functions at parse-time. This means
+    that user-defined functions will take precedence over CSS calculations
+    of the same name. Although the function names <code>calc()</code> and
+    <code>clamp()</code> are still forbidden, users may continue to freely
+    define functions whose names overlap with other CSS calculations
+    (including <code>abs()</code>, <code>min()</code>, <code>max()</code>,
+    and <code>round()</code> whose names overlap with global Sass
+    functions).</p>
     </li>
-    <li><code>babel-core</code>,
-    <code>babel-helper-compilation-targets</code>,
-    <code>babel-helper-simple-access</code>, <code>babel-parser</code>,
-    <code>babel-plugin-syntax-decorators</code>,
-    <code>babel-preset-env</code>, <code>babel-preset-flow</code>,
-    <code>babel-preset-react</code>, <code>babel-preset-typescript</code>,
-    <code>babel-traverse</code>, <code>babel-types</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15902">#15902</a>
-    extract more test helpers to repo-utils (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
+    <li>
+    <p>As a consequence of the change in calculation parsing described
+    above, calculation functions containing interpolation are now parsed
+    more strictly than before. However, all interpolations that would have
+    produced valid CSS will continue to work, so this is not considered a
+    breaking change.</p>
     </li>
-    </ul>
-    <h4>Committers: 2</h4>
-    <ul>
-    <li>Huáng Jùnliàng (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    <li>Nicolò Ribaudo (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    <h2>v7.22.13 (2023-08-28)</h2>
-    <h4>:house: Internal</h4>
-    <ul>
-    <li><code>babel-helper-fixtures</code>,
-    <code>babel-plugin-proposal-function-bind</code>,
-    <code>babel-plugin-transform-modules-commonjs</code>,
-    <code>babel-preset-env</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15890">#15890</a>
-    Improve helper-fixtures (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
+    <li>
+    <p>Interpolations in calculation functions that aren't used in a
+    position that could also have a normal calculation value are now
+    deprecated. For example, <code>calc(1px #{&quot;+ 2px&quot;})</code> is
+    deprecated, but <code>calc(1px + #{&quot;2px&quot;})</code> is still
+    allowed. This deprecation is named <code>calc-interp</code>. See <a
+    href="https://sass-lang.com/install">the Sass website</a> for more
+    information.</p>
     </li>
-    </ul>
-    <h4>:leftwards_arrow_with_hook: Revert</h4>
-    <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15901">#15901</a>
-    Revert &quot;Do not record trailing comma pos when
-    <code>maybeAsyncArrow: false</code>&quot; (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p><strong>Potentially breaking bug fix</strong>: The importer used to
+    load a given file is no longer used to load absolute URLs that appear in
+    that file. This was unintented behavior that contradicted the Sass
+    specification. Absolute URLs will now correctly be loaded only from the
+    global importer list. This applies to the modern JS API, the Dart API,
+    and the embedded protocol.</p>
     </li>
-    </ul>
-    <h4>Committers: 2</h4>
-    <ul>
-    <li>Huáng Jùnliàng (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    <li>Nicolò Ribaudo (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    <h2>v7.22.12 (2023-08-25)</h2>
-    <h4>:bug: Bug Fix</h4>
-    <ul>
-    <li><code>babel-plugin-transform-optional-chaining</code></li>
     </ul>
     <!-- raw HTML omitted -->
     </blockquote>
@@ -138,162 +129,149 @@ Date:   Sun Oct 1 21:05:39 2023 +0200
     <details>
     <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/babel/babel/blob/main/CHANGELOG.md"><code>@​babel/eslint-parser</code>'s
+    href="https://github.com/sass/dart-sass/blob/main/CHANGELOG.md">sass's
     changelog</a>.</em></p>
     <blockquote>
-    <h2>v7.22.15 (2023-09-04)</h2>
-    <h4>:bug: Bug Fix</h4>
+    <h2>1.68.0</h2>
     <ul>
-    <li><code>babel-core</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15923">#15923</a>
-    Only perform config loading re-entrancy check for cjs (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
+    <li>Fix the source spans associated with the <code>abs-percent</code>
+    deprecation.</li>
     </ul>
+    <h3>JS API</h3>
+    <ul>
+    <li>
+    <p>Non-filesystem importers can now set the
+    <code>nonCanonicalScheme</code> field, which
+    declares that one or more URL schemes (without <code>:</code>) will
+    never be used for
+    URLs returned by the <code>canonicalize()</code> method.</p>
+    </li>
+    <li>
+    <p>Add a <code>containingUrl</code> field to the
+    <code>canonicalize()</code> and <code>findFileUrl()</code>
+    methods of importers, which is set to the canonical URL of the
+    stylesheet that
+    contains the current load. For filesystem importers, this is always set;
+    for
+    other importers, it's set only if the current load has no URL scheme, or
+    if
+    its URL scheme is declared as non-canonical by the importer.</p>
     </li>
     </ul>
-    <h4>:house: Internal</h4>
+    <h3>Dart API</h3>
     <ul>
-    <li><code>babel-cli</code>, <code>babel-core</code>,
-    <code>babel-generator</code>,
-    <code>babel-helper-builder-binary-assignment-operator-visitor</code>,
-    <code>babel-helper-compilation-targets</code>,
-    <code>babel-helper-create-class-features-plugin</code>,
-    <code>babel-helper-create-regexp-features-plugin</code>,
-    <code>babel-helper-member-expression-to-functions</code>,
-    <code>babel-helper-module-imports</code>,
-    <code>babel-helper-module-transforms</code>,
-    <code>babel-helper-transform-fixture-test-runner</code>,
-    <code>babel-helper-validator-identifier</code>,
-    <code>babel-helper-validator-option</code>, <code>babel-helpers</code>,
-    <code>babel-node</code>, <code>babel-parser</code>,
-    <code>babel-plugin-bugfix-safari-id-destructuring-collision-in-function-expression</code>,
-    <code>babel-plugin-bugfix-v8-spread-parameters-in-optional-chaining</code>,
-    <code>babel-plugin-proposal-decorators</code>,
-    <code>babel-plugin-proposal-destructuring-private</code>,
-    <code>babel-plugin-proposal-pipeline-operator</code>,
-    <code>babel-plugin-transform-async-generator-functions</code>,
-    <code>babel-plugin-transform-block-scoping</code>,
-    <code>babel-plugin-transform-classes</code>,
-    <code>babel-plugin-transform-destructuring</code>,
-    <code>babel-plugin-transform-for-of</code>,
-    <code>babel-plugin-transform-modules-commonjs</code>,
-    <code>babel-plugin-transform-object-rest-spread</code>,
-    <code>babel-plugin-transform-optional-chaining</code>,
-    <code>babel-plugin-transform-parameters</code>,
-    <code>babel-plugin-transform-property-mutators</code>,
-    <code>babel-plugin-transform-react-jsx</code>,
-    <code>babel-plugin-transform-runtime</code>,
-    <code>babel-plugin-transform-typescript</code>,
-    <code>babel-preset-env</code>, <code>babel-preset-flow</code>,
-    <code>babel-preset-react</code>, <code>babel-preset-typescript</code>,
-    <code>babel-register</code>, <code>babel-standalone</code>,
-    <code>babel-template</code>, <code>babel-traverse</code>,
-    <code>babel-types</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15892">#15892</a> Add
-    explicit <code>.ts</code>/<code>.js</code> extension to all imports in
-    <code>src</code> (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p>Add <code>AsyncImporter.isNonCanonicalScheme</code>, which importers
+    (async or sync) can
+    use to indicate that a certain URL scheme will never be used for URLs
+    returned
+    by the <code>canonicalize()</code> method.</p>
+    </li>
+    <li>
+    <p>Add <code>AsyncImporter.containingUrl</code>, which is set during
+    calls to the
+    <code>canonicalize()</code> method to the canonical URL of the
+    stylesheet that contains
+    the current load. This is set only if the current load has no URL
+    scheme, or
+    if its URL scheme is declared as non-canonical by the importer.</p>
     </li>
     </ul>
-    <h2>v7.22.14 (2023-08-30)</h2>
-    <h4>:bug: Bug Fix</h4>
+    <h3>Embedded Sass</h3>
     <ul>
-    <li><code>babel-preset-env</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15907">#15907</a>
-    Avoid dynamic require call in preset-env (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
+    <li>
+    <p>The <code>CalculationValue.interpolation</code> field is deprecated
+    and will be removed
+    in a future version. It will no longer be set by the compiler, and if
+    the host
+    sets it it will be treated as equivalent to
+    <code>CalculationValue.string</code> except
+    that <code>&quot;(&quot;</code> and <code>&quot;)&quot;</code> will be
+    added to the beginning and end of the string
+    values.</p>
+    </li>
+    <li>
+    <p>Properly include TypeScript types in the <code>sass-embedded</code>
+    package.</p>
     </li>
     </ul>
-    <h4>:house: Internal</h4>
+    <h2>1.67.0</h2>
     <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15884">#15884</a>
-    Simplify parser errors creation (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    </li>
-    <li><code>babel-core</code>,
-    <code>babel-helper-compilation-targets</code>,
-    <code>babel-helper-simple-access</code>, <code>babel-parser</code>,
-    <code>babel-plugin-syntax-decorators</code>,
-    <code>babel-preset-env</code>, <code>babel-preset-flow</code>,
-    <code>babel-preset-react</code>, <code>babel-preset-typescript</code>,
-    <code>babel-traverse</code>, <code>babel-types</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15902">#15902</a>
-    extract more test helpers to repo-utils (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h2>v7.22.13 (2023-08-28)</h2>
-    <h4>:house: Internal</h4>
-    <ul>
-    <li><code>babel-helper-fixtures</code>,
-    <code>babel-plugin-proposal-function-bind</code>,
-    <code>babel-plugin-transform-modules-commonjs</code>,
-    <code>babel-preset-env</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15890">#15890</a>
-    Improve helper-fixtures (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
+    <li>
+    <p>All functions defined in CSS Values and Units 4 are now once again
+    parsed as
+    calculation objects: <code>round()</code>, <code>mod()</code>,
+    <code>rem()</code>, <code>sin()</code>, <code>cos()</code>,
+    <code>tan()</code>,
+    <code>asin()</code>, <code>acos()</code>, <code>atan()</code>,
+    <code>atan2()</code>, <code>pow()</code>, <code>sqrt()</code>,
+    <code>hypot()</code>,
+    <code>log()</code>, <code>exp()</code>, <code>abs()</code>, and
+    <code>sign()</code>.</p>
+    <p>Unlike in 1.65.0, function calls are <em>not</em> locked into being
+    parsed as
+    calculations or plain Sass functions at parse-time. This means that
+    user-defined functions will take precedence over CSS calculations of the
+    same
+    name. Although the function names <code>calc()</code> and
+    <code>clamp()</code> are still forbidden,
+    users may continue to freely define functions whose names overlap with
+    other
+    CSS calculations (including <code>abs()</code>, <code>min()</code>,
+    <code>max()</code>, and <code>round()</code> whose</p>
     </li>
     </ul>
-    <h4>:leftwards_arrow_with_hook: Revert</h4>
-    <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15901">#15901</a>
-    Revert &quot;Do not record trailing comma pos when
-    <code>maybeAsyncArrow: false</code>&quot; (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h2>v7.22.12 (2023-08-25)</h2>
-    <h4>:bug: Bug Fix</h4>
-    <ul>
-    <li><code>babel-plugin-transform-optional-chaining</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/15888">#15888</a> Fix
-    optional chain optimization in sequence expression (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
+    <!-- raw HTML omitted -->
     </blockquote>
+    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/babel/babel/commit/526005196e439b917960cf0a4181a78fa656dac0"><code>5260051</code></a>
-    v7.22.15</li>
+    href="https://github.com/sass/dart-sass/commit/de618fa7bd74cc648f3ee62358eed3e237d4644f"><code>de618fa</code></a>
+    Fix an error during embedded compiler shutdown (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2092">#2092</a>)</li>
     <li><a
-    href="https://github.com/babel/babel/commit/c39fda2878a075271b401a6f70a5f22ff594380b"><code>c39fda2</code></a>
-    chore: Update TS 5.2 (<a
-    href="https://github.com/babel/babel/tree/HEAD/eslint/babel-eslint-parser/issues/15897">#15897</a>)</li>
+    href="https://github.com/sass/dart-sass/commit/873e91e5fffefec7b6d9d6d3d79472c4cca3154e"><code>873e91e</code></a>
+    Cut a release (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2090">#2090</a>)</li>
     <li><a
-    href="https://github.com/babel/babel/commit/f64b04e216be9bd34b3e7b63042b7cff1e379310"><code>f64b04e</code></a>
-    extract more test helpers to repo-utils (<a
-    href="https://github.com/babel/babel/tree/HEAD/eslint/babel-eslint-parser/issues/15902">#15902</a>)</li>
-    <li>See full diff in <a
-    href="https://github.com/babel/babel/commits/v7.22.15/eslint/babel-eslint-parser">compare
+    href="https://github.com/sass/dart-sass/commit/13c9fb3c9d97d4d9582ccd33689111d74024261d"><code>13c9fb3</code></a>
+    Expose the containing URL to importers under some circumstances (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2083">#2083</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/69f1847bae60df16fe7d7bdfdfa794da8bf8c3d4"><code>69f1847</code></a>
+    CI: Configure dependabot to update GitHub Actions, too (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2087">#2087</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/c22c84d2c5cdd3d0c0333eb1c5b37bedb8b1cc3c"><code>c22c84d</code></a>
+    Update changelog for <a
+    href="https://redirect.github.com/sass/embedded-host-node/issues/248">sass/embedded-host-node#248</a>
+    (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2086">#2086</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/37e0ed54da1bd3ba3d4f4127da3a9575f7a9224e"><code>37e0ed5</code></a>
+    Fix source span for calculation deprecation warnings (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2084">#2084</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/7370d6a97df58966f72e896f8dd53dfe2ab3c4df"><code>7370d6a</code></a>
+    Fix changelog for 1.67.0 (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2085">#2085</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/5c31d1f245c274ff90eded7d7ae4437c664798b9"><code>5c31d1f</code></a>
+    Re-enable new calculation functions (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2080">#2080</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/bdb145f0396446dd1771229592bb31aea9c4383a"><code>bdb145f</code></a>
+    Fix example (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2074">#2074</a>)</li>
+    <li><a
+    href="https://github.com/sass/dart-sass/commit/77e208c2044dc91ab5aa75c6a96531922592b049"><code>77e208c</code></a>
+    Run cli compilations in parallel dart isolates (<a
+    href="https://redirect.github.com/sass/dart-sass/issues/2078">#2078</a>)</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/sass/dart-sass/compare/1.66.1...1.68.0">compare
     view</a></li>
     </ul>
     </details>
@@ -301,7 +279,7 @@ Date:   Sun Oct 1 21:05:39 2023 +0200
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=@babel/eslint-parser&package-manager=npm_and_yarn&previous-version=7.22.11&new-version=7.22.15)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=sass&package-manager=npm_and_yarn&previous-version=1.66.1&new-version=1.68.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
