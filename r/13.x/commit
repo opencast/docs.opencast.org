@@ -1,12 +1,25 @@
-commit 07443d702c5dcd7f7fdf3630ab7398ce264a63a4
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Sep 29 09:31:23 2023 +0200
+commit e050bd14e94955b29ff3e99e7a1245a5acefb987
+Author: Miguel Escriva <miesgre@gmail.com>
+Date:   Mon Oct 9 14:53:04 2023 +0200
 
-    Update ES index before triggering event handlers from AssetManager (#5260)
+    Paella 7: Use the localstorage to store the user preferences and upgrades Paella core to 1.43 (#5253)
     
-    The event handler for live events will trigger another snapshot if
-    something in the live publication changed. If we do the Elasticsearch
-    update afterwards, this means the update happens for the new snapshot
-    first, then for the old one, resulting in a lost update. This was broken
-    when this part was changed to be synchronous instead of asynchronous in
-    #3100.
+    This PR updates the paella to last version and updates the config file
+    to save the user preferences in the localstorage instead of cookies.
+    Fixes a "HTTP 431 header too large" bug when user's preferences are too
+    large.
+    See polimediaupv/paella-core#322
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [ ] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
