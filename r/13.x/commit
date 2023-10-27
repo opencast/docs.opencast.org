@@ -1,14 +1,16 @@
-commit ec246a7d41a2690fc09a0d4daf3617cc167d970d
+commit fa24a7470abc0554e58cf14601b3bcb3b64c65cf
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Oct 27 09:45:02 2023 +0200
+Date:   Fri Oct 27 10:39:39 2023 +0200
 
-    Add option to pass additional args to Whisper (#5342)
+    Get thumbnail for editor frontend from archive (#5354)
     
-    This allows us to pass additional arguments to Whisper without having to
-    deal with every single option separately.
+    Intends to fix https://github.com/opencast/opencast-editor/issues/1154
     
-    For example, I'm using this to pass the location for the model to
-    Whisper with `--model_dir`, since at least whisper-ctranslate2 defaults
-    to the home directory of the user... but if your user doesn't have a
-    home directory, this doesn't work. This is also the reason I'm aiming
-    this at 13.x, though this might be controversial.
+    When generating a thumbnail in the editor frontend, saving it and then
+    reloading the editor, the generated thumbnail would not show up. This is
+    because thumbnails are loaded from the internal publication, but the
+    generated thumbnails are only saved to the archive.
+    
+    This changes it so that thumbnails are loaded from the archive. If they
+    cannot be found there, they are loaded from the internal publication
+    instead.
