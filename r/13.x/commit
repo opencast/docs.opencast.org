@@ -1,9 +1,10 @@
-commit 72a579cd2b7c8067373b568b207e9c88bc931818
+commit f4235d45566bdfbdee363d578d630653bfb5cbd8
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Oct 27 11:24:58 2023 +0200
+Date:   Fri Oct 27 12:25:40 2023 +0200
 
-    Youtube-Publication: Throw explicit error if client_secret is malformed (#5349)
+    YT-Publish WOH: Fail more aggressively (#5350)
     
-    Parsing of the client_secret.json may go wrong, but currently the stack
-    trace is not very helpful in making clear when that happens. This should
-    help.
+    Currently the Youtube Publish WOH is a bit meek, often only logging
+    little warnings when it fails to publish. This makes the WOH more
+    assertive by having it throw exceptions instead, properly failing the
+    workflow.
