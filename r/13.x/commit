@@ -1,47 +1,14 @@
-commit 57c426b7d6418539357ec7aa9e0e04a310e26eb7
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Oct 20 15:48:05 2023 +0200
+commit ec246a7d41a2690fc09a0d4daf3617cc167d970d
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Fri Oct 27 09:45:02 2023 +0200
 
-    Add config-keys to set minimum rules for cuts and segments duration (#5317)
+    Add option to pass additional args to Whisper (#5342)
     
-    The editor WoH that applies the Opencast Built-in editor has some hidden
-    configurations that are not user reachable.
+    This allows us to pass additional arguments to Whisper without having to
+    deal with every single option separately.
     
-    These configurations are:
-    
-    - Minimum segment duration: If a segment has a lower duration as this
-    parameter, it will be discarded.
-    - Minimum Cut segment duration: If the cut between two segments is less
-    than the threshold, it will be discarded.
-    
-    The PR adds these two parameters to the
-    `etc/org.opencastproject.videoeditor.impl.VideoEditorServiceImpl.cfg`
-    file.
-    
-    Ready for Review
-    
-    ~~It will keep as a draft because I need to fix this undesirable log
-    message:~~
-    
-    ```
-    2023-10-06 15:07:15,981 | WARN  | (LoadUtil:95) - No hosts found that can process jobs of type segments.min.duration with load 100.0
-    2023-10-06 15:07:15,982 | WARN  | (LoadUtil:95) - No hosts found that can process jobs of type segments.min.cut.duration with load 100.0
-    ```
-    
-    ~~That error is because I used the same method to read the properties as
-    `jobLoad` variable. I will fix it soon.~~
-    
-    
-    ### Your pull request should…
-    
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    For example, I'm using this to pass the location for the model to
+    Whisper with `--model_dir`, since at least whisper-ctranslate2 defaults
+    to the home directory of the user... but if your user doesn't have a
+    home directory, this doesn't work. This is also the reason I'm aiming
+    this at 13.x, though this might be controversial.
