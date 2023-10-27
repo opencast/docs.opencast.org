@@ -1,16 +1,9 @@
-commit fa24a7470abc0554e58cf14601b3bcb3b64c65cf
+commit 72a579cd2b7c8067373b568b207e9c88bc931818
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Oct 27 10:39:39 2023 +0200
+Date:   Fri Oct 27 11:24:58 2023 +0200
 
-    Get thumbnail for editor frontend from archive (#5354)
+    Youtube-Publication: Throw explicit error if client_secret is malformed (#5349)
     
-    Intends to fix https://github.com/opencast/opencast-editor/issues/1154
-    
-    When generating a thumbnail in the editor frontend, saving it and then
-    reloading the editor, the generated thumbnail would not show up. This is
-    because thumbnails are loaded from the internal publication, but the
-    generated thumbnails are only saved to the archive.
-    
-    This changes it so that thumbnails are loaded from the archive. If they
-    cannot be found there, they are loaded from the internal publication
-    instead.
+    Parsing of the client_secret.json may go wrong, but currently the stack
+    trace is not very helpful in making clear when that happens. This should
+    help.
