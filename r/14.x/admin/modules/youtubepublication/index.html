@@ -37,7 +37,7 @@
               {title: "Before you start", url: "#before-you-start" },
               {title: "Google Developers Configuration", url: "#google-developers-configuration" },
               {title: "YouTube configuration in Opencast", url: "#youtube-configuration-in-opencast" },
-              {title: "Activate YouTube publication in Opencast", url: "#activate-youtube-publication-in-opencast" },
+              {title: "Add YouTube publication to your Opencast workflows", url: "#add-youtube-publication-to-your-opencast-workflows" },
           ]},
         ];
 
@@ -94,7 +94,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>You need to meet these requirements to make a YouTube Publication:</p>
 <ul>
 <li>Google Account</li>
-<li>YouTube Channel to make the publication</li>
+<li>YouTube Channel to publish to</li>
 </ul>
 <h2 id="google-developers-configuration">Google Developers Configuration</h2>
 <p>Below is a summarized version of <a href="https://developers.google.com/youtube/registering_an_application">Google's quickstart page</a>.  If these
@@ -102,24 +102,34 @@ instructions do not work for you, or are unclear please let us know - Google has
 pages and we don't always notice!</p>
 <h3 id="create-new-google-project">Create new Google Project</h3>
 <ul>
-<li>Login to Google account</li>
+<li>Login to your Google account</li>
 <li>Navigate to the <a href="https://console.developers.google.com/project"><strong>Google Developers Console</strong></a></li>
 <li>Click <strong>Create Project</strong> and follow the instructions</li>
 <li>Navigate to the <a href="https://console.developers.google.com/apis/credentials"><strong>Google Credentials Console</strong></a></li>
 <li>Select <strong>OAuth consent screen</strong></li>
-<li>Configure the API Consent Screen, you will need to set the Product name</li>
+<li>Configure the API Consent Screen<ul>
+<li>For <strong>User type</strong> select <code>external</code></li>
+<li>Add a test user (only necessary if your app is still in testing mode)</li>
+<li>Fill in the rest of the required settings at discretion</li>
+</ul>
+</li>
 <li>Select <strong>Credentials</strong></li>
-<li>Select <strong>Create Credentials</strong>, specifically OAuth Client ID</li>
-<li>Select <strong>Other</strong> application type</li>
+<li>Select <strong>Create Credentials</strong>, specifically OAuth Client ID<ul>
+<li><strong>Application type</strong> must be set to <code>Desktop</code></li>
+</ul>
+</li>
 </ul>
 <h3 id="save-client-id-in-json-format">Save Client ID in JSON Format</h3>
 <ul>
+<li>Select <strong>Credentials</strong>, you should see a new entry in the <strong>OAuth 2.0 Client IDs</strong> table</li>
 <li>Download the client information in JSON format by clicking <strong>Download JSON</strong><ul>
 <li>This currently looks like an arrow pointing downwards on the rightmost portion of the client id row</li>
 </ul>
 </li>
 <li>Save the JSON file to <code>${karaf.etc}/youtube-v3/client-secrets-youtube-v3.json</code> (Usually this is
-  <code>etc/youtube-v3/client-secrets-youtube-v3.json</code>)</li>
+  <code>etc/youtube-v3/client-secrets-youtube-v3.json</code>). It should match the path configured for
+  <code>org.opencastproject.publication.youtube.clientSecretsV3</code> in
+  <code>org.opencastproject.publication.youtube.YouTubeV3PublicationServiceImpl.cfg</code>.</li>
 </ul>
 <h3 id="enable-api">Enable API</h3>
 <ul>
@@ -136,7 +146,7 @@ pages and we don't always notice!</p>
 <p>With the JSON file created and saved previously, you have to proceed as described:</p>
 <ul>
 <li>
-<p>Start Opencast server (Restart Opencast in case was running)</p>
+<p>Start Opencast server (Restart Opencast in case it was running)</p>
 <p><strong>Note:</strong> Until this service is fully configured, Opencast will not start completely. In case you
 want to abort the configuration, you only need to delete the JSON file and restart Opencast.</p>
 </li>
@@ -163,38 +173,12 @@ want to abort the configuration, you only need to delete the JSON file and resta
 <p>Restart Opencast</p>
 </li>
 </ul>
-<h2 id="activate-youtube-publication-in-opencast">Activate YouTube publication in Opencast</h2>
-<p>Opencast can now publish to YouTube. The last step is to activate this feature. For this you have to create a new
-workflow or modify an existing one.</p>
-<ul>
-<li>
-<p>Open the workflows <code>etc/opencast/workflows/ng-schedule-and-upload.xml</code> and <code>etc/opencast/workflows/ng-publish.xml</code></p>
-</li>
-<li>
-<p>In the file, modify the <code>&lt;configuration_panel&gt;</code> and enable the YouTube option, like this:</p>
-<pre><code>&lt;input id="publishToYouTube" name="publishToYouTube" type="checkbox" class="configField" value="true"
-       disabled="disabled" /&gt;
-</code></pre>
-</li>
-</ul>
-<p>becomes</p>
-<pre><code>    &lt;input id="publishToYouTube" name="publishToYouTube" type="checkbox" class="configField" value="true"/&gt;
-</code></pre>
-<ul>
-<li>
-<p>Open the workflows <code>etc/opencast/workflows/ng-retract.xml</code></p>
-</li>
-<li>
-<p>In the file, modify the <code>&lt;configuration_panel&gt;</code> and enable the YouTube option, like this:</p>
-<pre><code>&lt;input id="retractFromYouTube" type="checkbox" class="configField" value="true" disabled="disabled" /&gt;
-</code></pre>
-</li>
-</ul>
-<p>becomes</p>
-<pre><code>    &lt;input id="retractFromYouTube" type="checkbox" checked="checked" class="configField" value="true" /&gt;
-</code></pre>
-<p>Opencast will detect the new workflow without restart, with that you can select the new workflow with the YouTube option
-enabled.</p>
+<h2 id="add-youtube-publication-to-your-opencast-workflows">Add YouTube publication to your Opencast workflows</h2>
+<p>Opencast can now publish to YouTube. To make use of this, add the <a href="../../workflowoperationhandlers/publish-youtube-woh/">Publish YouTube workflow operation</a>
+to your Opencast workflows. You can find more details on how to use the operation on its <a href="(../workflowoperationhandlers/publish-youtube-woh.md)">own page</a>.
+In general, it should be placed near your other <code>publish</code> operations.</p>
+<p>You may also want to add the <a href="../../workflowoperationhandlers/retract-youtube-woh/">Retract YouTube workflow operation</a> 
+near your <code>retract</code> operations.</p>
 
   <br>
     
