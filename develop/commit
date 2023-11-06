@@ -1,24 +1,167 @@
-commit ec7ca2dd6f10ea9f4a14d89b0f553cea41bce0cd
+commit c819fb3a96e24671887ec3a435fc471ac3f97336
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Sun Nov 5 17:58:26 2023 +0100
+Date:   Mon Nov 6 09:43:34 2023 +0100
 
-    Bump org.osgi:org.osgi.service.component.annotations from 1.5.0 to 1.5.1 in /modules/db (#5380)
+    Bump org.mariadb.jdbc:mariadb-java-client from 3.1.4 to 3.2.0 in /modules/db (#5379)
     
     Bumps
-    [org.osgi:org.osgi.service.component.annotations](https://github.com/osgi/osgi)
-    from 1.5.0 to 1.5.1.
+    [org.mariadb.jdbc:mariadb-java-client](https://github.com/mariadb-corporation/mariadb-connector-j)
+    from 3.1.4 to 3.2.0.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/releases">org.mariadb.jdbc:mariadb-java-client's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>MariaDB Connector/Java 3.2.0</h2>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.2.0">3.2.0</a>
+    (Aug 2023)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.1.4...3.2.0">Full
+    Changelog</a></p>
+    <h5>Notable Changes</h5>
+    <ul>
+    <li>CONJ-920 Java batched statements with optimistic locking failing.
+    the option <code>useBulkStmts</code> is now disable by default, a new
+    option <code>useBulkStmtsForInserts</code> is enable by default,
+    permetting using bulk for INSERT commands only. This permits optimistic
+    behavior working by default.</li>
+    <li>CONJ-1084 When using maxscale 23.08.0+, and a maxscale node fails,
+    connector will now priorize reconnection to the maxscale node having
+    less connection, to ensure repartition after failover</li>
+    <li>CONJ-1088 Implement <code>databaseTerm</code> option for mysql
+    compatibility</li>
+    <li>CONJ-1096 adding option <code>useLocalSessionState</code> to permit
+    avoiding queries when application only use JDBC methods.</li>
+    </ul>
+    <h5>Bugs Fixed</h5>
+    <ul>
+    <li>CONJ-1075 LOAD DATA INFILE is broken on windows</li>
+    <li>CONJ-1079 getGeneratedKeys after batch will not return all generated
+    id's if first batch command return no generated id.</li>
+    <li>CONJ-1080 maridb Java connector sslMode=verify-ca complaining unable
+    to find trust certificate.</li>
+    <li>CONJ-1082 Multiple session system variables parsing fails</li>
+    <li>CONJ-1083 Using /<em>client prepare</em>/ prefix to force client
+    side prepared statement</li>
+    <li>CONJ-1091 can't make a connection when the Read Replica DB is in a
+    hang state when SocketTimeout=0 set</li>
+    <li>CONJ-1092 ensure respecting server collation</li>
+    <li>CONJ-1094   Missing mariadb/mysql collation</li>
+    </ul>
+    </blockquote>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/blob/master/CHANGELOG.md">org.mariadb.jdbc:mariadb-java-client's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.2.0">3.2.0</a>
+    (Aug 2023)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.1.4...3.2.0">Full
+    Changelog</a></p>
+    <h5>Notable Changes</h5>
+    <ul>
+    <li>CONJ-920 Java batched statements with optimistic locking failing.
+    the option <code>useBulkStmts</code> is now disable by default, a new
+    option <code>useBulkStmtsForInserts</code> is enable by default,
+    permetting using bulk for INSERT commands only. This permits optimistic
+    behavior working by default.</li>
+    <li>CONJ-1084 When using maxscale 23.08.0+, and a maxscale node fails,
+    connector will now priorize reconnection to the maxscale node having
+    less connection, to ensure repartition after failover</li>
+    <li>CONJ-1088 Implement <code>databaseTerm</code> option for mysql
+    compatibility</li>
+    <li>CONJ-1096 adding option <code>useLocalSessionState</code> to permit
+    avoiding queries when application only use JDBC methods.</li>
+    </ul>
+    <h5>Bugs Fixed</h5>
+    <ul>
+    <li>CONJ-1075 LOAD DATA INFILE is broken on windows</li>
+    <li>CONJ-1079 getGeneratedKeys after batch will not return all generated
+    id's if first batch command return no generated id.</li>
+    <li>CONJ-1080 maridb Java connector sslMode=verify-ca complaining unable
+    to find trust certificate.</li>
+    <li>CONJ-1082 Multiple session system variables parsing fails</li>
+    <li>CONJ-1083 Using /<em>client prepare</em>/ prefix to force client
+    side prepared statement</li>
+    <li>CONJ-1091 can't make a connection when the Read Replica DB is in a
+    hang state when SocketTimeout=0 set</li>
+    <li>CONJ-1092 ensure respecting server collation</li>
+    <li>CONJ-1094   Missing mariadb/mysql collation</li>
+    </ul>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.0.11">3.0.11</a>
+    (Aug 2023)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.0.10...3.0.11">Full
+    Changelog</a></p>
+    <ul>
+    <li>CONJ-1089   correcting 3.0.10 incompatibility with in java 8</li>
+    </ul>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/2.7.10">2.7.10</a>
+    (Aug 2023)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/2.7.9...2.7.10">Full
+    Changelog</a></p>
+    <ul>
+    <li>CONJ-1091 Ensure setting connectTimeout as timeout for socket
+    timeout until connection is done. This permit to set a connectTimeout,
+    while socketTimeout can still be set to 0</li>
+    </ul>
+    </blockquote>
+    </details>
     <details>
     <summary>Commits</summary>
     <ul>
-    <li>See full diff in <a
-    href="https://github.com/osgi/osgi/commits">compare view</a></li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/7ddcd9eea4cd4379cb84638b0a68776165f103dc"><code>7ddcd9e</code></a>
+    [misc] correct batch for mysql server</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/e05fc3dde536e40b96bd35f8bbebd183cfce66d6"><code>e05fc3d</code></a>
+    [misc] update README versions</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/c81d45154da8c60853ef435a323f828fc1ce6cb6"><code>c81d451</code></a>
+    Merge branch 'release/3.2.0'</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/964a2c4b81d5b745de7a1c147cb3ced537fb9199"><code>964a2c4</code></a>
+    bump 3.2.0</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/e6ccc95d025a4e8a1ad6227131e8fa79d5caeba2"><code>e6ccc95</code></a>
+    [CONJ-920] new options useBulkStmtsForInserts permitting BULK returning
+    inser...</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/a5be232e7d9f8326a21cb05e60d396e841984fcb"><code>a5be232</code></a>
+    [misc] skysql-ha test improvement</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/65d73e7c311522cb2157db26d2a662cdd3dce449"><code>65d73e7</code></a>
+    [CONJ-1084] load-balance distribution ensuring repartition after
+    failover</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/78d868d8c12f016b64d0fabcc3d8499cc915f561"><code>78d868d</code></a>
+    [misc] updating mariadb es 23.07</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/7976659272981abc2ca7401e87a7ab378a20089e"><code>7976659</code></a>
+    [CONJ-1096] adding option useLocalSessionState</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/16e85bd9acf251dae600e52ed6dd9587886efeb9"><code>16e85bd</code></a>
+    [CONJ-1095] Retrieve session information on first Ok_Packet when
+    available</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.1.4...3.2.0">compare
+    view</a></li>
     </ul>
     </details>
     <br />
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.osgi:org.osgi.service.component.annotations&package-manager=maven&previous-version=1.5.0&new-version=1.5.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.mariadb.jdbc:mariadb-java-client&package-manager=maven&previous-version=3.1.4&new-version=3.2.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
