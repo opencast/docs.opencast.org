@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>org.opencast.paella.editorPlugin - Administration Guide</title>
+    <title>org.opencast.paella.downloadsPlugin - Administration Guide</title>
     <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../../../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Paella plugin: org.opencast.paella.editorPlugin", url: "#_top", children: [
+          {title: "Paella plugin: org.opencast.paella.downloadsPlugin", url: "#_top", children: [
               {title: "Configuration", url: "#configuration" },
           ]},
         ];
@@ -64,20 +64,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../org.opencast.paella.episodesFromSeries/" class="btn btn-xs btn-default pull-right">
+      <a href="../org.opencast.paella.editorPlugin/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../org.opencast.paella.episodesFromSeries/" class="btn btn-xs btn-link">
-        org.opencast.paella.episodesFromSeries
+      <a href="../org.opencast.paella.editorPlugin/" class="btn btn-xs btn-link">
+        org.opencast.paella.editorPlugin
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../org.opencast.paella.downloadsPlugin/" class="btn btn-xs btn-default pull-left">
+      <a href="../org.opencast.paella.descriptionPlugin/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../org.opencast.paella.downloadsPlugin/" class="btn btn-xs btn-link">
-        org.opencast.paella.downloadsPlugin
+        Previous</a><a href="../org.opencast.paella.descriptionPlugin/" class="btn btn-xs btn-link">
+        org.opencast.paella.descriptionPlugin
       </a>
     </div>
     
@@ -85,33 +85,56 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="paella-plugin-orgopencastpaellaeditorplugin">Paella plugin: org.opencast.paella.editorPlugin</h1>
-<p>This plugin adds a button to be able to login.</p>
+    <h1 id="paella-plugin-orgopencastpaelladownloadsplugin">Paella plugin: org.opencast.paella.downloadsPlugin</h1>
+<p>This plugin adds a panel to download the videos.</p>
 <p>The configurations for this plugin are done for each tenant. So you need to modify the <code>plugins</code>
 section of the <a href="../../configuration/">paella config file</a>.</p>
 <h2 id="configuration">Configuration</h2>
-<p>You need to enabled the <code>org.opencast.paella.editorPlugin</code> plugin.</p>
+<p>You need to enabled the <code>org.opencast.paella.downloadsPlugin</code> plugin.</p>
 <pre><code class="language-json">{
-    &quot;org.opencast.paella.editorPlugin&quot;: {
+    &quot;org.opencast.paella.downloadsPlugin&quot;: {
         &quot;enabled&quot;: true,
-        &quot;showIfAnonymous&quot;: false,
-        &quot;showIfCanWrite&quot;: true,
-        &quot;editorUrl&quot;: &quot;/editor-ui/index.html?id={id}&quot;
+
+        &quot;downloadFlavors&quot;: false,
+        &quot;downloadTags&quot;: false,
+        &quot;downloadMimeTypes&quot;: [&quot;audio/m4a&quot;, &quot;video/mp4&quot;],
+
+        &quot;enableOnLicenses&quot;: [
+            &quot;CC-BY&quot;,
+            &quot;CC-BY-SA&quot;,
+            &quot;CC-BY-ND&quot;,
+            &quot;CC-BY-NC&quot;,
+            &quot;CC-BY-NC-SA&quot;,
+            &quot;CC-BY-NC-ND&quot;,
+            &quot;CC0&quot;
+        ],
+        &quot;enableOnWritePermission&quot;: true
     }    
 }
 </code></pre>
+<p>The plugin is enabled when <code>enabled</code> is true and one of the two conditions (<code>enableOnLicenses</code> or <code>enableOnWritePermission</code>) is valid.</p>
 <p>Configuration parameters:</p>
 <ul>
 <li>
-<p><strong>showIfAnonymous</strong>: The button should be shown when the user is not logged in.</p>
+<p><strong>enableOnLicenses</strong>: The plugin is enabled if the <code>episode license</code> match any of the the licenses</p>
+<p>Valid values: <code>false</code> / Array strings</p>
+<p>Example: <code>[ "CC-BY", "CC-BY-SA" ]</code></p>
+</li>
+<li>
+<p><strong>enableOnWritePermission</strong>: The plugin is enabled if the <code>user</code> has <code>write</code> permission on the episode.</p>
 <p>Valid values: <code>true</code> / <code>false</code></p>
 </li>
 <li>
-<p><strong>showIfCanWrite</strong>: The button should be shown when user has write permission.</p>
-<p>Valid values: <code>true</code> / <code>false</code></p>
+<p><strong>downloadFlavors</strong>: Filter the media available to download by the track flavor.</p>
+<p>Valid values: <code>false</code> / Array strings</p>
 </li>
 <li>
-<p><strong>editorUrl</strong>: URL string to access the editor.</p>
+<p><strong>downloadTags</strong>: Filter the media available to download by the track tags.</p>
+<p>Valid values: <code>false</code> / Array strings</p>
+</li>
+<li>
+<p><strong>downloadMimeTypes</strong>: Filter the media available to download by the track mimetype.</p>
+<p>Valid values: <code>false</code> / Array strings</p>
 </li>
 </ul>
 
@@ -126,20 +149,20 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../org.opencast.paella.episodesFromSeries/" class="btn btn-xs btn-default pull-right">
+      <a href="../org.opencast.paella.editorPlugin/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../org.opencast.paella.episodesFromSeries/" class="btn btn-xs btn-link">
-        org.opencast.paella.episodesFromSeries
+      <a href="../org.opencast.paella.editorPlugin/" class="btn btn-xs btn-link">
+        org.opencast.paella.editorPlugin
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../org.opencast.paella.downloadsPlugin/" class="btn btn-xs btn-default pull-left">
+      <a href="../org.opencast.paella.descriptionPlugin/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../org.opencast.paella.downloadsPlugin/" class="btn btn-xs btn-link">
-        org.opencast.paella.downloadsPlugin
+        Previous</a><a href="../org.opencast.paella.descriptionPlugin/" class="btn btn-xs btn-link">
+        org.opencast.paella.descriptionPlugin
       </a>
     </div>
     
@@ -150,7 +173,7 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/paella.player7/plugins/org.opencast.paella.editorPlugin.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/modules/paella.player7/plugins/org.opencast.paella.downloadsPlugin.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
