@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Configuration - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Configuration of Stream Security", url: "#_top", children: [
+              {title: "URL Signing Service Installation", url: "#url-signing-service-installation" },
+              {title: "Minimal Configuration Example", url: "#minimal-configuration-example" },
+              {title: "Configuration of Signing Providers", url: "#configuration-of-signing-providers" },
+              {title: "Configuration of URL Signing Timeout Values", url: "#configuration-of-url-signing-timeout-values" },
+              {title: "Configuration of Verification Components", url: "#configuration-of-verification-components" },
+              {title: "Configuration of Wowza URL Signing", url: "#configuration-of-wowza-url-signing" },
+              {title: "Testing", url: "#testing" },
+              {title: "Further information", url: "#further-information" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../studio/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../studio/" class="btn btn-xs btn-link">
+        Studio
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../stream-security-overview/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../stream-security-overview/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="configuration-of-stream-security">Configuration of Stream Security</h1>
+<p>To get an introduction to stream security before deploying, please read the overview at:</p>
+<ul>
+<li><a href="../stream-security-overview/">Stream Security Overview</a></li>
+</ul>
+<p>It is important to note that if stream security is enabled, all resources will be signed and protected, even ones that
+do not have any access restrictions defined in their access control lists. Accessing resources with unsigned URLs will
+not be possible.</p>
+<p>On a high level, to use Stream security, these steps are required:</p>
+<ul>
+<li>Install and configure the URL signing service and signing providers</li>
+<li>Configure Opencast services (and, optionally, 3rd party services) that use the signing infrastructure to sign requests</li>
+<li>Install and configure verification components</li>
+</ul>
+<h2 id="url-signing-service-installation">URL Signing Service Installation</h2>
+<p>There are three modules that are built by default and need to be present on each Opencast node in order to initiate URL
+signing:</p>
+<ul>
+<li>urlsigning-common</li>
+<li>urlsigning-service-api</li>
+<li>urlsigning-service-impl</li>
+</ul>
+<p>If these modules are present, the URL signing service will be available, to which the URL signing providers can then
+register themselves.</p>
+<h2 id="minimal-configuration-example">Minimal Configuration Example</h2>
+<p>This is a minimal configuration example which requires valid tokens for all static file downloads:</p>
+<p><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg</code>:</p>
+<pre><code class="language-properties">enabled=true
+url.regex.files=.*localhost:8080/static/.*
+</code></pre>
+<p><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg</code></p>
+<pre><code class="language-properties">key.default.secret=THISISNOSECUREKEY
+key.default.url=http://localhost:8080/static/
+</code></pre>
+<p><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg</code>:</p>
+<pre><code class="language-properties">key.default=THISISNOSECUREKEY
+</code></pre>
+<h2 id="configuration-of-signing-providers">Configuration of Signing Providers</h2>
+<p>The GenericUrlSigningProvider that comes with Opencast has its own configuration file:</p>
+<pre><code>etc/org.opencastproject.security.urlsigning.provider.impl.GenericUrlSigningProvider.cfg
+</code></pre>
+<p>All signing providers follow the same configuration structure and support multiple configuration blocks, providing the
+settings for separate distributions (i.e. download or streaming servers, services or paths).</p>
+<p>Each signing key configuration consists of the following attributes:</p>
+<ul>
+<li><strong>Key ID:</strong> Key identifier, e.g. <code>demoKeyOne</code></li>
+<li><strong>Key secret:</strong> Key value, e.g. <code>25DA2BA549CB62EF297977845259A</code>. The key-length is not predefined, but a key length of
+  at least 128 bit is recommended. Any larger value will not increase security of the underlying algorithm</li>
+<li><strong>URL prefix:</strong> The URL signing provider will only sign URLs that start with this value. This allows to support
+  multiple distributions and different key pairs</li>
+<li><strong>Organization:</strong> Keys can be restricted to organizations so that different organizations use different keys.
+  This attribute is optional. If not specified, the key can be used by all organizations</li>
+</ul>
+<p>A typical configuration looks like this:</p>
+<pre><code>key.demoKeyOne.secret=6EDB5EDDCF994B7432C371D7C274F
+key.demoKeyOne.url=http://download.opencast.org/engage
+
+key.demoKeyTwo.secret=6EDB5EDDCF994B7432C371D7C274F
+key.demoKeyTwo.url=http://download.opencast.org/custom
+key.demoKeyTwo.organization=mh_default_org
+</code></pre>
+<p>It is also possible to use one key for multiple URL prefixes:</p>
+<pre><code>key.demoKeyThree.secret=6EDB5EDDCF994B7432C371D7C274F
+key.demoKeyThree.url.http=http://download.opencast.org/custom
+key.demoKeyThree.url.https=https://download.opencast.org/custom
+key.demoKeyThree.url.streaming=http://streaming.opencast.org/custom
+key.demoKeyThree.organization=mh_default_org
+</code></pre>
+<p>A Java regular expression can be defined to identify URLs to be excluded from URL signing.
+Any URL that matches this anchored regex will not be signed.</p>
+<pre><code>exclude.url.pattern=.*/.*/unprotected/.*/.*
+</code></pre>
+<h2 id="configuration-of-url-signing-timeout-values">Configuration of URL Signing Timeout Values</h2>
+<p>Once stream security is turned on by configuring the signing providers, multiple different services within Opencast will
+be signing URLs, and while some services are signing on behalf of administrative users working in the Opencast
+administrative user interface, others are signing URLs in order to grant access to learners playing back video content
+i.e. the functionality we have been talking about up to now.</p>
+<p>This section explains how to best configure URLs to ensure that they expire at the right time. This might be required if
+the default valid times do not seem secure enough or is more secure than needed.</p>
+<h3 id="signing-for-external-access">Signing for external access</h3>
+<p>The lifetime of the signed URLs can be configured by setting a custom value for the property
+<code>url.signing.expires.seconds</code> that defines the validity in seconds. The default valid time is 7200 seconds (2 hours).
+The signed URLs can also be configured to restrict access to the user’s IP address by setting the property
+<code>url.signing.use.client.ip</code> to true. By default this is disabled.</p>
+<p>Overview of configuration files for services that are able to automatically sign URLs on behalf of users:</p>
+<table>
+<thead>
+<tr>
+<th>URLs That Are Signed</th>
+<th>Configuration File Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Video player content</td>
+<td>org.opencastproject.security.urlsigning.SigningMediaPackageSerializer.cfg</td>
+</tr>
+<tr>
+<td>Admin UI links</td>
+<td>org.opencastproject.adminui.endpoint.OsgiEventEndpoint.cfg</td>
+</tr>
+<tr>
+<td>Preview and editor files</td>
+<td>org.opencastproject.adminui.endpoint.ToolsEndpoint.cfg</td>
+</tr>
+</tbody>
+</table>
+<p>The URLs will be signed by the first signing provider that will accept the URL’s path based upon the signing provider’s
+configuration. This makes it flexible to support many different scenarios. For example, we could configure the signing
+provider to have one key for any URL that begins with one scheme, such as http, which would cover all of the URLs to be
+signed with a single key. Or it could be configured so that each different scheme and hostname pair would have a
+different keys protecting each host’s URLs separately etc. Having the timing configurations separate from the key
+configuration allows the different types of URLs to be signed differently depending on the needs of the users without
+needing to configure this timing for all of the different keys.</p>
+<!-- _Very wordy.If this paragraph of examples is necessary, consider making it a list instead (and not full complete sentences) -->
+
+<h3 id="signing-for-opencast-internal-access">Signing for Opencast-internal access</h3>
+<p>Signing of requests for internal use is performed by a core component called <em>TrustedHttpClientImpl</em>, which is used to
+establish all internal HTTP connections. More specifically, the HTTP client needs access to internal storage areas such
+as the working file repository as well as to distributed artifacts on the downloads and streaming servers, all of which
+are protected by verification components.</p>
+<p>The default expiration time for signed internal requests is 60 seconds. This can be changed by setting a value in
+seconds for the <code>org.opencastproject.security.internal.url.signing.duration</code> property in the <code>custom.properties</code>
+configuration file. Since those URLs are signed right before the request is made, the valid time of 60 seconds should be
+sufficiently long.</p>
+<h2 id="configuration-of-verification-components">Configuration of Verification Components</h2>
+<p>The verification components ensure that only valid and correctly signed URLs are accessible at any given time. URLs
+which are not properly signed or have expired will be rejected.</p>
+<p>Out of the box, Opencast provides an internal verification component:</p>
+<ul>
+<li>Opencast internal UrlSigningFilter</li>
+</ul>
+<p>The following section is dedicated to the installation and configuration of the Opencast internal UrlSigningFilter. The
+stream security architecture allows the implementation for URL verification for third-party applications which are not
+covered in this documentation.</p>
+<h3 id="configuration-of-opencast-verification-filter">Configuration of Opencast verification filter</h3>
+<p>The Servlet filter providing the verification of requests to Opencast internal resources is implemented in the bundles:</p>
+<ul>
+<li>urlsigning-verifier-service-api</li>
+<li>urlsigning-verifier-service-impl</li>
+</ul>
+<p>The filter uses a set of regular expressions to determine which requests to an Opencast instance need to be verified.</p>
+<h4 id="installation">Installation</h4>
+<p>The bundles are built by default and as soon as they are running in Opencast, the filter is active, and ready to be
+enabled.</p>
+<h4 id="configuration">Configuration</h4>
+<p>Two things need to be configured for the Opencast verification filter:</p>
+<ul>
+<li>key pairs used to verify the signatures</li>
+<li>paths and endpoints that need to be protected</li>
+</ul>
+<p>The configuration is located at:</p>
+<pre><code>etc/org.opencastproject.security.urlsigning.verifier.impl.UrlSigningVerifierImpl.cfg
+</code></pre>
+<p>Example:</p>
+<pre><code>key.demoKeyOne=6EDB5EDDCF994B7432C371D7C274F
+
+key.demoKeyTwo=C843C21ECF59F2B38872A1BCAA774
+</code></pre>
+<p>The entries in this file need to have the same values for the signing providers configuration.</p>
+<p>The second step is to configure the filter defining the endpoints to be protected. The configuration file is located at:</p>
+<pre><code>etc/org.opencastproject.security.urlsigning.filter.UrlSigningFilter.cfg
+</code></pre>
+<p>The configuration defaults to a set of regular expressions which match all of the endpoints that serve files, and avoid
+protecting endpoints that only serve data. Therefore, the remaining step is enabling the filter by setting the property
+<code>enabled</code> to <code>true</code> and determining whether strict or non-strict verification of the resource is required.</p>
+<p>Note that strict verification of resources means the entire URL will be considered when comparing the incoming request
+for a resource against the policy, including the scheme (http, https, etc.), hostname and port. If turned off, only the
+path to the resource will be considered. So if the resource <code>http://httpdserver:8080/the/full/path/video.mp4</code> is
+requested, only the <code>/the/full/path/video.mp4</code> part of the URL will be checked against the policy’s path. As mentioned
+before, this is useful when using a load balancer so that the requested host name does not have to match the actual
+hostname or if a video player is rewriting requests, e.g. by inserting the port number.</p>
+<p>Example:</p>
+<pre><code>enabled=true
+
+strict=true
+
+url.regex.collection=.*files\/collection\/.*
+url.regex.mediapackage=.*files\/mediapackage\/.*
+url.regex.staticfiles=(?\=(.*staticfiles.*))(?=^(?!.*staticfiles.*url|.*docs.*).*$)(.*)
+url.regex.archive=.*archive\/archive\/mediapackage\/.*\/.*\/.*
+url.regex.static=.*static.*
+</code></pre>
+<h2 id="configuration-of-wowza-url-signing">Configuration of Wowza URL Signing</h2>
+<p>To configure Wowza URL Signing, you should use the file configuration <code>org.opencastproject.security.urlsigning.provider.impl.WowzaUrlSigningProvider.cfg</code>.</p>
+<p>You can find three properties to configure:</p>
+<pre><code># key.wowzatoken.secret=myTokenPrefix@mySharedSecret
+# key.wowzatoken.url=http://localhost:8080
+# key.wowzatoken.organization=mh_default_org
+</code></pre>
+<p>Each property has the form: key.<em>keyId</em>.<em>propertyName</em></p>
+<p><code>key.wowzatoken.organization</code> is optional. By deafult is <code>*</code>, that means any organization.</p>
+<p><code>key.wowzatoken.url</code> is mandatory. describes the url prefix that urls must have.</p>
+<p><code>key.wowzatoken.secret=myTokenPrefix@mySharedSecret</code> is mandatory. It is a pair separated by <code>@</code>. First value, <code>myTokenPrefix</code>, means defines the prefix that all parameters of signed urls will have. Second value, <code>mySharedSecret</code>, defines a secret value, to secure urls.</p>
+<p>After configuring the Opencast server, the steps to configure enable stream security in Wowza are:</p>
+<ol>
+<li>Open your Wowza server webpage (Normally <code>http://&lt;wowza-server&gt;:8088/enginemanager</code>) , log in and enter to your desired VOD application</li>
+<li>In the menu, select <code>Playback-Security</code> and click in <code>edit</code></li>
+<li>Select <code>Protect all protocols using hash (SecureToken version 2)</code></li>
+<li><code>Shared Secret</code> write the <code>mySharedSecret</code> set in the first step</li>
+<li><code>Hash-Algorithm</code>: SHA-256</li>
+<li><code>Hash Query Parameter Prefix</code> write the <code>myTokenPrefix</code> set in step one</li>
+<li>Save changes and restart the application</li>
+</ol>
+<h2 id="testing">Testing</h2>
+<p>Once all components of Stream Security are installed and properly configured, it is important to verify that the system
+is working as expected. It is especially important to try to access resources that should <em>not</em> be accessible.</p>
+<p>The following explains how to test if Stream Security has been correctly configured.</p>
+<h3 id="step-1-creating-signed-urls-with-signing-endpoint">Step 1: Creating Signed URLs with Signing Endpoint</h3>
+<p>The signing service provides a REST endpoint, which allows for the signing of arbitrary URLs. For manual use it is
+recommended to visit the endpoint’s documentation page at <code>http://localhost:8080/signing/docs</code>.</p>
+<h4 id="is-the-url-accepted">Is the URL accepted?</h4>
+<p>Check if the URL to be signed is accepted by the signing service (or by one of its signing providers respectively) by
+using the <code>/signing/accepts</code> endpoint. If that is not the case, the configuration of the signing providers should be
+checked again to ensure that at least one signing provider is responsible for the URL in question.</p>
+<p>If the service is fully operational, the response code will be <em>200 OK</em> and the response body either <em>true</em> (accepted)
+or <em>false</em> (refused).</p>
+<h3 id="step-2-signing-the-url">Step 2: Signing the URL</h3>
+<p>On the same documentation page URLs can be signed using the <code>/signing/sign</code> endpoint, and the access policy may be
+specified in that form as well. With this, several scenarios can be tested. Examples are:</p>
+<ul>
+<li>URLs that have already expired or will expire at a known date</li>
+<li>URLs that are not yet valid (if you provided a validFrom data in the access policy)</li>
+<li>URLs that are missing some or all of the signing parameters (policy, keyId or signature)</li>
+<li>URLs that are attempting to use signing parameters (policy and signature) from a different signed URL</li>
+</ul>
+<h3 id="step-3-verifying-the-url">Step 3: Verifying the URL</h3>
+<p>The signed URLs can then be passed to the appropriate testing tool (web browser, cURL, player, …) to test the
+functionality of the verification component(s). The following table is the return codes associated with different
+rejection conditions:</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Return Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>If any of the query string parameters are missing or are the wrong case / spelt incorrectly</td>
+<td>Bad Request (400)</td>
+</tr>
+<tr>
+<td>If any of the required policy variables are missing</td>
+<td>Bad Request (400)</td>
+</tr>
+<tr>
+<td>No encryption key that matches the KeyID known by the plugin</td>
+<td>Bad Request (400)</td>
+</tr>
+<tr>
+<td>The Policy and Signature don’t match in any way</td>
+<td>Forbidden (403)</td>
+</tr>
+<tr>
+<td>If client IP is specified and doesn’t match</td>
+<td>Forbidden (403)</td>
+</tr>
+<tr>
+<td>The current time has passed the DateGreaterThan, the time the URL expires</td>
+<td>Gone (410)</td>
+</tr>
+<tr>
+<td>The current time is before the DateLessThan, the time the URL becomes available</td>
+<td>Gone (410)</td>
+</tr>
+</tbody>
+</table>
+<p>The components that verify a URL is signed will run before a request is checked to be valid, so if a non-existent URL is
+signed for example, the above conditions will need to be fixed before a missing (404) response code will be returned.</p>
+<h3 id="step-4-inspect-policy">Step 4: Inspect policy</h3>
+<p>The generated policy which is added to the signed URLs can be inspected. It needs to be decoded from Base64 and the
+result must be a JSON document that contains exactly the values which have been passed during signing.</p>
+<p>Decoding this Base64 encoded policy</p>
+<pre><code>eyJTdGF0ZW1lbnQiOnsiUmVzb3VyY2UiOiJodHRwOlwvXC9vcGVuY2FzdC5vcmdcL2VuZ2FnZVwvcmVzb3VyY2UubXA0IiwiQ29uZGl0aW9uIjp7IkRh
+dGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJcEFkZHJlc3MiOiIxMC4wLjAuMSJ9fX0
+</code></pre>
+<p>…would result in this JSON document (policy):</p>
+<pre><code class="language-json">{
+  &quot;Statement&quot;:{
+    &quot;Resource&quot;:&quot;http:\/\/opencast.org\/engage\/resource.mp4&quot;,
+    &quot;Condition&quot;:{
+      &quot;DateLessThan&quot;:1425170777000,
+      &quot;DateGreaterThan&quot;:1425084379000,
+      &quot;IpAddress&quot;:&quot;10.0.0.1&quot;
+    }
+  }
+}
+</code></pre>
+<p>Inspecting and modifying the policy is useful for advanced testing, such as:</p>
+<ul>
+<li>URLs where the policy was modified after signing</li>
+<li>URLs where the policy was modified and resigned with a different key</li>
+</ul>
+<h2 id="further-information">Further information</h2>
+<p>For an overview of Stream Security: <!-- _This info is already given at the very beginning of the page! --></p>
+<ul>
+<li><a href="../stream-security-overview/">Stream Security Overview</a></li>
+</ul>
+<p>For further developer information, please have a look at the stream security section in the developer guide.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../studio/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../studio/" class="btn btn-xs btn-link">
+        Studio
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../stream-security-overview/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../stream-security-overview/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/stream-security/stream-security-config.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

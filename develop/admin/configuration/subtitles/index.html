@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Subtitles - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Subtitles", url: "#_top", children: [
+              {title: "Storage", url: "#storage" },
+              {title: "Uploading and downloading subtitles", url: "#uploading-and-downloading-subtitles" },
+              {title: "Automatically generating subtitles in Opencast", url: "#automatically-generating-subtitles-in-opencast" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../terminationstate/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../terminationstate/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../studio/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../studio/" class="btn btn-xs btn-link">
+        Studio
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="subtitles">Subtitles</h1>
+<p>This document records guidelines and conventions on how subtitles should be handled in Opencast.</p>
+<div class=warn>
+These guidelines are new to Opencast 15. Not all parts of Opencast may yet adhere to them! 
+</div>
+
+<p>Subtitles are expected to be in <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API">WebVTT format</a>. Subtitles
+in other formats are expected to be converted to WebVTT prior to uploading them to Opencast.</p>
+<h2 id="storage">Storage</h2>
+<p>In general, subtitles are stored as tracks in an event, much like audio and video streams. Subtitles stored this way
+are assumed to be related to audio and video tracks in the event.</p>
+<h3 id="flavor">Flavor</h3>
+<p>For the flavor of a subtitle track, <code>captions</code> is recommended for the main flavor, while the sub-flavor should express
+the processing state (e.g. <code>source</code>, <code>work</code>, <code>delivery</code>). In the case of multiple subtitle tracks, they should all
+be stored in the same flavor, while being optionally differentiated by <a href="#tags">tags</a>.</p>
+<h3 id="tags">Tags</h3>
+<p>Tags are used to hold additional information about individual subtitle tracks. All tags are optional and components
+should work without them being present, falling back to generic displays, or not showing information at all.</p>
+<p>The following is a list of tags that Opencast components may recognize:
+- <code>lang:&lt;language&gt;</code>
+    - <code>&lt;language&gt;</code> represents a language code of the form <code>en</code> or <code>en-US</code>.
+        - Based on the <a href="https://www.rfc-editor.org/info/rfc5646">IETF BCP 47 language tag specification</a>.
+        - Can either be a two letter language code, or a two letter language code followed by a hyphen and a two letter
+          region tag. Other subtags may not be supported by all Opencast services.
+    - Specifies the languages most prominently used in the subtitle.
+    - Even though all tags are optional, it is recommended to set this tag if possible, as it can help the most with
+      user experience (For example, the Paella Player uses <code>lang</code> in its subtitle selection).  </p>
+<ul>
+<li>
+<p><code>generator-type:&lt;type&gt;</code></p>
+<ul>
+<li><code>&lt;type&gt;</code>: auto, manual</li>
+<li>Specifies whether the subtitle was <em>auto</em>matically generated or <em>manual</em>ly written.</li>
+</ul>
+</li>
+<li>
+<p><code>generator:&lt;id&gt;</code></p>
+<ul>
+<li><code>&lt;id&gt;</code>: some string, e.g. <em>vosk</em></li>
+<li>Specifies which generator the subtitle was generated by.</li>
+</ul>
+</li>
+<li>
+<p><code>type:&lt;style&gt;</code></p>
+<ul>
+<li><code>&lt;style&gt;</code>: subtitle, closed-caption</li>
+<li>Specifies which type of subtitle the subtitle in question is.</li>
+</ul>
+</li>
+</ul>
+<h3 id="mime-type">Mime Type</h3>
+<p>Since the format of subtitle tracks should always be WebVTT, the mime type
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#webvtt_files">should always be <code>text/vtt</code></a>.</p>
+<h2 id="uploading-and-downloading-subtitles">Uploading and downloading subtitles</h2>
+<p>Subtitles can be up- and downloaded wherever other tracks can be up- and downloaded as well.</p>
+<h3 id="admin-ui">Admin UI</h3>
+<p>If you wish to configure subtitle upload in the Admin UI, check out
+<a href="../admin-ui/asset-upload/">Asset Upload Options</a>.</p>
+<h2 id="automatically-generating-subtitles-in-opencast">Automatically generating subtitles in Opencast</h2>
+<p>Opencast allows for automatically generating subtites by adding certain operations to your workflows. Subtitles
+can be generated locally by open-source services, or externally by paid services.</p>
+<p>For local generation, take a look at the
+<a href="../../workflowoperationhandlers/speechtotext-woh/">Speech-To-Text Workflow Operation</a>. As of writing, it supports
+<em>vosk</em> and <em>whisper</em>.</p>
+<p>For external generation, various plugins are available:</p>
+<ul>
+<li><a href="../transcription.configuration/amberscripttranscripts/">Amberscript</a></li>
+<li><a href="../transcription.configuration/googlespeechtranscripts/">Google Speech</a></li>
+<li><a href="../transcription.configuration/watsontranscripts/">IBM Watson</a></li>
+<li><a href="../transcription.configuration/microsoftazuretranscripts/">Microsoft Azure</a></li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../terminationstate/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../terminationstate/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../studio/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../studio/" class="btn btn-xs btn-link">
+        Studio
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/subtitles.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
