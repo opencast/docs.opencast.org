@@ -119,6 +119,11 @@ operations should be executed or skipped.</p>
 <td><code>presenter_source_hastag_archive</code></td>
 <td>Whether an element with given flavor and tag is in the mediapackage (only if <code>set-tag-variables</code> is set).</td>
 </tr>
+<tr>
+<td><code>publication_*channel*_exists</code></td>
+<td><code>publication_engage_player_exists</code></td>
+<td>Whether a publication with this channel is in the mediapackage (only if <code>set-publication-variables</code> is set).</td>
+</tr>
 </tbody>
 </table>
 <h2 id="parameter-table">Parameter Table</h2>
@@ -148,12 +153,21 @@ operations should be executed or skipped.</p>
 <td><code>true</code></td>
 <td>Whether to set tag variables (default: false).</td>
 </tr>
+<tr>
+<td>set-publication-variables</td>
+<td><code>true</code></td>
+<td>Whether to set publication variables (default: false, independent from <code>source-flavors</code> and <code>-tags</code>).</td>
+</tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
 <pre><code class="language-xml">&lt;operation
-    id=&quot;analyze-mediapackage&quot;
-    description=&quot;Analyze media package and set control variables&quot;&gt;
+  id=&quot;analyze-mediapackage&quot;
+  description=&quot;Analyze media package and set control variables&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-publication-variables&quot;&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
 <p>The operation will create workflow instance variables like this:</p>

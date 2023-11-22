@@ -393,7 +393,7 @@ operation should be executed. This so-called execution condition is a boolean ex
 <li>…strings, which must be surrounded by single-quotes. Escaping of single quotes is supported, just use two single
   quotes next to each other: <code>'foo''bar'</code></li>
 <li>…as well as references to the variables of the workflow instance that contain these data types. Variables
-  are enclosed in in <code>${}</code>, as shown below. A default value may be specified for a variable, after the name, 
+  are enclosed in <code>${}</code>, as shown below. A default value may be specified for a variable, after the name, 
   separated by a colon, as such: <code>${foo:1}</code>. The default value will be used in case the variable doesn’t exist. 
   If no default value is specified, <code>false</code> will be used. This, of course, only makes sense in boolean contexts. Be
   aware to specify a default value in relations such as <code>${foo} &lt; ${bar}</code>.</li>
@@ -427,6 +427,10 @@ used quoted in attributes. The following table shows all those characters:</p>
   …
 &lt;/operation&gt;
 </code></pre>
+<p>Some workflow operation handlers can generate or import variables during a workflow's run, for example:
+- <a href="../../workflowoperationhandlers/analyze-tracks-woh/">analyze-tracks</a>
+- <a href="../../workflowoperationhandlers/analyze-mediapackage-woh/">analyze-mediapackage</a>
+- <a href="../../workflowoperationhandlers/import-wf-properties-woh/">import-wf-properties</a></p>
 <h2 id="thumbnail-support">Thumbnail Support</h2>
 <p>The Admin UI comes with explicit support for thumbnails that are supposed to represent events visually, e.g. in lists
 of events as commonly used in video portals and other similar systems.

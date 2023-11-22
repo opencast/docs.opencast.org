@@ -1,9 +1,41 @@
-commit 16ee7a7366801299e9ea13346dbd689383fb2a19
+commit 9c2611ba28fc870a946574472e103ec380e9faff
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Nov 22 10:12:00 2023 +0100
+Date:   Wed Nov 22 10:56:59 2023 +0100
 
-    Log cached FFmpeg files (#5424)
+    Set publication variables in analyze-MP (#5419)
     
-    This just adds a verbose flag to the `tar` command extracting the FFmpeg
-    build so you can check what is being cached. This is just to make the
-    process a bit more transparent.
+    Similar to #5243 except this creates variables that contain which
+    publication channels are part of the media package. These new variables
+    are not created by default.
+    
+    The use case for this was that I wanted to publish everything if the
+    event wasn't published before, including encoding and all, but only
+    merge specific assets into the publication if it existed. Here's a
+    snippet if you want to test this for yourself:
+    
+    ```
+        <operation
+          id="include"
+          description="Publish to Engage"
+          if="NOT ${publication_engage_player_exists}">
+          <configurations>
+            <configuration key="workflow-id">partial-publish</configuration>
+          </configurations>
+        </operation>
+    
+        <operation
+          id="include"
+          description="Update Engage publication"
+          if="${publication_engage_player_exists}">
+          <configurations>
+            <configuration key="workflow-id">partial-publish-generated-captions</configuration>
+          </configurations>
+        </operation>
+    
+    ```
+    
+    Since the other one went into 14.x I'm aiming this at that branch as
+    well, but I can aim at develop instead if somebody disagrees.
+    
+    This also contains a small change to the docs that explains which WOHs
+    can generate workflow variables, because I keep forgetting this.
