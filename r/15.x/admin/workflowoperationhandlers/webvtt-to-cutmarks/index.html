@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>WebVTT to CutMarks Operation - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "WebVTT to CutMarks Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../zip-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../zip-woh/" class="btn btn-xs btn-link">
+        Zip
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../waveform-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../waveform-woh/" class="btn btn-xs btn-link">
+        Waveform
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="webvtt-to-cutmarks-operation">WebVTT to CutMarks Operation</h1>
+<p>ID: <code>webvtt-to-cutmarks</code></p>
+<h2 id="description">Description</h2>
+<p>This operation parses a WebVTT Subtitle File and generates a JSON of CutMarks based on the Subtitle Timestamps.
+It's primary intention is to be used as a silence detection based on available subtitle information.</p>
+<p>With the CutMarks to SMIL workflow operation this JSON can be converted to a SMIL that
+can be used in the <a href="../editor-woh/">Video Editor</a> for cutting.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<p>Tracks are assumed to start at 0.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Keys</th>
+<th>Default value</th>
+<th>Example/Other Possible values</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source-flavor</code></td>
+<td>None, must be set</td>
+<td><code>captions/vtt+en</code></td>
+<td>The Flavor of the WebVTT Subtitle File to parse, used for creating the CutMarks.</td>
+</tr>
+<tr>
+<td><code>target-flavor</code></td>
+<td>None, must be set</td>
+<td><code>cut-marks/json</code></td>
+<td>The Flavor of the output JSON, which contains the CutMarks based on the subtitle information.</td>
+</tr>
+<tr>
+<td><code>min-time-silence-in-ms</code></td>
+<td><code>0</code></td>
+<td><code>5000</code></td>
+<td>Time (in ms) between two subtitles for them to be considered seperate cutting sections, otherwise they are merged. Basically the minimum length of a silent section for it to be cut out.</td>
+</tr>
+<tr>
+<td><code>buffer-time-around-subtitle</code></td>
+<td><code>0</code></td>
+<td><code>1500</code></td>
+<td>How much buffer time (in ms) to add before and after a subtitle/non-silent section.</td>
+</tr>
+<tr>
+<td><code>track-flavor</code></td>
+<td>Optional/Empty</td>
+<td><code>presenter/source</code></td>
+<td>The flavor of the track related to the WebVTT, used for determining the end time of the video.</td>
+</tr>
+<tr>
+<td><code>start-treatment</code></td>
+<td><code>IGNORE</code></td>
+<td><code>USE_FOR_MIN_TIME</code>/<code>ALWAYS_INCLUDE</code></td>
+<td>How to treat the beginning of the video in relation to the subtitle sections.</td>
+</tr>
+<tr>
+<td><code>end-treatment</code></td>
+<td><code>IGNORE</code></td>
+<td><code>USE_FOR_MIN_TIME</code>/<code>ALWAYS_INCLUDE</code></td>
+<td>How to treat the end of the video in relation to the subtitle sections. (If not <code>IGNORE</code>, Needs <code>track-flavor</code> to be set)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;webvtt-to-cutmarks&quot;
+    description=&quot;Use WebVTT as a silence detection&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavor&quot;&gt;captions/vtt+en&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;cut-marks/json&lt;/configuration&gt;
+    &lt;configuration key=&quot;min-time-silence-in-ms&quot;&gt;5000&lt;/configuration&gt;
+    &lt;configuration key=&quot;buffer-time-around-subtitle&quot;&gt;1500&lt;/configuration&gt;
+    &lt;configuration key=&quot;track-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;start-treatment&quot;&gt;USE_FOR_MIN_TIME&lt;/configuration&gt;
+    &lt;configuration key=&quot;end-treatment&quot;&gt;USE_FOR_MIN_TIME&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../zip-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../zip-woh/" class="btn btn-xs btn-link">
+        Zip
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../waveform-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../waveform-woh/" class="btn btn-xs btn-link">
+        Waveform
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/webvtt-to-cutmarks.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

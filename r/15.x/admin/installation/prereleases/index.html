@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Prerelease Testing - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Prerelease Opencast Packages and Containers", url: "#_top", children: [
+              {title: "Debian Based Distributions", url: "#debian-based-distributions" },
+              {title: "Docker Images", url: "#docker-images" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../configuration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../configuration/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../docker-local/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../docker-local/" class="btn btn-xs btn-link">
+        Testing Locally
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="prerelease-opencast-packages-and-containers">Prerelease Opencast Packages and Containers</h1>
+<p>Shortly after a branch cut we start providing prerelease packages for the new branch.  In general you can expect a new
+verison any time a pull request has been merged.  This may be more than once a day, or it may be very rare late in the
+life cycle of a branch.</p>
+<div class=warn>
+Note: These packages come with *absolutely no support*, and may be broken at any time.  Do not install these on
+anything other than a testing system.  Do not feed the only copy of your recordings to these systems.  These
+packages may break their host operating system, and may eat your dog.  Do not feed these packages after midnight.
+</div>
+
+<!--
+Redhat Based Distributions
+--------------------------
+
+Add a repository configuration containing the following to `/etc/yum.repos.d/opencast-unstable.repo`.  Note that the `el`
+version must match your distribution's version!
+
+    [opencast-unstable-noarch]
+    name = Opencast el 8 Repository - noarch
+    baseurl  = http://ci.opencast.org/rpms/unstable/el/8/oc-15/noarch
+    enabled  = 1
+    gpgcheck = 1
+    gpgkey = http://ci.opencast.org/keys/public-signing-key.gpg
+
+Note: This repo still requires the normal Opencast repository for dependencies (notably ffmpeg).  Configuration for
+these packages should follow the [standard instructions](../configuration/basic.md)
+-->
+
+<h2 id="debian-based-distributions">Debian Based Distributions</h2>
+<p>First install the repository signing key with the following commands</p>
+<pre><code>curl http://ci.opencast.org/keys/public-signing-key.gpg | sudo gpg --no-default-keyring --keyring=/usr/share/keyrings/opencast-unstable.gpg --import -
+</code></pre>
+<p>The insert the following into <code>/etc/apt/sources.list.d/opencast-unstable.list</code></p>
+<pre><code>deb [signed-by=/usr/share/keyrings/opencast-unstable.gpg] http://ci.opencast.org/debian 15.x unstable
+</code></pre>
+<p>Note: This repo still requires the normal Opencast repository for dependencies (notably ffmpeg).  Configuration for
+these packages should follow the <a href="../../configuration/basic/">standard instructions</a></p>
+<h2 id="docker-images">Docker Images</h2>
+<p>All container images provide a <code>next</code> tag, e.g. <code>quay.io/opencast/allinone:next</code>. This version is a nightly build of the
+next upcoming major version. As such, it follows the latest release branch <code>r/Y.x</code> until <code>Y.0</code> is released. After that,
+it builds from <code>develop</code> until the next release branch is cut. This change is announced on list.</p>
+<p>Configuration for these images should follow the <a href="../../configuration/basic/">standard instructions</a></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../configuration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../configuration/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../docker-local/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../docker-local/" class="btn btn-xs btn-link">
+        Testing Locally
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/installation/prereleases.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

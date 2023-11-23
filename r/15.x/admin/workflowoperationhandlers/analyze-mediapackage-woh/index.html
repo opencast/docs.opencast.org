@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Analyze Mediapackage - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Analyze Media Package Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Workflow Instance Variables", url: "#workflow-instance-variables" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-link">
+        Analyze Audio
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../analyze-tracks-woh/" class="btn btn-xs btn-link">
+        Analyze Tracks
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="analyze-media-package-workflow-operation">Analyze Media Package Workflow Operation</h1>
+<p>ID: <code>analyze-mediapackage</code></p>
+<h2 id="description">Description</h2>
+<p>The analyze media package operation  analyzes the mediapackage and sets workflow instance
+variables based on the content of the medapackage. These variables can then be used to control if workflow
+operations should be executed or skipped.</p>
+<h2 id="workflow-instance-variables">Workflow Instance Variables</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*flavor*_exists</code></td>
+<td><code>presenter_source_exists=true</code></td>
+<td>Whether an element with given flavor is in the mediapackage.</td>
+</tr>
+<tr>
+<td><code>*flavor*_type</code></td>
+<td><code>presenter_source_type=Track</code></td>
+<td>The type of the element with the given flavor. Possible values are: <code>Attachment</code>, <code>Catalog</code>, <code>Track</code>.</td>
+</tr>
+<tr>
+<td><code>*flavor*_hastag_*tag*</code></td>
+<td><code>presenter_source_hastag_archive</code></td>
+<td>Whether an element with given flavor and tag is in the mediapackage (only if <code>set-tag-variables</code> is set).</td>
+</tr>
+<tr>
+<td><code>publication_*channel*_exists</code></td>
+<td><code>publication_engage_player_exists</code></td>
+<td>Whether a publication with this channel is in the mediapackage (only if <code>set-publication-variables</code> is set).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parameter-table">Parameter Table</h2>
+<p>If no configuration keys are specified, workflow instance variables will be set for every mediapackage element.</p>
+<p>If no mediapackage element matches a configuration key, no workflow instance variables will be set for that key. For example, the operation will never generate <code>presentation_work_exists=false</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Key</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavors</td>
+<td><code>*/work</code></td>
+<td>The comma separated list of flavors of the elements we are interested in.</td>
+</tr>
+<tr>
+<td>source-tags</td>
+<td><code>delivery, 1080p</code></td>
+<td>The comma separated list of tags of the elements we are interested in.</td>
+</tr>
+<tr>
+<td>set-tag-variables</td>
+<td><code>true</code></td>
+<td>Whether to set tag variables (default: false).</td>
+</tr>
+<tr>
+<td>set-publication-variables</td>
+<td><code>true</code></td>
+<td>Whether to set publication variables (default: false, independent from <code>source-flavors</code> and <code>-tags</code>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+  id=&quot;analyze-mediapackage&quot;
+  description=&quot;Analyze media package and set control variables&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;*/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;set-publication-variables&quot;&gt;true&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>The operation will create workflow instance variables like this:</p>
+<pre><code>dublincore_episode_exists=true
+dublincore_episode_type=Catalog
+presentation_source_exists=true
+presentation_source_type=Track
+security_xacml+episode_exists=true
+security_xacml+episode_type=Attachment
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../analyzeaudio-woh/" class="btn btn-xs btn-link">
+        Analyze Audio
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../analyze-tracks-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../analyze-tracks-woh/" class="btn btn-xs btn-link">
+        Analyze Tracks
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/analyze-mediapackage-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

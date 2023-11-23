@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>With Docker - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Development Environment with Docker", url: "#_top", children: [
+              {title: "Setting up a Docker build environment", url: "#setting-up-a-docker-build-environment" },
+              {title: "Single node Opencast Development", url: "#single-node-opencast-development" },
+              {title: "Multi-node Opencast Development", url: "#multi-node-opencast-development" },
+              {title: "Attaching a Remote Debugger to Karaf", url: "#attaching-a-remote-debugger-to-karaf" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../development-tips/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../development-tips/" class="btn btn-xs btn-link">
+        Tips for developing
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../setup-opencast-for-develop/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../setup-opencast-for-develop/" class="btn btn-xs btn-link">
+        General
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="development-environment-with-docker">Development Environment with Docker</h1>
+<p>Setting up and maintaining a proper Opencast build environment can be challenging. The <code>quay.io/opencast/build</code> Docker image,
+developed by the University of Münster, provides such a build environment already configured and ready to use. In fact,
+because of Docker's isolation functionality, multiple environments can be operated side by side on a single machine.</p>
+<h2 id="setting-up-a-docker-build-environment">Setting up a Docker build environment</h2>
+<p>Multiple <code>docker-compose</code> files are provided to start up different development environments
+(see "Testing Locally with Docker" guide in the administration documentation).</p>
+<p>Now create a folder where the Opencast repository should be located, and expose its path as an environment variable. You
+must also create the local Maven repository if it does not already exist.</p>
+<pre><code class="language-sh">$ mkdir -p opencast ~/.m2
+$ export OPENCAST_SRC=$PWD/opencast
+</code></pre>
+<p>The <code>OPENCAST_SRC</code> variable is used in the compose file to set up a Docker volume so that the host and Docker container
+can share the Opencast codebase. Similarly, the local Maven repository is shared in order to persist Maven artifacts
+beyond the lifetime of the Docker container. If you do not want to use the default path <code>~/.m2</code> you can set the
+<code>M2_REPO</code> variable to any other directory on the host system.</p>
+<p>Next, you should specify your UID and GID. A matching user will then be created within the container so that all new
+files can also be accessed from the host. If these variables remain unset, both default to 1000.</p>
+<pre><code class="language-sh">$ export OPENCAST_BUILD_USER_UID=$(id -u)
+$ export OPENCAST_BUILD_USER_GID=$(id -g)
+</code></pre>
+<h2 id="single-node-opencast-development">Single node Opencast Development</h2>
+<p>Now download the Docker compose file:</p>
+<pre><code class="language-sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.build.yml
+</code></pre>
+<p>With this you are ready to start up the build environment:</p>
+<pre><code class="language-sh">$ docker-compose up -d
+</code></pre>
+<p>You can enter the Opencast build environment with the <code>exec</code> command. Omitting the <code>--user opencast-builder</code> argument
+would give you a root shell, but that is not necessary because the user <code>opencast-builder</code> can use <code>sudo</code> within the
+container.</p>
+<pre><code class="language-sh">$ docker-compose exec --user opencast-builder opencast bash
+</code></pre>
+<p>There are multiple helper scripts available within the container:</p>
+<pre><code class="language-sh"># Clone the Opencast source code to the shared volume.
+$ oc_clone
+
+# Build Opencast.
+$ oc_build
+
+# Install Opencast in the same way as it would be installed in the other Opencast Docker images.
+$ oc_install &lt;distribution&gt;
+
+# Run the installed Opencast
+$ oc_run
+
+# Uninstall Opencast.
+$ oc_uninstall
+
+# Remove all Opencast files (database, media packages, etc.).
+$ oc_clean_data
+</code></pre>
+<p>These scripts are provided to automate common tasks, but you can also run the necessary commands directly.</p>
+<p>Since the Opencast code is shared, any change from an IDE is directly visible within the container.</p>
+<h2 id="multi-node-opencast-development">Multi-node Opencast Development</h2>
+<p>Development with multi-node Opencast environments are also supported using a different compose file.  Instead of
+downloading the single-node Docker compose file, download the multi-node version:</p>
+<pre><code class="language-sh">$ curl -o docker-compose.yml https://raw.githubusercontent.com/opencast/opencast-docker/&lt;version&gt;/docker-compose/docker-compose.multiserver.build.yml
+</code></pre>
+<p>This file defines a three node (admin, presentation, worker) cluster for use in testing, with all of the appropriate
+ports exported.  To access the a node run <code>docker-compose exec --user opencast-builder opencast-$nodetype bash</code>.  For
+example, to access the presentation node run <code>docker-compose exec --user opencast-builder opencast-presentation bash</code>.</p>
+<p>Available commands are otherwise identical.</p>
+<h2 id="attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</h2>
+<p>By default, the compose file sets the necessary variables to enable remote debugging. The network port is published by
+the container so that you can connect the remote debugger of your IDE to the port <code>5005</code> on <code>localhost</code>.  For multi-node
+setups each node has its debug port exposed: admin lives on <code>5005</code>, presentation on <code>5006</code>, and worker on <code>5007</code>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../development-tips/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../development-tips/" class="btn btn-xs btn-link">
+        Tips for developing
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../setup-opencast-for-develop/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../setup-opencast-for-develop/" class="btn btn-xs btn-link">
+        General
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/develop/development-environment-docker.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

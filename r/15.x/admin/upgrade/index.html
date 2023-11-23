@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 13.x to 14.x", url: "#_top", children: [
+              {title: "Configuration changes", url: "#configuration-changes" },
+              {title: "Database Migration", url: "#database-migration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-13x-to-14x">Upgrading Opencast from 13.x to 14.x</h1>
+<p>This guide describes how to upgrade Opencast 13.x to 14.x.
+In case you need information about how to upgrade older versions of Opencast,
+please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<ol>
+<li>Read the <a href="../releasenotes/">release notes</a> (especially the section of behaviour changes)</li>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast with the new version</li>
+<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
+<li><a href="#database-migration">Migrate the database</a></li>
+<li>Start Opencast</li>
+</ol>
+<h2 id="configuration-changes">Configuration changes</h2>
+<h3 id="analyze-mediapackage-workflow-operation-changes">Analyze-mediapackage workflow operation changes</h3>
+<p>The behaviour of the <code>analyze-mediapackage</code> workflow operation has been changed.
+Instead of replacing every character that doesn't match <code>a-z</code> or <code>0-9</code> with an underscore character,
+the operation now only replaces the <code>/</code> separating flavor and subflavor. This makes it behave identical to the
+<code>analyze-tracks</code> operation. If you make use of <code>analyze-mediapackage</code> workflow operation in your custom workflows,
+please adopt this changes.</p>
+<p>For more details see the documentation for the
+<a href="../workflowoperationhandlers/analyze-mediapackage-woh/">analyze-mediapackage operation</a>.</p>
+<h3 id="composite-workflow-operation-changes">Composite workflow operation changes</h3>
+<p>Instead of the <code>#{compositeCommand}</code> variable which was build by the composite workflow operation handler and could not
+be configured, the composite operation now supports multiple different variables for constructing the ffmpeg command to
+create the composite, most of which can be configured in the encoding profile. This is relevant e.g. for GPU encoding.</p>
+<p>If you use custom encoding profiles for composite or use the existing profiles in a different way than the standard
+workflows do, you might need to make some changes. Specifically, the <code>#{compositeCommand}</code> variable is no longer
+supported in the ffmpeg command, and the <code>mp4-preview</code> profile now only supports dual-streams and no watermark,
+while the <code>composite</code> profile retains its full functionality, but offers more configuration options than before.</p>
+<p>For more details see the updated documentation for the
+<a href="../workflowoperationhandlers/composite-woh/">composite operation</a>.</p>
+<h3 id="new-default-editor">New default editor</h3>
+<p>The default editor of Opencast has changed.
+If you want to continue using the internal editor of the old admin interface,
+you need to specifically configure this in <code>etc/org.opencastproject.organization-mh_default_org.cfg</code>
+by configuring <code>prop.admin.editor.url</code>.</p>
+<p>Note that the old admin interface is deprecated and will be removed in one of the next major releases.
+Even if you use the old editor for now, please make sure to test the new one
+and report potential problems.</p>
+<h3 id="new-default-player">New default player</h3>
+<p>Paella 7 is the new default player in Opencast.
+If you want to continue using the Paella 6 you need to specifically configure this in
+<code>etc/org.opencastproject.organization-mh_default_org.cfg</code> by configuring <code>prop.player</code>.</p>
+<p>Note that the old player Paella 6 is deprecated and will be removed in one of the next major releases.
+Even if you use the old player for now, please make sure to test the new one and report potential problems.</p>
+<h3 id="theodul-player-removed">Theodul player removed</h3>
+<p>The Theodul player was removed and can not be used any more.
+Please move to the new <a href="#new-default-player">Paella7 player</a>.</p>
+<h3 id="global-oc-remember-me-cookie">Global oc-remember-me cookie</h3>
+<p>It's now possible, to use the same <code>oc-remember-me</code> cookie for all nodes.
+So, if you log into the admin node for example, you don't have to log in again, when switching to the presentation
+node. You can enable it in the <code>etc/security/mh_default_org.xml</code> configuration (search for <code>rememberMeServices</code> bean
+and set the property named <code>key</code>).</p>
+<h3 id="login-page-moved">Login page moved</h3>
+<p>The login web page is moved from <code>/admin-ng/login.html</code> to <code>/login.html</code>. You may want to adopt this change in yor
+reverse proxy configuration in some cases.</p>
+<h2 id="database-migration">Database Migration</h2>
+<p>You will find database upgrade scripts in <code>docs/upgrade/13_to_14/</code>. These scripts are suitable for both, MariaDB and
+PostgreSQL. Changes include DB schema optimizations as well as fixes for the new workflow tables.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
