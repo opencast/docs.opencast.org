@@ -38,6 +38,7 @@
               {title: "Customize the player", url: "#customize-the-player" },
               {title: "Select the Opencast Player", url: "#select-the-opencast-player" },
               {title: "Cookie consent", url: "#cookie-consent" },
+              {title: "Hide/Show the timeline bar on Live events", url: "#hideshow-the-timeline-bar-on-live-events" },
           ]},
         ];
 
@@ -91,8 +92,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="paella-player-7">Paella Player 7</h1>
 <p>Paella 7 is Opencast's default player.</p>
 <p>The Paella <code>(pronounced 'paeja')</code> <a href="https://paellaplayer.upv.es">Player</a> is an Open Source
-JavaScript video player capable of playing an unlimited number of audio &amp; video streams 
-synchronously, Live Streaming, Zoom, Captions, contributed user plugins and a lot more. 
+JavaScript video player capable of playing an unlimited number of audio &amp; video streams
+synchronously, Live Streaming, Zoom, Captions, contributed user plugins and a lot more.
 It is easy to install and customize for your own needs.</p>
 <p>Paella 7 will be a complete rewrite of Paella, aiming several issues</p>
 <ul>
@@ -159,10 +160,10 @@ As an example there is a basic example here: <code>.../etc/ui-config/&lt;tenant&
 <h2 id="cookie-consent">Cookie consent</h2>
 <p>Paella uses cookies to store some user parameters (layout configuration, volume, etc...).
 And, if enabled, the paella user tracking plugin can use cookie to track the user.</p>
-<p>To comply with GDPR, ePrivacy Directive, or any other privacy laws, the opencast player uses 
-the <a href="https://www.termsfeed.com/privacy-consent/">Terms Feed Privacy Consent</a> banner and the 
-paella <code>config.json</code> file is configured to use it. </p>
-<p>To Learn more about paella cookie consent you can read paella 
+<p>To comply with GDPR, ePrivacy Directive, or any other privacy laws, the opencast player uses
+the <a href="https://www.termsfeed.com/privacy-consent/">Terms Feed Privacy Consent</a> banner and the
+paella <code>config.json</code> file is configured to use it.</p>
+<p>To Learn more about paella cookie consent you can read paella
 <a href="https://paellaplayer.upv.es/#/doc/cookie_consent.md">cookie consent documentation</a>.</p>
 <p>You can enable/disable the cookie consent banner in <code>config.json</code> file:</p>
 <pre><code class="language-json">{
@@ -171,6 +172,21 @@ paella <code>config.json</code> file is configured to use it. </p>
         &quot;cookieConsent&quot;: {
             &quot;enable&quot;: true
         },
+        ...
+    }
+    ...
+}
+</code></pre>
+<h2 id="hideshow-the-timeline-bar-on-live-events">Hide/Show the timeline bar on Live events</h2>
+<p>Paella can hide the timeline bar in live events using the <code>opencast.hideTimeLineOnLive</code> property
+in the configuration file.</p>
+<p>If your live stream offers a time buffer to go back in time, you can configure paella so that
+the time buffer bar is displayed and visitors will be able to go back in time.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+    ...
+    &quot;opencast&quot;: {
+        &quot;hideTimeLineOnLive&quot;: false
         ...
     }
     ...
