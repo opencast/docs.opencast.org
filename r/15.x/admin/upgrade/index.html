@@ -33,9 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 13.x to 14.x", url: "#_top", children: [
+          {title: "Upgrading Opencast from 14.x to 15.x", url: "#_top", children: [
+              {title: "Subtitle changes", url: "#subtitle-changes" },
               {title: "Configuration changes", url: "#configuration-changes" },
               {title: "Database Migration", url: "#database-migration" },
+              {title: "Elasticsearch Index Rebuild", url: "#elasticsearch-index-rebuild" },
           ]},
         ];
 
@@ -86,8 +88,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="upgrading-opencast-from-13x-to-14x">Upgrading Opencast from 13.x to 14.x</h1>
-<p>This guide describes how to upgrade Opencast 13.x to 14.x.
+    <h1 id="upgrading-opencast-from-14x-to-15x">Upgrading Opencast from 14.x to 15.x</h1>
+<p>This guide describes how to upgrade Opencast 14.x to 15.x.
 In case you need information about how to upgrade older versions of Opencast,
 please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
@@ -98,53 +100,103 @@ please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <li><a href="#database-migration">Migrate the database</a></li>
 <li>Start Opencast</li>
 </ol>
+<h2 id="subtitle-changes">Subtitle changes</h2>
+<p>With Opencast 15 we want to put more emphasis on subtitles. You can find more details on how subtitles should be
+handled going forward in <a href="../configuration/subtitles/">Subtitles</a>.</p>
+<p>This comes with a bit of migration. Namely, subtitles should not be stored as "attachments" or "catalogs" anymore, but
+as "media"(as they are called in the Admin UI) or "tracks" (as they are called internally). Therefore, all subtitle
+files currently stored as attachments or catalogs in your events should be moved to tracks. This can easily be
+accomplished with the "changetype" workflow operation handler new to Opencast 15. See example below. (Subtitles should
+then be republished)</p>
+<p>Additionally, we recommend adding a language tag <code>lang:&lt;language-code&gt;</code> to your subtitle files. While tags for subtitles
+are optional, the flavor will not encode the given language for a subtitle anymore, so a language tag is useful for
+identification and display purposes.
+You can read more about subtitles tags in <a href="../configuration/subtitles/">Subtitles</a>.</p>
+<p>If your subtitles are not in WebVTT format, they should be converted to WebVTT as well. While other formats are possible,
+WebVTT is the only one that will be guaranteed to work.</p>
+<details>
+
+<summary>Example workflow for changing subtitle type to track</summary>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+
+&lt;id&gt;change-subtitles&lt;/id&gt;
+  &lt;title&gt;Change Subtitles Type&lt;/title&gt;
+  &lt;tags&gt;
+    &lt;tag&gt;archive&lt;/tag&gt;
+  &lt;/tags&gt;
+  &lt;description&gt;&lt;/description&gt;
+  &lt;operations&gt;
+
+    &lt;!-- Add a language tag for the english subtitles --&gt;
+
+    &lt;operation
+        id=&quot;tag&quot;
+        description=&quot;Tagging media package elements&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/vtt+en&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;+lang:en&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Change the type of all files with the &quot;captions/*&quot; flavor to track --&gt;
+    &lt;!-- And their flavor to &quot;captions/source&quot; --&gt;
+
+    &lt;operation
+        id=&quot;changetype&quot;
+        description=&quot;Retracting elements flavored with presentation and tagged with preview from Engage&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/*&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-type&quot;&gt;track&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Save changes --&gt;
+
+    &lt;operation
+        id=&quot;snapshot&quot;
+        if=&quot;NOT (${presenter_delivery_exists} OR ${presentation_delivery_exists})&quot;
+        description=&quot;Archive publishing information&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Clean up work artifacts --&gt;
+
+    &lt;operation
+        id=&quot;cleanup&quot;
+        fail-on-error=&quot;false&quot;
+        description=&quot;Remove temporary processing artifacts&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!-- On systems with shared workspace or working file repository --&gt;
+        &lt;!-- you want to set this option to false. --&gt;
+        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
+        &lt;!-- ACLs are required again when working through ActiveMQ messages --&gt;
+        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+&lt;/definition&gt;
+</code></pre>
+
+</details>
+
 <h2 id="configuration-changes">Configuration changes</h2>
-<h3 id="analyze-mediapackage-workflow-operation-changes">Analyze-mediapackage workflow operation changes</h3>
-<p>The behaviour of the <code>analyze-mediapackage</code> workflow operation has been changed.
-Instead of replacing every character that doesn't match <code>a-z</code> or <code>0-9</code> with an underscore character,
-the operation now only replaces the <code>/</code> separating flavor and subflavor. This makes it behave identical to the
-<code>analyze-tracks</code> operation. If you make use of <code>analyze-mediapackage</code> workflow operation in your custom workflows,
-please adopt this changes.</p>
-<p>For more details see the documentation for the
-<a href="../workflowoperationhandlers/analyze-mediapackage-woh/">analyze-mediapackage operation</a>.</p>
-<h3 id="composite-workflow-operation-changes">Composite workflow operation changes</h3>
-<p>Instead of the <code>#{compositeCommand}</code> variable which was build by the composite workflow operation handler and could not
-be configured, the composite operation now supports multiple different variables for constructing the ffmpeg command to
-create the composite, most of which can be configured in the encoding profile. This is relevant e.g. for GPU encoding.</p>
-<p>If you use custom encoding profiles for composite or use the existing profiles in a different way than the standard
-workflows do, you might need to make some changes. Specifically, the <code>#{compositeCommand}</code> variable is no longer
-supported in the ffmpeg command, and the <code>mp4-preview</code> profile now only supports dual-streams and no watermark,
-while the <code>composite</code> profile retains its full functionality, but offers more configuration options than before.</p>
-<p>For more details see the updated documentation for the
-<a href="../workflowoperationhandlers/composite-woh/">composite operation</a>.</p>
-<h3 id="new-default-editor">New default editor</h3>
-<p>The default editor of Opencast has changed.
-If you want to continue using the internal editor of the old admin interface,
-you need to specifically configure this in <code>etc/org.opencastproject.organization-mh_default_org.cfg</code>
-by configuring <code>prop.admin.editor.url</code>.</p>
-<p>Note that the old admin interface is deprecated and will be removed in one of the next major releases.
-Even if you use the old editor for now, please make sure to test the new one
-and report potential problems.</p>
-<h3 id="new-default-player">New default player</h3>
-<p>Paella 7 is the new default player in Opencast.
-If you want to continue using the Paella 6 you need to specifically configure this in
-<code>etc/org.opencastproject.organization-mh_default_org.cfg</code> by configuring <code>prop.player</code>.</p>
-<p>Note that the old player Paella 6 is deprecated and will be removed in one of the next major releases.
-Even if you use the old player for now, please make sure to test the new one and report potential problems.</p>
-<h3 id="theodul-player-removed">Theodul player removed</h3>
-<p>The Theodul player was removed and can not be used any more.
-Please move to the new <a href="#new-default-player">Paella7 player</a>.</p>
-<h3 id="global-oc-remember-me-cookie">Global oc-remember-me cookie</h3>
-<p>It's now possible, to use the same <code>oc-remember-me</code> cookie for all nodes.
-So, if you log into the admin node for example, you don't have to log in again, when switching to the presentation
-node. You can enable it in the <code>etc/security/mh_default_org.xml</code> configuration (search for <code>rememberMeServices</code> bean
-and set the property named <code>key</code>).</p>
-<h3 id="login-page-moved">Login page moved</h3>
-<p>The login web page is moved from <code>/admin-ng/login.html</code> to <code>/login.html</code>. You may want to adopt this change in yor
-reverse proxy configuration in some cases.</p>
+<ul>
+<li>The default admin ui is now the "new" admin ui. If it does not suit your needs for whatever reason, you can always
+  switch back the "old" admin ui in <code>etc/ui-config/mh_default_org/runtime-info-ui/settings.json</code>
+  [<a href="https://github.com/opencast/opencast/pull/5414">#5414</a>]</li>
+<li>Paella Player 6 has been turned into a plugin. If you are still using it, you will need to enable it.
+  [<a href="https://github.com/opencast/opencast/pull/4965">#4965</a>]</li>
+</ul>
 <h2 id="database-migration">Database Migration</h2>
-<p>You will find database upgrade scripts in <code>docs/upgrade/13_to_14/</code>. These scripts are suitable for both, MariaDB and
-PostgreSQL. Changes include DB schema optimizations as well as fixes for the new workflow tables.</p>
+<p>There is no database migration required for upgrading form 14.x to 15.x.</p>
+<h2 id="elasticsearch-index-rebuild">Elasticsearch Index Rebuild</h2>
+<p>There is no index rebuild required for upgrading form 14.x to 15.x.</p>
 
   <br>
     
