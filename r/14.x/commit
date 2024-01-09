@@ -1,8 +1,11 @@
-commit cb63d8212aa9ec6194afcb4e769241933b660fb1
-Author: Matthias Neugebauer <matthias.neugebauer@uni-muenster.de>
-Date:   Tue Dec 12 17:38:06 2023 +0100
+commit 92ced4cc156a450213abcbf2077a9e69ebfa993d
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Tue Jan 9 15:48:54 2024 +0100
 
-    Merge branch 'r/13.x' into r/14.x
+    Fix Paella Player 7 login redirect (#5481)
     
-    * r/13.x:
-      Automatically update translation keys (r/13.x)
+    Our code for the Paella Player 7 checks the user role to decide whether
+    to redirect to the login page. However, the user role can be different
+    if you have configured a different user role prefix or simply turned
+    sanitize off. A safer assumption seems to be to expect any logged-in
+    user to have ROLE_USER.
