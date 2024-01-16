@@ -1,11 +1,20 @@
-commit 92ced4cc156a450213abcbf2077a9e69ebfa993d
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Jan 9 15:48:54 2024 +0100
+commit 095b4b75045690243f96e5c485138cb7d19a2709
+Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
+Date:   Tue Jan 16 12:51:29 2024 +0100
 
-    Fix Paella Player 7 login redirect (#5481)
+    Fix ACL template selection breaking after first selection (#5537)
     
-    Our code for the Paella Player 7 checks the user role to decide whether
-    to redirect to the login page. However, the user role can be different
-    if you have configured a different user role prefix or simply turned
-    sanitize off. A safer assumption seems to be to expect any logged-in
-    user to have ROLE_USER.
+    The template selection dropdown for access policies in e.g. the event
+    details is broken. After selecting an access policy, when trying to
+    select another access policy, the rules from the access policy above the
+    selected access policy will be selected.
+    For example, if you have `public, authenticated, private` and select
+    `public`, you get the aces for `public`. If you then select
+    `authenticated` you get the aces for `public`. Then selecting `private`
+    will lead to an error.
+    
+    This fixes that. Apparently the angularjs select thingy breaks if you
+    set ng-model to a value that is not in ng-options (e.g. setting it
+    ng-model to `0`, but ng-options only contains `951, 952, 953`). This
+    commit sets it to `undefined` instead, which angularjs seems to be able
+    to handle.
