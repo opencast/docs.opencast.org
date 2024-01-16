@@ -1,39 +1,30 @@
-commit b65f796c5f31e3455fcb8382f0b338049cf3ac45
-Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
-Date:   Tue Jan 16 12:55:53 2024 +0100
+commit d77de102e4413b5e4d15131911562125d8fa4e51
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Tue Jan 16 15:08:42 2024 +0100
 
-    Don't warn about using the default tool (#5538)
+    Add support for custom actions in ACL to Tobira harvest API (#5492)
     
-    If an LTI consumer does not specify a tool to use, Opencast will use the
-    default tool. That's just fine and expected in some cases.
+    Previously, only read and write roles were transmitted.
     
-    However, Opencast will log a warning every time this is being used,
-    causing an excessive amount of unnecessary logs like these:
+    This can go into 14 as it is not a breaking change. Well, one thing
+    changes: `ROLE_ADMIN` is not explicitly included in the event ACL
+    anymore. But since this is not a public free-for-all API, but only used
+    by Tobira, and since Tobira has implicit `ROLE_ADMIN` checks everywhere,
+    this is no problem. In fact, Tobira even removes `ROLE_ADMIN` in the
+    incoming ACL before storing it in the DB.
     
-    ```
-    2024-01-07T09:32:50,808 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T09:54:18,405 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:04:31,447 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:05:06,044 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:06:01,375 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:11:49,238 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:15:01,609 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:15:12,961 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    2024-01-07T10:15:40,276 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
-    ```
-    
-    This patch reduces the log level for this type of message to debug.
+    Related issue: https://github.com/elan-ev/tobira/issues/1004
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [x] [close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://help.github.com/en/articles/closing-issues-using-keywords)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
+    * [ ] include migration scripts and documentation, if appropriate
     * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
