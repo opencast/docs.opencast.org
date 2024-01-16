@@ -1,20 +1,39 @@
-commit 095b4b75045690243f96e5c485138cb7d19a2709
+commit b65f796c5f31e3455fcb8382f0b338049cf3ac45
 Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
-Date:   Tue Jan 16 12:51:29 2024 +0100
+Date:   Tue Jan 16 12:55:53 2024 +0100
 
-    Fix ACL template selection breaking after first selection (#5537)
+    Don't warn about using the default tool (#5538)
     
-    The template selection dropdown for access policies in e.g. the event
-    details is broken. After selecting an access policy, when trying to
-    select another access policy, the rules from the access policy above the
-    selected access policy will be selected.
-    For example, if you have `public, authenticated, private` and select
-    `public`, you get the aces for `public`. If you then select
-    `authenticated` you get the aces for `public`. Then selecting `private`
-    will lead to an error.
+    If an LTI consumer does not specify a tool to use, Opencast will use the
+    default tool. That's just fine and expected in some cases.
     
-    This fixes that. Apparently the angularjs select thingy breaks if you
-    set ng-model to a value that is not in ng-options (e.g. setting it
-    ng-model to `0`, but ng-options only contains `951, 952, 953`). This
-    commit sets it to `undefined` instead, which angularjs seems to be able
-    to handle.
+    However, Opencast will log a warning every time this is being used,
+    causing an excessive amount of unnecessary logs like these:
+    
+    ```
+    2024-01-07T09:32:50,808 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T09:54:18,405 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:04:31,447 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:05:06,044 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:06:01,375 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:11:49,238 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:15:01,609 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:15:12,961 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    2024-01-07T10:15:40,276 | WARN  | (LtiServlet:244) - The 'custom_tool' parameter was invalid: 'null'. Reverting to default: '/ltitools'
+    ```
+    
+    This patch reduces the log level for this type of message to debug.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
