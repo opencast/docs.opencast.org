@@ -1,8 +1,12 @@
-commit 29fdb124090ffc8af5043424a3167273d91270c0
+commit ef2304194534ae967a0ef305a043dae9328cf16b
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Jan 17 09:45:37 2024 +0100
+Date:   Wed Jan 17 09:59:12 2024 +0100
 
-    Update xmlsec version (CAS fix) (#5540)
+    Fix Paella Player 7 for single stream videos (#5539)
     
-    The `xmlsec` dependency version did not match the version included in
-    the `opencast-security-cas` feature.
+    Currently if we open the Paella Player 7 for an event that has only one
+    track (careful: captions count as tracks!), we get an error "s.some is
+    not a track". This was broken by the isLive check from #5420 and happens
+    because a single track is not wrapped in an array when the episode is
+    returned by the search service. This fixes that by doing that first. It
+    won't win any awards for being pretty, but it works. ;)
