@@ -1,5 +1,201 @@
-commit a01068b53721fa4b65481e5afd3cf58c508c7d3d
-Author: Arnei <arnewilken@yahoo.de>
-Date:   Wed Jan 17 10:16:58 2024 +0100
+commit 30021dfa5b149327e1c74e100bb0248cdfedad7d
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Fri Jan 19 14:41:51 2024 +0100
 
-    Merge remote-tracking branch 'origin/r/15.x' into develop
+    Improve encoding profiles by relaxing the GOP range requirements and using CRF 22 (#5545)
+    
+    **EDIT**: this description is not quite up to date anymore. Read the
+    next two comments as well to understand what changed. However, the file
+    size numbers in the table under "this PR" are basically still accurate
+    -> the huge file size wins remain.
+    
+    ---
+    
+    This PR changes the default encoding profiles, to be less restrictive
+    about GOP size, giving the codec more opportunity to compress better. It
+    also changes `--crf23` to `--crf22` for a slight bump in quality. This
+    was possible due to the large file size savings achieved by the GOP size
+    change. This results in slightly higher quality videos with reduced file
+    size (for slide desktop recordings reduced by more than half!).
+    
+    There are some arguments for why keeping the smaller GOP size might be
+    beneficial (I discuss those below). And of course, encoding profiles are
+    always a balance act between many factors. But I think this particular
+    change is a good one. I also think that increasing the quality a bit,
+    instead of "only" taking all the file size improvements, makes sense:
+    users' expectations regarding video quality rises over time, and the
+    video quality will have an effect of how happy users are with Opencast.
+    
+    
+    ## Encoding comparisons
+    
+    I tested five very different videos:
+    - *Presentation*: Desktop recording of slides. Very static. Ingested in
+    4k lossless compression.
+    - *Presenter*: The presenter video of my OC Summit 2023 talk "how to
+    install Tobira". Ingested in 1080p already compressed.
+    - *NASA Moon*: CGI with camera constantly moving slowly.
+    [Link](https://tobira.opencast.org/!v/HThra7F6aZc).
+    - *Garden Cat*: Short video of cat in garden plants, handheld camera,
+    lots of small moving parts.
+    [Link](https://tobira.opencast.org/!v/ECyD9lYw4-B)
+    - *Spring*: Animated Blender movie, short movie, mix of slow/static and
+    fast scenes. [Link](https://www.youtube.com/watch?v=WhWc3b3KhnY)
+    
+    I would think that vast majority of videos ingested into Opencast are
+    similar to "Presentation" or "Presenter", so the results for those
+    videos should be weighted higher I think.
+    
+    Everything was encoded in three settings:
+    - Status Quo: CRF 23, GOP 13-25 (*), `no-scenecut`
+    - This PR: CRF 22, GOP 13-100
+    - Another test: CRF 23, GOP 20-100
+    
+    (*): Yes, the current encoding profiles say `keyint=25:min-keyint=25`,
+    but x264 actually sets `min-keyint` to half the `keyint` in this case.
+    This can easily be verified by `mediainfo` the resulting files which say
+    `keyint=25 / keyint_min=13`.
+    
+    
+    ### File size
+    
+    | Video | Resolution | Status Quo | This PR | Another test | Status Quo
+    vs. PR |
+    | ------------ | ---------- | ----------- | -------- | ------------ |
+    ----------------- |
+    | Presentation | 480p | 102 MiB | 50 MiB | 49 MiB | 49% |
+    | | 720p | 159 MiB | 76 MiB | 74 MiB | 48% |
+    | | 1080p | 232 MiB | 101 MiB | 97 MiB | 44% |
+    | | 1440p | 310 MiB | 128 MiB | 123 MiB | 41% |
+    | | 2160p | 480 MiB | 190 MiB | 180 MiB | 39% |
+    | --------- | ---------- | ----------- | -------- | ---------- | |
+    | Presenter | 480p | 84 MiB | 71 MiB | 58 MiB | 86% |
+    | | 720p | 179 MiB | 164 MiB | 139 MiB | 92% |
+    | | 1080p | 427 MiB | 397 MiB | 348 MiB | 93% |
+    | --------- | ---------- | ----------- | -------- | ---------- | |
+    | NASA Moon | 720p | 43 MiB | 40 MiB | 39 MiB | 93% |
+    | | 1080p | 123 MiB | 109 MiB | 103 MiB | 88% |
+    | | 1440p | | 204 MiB | 184 MiB | |
+    | | 2160p | | 360 MiB | 332 MiB | |
+    | --------- | ---------- | ----------- | -------- | ---------- | |
+    | Garden Cat | 720p | 3.3 MiB | 2.9 MiB | 2.8 MiB | 88% |
+    | | 1080p | 10.5 MiB | 8.4 MiB | 7.6 MiB | 80% |
+    | | 1440p | | 16.6 MiB | 14.6 MiB | |
+    | | 2160p | | 33.7 MiB | 30.3 MiB | |
+    | --------- | ---------- | ----------- | -------- | ---------- | |
+    | Spring | 720p | 62 MiB | 58 MiB | 55 MiB | 93% |
+    | | 1080p | 134 MiB | 123 MiB | 111 MiB | 92% |
+    
+    
+    ### Quality
+    
+    Given that the quality is controlled by `--crf` (should be, anyway),
+    it's no surprise that the quality with this PR's encoding profile is a
+    touch better than with the old profile. The difference between CRF 23
+    and CRF 22 is certainly not large, but comparing directly, a small
+    improvement can be seen.
+    
+    ### Encoding time (very approximate!)
+    
+    I did all the encodings while also normally using my computer. So these
+    numbers here are veeeeery noisy, so keep that in mind. Looking at the
+    encoding times, I would clearly say that the noise is clearly way larger
+    than any potential difference. And I wouldn't worry about encoding times
+    for this change.
+    
+    | Video | Encoding profile | Time total | Time encoding delivery |
+    | ------------ | ---------------- | ---------- | ----------------------
+    |
+    | Presentation | Status Quo | 3:10:00 | 1:24:00 |
+    | | This PR | 2:34:00 | 1:26:00 |
+    | | Another test | 2:27:00 | 1:35:00 |
+    | Presenter | Status Quo | 9:14 | 5:10 |
+    | | This PR | 10:20 | 5:55 |
+    | | Another test | 9:19 | 5:13 |
+    | Spring | Status Quo | 7:48 | 3:25 |
+    | | This PR | 5:44 | 2:05 |
+    | | Another test | 6:43 | 3:00 |
+    
+    
+    ## Arguments for a smaller GOP size
+    
+    Very brief background: There are different kinds of frames in a video.
+    For the purpose of this PR, we simplify a bit and treat them as two
+    kinds: full images that can be decoded independently of the rest of the
+    video (I-frame), and frames that refer to parts of a previous frame
+    (P-frame). A GOP (group of pictures) is a group of frames that starts
+    with an i-frame and includes all succeeding P-frames until the next
+    I-frame.
+    
+    Having a smaller (or more regular) GOP size has some advantages:
+    
+    - Faster seeking: If you want to jump to any frame in a video, it's most
+    likely a P-frame. To decode (and show) that frame, all previous frames
+    until the closest I-frame have to be decoded (and thus downloaded).
+    Larger GOP sizes means that on average, more frames need to be
+    downloaded & decoded.
+    - Switching quality: Very similar to seeking, when switching quality
+    (manually or automatically), the whole GOP of the current frame needs to
+    be download and decoded. If a player that can automatically switch
+    quality based on network conditions, restricts itself to only switching
+    the quality at the beginning of a GOP, there are fewer switching
+    opportunities with larger GOP sizes.
+    - Low latency live streaming: usually live streaming delay is at least
+    as high as the GOP size, as the encoder won't release frames until a GOP
+    is finished.
+    - For lossy networks, loosing one frame means that all remaining frames
+    in the GOP are corrupted. Larger GOP sizes means a longer time until the
+    image is fixed again.
+    
+    The last arguments don't apply I think: Opencast is almost never the
+    service actually encoding live streams (as far as I know). So we can
+    mostly think about on-demand videos. Also, Opencast videos are almost
+    never viewed over lossy networks.
+    
+    The first two arguments apply, but I think the negative effect of my PR
+    on this will be minimal. The maximum GOP size allowed by this PR is 4s,
+    which is not even a lot. Also note that the I-frame in a GOP takes
+    usually the majority of space required by that GOP. So having a longer
+    GOP does not increase the download size by the same amount.
+    
+    For comparison, I analyzed the YouTube 1080p video of the Spring blender
+    movie. GOP sizes ranged from 4 to 133 frames (for a 24fps video). The
+    average is 77. Here is a histogram of how often certain GOP sizes
+    appear:
+    
+    
+    ![image](https://github.com/opencast/opencast/assets/7419664/3557a768-d002-499f-ba12-6bd89b11e056)
+    
+    
+    YouTube faces the same issues regarding seeking and quality switching,
+    and yet they have even higher GOP sizes. So I think it's certainly not
+    unreasonable to increase Opencast's GOP size to 100.
+    
+    
+    ## GOP size independent of frame rate?
+    
+    The GOP size is specified in frames, which might not be optimal.
+    Specifying as seconds might be more appropriate, to work better for
+    videos with different frame rates. I tried to do that but I couldn't
+    find a way to do it. The only option I found was `-force_key_frames
+    "expr:gte(t,n_forced*N)"`, but that forces exact GOP sizes, which is the
+    exact thing I want to move away from.
+    
+    So I decided to just move along with my change anyway. Right now we are
+    reencoding all videos with 25fps anyway (which bothers me greatly!), so
+    it still works. This PR doesn't make anything worse in that regard.
+    
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
