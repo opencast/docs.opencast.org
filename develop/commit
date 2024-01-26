@@ -1,24 +1,40 @@
-commit 9afc48444f6d1f76a33ce03d72a95982c4391229
+commit cdbebed43fcc439b3ad9a612665875f628b2a60e
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Jan 26 11:41:13 2024 +0100
+Date:   Fri Jan 26 11:50:00 2024 +0100
 
-    Remove unnecessary dependencies (#5466)
+    Make LTI "Custom role" configuration more configurable (#5312)
     
-    Opencast did not use removed dependencies, according to the Karaf
-    console.
+    Hi, this is my first contribution to this repository.
     
-    Is this change still allowed in a release after a feature freeze? It
-    could break Opencast because you can't test all possible configurations.
-    It works for me ;)
+    * The problem:
+    Current implementation of custom roles allows only one custom role also
+    it only accepts string that are exactly equal to role name which can
+    limit configurability.
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    This pull request implements ability to define multiple custom roles and
+    custom roles that need to be added for example:
+    ```
+    lti.custom_role_name.1=Instructor
+    lti.custom_roles.1=ROLE_MOODLE_INSTRUCTOR
+    
+    lti.custom_role_name.2=Learner
+    lti.custom_roles.2=ROLE_MOODLE_LEARNER
+    
+    -- Additionally theres regex support for matching roles --
+    lti.custom_role_name.3=ims\/lis\/Administrator
+    lti.custom_roles.3=ROLE_MOODLE_ADMINISTRATOR
+    ```
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
     issue](https://help.github.com/en/articles/closing-issues-using-keywords)
     if one exists
-    * [ ] [be against the correct
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
