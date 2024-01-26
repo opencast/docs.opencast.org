@@ -1,87 +1,11 @@
-commit 4a1ab9ef793cca61d43e0e23d16be956a835cf36
-Author: Matthias Neugebauer <mtneug@shio.solutions>
-Date:   Tue Jan 23 16:59:39 2024 +0100
+commit 82d3c461cbc8ce73984b3ed6ba2803505d00e368
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Fri Jan 26 11:26:59 2024 +0100
 
-    Add `skip_frame nokey` to timelinepreview operation for longer videos (#5549)
+    Docs: Add beginner guide for submitting issues (#5484)
     
-    This significantly speeds up the operation. Some examples:
-    - 5min video h264 1080p 190MB: 5.0s -> 1.5s
-    - 5min video h265 2160p 540MB: 32.5s -> 3.3s
-    - 50min video h264 2160p 200MB: 75s -> 14s
-    
-    For short videos, the timelinepreview will be less and less useful with
-    this: if a very short video only has 5 key frames, the generated image
-    will only contain 5 different frames, most repeated multiple times. For
-    that reason, I only enabled this for videos longer than 120s. But see
-    the discussion about the threshold below.
-    
-    Ideally, in the future, this operation should use the smallest encoded
-    output video as input (e.g. the 480p stream). The preview downscales the
-    frame a lot anyway. Doing that would
-    - Speed things up further, given that ffmpeg has to decode smaller
-    frames.
-    - Make sure that we have somewhat regular keyframes to completely rule
-    out fringe cases.
-    
-    But that's out of scope for this PR.
-    
-    ---
-    
-    ## Higher threshold?
-    
-    I tested this with three videos (comparing before and after) and maybe I
-    need to increase the threshold.
-    
-    - Moon: 5min, 37 keyframes in input file (8s average GOP size)
-    - Spring: 7:44, 106 keyframes in input file (4.3s average GOP size)
-    - Cat: 22s, 3 keyframes in input file (7.3s average GOP size)
-    
-    For "cat", the preview did not change at all (as expected, due to the
-    threshold). But for the other videos, the preview did get a bit worse. I
-    don't think it's terribly worse, but I would undersatnd if not everyone
-    would be ok with this. So I'm totally fine with increasing the threshold
-    to 10min for example. I would guess that by then it's really no problem.
-    And we still save time for the videos where it really matters. So yeah,
-    let me know what you think!
-    
-    **Moon (with this PR)**
-    
-    ![moon-after](https://github.com/opencast/opencast/assets/7419664/e9cced3a-02e2-4feb-9ba9-9b303bc25cbb)
-    
-    **Moon (before)**
-    
-    ![moon-before](https://github.com/opencast/opencast/assets/7419664/dbf021b7-3bd0-445b-bfc5-1b614d2b44a5)
-    
-    **Spring (with this PR)**
-    
-    ![spring-after](https://github.com/opencast/opencast/assets/7419664/0d316f3b-bdda-47e0-a635-dbebe3eebb59)
-    
-    **Spring (before)**
-    
-    ![spring-before](https://github.com/opencast/opencast/assets/7419664/566c0a3d-2363-4d81-831f-e33296808844)
-    
-    Here is a comparison for a 50min video (I did this manually with ffmpeg,
-    not through OC. So the results could be a tiny bit different):
-    
-    **Presentation (with this PR)**
-    
-    ![out2-key](https://github.com/opencast/opencast/assets/7419664/220826b5-146d-4e60-bd65-8f34ee64576c)
-    
-    **Presentation (before)**
-    
-    ![out2](https://github.com/opencast/opencast/assets/7419664/25ca8bc4-ecbf-4cc1-8ac1-2a4286133f50)
-    
-    
-    ### Your pull request should…
-    
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    We have detailed information on how to deal with security issues, but no
+    general guide for submitting issues. This aims to change that. The goal
+    here is to add helpful information for people who have been told to
+    "submit an issue", but only have a vague idea on what that entails and
+    are inexperienced with the Github web interface.
