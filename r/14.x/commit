@@ -1,15 +1,40 @@
-commit d1acc959e59fe1d55f49d9b209a9a8ce9f73dd47
-Author: Matthias Neugebauer <mtneug@shio.solutions>
-Date:   Wed Jan 24 17:55:58 2024 +0100
+commit a8d27148a61cfc4649e15e3b6f39ed4b762a2e65
+Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
+Date:   Fri Jan 26 13:28:40 2024 +0100
 
-    Disable running Firefox from Karma on Macs (#5551)
+    Fix concurrency problem in Whisper integration (#5472)
     
-    The old admin UI is on its way out anyway, so it should be fine to close
-    #3894 with this. Karma is deprecated anyway, so if we want to fix it
-    properly, we would need to get a new (frontend) test runner in there,
-    which I don't see happening.
+    The SpeechToTextService interface ensures that a unique file is passed
+    to transcription engines which these can safely use to store output
+    files. Unfortunately, most Whisper implementations work slightly
+    different and you cannot specify a single output file. That is probably
+    why the Whisper engine throes the safe file name overboard and just uses
+    the parent directly to store files.
     
-    Note for reviewers: There are two commits here, which are best viewed
-    individually. The first just fixes some formatting issues in the Karma
-    config. Or you view the the changes with whitespace ignored, that should
-    also hide most (not all) of those "irrelevant" changes.
+    This has the side-effect that if `mediapackage-a/presenter.mp4` and
+    `mediapackage-b/presenter.mp4` are processed concurrently, both write to
+    the same file and an incorrect output file will end up being attached to
+    one of the media packages.
+    
+    This patch fixes that problem by creating an unique directory instead
+    and passing that to the engines to operate in.
+    
+    This also fixes the problem that most Whisper implementations create
+    many more output files which whould have never been deleted before,
+    slowly filling up the workspace.
+    
+    This fixes  #5437
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
