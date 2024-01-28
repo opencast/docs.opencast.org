@@ -1,40 +1,9 @@
-commit a8d27148a61cfc4649e15e3b6f39ed4b762a2e65
-Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
-Date:   Fri Jan 26 13:28:40 2024 +0100
+commit 2cb3702ab7e70a1bdc483addba2c3764bd9a919b
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Sat Jan 27 21:26:16 2024 -0600
 
-    Fix concurrency problem in Whisper integration (#5472)
+    Merge branch 't/tobira-staticfiles' of gregorydlogan/opencast into r/14.x
     
-    The SpeechToTextService interface ensures that a unique file is passed
-    to transcription engines which these can safely use to store output
-    files. Unfortunately, most Whisper implementations work slightly
-    different and you cannot specify a single output file. That is probably
-    why the Whisper engine throes the safe file name overboard and just uses
-    the parent directly to store files.
+    Pull request #5526
     
-    This has the side-effect that if `mediapackage-a/presenter.mp4` and
-    `mediapackage-b/presenter.mp4` are processed concurrently, both write to
-    the same file and an incorrect output file will end up being attached to
-    one of the media packages.
-    
-    This patch fixes that problem by creating an unique directory instead
-    and passing that to the engines to operate in.
-    
-    This also fixes the problem that most Whisper implementations create
-    many more output files which whould have never been deleted before,
-    slowly filling up the workspace.
-    
-    This fixes  #5437
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+      Document how to turn static file auth off for Tobira usage.
