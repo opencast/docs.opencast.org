@@ -1,9 +1,30 @@
-commit 6b9f0151babd437228d790a5ec892fc2a885f043
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Mon Jan 29 22:22:40 2024 -0600
+commit 6551883c0a523856f6dd21bb84b77f959b4b3d6c
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Tue Jan 30 17:15:26 2024 +0100
 
-    Merge branch 'debian-apt-key-deprecation' of wsmirnow/opencast into r/14.x
+    Update Stud.IP User Provider (#5231)
     
-    Pull request #5555
+    This patch fixes a number of minor issues in the Stud.IP user provider:
     
-      Debian installation documentation fixed
+    - Errors handled were actually copied over from the Moodle user
+    provider. Changed the code to handle errors from Stud.IP.
+    - Removed the unnecessary check if roles are `null`. The object `roles`
+    can never be `null`.
+    - Properly handle non-existing users. In that case, Stud.IP should
+    return `404 Not Found`,
+    - Add email address to users.
+    - Fix some logging issues.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
