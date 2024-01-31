@@ -1,30 +1,16 @@
-commit 6551883c0a523856f6dd21bb84b77f959b4b3d6c
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Jan 30 17:15:26 2024 +0100
+commit a10ea5b674e08dee9fee9c32918878b4d18b3bcf
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Wed Jan 31 09:36:26 2024 +0100
 
-    Update Stud.IP User Provider (#5231)
+    Don't duplicate user roles when switching ACL templates in old Admin UI (#5553)
     
-    This patch fixes a number of minor issues in the Stud.IP user provider:
+    When switching templates in the ACL view of the old Admin UI of _new_
+    events, series or ACL templates, the user roles are accidentally pushed
+    twice. This is not visible in the UI, except if you have custom actions,
+    which will result in them seeming to mysteriously multiply each time you
+    select a different template:
     
-    - Errors handled were actually copied over from the Moodle user
-    provider. Changed the code to handle errors from Stud.IP.
-    - Removed the unnecessary check if roles are `null`. The object `roles`
-    can never be `null`.
-    - Properly handle non-existing users. In that case, Stud.IP should
-    return `404 Not Found`,
-    - Add email address to users.
-    - Fix some logging issues.
     
-    ### Your pull request should…
+    ![grafik](https://github.com/opencast/opencast/assets/11960278/000d0f70-5db2-4b43-b976-b85563d098f0)
     
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    This was initially broken by #5269.
