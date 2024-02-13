@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 15: Release Notes", url: "#_top", children: [
+              {title: "Opencast 15.1", url: "#opencast-151" },
               {title: "Opencast 15.0", url: "#opencast-150" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
@@ -88,6 +89,83 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-15-release-notes">Opencast 15: Release Notes</h1>
+<h2 id="opencast-151">Opencast 15.1</h2>
+<p>Opencast 15.1 includes important bug fixes and improvements.</p>
+<h3 id="bug-fixes">Bug fixes</h3>
+<ul>
+<li>
+<p><strong>Fix Paella Player 7 for single stream videos:</strong>
+This patch fixes the issue that Paella Player 7 will run into an error if a video has only one stream
+[<a href="https://github.com/opencast/opencast/pull/5539">#5539</a>]</p>
+</li>
+<li>
+<p><strong>Fix Paella 7 with no segments:</strong>
+This patch fixes the issue that Paella Player 7 will run into an error if a video has no segments
+[<a href="https://github.com/opencast/opencast/pull/5488">#5488</a>]</p>
+</li>
+<li>
+<p><strong>Fix Paella Player 7 login redirect:</strong>
+Paella Player 7 now redirects to the login page if a user doesn't have the role ROLE_USER
+[<a href="https://github.com/opencast/opencast/pull/5481">#5481</a>]</p>
+</li>
+<li>
+<p><strong>Update xmlsec version (CAS fix):</strong>
+This patch fixes a dependency mismatch for CAS users
+[<a href="https://github.com/opencast/opencast/pull/5540">#5540</a>]</p>
+</li>
+<li>
+<p><strong>Whisper transcription engine bug fixing:</strong>
+This patch fixes a number of minor bugs and inconveniences in the whisper transcription engine
+[<a href="https://github.com/opencast/opencast/pull/5436">#5436</a>]</p>
+</li>
+<li>
+<p><strong>Fix ACL template selection breaking after first selection:</strong>
+This patch fixes an error in the ACL template selection
+[<a href="https://github.com/opencast/opencast/pull/5537">#5537</a>]</p>
+</li>
+</ul>
+<h3 id="new-admin-ui-bug-fixes">(New) Admin UI Bug fixes</h3>
+<ul>
+<li><strong>Fix publication link not clickable:</strong>
+Fixes the little pop-up for the publications of an event in the events table.
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/217">#217</a>]</li>
+<li><strong>Fix mixed_text metadata fields without collection:</strong>
+Fixes a bug that would crash the ui when opening event or series metadata details
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/232">#232</a>]</li>
+<li><strong>Fix exception when opening timepicker:</strong>
+This also prevented scheduling events
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/205">#205</a>]</li>
+<li><strong>Don't call Object.entries on undefined:</strong>
+Fixes a problem where opening workflow details would break entire ui
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/239">#239</a>]</li>
+<li><strong>Don't render "invalid date" in table cells:</strong>
+Instead render nothing, like in the old admin ui
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/241">#241</a>]</li>
+<li><strong>Refresh workflow operations in event details</strong>
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/219">#219</a>]</li>
+<li><strong>Remove useAppDispatch from tableThunks.ts:</strong>
+Fixes the ui crashing when switching between pages in a table
+[<a href="https://github.com/opencast/opencast-admin-interface/pull/246">#246</a>]</li>
+</ul>
+<h3 id="improvements">Improvements</h3>
+<ul>
+<li>
+<p><strong>Don't warn about using the default tool:</strong>
+Changes the log level when Opencast uses the default tool for a LTI Consumer from warn to debug
+[<a href="https://github.com/opencast/opencast/pull/5538">#5538</a>]</p>
+</li>
+<li>
+<p><strong>Add support for custom actions in ACL to Tobira harvest API:</strong>
+ROLE_ADMIN is not explicitly included in the event ACL for the Tobira specific API anymore
+[<a href="https://github.com/opencast/opencast/pull/5492">#5492</a>]</p>
+</li>
+<li>
+<p><strong>Paella7: Add support for text/vtt captions in DownloadsPlugin:</strong>
+This PR adds the captions files to the Paella Player 7 downloads plugin
+[<a href="https://github.com/opencast/opencast/pull/5491">#5491</a>]</p>
+</li>
+</ul>
+<p>See <a href="../changelog/#opencast-151">changelog</a> for a comprehensive list of changes.</p>
 <h2 id="opencast-150">Opencast 15.0</h2>
 <h3 id="features">Features</h3>
 <h4 id="subtitles-as-first-class-citizens">Subtitles as first class citizens</h4>
@@ -175,7 +253,7 @@ WebVTT is the only one that will be guaranteed to work.</p>
 
 </details>
 
-<h3 id="improvements">Improvements</h3>
+<h3 id="improvements_1">Improvements</h3>
 <ul>
 <li>The analyze-mediapackage workflow operation can now generate variables regarding the existence of publications
   (example: <code>publication_engage_player_exists</code>) [<a href="https://github.com/opencast/opencast/pull/5419">#5419</a>]</li>
@@ -228,7 +306,7 @@ WebVTT is the only one that will be guaranteed to work.</p>
 <ul>
 <li>There are no API changes</li>
 </ul>
-<p>See <a href="../changelog/">changelog</a> for a comprehensive list of changes.</p>
+<p>See <a href="../changelog/#opencast-150">changelog</a> for a comprehensive list of changes.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
