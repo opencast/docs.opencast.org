@@ -1,16 +1,29 @@
-commit a10ea5b674e08dee9fee9c32918878b4d18b3bcf
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Wed Jan 31 09:36:26 2024 +0100
+commit 9314baa0b7119a008403f4e237406f261e938611
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Tue Feb 13 11:27:19 2024 +0100
 
-    Don't duplicate user roles when switching ACL templates in old Admin UI (#5553)
+    Encoding profile fix for portrait videos (#5548)
     
-    When switching templates in the ACL view of the old Admin UI of _new_
-    events, series or ACL templates, the user roles are accidentally pushed
-    twice. This is not visible in the UI, except if you have custom actions,
-    which will result in them seeming to mysteriously multiply each time you
-    select a different template:
+    Resolution based encoding for delivery videos in portrait format is
+    broken. Example given
     
+    Input video resolution | Maximum output video resolution
+    -----------------------|--------------------------------
+    1920x1080 | 1920x1080
+    1080x1920 | 2160x3840
     
-    ![grafik](https://github.com/opencast/opencast/assets/11960278/000d0f70-5db2-4b43-b976-b85563d098f0)
+    We want not upscale videos per default. This patch fixes this.
     
-    This was initially broken by #5269.
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://help.github.com/en/articles/closing-issues-using-keywords)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
