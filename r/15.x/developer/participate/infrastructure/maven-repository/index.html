@@ -127,7 +127,7 @@ preferred repository to use. You can find some example configurations in <code>d
 <h4 id="pushing-to-your-local-maven-repository">Pushing to your local Maven repository</h4>
 <p>The following command will add a file to your local Maven repository.  This is useful for testing if your artifacts are
 correctly placed prior to pushing to the mainline Nexus repository.</p>
-<pre><code>mvn install:install-file \
+<pre><code>./mvnw install:install-file \
  -Dfile=$filename \
  -DgroupId=$groupId \
  -DartifactId=$artifactId \
@@ -211,7 +211,7 @@ correctly placed prior to pushing to the mainline Nexus repository.</p>
 </code></pre>
 <h2 id="pushing-snapshots">Pushing Snapshots</h2>
 <p>Snapshots are pushed automatically by the CI servers.  For historical purposes, this is accomplished by:</p>
-<pre><code class="language-bash">mvn deploy
+<pre><code class="language-bash">./mvnw deploy
 </code></pre>
 <p>To verify, your artifacts can be found <a href="https://oss.sonatype.org/content/repositories/snapshots/org/opencastproject/">here</a>
 and <a href="https://oss.sonatype.org/content/groups/staging/org/opencastproject/">here</a>.  Note that you cannot (easily) drop
@@ -226,18 +226,18 @@ release once it has been closed!</p>
 <li>GPG signatures for the binaries, docs, and sources</li>
 </ul>
 <p>This is automated with the <code>release</code> profile.  To push a release run</p>
-<pre><code class="language-bash">mvn nexus-staging:deploy -P release
+<pre><code class="language-bash">./mvnw nexus-staging:deploy -P release
 </code></pre>
 <p>This creates a staging repository (https://oss.sonatype.org/content/groups/staging/org/opencastproject/) for your
 artifacts.  This is always safe to do - you can still rollback all changes with</p>
-<pre><code class="language-bash">mvn nexus-staging:drop
+<pre><code class="language-bash">./mvnw nexus-staging:drop
 </code></pre>
 <p>If things do not look ok, fix the issue and redeploy.  Once you are confident that everything is ok, you can run</p>
-<pre><code class="language-bash">mvn nexus-staging:close
+<pre><code class="language-bash">./mvnw nexus-staging:close
 </code></pre>
 <p>This closes the staging repository, and runs the Sonatype-side tests for things like GPG signatures.  If this fails,
 correct the issue locally, and redeploy.  Once this succeeds, you have two options: drop (to destroy the release) or:</p>
-<pre><code class="language-bash">mvn nexus-staging:release
+<pre><code class="language-bash">./mvnw nexus-staging:release
 </code></pre>
 <p>to permanently release the binaries in their current states.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
@@ -245,11 +245,11 @@ correct the issue locally, and redeploy.  Once this succeeds, you have two optio
 violations of deploy rules - this may or may not actually be true.  If you're confident that this is caused by a simple
 timeout and not something you have done use one of the following.</p>
 <p>To reattempt a deploy use</p>
-<pre><code class="language-bash">mvn nexus-staging:deploy-staged
+<pre><code class="language-bash">./mvnw nexus-staging:deploy-staged
 </code></pre>
 <p>This will avoid recompiling, retesting, and resigning all of the binaries.</p>
 <p>To reattempt a close use</p>
-<pre><code class="language-bash">mvn nexus-staging:close
+<pre><code class="language-bash">./mvnw nexus-staging:close
 </code></pre>
 
   <br>
