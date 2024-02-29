@@ -39,6 +39,7 @@
               {title: "Select the Opencast Player", url: "#select-the-opencast-player" },
               {title: "Cookie consent", url: "#cookie-consent" },
               {title: "Hide/Show the timeline bar on Live events", url: "#hideshow-the-timeline-bar-on-live-events" },
+              {title: "Configure video canvas", url: "#configure-video-canvas" },
           ]},
         ];
 
@@ -187,6 +188,33 @@ the time buffer bar is displayed and visitors will be able to go back in time.</
     ...
     &quot;opencast&quot;: {
         &quot;hideTimeLineOnLive&quot;: false
+        ...
+    }
+    ...
+}
+</code></pre>
+<h2 id="configure-video-canvas">Configure video canvas</h2>
+<p>Paella Player 7 supports multiple types of video canvas to render videos. The default is <code>video</code>, but there is for
+example also <code>video360</code> for 360° videos.</p>
+<p>In Opencast it is possible to configure which video canvas will be used for which track, depending on its tags and/or
+flavor. Only one tag <em>or</em> the flavor has to match for the canvas to be used. If the track meets the conditions of
+multiple canvases, all of them are set and the <code>order</code> field of the respective plugins controls in which order
+the player will try to use them.</p>
+<p>In any case, you should not remove the <code>video</code> option so it can be used as a fallback by the player in case the other
+canvases cannot be rendered for any reason.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+    ...
+    &quot;opencast&quot;: {
+      &quot;videoCanvas&quot;: {
+        &quot;video360&quot;: {
+          &quot;flavor&quot;: &quot;*/delivery+360&quot;,
+          &quot;tag&quot;: &quot;video360&quot;
+        },
+        &quot;video&quot;: {
+          &quot;flavor&quot;: &quot;*/delivery&quot;
+        }
+      }
         ...
     }
     ...
