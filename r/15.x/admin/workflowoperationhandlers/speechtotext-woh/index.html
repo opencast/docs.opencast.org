@@ -92,9 +92,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="speech-to-text-workflow-operation">Speech to Text Workflow Operation</h1>
 <p>ID: <code>speechtotext</code></p>
 <h2 id="description">Description</h2>
-<p>The speech to text operation can be used to generate subtitles for Videos or Audio files. Currently, there are two STT
-engines available, <a href="../../configuration/transcription.configuration/whisper/">Whisper</a> and 
-<a href="../../configuration/transcription.configuration/vosk/">Vosk</a>. The subtitles file format ist WebVTT.</p>
+<p>The speech to text operation can be used to generate subtitles from video or audio files. Currently, there are three
+STT engines available, <a href="../../configuration/transcription.configuration/whisper/">Whisper</a>,
+<a href="../../configuration/transcription.configuration/whispercpp/">WhisperC++</a> and
+<a href="../../configuration/transcription.configuration/vosk/">Vosk</a>.
+The subtitles file format ist WebVTT.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -140,20 +142,20 @@ engines available, <a href="../../configuration/transcription.configuration/whis
 <td>target-tags</td>
 <td>no</td>
 <td>delivery/captions</td>
-<td>Tags for the subtitle file.** The <code>generator</code> and <code>generator-type</code> tags will be set automatically. (Whisper only: If no <code>language-code</code> is set, the <code>lang</code> tag will be auto-generated.)</td>
+<td>Tags for the subtitle file.** The <code>generator</code> and <code>generator-type</code> tags will be set automatically. (Whisper/WhisperC++ only: If no <code>language-code</code> is set, the <code>lang</code> tag will be auto-generated.)</td>
 </tr>
 <tr>
 <td>translate</td>
 <td>no</td>
 <td>true</td>
-<td>Transcription is translated into English, valid values <code>true</code> or <code>false</code> (Whisper Only)</td>
+<td>Transcription is translated into English, valid values <code>true</code> or <code>false</code> (Whisper/WhisperC++ only)</td>
 </tr>
 </tbody>
 </table>
 <p><em>Vosk Only, default value can be modified on Vosk config file.
 </em>*For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>.</p>
 <h2 id="requirements">Requirements</h2>
-<p>In order for it to work, you have to install the vosk-cli or whisper package</p>
+<p>In order for it to work, you have to install the vosk-cli, whisper or whispercpp package.</p>
 <h2 id="operation-examples">Operation Examples</h2>
 <pre><code class="language-XML">&lt;operation
     id=&quot;speechtotext&quot;
