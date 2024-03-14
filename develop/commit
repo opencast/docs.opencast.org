@@ -1,138 +1,138 @@
-commit b468d55e6816f2ecb5c581f92de4564d027aac91
+commit 9a1ac2704df16d8787422ef3a810425f5fca8411
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Mar 14 09:45:11 2024 +0100
+Date:   Thu Mar 14 10:02:48 2024 +0100
 
-    Bump @playwright/test from 1.41.1 to 1.42.0 in /modules/engage-paella-player-7 (#5659)
+    Bump junit5.version from 5.10.0 to 5.10.2 in /modules/db (#5651)
     
-    Bumps [@playwright/test](https://github.com/microsoft/playwright) from
-    1.41.1 to 1.42.0.
+    Bumps `junit5.version` from 5.10.0 to 5.10.2.
+    Updates `org.junit.jupiter:junit-jupiter` from 5.10.0 to 5.10.2
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/microsoft/playwright/releases"><code>@​playwright/test</code>'s
+    href="https://github.com/junit-team/junit5/releases">org.junit.jupiter:junit-jupiter's
     releases</a>.</em></p>
     <blockquote>
-    <h2>v1.42.0</h2>
-    <h2>New APIs</h2>
-    <ul>
-    <li>
-    <p><strong>Test tags</strong></p>
-    <p><a href="https://playwright.dev/docs/test-annotations#tag-tests">New
-    tag syntax</a> for adding tags to the tests (@-tokens in the test title
-    are still supported).</p>
-    <pre lang="js"><code>test('test customer login', { tag: ['@fast',
-    '@login'] }, async ({ page }) =&gt; {
-      // ...
-    });
-    </code></pre>
-    <p>Use <code>--grep</code> command line option to run only tests with
-    certain tags.</p>
-    <pre lang="sh"><code>npx playwright test --grep @fast
-    </code></pre>
-    </li>
-    <li>
-    <p><strong>Annotating skipped tests</strong></p>
-    <p><a
-    href="https://playwright.dev/docs/test-annotations#annotate-tests">New
-    annotation syntax</a> for test annotations allows annotating the tests
-    that do not run.</p>
-    <pre lang="js"><code>test('test full report', {
-      annotation: [
-    { type: 'issue', description:
-    'https://github.com/microsoft/playwright/issues/23180' },
-    { type: 'docs', description:
-    'https://playwright.dev/docs/test-annotations#tag-tests' },
-      ],
-    }, async ({ page }) =&gt; {
-      // ...
-    });
-    </code></pre>
-    </li>
-    <li>
-    <p><strong>page.addLocatorHandler()</strong></p>
-    <p>New method <a
-    href="https://playwright.dev/docs/api/class-page#page-add-locator-handler">page.addLocatorHandler()</a>
-    registers a callback that will be invoked when specified element becomes
-    visible and may block Playwright actions. The callback can get rid of
-    the overlay. Here is an example that closes a cookie dialog when it
-    appears.</p>
-    <pre lang="js"><code>// Setup the handler.
-    await page.addLocatorHandler(
-    page.getByRole('heading', { name: 'Hej! You are in control of your
-    cookies.' }),
-        async () =&gt; {
-          await page.getByRole('button', { name: 'Accept all' }).click();
-        });
-    // Write the test as usual.
-    await page.goto('https://www.ikea.com/');
-    await page.getByRole('link', { name: 'Collection of blue and white'
-    }).click();
-    await expect(page.getByRole('heading', { name: 'Light and easy'
-    })).toBeVisible();
-    </code></pre>
-    </li>
-    </ul>
-    <!-- raw HTML omitted -->
+    <p>JUnit 5.10.2 = Platform 1.10.2 + Jupiter 5.10.2 + Vintage 5.10.2</p>
+    <p>See <a
+    href="http://junit.org/junit5/docs/5.10.2/release-notes/">Release
+    Notes</a>.</p>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/junit-team/junit5/compare/r5.10.1...r5.10.2">https://github.com/junit-team/junit5/compare/r5.10.1...r5.10.2</a></p>
+    <p>JUnit 5.10.1 = Platform 1.10.1 + Jupiter 5.10.1 + Vintage 5.10.1</p>
+    <p>See <a
+    href="http://junit.org/junit5/docs/5.10.1/release-notes/">Release
+    Notes</a>.</p>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.1">https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.1</a></p>
     </blockquote>
-    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/e7f0635c17ac5c178b0960cb35f849edd3cf69ef"><code>e7f0635</code></a>
-    cherry-pick(<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29692">#29692</a>):
-    docs: better addLocatorHandler example in release notes ...</li>
+    href="https://github.com/junit-team/junit5/commit/4c0dddad1b96d4a20e92a2cd583954643ac56ac0"><code>4c0ddda</code></a>
+    Release 5.10.2</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/8709a3a24b22304a2be67ac5688a998e71a32c5e"><code>8709a3a</code></a>
-    cherry-pick(<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29687">#29687</a>):
-    chore: fix docs roll for functions without args follow-u...</li>
+    href="https://github.com/junit-team/junit5/commit/463a14773d884f2bf31f073a87bef9d0938872db"><code>463a147</code></a>
+    Finalize release notes for 5.10.2</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/aa9f6fb71872b8bf066209ff229a0fe9c43fe91e"><code>aa9f6fb</code></a>
-    cherry-pick(<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29669">#29669</a>):
-    chore: strengthen linting (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29674">#29674</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/43c105a246c0130d08145335cb9986236e2a8465"><code>43c105a</code></a>
+    Revert &quot;Apply method predicate before searching type
+    hierarchy&quot;</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/f5899c155647da3c358b5a1e152b619518fb55e2"><code>f5899c1</code></a>
-    chore: set version to 1.42.0 (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29671">#29671</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/63d464d1e10a62743fe4024436ef1e006a89df72"><code>63d464d</code></a>
+    Revert &quot;Harmonize application of method and field filters in search
+    algorithms&quot;</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/77e1b025521912c4930f5dcac9a7ee492e0c3549"><code>77e1b02</code></a>
-    docs: 1.42 release notes (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29666">#29666</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/85ec2fccb32a51fbe6ff966e25726c94a67dd418"><code>85ec2fc</code></a>
+    Revert &quot;Apply field predicate before searching type
+    hierarchy&quot;</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/c1421bc9f2be2388b0b3d5fd5c601977689fa897"><code>c1421bc</code></a>
-    docs: typescript compiler invocation before tests (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29667">#29667</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/6209006a7693dbf6f680a5ac4541aba86c9da899"><code>6209006</code></a>
+    Update release notes</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/bd8d04443350212b95451f800d75148712bb99f9"><code>bd8d044</code></a>
-    feat(uimode) uses relative paths to establish websocket connection (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29617">#29617</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/5ee499f0e0029dbd1120ecf889bd214e2082c589"><code>5ee499f</code></a>
+    Fix CI build</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/56028269bb9364f5870daa7f054dad5bb401135e"><code>5602826</code></a>
-    devops: add a hint how to create a repro (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29665">#29665</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/d919ba71ea4c3b1e60f2d21473ba31ff0f6857ab"><code>d919ba7</code></a>
+    Namespace user-specific build parameters</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/015a1bcc1c0bdcc17409266ccc448b2def320914"><code>015a1bc</code></a>
-    feat(ct): double unmounting component throws error (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29650">#29650</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/e26cd83ed307ef100399ced9985f04612931984b"><code>e26cd83</code></a>
+    Prepare release notes for 5.10.2</li>
     <li><a
-    href="https://github.com/microsoft/playwright/commit/303d7fdac9971312d7314a151c7e33329b06b660"><code>303d7fd</code></a>
-    chore(ct): vue resolve internal type errors (<a
-    href="https://redirect.github.com/microsoft/playwright/issues/29649">#29649</a>)</li>
+    href="https://github.com/junit-team/junit5/commit/ec8d4282c60f480d3de264330b37e75b1b8d05d9"><code>ec8d428</code></a>
+    Include LauncherInterceptor in launcher module declaration</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/microsoft/playwright/compare/v1.41.1...v1.42.0">compare
+    href="https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.2">compare
     view</a></li>
     </ul>
     </details>
     <br />
     
+    Updates `org.junit.jupiter:junit-jupiter-api` from 5.10.0 to 5.10.2
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/junit-team/junit5/releases">org.junit.jupiter:junit-jupiter-api's
+    releases</a>.</em></p>
+    <blockquote>
+    <p>JUnit 5.10.2 = Platform 1.10.2 + Jupiter 5.10.2 + Vintage 5.10.2</p>
+    <p>See <a
+    href="http://junit.org/junit5/docs/5.10.2/release-notes/">Release
+    Notes</a>.</p>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/junit-team/junit5/compare/r5.10.1...r5.10.2">https://github.com/junit-team/junit5/compare/r5.10.1...r5.10.2</a></p>
+    <p>JUnit 5.10.1 = Platform 1.10.1 + Jupiter 5.10.1 + Vintage 5.10.1</p>
+    <p>See <a
+    href="http://junit.org/junit5/docs/5.10.1/release-notes/">Release
+    Notes</a>.</p>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.1">https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.1</a></p>
+    </blockquote>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/4c0dddad1b96d4a20e92a2cd583954643ac56ac0"><code>4c0ddda</code></a>
+    Release 5.10.2</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/463a14773d884f2bf31f073a87bef9d0938872db"><code>463a147</code></a>
+    Finalize release notes for 5.10.2</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/43c105a246c0130d08145335cb9986236e2a8465"><code>43c105a</code></a>
+    Revert &quot;Apply method predicate before searching type
+    hierarchy&quot;</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/63d464d1e10a62743fe4024436ef1e006a89df72"><code>63d464d</code></a>
+    Revert &quot;Harmonize application of method and field filters in search
+    algorithms&quot;</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/85ec2fccb32a51fbe6ff966e25726c94a67dd418"><code>85ec2fc</code></a>
+    Revert &quot;Apply field predicate before searching type
+    hierarchy&quot;</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/6209006a7693dbf6f680a5ac4541aba86c9da899"><code>6209006</code></a>
+    Update release notes</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/5ee499f0e0029dbd1120ecf889bd214e2082c589"><code>5ee499f</code></a>
+    Fix CI build</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/d919ba71ea4c3b1e60f2d21473ba31ff0f6857ab"><code>d919ba7</code></a>
+    Namespace user-specific build parameters</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/e26cd83ed307ef100399ced9985f04612931984b"><code>e26cd83</code></a>
+    Prepare release notes for 5.10.2</li>
+    <li><a
+    href="https://github.com/junit-team/junit5/commit/ec8d4282c60f480d3de264330b37e75b1b8d05d9"><code>ec8d428</code></a>
+    Include LauncherInterceptor in launcher module declaration</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/junit-team/junit5/compare/r5.10.0...r5.10.2">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
     
-    [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=@playwright/test&package-manager=npm_and_yarn&previous-version=1.41.1&new-version=1.42.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
