@@ -1,5 +1,26 @@
-commit 80957baf63331ae2663b0415b18d2981b13f1f11
+commit 5469e1d0776b88c93fa690ec00501a4dab7dc486
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Mar 14 10:22:10 2024 +0100
+Date:   Thu Mar 14 10:41:24 2024 +0100
 
-    Merge r/15.x into develop
+    Remove Entwine from Asset Manager API module (#5609)
+    
+    ~Attempt at finally getting rid of entwine dependencies in the asset
+    manager. WIP, I'll see how far I can take this.~
+    
+    Removes all entwine imports from the `asset-manager-api` module. (Seems
+    like I'm not getting to `asset-manager-impl` anytime soon). Entwine
+    functionality is replaced with standard java library functionality where
+    applicable.
+    
+    The goal of this PR is to get rid of our entwine dependencies in the
+    asset manager. While we usually try to get rid of entwine in passing and
+    try to avoid adding it anywhere if we can avoid it, entwine dependencies
+    are nested deep in the asset manager and we won't get rid of them unless
+    we target them directly (or just rewrite the whole thing).
+    
+    The goal of this PR is not to greatly improve upon code structure or
+    readability. In fact, some parts are likely to look just as complicated
+    as before. Still, I hope that overall this will make work with the asset
+    manager easier in the future. And naturally, while the code is not
+    necessarily improving, it should also not be getting worse than before,
+    so please do complain if you think that is the case :)
