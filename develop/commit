@@ -1,95 +1,77 @@
-commit fcc59961684182b3d54e323fb6bc0d8c11ebaef9
+commit b468d55e6816f2ecb5c581f92de4564d027aac91
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Mar 14 09:44:05 2024 +0100
+Date:   Thu Mar 14 09:45:11 2024 +0100
 
-    Bump html-validate from 8.8.0 to 8.11.1 in /modules/engage-paella-player-7 (#5661)
+    Bump @playwright/test from 1.41.1 to 1.42.0 in /modules/engage-paella-player-7 (#5659)
     
-    Bumps [html-validate](https://gitlab.com/html-validate/html-validate)
-    from 8.8.0 to 8.11.1.
+    Bumps [@playwright/test](https://github.com/microsoft/playwright) from
+    1.41.1 to 1.42.0.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://gitlab.com/html-validate/html-validate/tags">html-validate's
+    href="https://github.com/microsoft/playwright/releases"><code>@​playwright/test</code>'s
     releases</a>.</em></p>
     <blockquote>
-    <h2>v8.11.1</h2>
-    <h2>8.11.1 (2024-2-26)</h2>
-    <h3>Bug Fixes</h3>
+    <h2>v1.42.0</h2>
+    <h2>New APIs</h2>
     <ul>
-    <li><strong>dom:</strong> fix regression error with selectors ending
-    with characters <code>a</code>, <code>d</code> or <code>9</code> (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/a9a9ef9541fb58291576f697a385e5d378f16c8f">a9a9ef9</a>)</li>
+    <li>
+    <p><strong>Test tags</strong></p>
+    <p><a href="https://playwright.dev/docs/test-annotations#tag-tests">New
+    tag syntax</a> for adding tags to the tests (@-tokens in the test title
+    are still supported).</p>
+    <pre lang="js"><code>test('test customer login', { tag: ['@fast',
+    '@login'] }, async ({ page }) =&gt; {
+      // ...
+    });
+    </code></pre>
+    <p>Use <code>--grep</code> command line option to run only tests with
+    certain tags.</p>
+    <pre lang="sh"><code>npx playwright test --grep @fast
+    </code></pre>
+    </li>
+    <li>
+    <p><strong>Annotating skipped tests</strong></p>
+    <p><a
+    href="https://playwright.dev/docs/test-annotations#annotate-tests">New
+    annotation syntax</a> for test annotations allows annotating the tests
+    that do not run.</p>
+    <pre lang="js"><code>test('test full report', {
+      annotation: [
+    { type: 'issue', description:
+    'https://github.com/microsoft/playwright/issues/23180' },
+    { type: 'docs', description:
+    'https://playwright.dev/docs/test-annotations#tag-tests' },
+      ],
+    }, async ({ page }) =&gt; {
+      // ...
+    });
+    </code></pre>
+    </li>
+    <li>
+    <p><strong>page.addLocatorHandler()</strong></p>
+    <p>New method <a
+    href="https://playwright.dev/docs/api/class-page#page-add-locator-handler">page.addLocatorHandler()</a>
+    registers a callback that will be invoked when specified element becomes
+    visible and may block Playwright actions. The callback can get rid of
+    the overlay. Here is an example that closes a cookie dialog when it
+    appears.</p>
+    <pre lang="js"><code>// Setup the handler.
+    await page.addLocatorHandler(
+    page.getByRole('heading', { name: 'Hej! You are in control of your
+    cookies.' }),
+        async () =&gt; {
+          await page.getByRole('button', { name: 'Accept all' }).click();
+        });
+    // Write the test as usual.
+    await page.goto('https://www.ikea.com/');
+    await page.getByRole('link', { name: 'Collection of blue and white'
+    }).click();
+    await expect(page.getByRole('heading', { name: 'Light and easy'
+    })).toBeVisible();
+    </code></pre>
+    </li>
     </ul>
-    <h2>v8.11.0</h2>
-    <h2>8.11.0 (2024-2-26)</h2>
-    <h3>Features</h3>
-    <ul>
-    <li><strong>html5:</strong> add new property <code>aria.naming</code>
-    representing if the element can be named (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/4fca2643ad9fa9a21c5790407789bf6fa3e89843">4fca264</a>)</li>
-    <li><strong>html5:</strong> update role metadata from html-aria standard
-    (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/b029a3fab93e7fab9838af491697b02dbfa11ea9">b029a3f</a>)</li>
-    <li><strong>meta:</strong> move <code>implicitRole</code> to
-    <code>aria.implicitRole</code> (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/bc8cacf096ede336ca2cc8f387662ffeb5bb633d">bc8cacf</a>)</li>
-    </ul>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li>handle selectors containing tabs and newlines (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/5e45d54574f283916c2fed4bb26c429497484a00">5e45d54</a>),
-    closes <a
-    href="https://gitlab.com/html-validate/html-validate/issues/238">#238</a></li>
-    <li><strong>rules:</strong> new option <code>allowAnyNamable</code> for
-    <code>aria-label-misuse</code> (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/c08a3ba9906fec5119aa9dffe154207769e50319">c08a3ba</a>),
-    closes <a
-    href="https://gitlab.com/html-validate/html-validate/issues/237">#237</a></li>
-    </ul>
-    <h2>v8.10.0</h2>
-    <h2><a
-    href="https://gitlab.com/html-validate/html-validate/compare/v8.9.1...v8.10.0">8.10.0</a>
-    (2024-2-21)</h2>
-    <h3>Features</h3>
-    <ul>
-    <li><strong>rules:</strong> new rule <code>no-implicit-input-type</code>
-    (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/6cc0c6d1b2ad1627ce41af1a998a60da5872fe17">6cc0c6d</a>)</li>
-    </ul>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li><strong>deps:</strong> update dependency ignore to v5.3.1 (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/4553b89a470008789b0bf3569021c493a4db0c97">4553b89</a>)</li>
-    <li><strong>html5:</strong> <code>type</code> for
-    <code>&lt;input&gt;</code> no longer required (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/37284d043a5145ae75d34bf0dbe79e173b0d54db">37284d0</a>),
-    closes <a
-    href="https://gitlab.com/html-validate/html-validate/issues/235">#235</a></li>
-    <li><strong>rules:</strong> change wording required to recommended in
-    <code>no-implicit-button-type</code> (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/1926c061e3e37221cbc63fd3926c110926780a4d">1926c06</a>)</li>
-    </ul>
-    <h2>v8.9.1</h2>
-    <h2><a
-    href="https://gitlab.com/html-validate/html-validate/compare/v8.9.0...v8.9.1">8.9.1</a>
-    (2024-1-10)</h2>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li><strong>rules:</strong> <code>&lt;form&gt;</code> and
-    <code>&lt;section&gt;</code> without explicit accessible name is no
-    longer considered landmark (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/a36deac9e7a53f09e73e6575a9dcf098eb63bdda">a36deac</a>)</li>
-    <li><strong>rules:</strong> <code>&lt;header&gt;</code> and
-    <code>&lt;footer&gt;</code> nested in <code>&lt;main&gt;</code> or
-    sectioning content is no longer considered landmark (<a
-    href="https://gitlab.com/html-validate/html-validate/commit/bcab354dd201cffabb3352c8b13f5985c99b777c">bcab354</a>),
-    closes <a
-    href="https://gitlab.com/html-validate/html-validate/issues/234">#234</a></li>
-    </ul>
-    <h2>v8.9.0</h2>
-    <h2><a
-    href="https://gitlab.com/html-validate/html-validate/compare/v8.8.0...v8.9.0">8.9.0</a>
-    (2024-1-8)</h2>
     <!-- raw HTML omitted -->
     </blockquote>
     <p>... (truncated)</p>
@@ -98,40 +80,51 @@ Date:   Thu Mar 14 09:44:05 2024 +0100
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/ae1fc6ae1f0b86e61e1281e51831225604a0d6d4"><code>ae1fc6a</code></a>
-    chore(release): 8.11.1</li>
+    href="https://github.com/microsoft/playwright/commit/e7f0635c17ac5c178b0960cb35f849edd3cf69ef"><code>e7f0635</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29692">#29692</a>):
+    docs: better addLocatorHandler example in release notes ...</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/ae621de3a826126172d918f3a9e3245f599a858a"><code>ae621de</code></a>
-    Merge branch 'bugfix/selector' into 'master'</li>
+    href="https://github.com/microsoft/playwright/commit/8709a3a24b22304a2be67ac5688a998e71a32c5e"><code>8709a3a</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29687">#29687</a>):
+    chore: fix docs roll for functions without args follow-u...</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/a9a9ef9541fb58291576f697a385e5d378f16c8f"><code>a9a9ef9</code></a>
-    fix(dom): fix regression error with selectors ending with characters
-    <code>a</code>, <code>d</code>...</li>
+    href="https://github.com/microsoft/playwright/commit/aa9f6fb71872b8bf066209ff229a0fe9c43fe91e"><code>aa9f6fb</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29669">#29669</a>):
+    chore: strengthen linting (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29674">#29674</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/0aa187b7f1eb4fa01c298eceb767dd8d5bf6ad86"><code>0aa187b</code></a>
-    chore(deps): update dependency <code>@​microsoft/api-extractor</code> to
-    v7.41.0</li>
+    href="https://github.com/microsoft/playwright/commit/f5899c155647da3c358b5a1e152b619518fb55e2"><code>f5899c1</code></a>
+    chore: set version to 1.42.0 (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29671">#29671</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/c04e71c4436d15ae5a6db0665a704cc4cfc4ace5"><code>c04e71c</code></a>
-    chore(deps): update dependency cssnano to v6.0.5</li>
+    href="https://github.com/microsoft/playwright/commit/77e1b025521912c4930f5dcac9a7ee492e0c3549"><code>77e1b02</code></a>
+    docs: 1.42 release notes (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29666">#29666</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/af76d3da5f2aa5796bae558ecf5497d8a14cb15a"><code>af76d3d</code></a>
-    chore(release): 8.11.0</li>
+    href="https://github.com/microsoft/playwright/commit/c1421bc9f2be2388b0b3d5fd5c601977689fa897"><code>c1421bc</code></a>
+    docs: typescript compiler invocation before tests (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29667">#29667</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/cebbadaf78b9833dba53f52cd38a500fef36d65a"><code>cebbada</code></a>
-    Merge branch 'bugfix/newline-selectors' into 'master'</li>
+    href="https://github.com/microsoft/playwright/commit/bd8d04443350212b95451f800d75148712bb99f9"><code>bd8d044</code></a>
+    feat(uimode) uses relative paths to establish websocket connection (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29617">#29617</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/5e45d54574f283916c2fed4bb26c429497484a00"><code>5e45d54</code></a>
-    fix: handle selectors containing tabs and newlines</li>
+    href="https://github.com/microsoft/playwright/commit/56028269bb9364f5870daa7f054dad5bb401135e"><code>5602826</code></a>
+    devops: add a hint how to create a repro (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29665">#29665</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/adc196db808a29c8cc88dc8de269d97b1dc072cb"><code>adc196d</code></a>
-    chore(deps): update dependency <code>@​types/semver</code> to
-    v7.5.8</li>
+    href="https://github.com/microsoft/playwright/commit/015a1bcc1c0bdcc17409266ccc448b2def320914"><code>015a1bc</code></a>
+    feat(ct): double unmounting component throws error (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29650">#29650</a>)</li>
     <li><a
-    href="https://gitlab.com/html-validate/html-validate/commit/db9beb52b2a23c6a3f4fc193ea9da4e2822c4f95"><code>db9beb5</code></a>
-    Merge branch 'bugfix/aria-label-misuse-237' into 'master'</li>
+    href="https://github.com/microsoft/playwright/commit/303d7fdac9971312d7314a151c7e33329b06b660"><code>303d7fd</code></a>
+    chore(ct): vue resolve internal type errors (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/29649">#29649</a>)</li>
     <li>Additional commits viewable in <a
-    href="https://gitlab.com/html-validate/html-validate/compare/v8.8.0...v8.11.1">compare
+    href="https://github.com/microsoft/playwright/compare/v1.41.1...v1.42.0">compare
     view</a></li>
     </ul>
     </details>
@@ -139,7 +132,7 @@ Date:   Thu Mar 14 09:44:05 2024 +0100
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=html-validate&package-manager=npm_and_yarn&previous-version=8.8.0&new-version=8.11.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=@playwright/test&package-manager=npm_and_yarn&previous-version=1.41.1&new-version=1.42.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
