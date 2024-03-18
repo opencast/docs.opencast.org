@@ -1,5 +1,10 @@
-commit 2ae0685365aa54b5e13c8909edd31d5d8ea9e1f1
-Author: Waldemar Smirnow <wsmirnow@uni-osnabrueck.de>
-Date:   Thu Mar 14 10:53:19 2024 +0100
+commit b2271e29a706f45f127035f65a5afdf3aea83d24
+Author: Waldemar Smirnow <wsmirnow@users.noreply.github.com>
+Date:   Mon Mar 18 10:21:05 2024 +0100
 
-    Opencast 14 release notes
+    Quickfix dangling hard links on cephfs volumes (#5682)
+    
+    This is a quickfix that forces a `stat` call after creating hard links.
+    In a cephfs scenario this might be necessary in order to limit the
+    amount of strayed inodes (see
+    https://www.mail-archive.com/ceph-users@lists.ceph.com/msg53368.html).
