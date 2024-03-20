@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Playlists API - Developer Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Information", url: "#_top", children: [
+              {title: "GET /api/playlists/{id}", url: "#get-apiplaylistsid" },
+              {title: "GET /api/playlists/", url: "#get-apiplaylists" },
+              {title: "POST /api/playlists/", url: "#post-apiplaylists" },
+              {title: "PUT /api/playlists/{id}", url: "#put-apiplaylistsid" },
+              {title: "DELETE /api/playlists/{id}", url: "#delete-apiplaylistsid" },
+              {title: "POST /api/playlists/{id}/entries", url: "#post-apiplaylistsidentries" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../series-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../series-api/" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../listprovider-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../listprovider-api/" class="btn btn-xs btn-link">
+        ListProvider API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#information">Information</a><ul>
+<li><a href="#get-apiplaylistsid">GET /api/playlists/{id}</a></li>
+<li><a href="#get-apiplaylists">GET /api/playlists/</a></li>
+<li><a href="#post-apiplaylists">POST /api/playlists/</a></li>
+<li><a href="#put-apiplaylistsid">PUT /api/playlists/{id}</a></li>
+<li><a href="#delete-apiplaylistsid">DELETE /api/playlists/{id}</a></li>
+<li><a href="#post-apiplaylistsidentries">POST /api/playlists/{id}/entries</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="information">Information</h1>
+<p>The Playlists API is available since API version 1.11.0.</p>
+<h3 id="get-apiplaylistsid">GET /api/playlists/{id}</h3>
+<p>Returns a playlist.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A playlist as JSON.<br />
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
+<code>404 (NOT FOUND)</code>: The specified playlist does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;playlist&quot;: {
+    &quot;id&quot;: 551,
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;entries&quot;: [
+      {
+        &quot;id&quot;: 553,
+        &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      },
+      {
+        &quot;id&quot;: 554,
+        &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      }
+    ],
+    &quot;title&quot;: &quot;Opencast Playlist&quot;,
+    &quot;description&quot;: &quot;This is a playlist about Opencast&quot;,
+    &quot;creator&quot;: &quot;Opencast&quot;,
+    &quot;updated&quot;: 1701854481056,
+    &quot;accessControlEntries&quot;: [
+      {
+        &quot;allow&quot;: true,
+        &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+        &quot;action&quot;: &quot;read&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="get-apiplaylists">GET /api/playlists/</h3>
+<p>Get playlists. Playlists that you do not have read access to will not show up.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A JSON object containing an array.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>limit</code></td>
+<td><a href="../types/#basic"><code>int</code></a></td>
+<td>The maximum number of results to return for a single request</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td><a href="../types/#basic"><code>int</code></a></td>
+<td>The index of the first result to return</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Sort the results based upon a sorting criteria. A criteria is specified as a pair such as: <Sort Name>:ASC or <Sort Name>:DESC. Adding the suffix ASC or DESC sets the order as ascending or descending order and is mandatory. Sort Name is case sensitive. Supported Sort Names are 'updated'</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;playlist&quot;: [
+    {
+      &quot;playlist&quot;: {
+        &quot;id&quot;: 551,
+        &quot;organization&quot;: &quot;mh_default_org&quot;,
+        &quot;entries&quot;: [
+          {
+            &quot;id&quot;: 553,
+            &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+            &quot;type&quot;: &quot;EVENT&quot;
+          },
+          {
+            &quot;id&quot;: 554,
+            &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+            &quot;type&quot;: &quot;EVENT&quot;
+          }
+        ],
+        &quot;title&quot;: &quot;Opencast Playlist&quot;,
+        &quot;description&quot;: &quot;This is a playlist about Opencast&quot;,
+        &quot;creator&quot;: &quot;Opencast&quot;,
+        &quot;updated&quot;: 1701854481056,
+        &quot;accessControlEntries&quot;: [
+          {
+            &quot;allow&quot;: true,
+            &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+            &quot;action&quot;: &quot;read&quot;
+          }
+        ]
+      }
+    },
+    {
+      &quot;playlist&quot;: {
+        &quot;id&quot;: 1051,
+        &quot;organization&quot;: &quot;mh_default_org&quot;,
+        &quot;entries&quot;: [
+          {
+            &quot;id&quot;: 1053,
+            &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+            &quot;type&quot;: &quot;EVENT&quot;
+          },
+          {
+            &quot;id&quot;: 1054,
+            &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+            &quot;type&quot;: &quot;EVENT&quot;
+          }
+        ],
+        &quot;title&quot;: &quot;Opencast Playlist&quot;,
+        &quot;description&quot;: &quot;This is a playlist about Opencast&quot;,
+        &quot;creator&quot;: &quot;Opencast&quot;,
+        &quot;updated&quot;: 1701856455007,
+        &quot;accessControlEntries&quot;: [
+          {
+            &quot;allow&quot;: true,
+            &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+            &quot;action&quot;: &quot;read&quot;
+          }
+        ]
+      }
+    }
+  ]
+}
+</code></pre>
+<h3 id="post-apiplaylists">POST /api/playlists/</h3>
+<p>Creates a new playlist.</p>
+<p><strong>Response</strong></p>
+<p><code>201 (CREATED)</code>: The created playlist.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>playlist</code></td>
+<td><a href="../types/#Playlist"><code>Playlist</code></a></td>
+<td>Playlist in JSON format</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;playlist&quot;: {
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;entries&quot;: [
+      {
+        &quot;id&quot;: 553,
+        &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      },
+      {
+        &quot;id&quot;: 554,
+        &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      }
+    ],
+    &quot;title&quot;: &quot;Opencast Playlist&quot;,
+    &quot;description&quot;: &quot;This is a playlist about Opencast&quot;,
+    &quot;creator&quot;: &quot;Opencast&quot;,
+    &quot;updated&quot;: 1701854481056,
+    &quot;accessControlEntries&quot;: [
+      {
+        &quot;allow&quot;: true,
+        &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+        &quot;action&quot;: &quot;read&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="put-apiplaylistsid">PUT /api/playlists/{id}</h3>
+<p>Updates a playlist.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The updated playlist.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.  </p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>playlist</code></td>
+<td><a href="../types/#Playlist"><code>Playlist</code></a></td>
+<td>Playlist in JSON format</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;playlist&quot;: {
+    &quot;organization&quot;: &quot;mh_default_org&quot;,
+    &quot;entries&quot;: [
+      {
+        &quot;id&quot;: 553,
+        &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      },
+      {
+        &quot;id&quot;: 554,
+        &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+      }
+    ],
+    &quot;title&quot;: &quot;Opencast Playlist&quot;,
+    &quot;description&quot;: &quot;This is a playlist about Opencast&quot;,
+    &quot;creator&quot;: &quot;Opencast&quot;,
+    &quot;updated&quot;: 1701854481056,
+    &quot;accessControlEntries&quot;: [
+      {
+        &quot;allow&quot;: true,
+        &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+        &quot;action&quot;: &quot;read&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<h3 id="delete-apiplaylistsid">DELETE /api/playlists/{id}</h3>
+<p>Removes a playlist.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The removed playlist.
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
+<code>404 (NOT FOUND)</code>: The specified playlist does not exist.</p>
+<h3 id="post-apiplaylistsidentries">POST /api/playlists/{id}/entries</h3>
+<p>Updates the entries of a playlist.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The updated playlist.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
+<code>404 (NOT FOUND)</code>: The specified playlist does not exist.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>playlistEntries</code></td>
+<td><a href="../types/#PlaylistEntry"><code>List&lt;PlaylistEntry&gt;</code></a></td>
+<td>Playlist in JSON format</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">[
+    {
+        &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+    },
+    {
+        &quot;contentId&quot;: &quot;ID-3d-print&quot;,
+        &quot;type&quot;: &quot;EVENT&quot;
+    }
+]
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../series-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../series-api/" class="btn btn-xs btn-link">
+        Series API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../listprovider-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../listprovider-api/" class="btn btn-xs btn-link">
+        ListProvider API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/architecture/api/playlists-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
