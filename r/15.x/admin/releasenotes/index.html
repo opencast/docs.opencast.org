@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 15: Release Notes", url: "#_top", children: [
+              {title: "Opencast 15.4", url: "#opencast-154" },
               {title: "Opencast 15.3", url: "#opencast-153" },
               {title: "Opencast 15.2", url: "#opencast-152" },
               {title: "Opencast 15.1", url: "#opencast-151" },
@@ -91,6 +92,51 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-15-release-notes">Opencast 15: Release Notes</h1>
+<h2 id="opencast-154">Opencast 15.4</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Quickfix dangling hard links on cephfs volumes:</strong>
+Fixes Bug for CephFS regarding strayed inodes when hard linking
+[<a href="https://github.com/opencast/opencast/pull/5682">#5682</a>]</li>
+<li><strong>Fixed NPE on filtering data:</strong>
+Fixes NullPointerException on roles without a description when calling REST endpoint
+[<a href="https://github.com/opencast/opencast/pull/5667">#5667</a>]</li>
+<li><strong>Paella7: Avoid opening downloaded video:</strong>
+Fixes bug where a video is opened in another window instead
+of beeing downloaded in the Paella7 download plugin
+[<a href="https://github.com/opencast/opencast/pull/5673">#5673</a>]</li>
+<li><strong>Mark RPMs as available:</strong>
+Fixes an issue in the Opencast documentation, accidentally
+marking the RPMs for Opencast 15 as not yet available
+[<a href="https://github.com/opencast/opencast/pull/5696">#5696</a>]</li>
+<li><strong>Update (New) Admin UI to 2024-04-10:</strong>
+Contains various bug fixes as well as code enhancements
+[<a href="https://github.com/opencast/opencast/pull/5738">#5738</a>]</li>
+<li><strong>Process-smil WOH tag-with-profile configuration does
+not work depending on the encoding profile suffix configured:</strong>
+Fixes tagging with the profile name for encoding profiles with a suffix
+[<a href="https://github.com/opencast/opencast/pull/5689">#5689</a>]</li>
+<li><strong>Fix editor track selection for updating tags</strong>
+[<a href="https://github.com/opencast/opencast/pull/5686">#5686</a>]</li>
+</ul>
+<h3 id="improvements">Improvements</h3>
+<ul>
+<li><strong>Remove Warnings During Build</strong>
+[<a href="https://github.com/opencast/opencast/pull/5678">#5678</a>]</li>
+<li><strong>Fix more JavaDoc</strong>
+[<a href="https://github.com/opencast/opencast/pull/5677">#5677</a>]</li>
+<li><strong>Make a dynamic OSGi dependency static</strong>
+[<a href="https://github.com/opencast/opencast/pull/5670">#5670</a>]</li>
+<li><strong>Add synchronous deletion to Search API</strong>
+[<a href="https://github.com/opencast/opencast/pull/5675">#5675</a>]</li>
+<li><strong>Update temporal if empty:</strong>
+If the dcterm extent of the episode dublincore catalog is empty,
+it is updated by the inspect operation with the current length of the media package;
+this change applies the same behavior for the dcterm temporal.
+[<a href="https://github.com/opencast/opencast/pull/5669">#5669</a>]</li>
+<li><strong>Update typescript type definitions in ltitools</strong>
+[<a href="https://github.com/opencast/opencast/pull/5588">#5588</a>]</li>
+</ul>
 <h2 id="opencast-153">Opencast 15.3</h2>
 <p>This release comes with another small change to the community workflows, please check if it works for you.</p>
 <h3 id="configuration-changes">Configuration changes</h3>
@@ -105,7 +151,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><strong>Run Maven without installing</strong>
   <a href="https://github.com/opencast/opencast/pull/5487">[#5487]</a></li>
 </ul>
-<h3 id="bug-fixes">Bug fixes</h3>
+<h3 id="bug-fixes_1">Bug fixes</h3>
 <ul>
 <li><strong>Fixes a paella-core issue regarding the frameList.getImage function and
     extends the options for types of flavors for navigation slides</strong>
@@ -130,7 +176,7 @@ workflows. Please check if it affects you.</p>
    Adds the ability to download the captions files without the timestamps.
   [<a href="https://github.com/opencast/opencast/pull/5532">#5532</a>]</li>
 </ul>
-<h3 id="bug-fixes_1">Bug fixes</h3>
+<h3 id="bug-fixes_2">Bug fixes</h3>
 <ul>
 <li><strong>Don't log internal AmberScript service state</strong>
   [<a href="https://github.com/opencast/opencast/pull/5530">#5530</a>] -</li>
@@ -141,7 +187,7 @@ workflows. Please check if it affects you.</p>
 </ul>
 <h2 id="opencast-151">Opencast 15.1</h2>
 <p>Opencast 15.1 includes important bug fixes and improvements.</p>
-<h3 id="bug-fixes_2">Bug fixes</h3>
+<h3 id="bug-fixes_3">Bug fixes</h3>
 <ul>
 <li>
 <p><strong>Fix Paella Player 7 for single stream videos:</strong>
@@ -197,7 +243,7 @@ Instead render nothing, like in the old admin ui
 Fixes the ui crashing when switching between pages in a table
 [<a href="https://github.com/opencast/opencast-admin-interface/pull/246">#246</a>]</li>
 </ul>
-<h3 id="improvements">Improvements</h3>
+<h3 id="improvements_1">Improvements</h3>
 <ul>
 <li>
 <p><strong>Don't warn about using the default tool:</strong>
@@ -303,7 +349,7 @@ WebVTT is the only one that will be guaranteed to work.</p>
 
 </details>
 
-<h3 id="improvements_1">Improvements</h3>
+<h3 id="improvements_2">Improvements</h3>
 <ul>
 <li>The analyze-mediapackage workflow operation can now generate variables regarding the existence of publications
   (example: <code>publication_engage_player_exists</code>) [<a href="https://github.com/opencast/opencast/pull/5419">#5419</a>]</li>
