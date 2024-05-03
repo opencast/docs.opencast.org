@@ -39,7 +39,6 @@
               {title: "POST /api/playlists/", url: "#post-apiplaylists" },
               {title: "PUT /api/playlists/{id}", url: "#put-apiplaylistsid" },
               {title: "DELETE /api/playlists/{id}", url: "#delete-apiplaylistsid" },
-              {title: "POST /api/playlists/{id}/entries", url: "#post-apiplaylistsidentries" },
           ]},
         ];
 
@@ -96,7 +95,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#post-apiplaylists">POST /api/playlists/</a></li>
 <li><a href="#put-apiplaylistsid">PUT /api/playlists/{id}</a></li>
 <li><a href="#delete-apiplaylistsid">DELETE /api/playlists/{id}</a></li>
-<li><a href="#post-apiplaylistsidentries">POST /api/playlists/{id}/entries</a></li>
 </ul>
 </li>
 </ul>
@@ -346,41 +344,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><code>200 (OK)</code>: The removed playlist.
 <code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
 <code>404 (NOT FOUND)</code>: The specified playlist does not exist.</p>
-<h3 id="post-apiplaylistsidentries">POST /api/playlists/{id}/entries</h3>
-<p>Updates the entries of a playlist.</p>
-<p><strong>Response</strong></p>
-<p><code>200 (OK)</code>: The updated playlist.
-<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
-<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
-<code>404 (NOT FOUND)</code>: The specified playlist does not exist.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>playlistEntries</code></td>
-<td><a href="../types/#PlaylistEntry"><code>List&lt;PlaylistEntry&gt;</code></a></td>
-<td>Playlist in JSON format</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Example</strong></p>
-<pre><code class="language-json">[
-    {
-        &quot;contentId&quot;: &quot;ID-about-opencast&quot;,
-        &quot;type&quot;: &quot;EVENT&quot;
-    },
-    {
-        &quot;contentId&quot;: &quot;ID-3d-print&quot;,
-        &quot;type&quot;: &quot;EVENT&quot;
-    }
-]
-</code></pre>
 
   <br>
     
