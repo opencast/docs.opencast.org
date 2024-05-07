@@ -1,203 +1,55 @@
-commit 9fdad066328e009fc703e2e273875414f0ad4d04
+commit c7d98e78f8fa8d94a3241ce16046c0f923f613a9
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue May 7 15:49:56 2024 +0200
+Date:   Tue May 7 22:16:07 2024 +0200
 
-    Bump react-dom and @types/react-dom in /modules/lti (#5786)
+    Replace Solr Search with OpenSearch (#5597)
     
-    Bumps
-    [react-dom](https://github.com/facebook/react/tree/HEAD/packages/react-dom)
-    and
-    [@types/react-dom](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/react-dom).
-    These dependencies needed to be updated together.
-    Updates `react-dom` from 18.2.0 to 18.3.1
-    <details>
-    <summary>Release notes</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/facebook/react/releases">react-dom's
-    releases</a>.</em></p>
-    <blockquote>
-    <h2>18.3.1 (April 26, 2024)</h2>
-    <ul>
-    <li>Export <code>act</code> from <code>react</code> <a
-    href="https://github.com/facebook/react/commit/f1338f8080abd1386454a10bbf93d67bfe37ce85">f1338f</a></li>
-    </ul>
-    <h2>18.3.0 (April 25, 2024)</h2>
-    <p>This release is identical to 18.2 but adds warnings for deprecated
-    APIs and other changes that are needed for React 19.</p>
-    <p>Read the <a
-    href="https://react.dev/blog/2024/04/25/react-19-upgrade-guide">React 19
-    Upgrade Guide</a> for more info.</p>
-    <h3>React</h3>
-    <ul>
-    <li>Allow writing to <code>this.refs</code> to support string ref
-    codemod <a
-    href="https://github.com/facebook/react/commit/9090712fd3ca4e1099e1f92e67933c2cb4f32552">909071</a></li>
-    <li>Warn for deprecated <code>findDOMNode</code> outside StrictMode <a
-    href="https://github.com/facebook/react/commit/c3b283964108b0e8dbcf1f9eb2e7e67815e39dfb">c3b283</a></li>
-    <li>Warn for deprecated <code>test-utils</code> methods <a
-    href="https://github.com/facebook/react/commit/d4ea75dc4258095593b6ac764289f42bddeb835c">d4ea75</a></li>
-    <li>Warn for deprecated Legacy Context outside StrictMode <a
-    href="https://github.com/facebook/react/commit/415ee0e6ea0fe3e288e65868df2e3241143d5f7f">415ee0</a></li>
-    <li>Warn for deprecated string refs outside StrictMode <a
-    href="https://redirect.github.com/facebook/react/pull/25383">#25383</a></li>
-    <li>Warn for deprecated <code>defaultProps</code> for function
-    components <a
-    href="https://redirect.github.com/facebook/react/pull/25699">#25699</a></li>
-    <li>Warn when spreading <code>key</code> <a
-    href="https://redirect.github.com/facebook/react/pull/25697">#25697</a></li>
-    <li>Warn when using <code>act</code> from <code>test-utils</code> <a
-    href="https://github.com/facebook/react/commit/d4ea75dc4258095593b6ac764289f42bddeb835c">d4ea75</a></li>
-    </ul>
-    <h3>React DOM</h3>
-    <ul>
-    <li>Warn for deprecated <code>unmountComponentAtNode</code> <a
-    href="https://github.com/facebook/react/commit/8a015b68cc060079878e426610e64e86fb328f8d">8a015b</a></li>
-    <li>Warn for deprecated <code>renderToStaticNodeStream</code> <a
-    href="https://redirect.github.com/facebook/react/pull/28874">#28874</a></li>
-    </ul>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/facebook/react/blob/main/CHANGELOG.md">react-dom's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h2>18.3.1 (April 26, 2024)</h2>
-    <ul>
-    <li>Export <code>act</code> from <code>react</code> <a
-    href="https://github.com/facebook/react/commit/f1338f8080abd1386454a10bbf93d67bfe37ce85">f1338f</a></li>
-    </ul>
-    <h2>18.3.0 (April 25, 2024)</h2>
-    <p>This release is identical to 18.2 but adds warnings for deprecated
-    APIs and other changes that are needed for React 19.</p>
-    <p>Read the <a
-    href="https://react.dev/blog/2024/04/25/react-19-upgrade-guide">React 19
-    Upgrade Guide</a> for more info.</p>
-    <h3>React</h3>
-    <ul>
-    <li>Allow writing to <code>this.refs</code> to support string ref
-    codemod <a
-    href="https://github.com/facebook/react/commit/9090712fd3ca4e1099e1f92e67933c2cb4f32552">909071</a></li>
-    <li>Warn for deprecated <code>findDOMNode</code> outside StrictMode <a
-    href="https://github.com/facebook/react/commit/c3b283964108b0e8dbcf1f9eb2e7e67815e39dfb">c3b283</a></li>
-    <li>Warn for deprecated <code>test-utils</code> methods <a
-    href="https://github.com/facebook/react/commit/d4ea75dc4258095593b6ac764289f42bddeb835c">d4ea75</a></li>
-    <li>Warn for deprecated Legacy Context outside StrictMode <a
-    href="https://github.com/facebook/react/commit/415ee0e6ea0fe3e288e65868df2e3241143d5f7f">415ee0</a></li>
-    <li>Warn for deprecated string refs outside StrictMode <a
-    href="https://redirect.github.com/facebook/react/pull/25383">#25383</a></li>
-    <li>Warn for deprecated <code>defaultProps</code> for function
-    components <a
-    href="https://redirect.github.com/facebook/react/pull/25699">#25699</a></li>
-    <li>Warn when spreading <code>key</code> <a
-    href="https://redirect.github.com/facebook/react/pull/25697">#25697</a></li>
-    <li>Warn when using <code>act</code> from <code>test-utils</code> <a
-    href="https://github.com/facebook/react/commit/d4ea75dc4258095593b6ac764289f42bddeb835c">d4ea75</a></li>
-    </ul>
-    <h3>React DOM</h3>
-    <ul>
-    <li>Warn for deprecated <code>unmountComponentAtNode</code> <a
-    href="https://github.com/facebook/react/commit/8a015b68cc060079878e426610e64e86fb328f8d">8a015b</a></li>
-    <li>Warn for deprecated <code>renderToStaticNodeStream</code> <a
-    href="https://redirect.github.com/facebook/react/pull/28874">#28874</a></li>
-    </ul>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Commits</summary>
-    <ul>
-    <li><a
-    href="https://github.com/facebook/react/commit/d6c42f7b1134c4f033296ce4d47a7803aa0929df"><code>d6c42f7</code></a>
-    Bump to 18.3.1</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/8a015b68cc060079878e426610e64e86fb328f8d"><code>8a015b6</code></a>
-    Add deprecation warning for unmountComponentAtNode</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/c3b283964108b0e8dbcf1f9eb2e7e67815e39dfb"><code>c3b2839</code></a>
-    Add deprecation warning for findDOMNode</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/d4ea75dc4258095593b6ac764289f42bddeb835c"><code>d4ea75d</code></a>
-    ReactDOMTestUtils deprecation warnings</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/7548c019ce44e41301555aac645fbdfcf180e9b9"><code>7548c01</code></a>
-    Deprecate <code>renderToStaticNodeStream</code> (<a
-    href="https://github.com/facebook/react/tree/HEAD/packages/react-dom/issues/28872">#28872</a>)
-    (<a
-    href="https://github.com/facebook/react/tree/HEAD/packages/react-dom/issues/28874">#28874</a>)</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/589423270e8d69fce914f12f7dc7bb61bb7b81de"><code>5894232</code></a>
-    Enable warning for defaultProps on function components for everyone (<a
-    href="https://github.com/facebook/react/tree/HEAD/packages/react-dom/issues/25699">#25699</a>)</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/c2a246e956a164c7a92a3807c973bf9b56f85a6b"><code>c2a246e</code></a>
-    Turn on string ref deprecation warning for everybody (not codemoddable)
-    (<a
-    href="https://github.com/facebook/react/tree/HEAD/packages/react-dom/issues/25383">#25383</a>)</li>
-    <li><a
-    href="https://github.com/facebook/react/commit/2cfb4741fdf2f9e3a843930d95ee6965fab44b8f"><code>2cfb474</code></a>
-    Bump version from 18.2 to 18.3</li>
-    <li>See full diff in <a
-    href="https://github.com/facebook/react/commits/v18.3.1/packages/react-dom">compare
-    view</a></li>
-    </ul>
-    </details>
-    <details>
-    <summary>Maintainer changes</summary>
-    <p>This version was pushed to npm by <a
-    href="https://www.npmjs.com/~react-bot">react-bot</a>, a new releaser
-    for react-dom since your current version.</p>
-    </details>
-    <br />
+    This PR removes Solr (and all of its issues) and replaces it with
+    Opensearch/Elasticsearch (yay, new issues!), unifying our indexing
+    tools.
     
-    Updates `@types/react-dom` from 18.2.19 to 18.3.0
-    <details>
-    <summary>Commits</summary>
-    <ul>
-    <li>See full diff in <a
-    href="https://github.com/DefinitelyTyped/DefinitelyTyped/commits/HEAD/types/react-dom">compare
-    view</a></li>
-    </ul>
-    </details>
-    <br />
+    To accomplish this:
+    - We had to [remove the Feeds](a594019f82916a55d203efe3e518224bc8b50dab)
+    - We [replaced Solr with
+    Opensearch](a594019f82916a55d203efe3e518224bc8b50dab)
+    - Notably, I did not include URL signing support with this. If this is a
+    deal breaker we can work on it later.
+    - We [updated Tobira's integration](dedb54c)
+    - We [updated out Paella glue](25e76ac)
+    - We [fixed other integrations with Search](c32aeb6)
     
+    I've hit a few questions as I've reviewed this internally a bunch, so
+    I'm going to copy those questions up here as an initial code review.
     
-    Dependabot will resolve any conflicts with this PR as long as you don't
-    alter it yourself. You can also trigger a rebase manually by commenting
-    `@dependabot rebase`.
+    If you have a real system with lots of workflows and series, and want to
+    give this a spin, know that this does not need anything but the
+    database, and the dublincore metadata files. You should be able to pull
+    those out of production deployments and then test this in entirely
+    separate systems.
     
-    [//]: # (dependabot-automerge-start)
-    [//]: # (dependabot-automerge-end)
+    Todo list:
+    ~- Release notes note indicating that a reindex of the search service is
+    required.~
     
-    ---
+    Known, unfixable issues:
+    - Paella tests rely on `develop.opencast.org` to serve the `search/*`
+    endpoints in the format expected by this PR. This obviously will not
+    happen until *after* this PR is merged. Paella tests can be verified
+    locally by setting up Opencast to run on port 80, then `npm run dev` and
+    `npx playwright test` after the npm script finishes booting.
     
-    <details>
-    <summary>Dependabot commands and options</summary>
-    <br />
+    Closes #3921
     
-    You can trigger Dependabot actions by commenting on this PR:
-    - `@dependabot rebase` will rebase this PR
-    - `@dependabot recreate` will recreate this PR, overwriting any edits
-    that have been made to it
-    - `@dependabot merge` will merge this PR after your CI passes on it
-    - `@dependabot squash and merge` will squash and merge this PR after
-    your CI passes on it
-    - `@dependabot cancel merge` will cancel a previously requested merge
-    and block automerging
-    - `@dependabot reopen` will reopen this PR if it is closed
-    - `@dependabot close` will close this PR and stop Dependabot recreating
-    it. You can achieve the same result by closing it manually
-    - `@dependabot show <dependency name> ignore conditions` will show all
-    of the ignore conditions of the specified dependency
-    - `@dependabot ignore this major version` will close this PR and stop
-    Dependabot creating any more for this major version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this minor version` will close this PR and stop
-    Dependabot creating any more for this minor version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this dependency` will close this PR and stop
-    Dependabot creating any more for this dependency (unless you reopen the
-    PR or upgrade to it yourself)
+    ### Your pull request should…
     
-    
-    </details>
+    * [x] have a concise title
+    * [ ] ~[close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists~
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
