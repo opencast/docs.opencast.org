@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Developer Guide</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Opencast Development Guides", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+        <img class="wm-top-logo" src="./img/opencast-white.svg"/>
+      
+      <div class="wm-top-title">
+        Developer Guide<br>
+        
+      </div>
+    </a>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/opencast/opencast">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Participate</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/development-process/" class="wm-article-link wm-toc-text">Development process</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/committer/" class="wm-article-link wm-toc-text">Committers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/release-manager/" class="wm-article-link wm-toc-text">Release manager</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/qa-coordinator/" class="wm-article-link wm-toc-text">QA coordinator</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/localization/" class="wm-article-link wm-toc-text">Localization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Submit issues</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/submit-issues/submit-issues/" class="wm-article-link wm-toc-text">Overview and How to</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/submit-issues/security/" class="wm-article-link wm-toc-text">Security issues</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Decision making</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/decision-making/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/decision-making/lazy-consensus/" class="wm-article-link wm-toc-text">Lazy consensus</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/decision-making/consensus-building/" class="wm-article-link wm-toc-text">Consensus building</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/decision-making/voting/" class="wm-article-link wm-toc-text">Voting</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/governance/" class="wm-article-link wm-toc-text">Governance</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Services infrastructure</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/infrastructure/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/infrastructure/maven-repository/" class="wm-article-link wm-toc-text">Maven repository</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="participate/infrastructure/packaging/" class="wm-article-link wm-toc-text">Packaging</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="participate/proposal-log/" class="wm-article-link wm-toc-text">Proposal log</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Develop</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Setup dev environment</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="develop/setup-opencast-for-develop/" class="wm-article-link wm-toc-text">General</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="develop/development-environment-docker/" class="wm-article-link wm-toc-text">With Docker</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="develop/development-tips/" class="wm-article-link wm-toc-text">Tips for developing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Dev ops</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="develop/devops/local-cluster/" class="wm-article-link wm-toc-text">Local cluster for testing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="develop/devops/explore-h2-database/" class="wm-article-link wm-toc-text">Explore H2 database</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="develop/code-style/" class="wm-article-link wm-toc-text">Code style</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="develop/debugging/" class="wm-article-link wm-toc-text">Debugging</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Frontend development</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="develop/frontends/overview/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Admin UI</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="develop/frontends/admin-ui/development/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Style</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/alerts-indicators/" class="wm-article-link wm-toc-text">Alerts indicators</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/buttons/" class="wm-article-link wm-toc-text">Buttons</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/color-palette/" class="wm-article-link wm-toc-text">Color-palette</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/dropdowns/" class="wm-article-link wm-toc-text">dropdowns</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/forms/" class="wm-article-link wm-toc-text">Forms</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/icons/" class="wm-article-link wm-toc-text">Icons</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/" class="wm-article-link wm-toc-text">Index</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/modals/" class="wm-article-link wm-toc-text">Modals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/navigation/" class="wm-article-link wm-toc-text">Navigation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/references/" class="wm-article-link wm-toc-text">References</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/spacing/" class="wm-article-link wm-toc-text">Spacing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/typeface/" class="wm-article-link wm-toc-text">Typeface</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="develop/frontends/admin-ui/style/view-structure/" class="wm-article-link wm-toc-text">View Structure</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="develop/documentation/" class="wm-article-link wm-toc-text">Documentation</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Opencast architecture</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/overview/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/admin-ui/" class="wm-article-link wm-toc-text">Admin-UI</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/asset-manager/" class="wm-article-link wm-toc-text">Asset manager</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Capture agent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/capture-agent/capture-agent/" class="wm-article-link wm-toc-text">Introduction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/capture-agent/capture-agent-input/" class="wm-article-link wm-toc-text">Input</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/capture-agent/testcases/" class="wm-article-link wm-toc-text">Test Cases for Capture Agents</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">External API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/" class="wm-article-link wm-toc-text">Introduction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/usage/" class="wm-article-link wm-toc-text">Usage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/authentication/" class="wm-article-link wm-toc-text">Authentication</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/authorization/" class="wm-article-link wm-toc-text">Authorization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/base-api/" class="wm-article-link wm-toc-text">Base API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/agents-api/" class="wm-article-link wm-toc-text">Agents API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/events-api/" class="wm-article-link wm-toc-text">Events API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/listprovider-api/" class="wm-article-link wm-toc-text">ListProvider API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/playlists-api/" class="wm-article-link wm-toc-text">Playlists API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/series-api/" class="wm-article-link wm-toc-text">Series API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/statistics-api/" class="wm-article-link wm-toc-text">Statistics API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/groups-api/" class="wm-article-link wm-toc-text">Groups API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/security-api/" class="wm-article-link wm-toc-text">Security API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/workflow-api/" class="wm-article-link wm-toc-text">Workflow API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/types/" class="wm-article-link wm-toc-text">Data Types</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="architecture/api/glossary/" class="wm-article-link wm-toc-text">Glossary</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/filesystem/" class="wm-article-link wm-toc-text">Filesystem</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/job-dispatch/" class="wm-article-link wm-toc-text">Job dispatch</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/oaipmh/" class="wm-article-link wm-toc-text">OAI-PMH</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/paella-player-7/" class="wm-article-link wm-toc-text">Paella player 7</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/scheduler/" class="wm-article-link wm-toc-text">Scheduler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/statistics/" class="wm-article-link wm-toc-text">Statistics</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="architecture/stream-security/" class="wm-article-link wm-toc-text">Stream security</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 "><a href="license/" class="wm-article-link wm-toc-text">Licenses and Legal Matters</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="glossary/" class="wm-article-link wm-toc-text">Glossary</a>
+</li>
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="participate/development-process/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="participate/development-process/" class="btn btn-xs btn-link">
+        Development process
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opencast-development-guides">Opencast Development Guides</h1>
+<p>Welcome to the Opencast development documentation! If you are new to Opencast, be sure to check out our
+<a href="https://docs.opencast.org/stable/admin/">Administration Guide</a>.</p>
+<p>This documentation will help you if you want to participate in Opencast development. It is split into three main
+sections:</p>
+<ul>
+<li><a href="participate/development-process/">Participate</a> contains information on all the different ways you can take a
+  part in the Opencast project. Besides programming, there are many other tasks required to keep the project running.
+  Consider helping with translations or even becoming a release manager!</li>
+<li><a href="develop/setup-opencast-for-develop/">Develop</a> provides helpful tips and tricks on how set up your development
+  environment, as well as write and debug your code.</li>
+<li><a href="architecture/overview/">Opencast Architecture</a> supplies in depth, technical description on the different parts
+  that make up Opencast, such as the External API. If you are looking for information on how to configure certain parts,
+  check the <a href="https://docs.opencast.org/stable/admin/#configuration/">Administration Guide</a> instead.</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="participate/development-process/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="participate/development-process/" class="btn btn-xs btn-link">
+        Development process
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
+<!--
+MkDocs version : 1.6.0
+Build Date UTC : 2024-05-08 08:18:20.870894+00:00
+-->

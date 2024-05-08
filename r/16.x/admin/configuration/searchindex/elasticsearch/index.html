@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Elasticsearch - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Elasticsearch Configuration", url: "#_top", children: [
+              {title: "Configuring External Nodes", url: "#configuring-external-nodes" },
+              {title: "Version", url: "#version" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../serving-static-files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../serving-static-files/" class="btn btn-xs btn-link">
+        Serving Static Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../solr/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../solr/" class="btn btn-xs btn-link">
+        Solr
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="elasticsearch-configuration">Elasticsearch Configuration</h1>
+<p><em>Note: This configuration works the exact same way for OpenSearch</em></p>
+<p>Elasticsearch powers the external API as well as the administrative user interface of Opencast.</p>
+<h2 id="configuring-external-nodes">Configuring External Nodes</h2>
+<p>Opencast's Elasticsearch settings can be found in the <code>etc/custom.properties</code> configuration file.</p>
+<p>Relevant configuration keys are:</p>
+<ul>
+<li><code>org.opencastproject.elasticsearch.server.hostname</code></li>
+<li><code>org.opencastproject.elasticsearch.server.scheme</code></li>
+<li><code>org.opencastproject.elasticsearch.server.port</code></li>
+<li><code>org.opencastproject.elasticsearch.username</code></li>
+<li><code>org.opencastproject.elasticsearch.password</code></li>
+</ul>
+<p>Therefore only <code>admin</code>, <code>adminpresentation</code>, and <code>allinone</code> need to connect to Elasticsearch.</p>
+<p><code>username</code> and <code>password</code> are optional. If configured, requests to Elasticsearch are secured by
+HTTP basic authentication (which is unsecure without TLS encryption). Refer to <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-stack-security.html">the Elasticsearch
+documentation</a>
+to properly secure Elasticsearch.</p>
+<p>Additionally, the following settings can be configured in
+<code>org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code>:
+* <code>index.indentifier</code>
+* <code>index.name</code>
+* <code>max.retry.attempts.get</code>
+* <code>max.retry.attempts.update</code>
+* <code>retry.waiting.period.get</code>
+* <code>retry.waiting.period.update</code></p>
+<p>The identifier defines which index opencast is looking for. This might be interesting if you run an
+Elasticsearch cluster and want to follow a naming scheme. But you should be aware that the index actually consists of
+multiple subindices whose identifiers will be appended to the base name with an _ (e.g. "opencast_event").
+If an index doesn't exist, Opencast will create it. The name is used for logging purposes only.</p>
+<p>The max retry attempts and the waiting periods will be used in case of an ElasticsearchStatusException, e.g. if there
+are too many concurrent requests. The retry behavior can be configured differently for get and update/delete requests.
+This way you could set more retry attempts for index updates because of the more serious consequences if those requests
+fail. The waiting period is used to not overwhelm the Elasticsearch with retry requests, making the problem worse. By
+default, no retry will be attempted.</p>
+<h2 id="version">Version</h2>
+<p>Please confer to the <a href="../../../installation/source-linux/#install-dependencies">Linux installation guide</a>
+for version information.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../serving-static-files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../serving-static-files/" class="btn btn-xs btn-link">
+        Serving Static Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../solr/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../solr/" class="btn btn-xs btn-link">
+        Solr
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/searchindex/elasticsearch.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

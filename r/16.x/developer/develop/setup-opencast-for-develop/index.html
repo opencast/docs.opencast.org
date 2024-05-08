@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>General - Developer Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Developer Environment Setup", url: "#_top", children: [
+              {title: "TL;DR", url: "#tldr" },
+              {title: "Clone Opencast", url: "#clone-opencast" },
+              {title: "Install Dependencies", url: "#install-dependencies" },
+              {title: "Build Opencast", url: "#build-opencast" },
+              {title: "Common Build Errors or Fixes", url: "#common-build-errors-or-fixes" },
+              {title: "Recommended Development Tools", url: "#recommended-development-tools" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../development-environment-docker/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../development-environment-docker/" class="btn btn-xs btn-link">
+        With Docker
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../participate/proposal-log/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../participate/proposal-log/" class="btn btn-xs btn-link">
+        Proposal log
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="developer-environment-setup">Developer Environment Setup</h1>
+<p>These instructions outline how to install Opencast.
+This is meant for developers.
+For the installation of a production cluster, take a look at the admin guides.</p>
+<p>Warning: This probably won´t work with Windows.</p>
+<h2 id="tldr">TL;DR</h2>
+<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+$ cd opencast
+$ ./mvnw clean install -Pdev
+$ cd build/opencast-dist-develop-*
+$ ./bin/start-opencast
+</code></pre>
+<p>Opencast will then listen on <a href="http://localhost:8080">127.0.0.1:8080</a></p>
+<p>Default credentials are:</p>
+<ul>
+<li>username: admin</li>
+<li>password: opencast</li>
+</ul>
+<p>Where <code>*</code> is the version number of the distribution.</p>
+<h2 id="clone-opencast">Clone Opencast</h2>
+<p>You can get the Opencast source code by cloning the Git repository.</p>
+<p>Cloning the Git repository:</p>
+<pre><code class="language-sh">$ git clone https://github.com/opencast/opencast.git
+</code></pre>
+<h2 id="install-dependencies">Install Dependencies</h2>
+<p>Please make sure to install the following dependencies.</p>
+<p>Required:</p>
+<pre><code>java-11-openjdk-devel
+ffmpeg &gt;= 3.2.4
+maven &gt;= 3.6
+python
+firefox/chrome/chromium
+unzip
+gcc-c++
+tar
+bzip2
+</code></pre>
+<p>Required as a service for running Opencast:</p>
+<pre><code>elasticsearch = 7.9.x
+</code></pre>
+<p>Required for some services. Some tests may be skipped and some features
+may not be usable if they are not installed. Hence, it's generally a good idea to
+install them.</p>
+<pre><code>tesseract &gt;= 3
+hunspell &gt;= 1.2.8
+sox &gt;= 14.4
+synfig
+</code></pre>
+<h2 id="build-opencast">Build Opencast</h2>
+<p>You can now build opencast by changing into your opencast directory and running:</p>
+<pre><code>$ ./mvnw clean install [Options]
+</code></pre>
+<p>After the successful compilation you can start opencast with:</p>
+<pre><code>$ ./build/opencast-dist-develop-*/bin/start-opencast
+</code></pre>
+<p>Where <code>*</code> is the version number of the distribution.</p>
+<h3 id="build-options">Build options</h3>
+<h4 id="assembly-profiles">Assembly profiles</h4>
+<p>Besides the default <code>dist</code> Maven profile, you can specify other profiles to create different builds.
+Activate these profiles using:</p>
+<table>
+<thead>
+<tr>
+<th>profile</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-Pdev</code></td>
+<td>Create a single <code>allinone</code> distribution and unpack it</td>
+</tr>
+<tr>
+<td><code>-Pnone</code></td>
+<td>Do not create any distribution</td>
+</tr>
+</tbody>
+</table>
+<p>You can only use one of these profiles at a time.</p>
+<h4 id="build-options_1">Build options</h4>
+<p>The following options can be used to customize the build process. They can be used in combination with the assembly profiles.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-DtrimStackTrace=false</code></td>
+<td>Do not trim stack traces in the logs</td>
+</tr>
+<tr>
+<td><code>-DskipTests=true</code></td>
+<td>Skip tests</td>
+</tr>
+<tr>
+<td><code>-T 1.0C</code></td>
+<td>Use multiple threads for building (Experimental)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="build-single-modules">Build Single Modules</h3>
+<p>When working on a single Opencast module, it can be extremely helpful having the new built version automatically
+included in the Opencast OSGi infrastructure. This can be achieved by watching the module with the
+<a href="https://karaf.apache.org/manual/latest/commands/bundle-watch.html">bundle:watch</a> command in Karaf.
+The procedure would be as follows:</p>
+<ul>
+<li>Start Opencast and use <code>la -u</code> in the Karaf console to list all installed bundles/modules. Note down the IDs of the
+  bundles you want to watch.
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</li>
+<li>Use <code>bundle:watch IDs</code> to watch the desired modules, e.g. <code>bundle:watch 190 199</code></li>
+<li>Make your changes and rebuild the module (e.g. execute <code>./mvnw clean install</code> in the module folder).</li>
+<li>Watch how Karaf automatically redeploys the changed jars from your local Maven repository. You can verify that
+  everything went smoothly by checking the log with <code>log:tail</code>.</li>
+</ul>
+<p>To see this technique in action, you can watch the following short video:</p>
+<ul>
+<li><a href="https://asciinema.org/a/348132">Opencast development: Watch and reload modules</a></li>
+</ul>
+<p>The updated bundles are only available in the currently running Karaf instance. To create an Opencast version that contains
+your changes permanently, you have to run <code>./mvnw install</code> in the <code>assemblies</code> directory again.</p>
+<p>In several cases the <code>bundle:watch</code> can put Karaf in an unstable condition, as dependencies between bundles will not
+correctly be restored after the new bundle has been deployed.</p>
+<h3 id="examples">Examples</h3>
+<h4 id="build-enabling-multiple-threads-experimental">Build enabling multiple threads (Experimental)</h4>
+<p>Building with multiple threads decreases the build time significantly.
+If you want to enable multiple threads, you can use the following command:</p>
+<pre><code>$ ./mvnw clean install -T 1.0C -DskipTests -Pnone 
+&amp;&amp; cd assemblies &amp;&amp; ./mvnw install -T 1.0C -Dskiptests -Pdev  
+&amp;&amp; cd ..
+$ ./build/opencast-dist-develop-*/start-opencast
+</code></pre>
+<p>Multiple threads build have not been thoroughly tested and may cause runtime problems or unexpected behavior.
+We don't advise using this feature for production.</p>
+<h4 id="useful-commands-for-testing-purposes">Useful Commands for Testing Purposes</h4>
+<p>For a quick build, you can use the following command to skip Opencast's tests.</p>
+<pre><code>$ cd opencast
+$ ./mvnw clean install -Pdev -DskipTests
+</code></pre>
+<p>To see the whole <code>stacktrace</code> of the installation you can use the following command to disable the trimming.</p>
+<pre><code>$ cd opencast
+$ ./mvnw clean install -DtrimStackTrace=false
+</code></pre>
+<p>If you want to start opencast in debug mode, you could use the debug argument:</p>
+<pre><code>$ cd build/opencast-dist-develop-*/bin &amp;&amp; ./start-opencast debug
+</code></pre>
+<h2 id="common-build-errors-or-fixes">Common Build Errors or Fixes</h2>
+<h3 id="npm-access-error">NPM Access Error</h3>
+<p>To fix a NPM access error (<a href="https://stackoverflow.com/questions/16151018/npm-throws-error-without-sudo">example</a>),
+ you can run</p>
+<pre><code>$ sudo chown -R $USER:$(id -gn $USER) ~/.config &amp;&amp; sudo chown -R $USER:$(id -gn $USER) ~/.npm
+</code></pre>
+<h3 id="jdk-version">JDK Version</h3>
+<p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE uses JDK 11.</p>
+<h2 id="recommended-development-tools">Recommended Development Tools</h2>
+<p>While you can use any IDE or editor you like, we recommend the following tools.</p>
+<h3 id="intellij-idea-ide-community-edition">IntelliJ IDEA IDE Community Edition</h3>
+<p>Install it by downloading and following the manufacturer guide, select Community Edition:</p>
+<p><a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA Community Edition</a></p>
+<h4 id="import-opencast">Import Opencast</h4>
+<p>Follow the next steps, if you want to import opencast correctly</p>
+<ul>
+<li>Import project from external model</li>
+<li>Choose Maven</li>
+<li>Search for projects recursively</li>
+<li>Uncheck all listed profiles</li>
+<li>Check all projects to import</li>
+<li>Select JDK 11, it should be somewhere around <code>/usr/lib/jvm/java-11-openjdk</code> depending on your current system</li>
+</ul>
+<p>Now Idea should import the projects, it could take some time, you can make it faster by following <a href="#slow-intellij-idea-fix">this</a>.</p>
+<h4 id="setup-code-style">Setup Code Style</h4>
+<p>Import the opencast code style configuration by following the steps</p>
+<ul>
+<li>Go to settings</li>
+<li>Search for code style</li>
+<li>You should find it under Editor → Code Style</li>
+<li>Select Java and click on the gear icon</li>
+<li>Select Import Scheme and IntelliJ IDEA code style XML</li>
+<li>Import it from <code>opencast/docs/intellij_settings/codestyle.xml</code></li>
+</ul>
+<h4 id="setup-checkstyle">Setup CheckStyle</h4>
+<p>Check style is one of the tools we use to ensure code quality. Not following the check style rules will produce build errors.
+To use it in IntelliJ, follow these steps:</p>
+<ul>
+<li>Install the <a href="https://plugins.jetbrains.com/plugin/1065-checkstyle-idea">CheckStyle-IDEA plugin</a></li>
+<li>Configure the plugin:<ol>
+<li>Go to settings → Tools → Checkstyle</li>
+<li>Click on the plus icon</li>
+<li>Add a description</li>
+<li>Select “Use a local Checkstyle file“</li>
+<li>Fill the blanks:<ul>
+<li>checkstyle.header.file: <code>/docs/checkstyle/checkstyle-header.txt</code></li>
+<li>checkstyle.supressions.file: <code>/docs/checkstyle/checkstyle-suppressions.xml</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>To use the plugin, you can run manually the check-style plugin through the menu View → Tool Windows → Checkstyle.</p>
+<p>Now your IDE should be ready for developing.</p>
+<h4 id="slow-intellij-idea-fix">Slow IntelliJ IDEA Fix</h4>
+<p>Edit following file</p>
+<pre><code>$ sudo nano /etc/sysctl.conf
+</code></pre>
+<p>and copy this text into it</p>
+<pre><code>fs.inotify.max_user_watches = 524288
+</code></pre>
+<p>Apply your changes with</p>
+<pre><code>$ sudo sysctl -p --system
+</code></pre>
+<h3 id="visual-studio-code-editor">Visual Studio Code Editor</h3>
+<p>We use VS code for mainly:</p>
+<ul>
+<li>Frontend development</li>
+<li>Configure files</li>
+<li>Markdown files</li>
+<li>And other simple tasks.</li>
+</ul>
+<p>Install it by downloading and following the <a href="https://code.visualstudio.com/">manufacturer guide</a>:</p>
+<p>Recommended Extensions are:</p>
+<ul>
+<li>ESLint by Dirk Baeumer</li>
+<li>AngularJS 1.x Code Snippets by alexandersage</li>
+<li>Debugger for Chrome by Microsoft</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../development-environment-docker/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../development-environment-docker/" class="btn btn-xs btn-link">
+        With Docker
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../participate/proposal-log/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../participate/proposal-log/" class="btn btn-xs btn-link">
+        Proposal log
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/develop/setup-opencast-for-develop.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

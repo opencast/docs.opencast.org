@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Amazon S3 Archive Storage - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AWS S3 Archive Configuration", url: "#_top", children: [
+              {title: "Amazon User Configuration", url: "#amazon-user-configuration" },
+              {title: "Amazon Service Configuration", url: "#amazon-service-configuration" },
+              {title: "Opencast Service Configuration", url: "#opencast-service-configuration" },
+              {title: "Using S3 Archiving", url: "#using-s3-archiving" },
+              {title: "Manual S3 Archiving", url: "#manual-s3-archiving" },
+          ]},
+          {title: "S3 Storage Tiers", url: "#s3-storage-tiers", children: [
+              {title: "S3 Glacier Flexible Retrieval and Deep Archive", url: "#s3-glacier-flexible-retrieval-and-deep-archive" },
+              {title: "Permanently Restoring Content", url: "#permanently-restoring-content" },
+              {title: "Manually Changing Content Storage Tiers", url: "#manually-changing-content-storage-tiers" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../awss3distribution/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../awss3distribution/" class="btn btn-xs btn-link">
+        Amazon S3 Distribution
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../admin-ui/about/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../admin-ui/about/" class="btn btn-xs btn-link">
+        Imprint and Privacy Statement
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="aws-s3-archive-configuration">AWS S3 Archive Configuration</h1>
+<p>This page documents the configuration for the AWS S3 components in the Opencast module <strong>asset-manager-storage-aws</strong>.</p>
+<p>This configuration is only required on the admin node, and only if you are using Amazon S3 as an archive repository.</p>
+<h2 id="amazon-user-configuration">Amazon User Configuration</h2>
+<p>Configuration of Amazon users is beyond the scope of this documentation, instead we suggest referring to
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">Amazon's documentation</a>.  You will, however,
+require an <a href="https://aws.amazon.com/developers/access-keys/">Access Key ID and Secret Access Key</a>.  The user to which
+this key belongs <em>requires</em> the <em>AmazonS3FullAccess</em> permission, which can be granted using
+<a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_inline-using.html">these instructions</a>.</p>
+<p><strong>A <a href="https://aws.amazon.com/free/">free Amazon account</a> will work for small scale testing, but be aware that S3
+archiving can cost you a lot of money very quickly.  Be aware of how much data and how many requests you are making,
+and be sure to <a href="http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-alarms.html">set alarms</a> to
+notify you of cost overruns.</strong></p>
+<h2 id="amazon-service-configuration">Amazon Service Configuration</h2>
+<p>For development and testing it is generally safe to allow the Opencast AWS S3 Archive service to create the S3 bucket
+for you.  It will create the bucket per its configuration, with private-only access to the files, and no versioning.</p>
+<h2 id="opencast-service-configuration">Opencast Service Configuration</h2>
+<p>The Opencast AWS S3 Archive service configuration can be found in the
+<code>org.opencastproject.assetmanager.aws.s3.AwsS3AssetStore.cfg</code> configuration file.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: center;">Default</th>
+<th style="text-align: center;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.enabled</td>
+<td style="text-align: left;">Whether to enable this service</td>
+<td style="text-align: center;">false</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.region</td>
+<td style="text-align: left;">The AWS region to set</td>
+<td style="text-align: center;">us-east-1</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.bucket</td>
+<td style="text-align: left;">The S3 bucket name</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">example-org-archive</td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.access.id</td>
+<td style="text-align: left;">Your access ID</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">20 alphanumeric characters</td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.secret.key</td>
+<td style="text-align: left;">Your secret key</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">40 characters</td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.endpoint</td>
+<td style="text-align: left;">The endpoint to use</td>
+<td style="text-align: center;">Default AWS S3 endpoint</td>
+<td style="text-align: center;">https://s3.service.com</td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.path.style</td>
+<td style="text-align: left;">Whether to use path style</td>
+<td style="text-align: center;">false / Default AWS S3 style</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.max.connections</td>
+<td style="text-align: left;">Number of max connections</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.connection.timeout</td>
+<td style="text-align: left;">Connection timeout in ms</td>
+<td style="text-align: center;">10000</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">org.opencastproject.assetmanager.aws.s3.max.retries</td>
+<td style="text-align: left;">Number of max retries</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="using-s3-archiving">Using S3 Archiving</h2>
+<p>S3 archiving is done on a Snapshot level, that is a mediapackage ID + version.  Because of the way that the Asset
+Manager handles snapshots, all newly created snapshots are <em>always</em> local.  Creating a snapshot of a mediapackage with
+non local data will download <em>all</em> related snapshots for that mediapackage which can incur significant costs.  S3
+archiving is meant to be a cost reduction, and storage expansion tool, rather than hot storage where lots of reads and
+writes will occur.  Therefore, most adopters do not want to immediately (ie, at the end of your default workflow)
+offload your recordings to S3!  Instead, we suggest using the <code>TimedMediaArchiver</code> as configured in
+<code>/etc/org.opencastproject.assetmanager.impl.TimedMediaArchiver.cfg</code> to offload your recordings after sufficient time that
+further modification of the recording is unlikely.</p>
+<p>If you do need to create an additional workflow, a substantially better approach than restoring snapshots involves
+using the <a href="../../workflowoperationhandlers/ingestdownload-woh/">ingest-download</a> workflow operation handler to download
+the relevant file(s) to the local workspace.  This dramatically speeds up snapshotting, and allows the operations which
+require local files to work properly without having to restore everything, and then re-archive to S3.</p>
+<h2 id="manual-s3-archiving">Manual S3 Archiving</h2>
+<p>Manually moving assets to and from S3 is done via a workflow operation handler added as part of a workflow.
+The workflow operation handler definition looks like this</p>
+<pre><code>    &lt;operation
+      id=&quot;move-storage&quot;
+      description=&quot;Offloading to AWS S3&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;target-storage&quot;&gt;aws-s3&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<p>Assets in S3 continue to be accessible to Opencast, however there may be cases where you wish to restore your content
+back to your local storage.  This can be accomplished using the same workflow operation definition as above, and
+changing the <code>target-storage</code> configuration value from <code>aws-s3</code> to <code>local-filesystem</code> like so</p>
+<pre><code>    &lt;operation
+      id=&quot;move-storage&quot;
+      description=&quot;Restoring from AWS S3&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;target-storage&quot;&gt;local-filesystem&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+</code></pre>
+<h1 id="s3-storage-tiers">S3 Storage Tiers</h1>
+<p>S3 supports <a href="https://aws.amazon.com/s3/storage-classes/">storage tiering</a>, which can offer significant cost savings in
+return for substantially increased access times.  Opencast does not directly expose this functionality in the UI, but
+support is present in the back end.  Both manual, and Lifecycle based storage tiering are supported, as are all tiers.
+Attempting to retrieve an asset will trigger a restore to the standard S3 tier, if appropriate, and then return the
+file contents.  For more on cold storage, see below.</p>
+<h2 id="s3-glacier-flexible-retrieval-and-deep-archive">S3 Glacier Flexible Retrieval and Deep Archive</h2>
+<p>The Glacier FR and Deep Archive (known as Cold Storage going forward) storage classes are supported, however they have
+a significant drawback at this point: Opencast does not understand that these files are not immediately accessible.
+Attempts to process a workflow containing assets will trigger a restore of the file, but then likely fail the workflow
+after some time.  This because some Opencast configurations use HTTP(S) downloading to transfer the files between
+processing nodes, and those transfers <em>will</em> time out when access times for the media files are measured in hours.
+Note that these failures will not harm your Opencast system, but they will cost you money because of the potentially
+wasted restores.</p>
+<p>A better approach is to use the REST endpoints at <code>/assets/aws/s3</code>, eg <code>http://stable.opencast.org/assets/aws/s3</code>.
+Specifically, you probably want to use <code>PUT glacier/{mediaPackageId}/assets</code>, which enables temporary restoration of
+files from the Cold Storage tiers to standard S3.  AWS will automatically remove the temporary copy after the specified
+duration, and that should be long enough for your workflow to complete.</p>
+<h2 id="permanently-restoring-content">Permanently Restoring Content</h2>
+<p>Rarely you will need your content restored to S3 on a more permanent basis.  In this case you need to temporarily
+restore as above, and the once the restore is complete use the <code>POST {mediaPackageId}/assets</code> endpoint to permanently
+move the asset.  Note that the permanently restored asset may still be re-Glaciered by any active AWS Object Lifecycle
+rules.</p>
+<h2 id="manually-changing-content-storage-tiers">Manually Changing Content Storage Tiers</h2>
+<p>While AWS Lifecycle rules are a much more scalable solution, there may be times when you wish to manually alter an
+asset's storage tier.  In the same way that you can permanently restore an asset, you can also manually move assets
+betwen storage classes using the <code>POST {mediaPackageId}/assets</code>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../awss3distribution/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../awss3distribution/" class="btn btn-xs btn-link">
+        Amazon S3 Distribution
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../admin-ui/about/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../admin-ui/about/" class="btn btn-xs btn-link">
+        Imprint and Privacy Statement
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/awss3archive.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

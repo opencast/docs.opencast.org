@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 14.x to 15.x", url: "#_top", children: [
+              {title: "Subtitle changes", url: "#subtitle-changes" },
+              {title: "Configuration changes", url: "#configuration-changes" },
+              {title: "Database Migration", url: "#database-migration" },
+              {title: "Elasticsearch Index Rebuild", url: "#elasticsearch-index-rebuild" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-14x-to-15x">Upgrading Opencast from 14.x to 15.x</h1>
+<p>This guide describes how to upgrade Opencast 14.x to 15.x.
+In case you need information about how to upgrade older versions of Opencast,
+please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
+<ol>
+<li>Read the <a href="../releasenotes/">release notes</a> (especially the section of behaviour changes)</li>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast with the new version</li>
+<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
+<li><a href="#database-migration">Migrate the database</a></li>
+<li>Start Opencast</li>
+</ol>
+<h2 id="subtitle-changes">Subtitle changes</h2>
+<p>With Opencast 15 we want to put more emphasis on subtitles. You can find more details on how subtitles should be
+handled going forward in <a href="../configuration/subtitles/">Subtitles</a>.</p>
+<p>This comes with a bit of migration. Namely, subtitles should not be stored as "attachments" or "catalogs" anymore, but
+as "media"(as they are called in the Admin UI) or "tracks" (as they are called internally). Therefore, all subtitle
+files currently stored as attachments or catalogs in your events should be moved to tracks. This can easily be
+accomplished with the "changetype" workflow operation handler new to Opencast 15. See example below. (Subtitles should
+then be republished)</p>
+<p>Additionally, we recommend adding a language tag <code>lang:&lt;language-code&gt;</code> to your subtitle files. While tags for subtitles
+are optional, the flavor will not encode the given language for a subtitle anymore, so a language tag is useful for
+identification and display purposes.
+You can read more about subtitles tags in <a href="../configuration/subtitles/">Subtitles</a>.</p>
+<p>If your subtitles are not in WebVTT format, they should be converted to WebVTT as well. While other formats are possible,
+WebVTT is the only one that will be guaranteed to work.</p>
+<details>
+
+<summary>Example workflow for changing subtitle type to track</summary>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+
+&lt;id&gt;change-subtitles&lt;/id&gt;
+  &lt;title&gt;Change Subtitles Type&lt;/title&gt;
+  &lt;tags&gt;
+    &lt;tag&gt;archive&lt;/tag&gt;
+  &lt;/tags&gt;
+  &lt;description&gt;&lt;/description&gt;
+  &lt;operations&gt;
+
+    &lt;!-- Add a language tag for the english subtitles --&gt;
+
+    &lt;operation
+        id=&quot;tag&quot;
+        description=&quot;Tagging media package elements&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/vtt+en&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;+lang:en&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Change the type of all files with the &quot;captions/*&quot; flavor to track --&gt;
+    &lt;!-- And their flavor to &quot;captions/source&quot; --&gt;
+
+    &lt;operation
+        id=&quot;changetype&quot;
+        description=&quot;Retracting elements flavored with presentation and tagged with preview from Engage&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/*&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-type&quot;&gt;track&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Save changes --&gt;
+
+    &lt;operation
+        id=&quot;snapshot&quot;
+        if=&quot;NOT (${presenter_delivery_exists} OR ${presentation_delivery_exists})&quot;
+        description=&quot;Archive publishing information&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;!-- Clean up work artifacts --&gt;
+
+    &lt;operation
+        id=&quot;cleanup&quot;
+        fail-on-error=&quot;false&quot;
+        description=&quot;Remove temporary processing artifacts&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!-- On systems with shared workspace or working file repository --&gt;
+        &lt;!-- you want to set this option to false. --&gt;
+        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
+        &lt;!-- ACLs are required again when working through ActiveMQ messages --&gt;
+        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+  &lt;/operations&gt;
+&lt;/definition&gt;
+</code></pre>
+
+</details>
+
+<h2 id="configuration-changes">Configuration changes</h2>
+<ul>
+<li>The default admin ui is now the "new" admin ui. If it does not suit your needs for whatever reason, you can always
+  switch back the "old" admin ui in <code>etc/ui-config/mh_default_org/runtime-info-ui/settings.json</code>
+  [<a href="https://github.com/opencast/opencast/pull/5414">#5414</a>]</li>
+<li>Paella Player 6 has been turned into a plugin. If you are still using it, you will need to enable it.
+  [<a href="https://github.com/opencast/opencast/pull/4965">#4965</a>]</li>
+</ul>
+<h2 id="database-migration">Database Migration</h2>
+<p>There is no database migration required for upgrading form 14.x to 15.x.</p>
+<h2 id="elasticsearch-index-rebuild">Elasticsearch Index Rebuild</h2>
+<p>There is no index rebuild required for upgrading form 14.x to 15.x.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../changelog/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../changelog/" class="btn btn-xs btn-link">
+        Changelog
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

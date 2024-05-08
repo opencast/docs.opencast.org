@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Overview - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Workflow Operation Handler", url: "#_top", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Default Workflow Operations", url: "#default-workflow-operations" },
+              {title: "State Mappings", url: "#state-mappings" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="retry-strategies/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="retry-strategies/" class="btn btn-xs btn-link">
+        Retry Strategies
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../version-support/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../version-support/" class="btn btn-xs btn-link">
+        Version Support
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="workflow-operation-handler">Workflow Operation Handler</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Workflows are the central element to define how a media package is being processed by the Opencast services. Their
+definitions consist of a list of workflow operations, which basically map a piece of configuration to Opencast code:</p>
+<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+    ....
+    &lt;operation
+      id="tag"
+      &lt;configurations&gt;
+        &lt;configuration key="source-flavors"&gt;presentation/trimmed&lt;/configuration&gt;
+        &lt;configuration key="target-flavor"&gt;presentation/tagged&lt;/configuration&gt;
+      &lt;/configurations&gt;
+   &lt;/operation&gt;
+   ...
+&lt;/definition&gt;
+</code></pre>
+<h2 id="default-workflow-operations">Default Workflow Operations</h2>
+<p>The following table contains the workflow operations that are available in an out-of-the-box Opencast installation:</p>
+<table>
+<thead>
+<tr>
+<th>Operation Handler</th>
+<th>Description</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add-catalog</td>
+<td>Add a catalog to the media package</td>
+<td><a href="add-catalog-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>analyze-audio</td>
+<td>Analyze first audio stream</td>
+<td><a href="analyzeaudio-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>analyze-tracks</td>
+<td>Analyze tracks in media package</td>
+<td><a href="analyze-tracks-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>analyze-mediapackage</td>
+<td>Analyze media package</td>
+<td><a href="analyze-mediapackage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>animate</td>
+<td>Create animated video sequence</td>
+<td><a href="animate-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>amberscript-start-transcription</td>
+<td>Start AmberScript Transcription</td>
+<td><a href="amberscript-start-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>amberscript-attach-transcription</td>
+<td>Attach AmberScript Transcription</td>
+<td><a href="amberscript-attach-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>assert</td>
+<td>Verify preconditions with assertion</td>
+<td><a href="assert-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>asset-delete</td>
+<td>Deletes the current mediapackage from the Archive</td>
+<td><a href="asset-delete-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>attach-watson-transcription</td>
+<td>Attaches automated transcripts to mediapackage</td>
+<td><a href="attach-watson-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>changetype</td>
+<td>Change type of media package elements</td>
+<td><a href="changetype-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>cleanup</td>
+<td>Cleanup the working file repository</td>
+<td><a href="cleanup-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>clone</td>
+<td>Clone media package elements to another flavor</td>
+<td><a href="clone-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>comment</td>
+<td>Add, resolve or delete a comment</td>
+<td><a href="comment-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>composite</td>
+<td>Compose two videos on one canvas.</td>
+<td><a href="composite-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>concat</td>
+<td>Concatenate multiple video tracks into one video track</td>
+<td><a href="concat-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>conditional-config</td>
+<td>Configure workflow configuration variable based on coditions</td>
+<td><a href="conditional-config-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>configure-by-dcterm</td>
+<td>Set workflow parameter if dublincore term matches value</td>
+<td><a href="configure-by-dcterm-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>copy</td>
+<td>Copy media package elements to target directory</td>
+<td><a href="copy-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>cover-image</td>
+<td>Generate a cover-image containing metadata</td>
+<td><a href="coverimage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>crop-video</td>
+<td>Checks for black bars on the sides of the video</td>
+<td><a href="cropvideo-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>cut-marks-to-smil</td>
+<td>Parses timestamps into a SMIL for the editor workflow</td>
+<td><a href="cut-marks-to-smil-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>defaults</td>
+<td>Applies default workflow configuration values</td>
+<td><a href="defaults-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>demux</td>
+<td>Demuxes streams to multiple output files</td>
+<td><a href="demux-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>duplicate-event</td>
+<td>Create an event by cloning an existing one</td>
+<td><a href="duplicate-event-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>editor</td>
+<td>Waiting for user to review, then cut video based on edit-list</td>
+<td><a href="editor-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>encode</td>
+<td>Encode media files to differents formats in parallel</td>
+<td><a href="encode-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>error-resolution</td>
+<td>Internal operation to pause a workflow in error</td>
+<td><a href="error-resolution-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>execute-many</td>
+<td>Execute a command for each matching element in a MediaPackage</td>
+<td><a href="execute-many-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>execute-once</td>
+<td>Execute a command for a MediaPackage</td>
+<td><a href="execute-once-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>export-wf-properties</td>
+<td>Export workflow properties</td>
+<td><a href="export-wf-properties-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>extract-text</td>
+<td>Extracting text from presentation segments</td>
+<td><a href="extracttext-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>google-speech-attach-transcription</td>
+<td>Attaches automated transcripts to mediapackage</td>
+<td><a href="google-speech-attach-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>google-speech-start-transcription</td>
+<td>Starts automated transcription provided by Google Speech</td>
+<td><a href="google-speech-start-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>http-notify</td>
+<td>Notifies an HTTP endpoint about the process of the workflow</td>
+<td><a href="httpnotify-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>image</td>
+<td>Extract images from a video using FFmpeg</td>
+<td><a href="image-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>image-convert</td>
+<td>Convert images using FFmpeg</td>
+<td><a href="image-convert-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>image-to-video</td>
+<td>Create a video track from a source image</td>
+<td><a href="imagetovideo-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>import-wf-properties</td>
+<td>Import workflow properties</td>
+<td><a href="import-wf-properties-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>incident</td>
+<td>Testing incidents on a dummy job</td>
+<td><a href="incident-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>include</td>
+<td>Include workflow definition in current workflow</td>
+<td><a href="include-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>ingest-download</td>
+<td>Download files from external URL for ingest</td>
+<td><a href="ingestdownload-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>inspect</td>
+<td>Inspect the media (check if it is valid)</td>
+<td><a href="inspect-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>log</td>
+<td>Log workflow status</td>
+<td><a href="log-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>mattermost-notify</td>
+<td>Send messages to Mattermost</td>
+<td><a href="mattermost-notify-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>metadata-to-acl</td>
+<td>Add read/write access based on metadata</td>
+<td><a href="metadata-to-acl/">Documentation</a></td>
+</tr>
+<tr>
+<td>microsoft-azure-attach-transcription</td>
+<td>Attaches automated transcripts to mediapackage</td>
+<td><a href="microsoft-azure-attach-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>microsoft-azure-start-transcription</td>
+<td>Starts automated transcription provided by Microsoft Azure</td>
+<td><a href="microsoft-azure-start-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>move-storage</td>
+<td>Move files between asset manager storage systems</td>
+<td><a href="move-storage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>multiencode</td>
+<td>Encode to multiple profiles in one operation</td>
+<td><a href="multiencode-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>normalize-audio</td>
+<td>Normalize first audio stream</td>
+<td><a href="normalizeaudio-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>partial-import</td>
+<td>Import partial tracks and process according to a SMIL document</td>
+<td><a href="partial-import-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>post-mediapackage</td>
+<td>Send mediapackage to remote service</td>
+<td><a href="postmediapackage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>prepare-av</td>
+<td>Preparing audio and video work versions</td>
+<td><a href="prepareav-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>probe-resolution</td>
+<td>Set workflow instance variables based on video resolution</td>
+<td><a href="probe-resolution-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>process-smil</td>
+<td>Edit and Encode media defined by a SMIL file</td>
+<td><a href="process-smil-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publication-to-workspace</td>
+<td>Copy publication element to mediapackage in workspace</td>
+<td><a href="publication-to-workspace-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-configure-aws</td>
+<td>Distribute and publish media to the configured publication using Amazon S3 and Cloudfront</td>
+<td><a href="publish-configure-aws-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-configure</td>
+<td>Distribute and publish media to the configured publication</td>
+<td><a href="publish-configure-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-engage-aws</td>
+<td>Distribute and publish media to the engage player using Amazon S3 and Cloudfront</td>
+<td><a href="publish-engage-aws-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-engage</td>
+<td>Distribute and publish media to the engage player</td>
+<td><a href="publish-engage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-oaipmh</td>
+<td>Distribute and publish media to a OAI-PMH repository</td>
+<td><a href="publish-oaipmh-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>publish-youtube</td>
+<td>Distribute and publish media to YouTube</td>
+<td><a href="publish-youtube-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>rename-files</td>
+<td>Rename media files using metadata</td>
+<td><a href="rename-files-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>republish-oaipmh</td>
+<td>Update media in a OAI-PMH repository</td>
+<td><a href="republish-oaipmh-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-configure-aws</td>
+<td>Retracts media from configured publication in AWS S3 and Cloudfront</td>
+<td><a href="retract-configure-aws-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-configure</td>
+<td>Retracts media from configured publication</td>
+<td><a href="retract-configure-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-engage-aws</td>
+<td>Retracts media from AWS S3 and Cloudfront publication</td>
+<td><a href="retract-engage-aws-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-engage</td>
+<td>Retracts media from Opencast Media Module publication</td>
+<td><a href="retract-engage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-partial-aws</td>
+<td>Retract a subset of the mediapackage from a publication in Amazon S3 and Cloudfront</td>
+<td><a href="retract-partial-aws-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-partial</td>
+<td>Retract a subset of the mediapackage from a publication</td>
+<td><a href="retract-partial-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-oaipmh</td>
+<td>Retracts media from a OAI-PMH repository</td>
+<td><a href="retract-oaipmh-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-partial</td>
+<td>Retract a subset of the mediapackage from a publication</td>
+<td><a href="retract-partial-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>retract-youtube</td>
+<td>Retracts media from YouTube</td>
+<td><a href="retract-youtube-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>sanitize-adaptive</td>
+<td>Fix references to media files in a playlist</td>
+<td><a href="sanitize-adaptive-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>segment-video</td>
+<td>Extracting segments from presentation</td>
+<td><a href="segmentvideo-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>segmentpreviews</td>
+<td>Extract segment images from a video using FFmpeg</td>
+<td><a href="segmentpreviews-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>select-streams</td>
+<td>Select streams for further processing</td>
+<td><a href="select-streams-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>select-version</td>
+<td>Select a version of the media package to run the current workflow with</td>
+<td><a href="select-version-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>send-email</td>
+<td>Sends email notifications at any part of a workflow</td>
+<td><a href="send-email-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>series</td>
+<td>Apply series to the mediapackage</td>
+<td><a href="series-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>silence</td>
+<td>Silence detection on audio of the mediapackage</td>
+<td><a href="silence-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Archive the current state of the mediapackage</td>
+<td><a href="snapshot-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>speechtotext</td>
+<td>Create subtitles for video and audio sources</td>
+<td><a href="speechtotext-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>start-watson-transcription</td>
+<td>Starts automated transcription provided by IBM Watson</td>
+<td><a href="start-watson-transcription-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>start-workflow</td>
+<td>Start a new workflow for given media package ID</td>
+<td><a href="start-workflow-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>statistics-writer</td>
+<td>Log statistical data about the video</td>
+<td><a href="statistics-writer/">Documentation</a></td>
+</tr>
+<tr>
+<td>tag</td>
+<td>Modify the tag sets of media package elements</td>
+<td><a href="tag-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>tag-by-dcterm</td>
+<td>Modify the tags if dublincore term matches value</td>
+<td><a href="tag-by-dcterm-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>tag-engage</td>
+<td>Modify the tag sets of media package elements in the engage publication</td>
+<td><a href="tag-engage-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>theme</td>
+<td>Make settings of themes available to processing</td>
+<td><a href="theme-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>timelinepreviews</td>
+<td>Create a preview image stream from a given video track</td>
+<td><a href="timelinepreviews-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>transfer-metadata</td>
+<td>Transfer metadata fields between catalogs</td>
+<td><a href="transfer-metadata-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>video-grid</td>
+<td>Put parallel video streams on a single video canvas</td>
+<td><a href="video-grid-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>waveform</td>
+<td>Create a waveform image of the audio of the mediapackage</td>
+<td><a href="waveform-woh/">Documentation</a></td>
+</tr>
+<tr>
+<td>webvtt-to-cutmarks</td>
+<td>Create cutting suggestions from subtitles</td>
+<td><a href="webvtt-to-cutmarks/">Documentation</a></td>
+</tr>
+<tr>
+<td>zip</td>
+<td>Create zipped archive of the current state of the mediapackage</td>
+<td><a href="zip-woh/">Documentation</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="state-mappings">State Mappings</h2>
+<p>Technically, a workflow can be in one of the following states:</p>
+<table>
+<thead>
+<tr>
+<th>Technical State</th>
+<th>Description</th>
+<th>What the Admin UI displays in the events table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>instantiated</strong></td>
+<td>The workflow is queued and will be started as soon as possible</td>
+<td>"Pending"</td>
+</tr>
+<tr>
+<td><strong>running</strong></td>
+<td>The workflow is running, no problems so far</td>
+<td>"Running"</td>
+</tr>
+<tr>
+<td><strong>stopped</strong></td>
+<td>The workflow was aborted by the user</td>
+<td>"Processing canceled"</td>
+</tr>
+<tr>
+<td><strong>paused</strong></td>
+<td>The workflow was paused and can be continued</td>
+<td>"Paused"</td>
+</tr>
+<tr>
+<td><strong>succeeded</strong></td>
+<td>The workflow has completed successfully</td>
+<td>"Finished"</td>
+</tr>
+<tr>
+<td><strong>failed</strong></td>
+<td>The workflow failed due to an error</td>
+<td>"Processing failure"</td>
+</tr>
+<tr>
+<td><strong>failing</strong></td>
+<td>The workflow is still running, but there were errors. It will fail.</td>
+<td>"Running"</td>
+</tr>
+</tbody>
+</table>
+<p>Using state mappings, it is possible to refine the labels displayed in the Admin UI events table for a particular
+workflow.</p>
+<p>Here is an example which displays "Retracting" instead of "Running" for the retract workflow:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+  &lt;id&gt;retract&lt;/id&gt;
+  ...
+  &lt;state-mappings&gt;
+    &lt;state-mapping state=&quot;running&quot;&gt;retracting&lt;/state-mapping&gt;
+    &lt;state-mapping state=&quot;failing&quot;&gt;retracting&lt;/state-mapping&gt;
+  &lt;/state-mappings&gt;
+</code></pre>
+<p>When no state mappings are configured for a workflow, the generic default labels will be displayed.</p>
+<p>When a workflow includes other workflows, the event table only shows the state of the including workflow.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="retry-strategies/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="retry-strategies/" class="btn btn-xs btn-link">
+        Retry Strategies
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../version-support/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../version-support/" class="btn btn-xs btn-link">
+        Version Support
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
