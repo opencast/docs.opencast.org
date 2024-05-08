@@ -1,55 +1,24 @@
-commit c7d98e78f8fa8d94a3241ce16046c0f923f613a9
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue May 7 22:16:07 2024 +0200
+commit 479dc9639adcdb75d29c98a1325cad7b6b844658
+Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
+Date:   Wed May 8 09:56:54 2024 +0200
 
-    Replace Solr Search with OpenSearch (#5597)
+    Update (New) Admin UI to 2024-05-08 (#5816)
     
-    This PR removes Solr (and all of its issues) and replaces it with
-    Opensearch/Elasticsearch (yay, new issues!), unifying our indexing
-    tools.
+    Contains various bug fixes as well as code enhancements. For a full list
+    of changes see
     
-    To accomplish this:
-    - We had to [remove the Feeds](a594019f82916a55d203efe3e518224bc8b50dab)
-    - We [replaced Solr with
-    Opensearch](a594019f82916a55d203efe3e518224bc8b50dab)
-    - Notably, I did not include URL signing support with this. If this is a
-    deal breaker we can work on it later.
-    - We [updated Tobira's integration](dedb54c)
-    - We [updated out Paella glue](25e76ac)
-    - We [fixed other integrations with Search](c32aeb6)
-    
-    I've hit a few questions as I've reviewed this internally a bunch, so
-    I'm going to copy those questions up here as an initial code review.
-    
-    If you have a real system with lots of workflows and series, and want to
-    give this a spin, know that this does not need anything but the
-    database, and the dublincore metadata files. You should be able to pull
-    those out of production deployments and then test this in entirely
-    separate systems.
-    
-    Todo list:
-    ~- Release notes note indicating that a reindex of the search service is
-    required.~
-    
-    Known, unfixable issues:
-    - Paella tests rely on `develop.opencast.org` to serve the `search/*`
-    endpoints in the format expected by this PR. This obviously will not
-    happen until *after* this PR is merged. Paella tests can be verified
-    locally by setting up Opencast to run on port 80, then `npm run dev` and
-    `npx playwright test` after the npm script finishes booting.
-    
-    Closes #3921
+    https://github.com/opencast/opencast-admin-interface/releases/tag/2024-05-08
     
     ### Your pull request should…
     
     * [x] have a concise title
-    * [ ] ~[close an accompanying
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists~
-    * [x] [be against the correct
+    if one exists
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [ ] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
