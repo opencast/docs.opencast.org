@@ -1,22 +1,12 @@
-commit fcfe8caaed69e763a5684da90381303d01959345
+commit a3bc853cb889dd488a36317e684dadd0e41ebc7e
 Author: Matthias Neugebauer <mtneug@shio.solutions>
-Date:   Thu Jun 6 12:04:44 2024 +0200
+Date:   Thu Jun 6 12:05:48 2024 +0200
 
-    Remove duplicates in .gitignore (#5872)
+    Fix for event state when workflow is paused when rebuilding ES index (fixes #5868) (#5869)
     
-    This patch removes one occurrence of `.DS_Store` from the `.gitignore`
-    file since it was listed twice.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    This fixes the following: when the elastic search index is rebuilt,
+    events that have the last workflow in paused state are shown as
+    "Finished" instead of "Paused". The paused state is an active state
+    because there's a workflow that has not finished but the event cannot be
+    set to finished.
+    Fixes #5868
