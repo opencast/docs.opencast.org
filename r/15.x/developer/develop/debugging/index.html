@@ -33,9 +33,12 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "In Construction", url: "#_top", children: [
-              {title: "Attaching a Remote Debugger to Karaf", url: "#attaching-a-remote-debugger-to-karaf" },
-              {title: "Adding Dummy Capture Agent", url: "#adding-dummy-capture-agent" },
+          {title: "Debugging in Opencast", url: "#_top", children: [
+              {title: "Debugging strategies", url: "#debugging-strategies" },
+              {title: "Backend debugging", url: "#backend-debugging" },
+              {title: "Frontend debugging", url: "#frontend-debugging" },
+              {title: "Enable the Karaf web console", url: "#enable-the-karaf-web-console" },
+              {title: "Automatic Module Reloading", url: "#automatic-module-reloading" },
           ]},
         ];
 
@@ -63,11 +66,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../admin-ui/development/" class="btn btn-xs btn-default pull-right">
+      <a href="../frontends/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../admin-ui/development/" class="btn btn-xs btn-link">
+      <a href="../frontends/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
@@ -84,18 +87,47 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="in-construction">In Construction</h1>
-<h2 id="attaching-a-remote-debugger-to-karaf">Attaching a Remote Debugger to Karaf</h2>
-<p>To debug a running Opencast system, you can attach a remote debugger in your IDE (Eclipse or NetBeans, i.e.). For that
+    <h1 id="debugging-in-opencast">Debugging in Opencast</h1>
+<p>This guide will show you how to debug Opencast.</p>
+<h2 id="debugging-strategies">Debugging strategies</h2>
+<p>There are different ways to debug Opencast. You can debug the backend and the frontend.
+The backend is the Java code while the frontend is the Angular code but soon to be replaced for Typescript.</p>
+<h3 id="how-to-know-what-to-debug">How to know what to debug?</h3>
+<p>First, you need to determine where the problem is. The frontend problems are mostly visible in the browser.
+These problems normally are JavaScript errors or problems with the user interface.
+The backend problems are mostly visible in the logs and the API calls. These problems are mostly exceptions or errors.</p>
+<p>The frontend and the backend are connected. The frontend calls the backend via REST endpoints.
+If the information from the API is not correct, is a problem of the backend.
+If the information is correct but, the frontend is not showing the information correctly, is a problem of the frontend.</p>
+<h2 id="backend-debugging">Backend debugging</h2>
+<h3 id="logging-configuration">Logging configuration</h3>
+<p>The logging configuration is in the <code>etc/org.ops4j.pax.logging.cfg</code> file.
+You can change the logging level of a package by adding the following line:</p>
+<pre><code>log4j.logger.org.opencastproject.capture=DEBUG
+</code></pre>
+<p>Where <code>org.opencastproject.capture</code> is the package name and <code>DEBUG</code> is the logging level.</p>
+<p>The logging level can be one of the following:</p>
+<ul>
+<li><code>TRACE</code></li>
+<li><code>DEBUG</code></li>
+<li><code>ERROR</code></li>
+<li><code>WARN</code></li>
+<li><code>INFO</code></li>
+</ul>
+<h3 id="attaching-a-remote-debugger">Attaching a Remote Debugger</h3>
+<p>There are different ways to debug the backend of Opencast.
+The easiest way is to attach a remote debugger here are some two ways to do that.</p>
+<h4 id="for-source-installations">For source installations</h4>
+<p>To debug a running Opencast system, you can attach a remote debugger in your IDE (Eclipse, NetBeans, etc.). For that
 you have to enable the remote debugging in Karaf OSGI server that runs Opencast.</p>
-<p>You have to add "debug" as an additional paramenter to the Opencast start script:</p>
+<p>You have to add "debug" as an additional parameter to the Opencast start script:</p>
 <pre><code>bin/start-opencast debug
 </code></pre>
 <p>If you want to enable debug permanently you can export the variable in the shell:</p>
 <pre><code>export DEFAULT_JAVA_DEBUG_OPTS='-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
 </code></pre>
 <p>You can connect the remote debugger of your IDE on port <code>5005</code>.</p>
-<h3 id="enabling-debugger-for-package-installations">Enabling debugger for package installations</h3>
+<h4 id="for-package-installations">For package installations</h4>
 <p>Albeit you can use the afforemented method for package installations, you can't start debug mode via system services.
 The recommended way is to enable the debug mode in the <code>setenv</code> file, normally found in:</p>
 <pre><code>/usr/share/opencast/bin/
@@ -103,16 +135,16 @@ The recommended way is to enable the debug mode in the <code>setenv</code> file,
 <p>And add this line:</p>
 <pre><code>export KARAF_DEBUG=true
 </code></pre>
-<p>In case you need to change the port for debbuging, you can adding this another line:</p>
+<p>In case you need to change the port for debugging, you can add another line:</p>
 <pre><code>export JAVA_DEBUG_PORT={{PORT}}
 </code></pre>
 <p>Where <code>{{PORT}}</code> is the desired port.</p>
 <hr />
 <p>For more information on remote debugging with Karaf you can visit <a href="https://karaf.apache.org/manual/latest/#_debugging">this
 site.</a></p>
-<p>It is <strong>not recommended</strong> to enable remote debugging on production systems!</p>
-<h2 id="adding-dummy-capture-agent">Adding Dummy Capture Agent</h2>
-<p>In the case that is needed, you can create a dummy capture agent with testing porpurses.
+<p>Enabling remote debugging on production systems is <strong>not recommended</strong>!</p>
+<h3 id="adding-dummy-capture-agent">Adding Dummy Capture Agent</h3>
+<p>In the case that is needed, you can create a dummy capture agent with testing purposes.
 To add a dummy CA, go to the API Docs page in Opencast and enter a new capture agent in:</p>
 <pre><code>{opencast-url}/docs.html?path=/capture-admin#setAgentStateConfiguration-4
 </code></pre>
@@ -124,7 +156,20 @@ To add a dummy CA, go to the API Docs page in Opencast and enter a new capture a
 }
 </code></pre>
 <p>Click on <code>submit</code> and is ready to go.</p>
-<p>Additionaly you can call this REST endpoint directly using <code>CURL</code> for example.</p>
+<p>Additional you can call this REST endpoint directly using <code>curl</code> for example.</p>
+<h2 id="frontend-debugging">Frontend debugging</h2>
+<p>To debug the frontend you can use the browser developer tools. For most browsers this is bound to your F12 key by default.
+In the developer tools you can find the tab <code>Sources</code>. In this tab you can find the source code of the frontend. You can
+set breakpoints in the source code and debug the frontend.</p>
+<h2 id="enable-the-karaf-web-console">Enable the Karaf web console</h2>
+<p>The Karaf web console is a web interface to manage the OSGI bundles. You can enable the web console by adding the following:</p>
+<p>In the <code>etc/org.apache.karaf.features.cfg</code> file add the following line:</p>
+<pre><code>webconsole/4.2.15, \
+jaas/4.2.15, \
+</code></pre>
+<p>For security reasons, remember to disable the web console in production systems after you finished debugging.</p>
+<h2 id="automatic-module-reloading">Automatic Module Reloading</h2>
+<p>See <a href="development-environment.md#build-single-modules">Build Single Modules</a></p>
 
   <br>
     
@@ -137,11 +182,11 @@ To add a dummy CA, go to the API Docs page in Opencast and enter a new capture a
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../admin-ui/development/" class="btn btn-xs btn-default pull-right">
+      <a href="../frontends/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../admin-ui/development/" class="btn btn-xs btn-link">
+      <a href="../frontends/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
