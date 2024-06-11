@@ -161,6 +161,30 @@ git pull &lt;remote&gt; develop
 </code></pre>
 </li>
 <li>
+<p>Modify the Paella target branch (For Paella 6.x and 7.x), found in the dependabot configuration
+   file <code>.github/dependabot.yml</code> to target the latest supported version when this version will released.</p>
+<pre><code>Example:
+- package-ecosystem: npm
+  directory: "/modules/engage-paella-player-7"
+  schedule:
+  interval: daily
+  target-branch: "r/12.x"
+  open-pull-requests-limit: 10
+
+to
+
+- package-ecosystem: npm
+  directory: "/modules/engage-paella-player-7"
+  schedule:
+  interval: daily
+  target-branch: "r/13.x"
+  open-pull-requests-limit: 10
+</code></pre>
+</li>
+</ol>
+<p>make a PR then merge this change to <code>develop</code> branch.</p>
+<ol>
+<li>
 <p>Make sure you did not modify any files. If you did, stash those changes:</p>
 <pre><code>git status   # check for modified files
 git stash    # stash them if necessary
@@ -226,7 +250,7 @@ source.
 </code></pre>
 <h3 id="status-of-translations">Status of Translations</h3>
 <p>After the release branch is cut, the release managers should check if there are languages to be in- or excluded for the
-upcoming release as specified by the <a href="../localization/">criteria in the localization documentation</a> and notify the
+upcoming release as specified by the <a href="../../develop/localization/">criteria in the localization documentation</a> and notify the
 community about the status of Opencast's translations if necessary.</p>
 <p>Example announcement for included languages:</p>
 <pre><code class="language-no-highlight">To: users@opencast.org
@@ -357,7 +381,7 @@ git merge &lt;remote&gt;/develop   # this should be a fast-forward merge
 </li>
 </ol>
 <h3 id="updating-translations">Updating Translations</h3>
-<p>Updating the <a href="../localization/">localization translations</a> is automated for existing translation files. If new files need
+<p>Updating the <a href="../../develop/localization/">localization translations</a> is automated for existing translation files. If new files need
 to be added, it is something that should happen early during the release process. If files need to be removed, this
 needs to be done manually.</p>
 <h3 id="releasing">Releasing</h3>
@@ -475,10 +499,8 @@ emergencies.
 I am looking forward to your applications on list, please
 voice your interest until &lt;DATE_ROUGHLY_2_WEEKS_IN_THE_FUTURE&gt;.
 </code></pre>
-<p>In many cases only a single pair of users will step forward to fill these roles.  In this case, barring any objection
-from the community, these two will be selected to be release managers automatically.</p>
-<p>In the case where more than one pair steps up, a vote is held on the committers list to determine which pair of
-candidates are deemed most suitable for the position.</p>
+<p>In the case where someone steps up and offers to fill in the role of a release manager for the upcoming release, a vote
+is held on the committers list to determine whether the candidates are deemed suitable for the position.</p>
 <p>This email template may be used to initiate the vote:</p>
 <pre><code class="language-no-highlight">To: committers@opencast.org
 Subject: [#vote] Vote on Release Managers of Opencast &lt;NEXT_RELEASE&gt;

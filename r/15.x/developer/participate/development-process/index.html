@@ -96,7 +96,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#reviews">Reviews</a><ul>
 <li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li><a href="#merging-pull-requests">Merging Pull Requests</a></li>
-<li><a href="#automatically-closing-issues-when-a-pr-is-merged">Automatically closing issues when a PR is merged</a></li>
 </ul>
 </li>
 </ul>
@@ -231,28 +230,6 @@ feel free to contact one.</p>
 </ul>
 </li>
 </ul>
-<h4 id="automatically-closing-issues-when-a-pr-is-merged">Automatically closing issues when a PR is merged</h4>
-<p>Our pull request template wants you to "close an accompanying issue."
-This can be done as per the <a href="https://help.github.com/en/articles/closing-issues-using-keywords">GitHub documentation</a>
-by using one of several magic keywords in front of a valid issue number,
-either in the pull request description, or in any of the commit messages
-of the commits you want to merge. For example:</p>
-<blockquote>
-<p>This PR <strong>fixes #1234</strong>.</p>
-</blockquote>
-<p>A word of caution: due to our <a href="#git-repository-branching-model">branching model</a>
-this might not always work as expected. GitHub only recognizes
-the magic words when acting on the default branch of the repository,
-which in our case is <code>develop</code>. Issues mentioned in descriptions
-of PRs targeting <code>develop</code> or in any message of a commit that lands
-in <code>develop</code> will be automatically closed.</p>
-<p>Thus, if you are submitting a PR <strong>not</strong> targeting <code>develop</code>, and you
-want to use this feature, you <strong>have to</strong> mention the magic words
-in a commit message. Tne PR description does not work in this case.
-And even then, the issue will only be closed, once your merged commits
-reach <code>develop</code> by our forward merging process.</p>
-<p>Mentioning related issues in the PR description <strong>in addition</strong> to
-the commit message(-s) might of course still be useful for reviewers!</p>
 <h2 id="git-repository-branching-model">Git Repository Branching Model</h2>
 <p>While the Opencast repository and branching model is inspired by
 <a href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>, there have been some distinct changes to how release

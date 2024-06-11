@@ -42,7 +42,6 @@
               {title: "Access Control Lists", url: "#access-control-lists" },
               {title: "Workflow", url: "#workflow" },
               {title: "Statistics", url: "#statistics" },
-              {title: "Playlists", url: "#playlists" },
           ]},
         ];
 
@@ -130,11 +129,6 @@ sections that start with general information about how the types are supposed to
 </li>
 <li><a href="#statistics">Statistics</a><ul>
 <li><a href="#parameters">parameters</a></li>
-</ul>
-</li>
-<li><a href="#playlists">Playlists</a><ul>
-<li><a href="#playlist">Playlist</a></li>
-<li><a href="#playlist-entry">Playlist Entry</a></li>
 </ul>
 </li>
 </ul>
@@ -899,83 +893,6 @@ about supported data query parameters using this JSON object.</p>
 <tr>
 <td style="text-align: left;"><code>enumeration</code></td>
 <td style="text-align: left;">One of the values provided by the field <code>values</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="playlists">Playlists</h2>
-<h3 id="playlist">Playlist</h3>
-<p>A playlist is represented as a JSON object with the following fields:</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Identifier. Will be created if not set.</td>
-</tr>
-<tr>
-<td><code>entries</code></td>
-<td><a href="./#PlaylistEntry"><code>List&lt;PlaylistEntry&gt;</code></a></td>
-<td>List of entries.</td>
-</tr>
-<tr>
-<td><code>title</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Metadata.</td>
-</tr>
-<tr>
-<td><code>description</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Metadata.</td>
-</tr>
-<tr>
-<td><code>creator</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Metadata.</td>
-</tr>
-<tr>
-<td><code>updated</code></td>
-<td><code>unix epoch in milliseconds</code></td>
-<td>Metadata. Updated by Opencast with current time when playlist gets updated.</td>
-</tr>
-<tr>
-<td><code>accessControlEntries</code></td>
-<td><a href="./#AccessControlEntry"><code>List&lt;AccessControlEntry&gt;</code></a></td>
-<td>List of access control entries, basically an ACL.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="playlist-entry">Playlist Entry</h3>
-<p>An entry for a playlist as a JSON object. There are different kinds of entries:</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td><a href="./#basic"><code>long</code></a></td>
-<td>Identifier. Will be created if not set.</td>
-</tr>
-<tr>
-<td><code>contentId</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Identifier for the content of the entry. What the "content" is is defined by <code>type</code>.</td>
-</tr>
-<tr>
-<td><code>type</code></td>
-<td><a href="./#basic"><code>string</code></a></td>
-<td>Enumeration, current possible values are EVENT, INACCESSIBLE. Typically EVENT, set to INACCESSIBLE by Opencast if the requesting user lacks permissions on the event.</td>
 </tr>
 </tbody>
 </table>
