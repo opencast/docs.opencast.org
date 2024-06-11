@@ -1,5 +1,36 @@
-commit 7cd578d9c91bee96c1f1e7c584913d47cb910f7e
+commit e5fe685fbf4dfedde4b75cf483db41a23511ac61
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Jun 11 19:05:43 2024 +0200
+Date:   Tue Jun 11 23:54:42 2024 +0200
 
-    Merge r/15.x into r/16.x
+    Fix search REST bugs (#5852)
+    
+    This PR fixes a couple of things:
+    
+    - af53424532 **Special handling for series and episode modification
+    dates.**
+    - ff824e951f **Harmonizing search behaviour between series ID and series
+    names when searching for episodes. When searching with a series ID, if
+    there is no matching series then no episodes get found. Prior to this
+    commit you would get the full episode list when searching by series name
+    when there is no matching series name. This commit makes the endpoint
+    return an empty list when there is no matching series name.**
+    - 35950b2b3d **Handling deletion of non-existent series. Honestly not
+    sure how this would happen at all, but this adds handling for it at
+    least.**
+    
+    Fixes #5834
+    Fixes #5835
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] ~include migration scripts and documentation, if appropriate~
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
