@@ -33,11 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 14.x to 15.x", url: "#_top", children: [
-              {title: "Subtitle changes", url: "#subtitle-changes" },
-              {title: "Configuration changes", url: "#configuration-changes" },
-              {title: "Database Migration", url: "#database-migration" },
-              {title: "Elasticsearch Index Rebuild", url: "#elasticsearch-index-rebuild" },
+          {title: "Upgrading Opencast from 15.x to 16.x", url: "#_top", children: [
+              {title: "Search Service Migration", url: "#search-service-migration" },
+              {title: "API Changes", url: "#api-changes" },
           ]},
         ];
 
@@ -88,115 +86,236 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="upgrading-opencast-from-14x-to-15x">Upgrading Opencast from 14.x to 15.x</h1>
-<p>This guide describes how to upgrade Opencast 14.x to 15.x.
+    <h1 id="upgrading-opencast-from-15x-to-16x">Upgrading Opencast from 15.x to 16.x</h1>
+<p>This guide describes how to upgrade Opencast 15.x to 16.x.
 In case you need information about how to upgrade older versions of Opencast,
 please refer to <a href="https://docs.opencast.org">older release notes</a>.</p>
 <ol>
-<li>Read the <a href="../releasenotes/">release notes</a> (especially the section of behaviour changes)</li>
+<li>Read the <a href="../releasenotes/">release notes</a></li>
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
-<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
-<li><a href="#database-migration">Migrate the database</a></li>
+<li><a href="#search-service-migration">Migrate Solr to OpenSearch/Elasticsearch</a></li>
+<li><a href="#api-changes">API changes</a></li>
 <li>Start Opencast</li>
 </ol>
-<h2 id="subtitle-changes">Subtitle changes</h2>
-<p>With Opencast 15 we want to put more emphasis on subtitles. You can find more details on how subtitles should be
-handled going forward in <a href="../configuration/subtitles/">Subtitles</a>.</p>
-<p>This comes with a bit of migration. Namely, subtitles should not be stored as "attachments" or "catalogs" anymore, but
-as "media"(as they are called in the Admin UI) or "tracks" (as they are called internally). Therefore, all subtitle
-files currently stored as attachments or catalogs in your events should be moved to tracks. This can easily be
-accomplished with the "changetype" workflow operation handler new to Opencast 15. See example below. (Subtitles should
-then be republished)</p>
-<p>Additionally, we recommend adding a language tag <code>lang:&lt;language-code&gt;</code> to your subtitle files. While tags for subtitles
-are optional, the flavor will not encode the given language for a subtitle anymore, so a language tag is useful for
-identification and display purposes.
-You can read more about subtitles tags in <a href="../configuration/subtitles/">Subtitles</a>.</p>
-<p>If your subtitles are not in WebVTT format, they should be converted to WebVTT as well. While other formats are possible,
-WebVTT is the only one that will be guaranteed to work.</p>
-<details>
-
-<summary>Example workflow for changing subtitle type to track</summary>
-
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
-
-&lt;id&gt;change-subtitles&lt;/id&gt;
-  &lt;title&gt;Change Subtitles Type&lt;/title&gt;
-  &lt;tags&gt;
-    &lt;tag&gt;archive&lt;/tag&gt;
-  &lt;/tags&gt;
-  &lt;description&gt;&lt;/description&gt;
-  &lt;operations&gt;
-
-    &lt;!-- Add a language tag for the english subtitles --&gt;
-
-    &lt;operation
-        id=&quot;tag&quot;
-        description=&quot;Tagging media package elements&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/vtt+en&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-tags&quot;&gt;+lang:en&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Change the type of all files with the &quot;captions/*&quot; flavor to track --&gt;
-    &lt;!-- And their flavor to &quot;captions/source&quot; --&gt;
-
-    &lt;operation
-        id=&quot;changetype&quot;
-        description=&quot;Retracting elements flavored with presentation and tagged with preview from Engage&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/*&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-type&quot;&gt;track&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Save changes --&gt;
-
-    &lt;operation
-        id=&quot;snapshot&quot;
-        if=&quot;NOT (${presenter_delivery_exists} OR ${presentation_delivery_exists})&quot;
-        description=&quot;Archive publishing information&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Clean up work artifacts --&gt;
-
-    &lt;operation
-        id=&quot;cleanup&quot;
-        fail-on-error=&quot;false&quot;
-        description=&quot;Remove temporary processing artifacts&quot;&gt;
-      &lt;configurations&gt;
-        &lt;!-- On systems with shared workspace or working file repository --&gt;
-        &lt;!-- you want to set this option to false. --&gt;
-        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
-        &lt;!-- ACLs are required again when working through ActiveMQ messages --&gt;
-        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-&lt;/definition&gt;
-</code></pre>
-
-</details>
-
-<h2 id="configuration-changes">Configuration changes</h2>
+<h2 id="search-service-migration">Search Service Migration</h2>
+<blockquote>
+<p>Opencast works with both Opensearch 1.x and Elasticsearch 7.10. For this section we will just talk about OpenSearch,
+which is our recommendation, but this will work with both.</p>
+</blockquote>
+<p>The search service now uses OpenSearch instead of Solr. This means that you need to ensure that the presentation node
+has access to your OpenSearch. Previously, only the admin node needed access and many installation just has OpenSearch
+as an internal service on that machine.</p>
+<p>You also need to rebuild the search service index. Note that the search service has a separate index which is way faster
+to rebuild and you don't need to rebuild all indexes. To start this process:</p>
 <ul>
-<li>The default admin ui is now the "new" admin ui. If it does not suit your needs for whatever reason, you can always
-  switch back the "old" admin ui in <code>etc/ui-config/mh_default_org/runtime-info-ui/settings.json</code>
-  [<a href="https://github.com/opencast/opencast/pull/5414">#5414</a>]</li>
-<li>Paella Player 6 has been turned into a plugin. If you are still using it, you will need to enable it.
-  [<a href="https://github.com/opencast/opencast/pull/4965">#4965</a>]</li>
+<li>Go to the REST docs</li>
+<li>Search for <code>/index</code></li>
+<li>Go to <code>POST /rebuild/{service}</code></li>
+<li>Set <code>Search</code> as service and submit</li>
+<li>The logs should show the status of the index rebuild</li>
 </ul>
-<h2 id="database-migration">Database Migration</h2>
-<p>There is no database migration required for upgrading form 14.x to 15.x.</p>
-<h2 id="elasticsearch-index-rebuild">Elasticsearch Index Rebuild</h2>
-<p>There is no index rebuild required for upgrading form 14.x to 15.x.</p>
+<h2 id="api-changes">API Changes</h2>
+<p>Migrating from Solr to OpenSearch/Elasticsearch in the search service caused
+subtle changes in the <code>/search/…</code> API endpoints. The most important changes are:</p>
+<ul>
+<li>The endpoints are now JSON only. No more XML</li>
+<li>The <code>search-results</code> sub-object has been removen and it's contents moved one layer up.</li>
+<li>Dublin Core metadata and ACLs are now available via <code>acl</code> and <code>dc</code> attributes in episodes and series.</li>
+</ul>
+<h3 id="series">Series</h3>
+<pre><code>❯ curl -s -u admin:opencast 'http://localhost:8080/search/series.json?limit=1&amp;offset=0' | jq
+</code></pre>
+<pre><code class="language-json">{
+  &quot;limit&quot;: &quot;1&quot;,
+  &quot;result&quot;: [
+    {
+      &quot;org&quot;: &quot;mh_default_org&quot;,
+      &quot;acl&quot;: {
+        &quot;read&quot;: [
+          &quot;ROLE_USER&quot;
+        ],
+        &quot;dance&quot;: [
+          &quot;ROLE_USER&quot;
+        ]
+      },
+      &quot;dc&quot;: {
+        &quot;identifier&quot;: [
+          &quot;e12d5290-0825-4868-a8e6-1d75d4af9d41&quot;
+        ],
+        &quot;creator&quot;: [
+          &quot;lk&quot;
+        ],
+        &quot;created&quot;: [
+          &quot;2022-06-30T16:39Z&quot;
+        ],
+        &quot;modified&quot;: [
+          &quot;2022-06-30T18:40:49.898224&quot;
+        ],
+        &quot;title&quot;: [
+          &quot;I 🖤 Opencast&quot;
+        ]
+      }
+    }
+  ],
+  &quot;total&quot;: 0,
+  &quot;offset&quot;: &quot;0&quot;
+}
+</code></pre>
+<h3 id="episodes">Episodes</h3>
+<pre><code>❯ curl -s -u admin:opencast 'http://localhost:8080/search/episode.json?limit=1' | jq
+</code></pre>
+<pre><code class="language-json">{
+  &quot;limit&quot;: 1,
+  &quot;result&quot;: [
+    {
+      &quot;mediapackage&quot;: {
+        &quot;duration&quot;: 4160.0,
+        &quot;seriestitle&quot;: &quot;I 🖤 Opencast&quot;,
+        &quot;metadata&quot;: {
+          &quot;catalog&quot;: {
+            &quot;mimetype&quot;: &quot;text/xml&quot;,
+            &quot;id&quot;: &quot;62a0124f-f321-4d0f-8891-6f67e7cfb4e6&quot;,
+            &quot;type&quot;: &quot;dublincore/episode&quot;,
+            &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/87b61d14-0457-4810-9ef3-04dba28dcd18/dublincore.xml&quot;,
+            &quot;tags&quot;: &quot;&quot;
+          }
+        },
+        &quot;attachments&quot;: {
+          &quot;attachment&quot;: [
+            {
+              &quot;ref&quot;: &quot;track:9ae01c64-136c-4297-ae8a-888ca7135be5&quot;,
+              &quot;size&quot;: 49701.0,
+              &quot;mimetype&quot;: &quot;image/jpeg&quot;,
+              &quot;id&quot;: &quot;9154577f-575d-454b-96d5-81f18651959f&quot;,
+              &quot;type&quot;: &quot;presenter/player+preview&quot;,
+              &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/c0e8bf65-fcde-463a-b8a5-ad6025ed00ef/goat_1_000s_player.jpg&quot;,
+              &quot;tags&quot;: {
+                &quot;tag&quot;: &quot;engage-download&quot;
+              }
+            },
+            {
+              &quot;ref&quot;: &quot;track:9ae01c64-136c-4297-ae8a-888ca7135be5&quot;,
+              &quot;size&quot;: 4137.0,
+              &quot;mimetype&quot;: &quot;image/jpeg&quot;,
+              &quot;id&quot;: &quot;b776aaaf-b9ed-43d5-9ae5-830a51988081&quot;,
+              &quot;type&quot;: &quot;presenter/search+preview&quot;,
+              &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/707bb709-61c0-4b39-becb-51553e297ce4/goat_1_000s_search.jpg&quot;,
+              &quot;tags&quot;: {
+                &quot;tag&quot;: &quot;engage-download&quot;
+              }
+            },
+            {
+              &quot;mimetype&quot;: &quot;text/xml&quot;,
+              &quot;id&quot;: &quot;868ebbf2-2670-48cb-b404-b2d5113dfab8&quot;,
+              &quot;type&quot;: &quot;security/xacml+series&quot;,
+              &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/security-policy-series/xacml.xml&quot;,
+              &quot;tags&quot;: &quot;&quot;
+            },
+            {
+              &quot;mimetype&quot;: &quot;text/xml&quot;,
+              &quot;id&quot;: &quot;d82f6b92-4d06-44f9-a3a0-6a078ccfdf72&quot;,
+              &quot;type&quot;: &quot;security/xacml+episode&quot;,
+              &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/3a2e4cf3-6fb4-4cd2-a2b7-e03a0bba5e24/episode_security.xml&quot;,
+              &quot;tags&quot;: &quot;&quot;
+            }
+          ]
+        },
+        &quot;series&quot;: &quot;e12d5290-0825-4868-a8e6-1d75d4af9d41&quot;,
+        &quot;creators&quot;: {
+          &quot;creator&quot;: &quot;hafnyl&quot;
+        },
+        &quot;start&quot;: &quot;2022-06-30T16:39:00Z&quot;,
+        &quot;id&quot;: &quot;04&quot;,
+        &quot;media&quot;: {
+          &quot;track&quot;: {
+            &quot;video&quot;: {
+              &quot;framecount&quot;: 208.0,
+              &quot;framerate&quot;: 50.0,
+              &quot;bitrate&quot;: 9390780.0,
+              &quot;id&quot;: &quot;video-1&quot;,
+              &quot;device&quot;: &quot;&quot;,
+              &quot;encoder&quot;: {
+                &quot;type&quot;: &quot;H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10&quot;
+              },
+              &quot;resolution&quot;: &quot;1920x1080&quot;
+            },
+            &quot;type&quot;: &quot;presenter/preview&quot;,
+            &quot;url&quot;: &quot;http://localhost:8080/static/mh_default_org/engage-player/04/9b8e8a5f-831f-4114-baf1-5c333c0ba482/goat.mp4&quot;,
+            &quot;tags&quot;: {
+              &quot;tag&quot;: [
+                &quot;atom&quot;,
+                &quot;default&quot;,
+                &quot;engage-download&quot;,
+                &quot;engage-streaming&quot;,
+                &quot;rss&quot;
+              ]
+            },
+            &quot;master&quot;: false,
+            &quot;duration&quot;: 4160.0,
+            &quot;ref&quot;: &quot;track:9ae01c64-136c-4297-ae8a-888ca7135be5&quot;,
+            &quot;size&quot;: 4955801.0,
+            &quot;checksum&quot;: {
+              &quot;$&quot;: &quot;02780f257e9397883517ebed78a2df98&quot;,
+              &quot;type&quot;: &quot;md5&quot;
+            },
+            &quot;mimetype&quot;: &quot;video/mp4&quot;,
+            &quot;id&quot;: &quot;33e1c89c-586a-482b-a98d-14e6c4439fef&quot;,
+            &quot;audio&quot;: {
+              &quot;framecount&quot;: 196.0,
+              &quot;channels&quot;: 2.0,
+              &quot;samplingrate&quot;: 48000.0,
+              &quot;bitrate&quot;: 126382.0,
+              &quot;id&quot;: &quot;audio-1&quot;,
+              &quot;device&quot;: &quot;&quot;,
+              &quot;encoder&quot;: {
+                &quot;type&quot;: &quot;AAC (Advanced Audio Coding)&quot;
+              }
+            },
+            &quot;live&quot;: false
+          }
+        },
+        &quot;title&quot;: &quot;I 🖤 Opencast (04)&quot;,
+        &quot;publications&quot;: &quot;&quot;
+      },
+      &quot;org&quot;: &quot;mh_default_org&quot;,
+      &quot;acl&quot;: {
+        &quot;read&quot;: [
+          &quot;ROLE_USER&quot;
+        ],
+        &quot;dance&quot;: [
+          &quot;ROLE_USER&quot;
+        ]
+      },
+      &quot;dc&quot;: {
+        &quot;extent&quot;: [
+          &quot;PT4.163S&quot;
+        ],
+        &quot;identifier&quot;: [
+          &quot;04&quot;
+        ],
+        &quot;creator&quot;: [
+          &quot;hafnyl&quot;
+        ],
+        &quot;created&quot;: [
+          &quot;2022-06-30T16:39Z&quot;
+        ],
+        &quot;modified&quot;: [
+          &quot;2022-06-30T18:40:43.627963&quot;
+        ],
+        &quot;isPartOf&quot;: [
+          &quot;e12d5290-0825-4868-a8e6-1d75d4af9d41&quot;
+        ],
+        &quot;title&quot;: [
+          &quot;I 🖤 Opencast (04)&quot;
+        ]
+      }
+    }
+  ],
+  &quot;total&quot;: 5,
+  &quot;offset&quot;: 0
+}
+</code></pre>
 
   <br>
     
