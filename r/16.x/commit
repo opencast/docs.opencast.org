@@ -1,36 +1,48 @@
-commit e5fe685fbf4dfedde4b75cf483db41a23511ac61
+commit ecfe261b7692b65310cf043673e458e2e6e7dfd7
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Jun 11 23:54:42 2024 +0200
+Date:   Wed Jun 12 12:13:01 2024 +0200
 
-    Fix search REST bugs (#5852)
+    Mark old admin interface configuration as deprecated (#5915)
     
-    This PR fixes a couple of things:
+    This patch moves all configuration only affecting the old admin
+    interface to the bottom of the configuration file and marks them as
+    deprecated.
     
-    - af53424532 **Special handling for series and episode modification
-    dates.**
-    - ff824e951f **Harmonizing search behaviour between series ID and series
-    names when searching for episodes. When searching with a series ID, if
-    there is no matching series then no episodes get found. Prior to this
-    commit you would get the full episode list when searching by series name
-    when there is no matching series name. This commit makes the endpoint
-    return an empty list when there is no matching series name.**
-    - 35950b2b3d **Handling deletion of non-existent series. Honestly not
-    sure how this would happen at all, but this adds handling for it at
-    least.**
+    This doesn't mean that they can't be used in the future if certain
+    features are re-implemented. But for now, they just don't do anything.
     
-    Fixes #5834
-    Fixes #5835
+    To help identifying if properties are used in the new admin interface I
+    used the following script (and made sure they are also not used in
+    Opencast's backend code):
+    
+    ```sh
+    #!/bin/sh
+    
+    sed -n 's/^#\{0,1\}prop\.\([^ =]*\)[ =].*$/\1/p' org.opencastproject.organization-mh_default_org.cfg \
+    | while read prop
+    do
+      (
+      cd ../../opencast-admin-interface/
+      if grep -rnql "$prop" src
+      then
+        printf '%4s  %-60s %s\n' yes "${prop}" "used by admin interface"
+      else
+        printf '%4s  %-60s %s\n' no  "${prop}" "not used by admin interface"
+      fi
+      )
+    done
+    ```
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [x] [close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] ~include migration scripts and documentation, if appropriate~
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
