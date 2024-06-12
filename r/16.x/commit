@@ -1,48 +1,25 @@
-commit ecfe261b7692b65310cf043673e458e2e6e7dfd7
+commit e56261350cea940c864b2a734ec7e857ab65c8a0
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Jun 12 12:13:01 2024 +0200
+Date:   Wed Jun 12 13:19:27 2024 +0200
 
-    Mark old admin interface configuration as deprecated (#5915)
+    Admin interface theme configuration (#5914)
     
-    This patch moves all configuration only affecting the old admin
-    interface to the bottom of the configuration file and marks them as
-    deprecated.
+    This patch adds the configuration to en-/disable themes in the admin
+    interface.
     
-    This doesn't mean that they can't be used in the future if certain
-    features are re-implemented. But for now, they just don't do anything.
-    
-    To help identifying if properties are used in the new admin interface I
-    used the following script (and made sure they are also not used in
-    Opencast's backend code):
-    
-    ```sh
-    #!/bin/sh
-    
-    sed -n 's/^#\{0,1\}prop\.\([^ =]*\)[ =].*$/\1/p' org.opencastproject.organization-mh_default_org.cfg \
-    | while read prop
-    do
-      (
-      cd ../../opencast-admin-interface/
-      if grep -rnql "$prop" src
-      then
-        printf '%4s  %-60s %s\n' yes "${prop}" "used by admin interface"
-      else
-        printf '%4s  %-60s %s\n' no  "${prop}" "not used by admin interface"
-      fi
-      )
-    done
-    ```
+    This provides the configuration for
+    https://github.com/opencast/opencast-admin-interface/pull/687
     
     ### Your pull request should…
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    * [x] have a concise title
+    * [x] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [ ] [be against the correct
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
