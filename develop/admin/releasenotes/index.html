@@ -35,6 +35,7 @@
         var pageToc = [
           {title: "Opencast 16: Release Notes", url: "#_top", children: [
               {title: "Opencast 16.0", url: "#opencast-160" },
+              {title: "Update", url: "#update" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
           ]},
@@ -89,7 +90,37 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="opencast-16-release-notes">Opencast 16: Release Notes</h1>
 <h2 id="opencast-160">Opencast 16.0</h2>
-<p>Initial Release Notes Document for Opencast 16</p>
+<h3 id="features-improvements-and-behavior-changes">Features, Improvements and Behavior changes</h3>
+<ul>
+<li>Replaced Solr Search with OpenSearch/Elasticsearch. [<a href="https://github.com/opencast/opencast/pull/5597">#5597</a>]</li>
+<li>Removed Paella 6 with OC 16. [<a href="https://github.com/opencast/opencast/pull/5605">#5605</a>]</li>
+<li>Added Playlists. Playlists are a list of videos, similar to the same concept in YouTube. This provides an n:m mapping,
+  meaning that every playlist can contain multiple videos, and each video can be included in multiple playlists. (As
+  opposed to the 1:n mapping of Opencast series, where each video is part of at most one series.)
+  [<a href="https://github.com/opencast/opencast/pull/5478">#5478</a>]</li>
+<li>Added Playlists to Tobira Harvest API. [<a href="https://github.com/opencast/opencast/pull/5734">#5734</a>]</li>
+<li>Whisper is the new default STT engine [<a href="https://github.com/opencast/opencast/pull/5473">#5473</a>]</li>
+<li>Implemented the ability to define multiple custom roles and custom roles that need to be added
+  [<a href="https://github.com/opencast/opencast/pull/5312">#5312</a>]</li>
+<li>The default encoding profiles changed to be less restrictive about GOP size, giving the codec more opportunity to
+  compress better.[<a href="https://github.com/opencast/opencast/pull/5545">#5545</a>]</li>
+<li>Added the possibility to enable 360°videos with paella player 7.
+  [<a href="https://github.com/opencast/opencast/pull/5592">#5592</a>]</li>
+<li>Turned old admin interface into a plugin. This patch disables the old admin interface by default. Users can still
+  activate this if they really want/need the old interface. [<a href="https://github.com/opencast/opencast/pull/5811">#5811</a>]</li>
+</ul>
+<p>For more details, please take a look at the <a href="../changelog/">full changelog</a>.</p>
+<h2 id="update">Update</h2>
+<p>If you want to update Opencast from a previous version, please carefully read through the <a href="../upgrade/">upgrade guide</a>.
+For this upgrade, you should be particular aware of the following facts:</p>
+<ul>
+<li>Solr has been removed from Opencast which means that the presentation node now needs to have access to OpenSearch or
+  Elasticsearch.</li>
+<li>The search REST API for publications has slightly changed. This may impact integrations.</li>
+<li>Thew new admin interface is the default and the old one is disabled by default and only available via plugin.</li>
+<li>The feed generator has been removed from Opencast.</li>
+<li>Paella Player 6 has been removed from Opencast.</li>
+</ul>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
