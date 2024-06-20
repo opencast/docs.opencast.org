@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Domain change/HTTPS migration - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Domain change/HTTPS migration", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../admin-ui/capture-agent-access/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../admin-ui/capture-agent-access/" class="btn btn-xs btn-link">
+        Capture-Agent Access
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../https/self-signed-certificates/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../https/self-signed-certificates/" class="btn btn-xs btn-link">
+        Self-Signed Certificates
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="domain-changehttps-migration">Domain change/HTTPS migration</h1>
+<p>If you move your Opencast server to a new domain or if you switch from HTTP to HTTPS, you will change
+<code>org.opencastproject.server.url</code> in <code>etc/custom.properties</code>.
+But if your Opencast already processed events, these events still contain the old URL in various places.
+So in order for old events to work correctly, you have to migrate them.
+Re-processing or re-publishing will update the links but this may not be an option if you have many events.
+In that case, the following steps might help.</p>
+<blockquote>
+<p>Note that you modify stored data directly without any safety nets usually provided by Opencast. You should understand
+what you are doing!</p>
+</blockquote>
+<ol>
+<li>Backup your database, and the Solr and OpenSearch/Elasticsearch indexes!<ul>
+<li>OpenSearch/Elasticsearch: <code>{data}/index</code></li>
+<li>Solr: <code>{data}/solr-indexes</code></li>
+</ul>
+</li>
+<li>Change <code>org.opencastproject.server.url</code> and test your set-up with a new publication (i.e. uploading a video).</li>
+<li>Put all your nodes into maintenance mode or, at least, do not process any videos.</li>
+<li>
+<p>Update the media packages on disk.
+   Run the following in the folder configured in <code>org.opencastproject.storage.dir</code> (usually your NFS).
+   Note: only the subfolders <code>archive/</code> and <code>downloads/</code> will be affected by this, so you can also run it in those two
+   individually.
+   This is especially useful to reduce the execution time of the command if your NFS contains other, Opencast-unrelated
+   files (e.g. <code>.snapshots/</code>).</p>
+<pre><code> # This changes the domain AND from http to https. Carefully adjust the command as needed!
+ # Your old URL may or may not have the port explicitly listed.  Check the previous value of org.opencastproject.server.url and match that.
+ find . -type f -name "*.xml" -exec \
+    sed -i 's#http://old-domain.example.com:80#https://new-domain.example.com#g' {} +
+</code></pre>
+</li>
+<li>
+<p>Update database tables.
+   Note: there more than the following two tables containing the old domain name, but only these two are relevant.</p>
+<pre><code> -- Reminder: Your old domain name may or may not have its port listed.  Use old value for org.opencastproject.server.url here.
+ UPDATE oc_assets_snapshot SET mediapackage_xml = REPLACE(
+
+    mediapackage_xml, 'http://old-domain.example.com:80', 'https://new-domain.example.com');
+ UPDATE oc_search SET mediapackage_xml = REPLACE(
+    mediapackage_xml, 'http://old-domain.example.com:80', 'https://new-domain.example.com');
+</code></pre>
+</li>
+<li>
+<p>Remove the search service's Solr index. It usually is located at <code>solr-indexes/search</code> but its location really
+   depends on <code>org.opencastproject.solr.dir</code> and <code>org.opencastproject.search.solr.dir</code></p>
+</li>
+<li>Rebuild the Solr indices by re-starting your Opencast node running the search service (usually presentation).</li>
+<li>Rebuild the OpenSearch indices using the REST endpoint listed in the docs:
+   https://admin.opencast.example.com/docs.html?path=/index</li>
+</ol>
+<p>Note: If the solr index does not repopulate by itself please check if your nodes are still in maintenance mode and
+reactivate them.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../admin-ui/capture-agent-access/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../admin-ui/capture-agent-access/" class="btn btn-xs btn-link">
+        Capture-Agent Access
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../https/self-signed-certificates/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../https/self-signed-certificates/" class="btn btn-xs btn-link">
+        Self-Signed Certificates
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/migration-domain-https.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

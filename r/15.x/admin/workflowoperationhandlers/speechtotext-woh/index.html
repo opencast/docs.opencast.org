@@ -150,6 +150,18 @@ The subtitles file format ist WebVTT.</p>
 <td>true</td>
 <td>Transcription is translated into English, valid values <code>true</code> or <code>false</code> (Whisper/WhisperC++ only)</td>
 </tr>
+<tr>
+<td>limit-to-one</td>
+<td>no</td>
+<td>true</td>
+<td>Limits the maximum of generated subtitles to one. In most cases only one track will have the audio with the speech. Use this to prevent multiple transcription jobs that wastes computing resources. To have more control over which tracks shall be tried first for subtitle generation, use the <code>track-selection-strategy</code> option.</td>
+</tr>
+<tr>
+<td>track-selection-strategy</td>
+<td>no</td>
+<td>everything</td>
+<td>Use this in combination with <code>limit-to-one</code>. Define your strategy what tracks shall be selected for subtitle generation. If you use the <code>source-flavor</code> <code>*/source</code>, because your are unsure which track of your dual stream includes the audio, you can use the <code>track-selection-strategy</code> to try transcribing the presenter track first with the option<code>try_presenter_first</code> for example. These are the possible strategy options: <code>presenter_or_nothing</code>: only uses presenter tracks. <code>presentation_or_nothing</code>: only uses presentation tracks. <code>try_presenter_first</code>: looks for presenter tracks first, if there are no usable, try to transcribe the other tracks. <code>try_presentation_first</code>: looks for presentation tracks first, if there are no usable, try to transcribe the other tracks. <code>everything</code>: just transcribe everything (this is the default).</td>
+</tr>
 </tbody>
 </table>
 <p><em>Vosk Only, default value can be modified on Vosk config file.
