@@ -1,29 +1,13 @@
-commit 36cc1002b45edc9f48eea832dbf29043b4778ad0
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jun 28 17:19:28 2024 +0200
+commit 8e33aea4508229f36bd8ed8ad99f486576aa19d4
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Mon Jul 1 08:27:46 2024 +0200
 
-    Fix sporadic port binding errors in tests (#5949)
+    Remove prepared flavor (#5862)
     
-    Fixes #5948
+    This removes the `prepared` flavor from the workflows and configuration
+    as it currently serves no purpose and causes issues like making it hard
+    to know which captions to update. It was initially introduced to archive
+    the output of `prepare-av`, but that step was removed during the rework
+    f the workflows. This would make #5598 obsolete.
     
-    Fixes the errors that appears sporadically in the tests on GitHub like
-    here: [GitHub Action
-    Log](https://github.com/opencast/opencast/actions/runs/9597736269/job/26467429541#step:7:7887).
-    
-    The retry loop didn't work properly as it seems, because the error is
-    not a `BindExcpetion` and rather an `IOException`. So the tests already
-    failed, as soon as the same port was used a second time. What I did, was
-    simply to fix the retry functionality.. and move some code, because as
-    soon as the retry loop worked and multiple server were created, other
-    exceptions occurred.
-    
-    ### How to test:
-    Testing is a little bit complicated. I don't know how to test this
-    outside from the code.
-    
-    I tested it programmatically. I commented out the `server.stop()` method
-    at the bottom of the class, so the servers continuously are running and
-    blocking the ports. Then I played with the parameters like, for example,
-    using just one port the whole time, setting the retry attempts to only
-    3, removing the randomness (starting always from the same port), and so
-    on.
+    Might still be able to go into OC 16?
