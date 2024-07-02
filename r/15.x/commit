@@ -1,22 +1,18 @@
-commit baac31e400f63cc6ffe972f7936b224f1f635853
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Jul 2 18:03:53 2024 +0200
+commit 554e260e1751a1955435de9d7f92ec991c026b3a
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Jul 2 18:24:27 2024 +0200
 
-    Fix sporadic port binding errors in tests (#5994)
+    Display state mappings in the status column again (#5970)
     
-    This is a backport of #5949 to 15.x. Why not have unbroken tests on all
-    active branches? :grin:
+    The events table in the admin ui has a status column that informs users
+    about the current state of the latest workflow. A workflow can define
+    "state mappings" to overwrite what is usually displayed. For example, a
+    delete workflow may overwrite the usual "Running" with "Deleting". This
+    has probably been broken since Opencast 12-ish, and this commit should
+    fix it.
     
-    ### Your pull request should…
+    Example:
+    ![Bildschirmfoto vom 2024-06-28
+    14-59-10](https://github.com/opencast/opencast/assets/14070005/09ba953d-b381-42cf-a730-493207850f25)
     
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    Fixes https://github.com/opencast/opencast-admin-interface/issues/402.
