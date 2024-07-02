@@ -96,11 +96,7 @@ In that case, the following steps might help.</p>
 what you are doing!</p>
 </blockquote>
 <ol>
-<li>Backup your database, and the Solr and OpenSearch/Elasticsearch indexes!<ul>
-<li>OpenSearch/Elasticsearch: <code>{data}/index</code></li>
-<li>Solr: <code>{data}/solr-indexes</code></li>
-</ul>
-</li>
+<li>Backup your database and the OpenSearch/Elasticsearch indices (in <code>{data}/index</code>)!</li>
 <li>Change <code>org.opencastproject.server.url</code> and test your set-up with a new publication (i.e. uploading a video).</li>
 <li>Put all your nodes into maintenance mode or, at least, do not process any videos.</li>
 <li>
@@ -128,15 +124,10 @@ what you are doing!</p>
 </code></pre>
 </li>
 <li>
-<p>Remove the search service's Solr index. It usually is located at <code>solr-indexes/search</code> but its location really
-   depends on <code>org.opencastproject.solr.dir</code> and <code>org.opencastproject.search.solr.dir</code></p>
+<p>Rebuild the OpenSearch/Elasticsearch indices using the REST endpoint listed in the docs:
+   https://admin.opencast.example.com/docs.html?path=/index</p>
 </li>
-<li>Rebuild the Solr indices by re-starting your Opencast node running the search service (usually presentation).</li>
-<li>Rebuild the OpenSearch indices using the REST endpoint listed in the docs:
-   https://admin.opencast.example.com/docs.html?path=/index</li>
 </ol>
-<p>Note: If the solr index does not repopulate by itself please check if your nodes are still in maintenance mode and
-reactivate them.</p>
 
   <br>
     
