@@ -98,17 +98,12 @@ kinds of nodes are basically only defined by the existence or absence of specifi
 which can directly be built and installed. To build these distributions, you would compile Opencast just like it is
 outlined in the basic installation guides and will then find a set of different distributions, both as archive and in a
 separate directory.</p>
-<p>To list all distributions, run the following command after Opencast is built:</p>
-<pre><code>% ls -1 build/*.tar.gz
-build/opencast-dist-admin-${version}.tar.gz
-build/opencast-dist-allinone-${version}.tar.gz
-build/opencast-dist-presentation-${version}.tar.gz
-build/opencast-dist-worker-${version}.tar.g
-...
-</code></pre>
-<p>The same distributions can be found in the packages provided in the Opencast RPM repository.  These packages will
-automatically install all dependencies for a given node type. For example, to install an Opencast worker node, you would
-install the package <code>opencast21-distribution-worker</code>.</p>
+<p>You will find a list of all available distributions attached to each release.
+Take a look at <a href="https://github.com/opencast/opencast/releases/latest">the latest release on GitHub</a> to see the
+currently available distributions.</p>
+<p>The same distributions can be found in the packages provided in the Opencast RPM and Debian repositories.
+These packages will automatically install all dependencies for a given node type.
+For example, to install an Opencast worker node, you would install the package <code>opencast-worker</code>.</p>
 <p>The following list describes possible set-ups:</p>
 <h3 id="all-in-one">All-In-One</h3>
 <p>This is the default set-up described in the basic installation guides. It works fine for testing purposes. It should
@@ -124,28 +119,28 @@ performance simply by adding further worker nodes to the system.</p>
 <h2 id="step-2-set-up-nfs-server">Step 2: Set-Up NFS Server</h2>
 <p>Though it is possible to have Opencast run without shared storage, it is still a good idea to do so, as hard links can
 be used to link files instead of copying them and not everything has to be tunneled over HTTP.</p>
-<p>Thus you should first set-up your NFS server. The best solution is certainly to have a dedicated storage server. For
-smaller set-ups, however, it can also be put on one of the Opencast nodes, i.e. on the admin node.</p>
-<p>To do this, you first have to install and enable the NFS server:</p>
-<pre><code>yum install nfs-utils nfs-utils-lib
-chkconfig  --level 345 nfs on
-service nfs start
+<p>Thus you should first set-up your NFS server. The best solution is certainly to have a dedicated storage server.
+For smaller set-ups, however, it can also be put on one of the Opencast nodes, i.e. on the admin node.</p>
+<p>To do this, first install and enable the NFS server:</p>
+<pre><code>dnf install nfs-utils
+systemctl enable --now nfs-server.service
 </code></pre>
-<p>You want to have one common user on all your systems, so that file permissions do not become an issue.. As preparation
-for this it makes sense to manually create an <em>opencast</em> user and group with a common UID and GID:</p>
-<pre><code>groupadd -g 1234 opencast
-useradd -g 1234 -u 1234 opencast
+<p>You want to have one common user on all your systems, so that file permissions do not become an issue.
+As preparation for this it makes sense to manually create an <em>opencast</em> user and group with a common UID and GID:</p>
+<pre><code>groupadd -g 7967 opencast
+useradd -g 7967 -u 7967 opencast
 </code></pre>
-<p>If the user and group id <code>1234</code> is already used, just pick another one but make sure to pick the same one on all your
+<p>If the user and group id <code>7967</code> is already used, just pick another one but make sure to pick the same one on all your
 Opencast nodes.</p>
 <p>Then create the directory to be shared and set its ownership to the newly created users:</p>
 <pre><code>mkdir -p /srv/opencast
 chown opencast:opencast /srv/opencast
 </code></pre>
-<p>Next we actually share the storage dir. For this we need to edit the file <code>/etc/exports</code> and set:</p>
-<pre><code>/srv/opencast  131.173.172.190(rw,sync,no_subtree_check)
+<p>Next we actually share the storage directory.
+For this we need to edit the file <code>/etc/exports</code> and set:</p>
+<pre><code>/srv/opencast  198.51.100.42(rw,sync,no_subtree_check)
 </code></pre>
-<p>with 131.173.172.190 being the IP address of the other machine that should get access. Finally we enable the share with:</p>
+<p>with 198.51.100.42 being the IP address of the other machine that should get access. Finally we enable the share with:</p>
 <pre><code>exportfs -a
 </code></pre>
 <p>Of cause you have to open the necessary ports in your firewall configuration.  For iptables, appropriate rules could be
