@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Statistics Writer - Administration Guide</title>
+    <title>Subtitle Timeshift - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,9 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Statistics Writer Workflow Operation", url: "#_top", children: [
+          {title: "Subtitle Timeshift Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Requirements", url: "#requirements" },
+              {title: "Additional Notes", url: "#additional-notes" },
               {title: "Operation Examples", url: "#operation-examples" },
           ]},
         ];
@@ -66,20 +68,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../subtitle-timeshift-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../tag-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../subtitle-timeshift-woh/" class="btn btn-xs btn-link">
-        Subtitle Timeshift
+      <a href="../tag-woh/" class="btn btn-xs btn-link">
+        Tag
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../start-workflow-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../statistics-writer/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../start-workflow-woh/" class="btn btn-xs btn-link">
-        Start Workflow
+        Previous</a><a href="../statistics-writer/" class="btn btn-xs btn-link">
+        Statistics Writer
       </a>
     </div>
     
@@ -87,74 +89,60 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="statistics-writer-workflow-operation">Statistics Writer Workflow Operation</h1>
-<p>ID: <code>statistics-writer</code></p>
+    <h1 id="subtitle-timeshift-workflow-operation">Subtitle Timeshift Workflow Operation</h1>
+<p>ID: <code>subtitle-timeshift</code></p>
 <h2 id="description">Description</h2>
-<p>The statistics writer operation can be used to publish statistics about a video to a statistics backend such as
-InfluxDB. Currently, it only writes the length of the video in seconds to the data base. It can be configured to
-write the negative length and can thus be used for retract workflows, too.</p>
+<p>The subtitle timeshift operation can be used to offset the timestamps of WebVTT subtitle files. One use case regards 
+bumper/intro videos. For example: If a bumper/intro video gets added in front of an already subtitled presenter track,
+the subtitles would start too early. With this operation, you can select a video and a subtitle track and the timestamps
+of the captions file will be shifted backwards by the duration of the selected video. This ensures that the subtitles
+match the presenter track as intended.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
 <th>configuration keys</th>
 <th>required</th>
+<th>Example</th>
 <th>description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>flavor</td>
+<td>subtitle-source-flavor</td>
 <td>yes</td>
-<td>The flavor of the track you want to publish statistics about</td>
+<td>captions/source</td>
+<td>Flavor of the subtitle file(s) that shall be shifted.</td>
 </tr>
 <tr>
-<td>measurement-name</td>
+<td>video-source-flavor</td>
 <td>yes</td>
-<td>Measurement name in the statistics DB</td>
+<td>branding/bumper</td>
+<td>Flavor of the video that will be used to determine the duration for the shifting of the subtitle timestamps.</td>
 </tr>
 <tr>
-<td>organization-resource-id-name</td>
+<td>target-flavor</td>
 <td>yes</td>
-<td>Resource ID name for the organization</td>
-</tr>
-<tr>
-<td>length-field-name</td>
-<td>yes</td>
-<td>Field name for the length of the video</td>
-</tr>
-<tr>
-<td>temporal-resolution</td>
-<td>yes</td>
-<td>Temporal resolution to store the length in *</td>
-</tr>
-<tr>
-<td>retention-policy</td>
-<td>no</td>
-<td>Retention policy to use for the statistics DB</td>
-</tr>
-<tr>
-<td>retract</td>
-<td>no</td>
-<td>Whether to publish positive or negative numbers (default: <code>false</code>)</td>
+<td>captions/shifted</td>
+<td>Flavor of the subtitle file(s) that will be created including the shifted timestamps</td>
 </tr>
 </tbody>
 </table>
-<p>* Possible values are <code>milliseconds</code>, <code>seconds</code>, <code>minutes</code>, <code>hours</code>, <code>days</code></p>
+<h2 id="requirements">Requirements</h2>
+<p>Please select a flavor for <code>video-source-flavor</code> that will select only a single/unique video. If multiple videos are 
+selected, or (in other words) if it's not clear which video file the operation has to use, the operation will fail.</p>
+<h2 id="additional-notes">Additional Notes</h2>
+<p>The operation will simply skip if no subtitle file is found with the given <code>subtitle-source-flavor</code>.</p>
+<p>On successful completion, the operation will create a new subtitle file in the process and 
+will not override the old one. The tags of the original subtitle file will be copied to the new subtitle file.</p>
 <h2 id="operation-examples">Operation Examples</h2>
 <pre><code class="language-XML">&lt;operation
-  id=&quot;statistics-writer&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Collect video statistics&quot;&gt;
+    id=&quot;subtitle-timeshift&quot;
+    description=&quot;Create new subtitle file with shifted timestamps&quot;&gt;
   &lt;configurations&gt;
-    &lt;configuration key=&quot;flavor&quot;&gt;presenter/video&lt;/configuration&gt;
-    &lt;configuration key=&quot;retract&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;retention-policy&quot;&gt;infinite&lt;/configuration&gt;
-    &lt;configuration key=&quot;measurement-name&quot;&gt;publishedhours&lt;/configuration&gt;
-    &lt;configuration key=&quot;organization-resource-id-name&quot;&gt;organizationId&lt;/configuration&gt;
-    &lt;configuration key=&quot;length-field-name&quot;&gt;hours&lt;/configuration&gt;
-    &lt;configuration key=&quot;temporal-resolution&quot;&gt;hours&lt;/configuration&gt;
+    &lt;configuration key=&quot;subtitle-source-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/shifted&lt;/configuration&gt;
+    &lt;configuration key=&quot;video-source-flavor&quot;&gt;branding/bumper&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -170,20 +158,20 @@ write the negative length and can thus be used for retract workflows, too.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../subtitle-timeshift-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../tag-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../subtitle-timeshift-woh/" class="btn btn-xs btn-link">
-        Subtitle Timeshift
+      <a href="../tag-woh/" class="btn btn-xs btn-link">
+        Tag
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../start-workflow-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../statistics-writer/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../start-workflow-woh/" class="btn btn-xs btn-link">
-        Start Workflow
+        Previous</a><a href="../statistics-writer/" class="btn btn-xs btn-link">
+        Statistics Writer
       </a>
     </div>
     
@@ -194,7 +182,7 @@ write the negative length and can thus be used for retract workflows, too.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/statistics-writer.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/subtitle-timeshift-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
