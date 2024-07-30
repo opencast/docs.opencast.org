@@ -1,54 +1,8 @@
-commit 669b060f59e4dc942b57ff2d188ce03cd2fa014a
+commit e5e9504c586f199b633d05c94b89e14adb4028d5
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Jul 30 22:35:13 2024 +0200
+Date:   Tue Jul 30 22:56:59 2024 +0200
 
-    Properly handle ACL publication for non-admins (#6042)
-    
-    If a non-admin user tries to publish something, Opencast will try to get
-    the ACL for the media package intended for publication. During this
-    process, Opencast tries to evaluate the ACL and write it to the
-    database. Unfortunately, this process silently fails, causing an empty
-    ACL to be written into the database instead.
-    
-    The search service then tries to publish to the search index. This
-    causes several files linked in the media package to be accessed for
-    which the ACL in the database is being evaluated. Since that is now an
-    empty ACL, the access check fails, meaning that the publication fails
-    halfway (event is in the database, but not in the index).
-    
-    This patch allows Opencast to always access the access control list
-    linked in the media package, so that the correct ACL ends up in the
-    database, meaning the correct ACL will be used for the index checks.
-    
-    This fixes the overall problem and allows non-admin users to actually
-    publish events.
-    
-    This fixes #5333
-    This fixes #6040
-    
-    ---
-    
-    Easy way to test the problem is to run this in the Opencast git
-    repository:
-    ```
-    curl -i -u admin:opencast http://localhost:8080/user-utils/ \
-      -F username=test \
-      -F password=opencast \
-      -F 'roles=["ROLE_STUDIO"]'
-    
-    curl -i -f -u test:opencast http://localhost:8080/ingest/addMediaPackage/fast \
-      -F flavor=presenter/source \
-      -F BODY=@modules/inspection-service-ffmpeg/src/test/resources/segments_1.mp4 \
-      -F title=test \
-      -F identifier=test \
-      -F acl='{"acl": {"ace": [{"role": "ROLE_USER","action": "read"},{"role": "ROLE_USER","action": "write"}]}}'
-    ```
-    
-    ---
-    
-    We might want to check if this was broken prior to 16.x but since this
-    code has changed with the migration away from Solr, it would need a
-    different patch.
+    Opencast 16.1 Release Notes (#6056)
     
     ### Your pull request should…
     
