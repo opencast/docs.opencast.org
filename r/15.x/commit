@@ -1,52 +1,5 @@
-commit 0bbe9ca3f25ab847a28ea6207b0191ad22739924
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Jul 30 12:37:05 2024 +0200
+commit 1799357a4f2bfcb6031462ec4cc1e3dc925e5dc4
+Author: Crowdin Bot <crowdin-bot@opencast.org>
+Date:   Mon Aug 5 05:14:10 2024 +0000
 
-    Add new Workflow Operation: Subtitle Timeshift (#5913)
-    
-    This PR adds a new Workflow Operation named: 'Subtitle Timeshift'.
-    
-    With this Workflow Operation we define the flavor of a subtitle track
-    and the flavor of a video track. The workflow operation will then shift
-    all timestamps of the subtitle file by the duration of the video.
-    
-    Use Case: Currently if you put a bumper/intro video in front of an
-    already subtitled presenter track, the captions will mismatch. You can
-    use this workflow to shift the times of the subtitle file by the
-    duration of the bumper/intro video and the captions will match again.
-    
-    To test this, first generate subtitles with the `speech to text`
-    operation. You can find a partial-publish workflow with the added
-    operation in the
-    [attachment](https://github.com/user-attachments/files/15775191/workflows.zip).
-    Then, create a theme with a bumper video in the admin ui and create a
-    series that uses the theme. Add the new `subtitle-timeshift` operation
-    in your workflows that looks like this:
-    
-    ```
-        <operation
-          id="subtitle-timeshift"
-          description="Create new captions with time offset">
-          <configurations>
-            <configuration key="subtitle-source-flavor">captions/source</configuration>
-            <configuration key="video-source-flavor">branding/bumper</configuration>
-            <configuration key="target-flavor">captions/shifted</configuration>
-          </configurations>
-        </operation>
-    ```
-    
-    But you can also use my `partial-theming`workflow, that I added to the
-    [attachment](https://github.com/user-attachments/files/15775191/workflows.zip)
-    and adjust it.
-    As the last step, create an event and don't forget to select the series.
-    When the event is processed, the video should have the intro/bumper
-    video in front of it and the captions should match the audio.
-    
-    If you use my workflows, please always use new created events for your
-    tests. The workflows don't consider every possible combinations of
-    handling subtitles.
-    
-    This new operation also works for trimmed captions. When you cut for
-    example, use the schedule and upload workflow and uncheck the "straight
-    to publish" option. When processed, cut your video and publish it. The
-    captions should also match.
+    Automatically update translation keys (r/15.x)
