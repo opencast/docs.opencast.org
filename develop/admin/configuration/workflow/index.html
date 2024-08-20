@@ -134,7 +134,7 @@ format.</p>
 <h3 id="step-1-encoding-profiles">Step 1: Encoding Profiles</h3>
 <p>First create or select the encoding profiles you want to use. For more details on this, have a look at the <a href="../encoding/">Encoding
 Profile Configuration Guide</a>. For this guide we assume that we have an encoding profile <code>mov-low.http</code>
-which creates a distribution format definition for mp4 video and a <code>feed-cover.http</code> encoding profile to create
+which creates a distribution format definition for mp4 video and a <code>player-preview.http</code> encoding profile to create
 thumbnail images for the videos.</p>
 <h3 id="step-2-describe-the-workflow">Step 2: Describe the Workflow</h3>
 <p>Start by naming the workflow and giving it a meaningful description:</p>
@@ -239,7 +239,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
       &lt;configurations&gt;
         &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
         &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
         &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
       &lt;/configurations&gt;
     &lt;/operation&gt;
@@ -252,7 +252,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
       &lt;configurations&gt;
         &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
         &lt;configuration key="target-flavor"&gt;presentation/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
         &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
       &lt;/configurations&gt;
     &lt;/operation&gt;
@@ -282,8 +282,8 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
         &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
         &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
         &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;player-preview.http&lt;/configuration&gt;
         &lt;configuration key="time"&gt;1&lt;/configuration&gt;
       &lt;/configurations&gt;
     &lt;/operation&gt;
@@ -297,8 +297,8 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
         &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
         &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
         &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;rss, atom&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;feed-cover.http&lt;/configuration&gt;
+        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
+        &lt;configuration key="encoding-profile"&gt;player-preview.http&lt;/configuration&gt;
         &lt;configuration key="time"&gt;1&lt;/configuration&gt;
       &lt;/configurations&gt;
     &lt;/operation&gt;
@@ -323,7 +323,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
       exception-handler-workflow="error"
       description="Distribute media to the local distribution channel"&gt;
       &lt;configurations&gt;
-        &lt;configuration key="download-source-tags"&gt;publish,rss,atom&lt;/configuration&gt;
+        &lt;configuration key="download-source-tags"&gt;publish&lt;/configuration&gt;
         &lt;configuration key="streaming-source-tags"&gt;&lt;/configuration&gt;
         &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
       &lt;/configurations&gt;
@@ -334,7 +334,7 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
 &lt;/definition&gt;
 </code></pre>
 <ul>
-<li>The publish-engage operation uses all media tagged as <em>rss</em> or <em>atom</em> as input.</li>
+<li>The publish-engage operation uses all media tagged as <em>publish</em> as input.</li>
 </ul>
 <!-- _Are the next sections still part of Creating a Custom Workflow? -->
 <h2 id="accept-user-input">Accept User Input</h2>
