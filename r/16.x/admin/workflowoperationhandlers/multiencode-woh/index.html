@@ -129,19 +129,19 @@ and "presentation/preview"</p>
 </blockquote>
 <p>Each source selector can have its own set of target tags and flavors, defined as a comma delimited list.
 For example:</p>
-<pre><code class="language-xml">&lt;configuration key=&quot;target-tags&quot;&gt;engage-streaming,rss,atom;engage-download,rss,atom&lt;/configuration&gt;
+<pre><code class="language-xml">&lt;configuration key=&quot;target-tags&quot;&gt;engage-streaming,example;engage-download,example&lt;/configuration&gt;
 </code></pre>
 <blockquote>
 <p>Using the example above.
-"presenter/preview" is tagged with "engage-streaming,rss,atom".
-"presentation/preview" is tagged with "engage-download,rss,atom".</p>
+"presenter/preview" is tagged with "engage-streaming,example".
+"presentation/preview" is tagged with "engage-download,example".</p>
 </blockquote>
 <p>When a configuration has the same number of sections as the source, then the configurations for the operation
 are taken from the corresponding sections.</p>
 <p>Each section runs independently as a parallel encoding job.</p>
 <p>For example, if presenter/source is to encoded with "mp4-low.http,mp4-medium.http" and
 presentation/source is to be encoded with "mp4-hd.http,mp4-hd.http"</p>
-<p>The target flavors are presenter/delivery and presentation/delivery and all are tagged "rss, archive".
+<p>The target flavors are presenter/delivery and presentation/delivery and all are tagged "example".
 The target flavors are additionally tagged with encoding profiles, so that they can selected individually.</p>
 <p>This workflow supports HLS adaptive streaming.
 By:</p>
@@ -187,7 +187,7 @@ https://tools.ietf.org/html/draft-pantos-http-live-streaming-23</p>
 </tr>
 <tr>
 <td>target-tags</td>
-<td>rss,archive</td>
+<td>archive</td>
 <td>Specifies the tags of the new media</td>
 </tr>
 <tr>
@@ -209,7 +209,7 @@ https://tools.ietf.org/html/draft-pantos-http-live-streaming-23</p>
   &lt;configurations&gt;
     &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/work;presentation/work&lt;/configuration&gt;
     &lt;configuration key=&quot;target-flavors&quot;&gt;*/delivery&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;rss,archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
     &lt;configuration key=&quot;encoding-profiles&quot;&gt;
         hls-full-res-presenter-mp4,
         hls-half-res-presenter-mp4,

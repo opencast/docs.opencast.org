@@ -38,6 +38,7 @@
               {title: "Step 1: Configuration of the AAI Login handler", url: "#step-1-configuration-of-the-aai-login-handler" },
               {title: "Step 2: Spring Security Configuration", url: "#step-2-spring-security-configuration" },
               {title: "Step 3: Protecting HTML pages by Shibboleth", url: "#step-3-protecting-html-pages-by-shibboleth" },
+              {title: "Step 4: Configuring engage-UI", url: "#step-4-configuring-engage-ui" },
               {title: "Advanced SSO configuration: The DynamicLoginHandler", url: "#advanced-sso-configuration-the-dynamicloginhandler" },
           ]},
         ];
@@ -219,6 +220,13 @@ Access to APIs is protected by other means of authentication as, for example, di
     require valid-user
 &lt;/LocationMatch&gt;
 </code></pre>
+<h2 id="step-4-configuring-engage-ui">Step 4: Configuring engage-UI</h2>
+<p>By default the engage-UI uses a standard login form. To make use of an AAI login we need to redirect the loginbutton to the AAI login URL:</p>
+<p><code>etc/ui-config/mh_default_org/engage-ui/config.yml</code>:</p>
+<pre><code>customLoginURL: /Shibboleth.sso/Login?target=/engage/ui/index.html
+</code></pre>
+<p>The logout works out of the box since the logoutbutton calls <code>/j_spring_security_logout</code> which then will redirect to the AAI logout location
+configured earlier in the logoutSuccessHandler.</p>
 <h2 id="advanced-sso-configuration-the-dynamicloginhandler">Advanced SSO configuration: The DynamicLoginHandler</h2>
 <p>To configure complex mappings of AAI attributes via <a href="https://docs.spring.io/spring-framework/docs/3.0.x/reference/expressions.html"><code>SpEL</code></a> in the <code>mh_default_org.xml</code> file, it is necessary to follow the same steps as above. Just change the bean reference of <code>shibbolethLoginHandler</code> to <code>aaiLoginHandler</code> in the <code>shibbolethHeaderFilter</code>:</p>
 <pre><code>&lt;bean id="shibbolethHeaderFilter"
