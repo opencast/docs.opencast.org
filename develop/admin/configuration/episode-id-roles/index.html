@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Plugin Management - Administration Guide</title>
+    <title>Role Based Event Access - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,8 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Plugin Management", url: "#_top", children: [
-              {title: "List of Available Plugins", url: "#list-of-available-plugins" },
+          {title: "Episode ID roles", url: "#_top", children: [
+              {title: "Setup", url: "#setup" },
           ]},
         ];
 
@@ -64,20 +64,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../episode-id-roles/" class="btn btn-xs btn-default pull-right">
+      <a href="../searchindex/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../episode-id-roles/" class="btn btn-xs btn-link">
-        Role Based Event Access
+      <a href="../searchindex/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../playlists/" class="btn btn-xs btn-default pull-left">
+      <a href="../plugin-management/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../playlists/" class="btn btn-xs btn-link">
-        Playlists
+        Previous</a><a href="../plugin-management/" class="btn btn-xs btn-link">
+        Plugin Management
       </a>
     </div>
     
@@ -85,50 +85,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="plugin-management">Plugin Management</h1>
-<p>Opencast comes with a number of plugins which allow you to turn additional functionality off and on.
-Plugins can be enabled at runtime in <code>etc/org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code> by setting the specific
-configuration to <code>on</code> or <code>off</code>.</p>
-<h2 id="list-of-available-plugins">List of Available Plugins</h2>
-<ul>
-<li>opencast-plugin-legacy-annotation<ul>
-<li>Legacy annotation functionality. We do not recommend turning this on. It also requires additional configuration in
-  the player. It's kept for a few legacy use-cases.</li>
-</ul>
-</li>
-<li>opencast-plugin-transcription-services<ul>
-<li>Support for the Amberscript transcription service</li>
-<li>Support for the Google cloud transcription service</li>
-<li>Support for the IBM cloud transcription service</li>
-<li>Support for the Microsoft Azure cloud transcription service</li>
-</ul>
-</li>
-<li>opencast-plugin-userdirectory-brightspace<ul>
-<li>Module allowing Opencast to look up users in a Brightspace LMS</li>
-</ul>
-</li>
-<li>opencast-plugin-userdirectory-canvas<ul>
-<li>Module allowing Opencast to look up users in a Canvas LMS</li>
-</ul>
-</li>
-<li>opencast-plugin-userdirectory-moodle<ul>
-<li>Module allowing Opencast to look up users in a Moodle LMS</li>
-</ul>
-</li>
-<li>opencast-plugin-userdirectory-sakai<ul>
-<li>Module allowing Opencast to look up users in a Sakai LMS</li>
-</ul>
-</li>
-<li>opencast-plugin-userdirectory-studip<ul>
-<li>Module allowing Opencast to look up users in a Stud.IP LMS</li>
-</ul>
-</li>
-<li>opencast-plugin-usertracking<ul>
-<li>Legacy user tracking module. We do not recommend turning this on. It also requires additional configuration in
-  the player. It's kept for a few legacy use-cases.</li>
-</ul>
-</li>
-</ul>
+    <h1 id="episode-id-roles">Episode ID roles</h1>
+<p>If activated, users with a role like <code>ROLE_EPISODE_&lt;ID&gt;_&lt;ACTION&gt;</code> will have access to the episode with the given
+identifier, without this having to be explicitly stated in the ACL attached to the episode.</p>
+<p>For example, <code>ROLE_EPISODE_872dc4ec-ca8a-4e12-8dac-ce99784d6d29_READ</code> will allow the user to get read access to
+episode <code>872dc4ec-ca8a-4e12-8dac-ce99784d6d29</code>.</p>
+<p>The <code>&lt;ACTION&gt;</code> will be capitalized, but special characters may not be converted to <code>_</code>, e.g. <code>ANNOTATE-ADMIN</code>.</p>
+<h2 id="setup">Setup</h2>
+<p>Enable <code>episode.id.role.access</code> in <code>etc/custom.properties</code>.</p>
+<p>To make this work for the Admin UI and External API, the Elasticsearch Index needs to be updated with modified
+ACLs. You can achieve this by calling the <code>/index/rebuild/AssetManager/ACL</code> endpoint <strong>after</strong> enabling this feature
+in the aforementioned configuration files.
+The endpoint will reindex only event ACLs.</p>
+<p>In case you have custom actions configured, this will only work for the actions that were configured during the
+reindex of the Elasticsearch index. If you later add custom actions, you will have to reindex again.</p>
 
   <br>
     
@@ -141,20 +111,20 @@ configuration to <code>on</code> or <code>off</code>.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../episode-id-roles/" class="btn btn-xs btn-default pull-right">
+      <a href="../searchindex/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../episode-id-roles/" class="btn btn-xs btn-link">
-        Role Based Event Access
+      <a href="../searchindex/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../playlists/" class="btn btn-xs btn-default pull-left">
+      <a href="../plugin-management/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../playlists/" class="btn btn-xs btn-link">
-        Playlists
+        Previous</a><a href="../plugin-management/" class="btn btn-xs btn-link">
+        Plugin Management
       </a>
     </div>
     
@@ -165,7 +135,7 @@ configuration to <code>on</code> or <code>off</code>.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/plugin-management.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/episode-id-roles.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
