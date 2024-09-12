@@ -1,140 +1,141 @@
-commit 8f483804ecdf0412d22874f3c2cef33224752520
+commit 279a627e260dc62938cae94489fc4832b8f234e1
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Sep 11 16:48:28 2024 +0200
+Date:   Thu Sep 12 13:32:02 2024 +0200
 
-    Bump i18next from 23.12.2 to 23.14.0 in /modules/lti (#6132)
+    Bump iframe-resizer from 4.4.5 to 5.3.0 in /modules/lti (#6154)
     
-    Bumps [i18next](https://github.com/i18next/i18next) from 23.12.2 to
-    23.14.0.
+    Bumps [iframe-resizer](https://github.com/davidjbradshaw/iframe-resizer)
+    from 4.4.5 to 5.3.0.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/i18next/i18next/releases">i18next's
+    href="https://github.com/davidjbradshaw/iframe-resizer/releases">iframe-resizer's
     releases</a>.</em></p>
     <blockquote>
-    <h2>v23.14.0</h2>
+    <h2>v5.3.0</h2>
+    <h2>What's Changed</h2>
+    <p>This release of <em>iframe-resizer</em> has focused on the final few
+    areas where performance could be further improved, with the aim that,
+    even with the most complex pages; size changes are detected, calculated
+    and dispatched from the iframe in under <em>1ms</em>. Setting the
+    <code>log: true</code> option will now measure and display this
+    time.</p>
+    <p>In tests with Google Chrome on an M1 Mac, the <a
+    href="https://iframe-resizer.com/examples/">examples page</a> of the
+    <em>iframe-resizer</em> website average around <em>0.3ms</em>. The
+    logging has been left on if you would like to see the results on your
+    own system.</p>
+    <h3>Performance</h3>
     <ul>
-    <li>If backend errors with retry flag, set internal state to 0, so
-    reloadingResources should work <a
-    href="https://redirect.github.com/i18next/i18next-http-backend/issues/147">147</a></li>
+    <li>Moved resize event throttle to capture all triggering events in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1326">davidjbradshaw/iframe-resizer#1326</a></li>
+    <li>Refactored several <code>forEach()</code> statements to
+    <code>for...of</code>in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1329">davidjbradshaw/iframe-resizer#1329</a></li>
+    <li>Prevent <code>pageInfo</code> being double fired on parent page in
+    <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1321">davidjbradshaw/iframe-resizer#1321</a></li>
+    <li>Optimised <code>resizerObservers</code> setup in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1325">davidjbradshaw/iframe-resizer#1325</a></li>
+    <li>Display content size calculation time in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1332">davidjbradshaw/iframe-resizer#1332</a></li>
     </ul>
-    <h2>v23.13.0</h2>
+    <h3>Changed</h3>
     <ul>
-    <li>Cache output of getRule to optimize performance <a
-    href="https://redirect.github.com/i18next/i18next/pull/2226">2226</a></li>
+    <li>Isolate parent/child when messages passed via same-domain in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1319">davidjbradshaw/iframe-resizer#1319</a></li>
+    <li>Use <code>setTimeout(0)</code> on event callbacks with void return
+    type in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1324">davidjbradshaw/iframe-resizer#1324</a></li>
+    <li>Added Sandbox settings check to timeout warning in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1328">davidjbradshaw/iframe-resizer#1328</a></li>
     </ul>
-    <h2>v23.12.7</h2>
+    <h3>React</h3>
     <ul>
-    <li>revert last optimization to address <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
+    <li>Remove npm dependency for <code>Warning</code> package in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1327">davidjbradshaw/iframe-resizer#1327</a></li>
     </ul>
-    <h2>v23.12.6</h2>
+    <h3>Angular</h3>
     <ul>
-    <li>remove console.log statement <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
+    <li>Created <a
+    href="https://iframe-resizer.com/frameworks/angular/">Angular
+    Directive</a> in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1323">davidjbradshaw/iframe-resizer#1323</a></li>
     </ul>
-    <h2>v23.12.5</h2>
+    <h3>Fixes</h3>
     <ul>
-    <li>try to optimize last fix for <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
+    <li>Corrected case of child settings object in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1318">davidjbradshaw/iframe-resizer#1318</a></li>
+    <li>Disable <code>parentProps</code> when requested to turn off stream
+    in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1331">davidjbradshaw/iframe-resizer#1331</a></li>
     </ul>
-    <h2>v23.12.4</h2>
+    <p>Huge thanks to <a
+    href="https://github.com/bjornoss"><code>@​bjornoss</code></a> for his
+    work on the new <a
+    href="https://iframe-resizer.com/frameworks/angular/">Angular
+    Directive</a>.</p>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/davidjbradshaw/iframe-resizer/compare/v5.2.6...v5.3.0">https://github.com/davidjbradshaw/iframe-resizer/compare/v5.2.6...v5.3.0</a></p>
+    <h2>v5.2.6</h2>
+    <h2>What's Changed</h2>
     <ul>
-    <li>try to address <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a>
-    without the removal of cached formatter for in-built formatters</li>
+    <li>Fix: jQuery plugin init in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1317">davidjbradshaw/iframe-resizer#1317</a></li>
     </ul>
-    <h2>v23.12.3</h2>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/davidjbradshaw/iframe-resizer/compare/v5.2.5...v5.2.6">https://github.com/davidjbradshaw/iframe-resizer/compare/v5.2.5...v5.2.6</a></p>
+    <h2>v5.2.5</h2>
+    <h2>What's Changed</h2>
     <ul>
-    <li>fix: Using a comma in a formatter parameter <a
-    href="https://redirect.github.com/i18next/i18next/issues/2225">2225</a></li>
+    <li>Add: Check for child script being loaded more than once in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1312">davidjbradshaw/iframe-resizer#1312</a></li>
+    <li>Fix: Detection of inserted elements flowed outside of document body
+    in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1315">davidjbradshaw/iframe-resizer#1315</a></li>
+    <li>Fix: False positive hidden iframe detection when HTML element is
+    zero height in <a
+    href="https://redirect.github.com/davidjbradshaw/iframe-resizer/pull/1313">davidjbradshaw/iframe-resizer#1313</a></li>
     </ul>
+    <!-- raw HTML omitted -->
     </blockquote>
-    </details>
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/i18next/i18next/blob/master/CHANGELOG.md">i18next's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h2>23.14.0</h2>
-    <ul>
-    <li>If backend errors with retry flag, set internal state to 0, so
-    reloadingResources should work <a
-    href="https://redirect.github.com/i18next/i18next-http-backend/issues/147">147</a></li>
-    </ul>
-    <h2>23.13.0</h2>
-    <ul>
-    <li>Cache output of getRule to optimize performance <a
-    href="https://redirect.github.com/i18next/i18next/pull/2226">2226</a></li>
-    </ul>
-    <h2>23.12.7</h2>
-    <ul>
-    <li>revert last optimization to address <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
-    </ul>
-    <h2>23.12.6</h2>
-    <ul>
-    <li>remove console.log statement <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
-    </ul>
-    <h2>23.12.5</h2>
-    <ul>
-    <li>try to optimize last fix for <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a></li>
-    </ul>
-    <h2>23.12.4</h2>
-    <ul>
-    <li>try to address <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">2227</a>
-    without the removal of cached formatter for in-built formatters</li>
-    </ul>
-    <h2>23.12.3</h2>
-    <ul>
-    <li>fix: Using a comma in a formatter parameter <a
-    href="https://redirect.github.com/i18next/i18next/issues/2225">2225</a></li>
-    </ul>
-    </blockquote>
+    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/i18next/i18next/commit/0083b3a80f344281897f2727712078b6872d0107"><code>0083b3a</code></a>
-    23.14.0</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/611add447f30a3a3a1fedfd1bde02a0e4212f2b4"><code>611add4</code></a>
+    Release v5.3.0</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/04e2fc9f1825a71d098e3fc8708bdfc4d26b08f4"><code>04e2fc9</code></a>
-    If backend errors with retry flag, set internal state to 0, so
-    reloadingResou...</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/fbed48af7e734a6c432b65c1b6c90bbe53e1b857"><code>fbed48a</code></a>
+    eslint-disable-next-line no-console</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/d7fcec65faf4cb8f232a721d481e0d29ed684159"><code>d7fcec6</code></a>
-    23.13.0</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/58f0e13f6908fdbd0ea1c14f0e1043e292f5ac94"><code>58f0e13</code></a>
+    Added console.group to child completion messages</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/ffc0a5213851bcc2bf254a23f98ba234b1cabcd2"><code>ffc0a52</code></a>
-    build</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/1f2b3b7b941901c9cf17499a7c05737778ff1613"><code>1f2b3b7</code></a>
+    Fix test</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/3756cf69318d184963fca177cfe2de77bde69bde"><code>3756cf6</code></a>
-    Cache output of getRule to optimize performance (<a
-    href="https://redirect.github.com/i18next/i18next/issues/2226">#2226</a>)</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/4ea707adc85030a3ddb7573ddaeff7ffb7b5be76"><code>4ea707a</code></a>
+    Update index.html</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/202465a5b7115337f03490436f88737284e279e3"><code>202465a</code></a>
-    23.12.7</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/5fbe28e5d35c2aff6efb051105708e35b2f6106a"><code>5fbe28e</code></a>
+    Display content size calculation time</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/66fad4c9f8f21168e7af22c03a5917fca115d751"><code>66fad4c</code></a>
-    revert last optimization to address <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">#2227</a></li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/95a5dbecf4096a13254894d87504632dc1f72047"><code>95a5dbe</code></a>
+    Tidy</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/35d97577c953e91cddd880362deb47428030ccce"><code>35d9757</code></a>
-    23.12.6</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/8b9fc1126637f41dbf95c24905bc2df8d9166069"><code>8b9fc11</code></a>
+    Refactor sendIframe()</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/eb0445454c76a299ef3cf47a2c0c1582c903af0d"><code>eb04454</code></a>
-    remove console.log statement <a
-    href="https://redirect.github.com/i18next/i18next/issues/2227">#2227</a></li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/c7a1c32c282bcae42816137187b2ed38c0575336"><code>c7a1c32</code></a>
+    Fix iframe casing</li>
     <li><a
-    href="https://github.com/i18next/i18next/commit/21fdd90e2e1b50b2bd974caffa7f5a21753b8359"><code>21fdd90</code></a>
-    23.12.5</li>
+    href="https://github.com/davidjbradshaw/iframe-resizer/commit/bb63e6b75a96f06d3c8b05aab493813e39328ebc"><code>bb63e6b</code></a>
+    Fixed: Disable page info</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/i18next/i18next/compare/v23.12.2...v23.14.0">compare
+    href="https://github.com/davidjbradshaw/iframe-resizer/compare/v4.4.5...v5.3.0">compare
     view</a></li>
     </ul>
     </details>
@@ -142,7 +143,7 @@ Date:   Wed Sep 11 16:48:28 2024 +0200
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=i18next&package-manager=npm_and_yarn&previous-version=23.12.2&new-version=23.14.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=iframe-resizer&package-manager=npm_and_yarn&previous-version=4.4.5&new-version=5.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
