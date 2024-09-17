@@ -1,30 +1,5 @@
-commit 6a954bb48f29e9d384409429a21a28a7bbc83c93
-Author: Jonas Dühring <32971521+jduehring@users.noreply.github.com>
-Date:   Tue Sep 17 20:26:36 2024 +0200
+commit acf639c561b42a2a8d6155be615f2c59ee807c04
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Sep 17 20:29:22 2024 +0200
 
-    Skip elements during search-index rebuild that throw a NotFoundException (#6170)
-    
-    If during a rebuild of the search-index a NotFoundException is thrown,
-    right now the rebuild will just stop and not process any more events. So
-    in a cluster with a lot of events it is enough if there is one broken
-    mediapackages in the system (for example caused by a faulty retraction,
-    missing dublincore etc.) to not be able to continue the rebuild.
-    
-    With this patch instead of throwing a NotFoundException and stopping the
-    process, the error gets logged and the element is beeing skipped, so
-    that the rebuild can finish regardless.
-    
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
+    Merge r/15.x into r/16.x
