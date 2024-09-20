@@ -35,6 +35,7 @@
         var pageToc = [
           {title: "Development Process", url: "#_top", children: [
               {title: "Contributing Code", url: "#contributing-code" },
+              {title: "Reviewing Code", url: "#reviewing-code" },
               {title: "Git Repository Branching Model", url: "#git-repository-branching-model" },
               {title: "Release Process", url: "#release-process" },
               {title: "Quality Assurance", url: "#quality-assurance" },
@@ -99,6 +100,24 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#automatically-closing-issues-when-a-pr-is-merged">Automatically closing issues when a PR is merged</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#reviewing-code">Reviewing Code</a><ul>
+<li><a href="#trappings">Trappings</a><ul>
+<li><a href="#title">Title</a></li>
+<li><a href="#description">Description</a></li>
+<li><a href="#issues">Issues</a></li>
+<li><a href="#labels">Labels</a></li>
+</ul>
+</li>
+<li><a href="#code-base-changes">Code base changes</a><ul>
+<li><a href="#hygene">Hygene</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#functionality">Functionality</a></li>
+<li><a href="#tests">Tests</a></li>
+</ul>
+</li>
+<li><a href="#video-guides">Video guides</a></li>
 </ul>
 </li>
 <li><a href="#git-repository-branching-model">Git Repository Branching Model</a></li>
@@ -253,6 +272,80 @@ And even then, the issue will only be closed, once your merged commits
 reach <code>develop</code> by our forward merging process.</p>
 <p>Mentioning related issues in the PR description <strong>in addition</strong> to
 the commit message(-s) might of course still be useful for reviewers!</p>
+<h2 id="reviewing-code">Reviewing Code</h2>
+<p>Reviewing pull requests is as important as creating them, as pull requests cannot be merged without at least one
+approving review. Furthermore, the more people review a pull request the more likely it is that potential issues
+are found early, saving time and money down the line.</p>
+<p>This section intends to give guidelines on what to look for when reviewing a pull request. A review does not need
+to cover all of these, do as much as you can and then (at least roughly) write in the review what you looked at. Also if
+you found an issue with one of the guidelines, e.g. the description is not making any sense, it is completely okay to
+request a change to the description and holding of on reviewing other parts of the PR until the description is fixed.</p>
+<p>While a pull requests of course contains changes to the Opencast code base, it also consists of its trappings. Usually
+it makes sense to look at those first.</p>
+<h3 id="trappings">Trappings</h3>
+<h4 id="title">Title</h4>
+<p>Was a sensible title chosen? Does the title serve as good identifier for the pull request? A bad title might be
+"LTI bug". A good title might be "Fix a bug where LTI users can not play videos".</p>
+<h4 id="description">Description</h4>
+<p>Was a sensible description chosen?</p>
+<ul>
+<li>Does the description detail the goal of the pull request? A pull request should have one clear goal. If there are
+  multiple goals, it is usually best to split these among multiple pull requests.</li>
+<li>Would the stated goal of the pull request improve the Opencast codebase, or should it be rejected outright? Fixing a 
+  bug usually improves the code, adding another video player might not.</li>
+<li>Does the description explain how to test the pull request, e.g. is certain configuration necessary?</li>
+</ul>
+<h4 id="issues">Issues</h4>
+<p>If the pull request fixes an existing issue on GitHub, is it linked in the pull request? If one or more issues are linked
+in the pull request, does the pull request actually address them?</p>
+<h4 id="labels">Labels</h4>
+<p>Is the pull request labelled? Is it labelled sensibly?</p>
+<h3 id="code-base-changes">Code base changes</h3>
+<h4 id="hygene">Hygene</h4>
+<p>A pull request should have one clear goal. If there are  multiple goals, it is usually best to split these among
+multiple pull requests.</p>
+<p>Does the pull request have a sane commit tree?</p>
+<ul>
+<li>The tree should be easy to follow, not needlessly complex.</li>
+<li>Commits should have sensible titles and descriptions.</li>
+<li>Merge commits should be avoided, suggest using rebasing instead.</li>
+</ul>
+<p>Does the pull request target the right branch? Usually</p>
+<ul>
+<li>Major features go into develop</li>
+<li>Minor features go into stable</li>
+<li>Fixes go into legacy/stable</li>
+</ul>
+<h4 id="documentation">Documentation</h4>
+<ul>
+<li>Not necessary for every kind of pull request, but required for new features and major changes to existing behaviour.</li>
+<li>A mention should also be added to the release notes.</li>
+<li>The documentation should be legible and sensible. It should integrate with the surrounding documentation.</li>
+</ul>
+<h4 id="functionality">Functionality</h4>
+<p>Do the changes actually do what the description promises?</p>
+<p>Proofreading: Read through the code and try to think it through.</p>
+<ul>
+<li>What if this line of code throws an exception? What if the function is given bad parameters?</li>
+<li>How computationally expensive is this loop?</li>
+<li>Is the logging constructed so that it will be helpful? Are translations worded well?</li>
+</ul>
+<p>Test the code by compiling and running it. Try to test it in ways that won't be caught by the automated tests. Test it
+in a distributed Opencast setup if possible.</p>
+<h4 id="tests">Tests</h4>
+<p>Does the code require (unit) testing? Are the given tests sensible? Are there any test cases missing?</p>
+<h3 id="video-guides">Video guides</h3>
+<p>The GitHub web interface is ever-changing. If you are looking for help with navigating the website, check the
+<a href="https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request">official GitHub documentation</a>.</p>
+<p>If videos are more your style:</p>
+<ul>
+<li>(English) <a href="https://video.ethz.ch/events/opencast/2021/graz/0014efff-ff04-414c-876c-7a7eeb66122b.html">Talk from 2021 Opencast Summit</a>,
+  slide presentation by Greg on how he does things.</li>
+<li>(German) <a href="https://video.ethz.ch/events/opencast/2020/innsbruck/58a02ce8-1bf6-4b2a-b220-faf65931efbc.html">Talk from 2020 Opencast D/A/CH</a>,
+  shows how to navigate the Opencast GitHub website for beginners. Starts at minute 30.</li>
+<li>(English) <a href="https://video.ethz.ch/events/opencast/2024/zaragoza/b12f4344-12db-4d1e-8997-c8dd3832a462.html">Talk from 2024 Opencast Summit</a>,
+  5 minutes of motivation for non-technical reviewers.</li>
+</ul>
 <h2 id="git-repository-branching-model">Git Repository Branching Model</h2>
 <p>While the Opencast repository and branching model is inspired by
 <a href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>, there have been some distinct changes to how release
