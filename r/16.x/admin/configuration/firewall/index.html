@@ -79,26 +79,45 @@ In certain set-ups and with certain types of integrations, these may deviate sli
 <p>A visual representation of the communication within a three-node cluster will look like this:</p>
 <div class="mermaid">graph LR
 
-  user(User) --&gt;|80, 443| oc1(Opencast Admin)
-  user -.-&gt;|80, 443| oc2(Opencast Worker)
-  user --&gt;|80, 443| oc3(Opencast Presentation)
+  subgraph Internet
+    user(User)
+  end
+
+  subgraph Opencast
+    direction LR
+    oc1(Opencast Admin)
+    oc2(Opencast Worker)
+    oc3(Opencast Presentation)
+  end
+
+  subgraph Data
+    db(Database)
+    os(OpenSearch)
+    storage(Storage)
+  end
+
+  subgraph Recorder
+    ca(Capture Agent)
+  end
+
+  user --&gt;|80, 443| oc1
+  user --&gt;|80, 443| oc3
   oc1 &lt;--&gt;|80, 443| oc2
   oc2 &lt;--&gt;|80, 443| oc3
   oc3 &lt;--&gt;|80, 443| oc1
-  oc1 --&gt;|e.g. 3306| db(Database)
+  oc1 --&gt;|e.g. 3306| db
   oc2 --&gt;|e.g. 3306| db
   oc3 --&gt;|e.g. 3306| db
-  oc1 --&gt;|9200| os(OpenSearch)
-  oc3 --&gt;|9200| os(OpenSearch)
-  oc1 --&gt; storage(Storage)
-  oc2 --&gt; storage
-  oc3 --&gt; storage
-  ca(Capture Agent) --&gt;|80, 443| oc1
+  oc1 --&gt;|9200| os
+  oc3 --&gt;|9200| os
+  oc1 --- storage
+  oc2 --- storage
+  oc3 --- storage
+  ca --&gt;|80, 443| oc1
 </div>
 <p>Notes:</p>
 <ul>
 <li>The numbers in the diagram describe TCP ports</li>
-<li>Communication between users and workers is often not necessary</li>
 <li>If you use a database other than MariaDB, the port may differ</li>
 </ul>
 <h2 id="suggested-firewall-configurations">Suggested Firewall Configurations</h2>
