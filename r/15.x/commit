@@ -1,19 +1,54 @@
-commit 1c52ea1bf5ea6eeb39e1f3207dc41138918e2ffa
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Sep 17 17:59:03 2024 +0200
+commit 428b91ad89304ba01cf90663c33469416c986a64
+Author: Lukas Kalbertodt <lukas.kalbertodt@gmail.com>
+Date:   Tue Oct 1 11:14:10 2024 +0200
 
-    Add releasenotes and changelog for 15.10 (#6171)
+    Fix tobira harvest acls (#6157)
     
-    ### Your pull request should…
+    An ACL can contain `allow` and `deny` rules; until now, all roles were
+    added to the action to roles map, which only represents the allowed
+    actions.
     
-    * [x] have a concise title
+    This has led to users seeing videos in Tobira for which access has been
+    denied.
+    
+    This can be tested by updating the series acl via /series endpoint and
+    republishing the acl.
+    
+    **POST /series/{seriesID:.+}/accesscontrol**
+    ```XML
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <acl xmlns="http://org.opencastproject.security">
+      <ace>
+        <role>ROLE_USER</role>
+        <action>write</action>
+        <allow>false</allow>
+      </ace>
+      <ace>
+        <role>ROLE_USER</role>
+        <action>read</action>
+        <allow>true</allow>
+      </ace>
+      <ace>
+        <role>ROLE_USER_TEST</role>
+        <action>read</action>
+        <allow>true</allow>
+      </ace>
+      <ace>
+        <role>ROLE_USER_TEST</role>
+        <action>write</action>
+        <allow>true</allow>
+      </ace>
+    </acl>
+    ```
+    
+    * [ ] have a concise title
     * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [ ] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
