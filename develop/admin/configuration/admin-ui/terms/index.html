@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>New Admin UI - Administration Guide</title>
+    <title>Terms of Use - Administration Guide</title>
     <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../../css/base.css" rel="stylesheet">
@@ -33,9 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Admin Interface", url: "#_top", children: [
-              {title: "Accessing Old And New Admin Interface", url: "#accessing-old-and-new-admin-interface" },
-              {title: "Configuring the Default Admin Interface", url: "#configuring-the-default-admin-interface" },
+          {title: "Terms of Use", url: "#_top", children: [
           ]},
         ];
 
@@ -65,20 +63,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../role-based-visibility/" class="btn btn-xs btn-default pull-right">
+      <a href="../../awss3archive/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../role-based-visibility/" class="btn btn-xs btn-link">
-        Role-based Visibility
+      <a href="../../awss3archive/" class="btn btn-xs btn-link">
+        Amazon S3 Archive Storage
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../asset-upload/" class="btn btn-xs btn-default pull-left">
+      <a href="../about/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../asset-upload/" class="btn btn-xs btn-link">
-        Manual Asset Upload
+        Previous</a><a href="../about/" class="btn btn-xs btn-link">
+        Imprint and Privacy Statement
       </a>
     </div>
     
@@ -86,24 +84,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="admin-interface">Admin Interface</h1>
-<p>Opencast comes with two admin interfaces. The new Admin UI continues with the same look and
-feel, but uses new technologies under the hood. It strives to be robust and easy to work with, while having all the
-same functionality users expect from the old UI.</p>
-<h2 id="accessing-old-and-new-admin-interface">Accessing Old And New Admin Interface</h2>
-<p>You can access the admin interfaces by replacing the <code>ng</code> in your address bar with <code>ui</code> and vice versa.
-Before you can use the old interface, its plugin needs to be enabled in <code>etc/org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>.</p>
-<ul>
-<li>New: <code>/admin-ui/index.html</code></li>
-<li>Old: <code>/admin-ng/index.html</code></li>
-</ul>
-<h2 id="configuring-the-default-admin-interface">Configuring the Default Admin Interface</h2>
-<p>To configure the default admin interface, go to the configuration file located in
-<code>etc/ui-config/{organizationID}/runtime-info-ui/settings.json</code> and change <code>adminUIUrl</code>:</p>
-<ul>
-<li>New: <code>"adminUIUrl": "/admin-ui/index.html"</code> (default)</li>
-<li>Old: <code>"adminUIUrl": "/admin-ng/index.html"</code></li>
-</ul>
+    <h1 id="terms-of-use">Terms of Use</h1>
+<p>Opencast allows you to display terms of use for new users in the admin UI. The user will have to accept the terms to continue using the UI.</p>
+<p>To enable terms of use, set the following in <code>etc/org.opencastproject.organization-mh_default_org.cfg</code>:</p>
+<pre><code>prop.org.opencastproject.admin.display_terms=true
+</code></pre>
+<p>The content of the terms can be set in <code>/etc/ui-config/mh_default_org/admin-ui/</code> per language. The filenames follow these rules:</p>
+<pre><code>terms.%{language_code}.html
+</code></pre>
+<p>The corresponding language codes can be found in <a href="https://github.com/opencast/opencast-admin-interface/blob/main/src/i18n/languages.ts#L29"><code>/src/i18n/i18n.ts</code></a> in the admin-UI repo.</p>
+<p>If no language is provided, the english version will be displayed.</p>
 
   <br>
     
@@ -116,20 +106,20 @@ Before you can use the old interface, its plugin needs to be enabled in <code>et
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../role-based-visibility/" class="btn btn-xs btn-default pull-right">
+      <a href="../../awss3archive/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../role-based-visibility/" class="btn btn-xs btn-link">
-        Role-based Visibility
+      <a href="../../awss3archive/" class="btn btn-xs btn-link">
+        Amazon S3 Archive Storage
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../asset-upload/" class="btn btn-xs btn-default pull-left">
+      <a href="../about/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../asset-upload/" class="btn btn-xs btn-link">
-        Manual Asset Upload
+        Previous</a><a href="../about/" class="btn btn-xs btn-link">
+        Imprint and Privacy Statement
       </a>
     </div>
     
@@ -140,7 +130,7 @@ Before you can use the old interface, its plugin needs to be enabled in <code>et
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/new-admin-ui.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/admin-ui/terms.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
