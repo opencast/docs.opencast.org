@@ -1,49 +1,31 @@
-commit 1c4595b992e9a313aeacfaddc199dff0bf794262
+commit 70e291a82a985efef9229741598b6ffcb6174385
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Oct 29 10:58:53 2024 +0100
+Date:   Tue Oct 29 13:12:45 2024 +0100
 
-    Auto-encode audio track for Whisper (#6248)
+    Add more admin-UI Tobira endpoints (#6091)
     
-    Whisper.cpp requires a very specific input audio format. Instead of
-    relying on adopters working around this in the workflow and encoding
-    tracks in advance, this patch includes the encoding in the operation
-    itself.
+    This adds
+     - a) an endpoint to get paths of pages in Tobira that host an event
+     - b) an endpoint to update the path of a series in Tobira
     
-    This not only has the advantage that the configuration is much easier,
-    but it also means that only the tracks selected to actually be used for
-    generating the subtitles are encoded.
+    This shouldn't break any existing behaviour.
     
-    ### How to test this patch
-    
-    Configure Whisper.ccp and add the `speechtotext` operation to the fast
-    testing workflow:
-    
-    ```yaml
-      - id: speechtotext
-        description: Generates subtitles for video and audio files
-        configurations:
-          - source-flavor: '*/source'
-          - target-flavor: captions/source
-          - target-tags: engage-download
-          - target-flavor: captions/source
-          - limit-to-one: true
-    ```
-    
-    If you now ingest an `.mp4` file, the operation should be able to work
-    on it.
+    These are needed for additional requirements of
+    https://github.com/opencast/opencast-admin-interface/issues/311.
+    Corresponding Tobira and admin-UI PRs:
+    https://github.com/elan-ev/tobira/pull/1225,
+    https://github.com/opencast/opencast-admin-interface/pull/878.
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [x] [close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
