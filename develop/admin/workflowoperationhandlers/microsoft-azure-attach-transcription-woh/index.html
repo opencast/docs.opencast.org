@@ -36,7 +36,8 @@
           {title: "Microsoft Azure Attach Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
-              {title: "Example", url: "#example" },
+              {title: "Workflow properties", url: "#workflow-properties" },
+              {title: "Examples", url: "#examples" },
           ]},
         ];
 
@@ -76,10 +77,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     </div>
     
     <div class="wm-article-nav">
-      <a href="../move-storage-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../metadata-to-acl/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../move-storage-woh/" class="btn btn-xs btn-link">
-        Move Storage
+        Previous</a><a href="../metadata-to-acl/" class="btn btn-xs btn-link">
+        Metadata to ACL
       </a>
     </div>
     
@@ -95,61 +96,126 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <table>
 <thead>
 <tr>
-<th>configuration keys</th>
-<th>required</th>
-<th>description</th>
-<th>default value</th>
-<th>example</th>
+<th>Configuration</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>transcription-job-id</td>
-<td>yes</td>
 <td>This is filled out by the transcription service when starting the workflow.</td>
-<td>EMPTY</td>
-<td><strong>Should always be "${transcriptionJobId}"</strong></td>
+<td>yes</td>
+<td>NONE</td>
+<td><strong>Should always be ${transcriptionJobId}</strong></td>
 </tr>
 <tr>
 <td>target-flavor</td>
+<td>The flavor of the generated transcription file.</td>
 <td>yes</td>
-<td>The flavor of the caption/transcription file generated.</td>
-<td>EMPTY</td>
+<td>NONE</td>
 <td>captions/source</td>
 </tr>
 <tr>
-<td>target-tag</td>
+<td>target-tags</td>
+<td>The comma separated list of tags to add to the generated transcription file. The common caption tags* <code>generator-type</code>, <code>generator</code> and <code>type</code> are added by the service itself. You have to manually set the <code>lang</code> tag. The values are provided as <a href="#workflow-properties">workflow properties</a> but you have to choose between two digit language code or locale.</td>
 <td>no</td>
-<td>The tag to apply to the caption/transcription file generated.*</td>
 <td>EMPTY</td>
-<td>archive,generator-type:auto</td>
-</tr>
-<tr>
-<td>auto-set-language-tag</td>
-<td>no</td>
-<td>If autodetection was used, set a tag with the autodetected language.</td>
-<td>false</td>
-<td>true</td>
+<td>archive,${transcriptionLocaleTag}</td>
 </tr>
 <tr>
 <td>target-element-type</td>
+<td>Define as what kind of asset to attach the transcription. Accepted values: track, attachment.</td>
 <td>no</td>
-<td>Define where to append the subtitles file. Accepted values: 'track', 'attachment'.</td>
 <td>track</td>
 <td>track</td>
 </tr>
 </tbody>
 </table>
 <p>*For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>.</p>
-<h2 id="example">Example</h2>
+<h2 id="workflow-properties">Workflow properties</h2>
+<p>This workflow operation is not intended to be started by the user. This will be done by the <a href="../../configuration/transcription.configuration/microsoftazure/">Microsoft Azure Transcription Engine</a>. It will also set some workflow properties listed below.</p>
+<table>
+<thead>
+<tr>
+<th>Workflow property</th>
+<th>Description</th>
+<th>Default</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transcriptionJobId</td>
+<td>Azure transcription job ID.</td>
+<td>Azure specific</td>
+<td>Azure specific</td>
+</tr>
+<tr>
+<td>transcriptionLocale</td>
+<td>The recognized transcript locale or empty.</td>
+<td>EMPTY</td>
+<td>en-GB</td>
+</tr>
+<tr>
+<td>transcriptionLocaleSet</td>
+<td>Boolean value if locale was recognized.</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>transcriptionLocaleSubtypeSuffix</td>
+<td>Flavor suffix with recognized locale (legacy behavior).</td>
+<td>EMPTY</td>
+<td>+en-GB</td>
+</tr>
+<tr>
+<td>transcriptionLocaleTag</td>
+<td>Lang tag with recognized locale (see <a href="../../configuration/subtitles/">Subtitles section</a>)</td>
+<td>EMPTY</td>
+<td>lang:en-GB</td>
+</tr>
+<tr>
+<td>transcriptionLanguage</td>
+<td>The recognized transcript language or empty.</td>
+<td>EMPTY</td>
+<td>en</td>
+</tr>
+<tr>
+<td>transcriptionLanguageSet</td>
+<td>Boolean value if language was recognized.</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>transcriptionLanguageSubtypeSuffix</td>
+<td>Flavor suffix with recognized language (legacy behavior).</td>
+<td>EMPTY</td>
+<td>+en</td>
+</tr>
+<tr>
+<td>transcriptionLanguageTag</td>
+<td>Lang tag with recognized language (see <a href="../../configuration/subtitles/">Subtitles section</a>)</td>
+<td>EMPTY</td>
+<td>lang:en</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<p>The next operation example shows you how to attach a generated transcript to the media package for archiving. Here we used the <code>transcriptionLocaleTag</code> workflow property to set the recognized locale as language tag for the transcription. This can be replaced with <code>transcriptionLanguageTag</code> if you prefer the two digit language codes. Please note the '!' behind the variable name. It is Freemarker syntax and mean: leave it empty if not set.</p>
 <pre><code class="language-xml">&lt;operation
-    id=&quot;microsoft-azure-attach-transcription&quot;
-    description=&quot;Attach captions/transcription&quot;&gt;
+  id=&quot;microsoft-azure-attach-transcription&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;Attach transcription from Microsoft Azure&quot;&gt;
   &lt;configurations&gt;
     &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
     &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
+    &lt;!-- Set the flavor to something the Paella player will parse --&gt;
     &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;archive,generator-type:auto&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive, ${transcriptionLocaleTag!}&lt;/configuration&gt;
   &lt;/configurations&gt;
 &lt;/operation&gt;
 </code></pre>
@@ -175,10 +241,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     </div>
     
     <div class="wm-article-nav">
-      <a href="../move-storage-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../metadata-to-acl/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../move-storage-woh/" class="btn btn-xs btn-link">
-        Move Storage
+        Previous</a><a href="../metadata-to-acl/" class="btn btn-xs btn-link">
+        Metadata to ACL
       </a>
     </div>
     
