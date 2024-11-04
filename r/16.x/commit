@@ -1,16 +1,39 @@
-commit b8a037d1b09aca5492b835b6aa5381f9ac70c4d2
+commit 0447b0f12492590855408d64bcec5b19561cf633
 Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
-Date:   Tue Oct 29 17:31:08 2024 +0100
+Date:   Mon Nov 4 20:30:09 2024 +0100
 
-    Lower log level for filter parsing errors (#6254)
+    Improve event catalog handling in External API (#6251)
     
-    Opencast is noisy when users pass in invalid filters. This lowers the
-    log level to debug.
+    This is an updated version of closed #4417
+    
+    This adds four improvements to event catalog handling in the External
+    API
+    
+    1. Avoid DB query is not necessary.
+    2. Cache map of organization to list of catalogs instead of always
+    calculating it.
+    3. Avoid calling list providers to fetch collection data if this is
+    later on not used (e.g. all series).
+    4. Remove collection data from responses for extended metadata.
+    
+    The last point can be seen as a change to the External API. However, one
+    can also see this as a bug, as other methods in the class hide the
+    collection data from extended metadata.
+    
+    All changes can add up when requesting multiple events with `/events`
+    especially with many events and series.
     
     ### How to test this patch
     
-    1. Pass invalid filter to External API (e.g. leave out the `:`)
-    2. Observe what log level is used
+    Performance degradation is most noticeable when there are a lot of
+    series in Opencast.
+    
+    1. Create 1000 series (e.g. using
+    https://github.com/opencast/helper-scripts/tree/master/create-series)
+    2. Use External API to retrieve event infos and include
+    `withmetadata=true`
+    3. Apply patch and repeat 2.
+    4. Compare the performance of 2. and 3.
     
     ### Your pull request should…
     
