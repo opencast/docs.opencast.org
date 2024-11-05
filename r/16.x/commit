@@ -1,39 +1,21 @@
-commit 0447b0f12492590855408d64bcec5b19561cf633
+commit 0b5f1d09cbf0b82e1d191d970ad2410b6b8b2a72
 Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
-Date:   Mon Nov 4 20:30:09 2024 +0100
+Date:   Tue Nov 5 21:12:26 2024 +0100
 
-    Improve event catalog handling in External API (#6251)
+    Fix stale JWK provider cache when using kid (#6250)
     
-    This is an updated version of closed #4417
-    
-    This adds four improvements to event catalog handling in the External
-    API
-    
-    1. Avoid DB query is not necessary.
-    2. Cache map of organization to list of catalogs instead of always
-    calculating it.
-    3. Avoid calling list providers to fetch collection data if this is
-    later on not used (e.g. all series).
-    4. Remove collection data from responses for extended metadata.
-    
-    The last point can be seen as a change to the External API. However, one
-    can also see this as a bug, as other methods in the class hide the
-    collection data from extended metadata.
-    
-    All changes can add up when requesting multiple events with `/events`
-    especially with many events and series.
+    The JWK provider cache can become stale (e.g. upon key rotation). When
+    using key IDs this can result in an empty algorithm selection. An
+    exception is thrown, however, the cache is not refreshed. This patch
+    will force a refresh if no key could be found.
     
     ### How to test this patch
     
-    Performance degradation is most noticeable when there are a lot of
-    series in Opencast.
-    
-    1. Create 1000 series (e.g. using
-    https://github.com/opencast/helper-scripts/tree/master/create-series)
-    2. Use External API to retrieve event infos and include
-    `withmetadata=true`
-    3. Apply patch and repeat 2.
-    4. Compare the performance of 2. and 3.
+    1. Configure JWT, including a JWKS endpoint (that includes `kid` for
+    configured keys)
+    2. Start Opencast and authenticate using JWTs
+    3. Rotate keys
+    4. Try to authenticate using JWTs that are signed using new keys
     
     ### Your pull request should…
     
