@@ -1,34 +1,9 @@
-commit 0b5f1d09cbf0b82e1d191d970ad2410b6b8b2a72
-Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
-Date:   Tue Nov 5 21:12:26 2024 +0100
+commit 0598f362e22afce296dc4702d862bfb16b639057
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Tue Nov 5 15:55:47 2024 -0600
 
-    Fix stale JWK provider cache when using kid (#6250)
+    Merge branch 'escapes-for-parse-filter' of JulianKniephoff/opencast into r/16.x
     
-    The JWK provider cache can become stale (e.g. upon key rotation). When
-    using key IDs this can result in an empty algorithm selection. An
-    exception is thrown, however, the cache is not refreshed. This patch
-    will force a refresh if no key could be found.
+    Pull request #6111
     
-    ### How to test this patch
-    
-    1. Configure JWT, including a JWKS endpoint (that includes `kid` for
-    configured keys)
-    2. Start Opencast and authenticate using JWTs
-    3. Rotate keys
-    4. Try to authenticate using JWTs that are signed using new keys
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+      Treat `filter` parameter elements in admin UI APIs as URL encoded
