@@ -37,8 +37,8 @@
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
               {title: "Requirements", url: "#requirements" },
+              {title: "Track Selection Strategy", url: "#track-selection-strategy" },
               {title: "Operation Examples", url: "#operation-examples" },
-              {title: "Language code", url: "#language-code" },
           ]},
         ];
 
@@ -68,12 +68,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
-        Start Watson Transcription
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-link">
+        Speech to Text Attach
       </a>
     </div>
     
@@ -101,48 +101,48 @@ The subtitles file format ist WebVTT.</p>
 <table>
 <thead>
 <tr>
-<th>configuration keys</th>
-<th>required</th>
+<th>Configuration Keys</th>
+<th>Required</th>
 <th>Example</th>
-<th>description</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>source-flavor</td>
 <td>yes</td>
-<td>source/presenter</td>
+<td>presenter/source</td>
 <td>The source media package to use</td>
 </tr>
 <tr>
 <td>target-flavor</td>
 <td>yes</td>
 <td>archive</td>
-<td>Flavor of the produced subtitle file.</td>
+<td>Flavor of the produced subtitle</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>no</td>
+<td>captions/source</td>
+<td>Tags applies to the resulting subtitle element²³.</td>
 </tr>
 <tr>
 <td>target-element</td>
 <td>no</td>
 <td>track</td>
-<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment'. The default is "track".</td>
+<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment' (default: <code>track</code>).</td>
 </tr>
 <tr>
 <td>language-code</td>
 <td>no</td>
 <td>de</td>
-<td>The language of the video or audio source (default is "eng"). Vosk only: It has to match the name of the language model directory. See 'vosk-cli'.</td>
+<td>The language of the video or audio source⁴.</td>
 </tr>
 <tr>
 <td>language-fallback</td>
-<td>yes*</td>
+<td>no¹</td>
 <td>en</td>
-<td>The fallback value if the dublin core/media package language field is not present.</td>
-</tr>
-<tr>
-<td>target-tags</td>
-<td>no</td>
-<td>delivery/captions</td>
-<td>Tags for the subtitle file.** The <code>generator</code> and <code>generator-type</code> tags will be set automatically. (Whisper/WhisperC++ only: If no <code>language-code</code> is set, the <code>lang</code> tag will be auto-generated.)</td>
+<td>Optional fallback value if the dublin core/media package language field is not set.</td>
 </tr>
 <tr>
 <td>translate</td>
@@ -154,47 +154,54 @@ The subtitles file format ist WebVTT.</p>
 <td>limit-to-one</td>
 <td>no</td>
 <td>true</td>
-<td>Limits the maximum of generated subtitles to one. In most cases only one track will have the audio with the speech. Use this to prevent multiple transcription jobs that wastes computing resources. To have more control over which tracks shall be tried first for subtitle generation, use the <code>track-selection-strategy</code> option.</td>
+<td>Limits the maximum of generated subtitles to one.</td>
 </tr>
 <tr>
 <td>track-selection-strategy</td>
 <td>no</td>
 <td>everything</td>
-<td>Use this in combination with <code>limit-to-one</code>. Define your strategy what tracks shall be selected for subtitle generation. If you use the <code>source-flavor</code> <code>*/source</code>, because your are unsure which track of your dual stream includes the audio, you can use the <code>track-selection-strategy</code> to try transcribing the presenter track first with the option<code>try_presenter_first</code> for example. These are the possible strategy options: <code>presenter_or_nothing</code>: only uses presenter tracks. <code>presentation_or_nothing</code>: only uses presentation tracks. <code>try_presenter_first</code>: looks for presenter tracks first, if there are no usable, try to transcribe the other tracks. <code>try_presentation_first</code>: looks for presentation tracks first, if there are no usable, try to transcribe the other tracks. <code>everything</code>: just transcribe everything (this is the default).</td>
+<td>Define what tracks shall be selected for subtitle generation if used together with <code>limit-to-one</code> (default: <code>everything</code>).</td>
+</tr>
+<tr>
+<td>async</td>
+<td>no</td>
+<td>false</td>
+<td>Start transcription in the background. Use <a href="../speechtotext-attach-woh/"><code>speechtotext-attach</code></a> to get the finished transcriptions later in the workflow (default: <code>false</code>).</td>
 </tr>
 </tbody>
 </table>
-<p><em>Vosk Only, default value can be modified on Vosk config file.
-</em>*For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>.</p>
+<ol>
+<li>Vosk default value can be modified on Vosk config file.</li>
+<li>For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>. The <code>generator</code>
+   and <code>generator-type</code> tags will be set automatically. For Whisper, iIf no <code>language-code</code> is set, the <code>lang</code> tag will
+   be auto-generated.</li>
+<li>This has no effect if the transcription is run asynchronously. It only applies to attached in this operation.</li>
+<li>Vosk only: It has to match the name of the language model directory. See 'vosk-cli'.</li>
+</ol>
 <h2 id="requirements">Requirements</h2>
 <p>In order for it to work, you have to install the vosk-cli, whisper or whispercpp package.</p>
+<h2 id="track-selection-strategy">Track Selection Strategy</h2>
+<p>Use the tack selection strategy in combination with the <code>limit-to-one</code> option to define  what tracks are selected for
+subtitle generation.</p>
+<p>For example, if you set <code>source-flavor</code> to <code>*/source</code> because your are unsure which track includes the audio, you can
+use the <code>track-selection-strategy</code> to have Opencast prefer the presenter track for transcriptions.</p>
+<p>Available options are:</p>
+<ul>
+<li><code>presenter_or_nothing</code>: only uses presenter tracks.</li>
+<li><code>presentation_or_nothing</code>: only uses presentation tracks.</li>
+<li><code>try_presenter_first</code>: look for presenter tracks first, if there are no usable, try to transcribe the other tracks.</li>
+<li><code>try_presentation_first</code>: look for presentation tracks first, falling back to other tracks if none are usable.</li>
+<li><code>everything</code>: just transcribe everything (this is the default).</li>
+</ul>
 <h2 id="operation-examples">Operation Examples</h2>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;speechtotext&quot;
-    description=&quot;Generates subtitles for video and audio files&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-element&quot;&gt;track&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
-    &lt;configuration key=&quot;language-code&quot;&gt;eng&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">- id: speechtotext
+  description: Generates subtitles for video and audio files
+  configurations:
+    - source-flavor: '*/source'
+    - target-flavor: captions/source
+    - target-tags: engage-download
+    - limit-to-one: true
 </code></pre>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;speechtotext&quot;
-    description=&quot;Generates subtitles for video and audio files, derive language-code from metadata&quot;&gt;
-    &lt;configurations&gt;
-      &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-element&quot;&gt;track&lt;/configuration&gt;
-      &lt;configuration key=&quot;target-tags&quot;&gt;archive,subtitle,engage-download&lt;/configuration&gt;
-    &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
-<h2 id="language-code">Language code</h2>
-<p>The accepted language code are the two letter codes defined in ISO 639-1. A reference list can be found here:</p>
-<p><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">List of ISO 639-1 codes</a></p>
 
   <br>
     
@@ -207,12 +214,12 @@ The subtitles file format ist WebVTT.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../start-watson-transcription-woh/" class="btn btn-xs btn-link">
-        Start Watson Transcription
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-link">
+        Speech to Text Attach
       </a>
     </div>
     
