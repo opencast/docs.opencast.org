@@ -1,9 +1,41 @@
-commit 0598f362e22afce296dc4702d862bfb16b639057
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Nov 5 15:55:47 2024 -0600
+commit ded931945b149c118b94e81c9cd4b61de0f27dec
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Thu Nov 7 00:42:38 2024 +0100
 
-    Merge branch 'escapes-for-parse-filter' of JulianKniephoff/opencast into r/16.x
+    Fix default session timeout (#6292)
     
-    Pull request #6111
+    Due to a bug in Pax Web, the default session timeout for Opencast was
+    set to 4 minutes instead of 4 hours. This caused users to be logged out
+    automatically if they do not have an additional remember-me cookie (e.g.
+    LTI users don't have that). This basically means that users are unable
+    to watch videos longer than four minutes for which they need
+    authentication.
     
-      Treat `filter` parameter elements in admin UI APIs as URL encoded
+    This is a temporary fix for #6260
+    
+    ### How to test this patch
+    
+    To test this (check that the value is indeed seconds):
+    
+    - Set `org.ops4j.pax.web.session.timeout=20`
+    - Go to http://localhost:8080, make sure to **remove the check mark for
+    remember me** and log-in
+    - Wait for 21 seconds
+    - Go to http://localhost:8080 again
+      - You will be logged out and asked to log in again
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
