@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Frontend - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Video Editor Frontend", url: "#_top", children: [
+              {title: "Accessing The Editor", url: "#accessing-the-editor" },
+              {title: "Stand-alone capabilities", url: "#stand-alone-capabilities" },
+              {title: "Preview Tracks", url: "#preview-tracks" },
+              {title: "Workflow Selection", url: "#workflow-selection" },
+              {title: "Replacing the Admin Interface Editor", url: "#replacing-the-admin-interface-editor" },
+              {title: "Configuration", url: "#configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../videoeditor.workflow-operation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../videoeditor.workflow-operation/" class="btn btn-xs btn-link">
+        Workflow Operations
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../videoeditor.architecture/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../videoeditor.architecture/" class="btn btn-xs btn-link">
+        Architecture
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="video-editor-frontend">Video Editor Frontend</h1>
+<p>Opencast's video editor frontend (also referred to as "Stand-alone video editor" or just "The editor") provides a tool for
+users to cut videos without full access to the admin interface.
+It strives to be simple and easy to use while providing enough features for most common use-cases.</p>
+<h2 id="accessing-the-editor">Accessing The Editor</h2>
+<p>You can access the editor by providing an event identifier to the web interface like this:</p>
+<pre><code>/editor-ui/index.html?id=&lt;ID&gt;
+</code></pre>
+<h2 id="stand-alone-capabilities">Stand-alone capabilities</h2>
+<p>The editor frontend is also referred to as "stand-alone" since it can be deployed and run outside an Opencast installation.
+Should you wish to do so check its github repository: https://github.com/opencast/opencast-editor
+However, there is little benefit in doing so, as the editor frontend will not function without a connection to its
+backend in Opencast.</p>
+<h2 id="preview-tracks">Preview Tracks</h2>
+<p>Preview tracks for the editor are retrieved from the internal publication, similar to the editor in the admin interface.
+But unlike the admin interface, tracks are selected in the following way,
+falling back to the next rule if the previous yielded no results:</p>
+<ul>
+<li>select tracks tagged with <code>preview.tag</code></li>
+<li>select tracks with sub-flavor <code>preview.subtype</code></li>
+<li>select all available tracks</li>
+</ul>
+<p>More details about the preview track selection can be found and configured in
+<code>etc/org.opencastproject.editor.EditorServiceImpl.cfg</code>.</p>
+<h2 id="workflow-selection">Workflow Selection</h2>
+<p>The editor offers a workflow selection, allowing users to choose how an event is being processed.
+Workflows need to be tagged <code>editor</code> to show up in the user interface.
+The interface honors title, description and display order of workflows.</p>
+<p>If only a single workflow exists, the selection will be skipped.</p>
+<h2 id="replacing-the-admin-interface-editor">Replacing the Admin Interface Editor</h2>
+<p>It is possible to have the admin interface link to old internal editor instead of the stand-alone editor.
+For this, configure the <code>prop.admin.editor.url</code> in <code>etc/org.opencastproject.organization-mh_default_org.cfg</code>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The following configuration files allow customization of the editor:</p>
+<ul>
+<li>Backend (track selection, …)<ul>
+<li><code>etc/org.opencastproject.editor.EditorServiceImpl.cfg</code></li>
+</ul>
+</li>
+<li>User interface (which tools to show, …))<ul>
+<li><code>etc/ui-config/mh_default_org/editor/editor-settings.toml</code></li>
+</ul>
+</li>
+<li>Admin interface integration<ul>
+<li><code>etc/org.opencastproject.organization-mh_default_org.cfg</code></li>
+</ul>
+</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../videoeditor.workflow-operation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../videoeditor.workflow-operation/" class="btn btn-xs btn-link">
+        Workflow Operations
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../videoeditor.architecture/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../videoeditor.architecture/" class="btn btn-xs btn-link">
+        Architecture
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/videoeditor.frontend.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

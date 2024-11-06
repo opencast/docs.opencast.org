@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Theme - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Theme Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Workflow Properties", url: "#workflow-properties" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../video-grid-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../video-grid-woh/" class="btn btn-xs btn-link">
+        Video Grid
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../transfer-metadata-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../transfer-metadata-woh/" class="btn btn-xs btn-link">
+        Transfer Metadata
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="theme-workflow-operation">Theme Workflow Operation</h1>
+<p>ID: <code>theme</code></p>
+<h2 id="description">Description</h2>
+<p>The theme operation loads workflow properties and adds elements to the media package if available.
+This information can be used within workflow definitions to actually implement themes.</p>
+<p><strong>Bumpers</strong></p>
+<p>The property <em>theme_bumper_active</em> indicates whether the theme defines a bumper video. If true, the bumper video
+is added to the media package with the flavor <em>bumper-flavor</em> and/or tags <em>bumper-tags</em>.</p>
+<p><strong>Trailers</strong></p>
+<p>The property <em>theme_trailer_active</em> indicates whether the theme defines a trailer video. If true, the trailer video
+is added to the media package with the flavor <em>trailer-flavor</em> and/or tags <em>trailer-tags</em>.</p>
+<p><strong>Title Slide</strong></p>
+<p>The property <em>theme_title_slide_active</em> indicates whether the theme defines a title slide. Additionally, the
+property <em>theme_title_slide_uploaded</em> indicates whether the image needed as background for the generation
+of the title slide should be extracted from a video track or has been uploaded. In the later case,
+the background image is added to the media package with the flavor <em>title-slide-flavor</em> and/or tags <em>title-slide-tags</em>.</p>
+<p><strong>Watermark</strong></p>
+<p>The property <code>theme_watermark_active</code> indicates whether the theme defines a watermark.
+If true, the watermark is added to the media package with the flavor <code>watermark-flavor</code> and/or tags <code>watermark-tags</code>.
+Additionally, a watermark layout compatible to the composite operation is added as property <code>watermark_layout_variable</code>.</p>
+<h2 id="workflow-properties">Workflow Properties</h2>
+<p>The ThemeWorkflowOperation will set the following workflow properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theme_active</td>
+<td>true if the theme has active settings, false or undefined otherwise</td>
+</tr>
+<tr>
+<td>theme_bumper_active</td>
+<td>true if the theme has an active bumper video, false otherwise</td>
+</tr>
+<tr>
+<td>theme_trailer_active</td>
+<td>true if the theme has an active trailer video, false otherwise</td>
+</tr>
+<tr>
+<td>theme_title_slide_active</td>
+<td>true if the theme has an active title slide, false otherwise</td>
+</tr>
+<tr>
+<td>theme_title_slide_uploaded</td>
+<td>true if the theme come with an uploaded title slide, false otherwise</td>
+</tr>
+<tr>
+<td>theme_watermark_active</td>
+<td>true if the theme has an active watermark, false otherwise</td>
+</tr>
+</tbody>
+</table>
+<p>Note: The property <code>theme_active</code> can be used to test whether a theme has any active settings,
+i.e. at least one of the properties <code>theme_*_active</code> is true.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>Configuration Keys</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*bumper-flavor</td>
+<td>branding/bumper</td>
+<td>Flavor of the bumper video</td>
+</tr>
+<tr>
+<td>*bumper-tags</td>
+<td>bumper</td>
+<td>Tags of of the bumper video</td>
+</tr>
+<tr>
+<td>*trailer-flavor</td>
+<td>branding/trailer</td>
+<td>Flavor of the trailer video</td>
+</tr>
+<tr>
+<td>*trailer-tags</td>
+<td>trailer</td>
+<td>Tags of the trailer video</td>
+</tr>
+<tr>
+<td>*title-slide-flavor</td>
+<td>branding/titleslide</td>
+<td>Flavor of the title slide image</td>
+</tr>
+<tr>
+<td>*title-slide-tags</td>
+<td>titleslide</td>
+<td>Tags of the title slide image</td>
+</tr>
+<tr>
+<td>*watermark-flavor</td>
+<td>branding/watermark</td>
+<td>Flavor of the watermark image</td>
+</tr>
+<tr>
+<td>*watermark-tags</td>
+<td>watermark</td>
+<td>Tags of the watermark image</td>
+</tr>
+<tr>
+<td>*watermark-layout-variable</td>
+<td>theme_watermark_layout</td>
+<td>Variable that will hold the watermark layout</td>
+</tr>
+</tbody>
+</table>
+<p>* Mandatory configuration key (in case the feature is active)</p>
+<h2 id="operation-example">Operation Example</h2>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;theme&quot;
+    description=&quot;Apply the theme&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;bumper-flavor&quot;&gt;branding/bumper&lt;/configuration&gt;
+    &lt;configuration key=&quot;bumper-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;trailer-flavor&quot;&gt;branding/trailer&lt;/configuration&gt;
+    &lt;configuration key=&quot;trailer-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;title-slide-flavor&quot;&gt;branding/titleslide&lt;/configuration&gt;
+    &lt;configuration key=&quot;title-slide-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-flavor&quot;&gt;branding/titleslide&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-tags&quot;&gt;archive&lt;/configuration&gt;
+    &lt;configuration key=&quot;watermark-layout-variable&quot;&gt;theme_watermark_layout&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../video-grid-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../video-grid-woh/" class="btn btn-xs btn-link">
+        Video Grid
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../transfer-metadata-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../transfer-metadata-woh/" class="btn btn-xs btn-link">
+        Transfer Metadata
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/theme-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

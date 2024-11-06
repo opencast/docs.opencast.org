@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Partial Import - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Partial Import Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Prerequisite", url: "#prerequisite" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Operation Example", url: "#operation-example" },
+              {title: "SMIL File Structure", url: "#smil-file-structure" },
+              {title: "Encoding Profiles", url: "#encoding-profiles" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../postmediapackage-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../postmediapackage-woh/" class="btn btn-xs btn-link">
+        Post Media Package
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../normalizeaudio-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../normalizeaudio-woh/" class="btn btn-xs btn-link">
+        Normalize Audio
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="partial-import-workflow-operation">Partial Import Workflow Operation</h1>
+<p>ID: <code>partial-import</code></p>
+<h2 id="description">Description</h2>
+<p>The PartialImportWorkflowOperation processes a set of audio and video files according to a SMIL document describing
+their relations. Its primary use is to post-process audio and video files ingested by capture agents using
+/ingest/addPartialTrack of the ingest endpoint.</p>
+<h2 id="prerequisite">Prerequisite</h2>
+<p>When using the partial-import operation, make sure to perform a media inspection beforehand using the
+<a href="../inspect-woh/">inspect operation</a> with the option <code>accurate-frame-count</code> set to <code>true</code>. This ensures that
+the partial-import operation works correctly in case of media files with incorrect frame count in their header.
+Note that the use of <code>accurate-frame-count</code> will force the InspectWorkflowOperation to decode the complete video
+stream which makes the operation more expensive in terms of load.</p>
+<p>Not all encoding profiles required for the PartialImportWorkflowOperation are available in
+Opencast per default, so you will have to add them yourself.
+Examples can be found <a href="#encoding-profiles">further down</a>.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration keys</th>
+<th>type</th>
+<th>description</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-presenter-flavor</td>
+<td>MediaPackageElementFlavor</td>
+<td>The flavor of tracks for the presenter video</td>
+<td></td>
+</tr>
+<tr>
+<td>source-presentation-flavor</td>
+<td>MediaPackageElementFlavor</td>
+<td>The flavor of tracks for the presentation video</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>source-smil-flavor</strong>*</td>
+<td>MediaPackageElementFlavor</td>
+<td>The flavor of the SMIL file describing how to build the targets.</br>When using /ingest/addPartialTrack, the ingest service will create the SMIL file and add it to the media package as flavor <em>smil/source+partial</em></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>target-presenter-flavor</strong>*</td>
+<td>MediaPackageElementFlavor</td>
+<td>The flavor to be used for the target presentation track.</br>Both the type and subtype must not be <em>*</em></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>target-presentation-flavor</strong>*</td>
+<td>MediaPackageElementFlavor</td>
+<td>The flavor to be used for the target presentation track.</br>Both the type nor subtype must not be <em>*</em></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>preencode-encoding-profile</strong>*</td>
+<td>String</td>
+<td>Encoding profile to for pre-processing videos. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>concat-encoding-profile</strong>*</td>
+<td>String</td>
+<td>Encoding profile used for concatenating audio or video files</td>
+<td></td>
+</tr>
+<tr>
+<td>concat-output-framerate</td>
+<td>Float</td>
+<td>The optional output framerate for concatenated video files</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>trim-encoding-profile</strong>*</td>
+<td>String</td>
+<td>Encoding profile using for trimming tracks</td>
+<td></td>
+</tr>
+<tr>
+<td>force-encoding</td>
+<td>Boolean</td>
+<td>If set to <em>true</em>, all generated target files will be encoded using the encoding profile <em>force-encoding-profile</em></td>
+<td>false</td>
+</tr>
+<tr>
+<td><strong>force-encoding-profile</strong>*</td>
+<td>String</td>
+<td>Encoding profile to be used when <em>force-encoding</em> is set to <em>true</em> or a given target track has a file extension not included in <em>required-extensions</em></td>
+<td></td>
+</tr>
+<tr>
+<td>required-extensions</td>
+<td>String , { "," , String }</td>
+<td>Comma-separated list of file extension names (case insensitive). All generated target files whose file extensions are not in this list will be encoded using the encoding profile <em>force-encoding-profile</em></td>
+<td>"mp4"</td>
+</tr>
+<tr>
+<td>enforce-divisible-by-two</td>
+<td>Boolean</td>
+<td>If set, all video targets will have widths and heights divisible by two. This might be necessary depending since some encoder fail when encountering uneven widths or heights.</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>* <strong>required keys</strong></p>
+<p>Note that it is allowed to set the configuration keys 'target-presenter-flavor' and 'target-presentation-flavor' to the
+same value.</p>
+<h2 id="operation-example">Operation Example</h2>
+<p>What exactly the PartialImportWorkflowOperation does is best described by example. In our example, a capture agent
+records three sources:</p>
+<ul>
+<li>Presenter camera (video only)</li>
+<li>Presenter microphone (audio only)</li>
+<li>Presentation (video only)</li>
+</ul>
+<p>While the capture agent internally triggers the recording for all sources at the same time, the actual recording of the
+individual sources might not necessarily start at the exact same time, e.g. due to latency of the recording
+devices.</p>
+<p>Also, while recording, a watch dog in our example capture agent recognizes that for whatever reason, the
+recording of the sources had stopped and restarted again several times - resulting in multiple audio and/or video files
+per source.</p>
+<p>Here is a graphics showing how this example could look like:</p>
+<p><img alt="Figure 1" src="../partial-import-woh-figure-1.jpg" /></p>
+<p>So we have three tracks, but seven files:</p>
+<ul>
+<li>Presenter camera: 2 video-only files</li>
+<li>Presenter microphone: 2 audio-only files</li>
+<li>Presentation: 3 video-only files</li>
+</ul>
+<p>We call that individual fragments of a track <em>partial tracks</em>.</p>
+<p>Our example capture agent can now use the addPartialTrack ingest facility to specify for each of the ingested files, at
+which time the content fits into the overall recording. The ingest service will automatically create the SMIL file
+describing how the files relate to each other and add it to the media package as flavor <em>smil/source+partial</em>.</p>
+<p>In our example, this SMIL file would like something like:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;smil xmlns=&quot;http://www.w3.org/ns/SMIL&quot; version=&quot;3.0&quot;&gt;
+  &lt;head/&gt;
+  &lt;body&gt;
+    &lt;par dur=&quot;93861ms&quot;&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;412ms&quot; dur=&quot;13440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;15324ms&quot; dur=&quot;73440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;0ms&quot; dur=&quot;40861ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;43400ms&quot; dur=&quot;13861ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;948ms&quot; dur=&quot;33440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;35643ms&quot; dur=&quot;15430ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;45448ms&quot; dur=&quot;25440ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+    &lt;/par&gt;
+  &lt;/body&gt;
+&lt;/smil&gt;
+</code></pre>
+<p>What we finally want, however, is a single presenter and a single presentation track that can be processed by Opencast
+workflow operations. To achieve this, the PartialImportWorkflowOperation is used to post-process the files as described
+in the SMIL file:</p>
+<pre><code class="language-xml">&lt;operation id=&quot;partial-import&quot;
+     description=&quot;Post-processing raw audio and video files from capture agent&quot;
+     fail-on-error=&quot;true&quot;
+     exception-handler-workflow=&quot;partial-error&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-presenter-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-presentation-flavor&quot;&gt;presentation/source&lt;/configuration&gt;
+    &lt;configuration key=&quot;source-smil-flavor&quot;&gt;smil/source+partial&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-presenter-flavor&quot;&gt;presenter/standard&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-presentation-flavor&quot;&gt;presentation/standard&lt;/configuration&gt;
+    &lt;configuration key=&quot;preencode-encoding-profile&quot;&gt;partial-import-preencode&lt;/configuration&gt;
+    &lt;configuration key=&quot;concat-encoding-profile&quot;&gt;concat.work&lt;/configuration&gt;
+    &lt;configuration key=&quot;trim-encoding-profile&quot;&gt;trim.work&lt;/configuration&gt;
+    &lt;configuration key=&quot;force-encoding-profile&quot;&gt;encode.partial-import&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>In our example, the PartialImportWorkflowOperation will create the target flavors presenter/standard and
+presentation/standard as depicted below:</p>
+<p><img alt="Figure 2" src="../partial-import-woh-figure-2.jpg" /></p>
+<p>The green parts have been filled in by the PartialImportWorkflowOperation by either silence (audio) or pictures (video).</p>
+<p>To achieve this, the PartialImportWorkflowOperation performs the following steps:</p>
+<ol>
+<li>
+<p><strong>Extend content at the beginning:</strong> If the first partial track of a given source and type (audio/video) does not
+   begin at position zero, content is added in front of it so that the corresponding target track will start at position
+   zero. For audio, silence is added. In case of video, the first frame of the first partial track is added.</p>
+</li>
+<li>
+<p><strong>Filling the gaps:</strong> As you can see in our example, it is possible that content is missing within the actual tracks.
+   Those gaps are filled by adding silence (in case of audio) or adding the last frame of the previous partial track (in
+   case of video). In this step, content is also added at the end of the track in case its duration is less than the
+   overall duration of the recording.</p>
+</li>
+<li>
+<p><strong>Trim the tracks:</strong> It is possible that processing the ingested files according to the SMIL file would result in
+   tracks that have a longer duration than the overall recording should. Therefore, all tracks are trimmed individually
+   to the target duration.</p>
+</li>
+<li>
+<p><strong>Mux audio tracks:</strong> To avoid the necessity to call further workflow operations just for audio muxing, the
+   PartialImportWorkflowOperation can perform audio muxing itself. In our example, it would mux the audio and video
+   track of the presenter into a single audio/video track.</p>
+</li>
+<li>
+<p><strong>Ensure specific output formats:</strong> There may be situations where you want to ensure that the output of this
+   operations comes with a specific file format, e.g. <em>MP4</em>. The configuration keys <em>force-encoding</em> and
+   <em>required_extensions</em> can be used to control the behavior of the PartialImportWorkflowOperation: In case the
+   <em>force-encoding</em> is set to <em>true</em>, the target tracks will be re-encoded using the <em>force-encoding-profile</em>. The
+   target tracks will also be re-encoded using that encoding profile in case its file extensions don't match the
+   <em>required_extensions</em>.</p>
+</li>
+</ol>
+<h2 id="smil-file-structure">SMIL File Structure</h2>
+<p>The PartialImportWorkflowOperation expects a specific subset of SMIL that is described in this section.
+The overall structure of the SMIL file is shown by example below:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;smil xmlns=&quot;http://www.w3.org/ns/SMIL&quot; version=&quot;3.0&quot;&gt;
+  &lt;head/&gt;
+  &lt;body&gt;
+    &lt;par dur=&quot;15000ms&quot;&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;400ms&quot; dur=&quot;13000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;video begin=&quot;15000ms&quot; dur=&quot;70000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/5133d85c-5813-4b54-8a43-0cce9ddc1c4a/video_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;0ms&quot; dur=&quot;400ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+        &lt;audio begin=&quot;900ms&quot; dur=&quot;13000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/72a42596-e1d0-47a5-b9c8-60180b466954/audio_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+      &lt;seq&gt;
+        &lt;video begin=&quot;900ms&quot; dur=&quot;30000ms&quot; src=&quot;/files/mediapackage/7b56bf47-8065-4244-96a0-412a759ccc3f/bf5ea647-b99b-4ec3-a10c-29445fb01eca/video_file.mov&quot;/&gt;
+      &lt;/seq&gt;
+    &lt;/par&gt;
+  &lt;/body&gt;
+&lt;/smil&gt;
+</code></pre>
+<p>The PartialImportWorkflowOperation can handle at most one <strong><em>par</em></strong> element that is used to describe to overall media
+duration using the attribute <em>dur</em>. The resulting tracks will be trimmed to this duration if necessary. In the example
+above, the overall media duration is set to 15 seconds.</p>
+<p>The <em>par</em> element has one or two sequence sub elements <strong><em>seq</em></strong>, each describing a track that is to be built from its
+sub elements - the partial tracks. Each sequence (<em>seq</em>) has at least one sub element. Sub elements can be either
+<strong><em>video</em></strong> elements, <strong><em>audio</em></strong> elements or both <em>video</em> and <em>audio</em> elements. Each of those sub elements requires the
+attributes <em>begin</em> (position of partial track in milliseconds relative to start of overall media) and <em>dur</em> (duration of
+partial track in milliseconds) The <em>audio</em> elements are used to indicate that the media file referred to is an
+audio-only media file, whereas <em>video</em> elements can refer to either video-only or audio-video media files. The following
+combinations result in a defined behavior:</p>
+<h3 id="supported-combinations-of-video-and-audio-elements">Supported Combinations of Video and Audio Elements</h3>
+<table>
+<thead>
+<tr>
+<th>video</th>
+<th>audio</th>
+<th>resulting track</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>audio/video track</td>
+<td>n/a</td>
+<td>audio/video track</td>
+</tr>
+<tr>
+<td>video-only track</td>
+<td>n/a</td>
+<td>video-only track</td>
+</tr>
+<tr>
+<td>video-only track</td>
+<td>audio-only track</td>
+<td>audio/video track</td>
+</tr>
+<tr>
+<td>n/a</td>
+<td>audio-only track</td>
+<td>audio-only track</td>
+</tr>
+</tbody>
+</table>
+<p>All other combinations of <em>video</em> and <em>audio</em> elements result in unspecified behavior of the
+PartialImportWorkflowOperation.</p>
+<h3 id="order-of-video-and-audio-elements">Order of Video and Audio Elements</h3>
+<p>Within a sequence (<em>seq</em>), the <em>video</em> elements most occur in ascending order considering the values of their attributes
+<em>begin</em>. The same holds for <em>audio</em> elements. Note the <em>video</em> and <em>audio</em> elements are processed individually, so the
+order of occurrences of <em>video</em> and <em>audio</em> elements are independent from each other.</p>
+<p><strong>Important:</strong> The PartialImportWorkflowOperation will not process <em>video</em> or <em>audio</em> elements correctly if the order of
+appearance in the SMIL file is not correct.</p>
+<h3 id="overlapping-partial-tracks">Overlapping Partial Tracks</h3>
+<p>The behavior of overlapping partial tracks is unspecified, i.e. for a given element <em>e</em> (<em>video</em> or <em>audio</em>), the value
+of <em>begin</em> for the subsequent element <em>(e+1)</em> of the same type (<em>video</em> or <em>audio</em>) within the same sequence must be
+equal or greater than <em>e.begin + e.dur</em>, i.e. make sure that the following invariant holds: <em>(e+1).begin &gt;= e.begin +
+e.dur</em></p>
+<h2 id="encoding-profiles">Encoding Profiles</h2>
+<p>The PartialImportWorkflowOperation uses a number of encoding profiles to perform its processing.  Some of the encoding
+profiles can be explicitly configured by the user, others are used implicitly in means of being hard-coded and are not
+supposed to be changed by the user.</p>
+<h3 id="hard-coded-encoding-profiles">Hard-coded Encoding Profiles</h3>
+<table>
+<thead>
+<tr>
+<th>Encoding Profile</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>import.preview</td>
+<td>Extract the first frame of a given partial track</td>
+</tr>
+<tr>
+<td>import.image-frame</td>
+<td>Extract the last frame of a given partial track. Note that this profile is used to extract the <em>exactly</em> last frame of a partial track - not just a frame close to the last one. To make this work for video files with headers that don't contain the exact frame count, set <em>accurate_frame_count</em> to <em>true</em> in  etc/org.opencastproject.inspection.ffmpeg.MediaInspectionServiceImpl.cfg</td>
+</tr>
+<tr>
+<td>image-movie.work</td>
+<td>Generate video partial tracks based on extracted images used to fill video gaps</td>
+</tr>
+<tr>
+<td>import.silent</td>
+<td>Generate silent audio tracks used to fill audio gaps</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configurable-encoding-profiles">Configurable Encoding Profiles</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>concat-encoding-profile</td>
+<td>Used to concatenate partial tracks into tracks</td>
+</tr>
+<tr>
+<td>trim-encoding-profile</td>
+<td>Used to trim the resulting concatenated single tracks if necessary</td>
+</tr>
+<tr>
+<td>preencode-encoding-profile</td>
+<td>Used to encode all source video tracks before any processing happens, to avoid errors with non-uniform input and prepare them for lossless concatenation. Must ensure same resolution, codec, framerate and samplerate. Must use the same framerate as the image-movie.work profile.</td>
+</tr>
+<tr>
+<td>force-encoding-profile</td>
+<td>Used to re-encode target tracks in case the file extension of a given target track is not included in <em>required-extensions</em> or the configuration key <em>force-encoding</em> is set to <em>true</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="missing-encoding-profiles">Missing Encoding Profiles</h3>
+<p>Some of the encoding profiles necessary for this operation are not included in Opencast per default,
+but the operation will not work without them (or with similar ones configured).
+If you want to use this operation. we recommend using the following encoding profiles by copy and pasting them in
+a <code>.properties</code> file in the <code>etc/encoding</code> folder of your installation.</p>
+<pre><code># Generate silent audio tracks for filling gaps for partial import operation
+profile.import.silent.name = Generate silent audio tracks for filling gaps
+profile.import.silent.input = nothing
+profile.import.silent.output = audio
+profile.import.silent.suffix = -silent-audio.mp4
+profile.import.silent.ffmpeg.command = -strict -2 -filter_complex aevalsrc=0:d=#{time} -c:a aac -b:a 8k -ar 44100 #{out.dir}/#{out.name}#{out.suffix}
+
+# Extract last image for partial import operation
+profile.import.image-frame.name = Extract last image
+profile.import.image-frame.input = visual
+profile.import.image-frame.output = image
+profile.import.image-frame.suffix = -image.jpg
+profile.import.image-frame.ffmpeg.command = -sseof -3 -i #{in.video.path} -update 1 -q:v 1 #{out.dir}/#{out.name}#{out.suffix}
+
+# Extract image for partial import operation
+profile.import.preview.name = Extract an image
+profile.import.preview.input = visual
+profile.import.preview.output = image
+profile.import.preview.suffix = -image.jpg
+profile.import.preview.ffmpeg.command = -ss #{time} -i #{in.video.path} -r 1 -frames:v 1 #{out.dir}/#{out.name}#{out.suffix}
+
+# Trim a stream
+#   This command will trim and input stream. Trimming will be fast, as no
+#   re-encoding takes place. It will, however, not be frame accurate.
+profile.trim.work.name = trim track
+profile.trim.work.input = stream
+profile.trim.work.output = visual
+profile.trim.work.suffix = -trimmed.#{in.video.suffix}
+profile.trim.work.ffmpeg.command = -ss #{trim.start} -i #{in.video.path} -t #{trim.duration} -c copy #{out.dir}/#{out.name}#{out.suffix}
+
+# Used by Partial Import operation to encode tracks into equal formats
+profile.encode.partial-import.name = editor
+profile.encode.partial-import.input = audiovisual
+profile.encode.partial-import.output = audiovisual
+profile.encode.partial-import.suffix = -editor.mp4
+profile.encode.partial-import.mimetype = video/mp4
+profile.encode.partial-import.ffmpeg.command = -i #{in.video.path} \
+  -filter:v crop=trunc(iw/2)*2:trunc(ih/2)*2,fps=25 -shortest -c:v libx264 -preset superfast -pix_fmt yuv420p -crf 18 -c:a aac -b:a 196k \
+  #{out.dir}/#{out.name}#{out.suffix}
+
+# Preencode
+#   Used by partial import to make all videos have the same resolution,
+#   codec, framerate and samplerate to allow for usage of the concat
+#   demuxer.
+#   MUST specify the same framerate as image-movie.work
+profile.partial-import-preencode.name = partial-import-preencode
+profile.partial-import-preencode.input = audiovisual
+profile.partial-import-preencode.output = audiovisual
+profile.partial-import-preencode.suffix = -preencoded.mp4
+profile.partial-import-preencode.mimetype = video/mp4
+profile.partial-import-preencode.ffmpeg.command = -i #{in.video.path} \
+  -filter:v scale=1920:-2,fps=30 \
+  -shortest -c:v libx264 -pix_fmt yuv420p \
+  -c:a aac -b:a 196k \
+  -ar 44100 \
+  #{out.dir}/#{out.name}#{out.suffix}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../postmediapackage-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../postmediapackage-woh/" class="btn btn-xs btn-link">
+        Post Media Package
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../normalizeaudio-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../normalizeaudio-woh/" class="btn btn-xs btn-link">
+        Normalize Audio
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/partial-import-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
