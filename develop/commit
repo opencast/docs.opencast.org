@@ -1,5 +1,142 @@
-commit 2af50adcfcd8dc6df5f9f3b946de9e63b0658aed
+commit 864265ddb3f830990dd570a318ab9dc2f0fe842f
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Nov 19 16:41:35 2024 +0100
+Date:   Tue Nov 19 17:13:13 2024 +0100
 
-    Merge r/17.x into develop
+    Enable awt headless mode (#6308)
+    
+    TODO: Add documentation
+    
+    This allows Opencast to operate in a headless Java environment, with
+    fontconfig as the sole required dependency.
+    
+    > The fontconfig packages contains the font configuration and
+    customization library, which is designed to locate fonts within the
+    system and select them according to the requirements specified by the
+    applications.
+    
+    ### How to test this patch
+    
+    - Without the patch and full-blown Java, run a workflow with the
+    `cover-image` operation
+    - Ensure the operation is working
+    - Remove Java and install a java-headless version together with the
+    `fontconfig` package
+    - Run the workflow again, it should fail.
+    - Apply the patch and restart opencast
+    - Run the workflow again, it should succeed.
+    
+    ### Exceptions
+    
+    Exception without fontconfig package
+    ```
+    2024-11-13T21:22:16,800 | ERROR | (AbstractJobProducer$JobRunner:344) - Error handling operation 'Generate':
+    java.lang.InternalError: java.lang.reflect.InvocationTargetException
+            at sun.font.FontManagerFactory$1.run(FontManagerFactory.java:86) ~[?:?]
+            at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+            at sun.font.FontManagerFactory.getInstance(FontManagerFactory.java:74) ~[?:?]
+            at sun.java2d.SunGraphicsEnvironment.getFontManagerForSGE(SunGraphicsEnvironment.java:190) ~[?:?]
+            at sun.java2d.SunGraphicsEnvironment.getAvailableFontFamilyNames(SunGraphicsEnvironment.java:224) ~[?:?]
+            at sun.java2d.SunGraphicsEnvironment.getAvailableFontFamilyNames(SunGraphicsEnvironment.java:252) ~[?:?]
+            at sun.java2d.HeadlessGraphicsEnvironment.getAvailableFontFamilyNames(HeadlessGraphicsEnvironment.java:75) ~[?:?]
+            at org.apache.batik.bridge.DefaultFontFamilyResolver.<clinit>(DefaultFontFamilyResolver.java:86) ~[?:?]
+            at org.apache.batik.bridge.UserAgentAdapter.getFontFamilyResolver(UserAgentAdapter.java:465) ~[?:?]
+            at org.apache.batik.bridge.BridgeContext.getFontFamilyResolver(BridgeContext.java:284) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.getFontList(SVGTextElementBridge.java:1518) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.getAttributeMap(SVGTextElementBridge.java:1597) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.fillAttributedStringBuffer(SVGTextElementBridge.java:897) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.buildAttributedString(SVGTextElementBridge.java:850) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.computeLaidoutText(SVGTextElementBridge.java:630) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.buildGraphicsNode(SVGTextElementBridge.java:286) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildGraphicsNode(GVTBuilder.java:224) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildComposite(GVTBuilder.java:171) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildGraphicsNode(GVTBuilder.java:219) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildComposite(GVTBuilder.java:171) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.build(GVTBuilder.java:82) ~[?:?]
+            at org.apache.batik.transcoder.SVGAbstractTranscoder.transcode(SVGAbstractTranscoder.java:210) ~[?:?]
+            at org.apache.batik.transcoder.image.ImageTranscoder.transcode(ImageTranscoder.java:92) ~[?:?]
+            at org.apache.batik.transcoder.XMLAbstractTranscoder.transcode(XMLAbstractTranscoder.java:142) ~[?:?]
+            at org.apache.batik.transcoder.SVGAbstractTranscoder.transcode(SVGAbstractTranscoder.java:158) ~[?:?]
+            at org.apache.batik.apps.rasterizer.SVGConverter.transcode(SVGConverter.java:1008) ~[?:?]
+            at org.apache.batik.apps.rasterizer.SVGConverter.execute(SVGConverter.java:719) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.rasterizeSvg(AbstractCoverImageService.java:276) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.generateCoverImageInternal(AbstractCoverImageService.java:171) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.process(AbstractCoverImageService.java:125) ~[?:?]
+            at org.opencastproject.job.api.AbstractJobProducer$JobRunner.call(AbstractJobProducer.java:314) [!/:?]
+            at org.opencastproject.job.api.AbstractJobProducer$JobRunner.call(AbstractJobProducer.java:273) [!/:?]
+            at java.util.concurrent.FutureTask.run(FutureTask.java:264) [?:?]
+            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]
+            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]
+            at java.lang.Thread.run(Thread.java:829) [?:?]
+    Caused by: java.lang.reflect.InvocationTargetException
+            at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+            at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:?]
+            at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+            at java.lang.reflect.Constructor.newInstance(Constructor.java:490) ~[?:?]
+            at sun.font.FontManagerFactory$1.run(FontManagerFactory.java:84) ~[?:?]
+            ... 35 more
+    Caused by: java.lang.RuntimeException: Fontconfig head is null, check your fonts or fonts configuration
+            at sun.awt.FontConfiguration.getVersion(FontConfiguration.java:1271) ~[?:?]
+            at sun.awt.FontConfiguration.readFontConfigFile(FontConfiguration.java:225) ~[?:?]
+            at sun.awt.FontConfiguration.init(FontConfiguration.java:107) ~[?:?]
+            at sun.awt.X11FontManager.createFontConfiguration(X11FontManager.java:719) ~[?:?]
+            at sun.font.SunFontManager$2.run(SunFontManager.java:379) ~[?:?]
+            at java.security.AccessController.doPrivileged(Native Method) ~[?:?]
+            at sun.font.SunFontManager.<init>(SunFontManager.java:324) ~[?:?]
+            at sun.awt.FcFontManager.<init>(FcFontManager.java:35) ~[?:?]
+            at sun.awt.X11FontManager.<init>(X11FontManager.java:56) ~[?:?]
+            at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+            at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:?]
+            at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+            at java.lang.reflect.Constructor.newInstance(Constructor.java:490) ~[?:?]
+            at sun.font.FontManagerFactory$1.run(FontManagerFactory.java:84) ~[?:?]
+            ... 35 more
+    
+    ```
+    Exception without -Djava.awt.headless = true
+    ```
+    2024-11-13T21:27:17,404 | ERROR | (AbstractJobProducer$JobRunner:344) - Error handling operation 'Generate':
+    java.lang.NoClassDefFoundError: Could not initialize class org.apache.batik.bridge.DefaultFontFamilyResolver
+            at org.apache.batik.bridge.UserAgentAdapter.getFontFamilyResolver(UserAgentAdapter.java:465) ~[?:?]
+            at org.apache.batik.bridge.BridgeContext.getFontFamilyResolver(BridgeContext.java:284) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.getFontList(SVGTextElementBridge.java:1518) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.getAttributeMap(SVGTextElementBridge.java:1597) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.fillAttributedStringBuffer(SVGTextElementBridge.java:897) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.buildAttributedString(SVGTextElementBridge.java:850) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.computeLaidoutText(SVGTextElementBridge.java:630) ~[?:?]
+            at org.apache.batik.bridge.SVGTextElementBridge.buildGraphicsNode(SVGTextElementBridge.java:286) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildGraphicsNode(GVTBuilder.java:224) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildComposite(GVTBuilder.java:171) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildGraphicsNode(GVTBuilder.java:219) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.buildComposite(GVTBuilder.java:171) ~[?:?]
+            at org.apache.batik.bridge.GVTBuilder.build(GVTBuilder.java:82) ~[?:?]
+            at org.apache.batik.transcoder.SVGAbstractTranscoder.transcode(SVGAbstractTranscoder.java:210) ~[?:?]
+            at org.apache.batik.transcoder.image.ImageTranscoder.transcode(ImageTranscoder.java:92) ~[?:?]
+            at org.apache.batik.transcoder.XMLAbstractTranscoder.transcode(XMLAbstractTranscoder.java:142) ~[?:?]
+            at org.apache.batik.transcoder.SVGAbstractTranscoder.transcode(SVGAbstractTranscoder.java:158) ~[?:?]
+            at org.apache.batik.apps.rasterizer.SVGConverter.transcode(SVGConverter.java:1008) ~[?:?]
+            at org.apache.batik.apps.rasterizer.SVGConverter.execute(SVGConverter.java:719) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.rasterizeSvg(AbstractCoverImageService.java:276) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.generateCoverImageInternal(AbstractCoverImageService.java:171) ~[?:?]
+            at org.opencastproject.coverimage.impl.AbstractCoverImageService.process(AbstractCoverImageService.java:125) ~[?:?]
+            at org.opencastproject.job.api.AbstractJobProducer$JobRunner.call(AbstractJobProducer.java:314) [!/:?]
+            at org.opencastproject.job.api.AbstractJobProducer$JobRunner.call(AbstractJobProducer.java:273) [!/:?]
+            at java.util.concurrent.FutureTask.run(FutureTask.java:264) [?:?]
+            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]
+            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]
+            at java.lang.Thread.run(Thread.java:829) [?:?]
+    
+    ```
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
