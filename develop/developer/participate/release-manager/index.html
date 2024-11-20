@@ -363,27 +363,30 @@ needs to be done manually.</p>
 <p>The following steps outline the necessary steps for cutting the final release:</p>
 <ol>
 <li>
-<p>Switch to and update your release branch and ensure the latest state of the previous release branch is merged:</p>
-<pre><code>git checkout r/6.x
-git fetch &lt;remote&gt;
-git merge &lt;remote&gt;/r/6.x
-git merge &lt;remote&gt;/r/5.x
-</code></pre>
+<p>Switch to and update your local release branch.</p>
 </li>
 <li>
 <p>Add the release notes, and update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
    </a> is a convenient tool
-   for this.</p>
-<pre><code>cd docs/guides/admin/docs/
-vim releasenotes.md
-vim changelog.md
-git commit -S releasenotes.md changelog.md -m 'Updated Release Notes'
-git push &lt;remote&gt; r/6.x
+   for this. You need to update:</p>
+</li>
+<li>
+<p><code>docs/guides/admin/docs/releasenotes.md</code></p>
+</li>
+<li><code>docs/guides/admin/docs/changelog.md</code></li>
+</ol>
+<p>Create a pull request for the updated documentation and merge it.</p>
+<ol>
+<li>
+<p>Update your local release branch yet again, so that it contains the documentation:</p>
+<pre><code>git checkout r/16.x
+git fetch &lt;remote&gt;
+git merge &lt;remote&gt;/r/16.x
 </code></pre>
 </li>
 <li>
 <p>Switch to a new branch to create the release (name does not really matter):</p>
-<pre><code>git checkout -b tmp-6.0
+<pre><code>git checkout -b tmp-16.0
 </code></pre>
 </li>
 <li>
@@ -394,19 +397,20 @@ git push &lt;remote&gt; r/6.x
 <li>
 <p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
-git status | grep modified: | grep -v pom.xml   # this should yield no output
+# The following command should yield no output:
+git status | grep modified: | grep -v pom.xml
 </code></pre>
 </li>
 <li>
 <p>Commit the changes and create a release tag:</p>
 <pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
-git commit -S -m 'Opencast 6.0'
-git tag -s 6.0
+git commit -S -m 'Opencast 16.0'
+git tag -s 16.0 -m 'Opencast 16.0'
 </code></pre>
 </li>
 <li>
 <p>Push the tag to the community repository (you can remove the branch afterwards):</p>
-<pre><code>git push &lt;remote&gt; 6.0:6.0
+<pre><code>git push &lt;remote&gt; 16.0
 </code></pre>
 </li>
 <li>
@@ -418,34 +422,15 @@ git tag -s 6.0
 <p>If the workflow fails, investigate what was going wrong and either restart the workflow or create the release
    manually in the GitHub user interface.</p>
 <ol>
-<li>Check that the release is published on <a href="https://repo1.maven.org/maven2/org/opencastproject/opencast-common/">Maven Central</a>.
+<li>
+<p>Post a release notification on <a href="https://opencast.org">opencast.org</a>.</p>
+</li>
+<li>
+<p>Check that the release is published on <a href="https://repo1.maven.org/maven2/org/opencastproject/opencast-common/">Maven Central</a>.
     This can take some time, and is done via <a href="http://ci.opencast.org">Buildbot</a>.  If in doubt, ask the QA Coordinator to
-    check.  If you need to do this yourself please read the <a href="../infrastructure/maven-repository/#pushing-to-maven-central">infra documentation</a>.</li>
+    check.  If you need to do this yourself please read the <a href="../infrastructure/maven-repository/#pushing-to-maven-central">infra documentation</a>.</p>
+</li>
 </ol>
-<p>Finally, send a release notice to Opencast's announcement list. Note that posting to this list is restricted to those
-who need access to avoid general discussions on that list. In case you do not already have permissions to post on this
-list, please ask to be given permission. For the message, you may use the following template:</p>
-<pre><code class="language-no-highlight">To: announcements@opencast.org
-Subject: Opencast &lt;VERSION&gt; Released
-
-Hi everyone,
-it is my pleasure to announce that Opencast &lt;VERSION&gt; has
-been released:
-
-  https://github.com/opencast/opencast/releases
-
-The documentation for this release can be found at:
-
-  https://docs.opencast.org/r/&lt;VERSION&gt;/admin/
-
-RPM and Debian packages as well as Docker images will be
-available soon. Watch for announcements on the users list.
-
-To all committers and involved contributors, thank you for
-all your work. This could not have happened without you and
-I am glad we were able to work together and get this release
-out.
-</code></pre>
 <h3 id="appointment-of-next-release-manager">Appointment of Next Release Manager</h3>
 <p>After the release branch is cut, all work on <code>develop</code> is effectively the preparation for the next release. At this
 point, the release managers should send an inquiry to the development list to identify volunteers for the next release.</p>
