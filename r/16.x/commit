@@ -1,38 +1,8 @@
-commit 788f7aa9f7ec41fe2f31c3abc63927db9749937c
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Nov 20 10:07:05 2024 +0100
+commit a34d66418f71c259173de554549cc081b36a6a2b
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Wed Nov 20 10:56:35 2024 -0600
 
-    Fix Amberscript Transcription Jobs Hanging (#6262)
+    Revert "Fixes session timeout bug by upgrading pax-web" as requested in
+    PR 6306
     
-    This patch fixes the problem that AmberScript transcription jobs will
-    never finish if the event has been deleted between starting and
-    finishing the transcription.
-    
-    The code checked if a snapshot exists, skipping the operation and
-    repeating this on the next run again. An existing event will always have
-    at least one snapshot, since one is created at ingest or even earlier if
-    the event was scheduled. If you delete the event, however, there will be
-    no snapshot, but there will obviously also never be any snapshot. That
-    is why the jobs will just wait forever.
-    
-    ### How to test this patch
-    
-    - Configure AmberScript
-    - Add a new media (triggering the transcription service)
-    - Delete the event as soon as it finished processing
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    This reverts commit 2e9a5c02ce99c157739368d9705f0e875795aa4f.
