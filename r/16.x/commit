@@ -1,9 +1,44 @@
-commit d738a86563ef958371b8825c61ba6cb9dd84abc2
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Mon Dec 2 11:42:27 2024 -0600
+commit 0ed22c4c02a930a37f4d78e747bd612f7963bb69
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Dec 3 16:45:57 2024 +0100
 
-    Merge branch 'disable-hard-linking-orgs' of tales-media/fork-opencast-opencast into r/16.x
+    Fixed divide by zero in search index rebuild (#6329)
     
-    Pull request #6252
+    Running index rebuild on a system without engage publications (clean
+    install) will end up with an divide by zero error. This is happen on
+    logging progress, see stack trace below.
     
-      Disable hard linking between organizations
+    ```java
+    024-11-27 09:51:56,780 | ERROR | (AbstractIndexProducer:185) - Error updating the Search index.
+    java.lang.ArithmeticException: / by zero
+            at org.opencastproject.elasticsearch.index.rebuild.AbstractIndexProducer.logIndexRebuildProgress(AbstractIndexProducer.java:134) ~[?:?]
+            at org.opencastproject.elasticsearch.index.rebuild.AbstractIndexProducer.logIndexRebuildProgress(AbstractIndexProducer.java:109) ~[?:?]
+            at org.opencastproject.search.impl.SearchServiceIndex.repopulate(SearchServiceIndex.java:533) ~[?:?]
+            at org.opencastproject.elasticsearch.index.rebuild.IndexRebuildService.rebuildIndexInternal(IndexRebuildService.java:213) ~[?:?]
+            at org.opencastproject.elasticsearch.index.rebuild.IndexRebuildService.rebuildIndex(IndexRebuildService.java:158) ~[?:?]
+            at org.opencastproject.elasticsearch.index.endpoint.IndexEndpoint.lambda$rebuildIndex$5(IndexEndpoint.java:240) ~[?:?]
+            at org.opencastproject.security.util.SecurityContext.lambda$runInContext$0(SecurityContext.java:68) ~[?:?]
+            at org.opencastproject.security.util.SecurityContext.runInContext(SecurityContext.java:58) ~[?:?]
+            at org.opencastproject.security.util.SecurityContext.runInContext(SecurityContext.java:67) ~[?:?]
+            at org.opencastproject.elasticsearch.index.endpoint.IndexEndpoint.lambda$rebuildIndex$6(IndexEndpoint.java:237) ~[?:?]
+            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) [?:?]
+            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) [?:?]
+            at java.lang.Thread.run(Thread.java:840) [?:?]
+    ```
+    
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
