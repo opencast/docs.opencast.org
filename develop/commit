@@ -1,27 +1,208 @@
-commit fab8535fd38543eda201a1c60d5916c1460b6632
+commit 8046d2970f5f585c75bce1d7f6e236c3a3bfaa99
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Nov 20 23:48:40 2024 +0100
+Date:   Tue Dec 3 16:41:51 2024 +0100
 
-    Update documentation about how to create a release (#6320)
+    Build(deps-dev): bump @playwright/test from 1.48.2 to 1.49.0 in /modules/engage-paella-player-7 (#6356)
     
-    This patch updates the documentation about how to create a release.
+    Bumps [@playwright/test](https://github.com/microsoft/playwright) from
+    1.48.2 to 1.49.0.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/microsoft/playwright/releases"><code>@​playwright/test</code>'s
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>v1.49.0</h2>
+    <h2>Aria snapshots</h2>
+    <p>New assertion <a
+    href="https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-match-aria-snapshot">expect(locator).toMatchAriaSnapshot()</a>
+    verifies page structure by comparing to an expected accessibility tree,
+    represented as YAML.</p>
+    <pre lang="js"><code>await page.goto('https://playwright.dev');
+    await expect(page.locator('body')).toMatchAriaSnapshot(`
+      - banner:
+        - heading /Playwright enables reliable/ [level=1]
+        - link &quot;Get started&quot;
+        - link &quot;Star microsoft/playwright on GitHub&quot;
+      - main:
+        - img &quot;Browsers (Chromium, Firefox, WebKit)&quot;
+        - heading &quot;Any browser • Any platform • One API&quot;
+    `);
+    </code></pre>
+    <p>You can generate this assertion with <a
+    href="https://playwright.dev/docs/codegen">Test Generator</a> and update
+    the expected snapshot with <code>--update-snapshots</code> command line
+    flag.</p>
+    <p>Learn more in the <a
+    href="https://playwright.dev/docs/aria-snapshots">aria snapshots
+    guide</a>.</p>
+    <h2>Test runner</h2>
+    <ul>
+    <li>New option <a
+    href="https://playwright.dev/docs/api/class-testconfig#test-config-tsconfig">testConfig.tsconfig</a>
+    allows to specify a single <code>tsconfig</code> to be used for all
+    tests.</li>
+    <li>New method <a
+    href="https://playwright.dev/docs/api/class-test#test-fail-only">test.fail.only()</a>
+    to focus on a failing test.</li>
+    <li>Options <a
+    href="https://playwright.dev/docs/api/class-testconfig#test-config-global-setup">testConfig.globalSetup</a>
+    and <a
+    href="https://playwright.dev/docs/api/class-testconfig#test-config-global-teardown">testConfig.globalTeardown</a>
+    now support multiple setups/teardowns.</li>
+    <li>New value <code>'on-first-failure'</code> for <a
+    href="https://playwright.dev/docs/api/class-testoptions#test-options-screenshot">testOptions.screenshot</a>.</li>
+    <li>Added &quot;previous&quot; and &quot;next&quot; buttons to the HTML
+    report to quickly switch between test cases.</li>
+    <li>New properties <a
+    href="https://playwright.dev/docs/api/class-testinfoerror#test-info-error-cause">testInfoError.cause</a>
+    and <a
+    href="https://playwright.dev/docs/api/class-testerror#test-error-cause">testError.cause</a>
+    mirroring <a
+    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause"><code>Error.cause</code></a>.</li>
+    </ul>
+    <h2>Breaking: channels <code>chrome</code>, <code>msedge</code> and
+    similar switch to new headless</h2>
+    <p>This change affects you if you're using one of the following channels
+    in your <code>playwright.config.ts</code>:</p>
+    <ul>
+    <li><code>chrome</code>, <code>chrome-dev</code>,
+    <code>chrome-beta</code>, or <code>chrome-canary</code></li>
+    <li><code>msedge</code>, <code>msedge-dev</code>,
+    <code>msedge-beta</code>, or <code>msedge-canary</code></li>
+    </ul>
+    <h3>What do I need to do?</h3>
+    <p>After updating to Playwright v1.49, run your test suite. If it still
+    passes, you're good to go. If not, you will probably need to update your
+    snapshots, and adapt some of your test code around PDF viewers and
+    extensions. See [issue <a
+    href="https://redirect.github.com/microsoft/playwright/issues/33566">#33566</a>](<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33566">microsoft/playwright#33566</a>)
+    for more details.</p>
+    <h2>Other breaking changes</h2>
+    <ul>
+    <li>There will be no more updates for WebKit on Ubuntu 20.04 and Debian
+    11. We recommend updating your OS to a later version.</li>
+    <li>Package <code>@playwright/experimental-ct-vue2</code> will no longer
+    be updated.</li>
+    <li>Package <code>@playwright/experimental-ct-solid</code> will no
+    longer be updated.</li>
+    </ul>
+    <h2>Try new Chromium headless</h2>
+    <p>You can opt into the new headless mode by using
+    <code>'chromium'</code> channel. As <a
+    href="https://developer.chrome.com/blog/chrome-headless-shell">official
+    Chrome documentation puts it</a>:</p>
+    <blockquote>
+    <p>New Headless on the other hand is the real Chrome browser, and is
+    thus more authentic, reliable, and offers more features. This makes it
+    more suitable for high-accuracy end-to-end web app testing or browser
+    extension testing.</p>
+    </blockquote>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/a70a96ab2565918360cd0f0208b5d12cae318793"><code>a70a96a</code></a>
+    chore: mark v1.49.0 (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33649">#33649</a>)</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/53f51a8cf1ee5bac081891d53dbc1f628dc8142f"><code>53f51a8</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33638">#33638</a>):
+    chore: clear highlight when performing action</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/2a00ca84530683f08f4e08c8cd93340660728fd5"><code>2a00ca8</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33635">#33635</a>):
+    chore: add cm placeholder text</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/0e6434013b48dde6ed6cd8af9bda8046a7b9d5a2"><code>0e64340</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33632">#33632</a>):
+    chore: highlight edited locator while recording</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/cb0f456e46b89a522f86a5e4e93a0f37e6e5c5e2"><code>cb0f456</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33629">#33629</a>):
+    fix(rebase): do not apply multiple rebaselines to the sa...</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/698823a78ee2f9cb4f66bb73a11cd96612381dd5"><code>698823a</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33627">#33627</a>):
+    fix(codegen): document.documentElement is null on early ...</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/c0fa804367256f10d7e7859a6060bc1703838b35"><code>c0fa804</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33619">#33619</a>):
+    fix(aria): normalize whitespace in toMatchAccessible{Nam...</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/7a32228aedc9ac4147dce2e0abd15a45193f87ed"><code>7a32228</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33614">#33614</a>):
+    docs: add ariaSnapshot.timeout for language ports (<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33615">#33615</a>)</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/0e31acea8f162c7876d3b449636c5bee9c7ac949"><code>0e31ace</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33575">#33575</a>):
+    fix(canvas snapshots): position mismatch in headless mode</li>
+    <li><a
+    href="https://github.com/microsoft/playwright/commit/b2a39ffc615acd921584c548588e932e475ee5bb"><code>b2a39ff</code></a>
+    cherry-pick(<a
+    href="https://redirect.github.com/microsoft/playwright/issues/33604">#33604</a>):
+    docs: update docs about headless shell</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/microsoft/playwright/compare/v1.48.2...v1.49.0">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
     
-    While the process is mostly the same, it is slightly different by now.
-    This patch reflects the changes by updating our release manager guide.
+    
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=@playwright/test&package-manager=npm_and_yarn&previous-version=1.48.2&new-version=1.49.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
+    
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot merge` will merge this PR after your CI passes on it
+    - `@dependabot squash and merge` will squash and merge this PR after
+    your CI passes on it
+    - `@dependabot cancel merge` will cancel a previously requested merge
+    and block automerging
+    - `@dependabot reopen` will reopen this PR if it is closed
+    - `@dependabot close` will close this PR and stop Dependabot recreating
+    it. You can achieve the same result by closing it manually
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
     
     
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    </details>
