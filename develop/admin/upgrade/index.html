@@ -34,6 +34,10 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 16.x to 17.x", url: "#_top", children: [
+              {title: "Elasticsearch/Opensearch Plugin Installation", url: "#elasticsearchopensearch-plugin-installation" },
+              {title: "Configuration Changes", url: "#configuration-changes" },
+              {title: "Index Rebuild", url: "#index-rebuild" },
+              {title: "Uninstall Gstreamer", url: "#uninstall-gstreamer" },
           ]},
         ];
 
@@ -85,7 +89,58 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="upgrading-opencast-from-16x-to-17x">Upgrading Opencast from 16.x to 17.x</h1>
-<p>TBA.</p>
+<p>This guide describes how to upgrade Opencast 16.x to 17.x.
+In case you need to upgrade older versions of Opencast, please refer to the documentation of
+<a href="https://docs.opencast.org">those versions</a> first.</p>
+<ol>
+<li>Read the <a href="../releasenotes/">release notes</a></li>
+<li>Stop your current Opencast instance</li>
+<li>Install the required <a href="#elasticsearchopensearch-plugin-installation">Elasticsearch/Opensearch plugin</a></li>
+<li>Replace Opencast with the new version</li>
+<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
+<li>Start Opencast</li>
+<li><a href="#index-rebuild">Rebuild the index</a></li>
+<li>Optional: <a href="#uninstall-gstreamer">Remove Gstreamer</a></li>
+</ol>
+<h2 id="elasticsearchopensearch-plugin-installation">Elasticsearch/Opensearch Plugin Installation</h2>
+<p>The <code>analysis-icu</code> plugin for OpenSearch is required for Opencast 17. To install the plugin, run either</p>
+<pre><code>bin/opensearch-plugin install analysis-icu
+</code></pre>
+<p>or</p>
+<pre><code>bin/elasticsearch-plugin install analysis-icu
+</code></pre>
+<p>on all nodes of your Elasticsearch/Opensearch cluster and restart each node.</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>Check for changes in the configuration and apply those relevant to your setup to your files. You can use the following
+command to list all changes:</p>
+<pre><code>git diff origin/r/17.x origin/r/18.x -- etc/
+</code></pre>
+<p>The most important changes are:
+- The prepared flavor was removed from our workflows and the Editor configuration, the source flavor is now used instead.
+  If you have custom workflows, you only need to check default settings of EditorServiceImpl.cfg.
+  If you use the affected community workflows, ensure any custom workflows and integrations are still compatible.
+  [<a href="https://github.com/opencast/opencast/pull/5862">#5862</a>]
+- We no longer generate feed previews in our workflows. [<a href="https://github.com/opencast/opencast/pull/6087">#6087</a>]
+- ACL templates in <code>etc/acl/</code> must now be provided in JSON format.
+  [<a href="https://github.com/opencast/opencast/pull/6018">#6018</a>]
+- The Microsoft Azure transcription integration was completely rewritten, please check
+  <a href="../configuration/transcription.configuration/microsoftazure/">documentation</a> if you use it.
+  [<a href="https://github.com/opencast/opencast/pull/5876">#5876</a>]</p>
+<h2 id="index-rebuild">Index Rebuild</h2>
+<p>[<a href="https://github.com/opencast/opencast/pull/5413">#5413</a>] only requires an update of the index mappings, for which there
+are migration scripts in <code>docs/upgrade/16_to_17/</code>, but [<a href="https://github.com/opencast/opencast/pull/6023">#6023</a>]
+requires a full rebuild of the indexes that feed the Admin Interface and External API, so that is what's described here.</p>
+<p>You can do so by making a POST request to <code>/index/rebuild</code>, either like this</p>
+<pre><code>curl -i -u &lt;admin_user&gt;:&lt;password&gt; -s -X POST https://example.opencast.org/index/rebuild
+</code></pre>
+<p>or by opening the REST docs under the “?” symbol at the top right corner of the Admin Interface, going to the “Index
+Endpoint” section and using the testing form on <code>/rebuild</code> to issue a POST request.</p>
+<p>In both cases you should get a 200 HTTP status. The log or the Admin Interface will tell you when the rebuild is
+completed.</p>
+<h2 id="uninstall-gstreamer">Uninstall Gstreamer</h2>
+<p>The Microsoft Azure transcription integration was completely rewritten by
+[<a href="https://github.com/opencast/opencast/pull/5876">#5876</a>] and Gstreamer is no longer needed as a dependency.
+If you had it installed for this purpose, you can remove it now.</p>
 
   <br>
     
