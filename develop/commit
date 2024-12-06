@@ -1,141 +1,136 @@
-commit 4def5be5d282fc1778fb2a974bdabfe58eca9caf
+commit ec7158234c3120ee0255c9af216465a2adb58a5a
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Dec 6 18:53:55 2024 +0100
+Date:   Fri Dec 6 23:35:19 2024 +0100
 
-    Build(deps): bump path-to-regexp and express in /modules/lti (#6374)
+    Build(deps-dev): bump webpack from 5.93.0 to 5.97.1 in /modules/graphql-ui (#6372)
     
-    Bumps [path-to-regexp](https://github.com/pillarjs/path-to-regexp) and
-    [express](https://github.com/expressjs/express). These dependencies
-    needed to be updated together.
-    Updates `path-to-regexp` from 0.1.10 to 0.1.12
+    Bumps [webpack](https://github.com/webpack/webpack) from 5.93.0 to
+    5.97.1.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/pillarjs/path-to-regexp/releases">path-to-regexp's
+    href="https://github.com/webpack/webpack/releases">webpack's
     releases</a>.</em></p>
     <blockquote>
-    <h2>Fix backtracking (again)</h2>
-    <p><strong>Fixed</strong></p>
+    <h2>v5.97.1</h2>
+    <h2>Bug Fixes</h2>
     <ul>
-    <li>Improved backtracking protection for 0.1.x, will break some
-    previously valid paths (see previous advisory: <a
-    href="https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-9wv6-86v2-598j">https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-9wv6-86v2-598j</a>)</li>
+    <li>Performance regression</li>
+    <li>Sub define key should't be renamed when it's a defined variable</li>
     </ul>
-    <p><a
-    href="https://github.com/pillarjs/path-to-regexp/compare/v0.1.11...v0.1.12">https://github.com/pillarjs/path-to-regexp/compare/v0.1.11...v0.1.12</a></p>
-    <h2>Error on bad input</h2>
-    <p><strong>Changed</strong></p>
+    <h2>v5.97.0</h2>
+    <h2>Bug Fixes</h2>
     <ul>
-    <li>Add error on bad input values  8f09549</li>
+    <li>Don't crash with filesystem cache and unknown scheme</li>
+    <li>Generate a valid code when <code>output.iife</code> is
+    <code>true</code> and output.library.type is <code>umd</code></li>
+    <li>Fixed conflict variable name with concatenate modules and runtime
+    code</li>
+    <li>Merge duplicate chunks before</li>
+    <li>Collisions in ESM library</li>
+    <li>Use recursive search for versions of shared dependencies</li>
+    <li><strong>[WASM]</strong> Don't crash WebAssembly with Reference Types
+    (sync and async)</li>
+    <li><strong>[WASM]</strong> Fixed wasm loading for sync and async
+    webassembly</li>
+    <li><strong>[CSS]</strong> Don't add <code>[uniqueName]</code> to
+    <code>localIdentName</code> when it is empty</li>
+    <li><strong>[CSS]</strong> Parsing strings on Windows</li>
+    <li><strong>[CSS]</strong> Fixed CSS local escaping</li>
     </ul>
-    <p><a
-    href="https://github.com/pillarjs/path-to-regexp/compare/v0.1.10...v0.1.11">https://github.com/pillarjs/path-to-regexp/compare/v0.1.10...v0.1.11</a></p>
+    <h2>New Features</h2>
+    <ul>
+    <li>Added support for injecting debug IDs</li>
+    <li>Export the <code>MergeDuplicateChunks</code> plugin</li>
+    <li>Added universal loading for JS chunks and JS worker chunks (only ES
+    modules)</li>
+    <li><strong>[WASM]</strong> Added universal loading for WebAssembly
+    chunks (only for async WebAssembly)</li>
+    <li><strong>[CSS]</strong> Allow initial CSS chunks to be placed
+    anywhere - <strong>the <code>output.cssHeadDataCompression</code> option
+    was deleted</strong></li>
+    <li><strong>[CSS]</strong> Added universal loading for CSS chunks</li>
+    <li><strong>[CSS]</strong> Parse ICSS <code>@value</code> at-rules in
+    CSS modules</li>
+    <li><strong>[CSS]</strong> Parse ICSS <code>:import</code> rules in CSS
+    modules</li>
+    <li><strong>[CSS]</strong> Added the <code>url</code> and
+    <code>import</code> options for CSS</li>
+    <li><strong>[CSS]</strong> Allow to import custom properties in CSS
+    modules</li>
+    </ul>
+    <h2>Performance</h2>
+    <ul>
+    <li>Faster Queue implementation, also fixed queue iterator state in
+    dequeue method to ensure correct behavior after item removal</li>
+    </ul>
+    <h2>v5.96.1</h2>
+    <h2>Bug Fixes</h2>
+    <ul>
+    <li><strong>[Types]</strong> Add <code>@types/eslint-scope</code> to
+    dependencieS</li>
+    <li><strong>[Types]</strong> Fixed regression in
+    <code>validate</code></li>
+    </ul>
+    <h2>v5.96.0</h2>
+    <h2>Bug Fixes</h2>
+    <ul>
+    <li>Fixed Module Federation should track all referenced chunks</li>
+    <li>Handle Data URI without base64 word</li>
+    <li>HotUpdateChunk have correct runtime when modified with new
+    runtime</li>
+    </ul>
+    <!-- raw HTML omitted -->
     </blockquote>
+    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/pillarjs/path-to-regexp/commit/640e694c6fd971f78268439df9cf44040855e669"><code>640e694</code></a>
-    0.1.12</li>
+    href="https://github.com/webpack/webpack/commit/3612d36e44bda5644dc3b353e2cade7fe442ba59"><code>3612d36</code></a>
+    chore(release): 5.97.1</li>
     <li><a
-    href="https://github.com/pillarjs/path-to-regexp/commit/f01c26a013b1889f0c217c643964513acf17f6a4"><code>f01c26a</code></a>
-    Merge commit from fork</li>
+    href="https://github.com/webpack/webpack/commit/eb7ac6f39ae33baf962ce516f6ef772737de8742"><code>eb7ac6f</code></a>
+    fix: perf regression</li>
     <li><a
-    href="https://github.com/pillarjs/path-to-regexp/commit/0c7119248b7cb528a0aea3ba45ed4e2db007cba4"><code>0c71192</code></a>
-    0.1.11</li>
+    href="https://github.com/webpack/webpack/commit/554be24d3b6160b345b84abc037a4576296ee3fe"><code>554be24</code></a>
+    fix: sub define key should't be renamed when it's a defined
+    variable</li>
     <li><a
-    href="https://github.com/pillarjs/path-to-regexp/commit/8f095497d678c2ec3495a99ab3928748731e73ee"><code>8f09549</code></a>
-    Add error on bad input values</li>
-    <li>See full diff in <a
-    href="https://github.com/pillarjs/path-to-regexp/compare/v0.1.10...v0.1.12">compare
+    href="https://github.com/webpack/webpack/commit/5e0e78085359e731aa7ac43a2f9aebb9a16b6ff1"><code>5e0e780</code></a>
+    refactor: issue <a
+    href="https://redirect.github.com/webpack/webpack/issues/19030">#19030</a></li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/58fb03552cdb98da0502a272178fcfbfa187daab"><code>58fb035</code></a>
+    fix: sub define key should't be renamed when it's a defined
+    variable</li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/af1fd12efe6a625cc3edae667f36228af958edec"><code>af1fd12</code></a>
+    perf: regression</li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/34f19cbcd9997dd57ea9c8cae392a30a3c3d3afe"><code>34f19cb</code></a>
+    fix: package.json</li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/0ec7f5db974dbf6936943031c1df237b36c47851"><code>0ec7f5d</code></a>
+    refactor: issue <a
+    href="https://redirect.github.com/webpack/webpack/issues/19030">#19030</a></li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/5e7b8a23aaa4a514032e0045ebb0cd4aeaa4c0dc"><code>5e7b8a2</code></a>
+    fix: <code>package.json</code></li>
+    <li><a
+    href="https://github.com/webpack/webpack/commit/644f1d12716ba8f3c96d2efa279262560dd8c7fb"><code>644f1d1</code></a>
+    refactor: no extra work for CSS unescaping</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/webpack/webpack/compare/v5.93.0...v5.97.1">compare
     view</a></li>
     </ul>
     </details>
     <br />
     
-    Updates `express` from 4.21.1 to 4.21.2
-    <details>
-    <summary>Release notes</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/expressjs/express/releases">express's
-    releases</a>.</em></p>
-    <blockquote>
-    <h2>4.21.2</h2>
-    <h2>What's Changed</h2>
-    <ul>
-    <li>Add funding field (v4) by <a
-    href="https://github.com/bjohansebas"><code>@​bjohansebas</code></a> in
-    <a
-    href="https://redirect.github.com/expressjs/express/pull/6065">expressjs/express#6065</a></li>
-    <li>deps: path-to-regexp@0.1.11 by <a
-    href="https://github.com/blakeembrey"><code>@​blakeembrey</code></a> in
-    <a
-    href="https://redirect.github.com/expressjs/express/pull/5956">expressjs/express#5956</a></li>
-    <li>deps: bump path-to-regexp@0.1.12 by <a
-    href="https://github.com/jonchurch"><code>@​jonchurch</code></a> in <a
-    href="https://redirect.github.com/expressjs/express/pull/6209">expressjs/express#6209</a></li>
-    <li>Release: 4.21.2 by <a
-    href="https://github.com/UlisesGascon"><code>@​UlisesGascon</code></a>
-    in <a
-    href="https://redirect.github.com/expressjs/express/pull/6094">expressjs/express#6094</a></li>
-    </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/expressjs/express/compare/4.21.1...4.21.2">https://github.com/expressjs/express/compare/4.21.1...4.21.2</a></p>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/expressjs/express/blob/4.21.2/History.md">express's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h1>4.21.2 / 2024-11-06</h1>
-    <ul>
-    <li>deps: path-to-regexp@0.1.12
-    <ul>
-    <li>Fix backtracking protection</li>
-    </ul>
-    </li>
-    <li>deps: path-to-regexp@0.1.11
-    <ul>
-    <li>Throws an error on invalid path values</li>
-    </ul>
-    </li>
-    </ul>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Commits</summary>
-    <ul>
-    <li><a
-    href="https://github.com/expressjs/express/commit/1faf228935aa0a13111f92c28ee795be64ce3f0f"><code>1faf228</code></a>
-    4.21.2</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/2e0fb646d03184dd9a5285813460210c0e7ae654"><code>2e0fb64</code></a>
-    deps: bump path-to-regexp@0.1.12 (<a
-    href="https://redirect.github.com/expressjs/express/issues/6209">#6209</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/59fc27028ec5d212be653d35d7e3f73a2c3ac3c0"><code>59fc270</code></a>
-    deps: path-to-regexp@0.1.11 (<a
-    href="https://redirect.github.com/expressjs/express/issues/5956">#5956</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/51fc39ccf834eec44547b0f4fed8027e7c05a009"><code>51fc39c</code></a>
-    docs: add funding (<a
-    href="https://redirect.github.com/expressjs/express/issues/6065">#6065</a>)</li>
-    <li>See full diff in <a
-    href="https://github.com/expressjs/express/compare/4.21.1...4.21.2">compare
-    view</a></li>
-    </ul>
-    </details>
-    <details>
-    <summary>Maintainer changes</summary>
-    <p>This version was pushed to npm by <a
-    href="https://www.npmjs.com/~jonchurch">jonchurch</a>, a new releaser
-    for express since your current version.</p>
-    </details>
-    <br />
     
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=webpack&package-manager=npm_and_yarn&previous-version=5.93.0&new-version=5.97.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
