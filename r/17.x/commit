@@ -1,36 +1,16 @@
-commit 0256c576205b67da9a7b9de03bb6b9ddb502d782
+commit 45819e68015b1d02fa70fbfcc8d138ece4671f85
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Dec 11 09:31:34 2024 +0100
+Date:   Wed Dec 11 09:33:42 2024 +0100
 
-    Add tobira series endpoint to remove paths (#6317)
+    Allow removing subtitles (#6361)
     
-    This will allow removing ("unmounting") a series in Tobira.
-    The necessary endpoints in Tobira itself were already existing and also
-    called by this endpoint in Opencast.
-    This commit just makes some form params optional.
+    This allows the removal of a subtitle with the editor API. If a subtitle
+    is marked as deleted it will be removed from the media package.
     
-    
-    ### How to test this patch
-    <sub>The following is a bunch of information that is useful to test
-    this, but in the interest of time I'd suggest that this should be tested
-    by @Arnei, since he has done so before and won't need the extra
-    preparation.</sub>
-    If you want to test this and haven't done any Tobira testing before
-    (though that is probably too much work for this small PR for anyone that
-    hasn't tested these Tobira endpoints before):
-    - You'll need at least Tobira 2.11 and configure it to talk to your
-    Opencast with JWT setup (see our docs for reference:
-    https://elan-ev.github.io/tobira/setup/auth/jwt)
-    - The relevant endpoint is `updateSeriesTobiraPath` and can be tested
-    via
-    `{your-opencast}/docs.html?path=/admin-ng/series#updateSeriesTobiraPath-10`
-    - In order to use that endpoint for series unmounting:
-    - you'll need the `seriesId` (Opencast ID) of a mounted series in Tobira
-      - The page must not have any other content that the series
-      - `pathComponents` must be empty
-    - `currentPath` needs to be the path of that series in Tobira (i.e.
-    "/page/my_series")
-      - `targetPath` must be empty
+    <!--
+    Explain what this pull request does. If this fixes a bug, also explain
+    how to reproduce the issue.
+    -->
     
     <!--
     If your pull request is targeting the legacy (second oldest release
@@ -39,14 +19,19 @@ Date:   Wed Dec 11 09:31:34 2024 +0100
     develop.
     -->
     
-    <!--
-    Explain how to test this patch. If this requires a particular set-up or
-    configuration, explain that as well and provide
-    the necessary configuration if possible. The easier it is for others to
-    test the patch, the faster this will get
-    reviewed and merged.
-    -->
+    ### How to test this patch
     
+    - Create a subtitle with the editor
+    - Open the dev tools and switch to the network tab
+    - Save the editor changes
+    - Edit the recorded `POST /editor/<MP_ID>/edit.json` request
+    - Replace the subtitles JSON from the request with the snippet below
+    ```json
+    "subtitles":[{"id":"<SUBTITLE_ID>","subtitle":"","tags":[],"deleted":true}]
+    ```
+    - Send the edited request
+    - Reload editor
+    - Subtitle is removed
     
     ### Your pull request should…
     
