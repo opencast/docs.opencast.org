@@ -1,5 +1,65 @@
-commit 1f4e1d9fef33f21002d8cf4c3c6c5d731be8e7c6
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Dec 6 14:11:03 2024 +0100
+commit 0256c576205b67da9a7b9de03bb6b9ddb502d782
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Wed Dec 11 09:31:34 2024 +0100
 
-    Fix changelog formatting
+    Add tobira series endpoint to remove paths (#6317)
+    
+    This will allow removing ("unmounting") a series in Tobira.
+    The necessary endpoints in Tobira itself were already existing and also
+    called by this endpoint in Opencast.
+    This commit just makes some form params optional.
+    
+    
+    ### How to test this patch
+    <sub>The following is a bunch of information that is useful to test
+    this, but in the interest of time I'd suggest that this should be tested
+    by @Arnei, since he has done so before and won't need the extra
+    preparation.</sub>
+    If you want to test this and haven't done any Tobira testing before
+    (though that is probably too much work for this small PR for anyone that
+    hasn't tested these Tobira endpoints before):
+    - You'll need at least Tobira 2.11 and configure it to talk to your
+    Opencast with JWT setup (see our docs for reference:
+    https://elan-ev.github.io/tobira/setup/auth/jwt)
+    - The relevant endpoint is `updateSeriesTobiraPath` and can be tested
+    via
+    `{your-opencast}/docs.html?path=/admin-ng/series#updateSeriesTobiraPath-10`
+    - In order to use that endpoint for series unmounting:
+    - you'll need the `seriesId` (Opencast ID) of a mounted series in Tobira
+      - The page must not have any other content that the series
+      - `pathComponents` must be empty
+    - `currentPath` needs to be the path of that series in Tobira (i.e.
+    "/page/my_series")
+      - `targetPath` must be empty
+    
+    <!--
+    If your pull request is targeting the legacy (second oldest release
+    branch), explain why this patch is so important that
+    it needs to go into the legacy and can not go just into stable or
+    develop.
+    -->
+    
+    <!--
+    Explain how to test this patch. If this requires a particular set-up or
+    configuration, explain that as well and provide
+    the necessary configuration if possible. The easier it is for others to
+    test the patch, the faster this will get
+    reviewed and merged.
+    -->
+    
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
