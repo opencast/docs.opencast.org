@@ -1,31 +1,18 @@
-commit 0ed22c4c02a930a37f4d78e747bd612f7963bb69
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Dec 3 16:45:57 2024 +0100
+commit 79b562cdcfa0784090e626215865a56389cdba00
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Fri Dec 13 11:41:28 2024 +0100
 
-    Fixed divide by zero in search index rebuild (#6329)
+    Fix incorrect episode count in LTI series tool (#6328)
     
-    Running index rebuild on a system without engage publications (clean
-    install) will end up with an divide by zero error. This is happen on
-    logging progress, see stack trace below.
+    This patch fixes the episode count in the series LTI tool which would be
+    higher than the actual number of events.
     
-    ```java
-    024-11-27 09:51:56,780 | ERROR | (AbstractIndexProducer:185) - Error updating the Search index.
-    java.lang.ArithmeticException: / by zero
-            at org.opencastproject.elasticsearch.index.rebuild.AbstractIndexProducer.logIndexRebuildProgress(AbstractIndexProducer.java:134) ~[?:?]
-            at org.opencastproject.elasticsearch.index.rebuild.AbstractIndexProducer.logIndexRebuildProgress(AbstractIndexProducer.java:109) ~[?:?]
-            at org.opencastproject.search.impl.SearchServiceIndex.repopulate(SearchServiceIndex.java:533) ~[?:?]
-            at org.opencastproject.elasticsearch.index.rebuild.IndexRebuildService.rebuildIndexInternal(IndexRebuildService.java:213) ~[?:?]
-            at org.opencastproject.elasticsearch.index.rebuild.IndexRebuildService.rebuildIndex(IndexRebuildService.java:158) ~[?:?]
-            at org.opencastproject.elasticsearch.index.endpoint.IndexEndpoint.lambda$rebuildIndex$5(IndexEndpoint.java:240) ~[?:?]
-            at org.opencastproject.security.util.SecurityContext.lambda$runInContext$0(SecurityContext.java:68) ~[?:?]
-            at org.opencastproject.security.util.SecurityContext.runInContext(SecurityContext.java:58) ~[?:?]
-            at org.opencastproject.security.util.SecurityContext.runInContext(SecurityContext.java:67) ~[?:?]
-            at org.opencastproject.elasticsearch.index.endpoint.IndexEndpoint.lambda$rebuildIndex$6(IndexEndpoint.java:237) ~[?:?]
-            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) [?:?]
-            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) [?:?]
-            at java.lang.Thread.run(Thread.java:840) [?:?]
-    ```
+    This fixes #6322
     
+    ### How to test this patch
+    
+    - Publish an event (do not publish more than 14 events)
+    - Go to http://localhost:8080/ltitools/index.html?subtool=series
     
     ### Your pull request should…
     
