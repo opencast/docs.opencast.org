@@ -1,9 +1,18 @@
-commit 630fbc589f956d7a957afb877d6f5d559d45cb0b
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Dec 17 10:12:09 2024 -0600
+commit b314a5712d0fe4edb5ffe27f365ea868e7e49748
+Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
+Date:   Thu Dec 19 09:51:54 2024 +0100
 
-    Merge branch 'jquery-content-type' of lkiesow/opencast into r/17.x
+    Editor: Unify endpoints for saving (#6241)
     
-    Pull request #6390
+    We have two endpoints for saving data from the editor frontend, one for
+    metadata and one for all the rest. With the way the editor is set up,
+    two seperate endpoints are wholly unnecessary, so this unifies them into
+    one endpoint instead.
     
-      Fix jQuery mime type
+    Will break the frontend without respective changes:
+    https://github.com/opencast/opencast-editor/pull/1472
+    
+    #### Why is this aimed at legacy?
+    
+    This constitutes a breaking change. This needs to be merged into
+    whatever version the related frontend PR is merged into.
