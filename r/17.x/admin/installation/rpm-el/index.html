@@ -37,7 +37,7 @@
               {title: "Currently Supported", url: "#currently-supported" },
               {title: "Activate Repository", url: "#activate-repository" },
               {title: "Install Opencast", url: "#install-opencast" },
-              {title: "Install Elasticsearch", url: "#install-elasticsearch" },
+              {title: "Install OpenSearch", url: "#install-opensearch" },
               {title: "Configuration", url: "#configuration" },
               {title: "Start Opencast", url: "#start-opencast" },
               {title: "Advanced Installation", url: "#advanced-installation" },
@@ -130,24 +130,21 @@ Note that the testing repository is an additional repository and still requires 
 </code></pre>
 <p>This will install the default distribution of Opencast and all its dependencies.
 For more options, see the <a href="#advanced-installation">advanced installation section below</a>.</p>
-<h2 id="install-elasticsearch">Install Elasticsearch</h2>
-<p>Opencast uses Elasticsearch as a search index and a cache for quick access to some data from user interfaces.
-Make sure to install it on the node which also serves the admin interface.</p>
-<pre><code class="language-sh">dnf install elasticsearch-oss
+<h2 id="install-opensearch">Install OpenSearch</h2>
+<p>Opencast uses OpenSearch as a search index and a cache for quick access to some data from user interfaces.
+Opencast requires OpenSearch 1.x. Version 2.x will not work.
+It also requires <code>analysis-icu</code> plugin.
+The repository provides both:</p>
+<pre><code class="language-sh">dnf install opensearch opensearch-plugin-analysis-icu
 </code></pre>
-<p>Furthermore, the <code>analysis-icu</code> plugin for Elasticsearch is required to install. It is necessary for sorting naturally.
-To install the ICU plugin, run the following:</p>
-<pre><code>bin/elasticsearch-plugin install analysis-icu
-</code></pre>
-<p>Opencast automatically configures the search index once it is connected.
-The default configuration will work for a local Elasticsearch with no modifications.
-The only exception for this is to add a configuration to mitigate Log4Shell.
-For this, add a file <code>/etc/elasticsearch/jvm.options.d/log4shell.options</code> with the content:</p>
-<pre><code>-Dlog4j2.formatMsgNoLookups=true
-</code></pre>
+<p>After installing OpenSearch please make sure to install all necessary plugins and update the configuration.
+For details, please follow:</p>
+<ul>
+<li><a href="../../configuration/searchindex/elasticsearch/">Opencast OpenSearch Documentation</a></li>
+</ul>
 <p>Finally, make sure to start and enable the service:</p>
-<pre><code class="language-sh">systemctl start elasticsearch
-systemctl enable elasticsearch
+<pre><code class="language-sh">systemctl start opensearch
+systemctl enable opensearch
 </code></pre>
 <h2 id="configuration">Configuration</h2>
 <p>Make sure to set your hostname, login information and other configuration details by following the</p>
