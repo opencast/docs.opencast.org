@@ -1,9 +1,54 @@
-commit 1b901b4a1535e9bb5dd7343db435f1f030af7f3d
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Wed Feb 5 11:27:35 2025 -0600
+commit 6a2c7ab3194772168a17ead6737aada7ae975427
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Thu Feb 6 16:12:39 2025 +0100
 
-    Merge branch 'dependency-plugin-message-broker-api' of KatrinIhler/opencast into develop
+    Allow Byte-Order-Marks in WEBVTT subtitles (#6368)
     
-    Pull request #6441
+    Explain what this pull request does. If this fixes a bug, also explain
+    how to reproduce the issue.
     
-      Activate dependency plugin for message-broker-api
+    According to the spec, WEBVTT may start with
+    "An optional U+FEFF BYTE ORDER MARK (BOM) character."
+    
+    Reference: https://www.w3.org/TR/webvtt1/#file-structure
+    
+    This commit will remove the Byte-Order-Mark in the parsed representation
+    of the WebVTT file as it is optional.
+    
+    Resolves #6366
+    
+    ### How to test this patch
+    
+    1. Run the unit tests for the opencast-subtitle-parser module.
+    2. Cut subtitles contained in a WEBVTT with Byte-Order-Mark using the
+    editor WOH. For instance, allow uploading subtitles in the Admin UI,
+    upload the contained
+    `modules/subtitle-parser/src/test/resources/testresources/example-bom.vtt`
+    to an Opencast event, change the editor workflow to cut subtitles by
+    changing the following lines in
+    https://github.com/opencast/opencast/blob/develop/etc/workflows/partial-publish.xml#L50
+    
+    ```diff
+    -  <configuration key="source-flavors">*/work</configuration>
+    +  <configuration key="source-flavors">*/work,captions/*</configuration>
+    ```
+    
+    3. Open the Opencast Editor, set cutting marks and process the cut
+    recording.
+    
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] ~include migration scripts and documentation, if appropriate~
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] ~explain why it needs to be merged into the legacy branch, if it
+    is targeting the legacy branch~
