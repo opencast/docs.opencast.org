@@ -1,18 +1,21 @@
-commit ad21baddbc288cf5f59ba82e64588efac29fb617
+commit a4e83ec295d2fb2f2fd442cbbb13656952e9a174
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Thu Jan 23 11:18:10 2025 +0100
+Date:   Fri Feb 7 11:57:48 2025 +0100
 
-    Migrate away from deprecated ::set-output in GitHub Actions (#6437)
+    Handle Opencast starting up before index is available (#6434)
     
-    GitHub deprecated the `::set-output` to pass on values to different
-    taks. This patch migrated the create release workflow to using the new
-    environment files.
+    This PR supercedes #5944, handling additional cases which caused the
+    initial PR to hang or otherwise misbehave.
     
-    See
-    https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+    Fixes #5943
     
-    *This needs to go into `r/16.x` since the workflow is executed when
-    cutting new releases.*
+    ### How to test this patch
+    
+    Make sure Opensearch is not running, then start Opencast an observe the
+    waiting loop. Play with the timing. Then start Opensearch.
+    
+    You may see exceptions related to circular dependencies. These happen
+    without that patch, and are their own separate issue.
     
     ### Your pull request should…
     
@@ -22,10 +25,10 @@ Date:   Thu Jan 23 11:18:10 2025 +0100
     if one exists
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
+    * [x] ~include migration scripts and documentation, if appropriate~
     * [x] pass automated tests
     * [x] have a clean commit history
     * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    * [x] ~explain why it needs to be merged into the legacy branch, if it
+    is targeting the legacy branch~
