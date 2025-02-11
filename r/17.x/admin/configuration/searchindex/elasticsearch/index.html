@@ -142,6 +142,7 @@ The keys are stilli called <code>org.opencastproject.elasticsearch.*</code>, but
 <li><code>max.retry.attempts.update</code></li>
 <li><code>retry.waiting.period.get</code></li>
 <li><code>retry.waiting.period.update</code></li>
+<li><code>retry.delay.on.startup</code></li>
 </ul>
 <p>The identifier defines which index opencast is looking for.
 This might be interesting if you run an OpenSearch cluster and want to follow a naming scheme.
@@ -155,6 +156,8 @@ The retry behavior can be configured differently for get and update/delete reque
 This way you can set more retry attempts for updates because of the more serious consequences if those requests fail.
 The waiting period is used to not overwhelm OpenSearch with retry requests, making the problem worse.
 By default, no retry will be attempted.</p>
+<p>The <code>retry.delay.on.startup</code> defines how long Opencast will wait between retry attempts
+when the connection to the index fails on startup. The default is 10 seconds.</p>
 
   <br>
     
