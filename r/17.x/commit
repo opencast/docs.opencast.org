@@ -1,33 +1,37 @@
-commit cc6ba8fa3fb55115e6065eccd6de3b6080fb23aa
+commit ca6c33f72c6e4c13c3fdec941cf2988683520891
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Feb 24 17:35:46 2025 +0100
+Date:   Tue Feb 25 14:12:39 2025 +0100
 
-    Update maven version used by maven wrapper (#6473)
+    Wait for OpenSearch cluster state yellow or green (#6491)
     
-    Use maven version 3.9.9 with maven wrapper.
-    
-    <!--
-    Explain what this pull request does. If this fixes a bug, also explain
-    how to reproduce the issue.
-    -->
-    
-    <!--
-    If your pull request is targeting the legacy (second oldest release
-    branch), explain why this patch is so important that
-    it needs to go into the legacy and can not go just into stable or
-    develop.
-    -->
+    This update changes the health check to accept a yellow status. A yellow
+    state can occur during normal operations or due to issues like node
+    failure, and it shouldn't prevent Opencast from starting.
     
     ### How to test this patch
     
-    <!--
-    Explain how to test this patch. If this requires a particular set-up or
-    configuration, explain that as well and provide
-    the necessary configuration if possible. The easier it is for others to
-    test the patch, the faster this will get
-    reviewed and merged.
-    -->
+    Without the patch Opencast will remain on hold in step 6, patiently
+    waiting for the cluster state to transition to green before proceeding,
+    which will not happen.
     
+    1. Start the Elasticsearch Developer Container
+    2. Launch Opencast
+    3. Once the indexing is complete, go ahead and stop the Opencast
+    application.
+    4. Set Replica Count
+       - Update the replica count by executing the following command:
+       ```bash
+    curl -XPUT -H "Content-Type: application/json"
+    'http://localhost:9200/_all/_settings' -d '{"index.number_of_replicas" :
+    "1"}'
+       ```
+    5. Check for Cluster Health
+       - Verify that the cluster state is yellow by running:
+       ```bash
+       curl 'http://localhost:9200/_cluster/health'
+       ```
+    6. Now, start the Opencast again to confirm that it functions correctly
+    with the updated settings.
     
     ### Your pull request should…
     
