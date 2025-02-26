@@ -1,50 +1,54 @@
-commit ca6c33f72c6e4c13c3fdec941cf2988683520891
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Feb 25 14:12:39 2025 +0100
+commit 078f1e09741a0017d553ae361d5f089bc4b7873c
+Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
+Date:   Wed Feb 26 10:16:42 2025 +0100
 
-    Wait for OpenSearch cluster state yellow or green (#6491)
+    Fix outright javadoc errors (#6440)
     
-    This update changes the health check to accept a yellow status. A yellow
-    state can occur during normal operations or due to issues like node
-    failure, and it shouldn't prevent Opencast from starting.
+    This PR fixes the outright errors in our javadocs so they now build with
+    JDK17. It also centralizes the javadoc plugin version.
+    
+    This PR also introduces javadoc builds (but not deploys) to our main
+    build tests so that these errors can't creep in again.
+    
+    No attempt has been made to resolve the *numerous* other javadoc
+    warnings, but now at least the release builds will build correctly.
+    
+    <!--
+    Explain what this pull request does. If this fixes a bug, also explain
+    how to reproduce the issue.
+    -->
+    
+    <!--
+    If your pull request is targeting the legacy (second oldest release
+    branch), explain why this patch is so important that
+    it needs to go into the legacy and can not go just into stable or
+    develop.
+    -->
     
     ### How to test this patch
     
-    Without the patch Opencast will remain on hold in step 6, patiently
-    waiting for the cluster state to transition to green before proceeding,
-    which will not happen.
+    `mvn javadoc:javadoc`, then go have coffee.
+    <!--
+    Explain how to test this patch. If this requires a particular set-up or
+    configuration, explain that as well and provide
+    the necessary configuration if possible. The easier it is for others to
+    test the patch, the faster this will get
+    reviewed and merged.
+    -->
     
-    1. Start the Elasticsearch Developer Container
-    2. Launch Opencast
-    3. Once the indexing is complete, go ahead and stop the Opencast
-    application.
-    4. Set Replica Count
-       - Update the replica count by executing the following command:
-       ```bash
-    curl -XPUT -H "Content-Type: application/json"
-    'http://localhost:9200/_all/_settings' -d '{"index.number_of_replicas" :
-    "1"}'
-       ```
-    5. Check for Cluster Health
-       - Verify that the cluster state is yellow by running:
-       ```bash
-       curl 'http://localhost:9200/_cluster/health'
-       ```
-    6. Now, start the Opencast again to confirm that it functions correctly
-    with the updated settings.
     
     ### Your pull request should…
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    * [X] have a concise title
+    * [ ] ~[close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
+    if one exists~
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
+    * [ ] ~include migration scripts and documentation, if appropriate~
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    * [ ] ~explain why it needs to be merged into the legacy branch, if it
+    is targeting the legacy branch~
