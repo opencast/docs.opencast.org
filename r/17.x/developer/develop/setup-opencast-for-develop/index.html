@@ -198,8 +198,7 @@ included in the Opencast OSGi infrastructure. This can be achieved by watching t
 The procedure would be as follows:</p>
 <ul>
 <li>Start Opencast and use <code>la -u</code> in the Karaf console to list all installed bundles/modules. Note down the IDs of the
-  bundles you want to watch.
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</li>
+  bundles you want to watch.</li>
 <li>Use <code>bundle:watch IDs</code> to watch the desired modules, e.g. <code>bundle:watch 190 199</code></li>
 <li>Make your changes and rebuild the module (e.g. execute <code>./mvnw clean install</code> in the module folder).</li>
 <li>Watch how Karaf automatically redeploys the changed jars from your local Maven repository. You can verify that
@@ -217,8 +216,8 @@ correctly be restored after the new bundle has been deployed.</p>
 <h4 id="build-enabling-multiple-threads-experimental">Build enabling multiple threads (Experimental)</h4>
 <p>Building with multiple threads decreases the build time significantly.
 If you want to enable multiple threads, you can use the following command:</p>
-<pre><code>$ ./mvnw clean install -T 1.0C -DskipTests -Pnone 
-&amp;&amp; cd assemblies &amp;&amp; ./mvnw install -T 1.0C -Dskiptests -Pdev  
+<pre><code>$ ./mvnw clean install -T 1.0C -DskipTests -Pnone
+&amp;&amp; cd assemblies &amp;&amp; ./mvnw install -T 1.0C -Dskiptests -Pdev
 &amp;&amp; cd ..
 $ ./build/opencast-dist-develop-*/start-opencast
 </code></pre>
