@@ -164,7 +164,6 @@ swapped out at any time:</p>
 <ul>
 <li>dictionary-none</li>
 <li>dictionary-regexp (default)</li>
-<li>dictionary-hunspell</li>
 </ul>
 <h4 id="no-filtering-dictionary-none">No Filtering (dictionary-none)</h4>
 <p>The <code>dictionary-none</code> module is the simplest one. It will just let the recognized texts pass through
@@ -179,7 +178,7 @@ reached. Each match is returned, separated by a space character.</p>
 through, but will block all other characters. For the German language, for example, this would mean that all special
 characters would be blocked as well. So you want to configure Opencast to let them pass as well.</p>
 <p>Example:
-    * pattern: <code>\w+</code>
+    *pattern: <code>\w+</code>
     * text input: "aäa bbb"
     * text output: "a a bbb"</p>
 <p>If this is undesired, modify the <code>pattern</code> in
@@ -193,26 +192,7 @@ which will filter out most of the common noise. Note the double-escaping of <cod
 <p>A similar pattern that could be used for Spanish would be:</p>
 <pre><code>pattern=[¿¡(]*[\\wáéíóúÁÉÍÓÚüÜñÑ][\\wáéíóúÁÉÍÓÚüÜñÑ]+[)-.,:;!?]*
 </code></pre>
-<h4 id="using-a-spell-checker-dictionary-hunspell">Using a Spell Checker (dictionary-hunspell)</h4>
-<p>Last, the <code>dictionary-hunspell</code> will check words based on a spell checker and a dictionary. As spell checker,
-the tool <code>hunspell</code> is used which is one of the most common spell checkers on Linux and should be available from the
-system repositories for most common operating systems.</p>
-<p>For the Hunspell based DictionaryService, there are two configuration options: One specifies the location of the binary
-and one is for the arguments to use for filtering.</p>
-<p>By default, Opencast will just call <code>hunspell</code> without an absolute path. This will work as long as hunspell is in the
-systems path which should be the case unless you have built and installed it manually. In that case, the binary can be
-configured using the following option in the <code>custom.properties</code> file:</p>
-<pre><code>org.opencastproject.dictionary.hunspell.binary=/usr/bin/hunspell
-</code></pre>
-<p>While most people will not need the binary path configuration, most people will need the filtering option which can be
-used for setting the languages. Configuration for this can be done using the following key in the <code>custom.properties</code>
-file:</p>
-<pre><code>org.opencastproject.dictionary.hunspell.command=-d de_DE,en_GB,en_US -G
-</code></pre>
-<p>Note that equivalent to the Tesseract configuration, again the necessary languages have to be installed in the system.
-On RedHat based systems, for German, you would install the <code>hunspell-de</code> package from the system repositories.</p>
-<p>For Hunspell, you can also create custom dictionaries or add custom words to the existing ones. This might be
-interesting for technical terms.</p>
+<p>Note that equivalent to the Tesseract configuration, again the necessary languages have to be installed in the system.</p>
 
   <br>
     
