@@ -1,9 +1,39 @@
-commit d7c3877807542d82348d70530ac5c44179a71aad
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Thu Mar 6 12:23:02 2025 -0600
+commit 3d3e6e2ad1ea28ac0198978cdd918797e40b2bbb
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Mon Mar 17 14:59:01 2025 +0100
 
-    Merge branch 'respect-order-of-sort-parameters' of Arnei/opencast into r/17.x
+    Adds sorting parameter to series ltitools (#6321)
     
-    Pull request #6501
+    This PR adds the option to specify sorting criteria to the series
+    ltitools.
     
-      Respect order of sort parameters for search queries
+    ### How to test this patch
+    
+    Before this PR, it was not possible to set a sorting order in the series
+    ltitools. Calling for example
+    https://stable.opencast.org/ltitools/index.html?subtool=series&sort=title
+    would have no impact to the sorting.
+    
+    With the PR you should be able to make use of this parameter, either
+    directly in the url or through the tool configuration of your LMS (as
+    explained in
+    https://docs.opencast.org/r/16.x/admin/#configuration/ltimodule/#specifying-lti-tools).
+    
+    I could not test the patch with an LMS yet, so feel free to test, if you
+    have this option.
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
