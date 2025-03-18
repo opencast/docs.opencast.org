@@ -1,9 +1,29 @@
-commit ab6db76d4a9d6885951c48ea2b291454259cd17e
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Mar 18 13:42:32 2025 -0600
+commit 298f7978d28bdb168ad88f2e823acdd9c73b8862
+Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
+Date:   Tue Mar 18 22:13:40 2025 +0100
 
-    Merge branch 'themes-without-users' of lkiesow/opencast into r/17.x
+    Revert org.apache.santuario upgrade (#6528)
     
-    Pull request #6542
+    This reverts commit 77fab3349f36d71aa9aa9ea9b0614849b9bcb1b3, which
+    upgraded org.apache.santuario. The issue with this is that CAS will not
+    start with the upgraded version since it requires
+    `jakarta.xml.bind>=4.0.0` and that conflicts with... well, most of our
+    other dependencies.
     
-      Don't fail theme index rebuild if user does not exist
+    Fixes #6477.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [z] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] ~include migration scripts and documentation, if appropriate~
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
