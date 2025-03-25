@@ -1,18 +1,13 @@
-commit 32289fb701c25e04dea94bbe09d40aaa643447cd
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Mar 25 10:30:20 2025 +0100
+commit d369ae7db3cc3495a0c5f14b224d0dc1b7b15b50
+Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
+Date:   Tue Mar 25 18:06:25 2025 +0100
 
-    Update admin interface to 2025-03-20 (#6556)
+    Fix use of bitwise instead of logical operator (#6550)
     
-    Updates the admin interface to the newest release 2025-03-20.
+    The logic should be the same only that there is no short circuit. I
+    think this could be a possible NPE in this particular case.
     
-    Check out the release notes at:
-    https://github.com/opencast/opencast-admin-interface/releases/tag/2025-03-20
-    
-    ### How to test this patch
-    
-    Install and check if the admin interface is running and containing
-    features from the latest release.
+    I have not found other cases apart from the `&` fixed in #6540.
     
     ### Your pull request should…
     
