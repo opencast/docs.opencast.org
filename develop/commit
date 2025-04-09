@@ -1,5 +1,32 @@
-commit 3553aea379bd8bea8fdd0d73c2aaeeced618f260
+commit 67e2613db2c1780da476405691bd07ee754d830a
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Apr 3 21:46:46 2025 +0200
+Date:   Wed Apr 9 11:53:56 2025 +0200
 
-    Merge r/17.x into develop
+    Changing Logger Level for Jetty  (#6540)
+    
+    Stopping and restarting Opencast, while having it open in the browser,
+    leads to the following Jetty Warnings: `Session <sessionID> already in
+    cache` and `Create session failed` . This warning is triggered in the
+    `DelegatingAuthenticationEntryPoint.java` when the server tries to
+    create a new session (via `HttpServletRequest.getSession()`) with the
+    sessionID it got from the Cookie.
+    
+    A similar issue was already reported to Jetty (e.g
+    https://github.com/jetty/jetty.project/issues/4888), but it seems that
+    at least within the Jetty version (9.4.57) we are currently using for
+    Opencast this warning is still occurring. (Reporting this issue again is
+    not necessary, since jetty 9 is EOL since Jan 25)
+    
+    As far as I understood, the session is maintained via cookies. After
+    seeing in the opencast.log that after restarting the server the old
+    session can be entered and the expiration timer is reset for it, I
+    assume that the `Create session failed` warning does not have any
+    negative consequences for the session maintenance.
+    
+    When stopping and restarting Opencast, while having it open in the
+    browser, the user can see that network errors are occurring, at `System
+    warnings and notifications` on the menu bar. After a while the user is
+    automatically forwarded to the login page, but after logging in the user
+    is sometimes forwarded to `health.json` or `STATS.json . To avoid this I
+    edited the user forwarding in the
+    `DelegatingAuthenticationEntryPoint.java`.
