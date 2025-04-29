@@ -86,12 +86,38 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="paella-plugin-orgopencastpaellamatomousertrackingdataplugin">Paella plugin: org.opencast.paella.matomo.userTrackingDataPlugin</h1>
-<p>This plugin allows to use <a href="https://matomo.org/">Matomo service</a> to track usage data. </p>
+<p>This plugin allows to use <a href="https://matomo.org/">Matomo service</a> to track usage data.</p>
 <p>The configurations for this plugin are done for each tenant. So you need to modify the <code>plugins</code>
 section of the <a href="../../configuration/">paella config file</a>.</p>
 <h2 id="configuration">Configuration</h2>
-<p>You need to enabled the <code>org.opencast.paella.matomo.userTrackingDataPlugin</code> plugin.</p>
+<p>You need to enabled both the <code>es.upv.paella.userEventTracker</code> and the <code>org.opencast.paella.matomo.userTrackingDataPlugin</code> plugin.</p>
 <pre><code class="language-json">{
+    &quot;es.upv.paella.userEventTracker&quot;: {
+        &quot;enabled&quot;: true,
+        &quot;context&quot;: &quot;userTracking&quot;,
+        &quot;events&quot;: [
+            &quot;PLAY&quot;,
+            &quot;PAUSE&quot;,
+            &quot;STOP&quot;,
+            &quot;ENDED&quot;,
+            &quot;SEEK&quot;,
+            &quot;FULLSCREEN_CHANGED&quot;,
+            &quot;VOLUME_CHANGED&quot;,
+            &quot;CAPTIONS_CHANGED&quot;,
+            &quot;BUTTON_PRESS&quot;,
+            &quot;SHOW_POPUP&quot;,
+            &quot;HIDE_POPUP&quot;,
+            &quot;ENTER_FULLSCREEN&quot;,
+            &quot;EXIT_FULLSCREEN&quot;,
+            &quot;VOLUME_CHANGED&quot;,
+            &quot;CAPTIONS_ENABLED&quot;,
+            &quot;CAPTIONS_DISABLED&quot;,
+            &quot;LAYOUT_CHANGED&quot;,
+            &quot;PLAYBACK_RATE_CHANGED&quot;,
+            &quot;VIDEO_QUALITY_CHANGED&quot;,
+            &quot;RESIZE_END&quot;
+        ]
+    },
     &quot;org.opencast.paella.matomo.userTrackingDataPlugin&quot;: {
         &quot;enabled&quot;: true,
         &quot;context&quot;: [
@@ -99,31 +125,36 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
         ],
         &quot;server&quot;: &quot;//matomo.server.com/&quot;,
         &quot;siteId&quot;: &quot;1&quot;,
+        &quot;trackerUrl&quot;: {
+            &quot;php&quot;: &quot;matomo.php&quot;,
+            &quot;js&quot;: &quot;matomo.js&quot;
+        },
         &quot;matomoGlobalLoaded&quot;: false,
+        &quot;mediaAnalyticsTitle&quot;: &quot;${videoId}&quot;,
         &quot;cookieType&quot;: &quot;tracking&quot;,
         &quot;logUserId&quot;: true,
         &quot;events&quot;: {
             &quot;category&quot;: &quot;PaellaPlayer&quot;,
             &quot;action&quot;: &quot;${event}&quot;,
-            &quot;name&quot;: &quot;${videoId}&quot;
+            &quot;name&quot;: &quot;${eventData}&quot;
         },
         &quot;customDimensions&quot;: {
             &quot;1&quot;: &quot;${videoId}&quot;,
             &quot;2&quot;: &quot;${metadata.series} - ${metadata.seriestitle}&quot;,
             &quot;3&quot;: &quot;${metadata.presenters}&quot;
         }
-    }    
+    }
 }
 </code></pre>
-<p>Configuration parameters:</p>
+<p><strong>Configuration parameters:</strong></p>
 <ul>
 <li>
 <p><strong>context</strong>: <a href="https://github.com/polimediaupv/paella-user-tracking">User event tracker</a> context to use.</p>
-<p>Indicate which events should be captured.</p>
-<p>Default contiguration:
-<code>json
-"es.upv.paella.userEventTracker": {
-    "enabled": false,
+<p>Corresponds to the <code>context</code> parameter of <code>es.upv.paella.userEventTracker</code>.
+Indicates which events should be tracked.</p>
+<p>Example contiguration:</p>
+<p><code>"es.upv.paella.userEventTracker": {
+    "enabled": true,
     "context": "userTracking",
     "events": [
         "PLAY",
@@ -133,7 +164,6 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
         "SEEK",
         "FULLSCREEN_CHANGED",
         "VOLUME_CHANGED",
-        "TIMEUPDATE",
         "CAPTIONS_CHANGED",
         "BUTTON_PRESS",
         "SHOW_POPUP",
@@ -151,19 +181,29 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
 }</code></p>
 </li>
 <li>
-<p><strong>server</strong>: URL to matomo server</p>
+<p><strong>server</strong>: URL to Matomo server</p>
 </li>
-<li><strong>siteId</strong>: matomo siteId</li>
 <li>
-<p><strong>matomoGlobalLoaded</strong>: If matomo library is loaded globally by site page or the plugin should load it.</p>
+<p><strong>siteId</strong>: Matomo siteId</p>
+</li>
+<li>
+<p><strong>trackerUrl</strong>: Matomo JavaScript and PHP files loaded by the Paella player</p>
+<p>Allows to define files other than the default <code>matomo.php</code> and <code>matomo.js</code> that are loaded by the player to track usage data.</p>
+</li>
+<li>
+<p><strong>matomoGlobalLoaded</strong>: If Matomo library is loaded globally by site page or the plugin should load it.</p>
 <p>Keep it to <code>false</code> in Opencast.</p>
+</li>
+<li>
+<p><strong>mediaAnalyticsTitle</strong>: Template variable that will be used as title information in the Matomo Media Analytics plugin.</p>
+<p>Only relevant if you are using the Matomo Media Analytics plugin. It is recommended to use the <code>videoId</code> template variable to uniquely identify events in the Matomo Media Analytics plugin. If not set, the event title will be used.</p>
 </li>
 <li>
 <p><strong>cookieType</strong>: cookie type in the cookie consent plugIn.</p>
 <p>Keep it to <code>tracking</code> in Opencast.</p>
 </li>
 <li>
-<p><strong>logUserId</strong>: If Opecast user ID should be logued.</p>
+<p><strong>logUserId</strong>: If Opecast user ID should be logged.</p>
 </li>
 <li>
 <p><strong>events</strong>: If exists, user event interactions should be tracked.</p>
@@ -171,12 +211,14 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
 </li>
 <li>
 <p><strong>customDimensions</strong>: Custom dimensions to track.</p>
-<p>Object. The key represents the matomo custom dimension id, the value the string to log (template vars can me used)</p>
+<p>Object. The key represents the Matomo custom dimension id, the value the string to log (template vars can me used)</p>
 </li>
 </ul>
-<p>Template Vars:</p>
+<p><strong>Available template Vars:</strong></p>
 <ul>
-<li><strong>videoId</strong>: Video ID</li>
+<li>
+<p><strong>videoId</strong>: Video ID</p>
+</li>
 <li>
 <p><strong>metadata</strong>: Metadata object. Metadata properties:</p>
 <ul>
@@ -198,7 +240,10 @@ section of the <a href="../../configuration/">paella config file</a>.</p>
 </ul>
 </li>
 <li>
-<p><strong>event</strong>: Event name</p>
+<p><strong>event</strong>: Player event name (e.g. <code>paella:playbackRateChanged</code>)</p>
+</li>
+<li>
+<p><strong>eventData</strong>: A text representation of the data received by the player event (e.g. for the event <code>paella:playbackRateChanged</code> eventData = <code>2</code>)</p>
 </li>
 </ul>
 
