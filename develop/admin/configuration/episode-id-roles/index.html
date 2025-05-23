@@ -94,9 +94,9 @@ episode <code>872dc4ec-ca8a-4e12-8dac-ce99784d6d29</code>.</p>
 <h2 id="setup">Setup</h2>
 <p>Enable <code>episode.id.role.access</code> in <code>etc/custom.properties</code>.</p>
 <p>To make this work for the Admin UI and External API, the Elasticsearch Index needs to be updated with modified
-ACLs. You can achieve this by calling the <code>/index/rebuild/AssetManager/ACL</code> endpoint <strong>after</strong> enabling this feature
-in the aforementioned configuration files.
-The endpoint will reindex only event ACLs.</p>
+ACLs. You can achieve this by calling the <code>/index/rebuild/AssetManager/ACL</code> and <code>/index/rebuild/Search</code> endpoints 
+<strong>after</strong> enabling this feature in the aforementioned configuration files.
+These endpoints will reindex the event ACLs in both the AssetManager index and the Search index.</p>
 <p>In case you have custom actions configured, this will only work for the actions that were configured during the
 reindex of the Elasticsearch index. If you later add custom actions, you will have to reindex again.</p>
 
