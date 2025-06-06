@@ -1,7 +1,7 @@
-commit bf627e4877d72c1ddedf6f88bd43eb5d1dd7347c
+commit 873c55217e6664264feee6e039f40989f31a9a58
 Author: Waldemar Smirnow <wsmirnow@uni-osnabrueck.de>
-Date:   Fri Jun 6 15:19:29 2025 +0200
+Date:   Fri Jun 6 16:10:25 2025 +0200
 
-    Deselecting a series may result in loss of access to the event
+    Revert "Deselecting a series may result in loss of access to the event"
     
-    If the event has no episode ACL but only a series ACL, deselecting a series may result in the event no longer having any ACL. The non admin user will then lose access to the event. This occurs because the series ACL will be applied or (in this case) removed during the metadata update. To prevent this, we can keep the currently active ACL as the episode ACL before deleting the series ACL.
+    This reverts an accidentally pushed commit bf627e4877d72c1ddedf6f88bd43eb5d1dd7347c.
