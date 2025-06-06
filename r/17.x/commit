@@ -1,5 +1,7 @@
-commit 4653c07729630cc93c448b20525f10a59c191c6c
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Jun 3 16:20:29 2025 +0200
+commit bf627e4877d72c1ddedf6f88bd43eb5d1dd7347c
+Author: Waldemar Smirnow <wsmirnow@uni-osnabrueck.de>
+Date:   Fri Jun 6 15:19:29 2025 +0200
 
-    Release Notes for 17.4 (#6748)
+    Deselecting a series may result in loss of access to the event
+    
+    If the event has no episode ACL but only a series ACL, deselecting a series may result in the event no longer having any ACL. The non admin user will then lose access to the event. This occurs because the series ACL will be applied or (in this case) removed during the metadata update. To prevent this, we can keep the currently active ACL as the episode ACL before deleting the series ACL.
