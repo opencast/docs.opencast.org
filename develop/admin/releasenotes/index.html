@@ -33,12 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Opencast 17: Release Notes", url: "#_top", children: [
-              {title: "Opencast 17.4", url: "#opencast-174" },
-              {title: "Opencast 17.3", url: "#opencast-173" },
-              {title: "Opencast 17.2", url: "#opencast-172" },
-              {title: "Opencast 17.1", url: "#opencast-171" },
-              {title: "Opencast 17.0", url: "#opencast-170" },
+          {title: "Opencast 18: Release Notes", url: "#_top", children: [
+              {title: "Opencast 18.0", url: "#opencast-180" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
           ]},
@@ -91,85 +87,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="opencast-17-release-notes">Opencast 17: Release Notes</h1>
-<h2 id="opencast-174">Opencast 17.4</h2>
-<p>This release contains a few bug fixes and enhancements of existing features. Among others, it enables the use of
-Elasticsearch even if the setup is in yellow state (<a href="https://github.com/opencast/opencast/pull/6681">#6681</a>).
-It also adds an endpoint to trigger the update of a single event in search
-(<a href="https://github.com/opencast/opencast/pull/6653">#6653</a>).</p>
-<p>Most importantly, this contains a new version of both the Editor
-(<a href="https://github.com/opencast/opencast-editor/releases/tag/17.x-2025-05-23">17.x-2025-05-23</a>) and the Admin UI
-(<a href="https://github.com/opencast/opencast-admin-interface/releases/tag/17.x-2025-05-24">17.x-2025-05-24</a>).</p>
-<p>Additionally it contains a new version of Opencast Studio
-(<a href="https://github.com/elan-ev/opencast-studio/releases/tag/2025-04-30">2025-04-30</a>)
-with a bugfix regarding incorrect error messages when uploading.</p>
-<h2 id="opencast-173">Opencast 17.3</h2>
-<p>This release contains a few bug fixes, among them performance improvements for the metrics endpoint
-(<a href="https://github.com/opencast/opencast/pull/6627">#6627</a>). It's now also possible to trigger an index update for
-the archived information of an event (<a href="https://github.com/opencast/opencast/pull/6575">#6575</a>).</p>
-<p>Additionally, this contains new versions of both the Admin Interface
-(<a href="https://github.com/opencast/opencast-admin-interface/releases/tag/2025-04-17">2025-04-17</a>) and Studio
-(<a href="https://github.com/elan-ev/opencast-studio/releases/tag/2025-04-02">2025-04-02</a>).</p>
-<h2 id="opencast-172">Opencast 17.2</h2>
-<p>This is a maintenance release of Opencast 17.
-It fixes a few minor bugs.</p>
-<h2 id="opencast-171">Opencast 17.1</h2>
-<p>This release contains a couple of bug fixes. It also includes new versions for the editor
-(<a href="https://github.com/opencast/opencast-editor/releases/tag/2025-01-08">2025-01-08</a>) and the admin interface
-(<a href="https://github.com/opencast/opencast-admin-interface/releases/tag/2025-01-21">2025-01-21</a>). See the respective release
-notes for more details.</p>
-<p>One can now also remove subtitles from within the editor [<a href="https://github.com/opencast/opencast/pull/6361">#6361</a>] and
-configure asset upload options in more detail [<a href="https://github.com/opencast/opencast/pull/6362">#6362</a>].</p>
-<h2 id="opencast-170">Opencast 17.0</h2>
-<h3 id="features">Features</h3>
-<ul>
-<li>New roles were added with which a user can get access to an event without having to be added to the ACLs. For more
-  details see the relevant <a href="../configuration/episode-id-roles/">documentation</a>.
-  [<a href="https://github.com/opencast/opencast/pull/5056">#5056</a>]</li>
-<li>You can now generate captions with Whisper asynchronously. [<a href="https://github.com/opencast/opencast/pull/6247">#6247</a>]</li>
-<li>The Whisper.cpp integration now automatically re-encodes audio to a suitable format. It's
-  no longer necessary to include a separate encode operation for this in the workflow.
-  [<a href="https://github.com/opencast/opencast/pull/6248">#6248</a>]</li>
-<li>You can now provide terms of use to be presented to new users in the Admin UI. For configuration see
-  <a href="../configuration/admin-ui/terms/">the respective docs</a>. [<a href="https://github.com/opencast/opencast/pull/6010">#6010</a>]</li>
-<li>There is a new UI for the documentation of our REST endpoints but since it currently has some issues, it's not turned
-  on by default. You can however already try it out. [<a href="https://github.com/opencast/opencast/pull/5668">#5668</a>]</li>
-<li>There is a new GraphQL API as an alternative to the existing REST API. Please be aware that this is not yet production
-  ready and may change without further notice. [<a href="https://github.com/opencast/opencast/pull/5766">#5766</a>]</li>
-<li>There is a new filter available in the Admin interface to show only events that are published or not published.
-  [<a href="https://github.com/opencast/opencast/pull/6023">#6023</a>]</li>
-<li>The integration of Tobira in the Admin interface was improved.
-  [<a href="https://github.com/opencast/opencast/pull/6091">#6091</a>]</li>
-<li>Paella Player 7 now also shows a preview image in portrait mode.
-  [<a href="https://github.com/opencast/opencast/pull/6052">#6052</a>]</li>
-</ul>
-<h3 id="breaking-changes">Breaking Changes</h3>
-<ul>
-<li><strong>The old Admin UI was removed completely and is no longer available.</strong>
-[<a href="https://github.com/opencast/opencast/pull/5965">#5965</a>]</li>
-<li>We changed the sorting of events and series in the new Admin interface to something more intuitive. This <strong>requires the
-  installation of the OpenSearch/Elasticsearch plugin</strong> <code>analysis-icu</code>. Check the <a href="../upgrade/">upgrade guide</a> for more
-  details. [<a href="https://github.com/opencast/opencast/pull/5413">#5413</a>]</li>
-<li>The required Java version is now 17. [<a href="https://github.com/opencast/opencast/pull/5763">#5763</a>]</li>
-<li>The Microsoft Azure transcription integration was completely rewritten. Gstreamer is no longer needed as a dependency.
-  Please consult the updated <a href="../configuration/transcription.configuration/microsoftazure/">documentation</a> to find out
-  how to change your configuration and workflows so they are compatible again.
-  [<a href="https://github.com/opencast/opencast/pull/5876">#5876</a>]</li>
-<li>ACL templates in <code>etc/acl/</code> must be provided in JSON format from now on. XACML files are no longer accepted.
-  [<a href="https://github.com/opencast/opencast/pull/6018">#6018</a>]</li>
-</ul>
-<h3 id="configuration-changes">Configuration Changes</h3>
-<ul>
-<li>We no longer use the prepared flavor in our workflows and the Editor configuration as it was no longer serving any
-  purpose and made updating subtitles from the Editor difficult. Instead, we now always use the source flavor.
-  [<a href="https://github.com/opencast/opencast/pull/5862">#5862</a>]</li>
-<li>Since we removed feeds in OC 16, we no longer generate feed previews in our workflows.
-  [<a href="https://github.com/opencast/opencast/pull/6087">#6087</a>]</li>
-<li>Waveform peaks are now more visible, but that behavior is configurable.
-  [<a href="https://github.com/opencast/opencast/pull/6028">#6028</a>]</li>
-</ul>
-<p>For more details, please take a look at the <a href="../changelog/">full changelog</a>. If you want to update Opencast from a
-previous version, you should also read the <a href="../upgrade/">upgrade guide</a>.</p>
+    <h1 id="opencast-18-release-notes">Opencast 18: Release Notes</h1>
+<h2 id="opencast-180">Opencast 18.0</h2>
+<p>TBA</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
@@ -180,19 +100,19 @@ previous version, you should also read the <a href="../upgrade/">upgrade guide</
 </thead>
 <tbody>
 <tr>
-<td>November 6, 2024</td>
+<td>June 19, 2025</td>
 <td>Release Branch Cut</td>
 </tr>
 <tr>
-<td>December 4, 2024</td>
-<td>Release of Opencast 17.0</td>
+<td>July 24, 2025</td>
+<td>Release of Opencast 18.0</td>
 </tr>
 </tbody>
 </table>
 <h2 id="release-managers">Release Managers</h2>
 <ul>
-<li>Katrin Ihler (elan e.V.)</li>
-<li>Veronika Schröer (University of Konstanz)</li>
+<li>Dennis Benz (University of Osnabrück)</li>
+<li>Jonas Dühring (elan e.V.)</li>
 </ul>
 
   <br>
