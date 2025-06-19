@@ -1,9 +1,43 @@
-commit f66ce75f150a90f1fdc204d5d9d63cab0006eeea
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Thu Jun 12 16:16:57 2025 -0600
+commit c677247a47af91727a6711c820e72cc87a03f0a2
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Thu Jun 19 10:52:49 2025 +0200
 
-    Merge branch 'fix-jwt-validation' of dennis531/opencast into r/17.x
+    Add support for extra data in adopter registration (#6802)
     
-    Pull request #6791
+    This PR does a few things:
+    - It adds support for arbitrary extra data to be sent as part of the
+    normal adopter registration data. This enables (easier) extensions for
+    things like tracking integrations like Tobira.
+    - Adds a /stats endpoint for Tobira to put its stats information.
+    - Cleans up the adopter registration code, renaming classes and removing
+    redundant interfaces and such.
     
-      Fix jwt validation failures when using ECDSA algorithms
+    Ideally this would go into a `r/17.x` release, however if it can't then
+    `develop` would also work. This code adds a database table, but should
+    not require changing existing schema.
+    
+    ### How to test this patch
+    
+    Start an instance of
+    https://github.com/opencast/adopter-registration-server locally, setting
+    `org.opencastproject.adopter.registration.server.url=http://localhost:5000/`
+    in `custom.properties` prior to starting. Register as normal, restart
+    Opencast (or the adopter registration bundle). Manual insert of data is
+    required in the `/tobira/stats` endpoint, use the REST docs. The tobira
+    parameters supported are `num_realms, num_blocks, version, config`.
+    Omitted fields are silently ignored.
+    
+    ### Your pull request should…
+    * [x] have a concise title
+    * [ ] ~[close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists~
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
