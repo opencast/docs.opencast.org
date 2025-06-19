@@ -1,24 +1,18 @@
-commit 739cf40731ebdde073a48f14a3324d1f3e725f35
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Tue Jun 17 17:47:26 2025 +0200
+commit b3e8c2fe6315b84df18565752f5fb589429eb7bf
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Thu Jun 19 14:30:17 2025 -0600
 
-    Enable feature "Episode ID Roles" by default (#6696)
+    Update Whisper.cpp defaults to reflect new binary names (#6794)
     
-    This is a very useful feature to have, especially for external systems.
-    Especially especially so with JWT, which depends on this to make the
-    `oc` claim work. For external apps, it's extremely useful to be able to
-    rely on the presence of this feature and it will be annoying to tell
-    everyone to enable it manually. For example, Tobira is already making
-    use of this.
+    The default binary names of Whisper.cpp have changed. This patch adjusts
+    the Opencast code to reflect the new binary names. For more details, see
+    the deprecation warning at
     
-    CC @lkiesow @Arnei  (since you implemented this in #5056)
+    https://github.com/ggml-org/whisper.cpp/tree/v1.7.5/examples/deprecation-warning
     
-    
-    ### How to test this patch
-    
-    Build & start Opencast, then somehow create a user with a magic role
-    (permanent or just a JWT session) and see that the user has access to
-    the event.
+    Starting with Opencast 18, this change will also be included in
+    Opencast's package repository. The additional change to the default
+    model folder is done to also match the packages.
     
     
     ### Your pull request should…
