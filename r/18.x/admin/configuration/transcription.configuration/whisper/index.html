@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Whisper - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Whisper Transcription Engine", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Advantages", url: "#advantages" },
+              {title: "Enable Whisper engine", url: "#enable-whisper-engine" },
+              {title: "Additional Notes", url: "#additional-notes" },
+              {title: "Whisper-ctranslate2", url: "#whisper-ctranslate2" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../whispercpp/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../whispercpp/" class="btn btn-xs btn-link">
+        WhisperC++
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../vosk/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../vosk/" class="btn btn-xs btn-link">
+        Vosk
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="whisper-transcription-engine">Whisper Transcription Engine</h1>
+<h2 id="overview">Overview</h2>
+<p>Opencast can take advantage of <a href="">Open AI's Whisper Project</a> to generate automatic transcriptions on premise through 
+<a href="../../../workflowoperationhandlers/speechtotext-woh/">SpeechToText WoH</a>.</p>
+<h2 id="advantages">Advantages</h2>
+<ul>
+<li>Transcription on more than 80 languages</li>
+<li>Translation to English</li>
+<li>Automatic language detection</li>
+<li>Fast processing (When using a GPU)</li>
+<li>Run locally, no data sent to third parties.</li>
+</ul>
+<h2 id="enable-whisper-engine">Enable Whisper engine</h2>
+<p>To enable Whisper as for the <code>SpeechToText</code> WoH, follow these steps.</p>
+<ol>
+<li><a href="https://github.com/openai/whisper#setup">Install whisper</a> on the worker nodes.<ul>
+<li>Or install <a href="https://github.com/Softcatala/whisper-ctranslate2">whisper-ctranslate2</a> for faster processing
+  on CPU.</li>
+</ul>
+</li>
+<li>Enable whisper and set Job load in <code>org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>.</li>
+<li>Set the target model to use in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code>.</li>
+</ol>
+<h2 id="additional-notes">Additional Notes</h2>
+<ul>
+<li>Whisper can be run on CPU or GPU, the use of a GPU increase the performance dramatically.</li>
+<li><a href="https://github.com/openai/whisper#available-models-and-languages">There are five languages models available to use</a>, 
+from the lightest (tiny) to the most complete (large), having a
+bigger model improves the accuracy but diminishes processing speed.</li>
+<li>It's recommended to set a Job load for each machine. </li>
+<li>In the case that one want to use only one worker node with Whisper,
+one can set the job load to be bigger than the size on the non Whisper nodes. The whisper Job will only be run on 
+the Whisper machines (Whose nodes have higher job load set).</li>
+<li>Also, is a good idea on the Whisper node to configure it.<ul>
+<li>Avoid workflows failures over not enough memory with parallel transcriptions.</li>
+<li>Performance bottleneck with too many parallel transcriptions.</li>
+</ul>
+</li>
+</ul>
+<h2 id="whisper-ctranslate2">Whisper-ctranslate2</h2>
+<p><a href="https://github.com/Softcatala/whisper-ctranslate2">whisper-ctranslate2</a> offers the same command line interface
+as OpenAIs whisper, so it can easily be used in lieu of it. The main benefit of whisper-ctranslate2 is its
+out-of-the-box processing speed increase, especially on CPUs, compared to OpenAIs whisper. Otherwise the two
+should behave highly similar, so the above notes still apply.</p>
+<p>To use whisper-ctranslate2 instead of OpenAis whisper, change the <code>whisper.root.path</code> in
+<code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> to your installation path.</p>
+<p>Additional features:
+- Enabling quantization in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> can increase processing
+  speed even further.
+- Enabling Voice Activity Detection in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code> can prevent
+  whisper from transcribing non-speech or silence.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../whispercpp/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../whispercpp/" class="btn btn-xs btn-link">
+        WhisperC++
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../vosk/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../vosk/" class="btn btn-xs btn-link">
+        Vosk
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/transcription.configuration/whisper.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

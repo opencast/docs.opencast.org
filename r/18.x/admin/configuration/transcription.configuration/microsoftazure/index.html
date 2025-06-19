@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Microsoft Azure - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Microsoft Azure Transcription Engine", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Configuration", url: "#configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../vosk/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../vosk/" class="btn btn-xs btn-link">
+        Vosk
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        IBM Watson
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="microsoft-azure-transcription-engine">Microsoft Azure Transcription Engine</h1>
+<h2 id="overview">Overview</h2>
+<p>Microsoft Azure Opencast transcription service uses the Microsoft Azure Speech Service API to create a transcript from an audio track. The transcription is done asynchronously to speed up processing. When the result is generated, an attach-transcript workflow will be started to archive and publish the transcript. To find out more about the Microsoft Azure Speech Service API, read <a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/batch-transcription">documentation here</a>.</p>
+<p>Note: You must have an active subscription to use Microsoft Azure Speech Services.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="step-1-get-azure-subscription-credentials">Step 1: Get Azure subscription credentials</h3>
+<ul>
+<li><a href="https://azure.microsoft.com/en-US/free/cognitive-services/">Create an Azure subscription</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create">Create a storage account</a></li>
+<li>Get the storage account access key. Go to <a href="https://portal.azure.com">Azure Portal</a> &gt; <code>Storage accounts</code>, select your storage account, choose <code>Security + networking</code> &gt; <code>Access keys.</code> Copy the key.</li>
+<li><a href="https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices">Create a speech resource</a></li>
+<li>Get the subscription key and region. After your Speech resource is deployed, select <code>Go to resource</code> to view and
+  manage keys. For more information about Cognitive Services resources, see
+  <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Clinux#get-the-keys-for-your-resource">here</a></li>
+</ul>
+<h3 id="step-2-configure-the-microsoft-azure-transcription-service">Step 2: Configure the Microsoft Azure Transcription Service</h3>
+<p>Edit <code>etc/org.opencastproject.transcription.microsoft.azure.MicrosoftAzureTranscriptionService.cfg</code>:</p>
+<ul>
+<li>Set <code>enabled</code>=<code>true</code></li>
+<li>Set <code>azure_storage_account_name</code> to your storage account name</li>
+<li>Set <code>azure_account_access_key</code> to the storage account access key</li>
+<li>Set <code>azure_container_name</code> to a container name you want to use</li>
+<li>Set <code>azure_speech_services_endpoint</code> to your speech services endpoint</li>
+<li>Set <code>azure_cognitive_services_subscription_key</code> to the speech services subscription key</li>
+<li>Review the other configuration options in this file and edit as needed</li>
+</ul>
+<h3 id="step-3-add-a-workflow-operations-or-create-new-workflow-to-start-transcription">Step 3: Add a workflow operations or create new workflow to start transcription</h3>
+<p>Edit a workflow to start a transcription, e.g. <code>etc/workflows/partial-publish.xml</code>. You have to add the <code>microsoft-azure-start-transcription</code> operation right after the creation of the final cut of the media files. This operation may look like</p>
+<pre><code class="language-xml">&lt;!-- This is a typical operation to generate final cut --&gt;
+&lt;!-- of the media files. --&gt;
+&lt;operation
+  id=&quot;editor&quot;
+  …
+&lt;/operation&gt;
+
+&lt;!-- This operation will start the transcription job --&gt;
+&lt;operation
+  id=&quot;microsoft-azure-start-transcription&quot;
+  fail-on-error=&quot;true&quot;
+  exception-handler-workflow=&quot;partial-error&quot;
+  description=&quot;Start Microsoft Azure transcription job&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;source-flavors&quot;&gt;*/trimmed&lt;/configuration&gt;
+    &lt;!-- Skip this operation if flavor already exists. --&gt;
+    &lt;!-- Used for cases when mediapackage already has captions. --&gt;
+    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/*&lt;/configuration&gt;
+    &lt;configuration key=&quot;audio-extraction-encoding-profile&quot;&gt;transcription-azure.audio&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>For more options please consult the <a href="../../../workflowoperationhandlers/microsoft-azure-start-transcription-woh/">documentation</a>.</p>
+<h3 id="step-4-add-a-workflow-to-attach-transcriptions">Step 4: Add a workflow to attach transcriptions</h3>
+<p>A sample attach transcript workflow that is preconfigured in the configuration from Step 2. Attaches the generated transcription to the mediapackage, archives and republishes it. Copy it into a new file under <code>etc/workflows/microsoft-azure-attach-transcription.xml</code> in your Opencast installation.</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+  &lt;id&gt;microsoft-azure-attach-transcription&lt;/id&gt;
+  &lt;title&gt;Attach Transcription from Microsoft Azure&lt;/title&gt;
+  &lt;description&gt;Publish and archive transcription from Microsoft Azure Speech Services.&lt;/description&gt;
+  &lt;operations&gt;
+
+    &lt;operation
+      id=&quot;microsoft-azure-attach-transcription&quot;
+      fail-on-error=&quot;true&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Attach transcription from Microsoft Azure&quot;&gt;
+      &lt;configurations&gt;
+        &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
+        &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
+        &lt;!-- Set the flavor to something the Paella player will parse --&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;archive, ${transcriptionLocaleTag!}&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id=&quot;snapshot&quot;
+      fail-on-error=&quot;true&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Archive transcription&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id=&quot;tag&quot;
+      description=&quot;Tagging captions for publishing&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/source&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/delivery&lt;/configuration&gt;
+        &lt;configuration key=&quot;target-tags&quot;&gt;-archive&lt;/configuration&gt;
+        &lt;configuration key=&quot;copy&quot;&gt;true&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id=&quot;publish-engage&quot;
+      fail-on-error=&quot;true&quot;
+      exception-handler-workflow=&quot;partial-error&quot;
+      description=&quot;Distribute and publish to engage server&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;download-source-flavors&quot;&gt;captions/delivery&lt;/configuration&gt;
+        &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
+        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+
+    &lt;operation
+      id=&quot;cleanup&quot;
+      fail-on-error=&quot;false&quot;
+      description=&quot;Cleaning up&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
+        &lt;configuration key=&quot;delete-external&quot;&gt;false&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
+  &lt;/operations&gt;
+&lt;/definition&gt;
+</code></pre>
+<p>All available options of the  <code>microsoft-azure-attach-transcription</code> operation are documented <a href="../../../workflowoperationhandlers/microsoft-azure-attach-transcription-woh/">here</a>.</p>
+<h3 id="step-5-add-audio-extraction-encoding-profile">Step 5: Add audio extraction encoding profile</h3>
+<p>The audio track to transcript must be extracted from the media file and converted to a specific format for processing. This is done with encoding engine of Opencast. Put the encoding profile listed below into the file <code>etc/encoding/custom.properties</code>.</p>
+<pre><code class="language-cfg"># Microsoft Azure Speech Services accept limited audio formats
+# See https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/batch-transcription-audio-data#supported-audio-formats
+profile.transcription-azure.audio.name = extract audio stream for transcription
+profile.transcription-azure.audio.input = visual
+profile.transcription-azure.audio.output = audio
+profile.transcription-azure.audio.jobload = 0.5
+profile.transcription-azure.audio.suffix = .ogg
+profile.transcription-azure.audio.mimetype = audio/ogg
+profile.transcription-azure.audio.ffmpeg.command = -i #{in.video.path} \
+    -vn -dn -sn -map_metadata -1 \
+    -c:a libopus -b:a 24k -ac 1 -ar 16k \
+    #{out.dir}/#{out.name}#{out.suffix}
+</code></pre>
+<h3 id="step-6-enable-the-transcription-plugin">Step 6: Enable the transcription plugin</h3>
+<p>Transcription plugins are disabled by default. Enable it in the <code>etc/org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code> configuration file by setting the <code>opencast-plugin-transcription-services</code> to <code>true</code>.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../vosk/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../vosk/" class="btn btn-xs btn-link">
+        Vosk
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../watsontranscripts/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../watsontranscripts/" class="btn btn-xs btn-link">
+        IBM Watson
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/transcription.configuration/microsoftazure.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

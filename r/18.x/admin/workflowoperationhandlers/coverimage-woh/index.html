@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cover Image - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Cover Image Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Metadata", url: "#metadata" },
+              {title: "Stylesheet", url: "#stylesheet" },
+              {title: "Operation Example", url: "#operation-example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-link">
+        Crop Video
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../clone-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../clone-woh/" class="btn btn-xs btn-link">
+        Clone
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="cover-image-workflow-operation">Cover Image Workflow Operation</h1>
+<p>ID: <code>cover-image</code></p>
+<h2 id="description">Description</h2>
+<p>The cover image operation generates a cover image based on an XSLT transformation which results in an SVG
+image that is rasterized as PNG as a last step.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Example</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stylesheet *</td>
+<td>URL</td>
+<td>file:///etc/opencast/branding/coverimage.xsl</td>
+<td>-</td>
+<td>File URI to the XSL stylesheet used to generate the SVG image</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>XML</td>
+<td><code>&lt;meta&gt;&lt;title&gt;Hello!&lt;/title&gt;&lt;/meta&gt;</code></td>
+<td>-</td>
+<td>XML string which is passed to the XSL transformation. If parameter is not given, a default XML is handed to the transformation</td>
+</tr>
+<tr>
+<td>episodeFlavor</td>
+<td>Flavor</td>
+<td>dublincore/episode</td>
+<td>dublincore/episode</td>
+<td>Flavor of the passed episode</td>
+</tr>
+<tr>
+<td>seriesFlavor</td>
+<td>Flavor</td>
+<td>dublincore/series</td>
+<td>dublincore/series</td>
+<td>Flavor of the series that the passed episode is part of</td>
+</tr>
+<tr>
+<td>width *</td>
+<td>int</td>
+<td>1920</td>
+<td>-</td>
+<td>Width of the resulting image</td>
+</tr>
+<tr>
+<td>height *</td>
+<td>int</td>
+<td>1080</td>
+<td>-</td>
+<td>Height of the resulting image</td>
+</tr>
+<tr>
+<td>posterimage-flavor</td>
+<td>Flavor</td>
+<td>image/poster</td>
+<td>-</td>
+<td>Flavor of a poster image which may be used as a part of the cover image (e.g. as a background)</td>
+</tr>
+<tr>
+<td>posterimage</td>
+<td>URL</td>
+<td>http://flickr.com/posterimage.jpg</td>
+<td>-</td>
+<td>URL to a custom poster image instead of using one out of the media package</td>
+</tr>
+<tr>
+<td>target-flavor *</td>
+<td>Flavor</td>
+<td>image/cover</td>
+<td>-</td>
+<td>Flavor of the resulting cover image</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>String</td>
+<td>archive,download</td>
+<td>-</td>
+<td>Comma separated list of tags to be applied to the resulting attachment.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>stylesheet</code> parameter may use <code>${karaf.etc}</code> to reference Opencast's configuration directory.</p>
+<h2 id="metadata">Metadata</h2>
+<p>If no metadata is passed by using the configuration key <code>metadata</code>, the default metadata is passed to the cover image
+service which could look like the following example:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;metadata&gt;
+  &lt;title&gt;Puppy Love&lt;/title&gt;
+  &lt;date&gt;2014-04-24T11:21:00&lt;/date&gt;
+  &lt;license&gt;All rights reserved&lt;/license&gt;
+  &lt;description&gt;Here is a description of the video&lt;/description&gt;
+  &lt;series&gt;
+    &lt;title&gt;Superbowl Commercials&lt;/title&gt;
+    &lt;description&gt;Here is a description of the series&lt;/description&gt;
+  &lt;/series&gt;
+  &lt;contributors&gt;Budweiser&lt;/contributors&gt;
+  &lt;creators&gt;Budweiser&lt;/creators&gt;
+  &lt;subjects&gt;Commercial&lt;/subjects&gt;
+&lt;/metadata&gt;
+</code></pre>
+<p>Note that the date is localized based on your servers Java Runtime language settings.</p>
+<p>Also note that if the default metadata is beeing used and one of the metadata fields exists multiple times, the cover image service currently only adds the first field of each type to the xml.</p>
+<h2 id="stylesheet">Stylesheet</h2>
+<p>The cover image service uses the Xalan XSLT 1.0 processor to transform an XML stylesheet to an SVG image.</p>
+<p>The general structure of the stylesheet is expected to look like this:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+
+  &lt;xsl:param name=&quot;width&quot; /&gt;
+  &lt;xsl:param name=&quot;height&quot; /&gt;
+  &lt;xsl:param name=&quot;posterimage&quot; /&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; version=&quot;1.1&quot;&gt;
+      &lt;xsl:attribute name=&quot;width&quot;&gt;
+        &lt;xsl:value-of select=&quot;$width&quot; /&gt;
+      &lt;/xsl:attribute&gt;
+      &lt;xsl:attribute name=&quot;height&quot;&gt;
+        &lt;xsl:value-of select=&quot;$height&quot; /&gt;
+      &lt;/xsl:attribute&gt;
+
+      &lt;!-- Your SVG content --&gt;
+
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>The variables <code>width</code>, <code>height</code> and <code>posterimage</code> will be set to the values of the respective configuration keys.</p>
+<p>As a starting point for your own template you best take a look at file <code>etc/branding/coverimage.xsl</code>.</p>
+<h3 id="using-xlst-extensions">Using XLST Extensions</h3>
+<p>Xalan is a powerful XSLT 1.0 processor that comes with a rich feature set. For example, it is possible to
+execute JavaScript or Java code directly within the stylesheet.</p>
+<p>For commonly used tasks it is simpler, however, to make use of available XSLT Extensions.</p>
+<h4 id="opencast-extensions">Opencast Extensions</h4>
+<p>The package org.opencastproject.coverimage.impl.xsl provides classes supposed to be used within XSL stylesheets.</p>
+<p>To make use of those classes, you need to reference the package from your XSL stylesheet:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  xmlns:opencast=&quot;xalan://org.opencastproject.coverimage.impl.xsl&quot; exclude-result-prefixes=&quot;opencast&quot;
+  extension-element-prefixes=&quot;opencast&quot;&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>Later on, you can use methods of those classes as shown in the following example:</p>
+<pre><code class="language-xml">&lt;tspan class=&quot;title&quot; y=&quot;30%&quot; x=&quot;50%&quot;&gt;
+  &lt;xsl:value-of select=&quot;opencast:XsltHelper.split(metadata/title, 30, 1, false())&quot; /&gt;
+&lt;/tspan&gt;
+</code></pre>
+<p>Note: In XSLT, use <code>true()</code> and <code>false()</code> for boolean literals (<code>true</code> and <code>false</code> won't work since those are not
+keywords in XSLT)</p>
+<p>The following classes are provided by the org.opencastproject.coverimage.impl.xsl package:</p>
+<p><strong>class XsltHelper</strong></p>
+<p><em>String split(String text, int maxChars, int line, boolean isLastLine)</em></p>
+<p>This method can be used to break strings over multiple lines and to abbreviate strings that are too using ellipsis.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>text</td>
+<td>Input string</td>
+</tr>
+<tr>
+<td>maxChars</td>
+<td>Maximum number of characters per line</td>
+</tr>
+<tr>
+<td>line</td>
+<td>Number of line</td>
+</tr>
+<tr>
+<td>isLastLine</td>
+<td>Whether <code>line</code> is the last line used to represent the <code>text</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>Example</em></p>
+<p>To use at most two lines (max. 30 characters per line) to represent a string <code>metadata/title</code> and abbreviate the string
+if two lines aren't enough:</p>
+<pre><code class="language-xml">&lt;tspan class=&quot;title&quot; y=&quot;30%&quot; x=&quot;50%&quot;&gt;
+  &lt;xsl:value-of select=&quot;opencast:XsltHelper.split(metadata/title, 30, 1, false())&quot; /&gt;
+&lt;/tspan&gt;
+&lt;tspan class=&quot;title&quot; dy=&quot;10%&quot; x=&quot;50%&quot;&gt;
+  &lt;xsl:value-of select=&quot;opencast:XsltHelper.split(metadata/title, 30, 2, true())&quot; /&gt;
+&lt;/tspan&gt;
+</code></pre>
+<h4 id="exslt-extensions">EXSLT Extensions</h4>
+<p>Xalan supports most of the XSLT extensions of the EXSLT community (see <a href="http://exslt.org/">[1]</a>). In doubt consult
+<a href="http://xml.apache.org/xalan-j/extensionslib.html">[2]</a> for more information about Xalan's implementation of the
+EXSLT extensions.</p>
+<p>Please find an example of how to use EXSLT extensions below:</p>
+<pre><code class="language-xml">&lt;xsl:stylesheet version=&quot;1.0&quot;
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot;
+  xmlns:date=&quot;http://exslt.org/dates-and-times&quot;
+  xmlns:opencast=&quot;xalan://org.opencastproject.coverimage.impl.xsl&quot; exclude-result-prefixes=&quot;date&quot;
+  extension-element-prefixes=&quot;date&quot;&gt;
+
+  &lt;!-- [...] --&gt;
+
+  &lt;tspan class=&quot;presentationdate&quot; dy=&quot;12%&quot; x=&quot;50%&quot;&gt;
+    &lt;xsl:value-of select=&quot;date:format-date(metadata/date, 'MMMMMMMMMM dd, YYYY, HH:mm:ss')&quot; /&gt;
+  &lt;/tspan&gt;
+
+  &lt;!-- [...] --&gt;
+
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>In this example, the function <code>format-date</code> of the EXSLT dates-and-times functions library is used to format a date.</p>
+<h2 id="operation-example">Operation Example</h2>
+<p>Operation example with metadata derived from events metadata:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;cover-image&quot;
+    description=&quot;Create a cover image&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;stylesheet&quot;&gt;file://${karaf.etc}/branding/coverimage.xsl&lt;/configuration&gt;
+    &lt;configuration key=&quot;width&quot;&gt;1920&lt;/configuration&gt;
+    &lt;configuration key=&quot;height&quot;&gt;1080&lt;/configuration&gt;
+    &lt;configuration key=&quot;posterimage-flavor&quot;&gt;presenter/coverbackground&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/player+preview&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-tags&quot;&gt;archive, engage-download&lt;/configuration&gt;
+  &lt;/configurations&gt;
+&lt;/operation&gt;
+</code></pre>
+<p>Operation example with metadata provided in the operations configuration:</p>
+<pre><code class="language-xml">&lt;operation
+    id=&quot;cover-image&quot;
+    description=&quot;Create a cover image&quot;&gt;
+  &lt;configurations&gt;
+    &lt;configuration key=&quot;stylesheet&quot;&gt;file://${karaf.etc}/branding/coverimage.xsl&lt;/configuration&gt;
+    &lt;configuration key=&quot;metadata&quot;&gt;
+      &lt;![CDATA[&lt;meta&gt;&lt;title&gt;my custom title&lt;/title&gt;&lt;special&gt;very special&lt;/special&gt;&lt;/meta&gt;]]&gt;
+    &lt;/configuration&gt;
+    &lt;configuration key=&quot;width&quot;&gt;1920&lt;/configuration&gt;
+    &lt;configuration key=&quot;height&quot;&gt;1080&lt;/configuration&gt;
+    &lt;configuration key=&quot;posterimage-flavor&quot;&gt;presenter/player+preview&lt;/configuration&gt;
+    &lt;configuration key=&quot;target-flavor&quot;&gt;image/cover&lt;/configuration&gt;
+ &lt;/configurations&gt;
+&lt;/operation&gt;
+
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cropvideo-woh/" class="btn btn-xs btn-link">
+        Crop Video
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../clone-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../clone-woh/" class="btn btn-xs btn-link">
+        Clone
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/coverimage-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
