@@ -1,13 +1,23 @@
-commit 9340cc44e59f3c37ecae2733f6e750436d953e06
+commit 009ab65d80d06ef101790ddf68965fe8d4ca4355
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Jun 26 14:50:12 2025 +0200
+Date:   Thu Jun 26 17:58:16 2025 +0200
 
-    Partially remove entwine from dublincore (#6755)
+    Remove entwine JSON (#6785)
     
-    Replace entwine code with plain Java in the dublincore module. Leaves
-    some entwine that would otherwise require large changes in the index or
-    external-api modules.
+    Replace entwine code that handles JSON with Gson.
+    Gson was chosen because it is a JSON library that we also use.
     
+    This mostly affects the admin ui and external api endpoints, since
+    entwine JSON was used there for responses.
+    
+    Not sure if this warrants a new external api version, since this
+    *should* not result in functional changes. Will create a new version if
+    someone wants me to.
+    
+    ### How to test this patch
+    
+    Ideally you have a piece of software that uses the external API so you
+    can check if the software breaks.
     
     ### Your pull request should…
     
