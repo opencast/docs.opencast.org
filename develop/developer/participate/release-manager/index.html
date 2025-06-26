@@ -350,19 +350,11 @@ needs to be done manually.</p>
 <p>Add the release notes, and update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
    </a> is a convenient tool
    for this. You need to update:</p>
-</li>
-<li>
-<p><code>docs/guides/admin/docs/releasenotes.md</code></p>
-</li>
-<li><code>docs/guides/admin/docs/changelog.md</code></li>
-</ol>
-<p>Create a pull request for the updated documentation and merge it.</p>
-<ol>
-<li>
-<p>Update your local release branch yet again, so that it contains the documentation:</p>
-<pre><code>git checkout r/16.x
-git fetch &lt;remote&gt;
-git merge &lt;remote&gt;/r/16.x
+<pre><code>cd docs/guides/admin/docs/
+vim releasenotes.md
+vim changelog/opencast-&lt;version&gt;.md
+git commit -S releasenotes.md changelog.md -m 'Updated Release Notes'
+git push &lt;remote&gt; r/6.x
 </code></pre>
 </li>
 <li>
