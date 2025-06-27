@@ -1,41 +1,11 @@
-commit 076b97c3b77add6220b43b4e8b61aef0c69ff7b6
+commit 7fd574de7c1f4ba6f18d27d37fac45eac80e35f4
 Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Jun 27 11:57:41 2025 +0200
+Date:   Fri Jun 27 12:48:20 2025 +0200
 
-    Allow to select three or more tracks (#6728)
+    OC 17.4 Changelog (#6747)
     
-    Currently, the `select-tracks` workflow operation only supports up to
-    two input tracks. This patch removes this limit by adding a simple
-    support for these mediapackages.
+    **Attention:** This contains #6742!
     
-    The new case in the code simply adds the tracks to the mediapackage
-    while recognising the hide configurations. This new case doesn't mux any
-    video or audio.
-    
-    ### How to test this patch
-    
-    1. Ingest a mediapackage with three videos, e.g. `curl -u admin
-    http://localhost:8080/ingest/addMediaPackage/schedule-and-upload -F
-    'flavor=presenter/source' -F BODY=@presenter.mp4 -F
-    'flavor=presentation/source' -F BODY=@presentation.mp4 -F
-    'flavor=presentation-2/source' -F BODY=@presentation-2.mp4 -F
-    title=triple-video-test`
-    2. Open OC editor and remove one track in the selector
-    3. Save and process event
-    4. Check if event displays two video tracks in the player
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    Additionally, this adds changes that also went into legacy to the
+    changelog and changes the order to when the PR was merged, not created
+    (see https://github.com/opencast/helper-scripts/pull/80).
