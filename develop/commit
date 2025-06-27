@@ -1,27 +1,46 @@
-commit d0611a5cf1a93b71867d69aad9129436914aa190
+commit ee44eb0a9128beb2ded350a639052e88656ed853
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jun 27 11:05:30 2025 +0200
+Date:   Fri Jun 27 12:14:46 2025 +0200
 
-    Fix Dependency Plugin Complaining About Entwine (#6833)
+    Remove queries from the asset manager (#6689)
     
-    This patch fixes the tests failing due to the maven dependency plugin
-    complaining about the declaration of the entwine functional library in
-    some modules. This was likely being caused my merging several of the
-    entwine removal pull requests.
+    Fixes #5966.
+    
+    Removes all query related code from the asset manager. This means this
+    asset manager cannot be accessed via queries anymore. Instead, the asset
+    manager is exposing new methods which can be used instead.
+    
+    What this boils down to is dumbing down the asset manager. The query
+    language we used was powerful but complex. In removing it, we lose the
+    power to create whatever query we want or need on a dime. Now, if there
+    is something you want to do with the asset manager but there is no
+    method for it, that method will have to be written first.
+    On the other hand, writing new methods should now be a lot easier. Named
+    queries are less powerful, but comparatively easy to understand.
+    Therefore accessing and working with the asset manager should be easier
+    now.
+    
+    This also allows us to get rid of the query-dsl dependency, which
+    hopefully makes upgrading other depdencies easier.
+    
+    ### How to test this patch
+    
+    Do whatever you can think of that would affect assets. Mostly this will
+    be running workflows, but creativity is encouraged.
     
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [x] [close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
