@@ -1,46 +1,55 @@
-commit ee44eb0a9128beb2ded350a639052e88656ed853
+commit 454117e87659583d0dd41d106757a33be7aab18f
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jun 27 12:14:46 2025 +0200
+Date:   Fri Jun 27 12:24:47 2025 +0200
 
-    Remove queries from the asset manager (#6689)
+    Build(deps): bump org.apache.servicemix.bundles:org.apache.servicemix.bundles.aws-java-sdk from 1.12.269_1 to 1.12.503_1 in /modules/metrics-exporter (#6602)
     
-    Fixes #5966.
-    
-    Removes all query related code from the asset manager. This means this
-    asset manager cannot be accessed via queries anymore. Instead, the asset
-    manager is exposing new methods which can be used instead.
-    
-    What this boils down to is dumbing down the asset manager. The query
-    language we used was powerful but complex. In removing it, we lose the
-    power to create whatever query we want or need on a dime. Now, if there
-    is something you want to do with the asset manager but there is no
-    method for it, that method will have to be written first.
-    On the other hand, writing new methods should now be a lot easier. Named
-    queries are less powerful, but comparatively easy to understand.
-    Therefore accessing and working with the asset manager should be easier
-    now.
-    
-    This also allows us to get rid of the query-dsl dependency, which
-    hopefully makes upgrading other depdencies easier.
-    
-    ### How to test this patch
-    
-    Do whatever you can think of that would affect assets. Mostly this will
-    be running workflows, but creativity is encouraged.
+    Bumps
+    org.apache.servicemix.bundles:org.apache.servicemix.bundles.aws-java-sdk
+    from 1.12.269_1 to 1.12.503_1.
     
     
-    ### Your pull request should…
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.apache.servicemix.bundles:org.apache.servicemix.bundles.aws-java-sdk&package-manager=maven&previous-version=1.12.269_1&new-version=1.12.503_1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    You can trigger a rebase of this PR by commenting `@dependabot rebase`.
+    
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot merge` will merge this PR after your CI passes on it
+    - `@dependabot squash and merge` will squash and merge this PR after
+    your CI passes on it
+    - `@dependabot cancel merge` will cancel a previously requested merge
+    and block automerging
+    - `@dependabot reopen` will reopen this PR if it is closed
+    - `@dependabot close` will close this PR and stop Dependabot recreating
+    it. You can achieve the same result by closing it manually
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
+    
+    
+    </details>
+    
+    > **Note**
+    > Automatic rebases have been disabled on this pull request as it has
+    been open for over 30 days.
