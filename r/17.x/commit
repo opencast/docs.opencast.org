@@ -1,9 +1,47 @@
-commit a28c7e143765ccd0143491c721b683c701690dee
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Jul 8 12:28:12 2025 -0600
+commit 01dab3c898e1aa31c019df5acc70970e8c0cd31e
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Mon Jul 21 12:35:44 2025 +0200
 
-    Merge branch 'fix-snapshot-deletion' of tales-media/fork-opencast-opencast into r/17.x
+    Allow to escape colons in workflow variable syntax (#6884)
     
-    Pull request #6885
+    Workflow variables have the following syntax:
     
-      Fix snapshot deletion for remote only MediaPackages
+        ${var:default}
+    
+    A colon is used to separate the variable name from the default value.
+    However, the variable itself might contain a colon and there is
+    currently no way to use such a variable. A specific use case is the
+    `analyze-mediapackage` operation with `set-tag-variables` enabled. For
+    subtitle tracks, this might add a workflow property such as
+    
+        captions_source_hastag_lang:en
+    
+    This PR changes the regex to parse variables and allows to escape colons
+    in the following way:
+    
+        ${var-with-\:-colon:default-with\:-colon}
+    
+    This is breaking in the sense that the string `\:` is now replaced in
+    the variable name and default value with a `:`, but I don't think
+    anybody used `\:` at the moment. So this should not be breaking in
+    practice.
+    
+    ### How to test this patch
+    
+    Use a variable with a colon in a workflow.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
