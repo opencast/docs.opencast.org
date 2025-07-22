@@ -1,5 +1,33 @@
-commit 629d8d0a30f04a86583253c786e962f0eb03b018
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jul 11 21:19:54 2025 +0200
+commit 4529dab6ae535d1db04659f7962ca2eea11f1082
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Tue Jul 22 07:34:59 2025 +0200
 
-    Merge r/17.x into r/18.x
+    Add Voice Activity Detection (VAD) configs to whisperCpp (#6838)
+    
+    This PR adds configurations for the Voice Activity Detection (VAD) of
+    WhisperC++, see
+    https://github.com/ggml-org/whisper.cpp?tab=readme-ov-file#voice-activity-detection-vad.
+    
+    ### How to test this patch
+    1. Install WhisperC++ and configure Opencast according to
+    https://docs.opencast.org/r/17.x/admin/#configuration/transcription.configuration/whispercpp/#enable-whisperc-engine.
+    2. Configure VAD in
+    `org.opencastproject.speechtotext.impl.engine.WhisperCppEngine.cfg`
+    3. Upload a video and see the generated subtitles in the player.
+    
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
