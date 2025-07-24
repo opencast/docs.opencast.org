@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 17: Release Notes", url: "#_top", children: [
+              {title: "Opencast 17.6", url: "#opencast-176" },
               {title: "Opencast 17.5", url: "#opencast-175" },
               {title: "Opencast 17.4", url: "#opencast-174" },
               {title: "Opencast 17.3", url: "#opencast-173" },
@@ -93,6 +94,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-17-release-notes">Opencast 17: Release Notes</h1>
+<h2 id="opencast-176">Opencast 17.6</h2>
+<p>This version contains a <strong>security fix</strong>! It is advised to update to this version in a timely fashion. More information
+to follow.</p>
+<p>Workflow variables containing a colon in the variable name can now be escaped with a backslash.
+Beforehand, the variable syntax ${var:iable} would interpret the part after the : as the default value if var was not
+defined. This is especially useful for workflow properties defined by analyze-mediapackage based on element tags like
+<code>lang:en</code>. Please note that this is a breaking change in the sense that the string "\:" will now be interpreted as a
+":" (<a href="https://github.com/opencast/opencast/pull/6884">#6884</a>).</p>
+<p>Apart from that, this release contains multiple bug fixes, e.g. for timeouts in Stud.IP
+(<a href="https://github.com/opencast/opencast/pull/6825">#6825</a>) and multi-threading for WhisperCPP
+(<a href="https://github.com/opencast/opencast/pull/6883">#6883</a>) as well as snapshot deletion for remote storage
+((<a href="https://github.com/opencast/opencast/pull/6885">#6885</a>).</p>
+<p>As a feature, we now accept AAI attributes as list (<a href="https://github.com/opencast/opencast/pull/6831">#6831</a>).</p>
+<p>There are also new versions of both the admin ui
+(<a href="https://github.com/opencast/opencast-admin-interface/releases/tag/2025-07-24">2025-07-24</a> and the editor
+(<a href="https://github.com/opencast/opencast-editor/releases/tag/2025-07-24">2025-07-24</a> included.</p>
 <h2 id="opencast-175">Opencast 17.5</h2>
 <p>This release contains quite a few bug fixes and other improvements, most
 importantly a security fix for the paella player (<a href="https://github.com/opencast/opencast/pull/6783">#6783</a>)
