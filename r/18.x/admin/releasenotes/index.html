@@ -89,6 +89,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="opencast-18-release-notes">Opencast 18: Release Notes</h1>
 <h2 id="opencast-180">Opencast 18.0</h2>
+<h3 id="features">Features</h3>
+<ul>
+<li>JWT support has been improved by standardizing the JWT schema. This is the groundwork for further support
+  of JWT to ease the connection of external systems to Opencast. [<a href="https://github.com/opencast/opencast/pull/6177">#6177</a>]</li>
+<li>Added the ability to configure S3 buckets for each organization. [<a href="https://github.com/opencast/opencast/pull/6253">#6253</a>]</li>
+<li>Opencast now supports plugins with different modules on different distributions. [<a href="https://github.com/opencast/opencast/pull/6303">#6303</a>]</li>
+<li>Various improvements to full-text search [<a href="https://github.com/opencast/opencast/pull/6498">#6498</a>]</li>
+<li>Added support for audio-only uploads [<a href="https://github.com/opencast/opencast/pull/5856">#5856</a>]</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>The animate service and workflow operation have been removed. Make sure to update your custom workflows, if you used
+  this operation. [<a href="https://github.com/opencast/opencast/pull/6518">#6518</a>]</li>
+<li>All SoX related modules have been removed. Any workflows depending on this should switch to ffmpeg based normalization.
+  [<a href="https://github.com/opencast/opencast/pull/6682">#6682</a>]</li>
+<li>The crop service is now a plugin and disabled by default. If you have used it in previous versions, you need to enable
+  it in <code>etc/org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>. [<a href="https://github.com/opencast/opencast/pull/6303">#6303</a>]</li>
+<li>The required Java version is now 21. [<a href="https://github.com/opencast/opencast/pull/6472">#6472</a>]</li>
+</ul>
+<h3 id="configuration-changes">Configuration Changes</h3>
+<ul>
+<li>Series, Editor and Login-Buttons in the PaellaPlayer are now disabled by default.
+  [<a href="https://github.com/opencast/opencast/pull/6479">#6479</a>] [<a href="https://github.com/opencast/opencast/pull/6480">#6480</a>]
+  [<a href="https://github.com/opencast/opencast/pull/6481">#6481</a>]</li>
+<li>The feature "Episode ID Roles" is now a core feature: enabled by default with no option to disable.
+  [<a href="https://github.com/opencast/opencast/pull/6696">#6696</a>]
+  If you have not used this feature before, you'll need to perform an index rebuild. See <a href="../upgrade/">upgrade guide</a> for
+  details.</li>
+<li>The default workflows partial-publish and partial-preview have been modified to enable audio-only processing.
+  If you want to use this feature and use your own workflows, have a look at the required changes in the PR.
+  [<a href="https://github.com/opencast/opencast/pull/5856">#5856</a>]</li>
+</ul>
+<p>For more details, please take a look at the <a href="../changelog/opencast-18/">full changelog</a>. If you want to update Opencast
+from a previous version, you should also read the <a href="../upgrade/">upgrade guide</a>.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
 <thead>
