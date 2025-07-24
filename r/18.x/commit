@@ -1,21 +1,45 @@
-commit 232c9d8fae1c2cf48401bf833e6f0369886dab24
+commit 872349993c973abe9a3bac328f5a6b942aa230fe
 Author: Dennis Benz <dennis.benz@uni-osnabrueck.de>
-Date:   Thu Jul 24 14:14:12 2025 +0200
+Date:   Thu Jul 24 14:22:53 2025 +0200
 
-    Mux WOH (#6894)
+    User Settings Now Working (#6622)
     
-    The Mux WOH should encode multiple tracks into one. The encoding profile
-    defines how the streams are handled. With Mux WOH, you can name input
-    tracks that will be selected precisely in the encoding profile.
+    This PR get the user settings endpoints working properly
     
-    You can test the mux WOH with attached workflow and encoding profiles.
-    It expects presenter/source, presentation/source and at least one
-    captions/source tracks. Run it from the archive. It will generate and
-    archive an download/delivery media file with all presenter, presentation
-    media streams and all captions. Do not use it in production, only for
-    testing.
+    - **The addUserSetting method now checks to see if a key for that user
+    already exists, and updates it if it does. Previous behaviour led to db
+    constraint issues since it was blindly inserting new, identical keys.
+    This does mean that you can no longer add duplicate keys, so if you need
+    more than one thing stored under a given key you must marshall and
+    unmarshall on the user's end.**
+    - **Previous behaviour worked correctly for the *first* key set by a
+    user, but when more than one key was set you would see constraint
+    violations. Adding the key to the user+org tuple resolves the issue, and
+    matches the logic in the service.**
+    
+    Note that this PR updates the indexes on a presumably empty table (since
+    the endpoints don't really work right at all anyway).
+    
+    Fixes: #6565
     
     
-    [download.xml](https://github.com/user-attachments/files/21149133/download.xml.txt)
+    ### How to test this patch
     
-    [mux.properties](https://github.com/user-attachments/files/21149135/mux.properties.txt)
+    Use the endpoints under `/admin-ng/user-settings` to set, unset, and
+    update user settings.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] ~explain why it needs to be merged into the legacy branch, if it
+    is targeting the legacy branch~
