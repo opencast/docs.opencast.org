@@ -398,7 +398,9 @@ operation should be executed. This so-called execution condition is a boolean ex
   are enclosed in <code>${}</code>, as shown below. A default value may be specified for a variable, after the name,
   separated by a colon, as such: <code>${foo:1}</code>. The default value will be used in case the variable doesn’t exist.
   If no default value is specified, <code>false</code> will be used. This, of course, only makes sense in boolean contexts. Be
-  aware to specify a default value in relations such as <code>${foo} &lt; ${bar}</code>.</li>
+  aware to specify a default value in relations such as <code>${foo} &lt; ${bar}</code>. If a colon is part of a variable name, it
+  needs to be escaped, as such: <code>${foo\:bar:1}</code>. Escaped colons in the variable name and the default will be replaced
+  by a colon in the output.</li>
 </ul>
 <p>Example for simple boolean expressions:</p>
 <pre><code>&lt;operation id="..." if="${variableName1} AND NOT (${variableName2} OR ${variableName3})"&gt;
