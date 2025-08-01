@@ -1,210 +1,118 @@
-commit 6bde9f4d91b1b4c62c9513852cb5525e7e50e61c
+commit 1b993fcc9294cfdb4b15f10dd5ebd4459f5716a1
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Aug 1 19:05:40 2025 +0200
+Date:   Fri Aug 1 19:09:58 2025 +0200
 
-    Build(deps): bump org.apache.maven.plugins:maven-pmd-plugin from 3.26.0 to 3.27.0 in /modules/db (#6945)
+    Build(deps): bump com.github.ben-manes.caffeine:caffeine from 3.1.8 to 3.2.2 in /modules/db (#6953)
     
     Bumps
-    [org.apache.maven.plugins:maven-pmd-plugin](https://github.com/apache/maven-pmd-plugin)
-    from 3.26.0 to 3.27.0.
+    [com.github.ben-manes.caffeine:caffeine](https://github.com/ben-manes/caffeine)
+    from 3.1.8 to 3.2.2.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/apache/maven-pmd-plugin/releases">org.apache.maven.plugins:maven-pmd-plugin's
+    href="https://github.com/ben-manes/caffeine/releases">com.github.ben-manes.caffeine:caffeine's
     releases</a>.</em></p>
     <blockquote>
-    <h2>3.27.0</h2>
-    <!-- raw HTML omitted -->
-    <h2>🚀 New features and improvements</h2>
+    <h2>3.2.2</h2>
     <ul>
-    <li>Use constant 3.6.3 in prerequisites/maven as minimal Maven version
+    <li>Fixed characteristics returned by Spliterators (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1883">#1883</a>)</li>
+    </ul>
+    <h2>3.2.1</h2>
+    <ul>
+    <li>Fixed <code>computeIfAbsent</code> for an async cache's synchronous
+    view to retry if incomplete</li>
+    <li>Improved <code>CaffeineSpec</code> when being reflectively
+    constructed (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1839">#1839</a>)</li>
+    <li>Improved the handling of negative durations with variable
+    expiration</li>
+    <li>Fixed intermittent null after replacing a weak/soft value (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1820">#1820</a>)</li>
+    </ul>
+    <h2>3.2.0</h2>
+    <p>Cache</p>
+    <ul>
+    <li>Added <a href="https://www.sigstore.dev/">Sigstore</a> signing of
+    maven artifacts</li>
+    <li>Added <code>Expiry</code> static factory methods (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1499">#1499</a>)</li>
+    <li>Migrated to <a href="https://jspecify.dev/">JSpecify</a> annotations
+    (was checker framework)</li>
+    <li>Fixed variable expiration calculation when nearing overflow</li>
+    <li>Added logging when an async cache's removal listener fails</li>
+    <li>Added an expiration write optimization to more operations (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1320">#1320</a>)</li>
+    <li>Fixed when a <code>Weigher</code> or <code>Expiry</code> fail on an
+    async completion (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1687">#1687</a>)</li>
+    <li>Fixed cases when the expiration ticker was also used for statistics
     (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/640">#640</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Bump pmdVersion from 7.12.0 to 7.14.0 (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/213">#213</a>)
-    @<a href="https://github.com/apps/dependabot">dependabot[bot]</a></li>
-    <li>Allow plugin execute with Maven 4 (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/209">#209</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Upgrade to PMD 7.12 (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/196">#196</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MPMD-411">[MPMD-411]</a> -
-    Implement getOutputPath and identify getOutputName as deprecated, (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/179">#179</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1678">#1678</a>)</li>
+    <li>Fixed refresh handling to skip if the async cache's entry is still
+    loading (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1478">#1478</a>)</li>
+    <li>Fixed <code>containsKey</code> for an async cache's synchronous view
+    while in-flight (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1626">#1626</a>)</li>
+    <li>Fixed premature expiration for an async cache when using nearly
+    immediate expiration (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1623">#1623</a>)</li>
+    <li>For a bulk async load returning extra mappings, wait to be added to
+    the cache before returning (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1409">#1409</a>)</li>
     </ul>
-    <h2>🐛 Bug Fixes</h2>
+    <p>Guava</p>
     <ul>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MPMD-410">[MPMD-410]</a> -
-    Number agreement (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/181">#181</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
+    <li>Relaxed the OSGi version requirement (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1160">#1160</a>)</li>
     </ul>
-    <h2>📝 Documentation updates</h2>
+    <p>JCache</p>
     <ul>
-    <li>Documentation: Excludes should be placed in pluginManagement (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/637">#637</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/638">#638</a>)
-    <a href="https://github.com/Bukama"><code>@​Bukama</code></a></li>
-    <li>small parameter documentation improvement (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/221">#221</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Replace manually maintained release notes by link to GitHub (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/214">#214</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Correct typos (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/194">#194</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Add more information about excludes (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/185">#185</a>)
-    <a href="https://github.com/Bukama"><code>@​Bukama</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MNGSITE-529">[MNGSITE-529]</a>
-    - Rename &quot;Goals&quot; to &quot;Plugin Documentation&quot; (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/182">#182</a>)
-    <a href="https://github.com/Bukama"><code>@​Bukama</code></a></li>
+    <li>Allow <code>hibernate.javax.cache.uri</code> to load the
+    configuration from a jar (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1347">#1347</a>)</li>
     </ul>
-    <h2>👻 Maintenance</h2>
-    <ul>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MPMD-412">[MPMD-412]</a> -
-    Simplify stub setup by not swallowing exceptions (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/226">#226</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Use maven-embedder in test scope (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/228">#228</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Ignore the .vscode directory in git (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/227">#227</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Clarify and simplify isDirectoryExcluded (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/222">#222</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>fix return type of getFilesToProcess in Javadoc (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/223">#223</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>small parameter documentation improvement (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/221">#221</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Clean up some Javadoc comments (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/219">#219</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Declare used dependency on
-    org.apache.maven.reporting:maven-reporting… (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/215">#215</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Buffer the writers (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/218">#218</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Get rid of maven-artifact-transfer and other legacy stuff (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/210">#210</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Introduce service executors for CPD, PMD executors (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/206">#206</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Upgrade PR template for GitHub issues (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/207">#207</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Update site descriptor to 2.0 (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/205">#205</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Use shared release-drafter action (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/203">#203</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Fix failed tests in CPD reports that were hidden by overly broad
-    catch clauses (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/192">#192</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>simplify code by preferring JDK methods (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/199">#199</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Declare javax.inject dependency (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/197">#197</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Avoid catching raw exception (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/198">#198</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MPMD-412">[MPMD-412]</a> -
-    Remove unused code and otherwise cleanup tests (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/178">#178</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>remove redundant code (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/193">#193</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/MPMD-412">[MPMD-412]</a> -
-    clean up unused code (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/190">#190</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    <li>Enable GitHub issues (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/184">#184</a>)
-    <a href="https://github.com/Bukama"><code>@​Bukama</code></a></li>
-    <li>Prefer Guice injection (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/pull/177">#177</a>)
-    <a href="https://github.com/elharo"><code>@​elharo</code></a></li>
-    </ul>
-    <h2>📦 Dependency updates</h2>
-    <!-- raw HTML omitted -->
     </blockquote>
-    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/ac2291d1bfb6061091a4c2e67736f5320e727253"><code>ac2291d</code></a>
-    [maven-release-plugin] prepare release maven-pmd-plugin-3.27.0</li>
+    href="https://github.com/ben-manes/caffeine/commit/f55fea436a73ed14d2d4604adbd8382a464957e9"><code>f55fea4</code></a>
+    minor touchups</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/156596e15950e707d906ed8a146855755b804c2c"><code>156596e</code></a>
-    Bump org.apache.maven.plugins:maven-plugins from 44 to 45</li>
+    href="https://github.com/ben-manes/caffeine/commit/419e86182ec349b56d638cad19c4afe3760decc8"><code>419e861</code></a>
+    increase branch coverage</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/897483c77ce33229cc0d1515c7b2f196cbe5a643"><code>897483c</code></a>
-    Bump mavenVersion from 3.6.3 to 3.9.10 (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/641">#641</a>)</li>
+    href="https://github.com/ben-manes/caffeine/commit/a794497c5defbeff5e425fc2bf8e5783f434bf0b"><code>a794497</code></a>
+    additional tests for collection streams</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/77e0956d88008c84ebb4bee82eff43915eace719"><code>77e0956</code></a>
-    Use RESOLVED_VERSION in tag-template</li>
+    href="https://github.com/ben-manes/caffeine/commit/9021c7436a6e7cac08ff95751b3b71b3be64ec2d"><code>9021c74</code></a>
+    Return correct characteristics from spliterators (<a
+    href="https://redirect.github.com/ben-manes/caffeine/issues/1884">#1884</a>)</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/ba13018434fc13e84b0521c68f5cd7cf94602e85"><code>ba13018</code></a>
-    Use constant 3.6.3 in prerequisites/maven as minimal Maven version</li>
+    href="https://github.com/ben-manes/caffeine/commit/e9ecffe422469ae865528c20823eebea302d0b3b"><code>e9ecffe</code></a>
+    increase branch coverage</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/2714d4e1fe12ff756c5d8fd26cef0a22740515d9"><code>2714d4e</code></a>
-    Documentation: Excludes should be placed in pluginManagement (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/637">#637</a>
-    / <a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/638">#638</a>)</li>
+    href="https://github.com/ben-manes/caffeine/commit/b20d83978d470e0a9dac6aee0c38d1f9448d6465"><code>b20d839</code></a>
+    increase branch coverage</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/1dc5ad6935edc4edc454997bcc08d9a8c7f13dc8"><code>1dc5ad6</code></a>
-    remove jira link (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/636">#636</a>)</li>
+    href="https://github.com/ben-manes/caffeine/commit/a5e031b57a6a7f4fd1bb1adc2edf9de8e62b0cca"><code>a5e031b</code></a>
+    increase branch coverage</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/04894a5c33feac6ed398adbc8d5e6b8bcd325d96"><code>04894a5</code></a>
-    [MPMD-412] Simplify stub setup by not swallowing exceptions (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/226">#226</a>)</li>
+    href="https://github.com/ben-manes/caffeine/commit/7df535815e3d73634e84699cfe42f0feb7d81218"><code>7df5358</code></a>
+    Release 3.2.1</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/b9605ec7b67daf1749a5b4783f2412322e6e578d"><code>b9605ec</code></a>
-    Use maven-embedder in test scope</li>
+    href="https://github.com/ben-manes/caffeine/commit/56b69c74535b923d00473db3779bcd4a5e5738fa"><code>56b69c7</code></a>
+    minor touchups</li>
     <li><a
-    href="https://github.com/apache/maven-pmd-plugin/commit/7ac47acdea61a1265f051346de8deab8a87b67c0"><code>7ac47ac</code></a>
-    Ignore the .vscdoe directory in git (<a
-    href="https://redirect.github.com/apache/maven-pmd-plugin/issues/227">#227</a>)</li>
+    href="https://github.com/ben-manes/caffeine/commit/b0264b9137b0a1a97b6b44cb8f321a9bbf6d55ec"><code>b0264b9</code></a>
+    remove unnecessary <a
+    href="https://github.com/CanIgnoreReturnValue"><code>@​CanIgnoreReturnValue</code></a>
+    usages for stricter checking</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/apache/maven-pmd-plugin/compare/maven-pmd-plugin-3.26.0...maven-pmd-plugin-3.27.0">compare
+    href="https://github.com/ben-manes/caffeine/compare/v3.1.8...v3.2.2">compare
     view</a></li>
     </ul>
     </details>
@@ -212,7 +120,7 @@ Date:   Fri Aug 1 19:05:40 2025 +0200
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.apache.maven.plugins:maven-pmd-plugin&package-manager=maven&previous-version=3.26.0&new-version=3.27.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=com.github.ben-manes.caffeine:caffeine&package-manager=maven&previous-version=3.1.8&new-version=3.2.2)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
