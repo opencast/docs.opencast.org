@@ -1,11 +1,37 @@
-commit 41bc55faa855339ce969c5709293e28f5a4b1e99
+commit e2cc65d6fbe052ebb71d9f6b583bb54b181af009
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Aug 13 22:53:04 2025 +0200
+Date:   Thu Aug 14 00:53:51 2025 +0200
 
-    Update Debian package docs (#6969)
+    Fix partial path traversal vulnerability in UI config (#6979)
     
-    This patch updates versions related to the Opencast Debian packages.
-    They haven't been updated in a while and were a bit outdated.
+    The protections against path traversal attacks in the UI config module
+    are insufficient, still partially allowing for attacks in very specific
+    cases.
+    
+    The path is checked without checking for the file separator. This could
+    allow attackers access to files within another folder which starts with
+    the same path. For example, the default UI config directory is placed at
+    `/etc/opencast/ui-config`. Without this patch, an attacker can get
+    access to files in a folder `/etc/opencast/ui-config-hidden` if those
+    files are readable by Opencast.
+    
+    General path traversal is not possible. For example, an attacker
+    **cannot** exploit this to access files in `/etc/opencast/encoding` or
+    even in `/etc/opencast/` directly.
+    
+    **How dangerous is this?**
+    
+    Theoretically, this vulnerability may be exploited to get access to some
+    non-public files. However, given the default structure of Opencast's
+    configuration, this is extremely unlikely to hit any users. There can be
+    but one `ui-config` folders. This makes it quite unlikely for any user
+    to have created an additional folder starting with `ui-config`. Users
+    could also rename this folder, but since there is no real reason for
+    anyone to do this, this, again is extremely unlikely to trigger this
+    issue.
+    
+    Thanks to @odaysec for pointing this out.
+    This closes #6937
     
     ### Your pull request should…
     
