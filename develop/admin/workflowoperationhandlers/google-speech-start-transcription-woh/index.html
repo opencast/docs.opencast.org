@@ -131,31 +131,25 @@ text.</p>
 </table>
 <p><strong>One of source-flavor or source-tag must be specified.</strong></p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">&lt;!--  Encode audio to flac --&gt;
-&lt;operation
-    id=&quot;encode&quot;
-    description=&quot;Extract audio for transcript generation&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;audio/flac&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;transcript&lt;/configuration&gt;
-    &lt;configuration key=&quot;encoding-profile&quot;&gt;audio-flac&lt;/configuration&gt;
-    &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt; 
+<pre><code class="language-yaml">  # Encode audio to flac
+  - id: encode
+    description: Extract audio for transcript generation
+    configurations:
+      - source-flavor: '*/source'
+      - target-flavor: audio/flac
+      - target-tags: transcript
+      - encoding-profile: audio-flac
+      - process-first-match-only: true
 
-&lt;!-- Start Google Speech transcription job --&gt;
-&lt;operation
-    id=&quot;google-speech-start-transcription&quot;
-    description=&quot;Start Google Speech transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;!--  Skip this operation if flavor already exists. Used for cases when mp already has captions. --&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/timedtext&lt;/configuration&gt;
-    &lt;configuration key=&quot;language-code&quot;&gt;en-US&lt;/configuration&gt;
-    &lt;!-- Audio to be translated, produced in the previous compose operation --&gt;
-    &lt;configuration key=&quot;source-tag&quot;&gt;transcript&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+  # Start Google Speech transcription job
+  - id: google-speech-start-transcription
+    description: Start Google Speech transcription job
+    configurations:
+      # Skip this operation if flavor already exists. Used for cases when mp already has captions.
+      - skip-if-flavor-exists: captions/timedtext
+      - language-code: en-US
+      # Audio to be translated, produced in the previous compose operation
+      - source-tag: transcript
 </code></pre>
 <h3 id="encoding-profile-used-in-example-above">Encoding profile used in example above</h3>
 <pre><code class="language-properties">profile.audio-flac.name = audio-flac

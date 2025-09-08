@@ -201,24 +201,18 @@ require local files to work properly without having to restore everything, and t
 <h2 id="manual-s3-archiving">Manual S3 Archiving</h2>
 <p>Manually moving assets to and from S3 is done via a workflow operation handler added as part of a workflow.
 The workflow operation handler definition looks like this</p>
-<pre><code>    &lt;operation
-      id=&quot;move-storage&quot;
-      description=&quot;Offloading to AWS S3&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;target-storage&quot;&gt;aws-s3&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code>  - id: move-storage
+    description: Offloading to AWS S3
+    configurations:
+      - target-storage: aws-s3
 </code></pre>
 <p>Assets in S3 continue to be accessible to Opencast, however there may be cases where you wish to restore your content
 back to your local storage.  This can be accomplished using the same workflow operation definition as above, and
 changing the <code>target-storage</code> configuration value from <code>aws-s3</code> to <code>local-filesystem</code> like so</p>
-<pre><code>    &lt;operation
-      id=&quot;move-storage&quot;
-      description=&quot;Restoring from AWS S3&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;target-storage&quot;&gt;local-filesystem&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code>  - id: move-storage
+    description: Restoring from AWS S3
+    configurations:
+      - target-storage: local-filesystem
 </code></pre>
 <h1 id="s3-storage-tiers">S3 Storage Tiers</h1>
 <p>S3 supports <a href="https://aws.amazon.com/s3/storage-classes/">storage tiering</a>, which can offer significant cost savings in

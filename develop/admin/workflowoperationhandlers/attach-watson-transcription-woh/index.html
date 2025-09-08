@@ -143,27 +143,23 @@ in json format, converts it to the desired caption format, and adds it to the me
 </table>
 <p>*For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>.</p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">&lt;!-- Attach caption/transcript --&gt;
-&lt;operation id=&quot;attach-watson-transcription&quot;
-    description=&quot;Attach captions/transcription&quot;&gt;
-  &lt;configurations&gt;
-    &lt;!-- This is filled out by the transcription service when starting this workflow so just use this as is --&gt;
-    &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tag&quot;&gt;engage-download,lang:en,generator-type:auto&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-caption-format&quot;&gt;vtt&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # Attach caption/transcript
+  - id: attach-watson-transcription
+    description: Attach captions/transcription
+    configurations:
+      # This is filled out by the transcription service when starting this workflow so just use this as is
+      - transcription-job-id: ${transcriptionJobId}
+      - target-flavor: captions/source
+      - target-tag: engage-download,lang:en,generator-type:auto
+      - target-caption-format: vtt
 
-&lt;!-- Merge caption/transcript to existing publication and republish --&gt;
-&lt;operation id=&quot;publish-engage&quot;
-    description=&quot;Distribute and publish to engage server&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage-download&lt;/configuration&gt;
-    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
-    &lt;configuration key=&quot;check-availability&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+  # Merge caption/transcript to existing publication and republish
+  - id: publish-engage
+    description: Distribute and publish to engage server
+    configurations:
+      - download-source-tags: engage-download
+      - strategy: merge
+      - check-availability: true
 </code></pre>
 
   <br>

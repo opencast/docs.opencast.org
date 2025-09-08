@@ -194,14 +194,11 @@ resolution of 640x481 pixels has almost an aspect ration of 4/3, but is 1 pixel 
 or cover generation, it would still be reasonable to use the 4/3 settings. If 4/3 is listed in the <code>aspect-ratio</code>
 option, <code>…_aspect_snap</code> would be set to 4/3.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;analyze-tracks&quot;
-    description=&quot;Analyze tracks in media package and set control variables&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;aspect-ratio&quot;&gt;4/3,16/9&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: analyze-tracks
+    description: Analyze tracks in media package and set control variables
+    configurations:
+      - source-flavor: '*/source'
+      - aspect-ratio: 4/3,16/9
 </code></pre>
 <p>If a video track with a resolution of 1280x720, a duration of 40 seconds and an included audio stream is passed to this operation as
 <code>presentiation/source</code>, the resulting variables would be:</p>

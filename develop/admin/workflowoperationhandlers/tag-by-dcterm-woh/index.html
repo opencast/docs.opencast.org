@@ -180,18 +180,15 @@ the <code>default-value</code> and apply the tags if they match. This allows an 
 defined. For example if you have mediapackages that were created before additional metadata was added to the episode
 catalog you may want to imply that the <code>audience</code> term has a value of <code>all-enrolled</code>.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;tag-by-dcterm&quot;
-    description=&quot;Tagging media package elements according to dcterm&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;dublincore/*,security/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;dccatalog&quot;&gt;episode&lt;/configuration&gt;
-    &lt;configuration key=&quot;dcterm&quot;&gt;audience&lt;/configuration&gt;
-    &lt;configuration key=&quot;match-value&quot;&gt;learning-difficulties&lt;/configuration&gt;
-    &lt;configuration key=&quot;default-value&quot;&gt;all-enrolled&lt;/confiuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;+publishBeforeEditing&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: tag-by-dcterm
+    description: Tagging media package elements according to dcterm
+    configurations:
+      - source-flavors: dublincore/*,security/*
+      - dccatalog: episode
+      - dcterm: audience
+      - match-value: learning-difficulties
+      - default-value: all-enrolled
+      - target-tags: +publishBeforeEditing
 </code></pre>
 
   <br>

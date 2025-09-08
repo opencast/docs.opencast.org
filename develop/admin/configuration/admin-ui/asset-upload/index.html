@@ -160,17 +160,14 @@ workflows to process the new asset flavor.</p>
 </tbody>
 </table>
 <p>Example of variables in a workflow:</p>
-<pre><code class="language-xml">&lt;!-- Tag any optionally uploaded assets --&gt;
-&lt;operation
-  id=&quot;tag&quot;
-  if=&quot;${downloadSourceflavorsExist}&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Tagging uploaded assets for distribution&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;${download-source-flavors}&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;+engage-download&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # Tag any optionally uploaded assets
+  - id: tag
+    if: ${downloadSourceflavorsExist}
+    exception-handler-workflow: partial-error
+    description: Tagging uploaded assets for distribution
+    configurations:
+      - source-flavors: ${download-source-flavors}
+      - target-tags: +engage-download
 </code></pre>
 <h2 id="how-to-enable-preconfigured-asset-options">How to Enable Preconfigured Asset Options</h2>
 <p>Catalogs and attachments can be added to new and existing events. Some
@@ -210,54 +207,36 @@ EVENTS.EVENTS.NEW.SOURCE.UPLOAD.SUBTITLES={"id": "track_subtitles", "type":"trac
 #   "accept": ".avi,.flv,.m4v,.mkv,.mov,.mp4,.mpeg,.mpg,.ogv,.webm,.wmv,.flac,.m4a,.mp3,.ogg,.wav,.wma"}
 </code></pre>
 <p>Sample <code>publish-uploaded-assets</code> workflow:</p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
-  &lt;id&gt;publish-uploaded-assets&lt;/id&gt;
-  &lt;title&gt;Publish uploaded assets&lt;/title&gt;
-  &lt;tags /&gt;
-  &lt;description&gt;Publish uploaded assets&lt;/description&gt;
-  &lt;configuration_panel&gt;
-  &lt;/configuration_panel&gt;
+<pre><code class="language-yaml">id: publish-uploaded-assets
+title: Publish uploaded assets
+description: |-
+  Publish uploaded assets
+operations:
+  # Publish to engage player
+  - id: publish-engage
+    exception-handler-workflow: partial-error
+    description: Update recording in Opencast Media Module
+    configurations:
+      - download-source-flavors:
+          ${download-source-flavors},dublincore/*,security/*
+      - download-source-tags: engage-download
+      - streaming-source-tags: engage-streaming
+      - strategy: merge
+      - check-availability: false
 
-  &lt;operations&gt;
-    &lt;!-- Publish to engage player --&gt;
+# Archive the current state of the mediapackage
+  - id: snapshot
+    description: Archiving new assets
+    configurations:
+      - source-flavors: '*/*'
 
-    &lt;operation
-      id=&quot;publish-engage&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Update recording in Opencast Media Module&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;download-source-flavors&quot;&gt;${download-source-flavors},dublincore/*,security/*&lt;/configuration&gt;
-        &lt;configuration key=&quot;download-source-tags&quot;&gt;engage-download&lt;/configuration&gt;
-        &lt;configuration key=&quot;streaming-source-tags&quot;&gt;engage-streaming&lt;/configuration&gt;
-        &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
-        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Archive the current state of the mediapackage --&gt;
-
-    &lt;operation
-      id=&quot;snapshot&quot;
-      description=&quot;Archiving new assets&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;*/*&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;!-- Clean up work artifacts --&gt;
-
-    &lt;operation
-        id=&quot;cleanup&quot;
-        fail-on-error=&quot;false&quot;
-        description=&quot;Remove temporary processing artifacts&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
-        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-  &lt;/operations&gt;
-&lt;/definition&gt;
+# Clean up work artifacts
+  - id: cleanup
+    fail-on-error: false
+    description: Remove temporary processing artifacts
+    configurations:
+      - delete-external: true
+      - preserve-flavors: security/*
 </code></pre>
 <h2 id="how-to-upload-assets-in-the-admin-ui">How to Upload Assets in the Admin UI</h2>
 <p>After enabling an upload option, a new navigation area becomes visible in the "Create event", called "Asset Upload".

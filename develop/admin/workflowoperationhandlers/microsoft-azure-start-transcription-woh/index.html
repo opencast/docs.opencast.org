@@ -138,36 +138,30 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>One of source-flavors or source-tags must be specified.</strong></p>
 <h2 id="examples">Examples</h2>
 <p>The example below will start the transcription on the first trimmed media file found in the media package, but only if <code>captions/source</code> element doesn't exist yet. The encoding profile to extract the audio stream is <code>custom-transcription-azure.audio</code>. </p>
-<pre><code class="language-xml">&lt;!-- This operation will start the transcription job --&gt;
-&lt;operation
-  id=&quot;microsoft-azure-start-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Start Microsoft Azure transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;*/trimmed&lt;/configuration&gt;
-    &lt;!-- Skip this operation if flavor already exists. --&gt;
-    &lt;!-- Used for cases when mediapackage already has captions. --&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;audio-extraction-encoding-profile&quot;&gt;custom-transcription-azure.audio&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # This operation will start the transcription job
+  - id: microsoft-azure-start-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Start Microsoft Azure transcription job
+    configurations:
+      - source-flavors: '*/trimmed'
+      # Skip this operation if flavor already exists.
+      # Used for cases when mediapackage already has captions.
+      - skip-if-flavor-exists: captions/source
+      - audio-extraction-encoding-profile: custom-transcription-azure.audio
 </code></pre>
 <p>The next example shows you how to create a transcription of the <code>presenter/trimmed</code> media file with the language code <code>de-DE</code>. The transcription will start if <code>captions/source</code> element is missing.</p>
-<pre><code class="language-xml">&lt;!-- This operation will start the transcription job --&gt;
-&lt;operation
-  id=&quot;microsoft-azure-start-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Start Microsoft Azure transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/trimmed&lt;/configuration&gt;
-    &lt;!-- Skip this operation if flavor already exists. --&gt;
-    &lt;!-- Used for cases when mediapackage already has captions. --&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;language&quot;&gt;de-DE&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # This operation will start the transcription job
+  - id: microsoft-azure-start-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Start Microsoft Azure transcription job
+    configurations:
+      - source-flavors: presenter/trimmed
+      # Skip this operation if flavor already exists.
+      # Used for cases when mediapackage already has captions.
+      - skip-if-flavor-exists: captions/source
+      - language: de-DE
 </code></pre>
 
   <br>

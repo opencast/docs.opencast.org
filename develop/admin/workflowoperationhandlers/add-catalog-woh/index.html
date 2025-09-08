@@ -140,17 +140,14 @@ There are multiple supported options:
 - <code>skip</code>: The addition of the new catalog is skipped, the new catalog is not added.
 - <code>fail</code>: The workflow operation fails with an error, depending on the your configurations the complete workflow is aborted.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;add-catalog&quot;
-    description=&quot;Add catalog to media package&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;catalog-path&quot;&gt;${karaf.etc}/catalogs/default_dublincore.xml&lt;/configuration&gt;
-    &lt;configuration key=&quot;catalog-flavor&quot;&gt;dublincore/episode&lt;/configuration&gt;
-    &lt;configuration key=&quot;catalog-name&quot;&gt;dublincore.xml&lt;/configuration&gt;
-    &lt;configuration key=&quot;catalog-tags&quot;&gt;archive,dublincore&lt;/configuration&gt;
-    &lt;configuration key=&quot;catalog-type-collision-behavior&quot;&gt;keep&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: add-catalog
+    description: Add catalog to media package
+    configurations:
+      - catalog-path: ${karaf.etc}/catalogs/default_dublincore.xml
+      - catalog-flavor: dublincore/episode
+      - catalog-name: dublincore.xml
+      - catalog-tags: archive,dublincore
+      - catalog-type-collision-behavior: keep
 </code></pre>
 
   <br>

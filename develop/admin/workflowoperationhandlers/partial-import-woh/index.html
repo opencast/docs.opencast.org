@@ -249,22 +249,20 @@ describing how the files relate to each other and add it to the media package as
 <p>What we finally want, however, is a single presenter and a single presentation track that can be processed by Opencast
 workflow operations. To achieve this, the PartialImportWorkflowOperation is used to post-process the files as described
 in the SMIL file:</p>
-<pre><code class="language-xml">&lt;operation id=&quot;partial-import&quot;
-     description=&quot;Post-processing raw audio and video files from capture agent&quot;
-     fail-on-error=&quot;true&quot;
-     exception-handler-workflow=&quot;partial-error&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-presenter-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-presentation-flavor&quot;&gt;presentation/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-smil-flavor&quot;&gt;smil/source+partial&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-presenter-flavor&quot;&gt;presenter/standard&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-presentation-flavor&quot;&gt;presentation/standard&lt;/configuration&gt;
-    &lt;configuration key=&quot;preencode-encoding-profile&quot;&gt;partial-import-preencode&lt;/configuration&gt;
-    &lt;configuration key=&quot;concat-encoding-profile&quot;&gt;concat.work&lt;/configuration&gt;
-    &lt;configuration key=&quot;trim-encoding-profile&quot;&gt;trim.work&lt;/configuration&gt;
-    &lt;configuration key=&quot;force-encoding-profile&quot;&gt;encode.partial-import&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: partial-import
+    description: Post-processing raw audio and video files from capture agent
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    configurations:
+      - source-presenter-flavor: presenter/source
+      - source-presentation-flavor: presentation/source
+      - source-smil-flavor: smil/source+partial
+      - target-presenter-flavor: presenter/standard
+      - target-presentation-flavor: presentation/standard
+      - preencode-encoding-profile: partial-import-preencode
+      - concat-encoding-profile: concat.work
+      - trim-encoding-profile: trim.work
+      - force-encoding-profile: encode.partial-import
 </code></pre>
 <p>In our example, the PartialImportWorkflowOperation will create the target flavors presenter/standard and
 presentation/standard as depicted below:</p>

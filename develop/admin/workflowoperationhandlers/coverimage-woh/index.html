@@ -311,34 +311,26 @@ EXSLT extensions.</p>
 <p>In this example, the function <code>format-date</code> of the EXSLT dates-and-times functions library is used to format a date.</p>
 <h2 id="operation-example">Operation Example</h2>
 <p>Operation example with metadata derived from events metadata:</p>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;cover-image&quot;
-    description=&quot;Create a cover image&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;stylesheet&quot;&gt;file://${karaf.etc}/branding/coverimage.xsl&lt;/configuration&gt;
-    &lt;configuration key=&quot;width&quot;&gt;1920&lt;/configuration&gt;
-    &lt;configuration key=&quot;height&quot;&gt;1080&lt;/configuration&gt;
-    &lt;configuration key=&quot;posterimage-flavor&quot;&gt;presenter/coverbackground&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/player+preview&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;archive, engage-download&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: cover-image
+    description: Create a cover image
+    configurations:
+      - stylesheet: file://${karaf.etc}/branding/coverimage.xsl
+      - width: 1920
+      - height: 1080
+      - posterimage-flavor: presenter/coverbackground
+      - target-flavor: presenter/player+preview
+      - target-tags: archive, engage-download
 </code></pre>
 <p>Operation example with metadata provided in the operations configuration:</p>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;cover-image&quot;
-    description=&quot;Create a cover image&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;stylesheet&quot;&gt;file://${karaf.etc}/branding/coverimage.xsl&lt;/configuration&gt;
-    &lt;configuration key=&quot;metadata&quot;&gt;
-      &lt;![CDATA[&lt;meta&gt;&lt;title&gt;my custom title&lt;/title&gt;&lt;special&gt;very special&lt;/special&gt;&lt;/meta&gt;]]&gt;
-    &lt;/configuration&gt;
-    &lt;configuration key=&quot;width&quot;&gt;1920&lt;/configuration&gt;
-    &lt;configuration key=&quot;height&quot;&gt;1080&lt;/configuration&gt;
-    &lt;configuration key=&quot;posterimage-flavor&quot;&gt;presenter/player+preview&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;image/cover&lt;/configuration&gt;
- &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: cover-image
+    description: Create a cover image
+    configurations:
+      - stylesheet: file://${karaf.etc}/branding/coverimage.xsl
+      - metadata: &lt;meta&gt;&lt;title&gt;my custom title&lt;/title&gt;&lt;special&gt;very special&lt;/special&gt;&lt;/meta&gt;
+      - width: 1920
+      - height: 1080
+      - posterimage-flavor: presenter/player+preview
+      - target-flavor: image/cover
 
 </code></pre>
 

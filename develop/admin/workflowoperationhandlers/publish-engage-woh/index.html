@@ -180,19 +180,16 @@ download, …)</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;publish-engage&quot;
-    max-attempts=&quot;2&quot;
-    fail-on-error=&quot;true&quot;
-    exception-handler-workflow=&quot;error&quot;
-    description=&quot;Distribute and publish to engage player&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;download-source-tags&quot;&gt;engage&lt;/configuration&gt;
-    &lt;configuration key=&quot;streaming-source-tags&quot;&gt;engage&lt;/configuration&gt;
-    &lt;configuration key=&quot;check-availability&quot;&gt;true&lt;/configuration&gt;
-    &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: publish-engage
+    max-attempts: 2
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Distribute and publish to engage player
+    configurations:
+      - download-source-tags: engage
+      - streaming-source-tags: engage
+      - check-availability: true
+      - strategy: merge
 </code></pre>
 
   <br>

@@ -160,32 +160,25 @@ configuration properties can be used to modify the execution of subsequent opera
 will be evaluated as <code>false</code> in practice the only useful value which can set is <code>true</code>.  However operation <code>if</code>
 conditions can be negated though so it is possible to skip subsequent operations on matched <code>dcterm</code>  value.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;configure-by-dcterm&quot;
-    description=&quot;Configure publication channel by dcterm&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;dccatalog&quot;&gt;episode&lt;/configuration&gt;
-    &lt;configuration key=&quot;dcterm&quot;&gt;audience&lt;/configuration&gt;
-    &lt;configuration key=&quot;match-value&quot;&gt;private&lt;/configuration&gt;
-    &lt;configuration key=&quot;publishPrivate&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: configure-by-dcterm
+    description: Configure publication channel by dcterm
+    configurations:
+      - dccatalog: episode
+      - dcterm: audience
+      - match-value: private
+      - publishPrivate: true
 
 ...
 
-&lt;operation
-   id=&quot;publish-engage&quot;
-   if=&quot;${publishPrivate}&quot;
-   description=&quot;Publish to internal audience only&quot;&gt;
-   ...
-&lt;/operation&gt;
+  - id: publish-engage
+    if: ${publishPrivate}
+    description: Publish to internal audience only
 
-&lt;operation
-   id=&quot;publish-youtube&quot;
-   if=&quot;NOT ${publishPrivate}&quot;
-   description=&quot;Publish to global audience&quot;&gt;
+  - id: publish-youtube
+    if: NOT ${publishPrivate}
+    description: Publish to global audience
    ...
-&lt;/operation&gt;
+
 </code></pre>
 
   <br>

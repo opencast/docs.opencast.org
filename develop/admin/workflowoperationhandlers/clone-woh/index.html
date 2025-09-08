@@ -136,15 +136,12 @@ flavor <code>&lt;original-flavor&gt;/target</code>.</p>
 the source If <em>target-flavor</em> is specified as e.g. <code>target/*</code>, the target flavors will have the type <em>target</em> and the
 subtype from the source.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;clone&quot;
-    exception-handler-workflow=&quot;partial-error&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/target&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: clone
+    exception-handler-workflow: partial-error
+    configurations:
+      - source-flavor: '*/source'
+      - source-tags: archive
+      - target-flavor: '*/target'
 </code></pre>
 
   <br>

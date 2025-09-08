@@ -133,15 +133,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>In case no media package elements match <em>source-flavor</em> and <em>source-tags</em>, the operation will be skipped</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;changetype&quot;
-    description=&quot;Change type of captions to track&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;captions/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-type&quot;&gt;track&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: changetype
+    description: Change type of captions to track
+    configurations:
+      - source-flavors: captions/*
+      - target-flavor: captions/source
+      - target-type: track
 </code></pre>
 
   <br>

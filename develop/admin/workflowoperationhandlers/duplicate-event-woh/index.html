@@ -186,22 +186,19 @@ have to publish it manually when he is done editing it.</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;duplicate-event&quot;
-    description=&quot;Duplicate event&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;*/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;number-of-events&quot;&gt;${numberOfEvents}&lt;/configuration&gt;
-    &lt;configuration key=&quot;max-number-of-events&quot;&gt;1000&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;&lt;/configuration&gt; 
-    &lt;configuration key=&quot;no-suffix&quot;&gt;false&lt;/configuration
-    &lt;configuration key=&quot;set-series-id&quot;&gt;${seriesId}&lt;/configuration&gt;
-    &lt;configuration key=&quot;set-title&quot;&gt;${mpTitle}&lt;/configuration&gt;
-    &lt;configuration key=&quot;set-start-date-time&quot;&gt;${startDateTime}&lt;/configuration&gt;
-    &lt;configuration key=&quot;property-namespaces&quot;&gt;org.opencastproject.assetmanager.security&lt;/configuration&gt;
-    &lt;configuration key=&quot;copy-number-prefix&quot;&gt;copy&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: duplicate-event
+    description: Duplicate event
+    configurations:
+      - source-flavors: '*/*'
+      - number-of-events: ${numberOfEvents}
+      - max-number-of-events: 1000
+      - target-tags: ''
+      - no-suffix: false
+      - set-series-id: ${seriesId}
+      - set-title: ${mpTitle}
+      - set-start-date-time: ${startDateTime}
+      - property-namespaces: org.opencastproject.assetmanager.security
+      - copy-number-prefix: copy
 </code></pre>
 
   <br>

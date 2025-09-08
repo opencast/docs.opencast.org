@@ -166,36 +166,27 @@ namespaces can be used in this operation. The allowed namespaces are:</p>
 <li>Opencast Properties: <code>http://www.opencastproject.org/</code></li>
 </ul>
 <h2 id="operation-examples">Operation Examples</h2>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;series&quot;
-    description=&quot;Applying series to mediapackage&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;series&quot;&gt;0d06537e-09d3-420c-8314-a21e45c5d032&lt;/configuration&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: series
+    description: Applying series to mediapackage
+    configurations:
+      - series: 0d06537e-09d3-420c-8314-a21e45c5d032
+      - attach: '*'
+      - apply-acl: true
 </code></pre>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;series&quot;
-    description=&quot;Applying series to mediapackage&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;copy-metadata&quot;&gt;contributor, license&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: series
+    description: Applying series to mediapackage
+    configurations:
+      - attach: '*'
+      - apply-acl: false
+      - copy-metadata: contributor, license
 </code></pre>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;series&quot;
-    description=&quot;Applying series to mediapackage&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;attach&quot;&gt;dublincore/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;apply-acl&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;copy-metadata&quot;&gt;{http://purl.org/dc/terms/}contributor custom1 custom2&lt;/configuration&gt;
-    &lt;configuration key=&quot;default-namespace&quot;&gt;http://www.opencastproject.org/&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: series
+    description: Applying series to mediapackage
+    configurations:
+      - attach: dublincore/*
+      - apply-acl: false
+      - copy-metadata: '{http://purl.org/dc/terms/}contributor custom1 custom2'
+      - default-namespace: http://www.opencastproject.org/
 </code></pre>
 
   <br>

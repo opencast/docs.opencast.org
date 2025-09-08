@@ -234,22 +234,19 @@ video-201711201040.mp4
 </table>
 <h2 id="example">Example</h2>
 <p>Example of a concat operation in a workflow definition.</p>
-<pre><code class="language-xml">&lt;!-- Add intro and outro part to the presenter track --&gt;
-&lt;operation
-    id="concat"
-    description="Concatenate the presenter track and the intro/outro videos."&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="source-flavor-part-0"&gt;intro/source&lt;/configuration&gt;
-    &lt;configuration key="source-flavor-part-1"&gt;presenter/trimmed&lt;/configuration&gt;
-    &lt;configuration key="source-flavor-part-1-mandatory"&gt;true&lt;/configuration&gt;
-    &lt;configuration key="source-flavor-part-2"&gt;outro/source&lt;/configuration&gt;
-    &lt;configuration key="target-flavor"&gt;presenter/concat&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;engage-download,engage-streaming&lt;/configuration&gt;
-    &lt;configuration key="encoding-profile"&gt;concat&lt;/configuration&gt;
-    &lt;configuration key="output-resolution"&gt;1920x1080&lt;/configuration&gt;
-    &lt;configuration key="output-framerate"&gt;part-1&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # Add intro and outro part to the presenter track
+  - id: concat
+    description: Concatenate the presenter track and the intro/outro videos.
+    configurations:
+      - source-flavor-part-0: intro/source
+      - source-flavor-part-1: presenter/trimmed
+      - source-flavor-part-1-mandatory: true
+      - source-flavor-part-2: outro/source
+      - target-flavor: presenter/concat
+      - target-tags: engage-download,engage-streaming
+      - encoding-profile: concat
+      - output-resolution: 1920x1080
+      - output-framerate: part-1
 </code></pre>
 <h2 id="encoding-profile">Encoding Profile</h2>
 <p>The encoding profile command must contain the #{concatCommand} parameter which will set all input and possibly filter

@@ -136,15 +136,12 @@ selected, or (in other words) if it's not clear which video file the operation h
 <p>On successful completion, the operation will create a new subtitle file in the process and 
 will not override the old one. The tags of the original subtitle file will be copied to the new subtitle file.</p>
 <h2 id="operation-examples">Operation Examples</h2>
-<pre><code class="language-XML">&lt;operation
-    id=&quot;subtitle-timeshift&quot;
-    description=&quot;Create new subtitle file with shifted timestamps&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;subtitle-source-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/shifted&lt;/configuration&gt;
-    &lt;configuration key=&quot;video-source-flavor&quot;&gt;branding/bumper&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: subtitle-timeshift
+    description: Create new subtitle file with shifted timestamps
+    configurations:
+      - subtitle-source-flavor: captions/source
+      - target-flavor: captions/shifted
+      - video-source-flavor: branding/bumper
 </code></pre>
 
   <br>

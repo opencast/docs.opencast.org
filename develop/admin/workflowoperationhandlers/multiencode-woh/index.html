@@ -104,12 +104,12 @@ In addition, the target media can be optionally tagged with the encoding profile
 <p>This workflow handles each source selector independently as a section.
 The parameters for each configuration, such as flavors are separated positionally into sections by "<strong>;</strong>".
 The use of the semi-colon is optional. If it is absent, there is only one section.</p>
-<pre><code class="language-xml">&lt;configuration key=&quot;source-flavors&quot;&gt;*/source&lt;/configuration&gt;
+<pre><code class="language-yaml">- source-flavors: '*/source'
 </code></pre>
 <blockquote>
 <p>One source selector means that all the matching recording will be processed the same way.</p>
 </blockquote>
-<pre><code class="language-xml">&lt;configuration key=&quot;source-flavors&quot;&gt;presenter/source;presentation/source&lt;/configuration&gt;
+<pre><code class="language-yaml">- source-flavors: presenter/source;presentation/source
 </code></pre>
 <blockquote>
 <p>Two different source selectors means that all the matching recordings in the first selector will be processed
@@ -121,7 +121,7 @@ If there is only one section in one parameter, eg: target-flavors,
 but multiple sections in another, eg: source-flavors,
 then the sections are collapsed into one.
 For example:</p>
-<pre><code class="language-xml">&lt;configuration key=&quot;target-flavors&quot;&gt;*/preview&lt;/configuration&gt;
+<pre><code class="language-yaml">- target-flavors: '*/preview'
 </code></pre>
 <blockquote>
 <p>All targets are flavored the same way, using the example above, becomes "presenter/preview"
@@ -129,7 +129,7 @@ and "presentation/preview"</p>
 </blockquote>
 <p>Each source selector can have its own set of target tags and flavors, defined as a comma delimited list.
 For example:</p>
-<pre><code class="language-xml">&lt;configuration key=&quot;target-tags&quot;&gt;engage-streaming,example;engage-download,example&lt;/configuration&gt;
+<pre><code class="language-yaml">- target-tags: engage-streaming,example;engage-download,example
 </code></pre>
 <blockquote>
 <p>Using the example above.
@@ -203,27 +203,24 @@ https://tools.ietf.org/html/draft-pantos-http-live-streaming-23</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;multiencode&quot;
-    description=&quot;Encode to delivery formats, with different encoding settings for each video source&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/work;presentation/work&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavors&quot;&gt;*/delivery&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;archive&lt;/configuration&gt;
-    &lt;configuration key=&quot;encoding-profiles&quot;&gt;
-        hls-full-res-presenter-mp4,
-        hls-half-res-presenter-mp4,
-        hls-quarter-15fps-presenter-mp4,
-        multiencode-hls
-    &lt;/configuration&gt;
-    &lt;configuration key=&quot;tag-with-profile&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: multiencode
+    description: Encode to delivery formats, with different encoding settings 
+      for each video source
+    configurations:
+      - source-flavors: presenter/work;presentation/work
+      - target-flavors: '*/delivery'
+      - target-tags: archive
+      - encoding-profiles: |-
+          hls-full-res-presenter-mp4,
+          hls-half-res-presenter-mp4,
+          hls-quarter-15fps-presenter-mp4,
+          multiencode-hls
+      - tag-with-profile: true
 </code></pre>
 <p>On subsequent operations that run on the encoded files (e.g. <code>image</code>,<code>segment-video</code>, <code>segmentpreviews</code>,
 <code>timelinepreviews</code>, <code>extract-text</code>), you will <strong>have to</strong> specify on which encoding the operations run on, otherwise
 they will fail. This is done by adding a <code>source-tags</code> key to each operation like so:</p>
-<pre><code class="language-xml">&lt;configuration key=&quot;source-tags&quot;&gt;hls-full-res-presenter-mp4&lt;/configuration&gt;
+<pre><code class="language-yaml">- source-tags: hls-full-res-presenter-mp4
 </code></pre>
 <h2 id="encoding-profile">Encoding Profile</h2>
 <p>The encoding profiles necessary for this operation are not included in Opencast per default, but the operation will not

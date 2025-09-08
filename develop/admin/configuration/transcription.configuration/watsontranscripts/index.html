@@ -214,38 +214,30 @@ etc/encoding/watson-audio.properties.</p>
 published so that users can watch videos without having to wait for the transcription to finish, but it
 depends on your use case. The only requirement is to take a snapshot of the media package so that
 the second workflow can retrieve it from the Asset Manager to attach the caption/transcripts.</p>
-<pre><code class="language-xml">&lt;!-- Extract audio from one of the presenter videos --&gt;
+<pre><code class="language-yaml">  # Extract audio from one of the presenter videos
+  - id: encode
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Extract audio for transcript generation
+    configurations:
+      - source-tags: engage-download
+      - target-flavor: audio/ogg
+      # The target tag 'transcript' will be used in the next 'start-watson-transcription' operation
+      - target-tags: transcript
+      - encoding-profile: audio-opus
+      # If there is more than one file that match the source-tags, use only the first one
+      - process-first-match-only: true
 
-&lt;operation
-  id=&quot;encode&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Extract audio for transcript generation&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-tags&quot;&gt;engage-download&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;audio/ogg&lt;/configuration&gt;
-    &lt;!-- The target tag 'transcript' will be used in the next 'start-watson-transcription' operation --&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;transcript&lt;/configuration&gt;
-    &lt;configuration key=&quot;encoding-profile&quot;&gt;audio-opus&lt;/configuration&gt;
-    &lt;!-- If there is more than one file that match the source-tags, use only the first one --&gt;
-    &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-
-&lt;!-- Start IBM Watson recognitions job --&gt;
-
-&lt;operation
-  id=&quot;start-watson-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Start IBM Watson transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;!--  Skip this operation if flavor already exists. Used for cases when mp already has captions. --&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/vtt+en&lt;/configuration&gt;
-    &lt;!-- Audio to be translated, produced in the previous compose operation --&gt;
-    &lt;configuration key=&quot;source-tag&quot;&gt;transcript&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+  # Start IBM Watson recognitions job
+  - id: start-watson-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Start IBM Watson transcription job
+    configurations:
+      # Skip this operation if flavor already exists. Used for cases when mp already has captions.
+      - skip-if-flavor-exists: captions/vtt+en
+      # Audio to be translated, produced in the previous compose operation
+      - source-tag: transcript
 
 </code></pre>
 <p>Create a workflow that will add the generated caption/transcript to the media package and republish it.

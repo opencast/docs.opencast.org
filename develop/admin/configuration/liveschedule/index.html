@@ -227,7 +227,7 @@ publish URL something like rtmp://a.bcd.e.akamaientrypoint.net/EntryPoint. The s
 <h3 id="step-3-configure-the-workflow">Step 3: Configure the Workflow</h3>
 <p>When scheduling a live event via the admin UI, the workflow needs to have the <em>publishLive</em> configuration set to true
 (this is already included in the sample workflows).
-If not using the sample Opencast workflows, add to the <code>&lt;configuration_panel&gt;</code>:</p>
+If not using the sample Opencast workflows, add to the <code>&lt;configuration_panel_json&gt;</code>:</p>
 <pre><code>        &lt;fieldset&gt;
           &lt;legend&gt;Publish live stream:&lt;/legend&gt;
           &lt;ul&gt;
@@ -239,17 +239,14 @@ If not using the sample Opencast workflows, add to the <code>&lt;configuration_p
         &lt;/fieldset&gt;
 </code></pre>
 <p>And to the <em>defaults</em> operation:</p>
-<pre><code>    &lt;operation
-      id=&quot;defaults&quot;
-      description=&quot;Applying default configuration values&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;comment&quot;&gt;false&lt;/configuration&gt;
-        &lt;configuration key=&quot;publishToMediaModule&quot;&gt;true&lt;/configuration&gt;
-        &lt;configuration key=&quot;publishToOaiPmh&quot;&gt;true&lt;/configuration&gt;
-        &lt;configuration key=&quot;uploadedSearchPreview&quot;&gt;false&lt;/configuration&gt;
-        &lt;configuration key=&quot;publishLive&quot;&gt;false&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code>  - id: defaults
+    description: Applying default configuration values
+    configurations:
+      - comment: false
+      - publishToMediaModule: true
+      - publishToOaiPmh: true
+      - uploadedSearchPreview: false
+      - publishLive: false
 </code></pre>
 
   <br>

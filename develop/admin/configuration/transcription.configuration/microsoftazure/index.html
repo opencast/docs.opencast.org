@@ -114,96 +114,72 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 <h3 id="step-3-add-a-workflow-operations-or-create-new-workflow-to-start-transcription">Step 3: Add a workflow operations or create new workflow to start transcription</h3>
 <p>Edit a workflow to start a transcription, e.g. <code>etc/workflows/partial-publish.xml</code>. You have to add the <code>microsoft-azure-start-transcription</code> operation right after the creation of the final cut of the media files. This operation may look like</p>
-<pre><code class="language-xml">&lt;!-- This is a typical operation to generate final cut --&gt;
-&lt;!-- of the media files. --&gt;
-&lt;operation
-  id=&quot;editor&quot;
-  …
-&lt;/operation&gt;
+<pre><code class="language-yaml">  # This is a typical operation to generate final cut
+  # of the media files.
+  - id: editor
+   ...
+  # This operation will start the transcription job
+  - id: microsoft-azure-start-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Start Microsoft Azure transcription job
+    configurations:
+      - source-flavors: '*/trimmed'
+      # Skip this operation if flavor already exists.
+      # Used for cases when mediapackage already has captions.
+      - skip-if-flavor-exists: captions/*
+      - audio-extraction-encoding-profile: transcription-azure.audio
 
-&lt;!-- This operation will start the transcription job --&gt;
-&lt;operation
-  id=&quot;microsoft-azure-start-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Start Microsoft Azure transcription job&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;*/trimmed&lt;/configuration&gt;
-    &lt;!-- Skip this operation if flavor already exists. --&gt;
-    &lt;!-- Used for cases when mediapackage already has captions. --&gt;
-    &lt;configuration key=&quot;skip-if-flavor-exists&quot;&gt;captions/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;audio-extraction-encoding-profile&quot;&gt;transcription-azure.audio&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
 </code></pre>
 <p>For more options please consult the <a href="../../../workflowoperationhandlers/microsoft-azure-start-transcription-woh/">documentation</a>.</p>
 <h3 id="step-4-add-a-workflow-to-attach-transcriptions">Step 4: Add a workflow to attach transcriptions</h3>
 <p>A sample attach transcript workflow that is preconfigured in the configuration from Step 2. Attaches the generated transcription to the mediapackage, archives and republishes it. Copy it into a new file under <code>etc/workflows/microsoft-azure-attach-transcription.xml</code> in your Opencast installation.</p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
-  &lt;id&gt;microsoft-azure-attach-transcription&lt;/id&gt;
-  &lt;title&gt;Attach Transcription from Microsoft Azure&lt;/title&gt;
-  &lt;description&gt;Publish and archive transcription from Microsoft Azure Speech Services.&lt;/description&gt;
-  &lt;operations&gt;
+<pre><code class="language-yaml">id: microsoft-azure-attach-transcription
+title: Attach Transcription from Microsoft Azure
+description: |-
+  Publish and archive transcription from Microsoft Azure Speech Services.
+operations:
+  - id: microsoft-azure-attach-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Attach transcription from Microsoft Azure
+    configurations:
+      # This is filled out by the transcription service when starting this workflow
+      - transcription-job-id: ${transcriptionJobId}
+      # Set the flavor to something the Paella player will parse
+      - target-flavor: captions/source
+      - target-tags: archive, ${transcriptionLocaleTag!}
 
-    &lt;operation
-      id=&quot;microsoft-azure-attach-transcription&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Attach transcription from Microsoft Azure&quot;&gt;
-      &lt;configurations&gt;
-        &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
-        &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-        &lt;!-- Set the flavor to something the Paella player will parse --&gt;
-        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-tags&quot;&gt;archive, ${transcriptionLocaleTag!}&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+  - id: snapshot
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Archive transcription
+    configurations:
+      - source-tags: archive
 
-    &lt;operation
-      id=&quot;snapshot&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Archive transcription&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-tags&quot;&gt;archive&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+  - id: tag
+    description: Tagging captions for publishing
+    configurations:
+      - source-flavors: captions/source
+      - target-flavor: captions/delivery
+      - target-tags: -archive
+      - copy: true
 
-    &lt;operation
-      id=&quot;tag&quot;
-      description=&quot;Tagging captions for publishing&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;captions/source&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-flavor&quot;&gt;captions/delivery&lt;/configuration&gt;
-        &lt;configuration key=&quot;target-tags&quot;&gt;-archive&lt;/configuration&gt;
-        &lt;configuration key=&quot;copy&quot;&gt;true&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+  - id: publish-engage
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Distribute and publish to engage server
+    configurations:
+      - download-source-flavors: captions/delivery
+      - strategy: merge
+      - check-availability: false
 
-    &lt;operation
-      id=&quot;publish-engage&quot;
-      fail-on-error=&quot;true&quot;
-      exception-handler-workflow=&quot;partial-error&quot;
-      description=&quot;Distribute and publish to engage server&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;download-source-flavors&quot;&gt;captions/delivery&lt;/configuration&gt;
-        &lt;configuration key=&quot;strategy&quot;&gt;merge&lt;/configuration&gt;
-        &lt;configuration key=&quot;check-availability&quot;&gt;false&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;operation
-      id=&quot;cleanup&quot;
-      fail-on-error=&quot;false&quot;
-      description=&quot;Cleaning up&quot;&gt;
-      &lt;configurations&gt;
-        &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
-        &lt;configuration key=&quot;delete-external&quot;&gt;false&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-  &lt;/operations&gt;
-&lt;/definition&gt;
+  - id: cleanup
+    fail-on-error: false
+    description: Cleaning up
+    configurations:
+      - preserve-flavors: security/*
+      - delete-external: false
 </code></pre>
 <p>All available options of the  <code>microsoft-azure-attach-transcription</code> operation are documented <a href="../../../workflowoperationhandlers/microsoft-azure-attach-transcription-woh/">here</a>.</p>
 <h3 id="step-5-add-audio-extraction-encoding-profile">Step 5: Add audio extraction encoding profile</h3>

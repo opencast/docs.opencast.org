@@ -201,20 +201,17 @@ all the entries in that month, and add it to the previous value. And so on for t
 <p>To actually <em>write</em> these hours to the statistics data base, you have to add the <code>statistics-writer</code> workflow
 operation handler to your workflows. Specifically, somewhere in your publishing workflow, you have to add an entry
 such as this:</p>
-<pre><code class="language-XML">&lt;operation
-  id="statistics-writer"
-  fail-on-error="true"
-  exception-handler-workflow="partial-error"
-  description="Collect video statistics"&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="flavor"&gt;presenter/video&lt;/configuration&gt;
-    &lt;configuration key="retract"&gt;false&lt;/configuration&gt;
-    &lt;configuration key="measurement-name"&gt;publishedhours&lt;/configuration&gt;
-    &lt;configuration key="organization-resource-id-name"&gt;organizationId&lt;/configuration&gt;
-    &lt;configuration key="length-field-name"&gt;hours&lt;/configuration&gt;
-    &lt;configuration key="temporal-resolution"&gt;hours&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: statistics-writer
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Collect video statistics
+    configurations:
+      - flavor: presenter/video
+      - retract: false
+      - measurement-name: publishedhours
+      - organization-resource-id-name: organizationId
+      - length-field-name: hours
+      - temporal-resolution: hours
 </code></pre>
 <p>To <em>decrement</em> the running total of hours in the case of retractions, set the <code>retract</code> property to <code>true</code>.
 In the default case, or when the <code>retract</code> property is <code>false</code> the running total is not decremented when a

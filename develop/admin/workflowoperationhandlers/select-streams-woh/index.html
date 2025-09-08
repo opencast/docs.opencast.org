@@ -200,15 +200,12 @@ the same as if the parameter were omitted.</p>
 </table>
 <p>Note that those encoding profiles are included in the default configuration of Opencast.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;select-tracks&quot;
-    description=&quot;Select tracks for further processing&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/work&lt;/configuration&gt;
-    &lt;configuration key=&quot;audio-muxing&quot;&gt;force&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: select-tracks
+    description: Select tracks for further processing
+    configurations:
+      - source-flavor: '*/source'
+      - target-flavor: '*/work'
+      - audio-muxing: force
 </code></pre>
 
   <br>

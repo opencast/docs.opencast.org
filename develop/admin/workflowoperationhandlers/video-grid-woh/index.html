@@ -164,16 +164,13 @@ how the videos from our source-flavor are arranged in each section.</p>
 <p><img alt="Figure 2" src="../video-grid-woh-figure-2.png" /></p>
 <p>Finally, the videos for each section are combined into one final, single video file.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;video-grid&quot;
-    description=&quot;Generate sections of the final video&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-smil-flavor&quot;&gt;smil/source+partial&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/partial&lt;/configuration&gt;
-    &lt;configuration key=&quot;concat-encoding-profile&quot;&gt;concat-samecodec.work&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: video-grid
+    description: Generate sections of the final video
+    configurations:
+      - source-flavor: presenter/source
+      - source-smil-flavor: smil/source+partial
+      - target-flavor: presenter/partial
+      - concat-encoding-profile: concat-samecodec.work
 </code></pre>
 <h2 id="encoding-profiles">Encoding Profiles</h2>
 <p>Although not necessary, it is recommended to use a concat encoding profile that makes use of concat demuxing. This helps with reducing working memory usage.</p>

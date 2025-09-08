@@ -144,18 +144,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </table>
 <p>* <strong>mandatory</strong></p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;image-to-video&quot;
-    description=&quot;Composite&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-tags&quot;&gt;intro&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;intro/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;intro-video&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;intro/video&lt;/configuration&gt;
-    &lt;configuration key=&quot;duration&quot;&gt;10&lt;/configuration&gt;
-    &lt;configuration key=&quot;profile&quot;&gt;image-movie&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: image-to-video
+    description: Composite
+    configurations:
+      - source-tags: intro
+      - source-flavor: intro/source
+      - target-tags: intro-video
+      - target-flavor: intro/video
+      - duration: 10
+      - profile: image-movie
 </code></pre>
 <h2 id="encoding-profile-example">Encoding Profile Example</h2>
 <pre><code class="language-properties"># Image to video

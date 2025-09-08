@@ -353,28 +353,21 @@ output id to make it easy to find.</p>
 <p>Since the extended metadata don't have the <code>dublincore/*</code> flavor, a tagging operation for the archive has to be added
 for the extended catalogs.
 In our examples below, we use ext/episode as a flavor, so the following operation should be added to the workflows</p>
-<pre><code>&lt;!-- Tag the extended metadata catalogs for publishing --&gt;
-&lt;operation
-    id="tag"
-    description="Tagging extended metadata catalogs for archival and/or publication"&gt;
-    &lt;configurations&gt;
-        &lt;configuration key="source-flavors"&gt;ext/*&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;+archive&lt;/configuration&gt;
-    &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
+<p># Tag the extended metadata catalogs for publishing
+  - id: tag
+    description: Tagging extended metadata catalogs for archival and/or
+      publication
+    configurations:
+      - source-flavors: ext/*
+      - target-tags: +archive</p>
 <p>If you want the extended metadata to be published the same way as the standard metadata, you can update the existing
 tagging operation for dublincore metadata the following way</p>
-<pre><code>&lt;!-- Tag the incoming metadata catalogs for publishing --&gt;
-&lt;operation
-  id="tag"
-  description="Tagging metadata catalogs for archival and publication"&gt;
-  &lt;configurations&gt;
-    &lt;configuration key="source-flavors"&gt;dublincore/*,ext/*&lt;/configuration&gt;
-    &lt;configuration key="target-tags"&gt;+archive,+engage-download&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
+<p># Tag the incoming metadata catalogs for publishing
+  - id: tag
+    description: Tagging metadata catalogs for archival and publication
+    configurations:
+      - source-flavors: dublincore/<em>,ext/</em>
+      - target-tags: +archive,+engage-download</p>
 <h2 id="configuring-the-events-publisher-metadata-field">Configuring the events publisher metadata field</h2>
 <p>The metadata field can be used in two ways, and its meaning varies slightly:</p>
 <ul>

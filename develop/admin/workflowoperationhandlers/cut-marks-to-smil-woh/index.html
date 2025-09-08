@@ -141,17 +141,14 @@ The values are specified in milliseconds.</p>
 ]
 </code></pre>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;cut-marks-to-smil&quot;
-    description=&quot;Process ingested cut marks by applying them to current tracks&quot;
-    fail-on-error=&quot;true&quot;
-    exception-handler-workflow=&quot;partial-error&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-media-flavors&quot;&gt;presenter/prepared,presentation/prepared&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-json-flavor&quot;&gt;cut-marks/json&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-smil-flavor&quot;&gt;smil/cutting&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: cut-marks-to-smil
+    description: Process ingested cut marks by applying them to current tracks
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    configurations:
+      - source-media-flavors: presenter/prepared,presentation/prepared
+      - source-json-flavor: cut-marks/json
+      - target-smil-flavor: smil/cutting
 </code></pre>
 
   <br>

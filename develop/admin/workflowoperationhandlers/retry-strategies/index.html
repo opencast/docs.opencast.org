@@ -110,35 +110,29 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </table>
 <p><strong>Example 1</strong>: No retry</p>
 <p>If the operation1 fails, the workflow will fail because fail-on-error="true".</p>
-<pre><code>&lt;operation
-  id=&quot;operation1&quot;
-  retry-strategy=&quot;none&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Operation One&quot;&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: operation1
+    retry-strategy: none
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Operation One
 </code></pre>
 <p><strong>Example 2</strong>: Automatic retry</p>
 <p>If operation2 fails, it will be retried until it succeeds or until it has failed 5 times.</p>
-<pre><code>&lt;operation
-  id=&quot;operation2&quot;
-  retry-strategy=&quot;retry&quot;
-  max-attempts=&quot;5&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Operation Two&quot;&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: operation2
+    retry-strategy: retry
+    max-attempts: 5
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Operation Two
 </code></pre>
 <p><strong>Example 3</strong>: Manual retry</p>
 <p>If operation3 fails, the user can choose between Retry or Abort. The user can manually retry the operation 4 times.</p>
-<pre><code>&lt;operation
-  id=&quot;operation3&quot;
-  retry-strategy=&quot;hold&quot;
-  max-attempts=&quot;5&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;error&quot;
-  description=&quot;Operation Three&quot;&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: operation3
+    retry-strategy: hold
+    max-attempts: 5
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Operation Three
 </code></pre>
 
   <br>

@@ -132,15 +132,12 @@ usually used as last workflow operation in a workflow to ensure that temporary p
   while still removing all files.</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;cleanup&quot;
-    description=&quot;Remove temporary processing artifacts&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;preserve-flavors&quot;&gt;security/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;delete-external&quot;&gt;true&lt;/configuration&gt;
-    &lt;configuration key=&quot;delay&quot;&gt;5&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: cleanup
+    description: Remove temporary processing artifacts
+    configurations:
+      - preserve-flavors: security/*
+      - delete-external: true
+      - delay: 5
 </code></pre>
 
   <br>

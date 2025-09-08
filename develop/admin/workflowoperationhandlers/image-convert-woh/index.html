@@ -148,18 +148,15 @@ settings. One example is the conversion of preview images into different formats
 <p>This operation would convert all image attachments with flavor matches <code>*/preview</code> and tag <code>player</code> into two different
 formats described by the encoding profiles <code>preview-regular.image</code> and <code>preview-small.image</code>.
 The produced image attachments will have an flavor with the subtype <code>preview+player</code>.</p>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;image-convert&quot;
-    description=&quot;Resize images to fixed size&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-tags&quot;&gt;player&lt;/configuration&gt;
-    &lt;configuration key=&quot;source-flavors&quot;&gt;*/preview&lt;/configuration&gt;
-    &lt;configuration key=&quot;tags-and-flavors&quot;&gt;true&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/preview+player&lt;/configuration&gt;
-    &lt;configuration key=&quot;encoding-profiles&quot;&gt;preview-regular.image,preview-small.image&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: image-convert
+    description: Resize images to fixed size
+    configurations:
+      - source-tags: player
+      - source-flavors: '*/preview'
+      - tags-and-flavors: true
+      - target-tags: ''
+      - target-flavor: '*/preview+player'
+      - encoding-profiles: preview-regular.image,preview-small.image
 </code></pre>
 <h3 id="encoding-profile-example">Encoding Profile Example</h3>
 <pre><code class="language-properties"># Player preview image regular size

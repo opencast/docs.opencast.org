@@ -142,21 +142,18 @@ write the negative length and can thus be used for retract workflows, too.</p>
 </table>
 <p>* Possible values are <code>milliseconds</code>, <code>seconds</code>, <code>minutes</code>, <code>hours</code>, <code>days</code></p>
 <h2 id="operation-examples">Operation Examples</h2>
-<pre><code class="language-XML">&lt;operation
-  id=&quot;statistics-writer&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Collect video statistics&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;flavor&quot;&gt;presenter/video&lt;/configuration&gt;
-    &lt;configuration key=&quot;retract&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;retention-policy&quot;&gt;infinite&lt;/configuration&gt;
-    &lt;configuration key=&quot;measurement-name&quot;&gt;publishedhours&lt;/configuration&gt;
-    &lt;configuration key=&quot;organization-resource-id-name&quot;&gt;organizationId&lt;/configuration&gt;
-    &lt;configuration key=&quot;length-field-name&quot;&gt;hours&lt;/configuration&gt;
-    &lt;configuration key=&quot;temporal-resolution&quot;&gt;hours&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: statistics-writer
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Collect video statistics
+    configurations:
+      - flavor: presenter/video
+      - retract: false
+      - retention-policy: infinite
+      - measurement-name: publishedhours
+      - organization-resource-id-name: organizationId
+      - length-field-name: hours
+      - temporal-resolution: hours
 </code></pre>
 
   <br>

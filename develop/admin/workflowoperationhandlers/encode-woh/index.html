@@ -151,16 +151,14 @@ run of the operation, the media package will contain four new tracks: the first 
 <code>engage-download</code>, <code>engage-streaming</code> and <code>low-quality</code>; the second one containing the new tags <code>engage-download</code>,
 <code>engage-streaming</code> and <code>medium-quality</code>; etc.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;encode&quot;
-    description=&quot;encoding media files&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/trimmed&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/delivery&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;engage-download,engage-streaming&lt;/configuration&gt;
-    &lt;configuration key=&quot;encoding-profile&quot;&gt;parallel.http&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: encode
+    description: encoding media files
+    configurations:
+      - source-flavor: '*/trimmed'
+      - target-flavor: '*/delivery'
+      - target-tags: engage-download,engage-streaming
+      - encoding-profile: parallel.http
+
 </code></pre>
 <h2 id="encoding-profile-example">Encoding Profile Example</h2>
 <p>Unlike a regular compose operation, this operation can generate more than one output file and, therefore, more than one

@@ -134,17 +134,14 @@ corresponding metadata of the current workflow instance (see List of parameters)
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;mattermost-notify&quot;
-    description=&quot;Notify Mattermost about error&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;url&quot;&gt;insert-url-of-mattermost-webhook&lt;/configuration&gt;
-    &lt;configuration key=&quot;message&quot;&gt;Error at Workflow %i (%t) State: %s&lt;/configuration&gt;
-    &lt;configuration key=&quot;method&quot;&gt;post&lt;/configuration&gt;
-    &lt;configuration key=&quot;max-retry&quot;&gt;3&lt;/configuration&gt;
-    &lt;configuration key=&quot;timeout&quot;&gt;5&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: mattermost-notify
+    description: Notify Mattermost about error
+    configurations:
+      - url: insert-url-of-mattermost-webhook
+      - message: 'Error at Workflow %i (%t) State: %s'
+      - method: post
+      - max-retry: 3
+      - timeout: 5
 </code></pre>
 <h2 id="message-variables">Message Variables</h2>
 <p>All message variables (<code>%&lt;letter&gt;</code>) will be substituted with corresponding metadata of the current workflow instance

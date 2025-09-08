@@ -145,18 +145,15 @@ preview images are shown, better generate them only for one video. If <code>sour
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;timelinepreviews&quot;
-    description=&quot;Creating presentation timeline preview images&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;*/trimmed&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;*/timeline+preview&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;engage-download&lt;/configuration&gt;
-    &lt;configuration key=&quot;image-count&quot;&gt;100&lt;/configuration&gt;
-    &lt;!-- If there is more than one file that match the source-tags, use only the first one --&gt;
-    &lt;configuration key=&quot;process-first-match-only&quot;&gt;true&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: timelinepreviews
+    description: Creating presentation timeline preview images
+    configurations:
+      - source-flavor: '*/trimmed'
+      - target-flavor: '*/timeline+preview'
+      - target-tags: engage-download
+      - image-count: 100
+      # If there is more than one file that match the source-tags, use only the first one
+      - process-first-match-only: true
 </code></pre>
 
   <br>

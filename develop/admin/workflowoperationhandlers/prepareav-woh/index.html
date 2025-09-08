@@ -155,16 +155,13 @@ in the pipeline (encoding to flash, mjpeg etc.).</p>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-xml">&lt;operation
-    id=&quot;prepare-av&quot;
-    description=&quot;Preparing presenter audio and video work versions&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;source-flavor&quot;&gt;presenter/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;presenter/work&lt;/configuration&gt;
-    &lt;configuration key=&quot;rewrite&quot;&gt;false&lt;/configuration&gt;
-    &lt;configuration key=&quot;audio-muxing-source-flavors&quot;&gt;*/?,*/*&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: prepare-av
+    description: Preparing presenter audio and video work versions
+    configurations:
+      - source-flavor: presenter/source
+      - target-flavor: presenter/work
+      - rewrite: false
+      - audio-muxing-source-flavors: '*/?,*/*'
 </code></pre>
 <h2 id="audio-muxing">Audio Muxing</h2>
 <p>The prepare-av operation can be used for audio muxing in case a matching source video track has no audio. Audio
@@ -183,8 +180,8 @@ defines the search order of how to find an audio track.</p>
 resulting in a list of matching tracks, the search order within that list is undefined, i.e. PrepareAVWorkflowOperation
 will just pick any of those tracks that has audio.</p>
 <h2 id="example">Example</h2>
-<pre><code class="language-xml">&lt;configuration key=&quot;source-flavor&quot;&gt;presenter/*&lt;/configuration&gt;
-&lt;configuration key=&quot;audio-muxing-source-flavors&quot;&gt;presenter-audio/?, presentation/?,presentation/*,?/audio,*/*&lt;/configuration&gt;
+<pre><code class="language-yaml">      - source-flavor: presenter/*
+      - audio-muxing-source-flavors: presenter-audio/?, presentation/?,presentation/*,?/audio,*/*
 </code></pre>
 <p>Let's assume that exactly one video-only track of flavor presenter/source in the media package and another track of
 flavor audio/track that has audio.</p>

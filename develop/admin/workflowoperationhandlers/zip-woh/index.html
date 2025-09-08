@@ -134,24 +134,11 @@ and by default stores the zip file in the working file repository's "zip" collec
   processing time. That is why activating this is usually not recommended.</li>
 </ul>
 <h2 id="operation-example">Operation Example</h2>
-<p>XML</p>
-<pre><code class="language-xml">&lt;operation
-  id=&quot;zip&quot;
-  description=&quot;Creating zipped recording archive&quot;&gt;
-  &lt;configurations&gt;
-    &lt;configuration key=&quot;zip-collection&quot;&gt;failed.zips&lt;/configuration&gt;
-    &lt;configuration key=&quot;include-flavors&quot;&gt;*/source,dublincore/*&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;all/zip&lt;/configuration&gt;
-    &lt;configuration key=&quot;compression&quot;&gt;false&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
-</code></pre>
-<p>YAML</p>
-<pre><code class="language-yml">- id: zip
+<pre><code class="language-yaml">- id: zip
   description: Creating zipped recording archive
   configurations:
     - zip-collection: failed.zips
-    - include-flavors: */source,dublincore/*
+    - include-flavors: '*/source,dublincore/*'
     - target-flavor: all/zip
     - compression: false
 </code></pre>

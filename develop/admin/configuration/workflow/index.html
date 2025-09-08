@@ -41,7 +41,7 @@
               {title: "Conditional Execution", url: "#conditional-execution" },
               {title: "Thumbnail Support", url: "#thumbnail-support" },
               {title: "Test the Workflow", url: "#test-the-workflow" },
-              {title: "Using YAML Files with Workflows", url: "#using-yaml-files-with-workflows" },
+              {title: "Using XML Files with Workflows", url: "#using-xml-files-with-workflows" },
           ]},
         ];
 
@@ -112,23 +112,16 @@ repetition in a given workflow.</p>
 <p>Workflow operations can be configured using configuration elements. The use of string replacement in configuration
 values allows workflows to dynamically adapt to a given input or user decision.</p>
 <h3 id="document">Document</h3>
-<p>Opencast workflows are defined in XML, or alternatively in <a href="./#using-yaml-files-with-workflows">YAML</a> .  The structure of a Opencast workflow looks like this:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-
-  &lt;!-- Description --&gt;
-  &lt;id&gt;&lt;/id&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;tags&gt;&lt;/tags&gt;
-  &lt;description&gt;&lt;/description&gt;
-  &lt;displayOrder&gt;&lt;/displayOrder&gt;
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
-    &lt;operation&gt;&lt;/operation&gt;
-    ...
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+<p>Opencast workflows are defined in YAML, or alternatively in <a href="./#using-xml-files-with-workflows">XML</a> .  The structure of a Opencast workflow looks like this:</p>
+<pre><code class="language-yaml"># Description
+id:
+title: &quot;&quot;
+tags: []
+description: &quot;&quot;
+# Operations
+operations:
+  - id:
+  ...
 </code></pre>
 <h2 id="create-a-workflow">Create a Workflow</h2>
 <p>This section will walk you through creating a custom workflow, which will encode ingested tracks to defined output
@@ -140,36 +133,28 @@ which creates a distribution format definition for mp4 video and a <code>player-
 thumbnail images for the videos.</p>
 <h3 id="step-2-describe-the-workflow">Step 2: Describe the Workflow</h3>
 <p>Start by naming the workflow and giving it a meaningful description:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+<pre><code class="language-yaml"># Description
+id: example
+# Optionally specify an organization
+organization: mh_default_org
+# optionally specify roles for this workflow
+roles:
+  - ROLE_ADMIN
+title: Encode Mp4, Distribute and Publish
+tags:
+  # Tell the UI where to show this workflow
+  - upload
+  - schedule
+  - archive
+displayOrder: 10
+description: |-
+  1. Encode to Mp4 and thumbnail.
 
-  &lt;!-- Description --&gt;
-  &lt;id&gt;example&lt;/id&gt;
-  &lt;!-- Optionally specify an organization --&gt;
-  &lt;organization&gt;mh_default_org&lt;/organization&gt;
-  &lt;!-- optionally specify roles for this workflow --&gt;
-  &lt;roles&gt;
-    &lt;role&gt;ROLE_ADMIN&lt;/role&gt;
-  &lt;/roles&gt;
-  &lt;title&gt;Encode Mp4, Distribute and Publish&lt;/title&gt;
-  &lt;tags&gt;
-    &lt;!-- Tell the UI where to show this workflow --&gt;
-    &lt;tag&gt;upload&lt;/tag&gt;
-    &lt;tag&gt;schedule&lt;/tag&gt;
-    &lt;tag&gt;archive&lt;/tag&gt;
-  &lt;/tags&gt;
-  &lt;description&gt;
-    1. Encode to Mp4 and thumbnail.
+  2. Distribute to local repository.
 
-    2. Distribute to local repository.
-
-    3. Publish to search index.
-  &lt;/description&gt;
-  &lt;displayOrder&gt;10&lt;/displayOrder&gt;
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;&lt;/operations&gt;
-
-&lt;/definition&gt;
+  3. Publish to search index.
+# Operations
+operations: []
 </code></pre>
 <ul>
 <li>The <code>id</code> is used in several Opencast endpoints to identify and select this workflow. Make sure that this identifier
@@ -197,71 +182,49 @@ thumbnail images for the videos.</p>
 </ul>
 <h3 id="step-3-inspect-the-media">Step 3: Inspect the Media</h3>
 <p>The first operation will be to inspect the media for technical metadata, such as format and length:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+<pre><code class="language-yaml"># Description
+# ...
 
-  &lt;!-- Description --&gt;
-  ...
-
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
-
-    &lt;!-- inspect media --&gt;
-    &lt;operation
-      id="inspect"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Inspect media package"&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+# Operations
+operations:
+  # inspect media
+  - id: inspect
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Inspect media package
 </code></pre>
 <p>The <em>fail-on-error</em> attribute is a boolean determining whether the workflow will throw an error to the
 exception-handler-workflow or simply proceed with the remaining operations.</p>
 <h3 id="step-4-encoding">Step 4: Encoding</h3>
 <p>The next operations will encode the media to the Mp4 format:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
+<pre><code class="language-yaml"># Description
+# ...
 
-  &lt;!-- Description --&gt;
-  ...
+# Operations
+operations:
+  # inspect media
+  # ...
 
-  &lt;!-- Operations --&gt;
-  &lt;operations&gt;
+  # encode: mp4
+  - id: encode
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Encode camera to mp4
+    configurations:
+      - source-flavor: presenter/source
+      - target-flavor: presenter/delivery
+      - target-tags: ''
+      - encoding-profile: mov-low.http
 
-    &lt;!-- inspect media --&gt;
-    ...
-
-    &lt;!-- encode: mp4 --&gt;
-    &lt;operation
-      id="encode"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode camera to mp4"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;presenter/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-    &lt;operation
-      id="encode"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode screen to mp4"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;presentation/delivery&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;mov-low.http&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+  - id: encode
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Encode screen to mp4
+    configurations:
+      - source-flavor: presentation/source
+      - target-flavor: presentation/delivery
+      - target-tags: ''
+      - encoding-profile: mov-low.http
 </code></pre>
 <ul>
 <li>The <code>target-tags</code> attribute causes the resulting media to be tagged. For example, this could be used to define these
@@ -270,70 +233,50 @@ exception-handler-workflow or simply proceed with the remaining operations.</p>
 </ul>
 <h3 id="step-5-encode-to-thumbnail">Step 5: Encode to Thumbnail</h3>
 <p>The next operations will create thumbnails from the media:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-  ...
-  &lt;operations&gt;
-    ...
-    &lt;!-- encode: images --&gt;
-    &lt;operation
-      id="image"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode camera to thumbnail"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presenter/source&lt;/configuration&gt;
-        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;player-preview.http&lt;/configuration&gt;
-        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
+<pre><code class="language-yaml"># ...
+operations:
+  # ...
+  # encode: images
+  - id: image
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Encode camera to thumbnail
+    configurations:
+      - source-flavor: presenter/source
+      - source-tags: ''
+      - target-flavor: cover/source
+      - target-tags: ''
+      - encoding-profile: player-preview.http
+      - time: 1
 
-    &lt;operation
-      id="image"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Encode screen to thumbnail"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="source-flavor"&gt;presentation/source&lt;/configuration&gt;
-        &lt;configuration key="source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="target-flavor"&gt;cover/source&lt;/configuration&gt;
-        &lt;configuration key="target-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="encoding-profile"&gt;player-preview.http&lt;/configuration&gt;
-        &lt;configuration key="time"&gt;1&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+  - id: image
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Encode screen to thumbnail
+    configurations:
+      - source-flavor: presentation/source
+      - source-tags: ''
+      - target-flavor: cover/source
+      - target-tags: ''
+      - encoding-profile: player-preview.http
+      - time: 1
 </code></pre>
 <ul>
 <li>The time attribute determines the approximate frame of the source media is used. The time unit is in seconds.</li>
 </ul>
 <h3 id="step-6-distribute-the-media">Step 6: Distribute the Media</h3>
 <p>The next operation copies the encoded media to the Opencast distribution channel:</p>
-<pre><code>&lt;definition xmlns="http://workflow.opencastproject.org"&gt;
-  ...
-  &lt;operations&gt;
-
-    &lt;!-- distribute: local --&gt;
-    &lt;operation
-      id="publish-engage"
-      fail-on-error="true"
-      exception-handler-workflow="error"
-      description="Distribute media to the local distribution channel"&gt;
-      &lt;configurations&gt;
-        &lt;configuration key="download-source-tags"&gt;publish&lt;/configuration&gt;
-        &lt;configuration key="streaming-source-tags"&gt;&lt;/configuration&gt;
-        &lt;configuration key="check-availability"&gt;true&lt;/configuration&gt;
-      &lt;/configurations&gt;
-    &lt;/operation&gt;
-
-  &lt;/operations&gt;
-
-&lt;/definition&gt;
+<pre><code class="language-yaml"># ...
+operations:
+  # distribute: local
+  - id: publish-engage
+    fail-on-error: true
+    exception-handler-workflow: error
+    description: Distribute media to the local distribution channel
+    configurations:
+      - download-source-tags: publish
+      - streaming-source-tags: ''
+      - check-availability: true
 </code></pre>
 <ul>
 <li>The publish-engage operation uses all media tagged as <em>publish</em> as input.</li>
@@ -348,23 +291,19 @@ must:</p>
 <li>contain a custom configuration panel.</li>
 </ul>
 <p>Here is an example of a configurable operation:</p>
-<pre><code>&lt;operation id="..." if="${somevar}"&gt;
-  ...
-&lt;/operation&gt;
+<pre><code>- id: "..."
+  if: "${somevar}"
 </code></pre>
 <p>The attribute <code>if</code> specifies the execution condition in means of the operation only being executed if that condition
 evaluates to true. You can find more details on conditional execution in the next section.</p>
 <p>Once the operation is configured to accept a variable, we need to describe how to gather the value from the
-administrative user. The <code>&lt;configuration_panel&gt;</code> element of a workflow definitions describes this user interface
+administrative user. The <code>&lt;configuration_panel_json&gt;</code> element of a workflow definitions describes this user interface
 snippet.  A simple configuration panel could look like this:</p>
-<pre><code>&lt;configuration_panel&gt;
-  &lt;![CDATA[
-    &lt;input id="someaction" name="someaction" type="checkbox" value="true" /&gt;
-    &lt;label for="someaction"&gt;Execute some operation?&lt;/label&gt;
-  ]]&gt;
-&lt;/configuration_panel&gt;
+<pre><code>configuration_panel_json: |-
+  &lt;input id="someaction" name="someaction" type="checkbox" value="true" /&gt;
+  &lt;label for="someaction"&gt;Execute some operation?&lt;/label&gt;
 </code></pre>
-<p>The checkbox in this <code>&lt;configuration_panel&gt;</code> will now be displayed in the administrative tools, and the user's
+<p>The checkbox in this <code>&lt;configuration_panel_json&gt;</code> will now be displayed in the administrative tools, and the user's
 selection will be used to replace the <code>${someaction}</code> variable in the workflow.</p>
 <p>This input can also be sent by capture agents, using the ingest endpoints. Please note that capture agents usually do
 not load the configuration panel. Hence defaults set in the user interface will not apply to ingests. To circumvent
@@ -403,20 +342,17 @@ operation should be executed. This so-called execution condition is a boolean ex
   by a colon in the output.</li>
 </ul>
 <p>Example for simple boolean expressions:</p>
-<pre><code>&lt;operation id="..." if="${variableName1} AND NOT (${variableName2} OR ${variableName3})"&gt;
-  …
-&lt;/operation&gt;
+<pre><code>- id: "..."
+  if: "${variableName1} AND NOT (${variableName2} OR ${variableName3})"
 </code></pre>
 <p>Example for string comparisons:</p>
-<pre><code>&lt;operation id="..." if="${captureAgentVendor} == 'ACME Corporation'"&gt;
-  …
-&lt;/operation&gt;
+<pre><code>- id: "..."
+  if: "${captureAgentVendor} == 'ACME Corporation'"
 </code></pre>
 <p>Note that operations containing strings and numbers are somewhat well-behaved, for example, the following operation
 gets executed because <code>3</code> is converted to a string and then added to the string <code>'4'</code>:</p>
-<pre><code>&lt;operation id="..." if="3+'4' == '34'"&gt;
-  …
-&lt;/operation&gt;
+<pre><code>- id: "..."
+  if: "3+'4' == '34'"
 </code></pre>
 <p>Note that XML requires certain characters like the <code>&lt;</code> and <code>&gt;</code> operators to be written as XML entities. Even if they are
 used quoted in attributes. The following table shows all those characters:</p>
@@ -427,9 +363,8 @@ used quoted in attributes. The following table shows all those characters:</p>
 &amp;  →  &amp;amp;
 </code></pre>
 <p>Example:</p>
-<pre><code>&lt;operation id="..." if="${yresolution} &amp;gt; 720"&gt;
-  …
-&lt;/operation&gt;
+<pre><code>- id: "..."
+  if: "${yresolution} &gt; 720"
 </code></pre>
 <p>Some workflow operation handlers can generate or import variables during a workflow's run, for example:
 - <a href="../../workflowoperationhandlers/analyze-tracks-woh/">analyze-tracks</a>
@@ -489,29 +424,40 @@ and be consistent to the Admin UI thumbnail configuration (see <a href="../admin
 <h2 id="test-the-workflow">Test the Workflow</h2>
 <p>The easiest way to test a workflow is to just put it into the workflows folder where it will be picked up by Opencast
 automatically and will be available in Opencast a few seconds later.</p>
-<h2 id="using-yaml-files-with-workflows">Using YAML Files with Workflows</h2>
-<p>As an alternative to XML workflow configuration files, it is possible to use YAML files with the following structure.</p>
-<h3 id="yaml-workflow-definition-structure">YAML Workflow Definition Structure</h3>
-<pre><code>---
-id:
-title:
-tags: []
-displayOrder:
-description:
-operations: []
-state-mappings:
-  - state:
-    value:
+<h2 id="using-xml-files-with-workflows">Using XML Files with Workflows</h2>
+<p>As an alternative to YAML workflow configuration files, it is possible to use XML files with the following structure.</p>
+<h3 id="xml-workflow-definition-structure">XML Workflow Definition Structure</h3>
+<pre><code class="language-xml">&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
+
+  &lt;!-- Description --&gt;
+  &lt;id&gt;&lt;/id&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;tags&gt;&lt;/tags&gt;
+  &lt;description&gt;&lt;/description&gt;
+  &lt;displayOrder&gt;&lt;/displayOrder&gt;
+  &lt;state-mappings&gt;
+    &lt;state-mapping state=&quot;&quot;&gt;&lt;/state-mapping&gt;
+  &lt;/state-mappings&gt;
+
+  &lt;!-- Operations --&gt;
+  &lt;operations&gt;
+    &lt;operation&gt;&lt;/operation&gt;
+    ...
+  &lt;/operations&gt;
+
+&lt;/definition&gt;
 </code></pre>
-<h3 id="yaml-operation-structure">YAML Operation Structure</h3>
-<pre><code>- id:
-  if:
-  fail-on-error:
-  exception-handler-workflow:
-  description:
-  configurations:
-    - key1: value1
-    - key2: value2
+<h3 id="xml-operation-structure">XML Operation Structure</h3>
+<pre><code class="language-xml">    &lt;operation
+      id=&quot;&quot;
+      if=&quot;&quot;
+      fail-on-error=&quot;&quot;
+      exception-handler-workflow=&quot;&quot;
+      description=&quot;&quot;&gt;
+      &lt;configurations&gt;
+        &lt;configuration key=&quot;&quot;&gt;&lt;/configuration&gt;
+      &lt;/configurations&gt;
+    &lt;/operation&gt;
 </code></pre>
 
   <br>

@@ -1,44 +1,40 @@
-commit e14d3b1bcc362a16ef260f98e194971fc500567d
-Author: geichelberger <35195803+geichelberger@users.noreply.github.com>
-Date:   Mon Sep 8 21:02:50 2025 +0200
+commit 1d96609f6fe429b0d8917cddef5ec4cf370cab23
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Sep 9 00:59:57 2025 +0200
 
-    Update Hamcrest dep (#6975)
+    Use YAML for workflows everywhere (#6798)
     
-    This PR extends #6778 to include a required update to the assembly
-    configs. The parent PR does not boot without this change since the newer
-    hamcrest build needs the newer caffeine version. A better approach would
-    be to have these be packed on their own, but outright removing the line
-    in the assembly config omits the library completely, which also doesn't
-    work.
+    Fixes #6720.
     
-    If someone has a better way of doing this please let me know, but in the
-    meantime this will work.
+    It seems to me that most of us prefer the YAML format for workflows over
+    the XML format. Yet we are still using the XML format almost everywhere.
+    This PR aims at changing that, by converting all our workflows in
+    `etc/workflows` to YAML and also fixing up the docs.
+    
+    As this only aims at converting from one format to another, this should
+    result in no functional changes.
+    
+    This PR also includes the script I used to help me with converting. It
+    is not supposed to be a perfect migration script, but I thought it may
+    still be useful to adopters who have yet to switch to the YAML format. I
+    have no qualms about removing it though.
     
     ### How to test this patch
     
-    Turn on the graphql plugin and make sure things work
-    
-    <!--
-    Explain how to test this patch. If this requires a particular set-up or
-    configuration, explain that as well and provide
-    the necessary configuration if possible. The easier it is for others to
-    test the patch, the faster this will get
-    reviewed and merged.
-    -->
-    
+    Best way to test this will probably be to run all the workflows.
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [ ] ~[close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists~
-    * [x] [be against the correct
+    if one exists
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] ~include migration scripts and documentation, if appropriate~
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] ~explain why it needs to be merged into the legacy branch, if it
-    is targeting the legacy branch~
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch

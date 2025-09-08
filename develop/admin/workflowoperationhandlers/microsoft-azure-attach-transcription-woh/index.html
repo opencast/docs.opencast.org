@@ -205,19 +205,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </table>
 <h2 id="examples">Examples</h2>
 <p>The next operation example shows you how to attach a generated transcript to the media package for archiving. Here we used the <code>transcriptionLocaleTag</code> workflow property to set the recognized locale as language tag for the transcription. This can be replaced with <code>transcriptionLanguageTag</code> if you prefer the two digit language codes. Please note the '!' behind the variable name. It is Freemarker syntax and mean: leave it empty if not set.</p>
-<pre><code class="language-xml">&lt;operation
-  id=&quot;microsoft-azure-attach-transcription&quot;
-  fail-on-error=&quot;true&quot;
-  exception-handler-workflow=&quot;partial-error&quot;
-  description=&quot;Attach transcription from Microsoft Azure&quot;&gt;
-  &lt;configurations&gt;
-    &lt;!-- This is filled out by the transcription service when starting this workflow --&gt;
-    &lt;configuration key=&quot;transcription-job-id&quot;&gt;${transcriptionJobId}&lt;/configuration&gt;
-    &lt;!-- Set the flavor to something the Paella player will parse --&gt;
-    &lt;configuration key=&quot;target-flavor&quot;&gt;captions/source&lt;/configuration&gt;
-    &lt;configuration key=&quot;target-tags&quot;&gt;archive, ${transcriptionLocaleTag!}&lt;/configuration&gt;
-  &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: microsoft-azure-attach-transcription
+    fail-on-error: true
+    exception-handler-workflow: partial-error
+    description: Attach transcription from Microsoft Azure
+    configurations:
+      # This is filled out by the transcription service when starting this workflow
+      - transcription-job-id: ${transcriptionJobId}
+      # Set the flavor to something the Paella player will parse
+      - target-flavor: captions/source
+      - target-tags: archive, ${transcriptionLocaleTag!}
 </code></pre>
 
   <br>

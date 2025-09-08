@@ -141,22 +141,18 @@ package from the asset manager, such as rolling back, retrieving discarded media
 <h2 id="examples">Examples</h2>
 <h3 id="example-1">Example 1</h3>
 <p>Select version <strong>0</strong> of the media package from the asset manager:</p>
-<pre><code class="language-xml">&lt;operation id=&quot;select-version&quot;
-           description=&quot;Select version 0 of media package to use in current workflow&quot;&gt;
-    &lt;configurations&gt;
-        &lt;configuration key=&quot;version&quot;&gt;0&lt;/configuration&gt;
-    &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: select-version
+    description: Select version 0 of media package to use in current workflow
+    configurations:
+      - version: 0
 </code></pre>
 <h3 id="example-2">Example 2</h3>
 <p>Select the latest version where delivery media do not have the tags <em>hls-presenter-mp4</em> and <em>hls-presentation-mp4</em>:</p>
-<pre><code class="language-xml">&lt;operation id=&quot;select-version&quot;
-           description=&quot;Select version with no hls tags in delivery media to use in current workflow&quot;&gt;
-    &lt;configurations&gt;
-        &lt;configuration key=&quot;source-flavors&quot;&gt;presenter/delivery,presentation/delivery&lt;/configuration&gt;
-        &lt;configuration key=&quot;no-tags&quot;&gt;hls-presenter-mp4,hls-presentation-mp4&lt;/configuration&gt;
-    &lt;/configurations&gt;
-&lt;/operation&gt;
+<pre><code class="language-yaml">  - id: select-version
+    description: Select version with no hls tags in delivery media to use in current workflow
+    configurations:
+      - source-flavors: presenter/delivery,presentation/delivery
+      - no-tags: hls-presenter-mp4,hls-presentation-mp4
 </code></pre>
 
   <br>
