@@ -115,10 +115,10 @@ match the presenter track as intended.</p>
 <td>Flavor of the subtitle file(s) that shall be shifted.</td>
 </tr>
 <tr>
-<td>video-source-flavor</td>
+<td>video-source-flavors</td>
 <td>yes</td>
 <td>branding/bumper</td>
-<td>Flavor of the video that will be used to determine the duration for the shifting of the subtitle timestamps.</td>
+<td>Flavors of the videos that will be used to determine the duration for the shifting of the subtitle timestamps.</td>
 </tr>
 <tr>
 <td>target-flavor</td>
@@ -129,8 +129,8 @@ match the presenter track as intended.</p>
 </tbody>
 </table>
 <h2 id="requirements">Requirements</h2>
-<p>Please select a flavor for <code>video-source-flavor</code> that will select only a single/unique video. If multiple videos are 
-selected, or (in other words) if it's not clear which video file the operation has to use, the operation will fail.</p>
+<p>The operation will sum over all durations of all tracks in <code>video-source-flavors</code>. Please make sure the specified
+flavors only contain tracks by which duration you want the subtitles shifted.</p>
 <h2 id="additional-notes">Additional Notes</h2>
 <p>The operation will simply skip if no subtitle file is found with the given <code>subtitle-source-flavor</code>.</p>
 <p>On successful completion, the operation will create a new subtitle file in the process and 
