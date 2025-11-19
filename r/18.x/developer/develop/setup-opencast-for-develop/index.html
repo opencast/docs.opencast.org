@@ -240,6 +240,17 @@ $ ./mvnw clean install -DtrimStackTrace=false
  you can run</p>
 <pre><code>$ sudo chown -R $USER:$(id -gn $USER) ~/.config &amp;&amp; sudo chown -R $USER:$(id -gn $USER) ~/.npm
 </code></pre>
+<h3 id="npm-timeout">NPM Timeout</h3>
+<p>To avoid timeout and connection errors when downloading npm packages used in UI modules that are not maintained as dedicated
+projects (<code>engage-paella-player-7</code>, <code>engage-paella-player-8</code>, <code>engage-ui</code>, <code>graphql-ui</code>, <code>lti</code> and <code>runtime-info-ui</code>), you can
+configure an npm cache by setting an environment variable before running Maven. For example: <code>NPM_CONFIG_CACHE=~/.npm</code>.</p>
+<p>This is especially useful when building inside a container:</p>
+<pre><code class="language-sh">% docker run -v /path/to/opencast:/opencast -v npm-cache:/root/.npm ...
+
+% cd /opencast
+% export NPM_CONFIG_CACHE=/root/.npm
+% ./mvnv clean install ...
+</code></pre>
 <h3 id="jdk-version">JDK Version</h3>
 <p>Some IDEs attempt to use the most recent version of the JDK. Make sure that your IDE uses JDK 11.</p>
 <h2 id="recommended-development-tools">Recommended Development Tools</h2>
