@@ -1,9 +1,58 @@
-commit a212fa80b3bee0bfd78e773da81d5211fbaa4d26
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Nov 18 13:51:25 2025 -0600
+commit 0898a384b7fb50aacd5ecd57b8ef1c996cdf7b18
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Wed Nov 19 14:35:14 2025 +0100
 
-    Merge branch 'dependabot/npm_and_yarn/docs/checkstyle/eslint-config/eslint/js-9.39.0' of opencast/opencast into develop
+    Vastly simplify JWT setup for common cases (#7189)
     
-    Pull request #7162
+    Fixes #7034
     
-      Build(deps): bump @eslint/js from 9.36.0 to 9.39.0 in /docs/checkstyle/eslint-config
+    With this PR, OC administrators only need to change a single line
+    (`jwksUrl) in the security config to make common cases (Tobira, LMS)
+    work. This does not only benefit admins, but also devs who would
+    otherwise have to adjust the security config every time they test
+    something with JWT. This is not only annoying, but also error prone. In
+    the past, quite a lot of human life time was lost on this non-trivial
+    and confusing configuration. I know because I have helped many people
+    over the past few years setting up JWT.
+    
+    You should probably read this PR commit by commit. Basically each commit
+    makes the configuration a bit easier.
+    
+    I don't think this PR is a _perfect_ solution, in that it enables some
+    logic to run even if not necessary. But:
+    - Most OC installations will actually configure JWT, and then there is
+    no useless overhead.
+    - Implementing it in a way that admins only have to configure a single
+    line, and only then all the machinery is enabled, is _way_ harder than
+    this PR.
+    - The wasted CPU cycles due to this are minimal, likely swamped by many
+    other factors. And if an admin so desires, they can still disable it.
+    
+    While I hope that this PR gets fully merged, I'm also fine with removing
+    some parts, if there are parts that are too controversial to merge
+    before the OC 19 branch cut. Every bit helps.
+    
+    CC @mtneug @joneug
+    
+    ### How to test this patch
+    
+    Not sure how much testing is necessary here. Ideally of course, it is
+    tested with a JWT provider like Tobira. I did that and it just works
+    after changing this one line.
+    
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
