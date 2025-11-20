@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Speech to Text - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Speech to Text Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Requirements", url: "#requirements" },
+              {title: "Track Selection Strategy", url: "#track-selection-strategy" },
+              {title: "Operation Examples", url: "#operation-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-link">
+        Speech to Text Attach
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="speech-to-text-workflow-operation">Speech to Text Workflow Operation</h1>
+<p>ID: <code>speechtotext</code></p>
+<h2 id="description">Description</h2>
+<p>The speech to text operation can be used to generate subtitles from video or audio files. Currently, there are three
+STT engines available, <a href="../../configuration/transcription.configuration/whisper/">Whisper</a>,
+<a href="../../configuration/transcription.configuration/whispercpp/">WhisperC++</a> and
+<a href="../../configuration/transcription.configuration/vosk/">Vosk</a>.
+The subtitles file format ist WebVTT.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>Configuration Keys</th>
+<th>Required</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-flavor</td>
+<td>yes</td>
+<td>presenter/source</td>
+<td>The source media element flavor to use</td>
+</tr>
+<tr>
+<td>source-tags</td>
+<td>no</td>
+<td>master-video</td>
+<td>Comma-separated list of tags to help select the appropriate track</td>
+</tr>
+<tr>
+<td>target-flavor</td>
+<td>yes</td>
+<td>archive</td>
+<td>Flavor of the produced subtitle</td>
+</tr>
+<tr>
+<td>target-tags</td>
+<td>no</td>
+<td>captions/source</td>
+<td>Tags applies to the resulting subtitle element²³.</td>
+</tr>
+<tr>
+<td>target-element</td>
+<td>no</td>
+<td>track</td>
+<td>Define where to append the subtitles file. Possibilities are: as a 'track' or as an 'attachment' (default: <code>track</code>).</td>
+</tr>
+<tr>
+<td>language-code</td>
+<td>no</td>
+<td>de</td>
+<td>The language of the video or audio source⁴.</td>
+</tr>
+<tr>
+<td>language-fallback</td>
+<td>no¹</td>
+<td>en</td>
+<td>Optional fallback value if the dublin core/media package language field is not set.</td>
+</tr>
+<tr>
+<td>translate</td>
+<td>no</td>
+<td>true</td>
+<td>Transcription is translated into English, valid values <code>true</code> or <code>false</code> (Whisper/WhisperC++ only)</td>
+</tr>
+<tr>
+<td>limit-to-one</td>
+<td>no</td>
+<td>true</td>
+<td>Limits the maximum of generated subtitles to one.</td>
+</tr>
+<tr>
+<td>track-selection-strategy</td>
+<td>no</td>
+<td>everything</td>
+<td>Define what tracks shall be selected for subtitle generation if used together with <code>limit-to-one</code> (default: <code>everything</code>).</td>
+</tr>
+<tr>
+<td>async</td>
+<td>no</td>
+<td>false</td>
+<td>Start transcription in the background. Use <a href="../speechtotext-attach-woh/"><code>speechtotext-attach</code></a> to get the finished transcriptions later in the workflow (default: <code>false</code>).</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Vosk default value can be modified on Vosk config file.</li>
+<li>For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>. The <code>generator</code>
+   and <code>generator-type</code> tags will be set automatically. For Whisper, iIf no <code>language-code</code> is set, the <code>lang</code> tag will
+   be auto-generated.</li>
+<li>This has no effect if the transcription is run asynchronously. It only applies to attached in this operation.</li>
+<li>Vosk only: It has to match the name of the language model directory. See 'vosk-cli'.</li>
+</ol>
+<h2 id="requirements">Requirements</h2>
+<p>In order for it to work, you have to install the vosk-cli, whisper or whispercpp package.</p>
+<h2 id="track-selection-strategy">Track Selection Strategy</h2>
+<p>Use the tack selection strategy in combination with the <code>limit-to-one</code> option to define  what tracks are selected for
+subtitle generation.</p>
+<p>For example, if you set <code>source-flavor</code> to <code>*/source</code> because your are unsure which track includes the audio, you can
+use the <code>track-selection-strategy</code> to have Opencast prefer the presenter track for transcriptions.</p>
+<p>Available options are:</p>
+<ul>
+<li><code>presenter_or_nothing</code>: only uses presenter tracks.</li>
+<li><code>presentation_or_nothing</code>: only uses presentation tracks.</li>
+<li><code>try_presenter_first</code>: look for presenter tracks first, if there are no usable, try to transcribe the other tracks.</li>
+<li><code>try_presentation_first</code>: look for presentation tracks first, falling back to other tracks if none are usable.</li>
+<li><code>everything</code>: just transcribe everything (this is the default).</li>
+</ul>
+<h2 id="operation-examples">Operation Examples</h2>
+<pre><code class="language-yaml">- id: speechtotext
+  description: Generates subtitles for video and audio files
+  configurations:
+    - source-flavor: '*/source'
+    - target-flavor: captions/source
+    - target-tags: engage-download
+    - limit-to-one: true
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../speechtotext-attach-woh/" class="btn btn-xs btn-link">
+        Speech to Text Attach
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../silence-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../silence-woh/" class="btn btn-xs btn-link">
+        Silence
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/speechtotext-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

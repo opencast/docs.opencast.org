@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Assert - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Assert Workflow Operation", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Example", url: "#example" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../snapshot-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../snapshot-woh/" class="btn btn-xs btn-link">
+        Asset Snapshot
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
+        AmberScript Attach Transcription
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="assert-workflow-operation">Assert Workflow Operation</h1>
+<p>ID: <code>assert</code></p>
+<h2 id="description">Description</h2>
+<p>The assert operation evaluates workflow configuration variables based on assertions.</p>
+<p>The operation fails if an assertion does not meet its criteria.</p>
+<h2 id="parameter-table">Parameter Table</h2>
+<table>
+<thead>
+<tr>
+<th>configuration key</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>that-<strong>X</strong></td>
+<td>Assertion to be tested that evaluates to true, same syntax as workflow conditions</td>
+<td>(${presenter_work_resolution_x} &gt; 1600)</td>
+</tr>
+<tr>
+<td>true-<strong>X</strong></td>
+<td>Synonym for <em>that</em> assertion</td>
+<td>(${presenter_work_media})</td>
+</tr>
+<tr>
+<td>false-<strong>X</strong></td>
+<td>Assertion to be tested that evaluates to false, same syntax as workflow conditions</td>
+<td>(${presenter_delivery_media})</td>
+</tr>
+</tbody>
+</table>
+<p>All assertions are sorted as strings and then evaluated in sequence e.g. false-1, that-1, true-1, etc.</p>
+<h2 id="example">Example</h2>
+<p>Fail workflow if conditions are not met:</p>
+<pre><code class="language-yaml">  - id: assert
+    description: &quot;Ensure presenter work media is present and has a matching framerate&quot;
+    configurations:
+      - that-1: &quot;${presenter_source_framerate} == 30&quot;
+      - true-1: &quot;${presenter_source_media}&quot;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../snapshot-woh/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../snapshot-woh/" class="btn btn-xs btn-link">
+        Asset Snapshot
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../amberscript-attach-transcription-woh/" class="btn btn-xs btn-link">
+        AmberScript Attach Transcription
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/assert-woh.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
