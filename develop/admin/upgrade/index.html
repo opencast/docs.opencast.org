@@ -33,9 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 17.x to 18.x", url: "#_top", children: [
+          {title: "Upgrading Opencast from 18.x to 19.x", url: "#_top", children: [
               {title: "Configuration Changes", url: "#configuration-changes" },
-              {title: "Database Migration and Elasticsearch Data Extraction", url: "#database-migration-and-elasticsearch-data-extraction" },
+              {title: "Database Upgrade", url: "#database-upgrade" },
               {title: "Index Rebuild", url: "#index-rebuild" },
           ]},
         ];
@@ -87,8 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="upgrading-opencast-from-17x-to-18x">Upgrading Opencast from 17.x to 18.x</h1>
-<p>This guide describes how to upgrade Opencast 17.x to 18.x.
+    <h1 id="upgrading-opencast-from-18x-to-19x">Upgrading Opencast from 18.x to 19.x</h1>
+<p>This guide describes how to upgrade Opencast 18.x to 19.x.
 In case you need to upgrade older versions of Opencast, please refer to the documentation of
 <a href="https://docs.opencast.org">those versions</a> first.</p>
 <ol>
@@ -96,9 +96,9 @@ In case you need to upgrade older versions of Opencast, please refer to the docu
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
 <li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
-<li><a href="#1-database-migration">Migrate the database and extract Elasticsearch/Opensearch data</a></li>
+<li>Upgrade the database using <a href="#database-upgrade">the upgrade script</a></li>
 <li>Start Opencast</li>
-<li><a href="#index-rebuild">Rebuild the index</a></li>
+<li><a href="#index-rebuild">Rebuild the index (if needed)</a></li>
 </ol>
 <h2 id="configuration-changes">Configuration Changes</h2>
 <p>Check for changes in the configuration and apply those relevant to your setup to your files. You can use the following
@@ -107,94 +107,22 @@ command to list all changes:</p>
 </code></pre>
 <p>The most important changes are:</p>
 <ul>
-<li>Series, Editor and Login-Buttons in the PaellaPlayer are now disabled by default.
-  [<a href="https://github.com/opencast/opencast/pull/6479">#6479</a>] [<a href="https://github.com/opencast/opencast/pull/6480">#6480</a>]
-  [<a href="https://github.com/opencast/opencast/pull/6481">#6481</a>]</li>
-<li>The feature "Episode ID Roles" is now a core feature: enabled by default with no option to disable.
-  If you have not used this feature before, you'll need to perform an index rebuild. See
-  <a href="#index-rebuild">Rebuild the index</a> for details. [<a href="https://github.com/opencast/opencast/pull/6696">#6696</a>]</li>
-<li>The default workflows partial-publish and partial-preview have been modified to enable audio-only processing.
-  If you want to use this feature and use your own workflows, have a look at the required changes in the PR.
-  [<a href="https://github.com/opencast/opencast/pull/5856">#5856</a>]</li>
+<li>Default workflows are now in yaml [<a href="https://github.com/opencast/opencast/pull/6798">#6798</a>]</li>
+<li>The configuration key <code>video-source-flavor</code> for the Subtitle Timeshift Workflow Operation Handler changed to
+  <code>video-source-flavors</code> (plural). [<a href="https://github.com/opencast/opencast/pull/6901">#6901</a>]</li>
+<li>Configuring JWT authentication is now substantially simpler [<a href="https://github.com/opencast/opencast/pull/7189">#7189</a>]</li>
+<li>The editor now displays less metadata by default [<a href="https://github.com/opencast/opencast/pull/7053">#7053</a>]</li>
+<li>The plugin <code>opencast-plugin-legacy-annotation</code> has been removed from <code>org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>.
+  [<a href="https://github.com/opencast/opencast/pull/6902">#6902</a>]</li>
+<li>Target tag handling has changed with [<a href="https://github.com/opencast/opencast/pull/6648">#6648</a>]:</li>
 </ul>
-<h2 id="database-migration-and-elasticsearch-data-extraction">Database Migration and Elasticsearch Data Extraction</h2>
-<h3 id="1-database-migration">1. Database Migration</h3>
-<p>Before running the data extraction script, you <strong>must</strong> apply the database migration <code>mariadb.sql</code> or <code>postgres.sql</code>.
-This step ensures that the necessary schema changes are applied before updating the records. You will find database
-upgrade scripts in <code>docs/upgrade/17_to_18/</code>. <strong>Make sure to backup your database before migrating, to be able to easily
-revert changes, if necessary.</strong></p>
-<h3 id="2-elasticsearch-data-extraction-and-sql-update-script-generation">2. Elasticsearch Data Extraction and SQL Update Script Generation</h3>
-<p>After completing the database migration, run the provided Bash script <code>extract_es_data.sh</code> to extract data from
-Elasticsearch and generate an SQL update script.</p>
-<h4 id="steps-to-execute-the-script">Steps to Execute the Script:</h4>
-<ol>
-<li><strong>Install Required Dependencies</strong><ul>
-<li>Ensure that <code>jq</code> is installed, as it is required to parse Elasticsearch responses.</li>
-<li>You can install <code>jq</code> using the following command:</li>
-</ul>
-</li>
-</ol>
-<pre><code class="language-sh">      # Debian/Ubuntu
-      sudo apt-get install jq
-
-      # macOS (using Homebrew)
-      brew install jq
-
-      # Red Hat/Fedora
-      sudo dnf install jq
-</code></pre>
-<ol>
-<li>
-<p><strong>Configure the Shell Script</strong>
-   Update the following parameters in the script to match your environment:</p>
-<ul>
-<li><code>ES_HOST</code> (Elasticsearch host)</li>
-<li><code>ES_USER</code> (Elasticsearch username)</li>
-<li><code>ES_PASS</code> (Elasticsearch password)</li>
-</ul>
-</li>
-<li>
-<p><strong>Run the Script</strong>
-   Execute the script using the following command:</p>
-</li>
-</ol>
-<pre><code class="language-sh">   ./extract_es_data.sh
-</code></pre>
-<p>This script:
-- Fetches records from Elasticsearch (<code>opencast_series</code> index)
-- Generates an SQL update script (<code>update_statements.sql</code>)</p>
-<ol>
-<li><strong>Apply the SQL Update Statements</strong>
-   After running the script, apply the generated SQL statements to the database:</li>
-</ol>
-<pre><code class="language-sh">   # PostgreSQL
-   psql -U &lt;db_user&gt; -d &lt;db_name&gt; -f update_statements.sql
-
-   # MariaDB
-   mysql -u &lt;db_user&gt; -p &lt;db_name&gt; &lt; update_statements.sql
-</code></pre>
-<p>Replace <code>&lt;db_user&gt;</code> and <code>&lt;db_name&gt;</code> with your actual database credentials.</p>
-<h3 id="3-error-handling">3. Error Handling</h3>
-<ul>
-<li>Any errors encountered while generating the SQL script will be logged in <code>error_log.txt</code>.</li>
-<li>Review this file for potential issues before applying the SQL updates.</li>
-</ul>
-<h3 id="important-notes">Important Notes</h3>
-<ul>
-<li>The shell script processes Elasticsearch records in batches of <strong>1000</strong>.</li>
-<li>If the database migration script is not executed first, applying the SQL update script may fail due to missing schema
-  changes.</li>
-</ul>
+<h2 id="database-upgrade">Database Upgrade</h2>
+<p>This script will drop a table which is no longer used in Opencast 19. You will find database
+upgrade scripts in <code>docs/upgrade/19_to_20/</code>. <strong>Make
+sure to backup your database before migrating, to be able to easily revert changes, if necessary.</strong></p>
 <h2 id="index-rebuild">Index Rebuild</h2>
-<p>[<a href="https://github.com/opencast/opencast/pull/6498">#6498</a>] requires an update of the index settings, mappings and text
-fields, for which there is a migration script <code>optimize_search.sh</code>  in <code>docs/upgrade/17_to_18/</code>. The script makes use of
-the present files <code>event_mapping.json</code>, <code>series_mapping.json</code>, <code>theme_mapping.json</code>, <code>search_mapping.json</code> and
-<code>indexSettings.json</code>, so make sure to put these in the same folder as the script when executing.</p>
-<p>[<a href="https://github.com/opencast/opencast/pull/6696">#6696</a>] only requires an update to the indexed Elasticsearch/Opensearch
-ACLs if you haven't used this feature before. <strong>If this feature was already enabled, no further actions are required.</strong>
-If it was not enabled before upgrading, you can start the rebuild by calling the <code>/index/rebuild/AssetManager/ACL</code> and
-<code>/index/rebuild/Search</code> endpoints. These endpoints will reindex the event ACLs in both the AssetManager index and the
-Search index. For more information, see <a href="../configuration/episode-id-roles/">here</a>.</p>
+<p>An index rebuild for for 19.x should not be required if upgrading from an 18.x system.  Upgrading from a version prior
+to 18.x requires an index rebuild, follow the 18.x upgrade guide for details.</p>
 
   <br>
     
