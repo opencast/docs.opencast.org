@@ -94,6 +94,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#contributing-code">Contributing Code</a><ul>
 <li><a href="#github">GitHub</a></li>
 <li><a href="#acceptance-criteria-for-patches-in-different-versions">Acceptance Criteria for Patches in Different Versions</a></li>
+<li><a href="#release-notes">Release Notes</a></li>
 <li><a href="#reviews">Reviews</a><ul>
 <li><a href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li><a href="#merging-pull-requests">Merging Pull Requests</a></li>
@@ -183,9 +184,17 @@ That is why patches may only be accepted into releases branches (<code>r/?.x</co
 <li>Patches must work with the same configuration within a major version</li>
 </ul>
 <p>Patches which do not meet these criteria should target the branch <code>develop</code> to become part of the next major version.</p>
-<p>Note: Patches adding features should target the current stable release (<code>r/&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f110f49fba0&gt;.x</code>), or
+<h3 id="release-notes">Release Notes</h3>
+<p>Patches adding features should target the current stable release (<code>r/20.x</code>), or
 <code>develop</code>, and are strongly discouraged from targetting the legacy release.  Features going into the legacy release
-will need a good reason, and must be highly self contained.</p>
+will need a good reason, and must be highly self contained.  Regardless of branch target, features must include a
+note in the <a href="https://github.com/opencast/opencast/tree/develop/docs/guides/admin/docs/releasenotes">release notes directory</a>
+which contains:</p>
+<ul>
+<li>A brief description of the feature, as well as a link to the relevant PR(s) and or issue(s).</li>
+<li>Whether the feature requires a database schema change.</li>
+<li>Whether the feature requires an index rebuild</li>
+</ul>
 <p>To determine the acceptance of patches, all pull requests will be discussed in the technical meeting.
 This protects against inclusion of controversial changes with no broader consent among committers.</p>
 <h3 id="reviews">Reviews</h3>
