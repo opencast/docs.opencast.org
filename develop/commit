@@ -1,5 +1,14 @@
-commit c8bc4cbcfa714b02b715ce57674602bcf901ae9b
-Author: Crowdin Bot <crowdin-bot@opencast.org>
-Date:   Mon Jan 19 05:29:34 2026 +0000
+commit 8d71ee3661e996cf008964c158e29344316ca632
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Tue Jan 27 16:59:39 2026 +0100
 
-    Automatically update translation keys (develop)
+    Refactor docker compose service configuration (#7334)
+    
+    - Renamed elasticsearch service to opensearch in all docker compose
+    files
+    - Removed container_name from all services
+    
+    This allows container and volume names to be overridden using the -p
+    option of docker compose for better flexibility. For example, this
+    enables running multiple instances of the same services simultaneously
+    for different projects or testing scenarios.
