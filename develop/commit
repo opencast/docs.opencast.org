@@ -1,121 +1,268 @@
-commit 65ca96fcc9251004fac837df87dd1c29bb8948f9
+commit c6e2f4a72f6a243714648bd6b938e74912584cc4
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Feb 6 12:53:59 2026 +0100
+Date:   Fri Feb 6 12:55:12 2026 +0100
 
-    Build(deps): bump org.owasp.esapi:esapi from 2.6.0.0 to 2.7.0.0 in /modules/metrics-exporter (#7233)
+    Build(deps): bump axios from 1.11.0 to 1.12.2 in /modules/lti (#7079)
     
-    Bumps
-    [org.owasp.esapi:esapi](https://github.com/ESAPI/esapi-java-legacy) from
-    2.6.0.0 to 2.7.0.0.
+    Bumps [axios](https://github.com/axios/axios) from 1.11.0 to 1.12.2.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/ESAPI/esapi-java-legacy/releases">org.owasp.esapi:esapi's
+    href="https://github.com/axios/axios/releases">axios's
     releases</a>.</em></p>
     <blockquote>
-    <h2>esapi-2.7.0.0</h2>
-    <h2>Full Release Notes</h2>
-    <p>Release notes for ESAPI release 2.7.00 are located at:</p>
+    <h2>Release v1.12.2</h2>
+    <h2>Release notes:</h2>
+    <h3>Bug Fixes</h3>
     <ul>
-    <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.7.0.0-release-notes.txt">https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.7.0.0-release-notes.txt</a></li>
+    <li><strong>fetch:</strong> use current global fetch instead of cached
+    one when env fetch is not specified to keep MSW support; (<a
+    href="https://redirect.github.com/axios/axios/issues/7030">#7030</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53">cf78825</a>)</li>
     </ul>
-    <h2>What's Changed</h2>
+    <h3>Contributors to this release</h3>
     <ul>
-    <li>This is a <strong><em>major</em></strong> patch release with the
-    primary intent of addressing <strong><a
-    href="https://nvd.nist.gov/vuln/detail/CVE-2025-5878">CVE-2025-5878</a></strong>,
-    the details of which are spelled out in [Security Bulletin <a
-    href="https://redirect.github.com/ESAPI/esapi-java-legacy/issues/13">#13</a>](<a
-    href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/ESAPI-security-bulletin13.pdf">https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/ESAPI-security-bulletin13.pdf</a>).
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+247/-16
+    ([#7030](https://github.com/axios/axios/issues/7030)
+    [#7022](https://github.com/axios/axios/issues/7022)
+    [#7024](https://github.com/axios/axios/issues/7024) )">Dmitriy
+    Mozgovoy</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/noritaka1166"
+    title="+2/-6 ([#7028](https://github.com/axios/axios/issues/7028)
+    [#7029](https://github.com/axios/axios/issues/7029) )">Noritaka
+    Kobayashi</a></li>
+    </ul>
+    <h2>Release v1.12.1</h2>
+    <h2>Release notes:</h2>
+    <h3>Bug Fixes</h3>
     <ul>
-    <li>Major Javadoc enhancements, corrections, and clarifications.</li>
-    <li>Deprecated methods, interfaces, and classes.</li>
-    <li>The reference implementation for the
-    <code>Encoder.encodeForSQL</code> interface is now disabled by default
-    and must be explicitly enabled if you absolutely much use it.
-    (<strong>WARNING</strong>: You shouldn't!) Instructions on how to enable
-    it are provided in Appendix B of [Security Bulletin <a
-    href="https://redirect.github.com/ESAPI/esapi-java-legacy/issues/13">#13</a>](<a
-    href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/ESAPI-security-bulletin13.pdf">https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/ESAPI-security-bulletin13.pdf</a>).
-    You will find the updated <strong>ESAPI.properties</strong> file in the
-    configuration jar helpful.</li>
+    <li><strong>types:</strong> fixed env config types; (<a
+    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05">b5f26b7</a>)</li>
     </ul>
-    </li>
-    </ul>
+    <h3>Contributors to this release</h3>
     <ul>
-    <li>This release also updates Apache Commons FileUploads to 1.6.0 to
-    address CVE-2025-48976. That CVE likely does not affect the
-    <code>HTTP.getFileUloads</code> interfaces (which is the only methods
-    that use that library), but we have not had time to analyze it fully
-    given the CVE cited against ESAPI.</li>
-    <li>Apache Commons BeanUtils was also updated to 1.11.0 to address
-    CVE-2025-48734 which potentially could anyone using ESAPI's
-    AccessController and has placed their access control policy in a place
-    where an attacker may be overwrite it. That is highly unlikely, but
-    better safe than sorry.</li>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+10/-4
+    ([#7020](https://github.com/axios/axios/issues/7020) )">Dmitriy
+    Mozgovoy</a></li>
     </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.2.0...esapi-2.7.0.0">https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.2.0...esapi-2.7.0.0</a></p>
-    <h2>Configuration Jar</h2>
-    <p>Note the associated file
-    &quot;<strong>esapi-2.7.0.0-configuration.jar</strong>&quot; contains
-    the default ESAPI configuration files under 'configuration/'
-    (ESAPI.properties, validation.properties, etc.) and the file
-    &quot;<strong>esapi-2.7.0.0-configuration.jar.asc&quot;</strong> is a
-    GPG signature of that jar file made by Kevin W. Wall. If you were using
-    ESAPI's <code>Encoder.encodeForSQL</code> interface, you will want to
-    use its updated <strong>ESAPI.properties</strong> file.</p>
-    <h2>esapi-2.6.2.0</h2>
-    <h2>Full Release Notes</h2>
-    <p>Release notes for ESAPI release 2.6.2.0 are located at:</p>
+    <h2>Release v1.12.0</h2>
+    <h2>Release notes:</h2>
+    <h3>Bug Fixes</h3>
     <ul>
-    <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.6.2.0-release-notes.txt">https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.6.2.0-release-notes.txt</a></li>
+    <li>adding build artifacts (<a
+    href="https://github.com/axios/axios/commit/9ec86de257bfa33856571036279169f385ed92bd">9ec86de</a>)</li>
+    <li>dont add dist on release (<a
+    href="https://github.com/axios/axios/commit/a2edc3606a4f775d868a67bb3461ff18ce7ecd11">a2edc36</a>)</li>
+    <li><strong>fetch-adapter:</strong> set correct Content-Type for Node
+    FormData (<a
+    href="https://redirect.github.com/axios/axios/issues/6998">#6998</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/a9f47afbf3224d2ca987dbd8188789c7ea853c5d">a9f47af</a>)</li>
+    <li><strong>node:</strong> enforce maxContentLength for data: URLs (<a
+    href="https://redirect.github.com/axios/axios/issues/7011">#7011</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/945435fc51467303768202250debb8d4ae892593">945435f</a>)</li>
+    <li>package exports (<a
+    href="https://redirect.github.com/axios/axios/issues/5627">#5627</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/aa78ac23fc9036163308c0f6bd2bb885e7af3f36">aa78ac2</a>)</li>
+    <li><strong>params:</strong> removing '[' and ']' from URL encode
+    exclude characters (<a
+    href="https://redirect.github.com/axios/axios/issues/3316">#3316</a>)
+    (<a
+    href="https://redirect.github.com/axios/axios/issues/5715">#5715</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/6d84189349c43b1dcdd977b522610660cc4c7042">6d84189</a>)</li>
+    <li>release pr run (<a
+    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2">fd7f404</a>)</li>
+    <li><strong>types:</strong> change the type guard on isCancel (<a
+    href="https://redirect.github.com/axios/axios/issues/5595">#5595</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/0dbb7fd4f61dc568498cd13a681fa7f907d6ec7e">0dbb7fd</a>)</li>
     </ul>
-    <h2>What's Changed</h2>
+    <h3>Features</h3>
     <ul>
-    <li>This is a minor patch release with the intent of updating the Apache
-    Commons BeanUtils dependency from v1.9.4 to v1.11.0 to
-    CVE-2025-48734.</li>
+    <li><strong>adapter:</strong> surface low‑level network error details;
+    attach original error via cause (<a
+    href="https://redirect.github.com/axios/axios/issues/6982">#6982</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/78b290c57c978ed2ab420b90d97350231c9e5d74">78b290c</a>)</li>
+    <li><strong>fetch:</strong> add fetch, Request, Response env config
+    variables for the adapter; (<a
+    href="https://redirect.github.com/axios/axios/issues/7003">#7003</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/c959ff29013a3bc90cde3ac7ea2d9a3f9c08974b">c959ff2</a>)</li>
+    <li>support reviver on JSON.parse (<a
+    href="https://redirect.github.com/axios/axios/issues/5926">#5926</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/2a9763426e43d996fd60d01afe63fa6e1f5b4fca">2a97634</a>),
+    closes <a
+    href="https://redirect.github.com/axios/axios/issues/5924">#5924</a></li>
+    <li><strong>types:</strong> extend AxiosResponse interface to include
+    custom headers type (<a
+    href="https://redirect.github.com/axios/axios/issues/6782">#6782</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/7960d34eded2de66ffd30b4687f8da0e46c4903e">7960d34</a>)</li>
     </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.1.0...esapi-2.6.2.0">https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.1.0...esapi-2.6.2.0</a></p>
-    <h2>Other Notes</h2>
-    <p>You may see GHAS Dependabot references to <a
-    href="https://github.com/ESAPI/esapi-java-legacy/security/dependabot/17">https://github.com/ESAPI/esapi-java-legacy/security/dependabot/17</a>
-    for this (and previous releases). For a more thorough discussion of
-    this, please see Discussion <a
-    href="https://redirect.github.com/ESAPI/esapi-java-legacy/issues/877">#877</a>.</p>
-    <h2>Configuration Jar</h2>
-    <p>Note the associated file
-    &quot;<strong>esapi-2.6.2.0-configuration.jar</strong>&quot; contains
-    the default ESAPI configuration
-    files under 'configuration/' (ESAPI.properties, validation.properties,
-    etc.) and the file
-    &quot;<strong>esapi-2.6.2.0-configuration.jar.asc&quot;</strong> is a
-    GPG signature of that jar file made by Kevin W. Wall.</p>
-    <h2>2.6.1.0</h2>
-    <h2>Full Release Notes</h2>
-    <p>Release notes for ESAPI release 2.6.1.0 are located at:</p>
+    <h3>Contributors to this release</h3>
     <ul>
-    <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.6.1.0-release-notes.txt">https://github.com/ESAPI/esapi-java-legacy/blob/develop/documentation/esapi4java-core-2.6.1.0-release-notes.txt</a></li>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/WillianAgostini" title="+132/-16760
+    ([#7002](https://github.com/axios/axios/issues/7002)
+    [#5926](https://github.com/axios/axios/issues/5926)
+    [#6782](https://github.com/axios/axios/issues/6782) )">Willian
+    Agostini</a></li>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+4263/-293
+    ([#7006](https://github.com/axios/axios/issues/7006)
+    [#7003](https://github.com/axios/axios/issues/7003) )">Dmitriy
+    Mozgovoy</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/mkhani01"
+    title="+111/-15 ([#6982](https://github.com/axios/axios/issues/6982)
+    )">khani</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/AmeerAssadi"
+    title="+123/-0 ([#7011](https://github.com/axios/axios/issues/7011)
+    )">Ameer Assadi</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/emiedonmokumo"
+    title="+55/-35 ([#6998](https://github.com/axios/axios/issues/6998)
+    )">Emiedonmokumo Dick-Boro</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/opsysdebug"
+    title="+8/-8 ([#6980](https://github.com/axios/axios/issues/6980)
+    )">Zeroday BYTE</a></li>
     </ul>
-    <h2>What's Changed</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/axios/axios/blob/v1.x/CHANGELOG.md">axios's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2><a
+    href="https://github.com/axios/axios/compare/v1.12.1...v1.12.2">1.12.2</a>
+    (2025-09-14)</h2>
+    <h3>Bug Fixes</h3>
     <ul>
-    <li>Updated AntiSamy from release 1.7.7 to 1.7.8 which addresses the
-    potentially exploitable vulnerability <a
-    href="https://github.com/advisories/GHSA-73m2-qfq3-56cx">https://github.com/advisories/GHSA-73m2-qfq3-56cx</a>.
-    There is slim possibility that this could affect ESAPI users who have
-    allowed certain CSS mark-up constructs to the AntiSamy policy file that
-    they are using. However the default ESAPI AntiSamy policy file
-    (antisamy-esapi.xml) does not permit CSS mark-up of any sort out unless
-    it has been modified by the ESAPI client.</li>
-    <li>Other minor updates to pom.xml</li>
+    <li><strong>fetch:</strong> use current global fetch instead of cached
+    one when env fetch is not specified to keep MSW support; (<a
+    href="https://redirect.github.com/axios/axios/issues/7030">#7030</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53">cf78825</a>)</li>
     </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.0.0...esapi-2.6.1.0">https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.0.0...esapi-2.6.1.0</a></p>
+    <h3>Contributors to this release</h3>
+    <ul>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+247/-16
+    ([#7030](https://github.com/axios/axios/issues/7030)
+    [#7022](https://github.com/axios/axios/issues/7022)
+    [#7024](https://github.com/axios/axios/issues/7024) )">Dmitriy
+    Mozgovoy</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/noritaka1166"
+    title="+2/-6 ([#7028](https://github.com/axios/axios/issues/7028)
+    [#7029](https://github.com/axios/axios/issues/7029) )">Noritaka
+    Kobayashi</a></li>
+    </ul>
+    <h2><a
+    href="https://github.com/axios/axios/compare/v1.12.0...v1.12.1">1.12.1</a>
+    (2025-09-12)</h2>
+    <h3>Bug Fixes</h3>
+    <ul>
+    <li><strong>types:</strong> fixed env config types; (<a
+    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05">b5f26b7</a>)</li>
+    </ul>
+    <h3>Contributors to this release</h3>
+    <ul>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+10/-4
+    ([#7020](https://github.com/axios/axios/issues/7020) )">Dmitriy
+    Mozgovoy</a></li>
+    </ul>
+    <h1><a
+    href="https://github.com/axios/axios/compare/v1.11.0...v1.12.0">1.12.0</a>
+    (2025-09-11)</h1>
+    <h3>Bug Fixes</h3>
+    <ul>
+    <li>adding build artifacts (<a
+    href="https://github.com/axios/axios/commit/9ec86de257bfa33856571036279169f385ed92bd">9ec86de</a>)</li>
+    <li>dont add dist on release (<a
+    href="https://github.com/axios/axios/commit/a2edc3606a4f775d868a67bb3461ff18ce7ecd11">a2edc36</a>)</li>
+    <li><strong>fetch-adapter:</strong> set correct Content-Type for Node
+    FormData (<a
+    href="https://redirect.github.com/axios/axios/issues/6998">#6998</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/a9f47afbf3224d2ca987dbd8188789c7ea853c5d">a9f47af</a>)</li>
+    <li><strong>node:</strong> enforce maxContentLength for data: URLs (<a
+    href="https://redirect.github.com/axios/axios/issues/7011">#7011</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/945435fc51467303768202250debb8d4ae892593">945435f</a>)</li>
+    <li>package exports (<a
+    href="https://redirect.github.com/axios/axios/issues/5627">#5627</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/aa78ac23fc9036163308c0f6bd2bb885e7af3f36">aa78ac2</a>)</li>
+    <li><strong>params:</strong> removing '[' and ']' from URL encode
+    exclude characters (<a
+    href="https://redirect.github.com/axios/axios/issues/3316">#3316</a>)
+    (<a
+    href="https://redirect.github.com/axios/axios/issues/5715">#5715</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/6d84189349c43b1dcdd977b522610660cc4c7042">6d84189</a>)</li>
+    <li>release pr run (<a
+    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2">fd7f404</a>)</li>
+    <li><strong>types:</strong> change the type guard on isCancel (<a
+    href="https://redirect.github.com/axios/axios/issues/5595">#5595</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/0dbb7fd4f61dc568498cd13a681fa7f907d6ec7e">0dbb7fd</a>)</li>
+    </ul>
+    <h3>Features</h3>
+    <ul>
+    <li><strong>adapter:</strong> surface low‑level network error details;
+    attach original error via cause (<a
+    href="https://redirect.github.com/axios/axios/issues/6982">#6982</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/78b290c57c978ed2ab420b90d97350231c9e5d74">78b290c</a>)</li>
+    <li><strong>fetch:</strong> add fetch, Request, Response env config
+    variables for the adapter; (<a
+    href="https://redirect.github.com/axios/axios/issues/7003">#7003</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/c959ff29013a3bc90cde3ac7ea2d9a3f9c08974b">c959ff2</a>)</li>
+    <li>support reviver on JSON.parse (<a
+    href="https://redirect.github.com/axios/axios/issues/5926">#5926</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/2a9763426e43d996fd60d01afe63fa6e1f5b4fca">2a97634</a>),
+    closes <a
+    href="https://redirect.github.com/axios/axios/issues/5924">#5924</a></li>
+    <li><strong>types:</strong> extend AxiosResponse interface to include
+    custom headers type (<a
+    href="https://redirect.github.com/axios/axios/issues/6782">#6782</a>)
+    (<a
+    href="https://github.com/axios/axios/commit/7960d34eded2de66ffd30b4687f8da0e46c4903e">7960d34</a>)</li>
+    </ul>
+    <h3>Contributors to this release</h3>
+    <ul>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/WillianAgostini" title="+132/-16760
+    ([#7002](https://github.com/axios/axios/issues/7002)
+    [#5926](https://github.com/axios/axios/issues/5926)
+    [#6782](https://github.com/axios/axios/issues/6782) )">Willian
+    Agostini</a></li>
+    <li><!-- raw HTML omitted --> <a
+    href="https://github.com/DigitalBrainJS" title="+4263/-293
+    ([#7006](https://github.com/axios/axios/issues/7006)
+    [#7003](https://github.com/axios/axios/issues/7003) )">Dmitriy
+    Mozgovoy</a></li>
+    <li><!-- raw HTML omitted --> <a href="https://github.com/mkhani01"
+    title="+111/-15 ([#6982](https://github.com/axios/axios/issues/6982)
+    )">khani</a></li>
+    </ul>
     <!-- raw HTML omitted -->
     </blockquote>
     <p>... (truncated)</p>
@@ -124,43 +271,46 @@ Date:   Fri Feb 6 12:53:59 2026 +0100
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/0fa4c0f1311aa525b1a776f0a789fb1dc8a04b41"><code>0fa4c0f</code></a>
-    Remove '-SNAPSHOT' from release # to prep official release.</li>
+    href="https://github.com/axios/axios/commit/e5a33366d75b65f88052b230b103731eb7dcb793"><code>e5a3336</code></a>
+    chore(release): v1.12.2 (<a
+    href="https://redirect.github.com/axios/axios/issues/7031">#7031</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/f75ac2c2647a81d2cfbdc9c899f8719c240ed512"><code>f75ac2c</code></a>
-    Merging Private Branch contents from Kevin's Repo. (<a
-    href="https://redirect.github.com/ESAPI/esapi-java-legacy/issues/888">#888</a>)</li>
+    href="https://github.com/axios/axios/commit/38726c7586c6a2583b7e7dcdce0c4fedd013055d"><code>38726c7</code></a>
+    refactor: change if in else to else if (<a
+    href="https://redirect.github.com/axios/axios/issues/7028">#7028</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/e2322914304d9b1c52523ff24be495b7832f6a56"><code>e232291</code></a>
-    Merge pull request <a
-    href="https://redirect.github.com/ESAPI/esapi-java-legacy/issues/886">#886</a>
-    from kwwall/develop</li>
+    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53"><code>cf78825</code></a>
+    fix(fetch): use current global fetch instead of cached one when env
+    fetch is ...</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/23a2b7666186afdc004a9e01eec5da593e85d172"><code>23a2b76</code></a>
-    Added Javadoc to encodeForSQL method regarding how to enabled it.</li>
+    href="https://github.com/axios/axios/commit/c26d00f451949306f708aa78d1e9f12b9eb6ff4b"><code>c26d00f</code></a>
+    refactor: remove redundant assignment (<a
+    href="https://redirect.github.com/axios/axios/issues/7029">#7029</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/01297409b786075686c6738fdf0355edad427a6c"><code>0129740</code></a>
-    Added 2 new field names whose values are the 2 new property names.</li>
+    href="https://github.com/axios/axios/commit/9fb41a8fcd6f698ee82175c0d9e654b4b0a7081c"><code>9fb41a8</code></a>
+    chore(ci): add local HTTP server for Karma tests; (<a
+    href="https://redirect.github.com/axios/axios/issues/7022">#7022</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/eb425bbb831c68321d169d3ac5f84ddf9dfc189d"><code>eb425bb</code></a>
-    New property file for testing DefaultEncoder.encodeForSQL when it's</li>
+    href="https://github.com/axios/axios/commit/19f9f36850210511445c67c865466156d6d1dee2"><code>19f9f36</code></a>
+    docs(readme): add custom fetch section; (<a
+    href="https://redirect.github.com/axios/axios/issues/7024">#7024</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/844eb0c6fd077b6299604838bfc67fd6c658e6eb"><code>844eb0c</code></a>
-    Add missing newline.</li>
+    href="https://github.com/axios/axios/commit/3cac78c2de2d1d1af0c1b4753feff16c075f01d1"><code>3cac78c</code></a>
+    chore(release): v1.12.1 (<a
+    href="https://redirect.github.com/axios/axios/issues/7021">#7021</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/a10e323dcde635f40d15c875253084a7669175e8"><code>a10e323</code></a>
-    hanged the tongue-in-cheek property names to the actual ones we are
-    using.</li>
+    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05"><code>b5f26b7</code></a>
+    fix(types): fixed env config types; (<a
+    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/06d0ff2e540ef37077822273e1957b50beaa8ff7"><code>06d0ff2</code></a>
-    Changed the tongue-in-cheek property names to the actual ones we are
-    using.</li>
+    href="https://github.com/axios/axios/commit/0d8ad6e1de0f5339e02bc262d6f0df4936974120"><code>0d8ad6e</code></a>
+    chore(release): v1.12.0 (<a
+    href="https://redirect.github.com/axios/axios/issues/7013">#7013</a>)</li>
     <li><a
-    href="https://github.com/ESAPI/esapi-java-legacy/commit/61de71f70081f204b915e95d186c702509cbf857"><code>61de71f</code></a>
-    Changed the tongue-in-cheek propert names to the actual ones we are
-    using.</li>
+    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2"><code>fd7f404</code></a>
+    fix: release pr run</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/ESAPI/esapi-java-legacy/compare/esapi-2.6.0.0...esapi-2.7.0.0">compare
+    href="https://github.com/axios/axios/compare/v1.11.0...v1.12.2">compare
     view</a></li>
     </ul>
     </details>
@@ -168,7 +318,7 @@ Date:   Fri Feb 6 12:53:59 2026 +0100
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.owasp.esapi:esapi&package-manager=maven&previous-version=2.6.0.0&new-version=2.7.0.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=axios&package-manager=npm_and_yarn&previous-version=1.11.0&new-version=1.12.2)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     You can trigger a rebase of this PR by commenting `@dependabot rebase`.
     
