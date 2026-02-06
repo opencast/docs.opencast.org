@@ -1,139 +1,174 @@
-commit c6e2f4a72f6a243714648bd6b938e74912584cc4
+commit ce822214b826f99d2897e4aff3b680bc68e7bd68
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Feb 6 12:55:12 2026 +0100
+Date:   Fri Feb 6 13:29:41 2026 +0100
 
-    Build(deps): bump axios from 1.11.0 to 1.12.2 in /modules/lti (#7079)
+    Bump webpack from 5.94.0 to 5.105.0 in /modules/lti (#7362)
     
-    Bumps [axios](https://github.com/axios/axios) from 1.11.0 to 1.12.2.
+    Bumps [webpack](https://github.com/webpack/webpack) from 5.94.0 to
+    5.105.0.
     <details>
     <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/axios/axios/releases">axios's
+    href="https://github.com/webpack/webpack/releases">webpack's
     releases</a>.</em></p>
     <blockquote>
-    <h2>Release v1.12.2</h2>
-    <h2>Release notes:</h2>
-    <h3>Bug Fixes</h3>
+    <h2>v5.105.0</h2>
+    <h3>Minor Changes</h3>
     <ul>
-    <li><strong>fetch:</strong> use current global fetch instead of cached
-    one when env fetch is not specified to keep MSW support; (<a
-    href="https://redirect.github.com/axios/axios/issues/7030">#7030</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53">cf78825</a>)</li>
+    <li>
+    <p>Allow resolving worker module by export condition name when using
+    <code>new Worker()</code> (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20353">#20353</a>)</p>
+    </li>
+    <li>
+    <p>Detect conditional imports to avoid compile-time linking errors for
+    non-existent exports. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20320">#20320</a>)</p>
+    </li>
+    <li>
+    <p>Added the <code>tsconfig</code> option for the <code>resolver</code>
+    options (replacement for <code>tsconfig-paths-webpack-plugin</code>).
+    Can be <code>false</code> (disabled), <code>true</code> (use the default
+    <code>tsconfig.json</code> file to search for it), a string path to
+    <code>tsconfig.json</code>, or an object with <code>configFile</code>
+    and <code>references</code> options. (by <a
+    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20400">#20400</a>)</p>
+    </li>
+    <li>
+    <p>Support <code>import.defer()</code> for context modules. (by <a
+    href="https://github.com/ahabhgk"><code>@​ahabhgk</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20399">#20399</a>)</p>
+    </li>
+    <li>
+    <p>Added support for array values ​​to the <code>devtool</code> option.
+    (by <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20191">#20191</a>)</p>
+    </li>
+    <li>
+    <p>Improve rendering node built-in modules for ECMA module output. (by
+    <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20255">#20255</a>)</p>
+    </li>
+    <li>
+    <p>Unknown import.meta properties are now determined at runtime instead
+    of being statically analyzed at compile time. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20312">#20312</a>)</p>
+    </li>
     </ul>
-    <h3>Contributors to this release</h3>
+    <h3>Patch Changes</h3>
     <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+247/-16
-    ([#7030](https://github.com/axios/axios/issues/7030)
-    [#7022](https://github.com/axios/axios/issues/7022)
-    [#7024](https://github.com/axios/axios/issues/7024) )">Dmitriy
-    Mozgovoy</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/noritaka1166"
-    title="+2/-6 ([#7028](https://github.com/axios/axios/issues/7028)
-    [#7029](https://github.com/axios/axios/issues/7029) )">Noritaka
-    Kobayashi</a></li>
-    </ul>
-    <h2>Release v1.12.1</h2>
-    <h2>Release notes:</h2>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li><strong>types:</strong> fixed env config types; (<a
-    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05">b5f26b7</a>)</li>
-    </ul>
-    <h3>Contributors to this release</h3>
-    <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+10/-4
-    ([#7020](https://github.com/axios/axios/issues/7020) )">Dmitriy
-    Mozgovoy</a></li>
-    </ul>
-    <h2>Release v1.12.0</h2>
-    <h2>Release notes:</h2>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li>adding build artifacts (<a
-    href="https://github.com/axios/axios/commit/9ec86de257bfa33856571036279169f385ed92bd">9ec86de</a>)</li>
-    <li>dont add dist on release (<a
-    href="https://github.com/axios/axios/commit/a2edc3606a4f775d868a67bb3461ff18ce7ecd11">a2edc36</a>)</li>
-    <li><strong>fetch-adapter:</strong> set correct Content-Type for Node
-    FormData (<a
-    href="https://redirect.github.com/axios/axios/issues/6998">#6998</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/a9f47afbf3224d2ca987dbd8188789c7ea853c5d">a9f47af</a>)</li>
-    <li><strong>node:</strong> enforce maxContentLength for data: URLs (<a
-    href="https://redirect.github.com/axios/axios/issues/7011">#7011</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/945435fc51467303768202250debb8d4ae892593">945435f</a>)</li>
-    <li>package exports (<a
-    href="https://redirect.github.com/axios/axios/issues/5627">#5627</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/aa78ac23fc9036163308c0f6bd2bb885e7af3f36">aa78ac2</a>)</li>
-    <li><strong>params:</strong> removing '[' and ']' from URL encode
-    exclude characters (<a
-    href="https://redirect.github.com/axios/axios/issues/3316">#3316</a>)
-    (<a
-    href="https://redirect.github.com/axios/axios/issues/5715">#5715</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/6d84189349c43b1dcdd977b522610660cc4c7042">6d84189</a>)</li>
-    <li>release pr run (<a
-    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2">fd7f404</a>)</li>
-    <li><strong>types:</strong> change the type guard on isCancel (<a
-    href="https://redirect.github.com/axios/axios/issues/5595">#5595</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/0dbb7fd4f61dc568498cd13a681fa7f907d6ec7e">0dbb7fd</a>)</li>
-    </ul>
-    <h3>Features</h3>
-    <ul>
-    <li><strong>adapter:</strong> surface low‑level network error details;
-    attach original error via cause (<a
-    href="https://redirect.github.com/axios/axios/issues/6982">#6982</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/78b290c57c978ed2ab420b90d97350231c9e5d74">78b290c</a>)</li>
-    <li><strong>fetch:</strong> add fetch, Request, Response env config
-    variables for the adapter; (<a
-    href="https://redirect.github.com/axios/axios/issues/7003">#7003</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/c959ff29013a3bc90cde3ac7ea2d9a3f9c08974b">c959ff2</a>)</li>
-    <li>support reviver on JSON.parse (<a
-    href="https://redirect.github.com/axios/axios/issues/5926">#5926</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/2a9763426e43d996fd60d01afe63fa6e1f5b4fca">2a97634</a>),
-    closes <a
-    href="https://redirect.github.com/axios/axios/issues/5924">#5924</a></li>
-    <li><strong>types:</strong> extend AxiosResponse interface to include
-    custom headers type (<a
-    href="https://redirect.github.com/axios/axios/issues/6782">#6782</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/7960d34eded2de66ffd30b4687f8da0e46c4903e">7960d34</a>)</li>
-    </ul>
-    <h3>Contributors to this release</h3>
-    <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/WillianAgostini" title="+132/-16760
-    ([#7002](https://github.com/axios/axios/issues/7002)
-    [#5926](https://github.com/axios/axios/issues/5926)
-    [#6782](https://github.com/axios/axios/issues/6782) )">Willian
-    Agostini</a></li>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+4263/-293
-    ([#7006](https://github.com/axios/axios/issues/7006)
-    [#7003](https://github.com/axios/axios/issues/7003) )">Dmitriy
-    Mozgovoy</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/mkhani01"
-    title="+111/-15 ([#6982](https://github.com/axios/axios/issues/6982)
-    )">khani</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/AmeerAssadi"
-    title="+123/-0 ([#7011](https://github.com/axios/axios/issues/7011)
-    )">Ameer Assadi</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/emiedonmokumo"
-    title="+55/-35 ([#6998](https://github.com/axios/axios/issues/6998)
-    )">Emiedonmokumo Dick-Boro</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/opsysdebug"
-    title="+8/-8 ([#6980](https://github.com/axios/axios/issues/6980)
-    )">Zeroday BYTE</a></li>
+    <li>
+    <p>Fixed ESM default export handling for <code>.mjs</code> files in
+    Module Federation (by <a
+    href="https://github.com/y-okt"><code>@​y-okt</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20189">#20189</a>)</p>
+    </li>
+    <li>
+    <p>Optimized <code>import.meta.env</code> handling in destructuring
+    assignments by using cached stringified environment definitions. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20313">#20313</a>)</p>
+    </li>
+    <li>
+    <p>Respect the <code>stats.errorStack</code> option in stats output. (by
+    <a
+    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20258">#20258</a>)</p>
+    </li>
+    <li>
+    <p>Fixed a bug where declaring a <code>module</code> variable in module
+    scope would conflict with the default <code>moduleArgument</code>. (by
+    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
+    <a
+    href="https://redirect.github.com/webpack/webpack/pull/20265">#20265</a>)</p>
+    </li>
+    <li>
+    <p>Fix VirtualUrlPlugin to set resourceData.context for proper module
+    resolution. Previously, when context was not set, it would fallback to
+    the virtual scheme path (e.g., <code>virtual:routes</code>), which is
+    not a valid filesystem path, causing subsequent resolve operations to
+    fail. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20390">#20390</a>)</p>
+    </li>
+    <li>
+    <p>Fixed Worker self-import handling to support various URL patterns
+    (e.g., <code>import.meta.url</code>, <code>new
+    URL(import.meta.url)</code>, <code>new URL(import.meta.url,
+    import.meta.url)</code>, <code>new URL(&quot;./index.js&quot;,
+    import.meta.url)</code>). Workers that resolve to the same module are
+    now properly deduplicated, regardless of the URL syntax used. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20381">#20381</a>)</p>
+    </li>
+    <li>
+    <p>Reuse the same async entrypoint for the same Worker URL within a
+    module to avoid circular dependency warnings when multiple Workers
+    reference the same resource. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20345">#20345</a>)</p>
+    </li>
+    <li>
+    <p>Fixed a bug where a self-referencing dependency would have an unused
+    export name when imported inside a web worker. (by <a
+    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20251">#20251</a>)</p>
+    </li>
+    <li>
+    <p>Fix missing export generation when concatenated modules in different
+    chunks share the same runtime in module library bundles. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20346">#20346</a>)</p>
+    </li>
+    <li>
+    <p>Fixed <code>import.meta.env.xxx</code> behavior: when accessing a
+    non-existent property, it now returns empty object instead of full
+    object at runtime. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20289">#20289</a>)</p>
+    </li>
+    <li>
+    <p>Improved parsing error reporting by adding a link to the loader
+    documentation. (by <a
+    href="https://github.com/gaurav10gg"><code>@​gaurav10gg</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20244">#20244</a>)</p>
+    </li>
+    <li>
+    <p>Fix typescript types. (by <a
+    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20305">#20305</a>)</p>
+    </li>
+    <li>
+    <p>Add declaration for unused harmony import specifier. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20286">#20286</a>)</p>
+    </li>
+    <li>
+    <p>Fix compressibility of modules while retaining portability. (by <a
+    href="https://github.com/dmichon-msft"><code>@​dmichon-msft</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20287">#20287</a>)</p>
+    </li>
+    <li>
+    <p>Optimize source map generation: only include <code>ignoreList</code>
+    property when it has content, avoiding empty arrays in source maps. (by
+    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
+    <a
+    href="https://redirect.github.com/webpack/webpack/pull/20319">#20319</a>)</p>
+    </li>
+    <li>
+    <p>Preserve star exports for dependencies in ECMA module output. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20293">#20293</a>)</p>
+    </li>
     </ul>
     <!-- raw HTML omitted -->
     </blockquote>
@@ -142,126 +177,161 @@ Date:   Fri Feb 6 12:55:12 2026 +0100
     <details>
     <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/axios/axios/blob/v1.x/CHANGELOG.md">axios's
+    href="https://github.com/webpack/webpack/blob/main/CHANGELOG.md">webpack's
     changelog</a>.</em></p>
     <blockquote>
-    <h2><a
-    href="https://github.com/axios/axios/compare/v1.12.1...v1.12.2">1.12.2</a>
-    (2025-09-14)</h2>
-    <h3>Bug Fixes</h3>
+    <h2>5.105.0</h2>
+    <h3>Minor Changes</h3>
     <ul>
-    <li><strong>fetch:</strong> use current global fetch instead of cached
-    one when env fetch is not specified to keep MSW support; (<a
-    href="https://redirect.github.com/axios/axios/issues/7030">#7030</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53">cf78825</a>)</li>
+    <li>
+    <p>Allow resolving worker module by export condition name when using
+    <code>new Worker()</code> (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20353">#20353</a>)</p>
+    </li>
+    <li>
+    <p>Detect conditional imports to avoid compile-time linking errors for
+    non-existent exports. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20320">#20320</a>)</p>
+    </li>
+    <li>
+    <p>Added the <code>tsconfig</code> option for the <code>resolver</code>
+    options (replacement for <code>tsconfig-paths-webpack-plugin</code>).
+    Can be <code>false</code> (disabled), <code>true</code> (use the default
+    <code>tsconfig.json</code> file to search for it), a string path to
+    <code>tsconfig.json</code>, or an object with <code>configFile</code>
+    and <code>references</code> options. (by <a
+    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20400">#20400</a>)</p>
+    </li>
+    <li>
+    <p>Support <code>import.defer()</code> for context modules. (by <a
+    href="https://github.com/ahabhgk"><code>@​ahabhgk</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20399">#20399</a>)</p>
+    </li>
+    <li>
+    <p>Added support for array values ​​to the <code>devtool</code> option.
+    (by <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20191">#20191</a>)</p>
+    </li>
+    <li>
+    <p>Improve rendering node built-in modules for ECMA module output. (by
+    <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20255">#20255</a>)</p>
+    </li>
+    <li>
+    <p>Unknown import.meta properties are now determined at runtime instead
+    of being statically analyzed at compile time. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20312">#20312</a>)</p>
+    </li>
     </ul>
-    <h3>Contributors to this release</h3>
+    <h3>Patch Changes</h3>
     <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+247/-16
-    ([#7030](https://github.com/axios/axios/issues/7030)
-    [#7022](https://github.com/axios/axios/issues/7022)
-    [#7024](https://github.com/axios/axios/issues/7024) )">Dmitriy
-    Mozgovoy</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/noritaka1166"
-    title="+2/-6 ([#7028](https://github.com/axios/axios/issues/7028)
-    [#7029](https://github.com/axios/axios/issues/7029) )">Noritaka
-    Kobayashi</a></li>
-    </ul>
-    <h2><a
-    href="https://github.com/axios/axios/compare/v1.12.0...v1.12.1">1.12.1</a>
-    (2025-09-12)</h2>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li><strong>types:</strong> fixed env config types; (<a
-    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05">b5f26b7</a>)</li>
-    </ul>
-    <h3>Contributors to this release</h3>
-    <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+10/-4
-    ([#7020](https://github.com/axios/axios/issues/7020) )">Dmitriy
-    Mozgovoy</a></li>
-    </ul>
-    <h1><a
-    href="https://github.com/axios/axios/compare/v1.11.0...v1.12.0">1.12.0</a>
-    (2025-09-11)</h1>
-    <h3>Bug Fixes</h3>
-    <ul>
-    <li>adding build artifacts (<a
-    href="https://github.com/axios/axios/commit/9ec86de257bfa33856571036279169f385ed92bd">9ec86de</a>)</li>
-    <li>dont add dist on release (<a
-    href="https://github.com/axios/axios/commit/a2edc3606a4f775d868a67bb3461ff18ce7ecd11">a2edc36</a>)</li>
-    <li><strong>fetch-adapter:</strong> set correct Content-Type for Node
-    FormData (<a
-    href="https://redirect.github.com/axios/axios/issues/6998">#6998</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/a9f47afbf3224d2ca987dbd8188789c7ea853c5d">a9f47af</a>)</li>
-    <li><strong>node:</strong> enforce maxContentLength for data: URLs (<a
-    href="https://redirect.github.com/axios/axios/issues/7011">#7011</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/945435fc51467303768202250debb8d4ae892593">945435f</a>)</li>
-    <li>package exports (<a
-    href="https://redirect.github.com/axios/axios/issues/5627">#5627</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/aa78ac23fc9036163308c0f6bd2bb885e7af3f36">aa78ac2</a>)</li>
-    <li><strong>params:</strong> removing '[' and ']' from URL encode
-    exclude characters (<a
-    href="https://redirect.github.com/axios/axios/issues/3316">#3316</a>)
-    (<a
-    href="https://redirect.github.com/axios/axios/issues/5715">#5715</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/6d84189349c43b1dcdd977b522610660cc4c7042">6d84189</a>)</li>
-    <li>release pr run (<a
-    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2">fd7f404</a>)</li>
-    <li><strong>types:</strong> change the type guard on isCancel (<a
-    href="https://redirect.github.com/axios/axios/issues/5595">#5595</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/0dbb7fd4f61dc568498cd13a681fa7f907d6ec7e">0dbb7fd</a>)</li>
-    </ul>
-    <h3>Features</h3>
-    <ul>
-    <li><strong>adapter:</strong> surface low‑level network error details;
-    attach original error via cause (<a
-    href="https://redirect.github.com/axios/axios/issues/6982">#6982</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/78b290c57c978ed2ab420b90d97350231c9e5d74">78b290c</a>)</li>
-    <li><strong>fetch:</strong> add fetch, Request, Response env config
-    variables for the adapter; (<a
-    href="https://redirect.github.com/axios/axios/issues/7003">#7003</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/c959ff29013a3bc90cde3ac7ea2d9a3f9c08974b">c959ff2</a>)</li>
-    <li>support reviver on JSON.parse (<a
-    href="https://redirect.github.com/axios/axios/issues/5926">#5926</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/2a9763426e43d996fd60d01afe63fa6e1f5b4fca">2a97634</a>),
-    closes <a
-    href="https://redirect.github.com/axios/axios/issues/5924">#5924</a></li>
-    <li><strong>types:</strong> extend AxiosResponse interface to include
-    custom headers type (<a
-    href="https://redirect.github.com/axios/axios/issues/6782">#6782</a>)
-    (<a
-    href="https://github.com/axios/axios/commit/7960d34eded2de66ffd30b4687f8da0e46c4903e">7960d34</a>)</li>
-    </ul>
-    <h3>Contributors to this release</h3>
-    <ul>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/WillianAgostini" title="+132/-16760
-    ([#7002](https://github.com/axios/axios/issues/7002)
-    [#5926](https://github.com/axios/axios/issues/5926)
-    [#6782](https://github.com/axios/axios/issues/6782) )">Willian
-    Agostini</a></li>
-    <li><!-- raw HTML omitted --> <a
-    href="https://github.com/DigitalBrainJS" title="+4263/-293
-    ([#7006](https://github.com/axios/axios/issues/7006)
-    [#7003](https://github.com/axios/axios/issues/7003) )">Dmitriy
-    Mozgovoy</a></li>
-    <li><!-- raw HTML omitted --> <a href="https://github.com/mkhani01"
-    title="+111/-15 ([#6982](https://github.com/axios/axios/issues/6982)
-    )">khani</a></li>
+    <li>
+    <p>Fixed ESM default export handling for <code>.mjs</code> files in
+    Module Federation (by <a
+    href="https://github.com/y-okt"><code>@​y-okt</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20189">#20189</a>)</p>
+    </li>
+    <li>
+    <p>Optimized <code>import.meta.env</code> handling in destructuring
+    assignments by using cached stringified environment definitions. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20313">#20313</a>)</p>
+    </li>
+    <li>
+    <p>Respect the <code>stats.errorStack</code> option in stats output. (by
+    <a
+    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20258">#20258</a>)</p>
+    </li>
+    <li>
+    <p>Fixed a bug where declaring a <code>module</code> variable in module
+    scope would conflict with the default <code>moduleArgument</code>. (by
+    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
+    <a
+    href="https://redirect.github.com/webpack/webpack/pull/20265">#20265</a>)</p>
+    </li>
+    <li>
+    <p>Fix VirtualUrlPlugin to set resourceData.context for proper module
+    resolution. Previously, when context was not set, it would fallback to
+    the virtual scheme path (e.g., <code>virtual:routes</code>), which is
+    not a valid filesystem path, causing subsequent resolve operations to
+    fail. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20390">#20390</a>)</p>
+    </li>
+    <li>
+    <p>Fixed Worker self-import handling to support various URL patterns
+    (e.g., <code>import.meta.url</code>, <code>new
+    URL(import.meta.url)</code>, <code>new URL(import.meta.url,
+    import.meta.url)</code>, <code>new URL(&quot;./index.js&quot;,
+    import.meta.url)</code>). Workers that resolve to the same module are
+    now properly deduplicated, regardless of the URL syntax used. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20381">#20381</a>)</p>
+    </li>
+    <li>
+    <p>Reuse the same async entrypoint for the same Worker URL within a
+    module to avoid circular dependency warnings when multiple Workers
+    reference the same resource. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20345">#20345</a>)</p>
+    </li>
+    <li>
+    <p>Fixed a bug where a self-referencing dependency would have an unused
+    export name when imported inside a web worker. (by <a
+    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20251">#20251</a>)</p>
+    </li>
+    <li>
+    <p>Fix missing export generation when concatenated modules in different
+    chunks share the same runtime in module library bundles. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20346">#20346</a>)</p>
+    </li>
+    <li>
+    <p>Fixed <code>import.meta.env.xxx</code> behavior: when accessing a
+    non-existent property, it now returns empty object instead of full
+    object at runtime. (by <a
+    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20289">#20289</a>)</p>
+    </li>
+    <li>
+    <p>Improved parsing error reporting by adding a link to the loader
+    documentation. (by <a
+    href="https://github.com/gaurav10gg"><code>@​gaurav10gg</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20244">#20244</a>)</p>
+    </li>
+    <li>
+    <p>Fix typescript types. (by <a
+    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20305">#20305</a>)</p>
+    </li>
+    <li>
+    <p>Add declaration for unused harmony import specifier. (by <a
+    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20286">#20286</a>)</p>
+    </li>
+    <li>
+    <p>Fix compressibility of modules while retaining portability. (by <a
+    href="https://github.com/dmichon-msft"><code>@​dmichon-msft</code></a>
+    in <a
+    href="https://redirect.github.com/webpack/webpack/pull/20287">#20287</a>)</p>
+    </li>
+    <li>
+    <p>Optimize source map generation: only include <code>ignoreList</code>
+    property when it has content, avoiding empty arrays in source maps. (by
+    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
+    <a
+    href="https://redirect.github.com/webpack/webpack/pull/20319">#20319</a>)</p>
+    </li>
     </ul>
     <!-- raw HTML omitted -->
     </blockquote>
@@ -271,56 +341,64 @@ Date:   Fri Feb 6 12:55:12 2026 +0100
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/axios/axios/commit/e5a33366d75b65f88052b230b103731eb7dcb793"><code>e5a3336</code></a>
-    chore(release): v1.12.2 (<a
-    href="https://redirect.github.com/axios/axios/issues/7031">#7031</a>)</li>
+    href="https://github.com/webpack/webpack/commit/1486f9aacca11d79dbb7ddbceed29b7e6df7a7ab"><code>1486f9a</code></a>
+    chore(release): new release</li>
     <li><a
-    href="https://github.com/axios/axios/commit/38726c7586c6a2583b7e7dcdce0c4fedd013055d"><code>38726c7</code></a>
-    refactor: change if in else to else if (<a
-    href="https://redirect.github.com/axios/axios/issues/7028">#7028</a>)</li>
+    href="https://github.com/webpack/webpack/commit/1a517f665aae7b4d3d29c8b408d09488a21fbf94"><code>1a517f6</code></a>
+    feat: added the <code>tsconfig</code> option for the
+    <code>resolver</code> options (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20400">#20400</a>)</li>
     <li><a
-    href="https://github.com/axios/axios/commit/cf78825e1229b60d1629ad0bbc8a752ff43c3f53"><code>cf78825</code></a>
-    fix(fetch): use current global fetch instead of cached one when env
-    fetch is ...</li>
+    href="https://github.com/webpack/webpack/commit/7b3b0f795df377a9d0073822a2d60c1390d03109"><code>7b3b0f7</code></a>
+    feat: support <code>import.defer()</code> for context modules</li>
     <li><a
-    href="https://github.com/axios/axios/commit/c26d00f451949306f708aa78d1e9f12b9eb6ff4b"><code>c26d00f</code></a>
-    refactor: remove redundant assignment (<a
-    href="https://redirect.github.com/axios/axios/issues/7029">#7029</a>)</li>
+    href="https://github.com/webpack/webpack/commit/c4a6a922de4af37a92d05c0ddc975b5348cfa9a1"><code>c4a6a92</code></a>
+    refactor: more types and increase types coverage</li>
     <li><a
-    href="https://github.com/axios/axios/commit/9fb41a8fcd6f698ee82175c0d9e654b4b0a7081c"><code>9fb41a8</code></a>
-    chore(ci): add local HTTP server for Karma tests; (<a
-    href="https://redirect.github.com/axios/axios/issues/7022">#7022</a>)</li>
+    href="https://github.com/webpack/webpack/commit/5ecc58d722da7715ede7de59b97108dd715d1bfa"><code>5ecc58d</code></a>
+    feat: consider asset module as side-effect-free (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20352">#20352</a>)</li>
     <li><a
-    href="https://github.com/axios/axios/commit/19f9f36850210511445c67c865466156d6d1dee2"><code>19f9f36</code></a>
-    docs(readme): add custom fetch section; (<a
-    href="https://redirect.github.com/axios/axios/issues/7024">#7024</a>)</li>
+    href="https://github.com/webpack/webpack/commit/cce0f6989888771ec279777ab8f8dce8e39198a0"><code>cce0f69</code></a>
+    test: avoid comma operator in BinaryMiddleware test (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20398">#20398</a>)</li>
     <li><a
-    href="https://github.com/axios/axios/commit/3cac78c2de2d1d1af0c1b4753feff16c075f01d1"><code>3cac78c</code></a>
-    chore(release): v1.12.1 (<a
-    href="https://redirect.github.com/axios/axios/issues/7021">#7021</a>)</li>
+    href="https://github.com/webpack/webpack/commit/cd4793d50e8e1e519ecd07b76d9e5dc06357341e"><code>cd4793d</code></a>
+    feat: support import specifier guard (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20320">#20320</a>)</li>
     <li><a
-    href="https://github.com/axios/axios/commit/b5f26b75bdd9afa95016fb67d0cab15fc74cbf05"><code>b5f26b7</code></a>
-    fix(types): fixed env config types; (<a
-    href="https://redirect.github.com/axios/axios/issues/7020">#7020</a>)</li>
+    href="https://github.com/webpack/webpack/commit/fe486552d060f6d2815a39a6bd0fb351d348658c"><code>fe48655</code></a>
+    docs: update examples (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20397">#20397</a>)</li>
     <li><a
-    href="https://github.com/axios/axios/commit/0d8ad6e1de0f5339e02bc262d6f0df4936974120"><code>0d8ad6e</code></a>
-    chore(release): v1.12.0 (<a
-    href="https://redirect.github.com/axios/axios/issues/7013">#7013</a>)</li>
+    href="https://github.com/webpack/webpack/commit/de107f8767a2a11759f8261ed1ac49bcddec34b6"><code>de107f8</code></a>
+    fix(VirtualUrlPlugin): set resourceData.context to avoid invalid
+    fallback (<a
+    href="https://redirect.github.com/webpack/webpack/issues/2">#2</a>...</li>
     <li><a
-    href="https://github.com/axios/axios/commit/fd7f404488b2c4f238c2fbe635b58026a634bfd2"><code>fd7f404</code></a>
-    fix: release pr run</li>
+    href="https://github.com/webpack/webpack/commit/a656ab1fd1064ef8dd3eef1a2f3071fc176b948f"><code>a656ab1</code></a>
+    test: add self-import test case for dynamic import (<a
+    href="https://redirect.github.com/webpack/webpack/issues/20389">#20389</a>)</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/axios/axios/compare/v1.11.0...v1.12.2">compare
+    href="https://github.com/webpack/webpack/compare/v5.94.0...v5.105.0">compare
     view</a></li>
     </ul>
+    </details>
+    <details>
+    <summary>Maintainer changes</summary>
+    <p>This version was pushed to npm by [GitHub Actions](<a
+    href="https://www.npmjs.com/~GitHub">https://www.npmjs.com/~GitHub</a>
+    Actions), a new releaser for webpack since your current version.</p>
     </details>
     <br />
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=axios&package-manager=npm_and_yarn&previous-version=1.11.0&new-version=1.12.2)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=webpack&package-manager=npm_and_yarn&previous-version=5.94.0&new-version=5.105.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    You can trigger a rebase of this PR by commenting `@dependabot rebase`.
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
     
     [//]: # (dependabot-automerge-start)
     [//]: # (dependabot-automerge-end)
@@ -335,14 +413,6 @@ Date:   Fri Feb 6 12:55:12 2026 +0100
     - `@dependabot rebase` will rebase this PR
     - `@dependabot recreate` will recreate this PR, overwriting any edits
     that have been made to it
-    - `@dependabot merge` will merge this PR after your CI passes on it
-    - `@dependabot squash and merge` will squash and merge this PR after
-    your CI passes on it
-    - `@dependabot cancel merge` will cancel a previously requested merge
-    and block automerging
-    - `@dependabot reopen` will reopen this PR if it is closed
-    - `@dependabot close` will close this PR and stop Dependabot recreating
-    it. You can achieve the same result by closing it manually
     - `@dependabot show <dependency name> ignore conditions` will show all
     of the ignore conditions of the specified dependency
     - `@dependabot ignore this major version` will close this PR and stop
@@ -354,10 +424,8 @@ Date:   Fri Feb 6 12:55:12 2026 +0100
     - `@dependabot ignore this dependency` will close this PR and stop
     Dependabot creating any more for this dependency (unless you reopen the
     PR or upgrade to it yourself)
-    
+    You can disable automated security fix PRs for this repo from the
+    [Security Alerts
+    page](https://github.com/opencast/opencast/network/alerts).
     
     </details>
-    
-    > **Note**
-    > Automatic rebases have been disabled on this pull request as it has
-    been open for over 30 days.
