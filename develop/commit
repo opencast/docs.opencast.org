@@ -1,400 +1,63 @@
-commit ce822214b826f99d2897e4aff3b680bc68e7bd68
+commit 1c1c7ab6e955e38958af052972b201f49b7976e6
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Feb 6 13:29:41 2026 +0100
+Date:   Fri Feb 6 14:12:36 2026 +0100
 
-    Bump webpack from 5.94.0 to 5.105.0 in /modules/lti (#7362)
+    Bump lodash from 4.17.21 to 4.17.23 in /modules/graphql-ui (#7331)
     
-    Bumps [webpack](https://github.com/webpack/webpack) from 5.94.0 to
-    5.105.0.
-    <details>
-    <summary>Release notes</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/webpack/webpack/releases">webpack's
-    releases</a>.</em></p>
-    <blockquote>
-    <h2>v5.105.0</h2>
-    <h3>Minor Changes</h3>
-    <ul>
-    <li>
-    <p>Allow resolving worker module by export condition name when using
-    <code>new Worker()</code> (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20353">#20353</a>)</p>
-    </li>
-    <li>
-    <p>Detect conditional imports to avoid compile-time linking errors for
-    non-existent exports. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20320">#20320</a>)</p>
-    </li>
-    <li>
-    <p>Added the <code>tsconfig</code> option for the <code>resolver</code>
-    options (replacement for <code>tsconfig-paths-webpack-plugin</code>).
-    Can be <code>false</code> (disabled), <code>true</code> (use the default
-    <code>tsconfig.json</code> file to search for it), a string path to
-    <code>tsconfig.json</code>, or an object with <code>configFile</code>
-    and <code>references</code> options. (by <a
-    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20400">#20400</a>)</p>
-    </li>
-    <li>
-    <p>Support <code>import.defer()</code> for context modules. (by <a
-    href="https://github.com/ahabhgk"><code>@​ahabhgk</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20399">#20399</a>)</p>
-    </li>
-    <li>
-    <p>Added support for array values ​​to the <code>devtool</code> option.
-    (by <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20191">#20191</a>)</p>
-    </li>
-    <li>
-    <p>Improve rendering node built-in modules for ECMA module output. (by
-    <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20255">#20255</a>)</p>
-    </li>
-    <li>
-    <p>Unknown import.meta properties are now determined at runtime instead
-    of being statically analyzed at compile time. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20312">#20312</a>)</p>
-    </li>
-    </ul>
-    <h3>Patch Changes</h3>
-    <ul>
-    <li>
-    <p>Fixed ESM default export handling for <code>.mjs</code> files in
-    Module Federation (by <a
-    href="https://github.com/y-okt"><code>@​y-okt</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20189">#20189</a>)</p>
-    </li>
-    <li>
-    <p>Optimized <code>import.meta.env</code> handling in destructuring
-    assignments by using cached stringified environment definitions. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20313">#20313</a>)</p>
-    </li>
-    <li>
-    <p>Respect the <code>stats.errorStack</code> option in stats output. (by
-    <a
-    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20258">#20258</a>)</p>
-    </li>
-    <li>
-    <p>Fixed a bug where declaring a <code>module</code> variable in module
-    scope would conflict with the default <code>moduleArgument</code>. (by
-    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
-    <a
-    href="https://redirect.github.com/webpack/webpack/pull/20265">#20265</a>)</p>
-    </li>
-    <li>
-    <p>Fix VirtualUrlPlugin to set resourceData.context for proper module
-    resolution. Previously, when context was not set, it would fallback to
-    the virtual scheme path (e.g., <code>virtual:routes</code>), which is
-    not a valid filesystem path, causing subsequent resolve operations to
-    fail. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20390">#20390</a>)</p>
-    </li>
-    <li>
-    <p>Fixed Worker self-import handling to support various URL patterns
-    (e.g., <code>import.meta.url</code>, <code>new
-    URL(import.meta.url)</code>, <code>new URL(import.meta.url,
-    import.meta.url)</code>, <code>new URL(&quot;./index.js&quot;,
-    import.meta.url)</code>). Workers that resolve to the same module are
-    now properly deduplicated, regardless of the URL syntax used. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20381">#20381</a>)</p>
-    </li>
-    <li>
-    <p>Reuse the same async entrypoint for the same Worker URL within a
-    module to avoid circular dependency warnings when multiple Workers
-    reference the same resource. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20345">#20345</a>)</p>
-    </li>
-    <li>
-    <p>Fixed a bug where a self-referencing dependency would have an unused
-    export name when imported inside a web worker. (by <a
-    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20251">#20251</a>)</p>
-    </li>
-    <li>
-    <p>Fix missing export generation when concatenated modules in different
-    chunks share the same runtime in module library bundles. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20346">#20346</a>)</p>
-    </li>
-    <li>
-    <p>Fixed <code>import.meta.env.xxx</code> behavior: when accessing a
-    non-existent property, it now returns empty object instead of full
-    object at runtime. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20289">#20289</a>)</p>
-    </li>
-    <li>
-    <p>Improved parsing error reporting by adding a link to the loader
-    documentation. (by <a
-    href="https://github.com/gaurav10gg"><code>@​gaurav10gg</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20244">#20244</a>)</p>
-    </li>
-    <li>
-    <p>Fix typescript types. (by <a
-    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20305">#20305</a>)</p>
-    </li>
-    <li>
-    <p>Add declaration for unused harmony import specifier. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20286">#20286</a>)</p>
-    </li>
-    <li>
-    <p>Fix compressibility of modules while retaining portability. (by <a
-    href="https://github.com/dmichon-msft"><code>@​dmichon-msft</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20287">#20287</a>)</p>
-    </li>
-    <li>
-    <p>Optimize source map generation: only include <code>ignoreList</code>
-    property when it has content, avoiding empty arrays in source maps. (by
-    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
-    <a
-    href="https://redirect.github.com/webpack/webpack/pull/20319">#20319</a>)</p>
-    </li>
-    <li>
-    <p>Preserve star exports for dependencies in ECMA module output. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20293">#20293</a>)</p>
-    </li>
-    </ul>
-    <!-- raw HTML omitted -->
-    </blockquote>
-    <p>... (truncated)</p>
-    </details>
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/webpack/webpack/blob/main/CHANGELOG.md">webpack's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h2>5.105.0</h2>
-    <h3>Minor Changes</h3>
-    <ul>
-    <li>
-    <p>Allow resolving worker module by export condition name when using
-    <code>new Worker()</code> (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20353">#20353</a>)</p>
-    </li>
-    <li>
-    <p>Detect conditional imports to avoid compile-time linking errors for
-    non-existent exports. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20320">#20320</a>)</p>
-    </li>
-    <li>
-    <p>Added the <code>tsconfig</code> option for the <code>resolver</code>
-    options (replacement for <code>tsconfig-paths-webpack-plugin</code>).
-    Can be <code>false</code> (disabled), <code>true</code> (use the default
-    <code>tsconfig.json</code> file to search for it), a string path to
-    <code>tsconfig.json</code>, or an object with <code>configFile</code>
-    and <code>references</code> options. (by <a
-    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20400">#20400</a>)</p>
-    </li>
-    <li>
-    <p>Support <code>import.defer()</code> for context modules. (by <a
-    href="https://github.com/ahabhgk"><code>@​ahabhgk</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20399">#20399</a>)</p>
-    </li>
-    <li>
-    <p>Added support for array values ​​to the <code>devtool</code> option.
-    (by <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20191">#20191</a>)</p>
-    </li>
-    <li>
-    <p>Improve rendering node built-in modules for ECMA module output. (by
-    <a href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20255">#20255</a>)</p>
-    </li>
-    <li>
-    <p>Unknown import.meta properties are now determined at runtime instead
-    of being statically analyzed at compile time. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20312">#20312</a>)</p>
-    </li>
-    </ul>
-    <h3>Patch Changes</h3>
-    <ul>
-    <li>
-    <p>Fixed ESM default export handling for <code>.mjs</code> files in
-    Module Federation (by <a
-    href="https://github.com/y-okt"><code>@​y-okt</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20189">#20189</a>)</p>
-    </li>
-    <li>
-    <p>Optimized <code>import.meta.env</code> handling in destructuring
-    assignments by using cached stringified environment definitions. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20313">#20313</a>)</p>
-    </li>
-    <li>
-    <p>Respect the <code>stats.errorStack</code> option in stats output. (by
-    <a
-    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20258">#20258</a>)</p>
-    </li>
-    <li>
-    <p>Fixed a bug where declaring a <code>module</code> variable in module
-    scope would conflict with the default <code>moduleArgument</code>. (by
-    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
-    <a
-    href="https://redirect.github.com/webpack/webpack/pull/20265">#20265</a>)</p>
-    </li>
-    <li>
-    <p>Fix VirtualUrlPlugin to set resourceData.context for proper module
-    resolution. Previously, when context was not set, it would fallback to
-    the virtual scheme path (e.g., <code>virtual:routes</code>), which is
-    not a valid filesystem path, causing subsequent resolve operations to
-    fail. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20390">#20390</a>)</p>
-    </li>
-    <li>
-    <p>Fixed Worker self-import handling to support various URL patterns
-    (e.g., <code>import.meta.url</code>, <code>new
-    URL(import.meta.url)</code>, <code>new URL(import.meta.url,
-    import.meta.url)</code>, <code>new URL(&quot;./index.js&quot;,
-    import.meta.url)</code>). Workers that resolve to the same module are
-    now properly deduplicated, regardless of the URL syntax used. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20381">#20381</a>)</p>
-    </li>
-    <li>
-    <p>Reuse the same async entrypoint for the same Worker URL within a
-    module to avoid circular dependency warnings when multiple Workers
-    reference the same resource. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20345">#20345</a>)</p>
-    </li>
-    <li>
-    <p>Fixed a bug where a self-referencing dependency would have an unused
-    export name when imported inside a web worker. (by <a
-    href="https://github.com/samarthsinh2660"><code>@​samarthsinh2660</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20251">#20251</a>)</p>
-    </li>
-    <li>
-    <p>Fix missing export generation when concatenated modules in different
-    chunks share the same runtime in module library bundles. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20346">#20346</a>)</p>
-    </li>
-    <li>
-    <p>Fixed <code>import.meta.env.xxx</code> behavior: when accessing a
-    non-existent property, it now returns empty object instead of full
-    object at runtime. (by <a
-    href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20289">#20289</a>)</p>
-    </li>
-    <li>
-    <p>Improved parsing error reporting by adding a link to the loader
-    documentation. (by <a
-    href="https://github.com/gaurav10gg"><code>@​gaurav10gg</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20244">#20244</a>)</p>
-    </li>
-    <li>
-    <p>Fix typescript types. (by <a
-    href="https://github.com/alexander-akait"><code>@​alexander-akait</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20305">#20305</a>)</p>
-    </li>
-    <li>
-    <p>Add declaration for unused harmony import specifier. (by <a
-    href="https://github.com/hai-x"><code>@​hai-x</code></a> in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20286">#20286</a>)</p>
-    </li>
-    <li>
-    <p>Fix compressibility of modules while retaining portability. (by <a
-    href="https://github.com/dmichon-msft"><code>@​dmichon-msft</code></a>
-    in <a
-    href="https://redirect.github.com/webpack/webpack/pull/20287">#20287</a>)</p>
-    </li>
-    <li>
-    <p>Optimize source map generation: only include <code>ignoreList</code>
-    property when it has content, avoiding empty arrays in source maps. (by
-    <a href="https://github.com/xiaoxiaojx"><code>@​xiaoxiaojx</code></a> in
-    <a
-    href="https://redirect.github.com/webpack/webpack/pull/20319">#20319</a>)</p>
-    </li>
-    </ul>
-    <!-- raw HTML omitted -->
-    </blockquote>
-    <p>... (truncated)</p>
-    </details>
+    Bumps [lodash](https://github.com/lodash/lodash) from 4.17.21 to
+    4.17.23.
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/webpack/webpack/commit/1486f9aacca11d79dbb7ddbceed29b7e6df7a7ab"><code>1486f9a</code></a>
-    chore(release): new release</li>
+    href="https://github.com/lodash/lodash/commit/dec55b7a3b382da075e2eac90089b4cd00a26cbb"><code>dec55b7</code></a>
+    Bump main to v4.17.23 (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6088">#6088</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/1a517f665aae7b4d3d29c8b408d09488a21fbf94"><code>1a517f6</code></a>
-    feat: added the <code>tsconfig</code> option for the
-    <code>resolver</code> options (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20400">#20400</a>)</li>
+    href="https://github.com/lodash/lodash/commit/19c9251b3631d7cf220b43bc757eb33f1084f117"><code>19c9251</code></a>
+    fix: setCacheHas JSDoc return type should be boolean (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6071">#6071</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/7b3b0f795df377a9d0073822a2d60c1390d03109"><code>7b3b0f7</code></a>
-    feat: support <code>import.defer()</code> for context modules</li>
+    href="https://github.com/lodash/lodash/commit/b5e672995ae26929d111a6e94589f8d03fb8e578"><code>b5e6729</code></a>
+    jsdoc: Add -0 and BigInt zeros to _.compact falsey values list (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6062">#6062</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/c4a6a922de4af37a92d05c0ddc975b5348cfa9a1"><code>c4a6a92</code></a>
-    refactor: more types and increase types coverage</li>
+    href="https://github.com/lodash/lodash/commit/edadd452146f7e4bad4ea684e955708931d84d81"><code>edadd45</code></a>
+    Prevent prototype pollution on baseUnset function</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/5ecc58d722da7715ede7de59b97108dd715d1bfa"><code>5ecc58d</code></a>
-    feat: consider asset module as side-effect-free (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20352">#20352</a>)</li>
+    href="https://github.com/lodash/lodash/commit/4879a7a7d0a4494b0e83c7fa21bcc9fc6e7f1a6d"><code>4879a7a</code></a>
+    doc: fix autoLink function, conversion of source links (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6056">#6056</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/cce0f6989888771ec279777ab8f8dce8e39198a0"><code>cce0f69</code></a>
-    test: avoid comma operator in BinaryMiddleware test (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20398">#20398</a>)</li>
+    href="https://github.com/lodash/lodash/commit/9648f692b0fc7c2f6a7a763d754377200126c2e8"><code>9648f69</code></a>
+    chore: remove <code>yarn.lock</code> file (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6053">#6053</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/cd4793d50e8e1e519ecd07b76d9e5dc06357341e"><code>cd4793d</code></a>
-    feat: support import specifier guard (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20320">#20320</a>)</li>
+    href="https://github.com/lodash/lodash/commit/dfa407db0bf5b200f2c7a9e4f06830ceaf074be9"><code>dfa407d</code></a>
+    ci: remove legacy configuration files (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6052">#6052</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/fe486552d060f6d2815a39a6bd0fb351d348658c"><code>fe48655</code></a>
-    docs: update examples (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20397">#20397</a>)</li>
+    href="https://github.com/lodash/lodash/commit/156e1965ae78b121a88f81178ab81632304e8d64"><code>156e196</code></a>
+    feat: add renovate setup (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6039">#6039</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/de107f8767a2a11759f8261ed1ac49bcddec34b6"><code>de107f8</code></a>
-    fix(VirtualUrlPlugin): set resourceData.context to avoid invalid
-    fallback (<a
-    href="https://redirect.github.com/webpack/webpack/issues/2">#2</a>...</li>
+    href="https://github.com/lodash/lodash/commit/933e1061b8c344d3fc742cdc400175d5ffc99bce"><code>933e106</code></a>
+    ci: add pipeline for Bun (<a
+    href="https://redirect.github.com/lodash/lodash/issues/6023">#6023</a>)</li>
     <li><a
-    href="https://github.com/webpack/webpack/commit/a656ab1fd1064ef8dd3eef1a2f3071fc176b948f"><code>a656ab1</code></a>
-    test: add self-import test case for dynamic import (<a
-    href="https://redirect.github.com/webpack/webpack/issues/20389">#20389</a>)</li>
+    href="https://github.com/lodash/lodash/commit/072a807ff7ad8ffc7c1d2c3097266e815d138e20"><code>072a807</code></a>
+    docs: update links related to Open JS Foundation (<a
+    href="https://redirect.github.com/lodash/lodash/issues/5968">#5968</a>)</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/webpack/webpack/compare/v5.94.0...v5.105.0">compare
+    href="https://github.com/lodash/lodash/compare/4.17.21...4.17.23">compare
     view</a></li>
     </ul>
-    </details>
-    <details>
-    <summary>Maintainer changes</summary>
-    <p>This version was pushed to npm by [GitHub Actions](<a
-    href="https://www.npmjs.com/~GitHub">https://www.npmjs.com/~GitHub</a>
-    Actions), a new releaser for webpack since your current version.</p>
     </details>
     <br />
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=webpack&package-manager=npm_and_yarn&previous-version=5.94.0&new-version=5.105.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=lodash&package-manager=npm_and_yarn&previous-version=4.17.21&new-version=4.17.23)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
@@ -413,6 +76,14 @@ Date:   Fri Feb 6 13:29:41 2026 +0100
     - `@dependabot rebase` will rebase this PR
     - `@dependabot recreate` will recreate this PR, overwriting any edits
     that have been made to it
+    - `@dependabot merge` will merge this PR after your CI passes on it
+    - `@dependabot squash and merge` will squash and merge this PR after
+    your CI passes on it
+    - `@dependabot cancel merge` will cancel a previously requested merge
+    and block automerging
+    - `@dependabot reopen` will reopen this PR if it is closed
+    - `@dependabot close` will close this PR and stop Dependabot recreating
+    it. You can achieve the same result by closing it manually
     - `@dependabot show <dependency name> ignore conditions` will show all
     of the ignore conditions of the specified dependency
     - `@dependabot ignore this major version` will close this PR and stop
