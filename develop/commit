@@ -1,47 +1,10 @@
-commit 6c9bb5bab93263ae0190e807ff7ef9c1f00863d0
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Feb 18 00:26:59 2026 +0100
+commit 56861f626835b8eabc1797b45d88add28d42098f
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Sun Feb 22 13:18:59 2026 +0100
 
-    Fix build date in BundleInfoRestEndpoint (#7393)
+    Merge branch 'r/19.x' into develop
     
-    Fixes #904.
-    
-    `.getLastModified()` returns the following: "Returns the time when this
-    bundle was last modified. A bundle is considered to be modified when it
-    is installed, updated or uninstalled."
-    
-    However, what we are looking for here is when the date when the bundle
-    was built. There is no convenient method for that, so we have to parse
-    it from the headers ourselves.
-    
-    ### How to test this patch
-    
-    1. Built your Opencast.
-    2. Wait a day.
-    3. Restart Opencast.
-    4. Check the built date in the admin ui. It should show todays date,
-    which is wrong.
-    5. Install this patch.
-    6. Wait a day.
-    7. Restart Opencast.
-    8. Check the built date in the admin ui. It should show yesterdays date,
-    which is correct.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [x] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature
+    * r/19.x:
+      Adding additional checks into the release manager's notes.  Some features in 19.0 were missed, and this would (hopefully) have caught them.
+      Fix select asset query and add limit to one result
+      Fix missing apply in storage id update
