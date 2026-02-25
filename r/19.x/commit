@@ -1,53 +1,5 @@
-commit 92db1e81861444bdd954a8b851a00dfca57ae88b
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Feb 20 14:25:24 2026 +0100
+commit f71e14a261de8484f9bde8e684b9686c16958114
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Wed Feb 25 23:48:54 2026 +0000
 
-    Fix two Asset Manager Queries (#7373)
-    
-    This fixes two bugs introduced with #6689 in Opencast 19:
-    
-    1. **Fix missing apply in storage id update.** This breaks moving
-    snapshots from one store to another, e.g. timed media archiver or
-    `move-storage` operation.
-    2. **Fix select asset query and add limit to one result.** Selecting
-    assets based on checksum, storage location and organization is not
-    unique, i.e. multiple asset records over multiple snapshots could be
-    returned. Using `findOpt` assums a single result and otherwise errors
-    out with no result. I added an explicit limit to one result. It doesn't
-    matter which one is returned as all asset records point to files with
-    the same checksum.
-    
-    ### How to test this patch
-    
-    For 1: Force a move between storage locations, e.g. with timed media
-    archiver, `move-storage` operation or using the API directly.
-    
-    For 2: Force usage of the records in the asset table, e.g.:
-    
-    1. Create and ingest a mediapackage with some elements. Create multiple
-    snapshots in that ingest workflow.
-    2. Start another workflow that contains the `cleanup` operation and
-    afterwards creates a `snapshot`.
-    
-    Without this patch, the second step will fail as the assets are no
-    longer in the workspace. However, the asset manager should simply be
-    able to reuse the already archived assets from other snapshots.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [ ] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature
+    Merge r/18.x into r/19.x
