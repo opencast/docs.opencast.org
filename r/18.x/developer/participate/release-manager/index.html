@@ -168,7 +168,12 @@ git stash    # stash them if necessary
 <li>
 <p>Create and push the new release branch:</p>
 <pre><code>git checkout -b r/7.x
+git submodule foreach git checkout -b r/7.x
+sed -i 's#branch = develop#branch = r/7.x#g' .gitmodules
+git add .gitmodules
+git commit -m "Updating .gitmodules to point at the r/7.x"
 git push &lt;remote&gt; r/7.x
+git submodule foreach git push &lt;remote&gt; r/7.x
 </code></pre>
 </li>
 <li>
@@ -180,14 +185,18 @@ git push &lt;remote&gt; r/7.x
 <li>
 <p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
-git status | grep modified: | grep -v pom.xml   # this should have no output
+git status | grep modified: | grep -v pom.xml | grep -v "modified content"  # this should have no output
 </code></pre>
 </li>
 <li>
 <p>If everything looks fine, commit the changes and push it to the community repository:</p>
-<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+<pre><code>git submodule foreach git add pom.xml
+git submodule foreach git commit -s -m 'Bumping pom.xml Version Nnumbers'
+git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git add $(git submodule | cut -f 2 -d " ")
 git commit -s -m 'Bumping pom.xml Version Numbers'
 git push &lt;remote&gt; develop
+git submodule foreach git push origin develop
 </code></pre>
 </li>
 </ol>
@@ -344,6 +353,7 @@ git push &lt;remote&gt; r/6.x
 <li>
 <p>Switch to a new branch to create the release (name does not really matter):</p>
 <pre><code>git checkout -b tmp-16.0
+git submodule foreach git checkout -b tmp-16.0
 </code></pre>
 </li>
 <li>
@@ -355,19 +365,24 @@ git push &lt;remote&gt; r/6.x
 <p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
 # The following command should yield no output:
-git status | grep modified: | grep -v pom.xml
+git status | grep modified: | grep -v pom.xml | grep -v "modified content"
 </code></pre>
 </li>
 <li>
 <p>Commit the changes and create a release tag:</p>
-<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+<pre><code>git submodule foreach git add pom.xml
+git submodule foreach git commit -S -m 'Opencast 16.0'
+git submodule foreach git tag -s 16.0 -m 'Opencast 16.0'
+git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git add $(git submodule | cut -f 2 -d " ")
 git commit -S -m 'Opencast 16.0'
 git tag -s 16.0 -m 'Opencast 16.0'
 </code></pre>
 </li>
 <li>
 <p>Push the tag to the community repository (you can remove the branch afterwards):</p>
-<pre><code>git push &lt;remote&gt; 16.0
+<pre><code>git submodule foreach git push origin 16.0
+git push &lt;remote&gt; 16.0
 </code></pre>
 </li>
 <li>
