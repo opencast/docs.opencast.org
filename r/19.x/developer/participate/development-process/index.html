@@ -37,6 +37,7 @@
               {title: "Contributing Code", url: "#contributing-code" },
               {title: "Reviewing Code", url: "#reviewing-code" },
               {title: "Git Repository Branching Model", url: "#git-repository-branching-model" },
+              {title: "Git Submodules", url: "#git-submodules" },
               {title: "Release Process", url: "#release-process" },
               {title: "Quality Assurance", url: "#quality-assurance" },
           ]},
@@ -121,6 +122,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 <li><a href="#git-repository-branching-model">Git Repository Branching Model</a></li>
+<li><a href="#git-submodules">Git Submodules</a><ul>
+<li><a href="#initial-clone">Initial clone</a></li>
+<li><a href="#updating-to-a-version-with-submodules">Updating to a version with submodules</a></li>
+<li><a href="#manually-updating-the-subprojects-commit">Manually updating the subproject's commit</a></li>
+<li><a href="#working-with-older-non-submoduled-versions">Working with older, non-submoduled versions</a></li>
+<li><a href="#why-working-directly-on-a-submodule-is-a-bad-idea">Why working directly on a submodule is a bad idea</a></li>
+</ul>
+</li>
 <li><a href="#release-process">Release Process</a><ul>
 <li><a href="#preparations">Preparations</a><ul>
 <li><a href="#release-schedule">Release Schedule</a></li>
@@ -183,7 +192,7 @@ That is why patches may only be accepted into releases branches (<code>r/?.x</co
 <li>Patches must work with the same configuration within a major version</li>
 </ul>
 <p>Patches which do not meet these criteria should target the branch <code>develop</code> to become part of the next major version.</p>
-<p>Note: Patches adding features should target the current stable release (<code>r/&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f1fbb352d40&gt;.x</code>), or
+<p>Note: Patches adding features should target the current stable release (<code>r/&lt;function define_env.&lt;locals&gt;.opencast_major_version at 0x7f991b862d40&gt;.x</code>), or
 <code>develop</code>, and are strongly discouraged from targetting the legacy release.  Features going into the legacy release
 will need a good reason, and must be highly self contained.</p>
 <p>To determine the acceptance of patches, all pull requests will be discussed in the technical meeting.
@@ -388,6 +397,53 @@ part of the next Opencast versions (and <code>develop</code>), without having to
 <p>For example, a pull request may be merged into <code>r/7.x</code>, <code>r/7.x</code> will then be merged into <code>develop</code> or, if it already
 exists, <code>r/8.x</code> and from there into <code>develop</code>. That way patches bubble through all newer versions and finally end up in
 <code>develop</code>.</p>
+<h2 id="git-submodules">Git Submodules</h2>
+<p>Starting in the <code>r/18.x</code> branch we changed how we work with submodules.  Prior to this change <code>admin-ui-interface</code>,
+<code>editor</code>, and <code>studio</code> were fetched as release tarballs at build time by Maven.  This came with a
+ <a href="https://github.com/orgs/opencast/discussions/7277">number of drawbacks</a>, which is part of why we have replaced those
+modules with <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodules</a>.  Submodules are a complex topic,
+but for an Opencast developer they should be relatively simple to manage.</p>
+<h3 id="initial-clone">Initial clone</h3>
+<p>We all clone <code>opencast/opencast</code>, but now there is a suggested additional step to run before cloning:</p>
+<pre><code>git config submodule.recurse true
+</code></pre>
+<p>What this does is tell git that when you check a branch out, that <em>all</em> submodules should also check out the appropriate
+revisions specfied in their respective submodule directories.  If you do not do this, then you will need to manually
+run <code>git submodule update --init --recursive --remote</code> every time you change branches.  Failure to run this manual step
+does not cause issues, as long as you do not incorrectly commit the wrong submodule hash.</p>
+<h3 id="updating-to-a-version-with-submodules">Updating to a version with submodules</h3>
+<p>Even if you applied the change above, when you first checkout (or update) a branch to a version which contains
+submodules, those submodules will not automatically clone.  This requires an additional step:</p>
+<pre><code>git submodule update --init --recursive
+</code></pre>
+<p>This step initiates a clone for each submodule, and then checks out the correct versions.</p>
+<h3 id="manually-updating-the-subprojects-commit">Manually updating the subproject's commit</h3>
+<p>Rarely, you may want to locally update the hash of a submodule.  This is accomplished by running the same command as
+above with the addition of <code>--remote</code>.  In addition if you only want to update to the latest in the release branch:</p>
+<pre><code>git submodule update --init --remote modules/SUBMODULE_NAME
+</code></pre>
+<p>If you want a specific hash then the command is slightly different.  First enter the submodule's directory, then check
+out the revision you want, fetching a repo update if needed</p>
+<pre><code>cd module/SUBMODULE_NAME
+git fetch origin -&gt; Remember, origin here is the submodule's repository
+git checkout HASH/BRANCH
+</code></pre>
+<p>A word of warning:  It is generally better to merge in the release branch you are working from rather than updating
+the hash in your branch directly.  If you absolutely must update the submodule, only do the ones you need specifically,
+and if you commit those changes do them in a separate commit from the rest of your work.  A branch with a changed
+target will almost certainly have conflicts when filed as a PR because git is diffing only the target hashes, with no
+concept of the commit tree, or whether commit A is a child commit of commit B.  In <em>most</em> cases, you do not want to
+commit the changed hash, even if you need it for development.  In this case, avoid committing the X submodule so your
+change will not persist.</p>
+<h3 id="working-with-older-non-submoduled-versions">Working with older, non-submoduled versions</h3>
+<p>Git does not nicely handle switching back and forth between non-submoduled versions (ie, earlier 18.x and 19.x, or 17.x
+and older).  It's technically possible, but requires manually removing files from disk <em>every time youi switch between
+branches</em>.  In general, we suggest working on older versions in a separate clone.</p>
+<h3 id="why-working-directly-on-a-submodule-is-a-bad-idea">Why working directly on a submodule is a bad idea</h3>
+<p>If you are working directly on one of the submodules (eg: fixing a bug) you should be working in an entirely separate
+clone of <em>only</em> that submodule.  While technically possible, working in the <code>opencast/opencast</code> clone's copy of the
+submodule can lead to very confusing situations which are easily avoided if you instead work on the code in a separate
+clone and treat the nested submodule from the main codebase as a black box.</p>
 <h2 id="release-process">Release Process</h2>
 <p>As indicated above, the release cycle of a new Opencast version starts when a release branch is cut. Patches merged into
 <code>develop</code> after the cut will be part of the next version, but not the one just cut.</p>
