@@ -172,7 +172,12 @@ git stash    # stash them if necessary
 <li>
 <p>Create and push the new release branch:</p>
 <pre><code>git checkout -b r/20.x
+git submodule foreach git checkout -b r/20.x
+sed -i 's#branch = develop#branch = r/20.x#g' .gitmodules
+git add .gitmodules
+git commit -m "Updating .gitmodules to point at the r/20.x"
 git push &lt;remote&gt; r/20.x
+git submodule foreach git push &lt;remote&gt; r/20.x
 </code></pre>
 </li>
 <li>
@@ -184,38 +189,18 @@ git push &lt;remote&gt; r/20.x
 <li>
 <p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
-git status | grep modified: | grep -v pom.xml   # this should have no output
+git status | grep modified: | grep -v pom.xml | grep -v "modified content"  # this should have no output
 </code></pre>
 </li>
 <li>
 <p>If everything looks fine, commit the changes and push it to the community repository:</p>
-<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+<pre><code>git submodule foreach git add pom.xml
+git submodule foreach git commit -s -m 'Bumping pom.xml Version Nnumbers'
+git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git add $(git submodule | cut -f 2 -d " ")
 git commit -s -m 'Bumping pom.xml Version Numbers'
 git push &lt;remote&gt; develop
-</code></pre>
-</li>
-<li>
-<p>Create a release branch in the admin-ui-interface repository:</p>
-<pre><code>git clone -b develop git@github.com:opencast/opencast-admin-interface.git
-cd opencast-admin-interface
-git checkout -b r/21.x
-git push origin r/21.x
-</code></pre>
-</li>
-<li>
-<p>Create a release branch in the editor repository:</p>
-<pre><code>git clone -b develop git@github.com:opencast/opencast-editor.git
-cd opencast-editor
-git checkout -b r/21.x
-git push origin r/21.x
-</code></pre>
-</li>
-<li>
-<p>Create a release branch in the studio repository:</p>
-<pre><code>git clone -b develop git@github.com:opencast/studio.git
-cd studio
-git checkout -b r/21.x
-git push origin r/21.x
+git submodule foreach git push origin develop
 </code></pre>
 </li>
 <li>
@@ -434,7 +419,10 @@ git status | grep modified: | grep -v pom.xml
 </li>
 <li>
 <p>Commit the changes:</p>
-<pre><code>git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+<pre><code>git submodule foreach git add pom.xml
+git submodule foreach git commit -S -m 'Opencast 20.0'
+git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
+git add $(git submodule | cut -f 2 -d " ")
 git commit -S -m 'Opencast 20.0'
 </code></pre>
 </li>
@@ -443,7 +431,9 @@ git commit -S -m 'Opencast 20.0'
 </li>
 <li>
 <p>Push the tag to the community repository, and remove the local branch:</p>
-<pre><code>git tag -s 20.0 -m 'Opencast 20.0'
+<pre><code>git submodule foreach git tag -s 20.0 -m 'Opencast 20.0'
+git tag -s 20.0 -m 'Opencast 20.0'
+git submodule foreach git push origin 20.0
 git push &lt;remote&gt; 20.0
 git branch -D tmp-20.0
 </code></pre>
