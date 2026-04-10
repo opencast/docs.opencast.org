@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Log - Administration Guide</title>
+    <title>Matrix Notification - Administration Guide</title>
     <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
@@ -33,9 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Logging Workflow Operation", url: "#_top", children: [
+          {title: "Matrix Notification Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
+              {title: "Parameter Table", url: "#parameter-table" },
               {title: "Operation Example", url: "#operation-example" },
+              {title: "Configuration", url: "#configuration" },
           ]},
         ];
 
@@ -65,20 +67,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../matrix-notification-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../mattermost-notify-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../matrix-notification-woh/" class="btn btn-xs btn-link">
-        Matrix Notification
+      <a href="../mattermost-notify-woh/" class="btn btn-xs btn-link">
+        Mattermost Notification Module
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../inspect-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../log-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../inspect-woh/" class="btn btn-xs btn-link">
-        Inspect
+        Previous</a><a href="../log-woh/" class="btn btn-xs btn-link">
+        Log
       </a>
     </div>
     
@@ -86,53 +88,47 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="logging-workflow-operation">Logging Workflow Operation</h1>
-<p>ID: <code>log</code></p>
+    <h1 id="matrix-notification-workflow-operation">Matrix Notification Workflow Operation</h1>
+<p>ID: <code>matrix-notify</code></p>
 <h2 id="description">Description</h2>
-<p>The <code>log</code> operation is primarily meant for testing and debugging purposes.
-It allows you to log the current state of of a workflow and/or its media package.</p>
+<p>The matrix-notify operation sends a message to a specified Matrix room using the Matrix Client-Server API. It is useful to send notifications when some operation(s) have been completed or some error(s) have occurred in a workflow.</p>
+<h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Default</th>
-<th>Description</th>
+<th>configuration keys</th>
+<th>description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>directory</td>
-<td></td>
-<td>If set, write the logs to this directory</td>
+<td>room-id</td>
+<td>The Matrix room ID to send the notification to</td>
 </tr>
 <tr>
-<td>workflowinstance-xml</td>
-<td><code>false</code></td>
-<td>Log the current state of the workflow as XML</td>
-</tr>
-<tr>
-<td>mediapackage-xml</td>
-<td><code>false</code></td>
-<td>Log the state of the current workflow's media package as XML</td>
-</tr>
-<tr>
-<td>mediapackage-json</td>
-<td><code>true</code></td>
-<td>Log the state of the current workflow's media package as JSON</td>
+<td>message</td>
+<td>The message body to send</td>
 </tr>
 </tbody>
 </table>
-<p>Setting any output configuration (<code>*-xml</code> and <code>*-json</code> options) will overwrite all defaults and only the formats
-explicitly enabled will be logged.</p>
 <h2 id="operation-example">Operation Example</h2>
-<pre><code class="language-yml">- id: log
-  description: Log to system logger
-</code></pre>
-<pre><code class="language-yaml">  - id: log
-    description: Log to file
+<pre><code class="language-yaml">  - id: matrix-notify
+    description: Notify Matrix about workflow completion
     configurations:
-      - directory: /tmp/logtest
+      - room-id: &quot;!room-id!&quot;
+      - message: &quot;Workflow has been completed successfully&quot;
 </code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The Matrix Notification Workflow Operation Handler requires the following configuration properties to be set in <code>etc/org.opencastproject.workflow.handler.matrix.MatrixNotificationWorkflowOperationHandler.cfg</code>:</p>
+<ul>
+<li><code>matrix.server.url</code> - The Matrix server URL (default: https://matrix.org)</li>
+<li><code>matrix.access.token</code> - The Matrix access token for authentication (required)</li>
+<li><code>matrix.max.retry</code> - Maximum number of retry attempts (default: 5)</li>
+<li><code>matrix.timeout</code> - Request timeout in seconds (default: 10)</li>
+</ul>
+<p>The <code>room-id</code> and <code>message</code> parameters are specified in the workflow configuration and are required for the operation to function.</p>
+<p>The Matrix access token must be obtained from the Matrix server and should have appropriate permissions to send messages to the specified room.</p>
+<p>Note: The Matrix server URL can be set to a custom Matrix server (e.g., https://matrix.example.com) if using a self-hosted Matrix server instead of the default matrix.org server.</p>
 
   <br>
     
@@ -145,20 +141,20 @@ explicitly enabled will be logged.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../matrix-notification-woh/" class="btn btn-xs btn-default pull-right">
+      <a href="../mattermost-notify-woh/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../matrix-notification-woh/" class="btn btn-xs btn-link">
-        Matrix Notification
+      <a href="../mattermost-notify-woh/" class="btn btn-xs btn-link">
+        Mattermost Notification Module
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../inspect-woh/" class="btn btn-xs btn-default pull-left">
+      <a href="../log-woh/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../inspect-woh/" class="btn btn-xs btn-link">
-        Inspect
+        Previous</a><a href="../log-woh/" class="btn btn-xs btn-link">
+        Log
       </a>
     </div>
     
@@ -169,7 +165,7 @@ explicitly enabled will be logged.</p>
 
 <footer class="container-fluid wm-page-content">
       <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/log-woh.md"><i class="fa fa-github"></i>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/workflowoperationhandlers/matrix-notification-woh.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
       </p>
   <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
