@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Elasticsearch - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "OpenSearch Configuration", url: "#_top", children: [
+              {title: "Version", url: "#version" },
+              {title: "Additional Plug-ins", url: "#additional-plug-ins" },
+              {title: "All-in-One Configuration", url: "#all-in-one-configuration" },
+              {title: "Configuring External Search Node", url: "#configuring-external-search-node" },
+              {title: "Optional Configuration", url: "#optional-configuration" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../serving-static-files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../serving-static-files/" class="btn btn-xs btn-link">
+        Serving Static Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="opensearch-configuration">OpenSearch Configuration</h1>
+<blockquote>
+<p>Opencast still works with older versions of Elasticsearch.
+If you use Elasticsearch, please make sure to get the correct version.</p>
+</blockquote>
+<p>OpenSearch powers the external API as well as the administrative user interface of Opencast.</p>
+<h2 id="version">Version</h2>
+<p>Opencast requires specific versions of OpenSearch/Elasticsearch.
+Please make sure to install the correct version:</p>
+<ul>
+<li>OpenSearch 1.x</li>
+<li>Elasticsearch 7.10.2</li>
+</ul>
+<h2 id="additional-plug-ins">Additional Plug-ins</h2>
+<p>Opencast needs the <code>analysis-icu</code> plugin for OpenSearch/Elasticsearch.
+<strong>You might have already installed it if you installed Opencast from the package repositories.</strong></p>
+<p>To manually install the ICU plugin, run the following:</p>
+<pre><code class="language-no-highlight">bin/opensearch-plugin install analysis-icu
+</code></pre>
+<h2 id="all-in-one-configuration">All-in-One Configuration</h2>
+<p>If you run Opencast as a single node and also run OpenSearch on that node, it might be okay to allow Opencast access
+with no further authentication. In that case, just edit <code>/etc/opensearch/opensearch.yml</code> and set:</p>
+<pre><code class="language-yaml">plugins.security.disabled: true
+</code></pre>
+<p>Please be aware, that this allows anyone who can access that machine to write to OpenSearch!</p>
+<h2 id="configuring-external-search-node">Configuring External Search Node</h2>
+<p>If you run Opencast in a cluster, or you just want to run OpenSearch on a different node, the configuration is a bit
+more complicated since you want to require authentication and TLS.</p>
+<!-- While this links to the RPM guide, the steps are identical for other installation types: -->
+<p>To set-up HTTP Basic authentication and TLS within OpenSearch, follow the <a href="https://opensearch.org/docs/1.3/install-and-configure/install-opensearch/rpm/#step-3-set-up-opensearch-in-your-environment">Set up OpenSearch in your environment
+</a>
+guide from OpenSearch.</p>
+<p>Alternatively, use a reverse proxy like Nginx or Caddy to terminate TLS and require HTTP Basic authentication.</p>
+<p>Next, configure the authentication in Opencast.
+Opencast's OpenSearch settings can be found in the <code>etc/custom.properties</code> configuration file.
+The keys are stilli called <code>org.opencastproject.elasticsearch.*</code>, but they will work for OpencSearch!</p>
+<p>Relevant configuration keys are:</p>
+<ul>
+<li><code>org.opencastproject.elasticsearch.server.hostname</code></li>
+<li><code>org.opencastproject.elasticsearch.server.scheme</code></li>
+<li><code>org.opencastproject.elasticsearch.server.port</code></li>
+<li><code>org.opencastproject.elasticsearch.username</code></li>
+<li><code>org.opencastproject.elasticsearch.password</code></li>
+</ul>
+<h2 id="optional-configuration">Optional Configuration</h2>
+<p>Additional settings can be configured in <code>org.opencastproject.elasticsearch.index.ElasticsearchIndex.cfg</code>:</p>
+<ul>
+<li><code>index.indentifier</code></li>
+<li><code>index.name</code></li>
+<li><code>max.retry.attempts.get</code></li>
+<li><code>max.retry.attempts.update</code></li>
+<li><code>retry.waiting.period.get</code></li>
+<li><code>retry.waiting.period.update</code></li>
+<li><code>retry.delay.on.startup</code></li>
+</ul>
+<p>The identifier defines which index opencast is looking for.
+This might be interesting if you run an OpenSearch cluster and want to follow a naming scheme.
+But you should be aware that the index actually consists of multiple sub-indices whose identifiers will be appended to
+the base name with an _ (e.g. <code>opencast_event</code>).
+If an index doesn't exist, Opencast will create it.
+The name is used for logging purposes only.</p>
+<p>The max retry attempts and the waiting periods will be used in case of an exception, e.g. if there are too many
+concurrent requests or OpenSearch is temporarily unavailable.
+The retry behavior can be configured differently for get and update/delete requests.
+This way you can set more retry attempts for updates because of the more serious consequences if those requests fail.
+The waiting period is used to not overwhelm OpenSearch with retry requests, making the problem worse.
+By default, no retry will be attempted.</p>
+<p>The <code>retry.delay.on.startup</code> defines how long Opencast will wait between retry attempts
+when the connection to the index fails on startup. The default is 10 seconds.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../serving-static-files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../serving-static-files/" class="btn btn-xs btn-link">
+        Serving Static Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/searchindex/elasticsearch.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Using Caddy - Administration Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Enable HTTPS using Caddy", url: "#_top", children: [
+              {title: "Opencast Configuration", url: "#opencast-configuration" },
+              {title: "Minimal Set-up", url: "#minimal-set-up" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script>
+      <script src="../../../javascript/popper.js"></script>
+      <script src="../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../self-signed-certificates/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../self-signed-certificates/" class="btn btn-xs btn-link">
+        Self-Signed Certificates
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../apache-httpd/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../apache-httpd/" class="btn btn-xs btn-link">
+        Using Apache httpd
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="enable-https-using-caddy">Enable HTTPS using Caddy</h1>
+<p>This guide will help you to configure Caddy 2 to act as HTTP(S) proxy for Opencast.</p>
+<h2 id="opencast-configuration">Opencast Configuration</h2>
+<p>Make sure to use <code>https</code> as protocol for <code>org.opencastproject.server.url</code> in <code>etc/custom.properties</code>.</p>
+<pre><code class="language-ini">org.opencastproject.server.url=https://example.opencast.org
+</code></pre>
+<p>No other configuration is required. Do not enable TLS in Opencast. Listen to local connections only. Both are the
+default settings.</p>
+<h2 id="minimal-set-up">Minimal Set-up</h2>
+<p>The following configuration is an example for <code>/etc/caddy/Caddyfile</code>.</p>
+<p>Explanations for the configuration directives are provided inline. Please make sure to replace <code>example.opencast.org</code>
+with your node's domain name.</p>
+<p>The main goals of this set-up are:</p>
+<ul>
+<li>Always redirect to HTTPS</li>
+<li>Proxy to Opencast and take care of TLS</li>
+</ul>
+<p>The great benefit of Caddy is that it takes care of most of the stuff without extra configuration, for example:</p>
+<ul>
+<li>Automatically redirects HTTP to HTTPS</li>
+<li>Has built-in support for ACME and automatically obtains certificates from Let's Encrypt</li>
+<li>Only uses secure TLS-Versions and Ciphers by default</li>
+<li>Automatically sets/passes the required headers</li>
+</ul>
+<pre><code class="language-caddy">example.opencast.org {
+
+    # Proxy requests to Opencast. This expects Opencast to be running locally on port 8080 which
+    # should be the default set-up.
+    reverse_proxy 127.0.0.1:8080 {
+
+        # Make sure to redirect location headers to HTTPS. This is just a precaution and shouldn't
+        # strictly be necessary but it did prevent some issues in the past and it does not cost
+        # much performance.
+        header_down Location http:// https://
+
+        # Make sure to serve cookies only via secure connections.
+        header_down Set-Cookie (.*) &quot;$1; HttpOnly; Secure; Partitioned;&quot;
+
+        # Depending on your integration, you may also want to allow cookies to be used on other
+        # sites. In that case, use this instead:
+        #header_down Set-Cookie (.*) &quot;$1; HttpOnly; Secure; SameSite=None; Partitioned;&quot;
+    }
+
+    # Optional - Set a custom certificate and key. This disables ACME.
+    #tls /path/to/example.opencast.org.crt /path/to/example.opencast.org.key
+}
+</code></pre>
+<blockquote>
+<p>It is also possible to use a custom ACME CA. For instructions, please take a look at the "acme_..." options
+<a href="https://caddyserver.com/docs/caddyfile/options">here</a>.</p>
+</blockquote>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../self-signed-certificates/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../self-signed-certificates/" class="btn btn-xs btn-link">
+        Self-Signed Certificates
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../apache-httpd/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../apache-httpd/" class="btn btn-xs btn-link">
+        Using Apache httpd
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/https/caddy.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
