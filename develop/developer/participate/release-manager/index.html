@@ -153,8 +153,8 @@ list and publish it on the release notes page.</p>
 <h3 id="release-branch">Release Branch</h3>
 <p>According to the set release schedule, at one point a release branch should be cut, effectively marking a feature freeze
 for a given release.  This branch is split off <code>develop</code> and should be named <code>r/N.x</code> (e.g.
-<code>r/20.x</code> for the Opencast 20 release branch).</p>
-<p>Example on how to create the Opencast 20 release branch:</p>
+<code>r/21.x</code> for the Opencast 21 release branch).</p>
+<p>Example on how to create the Opencast 21 release branch:</p>
 <ol>
 <li>
 <p>Check out <code>develop</code> and make sure it has the latest state (replace <code>&lt;remote&gt;</code> with your remote name for the community
@@ -171,19 +171,19 @@ git stash    # stash them if necessary
 </li>
 <li>
 <p>Create and push the new release branch:</p>
-<pre><code>git checkout -b r/20.x
-git submodule foreach git checkout -b r/20.x
-sed -i 's#branch = develop#branch = r/20.x#g' .gitmodules
+<pre><code>git checkout -b r/21.x
+git submodule foreach git checkout -b r/21.x
+sed -i 's#branch = develop#branch = r/21.x#g' .gitmodules
 git add .gitmodules
-git commit -m "Updating .gitmodules to point at the r/20.x"
-git push &lt;remote&gt; r/20.x
-git submodule foreach git push &lt;remote&gt; r/20.x
+git commit -m "Updating .gitmodules to point at the r/21.x"
+git push &lt;remote&gt; r/21.x
+git submodule foreach git push &lt;remote&gt; r/21.x
 </code></pre>
 </li>
 <li>
 <p>That is it for the release branch. Now update the versions in <code>develop</code> in preparation for the next release:</p>
 <pre><code>git checkout develop
-./mvnw versions:set -DnewVersion=21-SNAPSHOT versions:commit
+./mvnw versions:set -DnewVersion=22-SNAPSHOT versions:commit
 </code></pre>
 </li>
 <li>
@@ -207,7 +207,7 @@ git submodule foreach git push origin develop
 <p>File a PR against the infra repo updating version numbers:</p>
 <pre><code>git clone -b master git@github.com:opencast/opencast-project-infrastructure.git
 [ Update ansible-demo-machines/deploy.yml ]
-git commit -m "Updating demo machine versions due to 21 branch cut"
+git commit -m "Updating demo machine versions due to 22 branch cut"
 [ Create pr ]
 [ Bug QA manager on Matrix/email ]
 </code></pre>
@@ -313,9 +313,9 @@ moderation, issues that should be raised to community awareness, …) and bring 
 developer list or wherever appropriate.</p>
 <h3 id="merging-release-branches">Merging Release Branches</h3>
 <p>To not have to merge bug fixes into several branches and create several pull requests, the release branch should be
-merged down on a regular basis. Assuming, for example, that <code>r/20.x</code> is the latest release
+merged down on a regular basis. Assuming, for example, that <code>r/21.x</code> is the latest release
 branch, merges should happen like this:</p>
-<pre><code>r/19.x → r/20.x → develop
+<pre><code>r/20.x → r/21.x → develop
 </code></pre>
 <p>While any committer may do this at any time, it is good practice for release managers to do this for their release
 branches on a regular basis.</p>
@@ -335,7 +335,7 @@ git merge &lt;remote&gt;/develop   # this should be a fast-forward merge
 <li>
 <p>Merge the release branch. Note that if large merge conflicts arise, you may ask for help from the people creating the
    problematic patches:</p>
-<pre><code>git merge &lt;remote&gt;/r/20.x
+<pre><code>git merge &lt;remote&gt;/r/21.x
 </code></pre>
 </li>
 <li>
@@ -349,7 +349,7 @@ git merge &lt;remote&gt;/develop   # this should be a fast-forward merge
 to be added, it is something that should happen early during the release process. If files need to be removed, this
 needs to be done manually.</p>
 <h3 id="releasing">Releasing</h3>
-<p>The following steps outline the necessary steps for cutting the final release, using 20.0
+<p>The following steps outline the necessary steps for cutting the final release, using 21.0
 as an example:</p>
 <ol>
 <li>
@@ -376,9 +376,9 @@ as an example:</p>
 <p>Update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
    </a> is a convenient tool
    for this.  The script can be called a few different ways, please read the documentation and figure our yours.</p>
-<pre><code>python3 helper-scripts/release-management/create-changelog.py [args] &gt;&gt; changelog/opencast-20.md
+<pre><code>python3 helper-scripts/release-management/create-changelog.py [args] &gt;&gt; changelog/opencast-21.md
 [ manual check that the doc looks correct ]
-git add changelog/opencast-20.md
+git add changelog/opencast-21.md
 </code></pre>
 </li>
 <li>
@@ -395,19 +395,19 @@ picked up by the script above!</p>
    summary of the development activity between x.y and x.y-1</p>
 <pre><code>vim releasenotes.md
 git commit -s releasenotes.md changelog.md -m 'updated release notes and changelog'
-git push &lt;remote&gt; r/20.x
+git push &lt;remote&gt; r/21.x
 </code></pre>
 </li>
 </ul>
 </li>
 <li>
 <p>Switch to a new branch to create the release (name does not really matter):</p>
-<pre><code>git checkout -b tmp-20.0
+<pre><code>git checkout -b tmp-21.0
 </code></pre>
 </li>
 <li>
 <p>Make the version changes for the release:</p>
-<pre><code>./mvnw versions:set -DnewVersion=20.0 versions:commit
+<pre><code>./mvnw versions:set -DnewVersion=21.0 versions:commit
 </code></pre>
 </li>
 <li>
@@ -420,10 +420,10 @@ git status | grep modified: | grep -v pom.xml
 <li>
 <p>Commit the changes:</p>
 <pre><code>git submodule foreach git add pom.xml
-git submodule foreach git commit -S -m 'Opencast 20.0'
+git submodule foreach git commit -S -m 'Opencast 21.0'
 git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
 git add $(git submodule | cut -f 2 -d " ")
-git commit -S -m 'Opencast 20.0'
+git commit -S -m 'Opencast 21.0'
 </code></pre>
 </li>
 <li>
@@ -431,11 +431,11 @@ git commit -S -m 'Opencast 20.0'
 </li>
 <li>
 <p>Push the tag to the community repository, and remove the local branch:</p>
-<pre><code>git submodule foreach git tag -s 20.0 -m 'Opencast 20.0'
-git tag -s 20.0 -m 'Opencast 20.0'
-git submodule foreach git push origin 20.0
-git push &lt;remote&gt; 20.0
-git branch -D tmp-20.0
+<pre><code>git submodule foreach git tag -s 21.0 -m 'Opencast 21.0'
+git tag -s 21.0 -m 'Opencast 21.0'
+git submodule foreach git push origin 21.0
+git push &lt;remote&gt; 21.0
+git branch -D tmp-21.0
 </code></pre>
 </li>
 <li>
