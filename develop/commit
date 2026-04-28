@@ -1,54 +1,9 @@
-commit 6a0bf2943f1e541bd8611af1edce861e622af501
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Mon Apr 27 12:59:55 2026 +0200
+commit 8e3f3ee59d2f93baedfda139cd22ff6946f3f649
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Tue Apr 28 11:55:53 2026 -0600
 
-    Add metric for storage usage (#7376)
+    Merge branch 't/gitmodules-fix' of gregorydlogan/opencast into develop
     
-    Issue: #7368
+    Pull request #7619
     
-    This PR simply uses the available methods of the StorageUsage interface
-    for new metrics. The new metrics:
-    
-    - Total Space
-    - Usable Space
-    - Used Space
-    
-    for
-    
-    - Asset Manager
-    - Workspace
-    - Working File Repository
-    
-    Here an example:
-    
-    ```properties
-    # TYPE opencast_storage_available gauge
-    # HELP opencast_storage_available Shows available and used up space of different directories of Opencast.
-    opencast_storage_available{part="OsgiFileSystemAssetStore_usedSpace"} 0.0
-    opencast_storage_available{part="WorkingFileRepositoryRestEndpoint_usedSpace"} 0.0
-    opencast_storage_available{part="WorkspaceImpl_totalSpace"} 1.021414735872E12
-    opencast_storage_available{part="WorkingFileRepositoryRestEndpoint_usableSpace"} 9.23058225152E11
-    opencast_storage_available{part="OsgiFileSystemAssetStore_usableSpace"} 9.23058225152E11
-    opencast_storage_available{part="WorkspaceImpl_usedSpace"} 0.0
-    opencast_storage_available{part="WorkingFileRepositoryRestEndpoint_totalSpace"} 1.021414735872E12
-    opencast_storage_available{part="WorkspaceImpl_usableSpace"} 9.23058225152E11
-    opencast_storage_available{part="OsgiFileSystemAssetStore_totalSpace"} 1.021414735872E12
-    ```
-    
-    edit:
-    
-    the new version looks like this:
-    
-    ```properties
-    # TYPE opencast_storage gauge
-    # HELP opencast_storage Shows available and used up space of different directories of Opencast.
-    opencast_storage{part="WorkspaceImpl",kind="usable"} 9.22632798208E11
-    opencast_storage{part="OsgiFileSystemAssetStore",kind="used"} 0.0
-    opencast_storage{part="WorkspaceImpl",kind="total"} 1.021414735872E12
-    opencast_storage{part="OsgiFileSystemAssetStore",kind="usable"} 9.22632798208E11
-    opencast_storage{part="WorkingFileRepositoryRestEndpoint",kind="total"} 1.021414735872E12
-    opencast_storage{part="WorkspaceImpl",kind="used"} 0.0
-    opencast_storage{part="WorkingFileRepositoryRestEndpoint",kind="usable"} 9.22632798208E11
-    opencast_storage{part="WorkingFileRepositoryRestEndpoint",kind="used"} 0.0
-    opencast_storage{part="OsgiFileSystemAssetStore",kind="total"} 1.021414735872E12
-    ```
+      Fix incorrect submodule versions in develop

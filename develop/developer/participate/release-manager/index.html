@@ -157,6 +157,11 @@ for a given release.  This branch is split off <code>develop</code> and should b
 <p>Example on how to create the Opencast 21 release branch:</p>
 <ol>
 <li>
+<p>Ensure that you have applied a replacement rule set up for github</p>
+<pre><code>git config --global url."git@github.com:opencast/".insteadOf "https://github.com/opencast/"
+</code></pre>
+</li>
+<li>
 <p>Check out <code>develop</code> and make sure it has the latest state (replace <code>&lt;remote&gt;</code> with your remote name for the community
    repository):</p>
 <pre><code>git checkout develop
@@ -181,9 +186,17 @@ git submodule foreach git push &lt;remote&gt; r/21.x
 </code></pre>
 </li>
 <li>
-<p>That is it for the release branch. Now update the versions in <code>develop</code> in preparation for the next release:</p>
+<p>Merge the new release branch forward, then fix the submodule versions back to develop</p>
 <pre><code>git checkout develop
-./mvnw versions:set -DnewVersion=22-SNAPSHOT versions:commit
+git merge r/21.x
+sed -i 's#branch = .*#branch = develop#g' .gitmodules
+git add .gitmodules
+git commit -m "Reversing forward merge of submodule branches"
+</code></pre>
+</li>
+<li>
+<p>Now update the pom versions in <code>develop</code> in preparation for the next release:</p>
+<pre><code>./mvnw versions:set -DnewVersion=22-SNAPSHOT versions:commit
 </code></pre>
 </li>
 <li>
@@ -195,7 +208,7 @@ git status | grep modified: | grep -v pom.xml | grep -v "modified content"  # th
 <li>
 <p>If everything looks fine, commit the changes and push it to the community repository:</p>
 <pre><code>git submodule foreach git add pom.xml
-git submodule foreach git commit -s -m 'Bumping pom.xml Version Nnumbers'
+git submodule foreach git commit -s -m 'Bumping pom.xml Version Numbers'
 git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
 git add $(git submodule | cut -f 2 -d " ")
 git commit -s -m 'Bumping pom.xml Version Numbers'
@@ -353,34 +366,24 @@ needs to be done manually.</p>
 as an example:</p>
 <ol>
 <li>
+<p>Ensure that you have applied a replacement rule set up for github</p>
+<pre><code>git config --global url."git@github.com:opencast/".insteadOf "https://github.com/opencast/"
+</code></pre>
+</li>
+<li>
 <p>Switch to and update your local release branch, ensuring your local branch is up to date with the main repo.</p>
 </li>
 <li>
-<p>Cut and merge a <a href="https://github.com/opencast/opencast-admin-interface">new release of the admin UI</a> if necessary</p>
-</li>
-<li>
-<p>Cut and merge a <a href="https://github.com/opencast/opencast-editor">new release of the editor</a> if necessary</p>
-</li>
-<li>
-<p>Cut and merge a <a href="https://github.com/opencast/studio">new release of studio</a> if necessary</p>
-</li>
-<li>
-<p>Update the release notes and changelog</p>
-<ul>
-<li>
-<p>First move to the correct directory</p>
-<pre><code>cd docs/guide/admin/docs
-</code></pre>
-</li>
-<li>
-<p>Update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
+<p>Add the release notes, and update the changelog. The <code>create-changelog</code> <a href="https://github.com/opencast/helper-scripts/tree/master/release-management/create-changelog">helper script
    </a> is a convenient tool
    for this.  The script can be called a few different ways, please read the documentation and figure our yours.</p>
-<pre><code>python3 helper-scripts/release-management/create-changelog.py [args] &gt;&gt; changelog/opencast-21.md
+<pre><code>cd docs/guides/admin/docs/
+vim releasenotes.md
+python3 helper-scripts/release-management/create-changelog.py [args] &gt;&gt; changelog/opencast-21.md
 [ manual check that the doc looks correct ]
 git add changelog/opencast-21.md
 </code></pre>
-</li>
+<ul>
 <li>
 <p>Check that PRs tagged as features are all listed in the release notes, since sometimes committers miss adding the
 text files.</p>
@@ -393,16 +396,13 @@ picked up by the script above!</p>
 <p>The release notes for a major release (x.0) should be built from the various text files in the 
    <code>docs/guides/admin/docs/releasenotes</code> directory.  the release notes for a minor release (x.y) should be a rough
    summary of the development activity between x.y and x.y-1</p>
-<pre><code>vim releasenotes.md
-git commit -s releasenotes.md changelog.md -m 'updated release notes and changelog'
-git push &lt;remote&gt; r/21.x
-</code></pre>
 </li>
 </ul>
 </li>
 <li>
 <p>Switch to a new branch to create the release (name does not really matter):</p>
 <pre><code>git checkout -b tmp-21.0
+git submodule foreach git checkout -b tmp-21.0
 </code></pre>
 </li>
 <li>
@@ -414,11 +414,11 @@ git push &lt;remote&gt; r/21.x
 <p>Have a look at the changes. Make sure that nothing else was modified:</p>
 <pre><code>git diff
 # The following command should yield no output:
-git status | grep modified: | grep -v pom.xml
+git status | grep modified: | grep -v pom.xml | grep -v "modified content"
 </code></pre>
 </li>
 <li>
-<p>Commit the changes:</p>
+<p>Commit the changes and create a release tag:</p>
 <pre><code>git submodule foreach git add pom.xml
 git submodule foreach git commit -S -m 'Opencast 21.0'
 git add $(git status | grep 'modified:.*pom.xml' | awk '{print $2;}')
@@ -430,21 +430,24 @@ git commit -S -m 'Opencast 21.0'
 <p>Build and test the distributions.  Start each one and make sure they boot successfully.</p>
 </li>
 <li>
-<p>Push the tag to the community repository, and remove the local branch:</p>
+<p>Push the tag to the community repository (you can remove the branch afterwards):</p>
 <pre><code>git submodule foreach git tag -s 21.0 -m 'Opencast 21.0'
 git tag -s 21.0 -m 'Opencast 21.0'
 git submodule foreach git push origin 21.0
 git push &lt;remote&gt; 21.0
 git branch -D tmp-21.0
+git submodule foreach git branch -D tmp-21.0
 </code></pre>
 </li>
 <li>
 <p>Check the “Create new release” GitHub Actions workflow.
-    It will automatically build and upload the release tarballs and create a new release draft.
-    Once it is finished, review the draft, adjust the description and publish the release.</p>
-<p>If the workflow fails, investigate what was going wrong and either restart the workflow or create the release
-manually in the GitHub user interface.</p>
+   It will automatically build and upload the release tarballs and create a new release draft.
+   Once it is finished, review the draft, adjust the description and publish the release.</p>
 </li>
+</ol>
+<p>If the workflow fails, investigate what was going wrong and either restart the workflow or create the release
+   manually in the GitHub user interface.</p>
+<ol>
 <li>
 <p>In the case a x.0 release, post a release notification on <a href="https://opencast.org">opencast.org</a>.  You will need to
     ensure you have the appropriate permissions - talk to the QA Coordinator, or the board if you do not know how or
