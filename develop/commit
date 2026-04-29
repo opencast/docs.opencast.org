@@ -1,27 +1,41 @@
-commit 7d87f14895fe251c7a1c635956243c73226da281
+commit f4c62c6d68bceb249b1d60fea441072fd4dc030a
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Apr 29 12:15:42 2026 +0200
+Date:   Wed Apr 29 12:19:10 2026 +0200
 
-    Get Extended Metadata of Events from API via the Index (#7332)
+    Add API endpoints for playlist management in the admin interface (#7496)
     
-    Instead of reading extended metadata catalogs from disk, we can use the
-    fact that extended metadata are in the index (#3274) to get them from
-    there when requesting metadata from the External API. This should be
-    significantly faster.
+    This adds endpoints that allow creating, reading, updating and deleting
+    playlists in the Admin UI. They are mostly copied over from the external
+    API but have some additions, mainly related to filtering. This PR also
+    adds a basic listprovider for that purpose.
     
-    The returned format should be the same, which made the code a bit
-    uglier, but means no new API version. To test, configure extended
-    metadata and request an event from the API with `withmetadata` set.
+    Frontend for this is in
+    https://github.com/opencast/opencast-admin-interface/pull/1537
     
-    Indexing extended metadata was first introduced in OC 13, which required
-    an index rebuild anyway, but since there were some issues with that in
-    the recent past (see #6984), this might require another index rebuild
-    for the Asset Manager depending on when the last index rebuild was run.
+    ### How to test this patch
     
-    One small caveat: The extended metadata in the index currently don't
-    consider that one could configure two metadata fields with the same id
-    for the same catalog, but for different namespaces. As this should be
-    very rare, I'm not touching that right now bc we want to move away from
-    dublincore anyway.
+    When you check out and install this branch, you can test the endpoints
+    in the REST Service Documentation under `/admin-ng/playlists`
     
-    Fixes #7473
+    Part of https://github.com/opencast/opencast/issues/6909
+    (should only be closed once both this and the admin UI PR are merged)
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
