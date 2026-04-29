@@ -1,9 +1,44 @@
-commit fee625c5b71dbafb918e9b87494faa91ba0b9d36
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Apr 28 12:31:14 2026 -0600
+commit 6ca32651b7031a5256ec7a4c20457e122180005e
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Wed Apr 29 12:11:17 2026 +0200
 
-    Merge branch 'remove-checkstyle-suppression' of Arnei/opencast into develop
+    Get listproviders for metadata from External API (#7476)
     
-    Pull request #7618
-    Fixes #2238
-      Remove checkstyle suppression
+    A while ago we stopped returning collections for metadata fields with
+    listproviders attached from the External API to improve performance.
+    However, that means that an external application has no way to map a
+    value for one of those fields to its "human-readable value", meaning
+    what the Admin UI would show you, or show a selection of alternative
+    values.
+    
+    By including what listprovider is attached to that metadata field (an
+    information we already have internally), the application could fetch the
+    collection itself from the listproviders service if it wants to, without
+    impacting performance for the External API.
+    
+    Since this adds an attribute to the output data, this counts up the API
+    version as well.
+    
+    Example data:
+    ```
+      {
+        "identifier": "0a81278e-2865-484c-adcf-c0f6d407ca51",
+        "metadata": [
+          {
+            "flavor": "dublincore/episode-extended",
+            "title": "EVENTS.EVENTS.DETAILS.CATALOG.EPISODE",
+            "fields": [
+              {
+                "translatable": false,
+                "readOnly": false,
+                "id": "faculty",
+                "label": "Fachbereich",
+                "type": "text",
+                "value": "FACULTY1",
+                "required": true,
+                "listprovider": "FACULTIES" <- new!
+              }
+            ]
+          }
+      }
+    ```
