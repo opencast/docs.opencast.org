@@ -1,38 +1,12 @@
-commit e131349cab549b64045cd91df69c709187651f3a
+commit 5c051fd90d7cf5714952a8df2b2ef9891c8e7a9f
 Author: Martin Wygas <wygas@elan-ev.de>
-Date:   Fri May 15 15:29:24 2026 +0200
+Date:   Fri May 15 15:31:00 2026 +0200
 
-    Update submodules in r/20.x (#7658)
+    Fix default value for error states
     
-    Like https://github.com/opencast/opencast/pull/7656, the submodule
-    update code is currently not working for not-`develop` branches. This
-    pushes a manual update in prep for the 20.0 release tomorrow.
-    
-    ### How to test this patch
-    
-    Build and test the UIs
-    
-    ### AI Usage
-    
-    N/A
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [ ] ~[close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists~
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] ~include migration scripts and documentation, if appropriate~
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] ~explain why it needs to be merged into the legacy branch, if it
-    is targeting the legacy branch~
-    * [ ] ~include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)~
+    The PR #7450 changed the behaviour regarding error states.
+    It states that the default value is "disabled", but it is the
+    opposite. I ran into a problem where a service did run into a
+    problem and the service state were immediately set to `error`.
+    After changing the default value to "disabeld", everything
+    worked as expected.
