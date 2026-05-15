@@ -33,7 +33,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Upgrading Opencast from 18.x to 19.x", url: "#_top", children: [
+          {title: "Upgrading Opencast from 19.x to 20.x", url: "#_top", children: [
               {title: "Configuration Changes", url: "#configuration-changes" },
               {title: "Database Upgrade", url: "#database-upgrade" },
               {title: "Index Rebuild", url: "#index-rebuild" },
@@ -87,8 +87,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="upgrading-opencast-from-18x-to-19x">Upgrading Opencast from 18.x to 19.x</h1>
-<p>This guide describes how to upgrade Opencast 18.x to 19.x.
+    <h1 id="upgrading-opencast-from-19x-to-20x">Upgrading Opencast from 19.x to 20.x</h1>
+<p>This guide describes how to upgrade Opencast 19.x to 20.x.
 In case you need to upgrade older versions of Opencast, please refer to the documentation of
 <a href="https://docs.opencast.org">those versions</a> first.</p>
 <ol>
@@ -96,7 +96,7 @@ In case you need to upgrade older versions of Opencast, please refer to the docu
 <li>Stop your current Opencast instance</li>
 <li>Replace Opencast with the new version</li>
 <li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
-<li>Upgrade the database using <a href="#database-upgrade">the upgrade script</a></li>
+<li>Upgrade the database using <a href="#database-upgrade">the upgrade script (if needed)</a></li>
 <li>Start Opencast</li>
 <li><a href="#index-rebuild">Rebuild the index (if needed)</a></li>
 </ol>
@@ -107,26 +107,30 @@ command to list all changes:</p>
 </code></pre>
 <p>The most important changes are:</p>
 <ul>
-<li>Default workflows are now in yaml [<a href="https://github.com/opencast/opencast/pull/6798">#6798</a>]</li>
-<li>The configuration key <code>video-source-flavor</code> for the Subtitle Timeshift Workflow Operation Handler changed to
-  <code>video-source-flavors</code> (plural). [<a href="https://github.com/opencast/opencast/pull/6901">#6901</a>]</li>
-<li>Configuring JWT authentication is now substantially simpler [<a href="https://github.com/opencast/opencast/pull/7189">#7189</a>]</li>
-<li>The editor now displays less metadata by default [<a href="https://github.com/opencast/opencast/pull/7053">#7053</a>]</li>
-<li>The plugin <code>opencast-plugin-legacy-annotation</code> has been removed from <code>org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>.
-  [<a href="https://github.com/opencast/opencast/pull/6902">#6902</a>]</li>
-<li>Target tag handling has changed with [<a href="https://github.com/opencast/opencast/pull/6648">#6648</a>]:</li>
+<li>Paella 8 is now the default Paella version.  Paella 7 is scheduled for removal in Opencast 21. [<a href="https://github.com/opencast/opencast/pull/7214">#7214</a>]</li>
+<li>The circular dependency between index and list providers has been eliminated. The configuration for the ACL additional
+  actions list provider has been moved to the organization configuration. <a href="https://github.com/opencast/opencast/pull/7128">#7128</a></li>
+<li>JMX beans appear to be unused, and there are performance concerns surrounding JMX statistics. Therefore, they have
+  been removed to simplify our code. [<a href="https://github.com/opencast/opencast/pull/7317">#7317</a>]</li>
+<li>Disable service states by default. These tended to cause more issues in modern systems.  Functionality is still
+  present, just disabled by default. [<a href="https://github.com/opencast/opencast/pull/7450">#7450</a>]</li>
+<li>The configuration option "heartbeat.interval" was removed from <code>etc/org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>
+  Furthermore, only dispatching nodes will have a heartbeat from now on. [<a href="https://github.com/opencast/opencast/issues/7311">#7311</a>]</li>
+<li>All capture agent inputs are now preselected when scheduling a new event in the Admin UI [<a href="https://github.com/opencast/opencast/issues/1566">Admin Interface #1566</a>]</li>
+<li>Whether you were uploading or scheduling a new event in the Admin UI, the "Create Event" modal would always offer you
+  workflows tagged with either "upload" or "schedule". Now if you are uploading, you only get workflows tagged with
+  "upload". And if you are scheduling, you only get workflows tagged with "schedule". [<a href="https://github.com/opencast/admin-interface/issues/1567">Admin Interface #1567</a>]</li>
+<li>A new config option to filter available roles in the Admin UI access policy dropdowns was added. Allows you to
+  effectively remove catgories of roles (like ROLE_GROUP) from the dropdowns to make them more usable. [<a href="https://github.com/opencast/admin-interface/issues/1561">Admin Interface #1561</a>]
+  [<a href="https://github.com/opencast/opencast/pull/7541">#7541</a>]</li>
+<li>The editor thumbnail view has been improved. [<a href="https://github.com/opencast/editor/pull/1663">Editor #1663</a>]</li>
 </ul>
 <h2 id="database-upgrade">Database Upgrade</h2>
-<p>This script will drop a table which is no longer used in Opencast 19. You will find database
-upgrade scripts in <code>docs/upgrade/19_to_20/</code>. <strong>Make
-sure to backup your database before migrating, to be able to easily revert changes, if necessary.</strong></p>
+<p>A database upgrade for 20.x is not required if upgrading from an 19.x system. Upgrading from a version prior to 19.x
+may require a database upgrade, follow the corresponding upgrade guides for details.</p>
 <h2 id="index-rebuild">Index Rebuild</h2>
-<p>[<a href="https://github.com/opencast/opencast/pull/7477">#7477</a>] a fix applied in 19.4 re-enabled
-(Episode ID Roles)[https://docs.opencast.org/r/19.x/admin/#configuration/episode-id-roles/#episode-id-roles].  If your
-site uses these roles, a reindex of the search index or republishing the affected events will resolve the issue.  This
-can be safely ignored if your site does not use episode id roles.</p>
-<p>An index rebuild for for 19.x should not be required if upgrading from an 18.x system except for the above.  Upgrading
-from a version prior to 18.x requires an index rebuild, follow the 18.x upgrade guide for details.</p>
+<p>An index rebuild for 20.x is not required if upgrading from an 19.x system. Upgrading from a version prior to 19.x
+may require an index rebuild, follow the corresponding upgrade guides for details.</p>
 
   <br>
     
