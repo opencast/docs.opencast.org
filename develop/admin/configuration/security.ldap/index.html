@@ -94,6 +94,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 There are separate instructions on how to <a href="../security.cas/">configure an LDAP-backed CAS server</a>.</p>
 </blockquote>
 <h2 id="security-configuration">Security Configuration</h2>
+<p>Edit the <code>etc/org.opencastproject.kernel.security.SpringSecurityConfigurationArtifactInstaller.cfg</code>, adding all the expected ldap service configurations for each organization:</p>
+<pre><code># ldap.instances.&lt;organization_id&gt;=&lt;comma_separated_ldap_configuration_list&gt;
+ldap.instances.mh_default_org=ldapinstance1,ldapinstance2
+</code></pre>
+<p>In the example above, <em>ldapinstance1</em> and <em>ldapinstance1</em> correspond to LDAP service instances configured in <code>etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg</code> (see <em>LDAP Service Configuration</em> below).</p>
 <p>Edit the security configuration file at <code>etc/security/mh_default_org.xml</code>. In a multi-tenant set-up, you will have one
 configuration file for each tenant at <code>etc/security/&lt;organization_id&gt;.xml</code>.</p>
 <p>You will find several commented out LDAP sections in this file.
@@ -159,12 +164,9 @@ request information about users from the LDAP server in order to authenticate th
 </ul>
 <p>Both methods are not mutually exclusive – i.e. both can be activated at the same time, even though only the first one
 is uncommented in the sample file because it is the most usual.</p>
-<p>Next, uncomment the reference to Opencast's LDAP OSGI service, making sure to set the correct <code>instanceId</code> which needs
-to match the one used later in the LDAP service configuration.</p>
-<pre><code class="language-xml">&lt;osgi:reference id=&quot;authoritiesPopulator&quot; cardinality=&quot;1..1&quot;
-                interface=&quot;org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator&quot;
-                filter=&quot;(instanceId=theId)&quot;/&gt;
-</code></pre>
+<p>Next, make sure to name the LDAP authorities populator(s) passed to the
+LdapAuthenticationProvider(s) as a constructor parameter following this
+convention: <code>ldapAuthoritiesPopulator_&lt;ID&gt;</code>, where ID needs to match the one used later in the LDAP service configuration.</p>
 <p>Finally, enable the authentication provider by uncommenting:</p>
 <pre><code class="language-xml">&lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
 </code></pre>
@@ -230,7 +232,10 @@ at the bottom of the file. Please see the example below:</p>
     &lt;/bean&gt;
   &lt;/constructor-arg&gt;
   &lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
-  &lt;constructor-arg ref=&quot;authoritiesPopulator&quot; /&gt;
+  &lt;!-- Note that &lt;ID&gt; must match one of the LDAP service configurations --&gt;
+  &lt;!-- defined in etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg --&gt;
+  &lt;!-- constructor-arg ref=&quot;ldapAuthoritiesPopulator_&lt;ID&gt;&quot; /--&gt;
+  &lt;constructor-arg ref=&quot;ldapAuthoritiesPopulator_theId&quot; /&gt;
 &lt;/bean&gt;
 
 &lt;!-- PLEASE NOTE: The ID below must be changed for each context source instance --&gt;
@@ -258,7 +263,7 @@ at the bottom of the file. Please see the example below:</p>
       &lt;bean name=&quot;filterUserSearch&quot; class=&quot;org.springframework.security.ldap.search.FilterBasedLdapUserSearch&quot;&gt;
         &lt;constructor-arg index=&quot;0&quot; value=&quot;ou=OtherGroup,dc=my-other-institution,dc=other-country&quot; /&gt;
         &lt;constructor-arg index=&quot;1&quot; value=&quot;(uid={0})&quot; /&gt;
-             &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
+        &lt;!-- PLEASE NOTE: the ref below must match the corresponding context source ID --&gt;
         &lt;constructor-arg ref=&quot;contextSource2&quot; /&gt;
          &lt;/bean&gt;
        &lt;/property&gt;
@@ -266,17 +271,11 @@ at the bottom of the file. Please see the example below:</p>
   &lt;/constructor-arg&gt;
   &lt;!-- Defines how the user attributes are converted to authorities (roles) --&gt;
   &lt;!-- PLEASE NOTE: the ref below must match the corresponding authoritiesPopulator --&gt;
-  &lt;constructor-arg ref=&quot;authoritiesPopulator2&quot; /&gt;
+  &lt;!-- Note that &lt;ID&gt; must match one of the LDAP service configurations --&gt;
+  &lt;!-- defined in etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg --&gt;
+  &lt;!-- constructor-arg ref=&quot;ldapAuthoritiesPopulator_&lt;ID&gt;&quot; /--&gt;
+  &lt;constructor-arg ref=&quot;ldapAuthoritiesPopulator_theId2&quot; /&gt;
 &lt;/bean&gt;
-
-&lt;!-- [ ... SKIPPED LINES ... ] --&gt;
-
-&lt;osgi:reference id=&quot;authoritiesPopulator&quot; cardinality=&quot;1..1&quot;
-                interface=&quot;org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator&quot;
-                filter=&quot;(instanceId=theId)&quot;/&gt;
-&lt;osgi:reference id=&quot;authoritiesPopulator2&quot; cardinality=&quot;1..1&quot;
-                interface=&quot;org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator&quot;
-                filter=&quot;(instanceId=theId2)&quot;/&gt;
 
 &lt;!-- [ ... SKIPPED LINES ... ] --&gt;
 
