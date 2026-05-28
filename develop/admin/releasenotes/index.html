@@ -33,12 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Opencast 19: Release Notes", url: "#_top", children: [
-              {title: "Opencast 19.next", url: "#opencast-19next" },
-              {title: "Opencast 19.3", url: "#opencast-193" },
-              {title: "Opencast 19.2", url: "#opencast-192" },
-              {title: "Opencast 19.1", url: "#opencast-191" },
-              {title: "Opencast 19.0", url: "#opencast-190" },
+          {title: "Opencast 20: Release Notes", url: "#_top", children: [
+              {title: "Opencast 20.0", url: "#opencast-200" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
           ]},
@@ -91,63 +87,38 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="opencast-19-release-notes">Opencast 19: Release Notes</h1>
-<h2 id="opencast-19next">Opencast 19.next</h2>
-<p>This release contains a fix for
-(Episode ID Roles)[https://docs.opencast.org/r/19.x/admin/#configuration/episode-id-roles/#episode-id-roles], which
-were broken in earlier 19.x releases.  Adopters affected by this issue should either reindex their search index or
-republish their recordings.  If you do not use episode id roles then this can safely be ignored.</p>
-<h2 id="opencast-193">Opencast 19.3</h2>
-<p>This version contains an important fix for the admin UI, which had broken scheduling in 19.1 and 19.2.</p>
-<h2 id="opencast-192">Opencast 19.2</h2>
-<p>This version contains updates for the editor, along with the usual collection of bug fixes.</p>
-<h2 id="opencast-191">Opencast 19.1</h2>
-<p>This version contains updates for both the admin ui, and the editor, along with the usual collection of bug fixes.</p>
-<h2 id="opencast-190">Opencast 19.0</h2>
+    <h1 id="opencast-20-release-notes">Opencast 20: Release Notes</h1>
+<h2 id="opencast-200">Opencast 20.0</h2>
 <h3 id="features">Features</h3>
 <ul>
-<li>Episodes in the search index can be filtered according to whether or not they are live. [<a href="https://github.com/opencast/opencast/pull/7032">#7032</a>]</li>
-<li>Paella 8 is now included in Opencast as an alternative player [<a href="https://github.com/opencast/opencast/pull/7166">#7166</a>]</li>
-<li>A Matomo statistics provider has been added [<a href="https://github.com/opencast/opencast/pull/7134">#7134</a>]</li>
-<li>Default series ACLs can now be configured [<a href="https://github.com/opencast/opencast/pull/7041">#7041</a>]</li>
+<li>Opencast now supports chapters in videos. You can use the Editor to add, modify and publish chapters. [<a href="https://github.com/opencast/editor/pull/1647">Editor #1647</a>]
+  [<a href="https://github.com/opencast/opencast/pull/7142">#7142</a>]</li>
 </ul>
 <h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
-<li>Target tag behaviour has been unified across all workflow operation handlers. [<a href="https://github.com/opencast/opencast/pull/6648">#6648</a>]</li>
-<li>The Opencast presets module has been removed.  This previously allowed for org, and system wide presets to be
-  defined, but was undocumented and untested.  This change was discussed in <a href="https://github.com/opencast/opencast/issues/5615">5615</a>.
-  [<a href="https://github.com/opencast/opencast/pull/6903">#6903</a>]</li>
-<li>The Opencast annotation service has been removed.  If you had <code>opencast-plugin-legacy-annotation</code> enabled in
-  <code>org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code> then this affects you, otherwise it should not.  This change
-  was discussed in <a href="https://github.com/opencast/opencast/issues/5615">5615</a>.  The relevant database tables will be
-  automatically removed from your database systems by the upgrade script.  [<a href="https://github.com/opencast/opencast/pull/6902">#6902</a>]</li>
+<li>no breaking changes in this release</li>
 </ul>
 <h3 id="configuration-changes">Configuration Changes</h3>
 <ul>
-<li>Default workflows are now in yaml [<a href="https://github.com/opencast/opencast/pull/6798">#6798</a>]</li>
-<li>The configuration key <code>video-source-flavor</code> for the Subtitle Timeshift Workflow Operation Handler changed to
-  <code>video-source-flavors</code> (plural). [<a href="https://github.com/opencast/opencast/pull/6901">#6901</a>]</li>
-<li>Configuring JWT authentication is now substantially simpler [<a href="https://github.com/opencast/opencast/pull/7189">#7189</a>]</li>
-<li>The editor now displays less metadata by default [<a href="https://github.com/opencast/opencast/pull/7053">#7053</a>]</li>
-<li>The plugin <code>opencast-plugin-legacy-annotation</code> has been removed from <code>org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>.
-  [<a href="https://github.com/opencast/opencast/pull/6902">#6902</a>]</li>
-<li>
-<p>Target tag handling has changed with [<a href="https://github.com/opencast/opencast/pull/6648">#6648</a>]:</p>
-<p>All workflow operation handlers adapt the same method of
-handling target tags (if they support target tags).</p>
-<p>The chosen behaviour is that of the tag WOH:
-"If a target-tag starts with a '-', it will be removed from
-preexisting tags, if a target-tag starts with a '+', it will
-be added to preexisting tags. If there is no prefix, all
-preexisting tags are removed and replaced by the target-tags."</p>
-<p>This means that all WOH that did not support "+" and "-" now do.
-THIS CONSTITUTES A BEHAVIOUR CHANGE FOR SOME WORKFLOW OPERATION HANDLERS!
-In particular, some WOH were adding tags instead of replacing them,
-even though they were not prefaced with a "+". Adopters are advised
-to check their workflows.</p>
-</li>
+<li>Paella 8 is now the default Paella version.  Paella 7 is scheduled for removal in Opencast 21. [<a href="https://github.com/opencast/opencast/pull/7214">#7214</a>]</li>
+<li>The circular dependency between index and list providers has been eliminated. The configuration for the ACL additional
+  actions list provider has been moved to the organization configuration. <a href="https://github.com/opencast/opencast/pull/7128">#7128</a></li>
+<li>JMX beans appear to be unused, and there are performance concerns surrounding JMX statistics. Therefore, they have
+  been removed to simplify our code. [<a href="https://github.com/opencast/opencast/pull/7317">#7317</a>]</li>
+<li>Disable service states by default. These tended to cause more issues in modern systems.  Functionality is still
+  present, just disabled by default. [<a href="https://github.com/opencast/opencast/pull/7450">#7450</a>]</li>
+<li>The configuration option "heartbeat.interval" was removed from <code>etc/org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>
+  Furthermore, only dispatching nodes will have a heartbeat from now on. [<a href="https://github.com/opencast/opencast/issues/7311">#7311</a>]</li>
+<li>All capture agent inputs are now preselected when scheduling a new event in the Admin UI [<a href="https://github.com/opencast/opencast/issues/1566">Admin Interface #1566</a>]</li>
+<li>Whether you were uploading or scheduling a new event in the Admin UI, the "Create Event" modal would always offer you
+  workflows tagged with either "upload" or "schedule". Now if you are uploading, you only get workflows tagged with
+  "upload". And if you are scheduling, you only get workflows tagged with "schedule". [<a href="https://github.com/opencast/admin-interface/issues/1567">Admin Interface #1567</a>]</li>
+<li>A new config option to filter available roles in the Admin UI access policy dropdowns was added. Allows you to
+  effectively remove catgories of roles (like ROLE_GROUP) from the dropdowns to make them more usable. [<a href="https://github.com/opencast/admin-interface/issues/1561">Admin Interface #1561</a>]
+  [<a href="https://github.com/opencast/opencast/pull/7541">#7541</a>]</li>
+<li>The editor thumbnail view has been improved. [<a href="https://github.com/opencast/editor/pull/1663">Editor #1663</a>]</li>
 </ul>
-<p>For more details, please take a look at the <a href="../changelog/opencast-19/">full changelog</a>. If you want to update Opencast
+<p>For more details, please take a look at the <a href="../changelog/opencast-20/">full changelog</a>. If you want to update Opencast
 from a previous version, you should also read the <a href="../upgrade/">upgrade guide</a>.</p>
 <h2 id="release-schedule">Release Schedule</h2>
 <table>
@@ -159,19 +130,19 @@ from a previous version, you should also read the <a href="../upgrade/">upgrade 
 </thead>
 <tbody>
 <tr>
-<td>November 19, 2025</td>
+<td>April 15, 2026</td>
 <td>Release Branch Cut</td>
 </tr>
 <tr>
-<td>December 17, 2025</td>
-<td>Release of Opencast 18.0</td>
+<td>Mai 15, 2026</td>
+<td>Release of Opencast 20.0</td>
 </tr>
 </tbody>
 </table>
 <h2 id="release-managers">Release Managers</h2>
 <ul>
-<li>Greg Logan (Logan IT Enterprises)</li>
-<li>Lukas Gehrlein (ssystems Gmbh.)</li>
+<li>Martin Wygas (elan e.V.)</li>
+<li>Sascha Nösberger (University of Bern)</li>
 </ul>
 
   <br>
