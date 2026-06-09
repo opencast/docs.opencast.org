@@ -1,7 +1,58 @@
-commit 66c429378ab96e7a603707325aeaae04b1009c4a
-Author: JamesUoM <james.perrin@manchester.ac.uk>
-Date:   Mon Jun 8 15:25:55 2026 +0100
+commit 5a92bbdedb3ed8df58479542c32ad14185fbc9c9
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Tue Jun 9 15:03:50 2026 +0200
 
-    Fix typo in mh_default_org.xml (#7700)
+    Show user roles without associated users in the user table in the ACL… (#7540)
     
-    Missing "
+    …s in the admin ui. Fixes
+    https://github.com/opencast/admin-interface/issues/1361
+    
+    If you have user role sanitization off, the admin ui will display roles
+    in the ACL tab in two categories, "users" and "roles and groups".
+    Currently, the definition of a role for the users category is that there
+    should exist a user for the username after the user role prefix, in
+    Opencast or otherwise. E.g. if the role is ROLE_USER_GEORGE, it will be
+    sorted in the users category only if there is a user "george" in
+    Opencast or if "george" can be provided by a user provider.
+    
+    This patch changes the definition. Now, a role only needs to start with
+    the user role prefix to be sorted into the users category. E.g. the role
+    ROLE_USER_GEORGE would now always show up in the users category, no
+    matter if such a user actually exists.
+    
+    This should be more in line with expected behaviour, and help with
+    certain use cases where a user does not yet exist (meaning it should
+    help with whatever ILIAS is doing).
+    The downside is that now strings such as ROLE_USER_GEORGE can appear
+    next to usernames like "Theodore" in the users category, which may be
+    strange to some users.
+    
+    ### How to test this patch
+    
+    Make sure to set `sanitize=false` in
+    `etc/org.opencastproject.userdirectory.UserIdRoleProvider.cfg`.
+    If you don't have an ILIAS to test with, you can define custom user
+    roles for non-existing users in the `etc/custom.properties` under
+    `org.opencastproject.security.custom.roles`.
+    
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
