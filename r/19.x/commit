@@ -1,66 +1,11 @@
-commit 0145f52a033ecaa040928941e84d03116f9cc32a
+commit 5aa9d1ae21386456b7990bdd25785aa807e3a210
 Author: JamesUoM <james.perrin@manchester.ac.uk>
-Date:   Mon Jun 8 15:10:43 2026 +0100
+Date:   Wed Jun 10 08:07:24 2026 +0100
 
-    Service error states incorrectly cleared (#7692)
+    Correct and expand configuration panel json documentation (#7703)
     
-    This started with a dive trying to resolve the random CI errors people
-    are seeing like
-    ```
-    ServiceRegistrationTest.testScenarioManyJobsManyServices:264 expected:<ERROR> but was:<WARNING>
-    ```
-    which turn out to be caused by
-    https://github.com/opencast/opencast/pull/7450
+    Docs mentioning `configuration_panel_json` still referred to old
+    `configuration_panel` HTML. Also no actual docs for
+    `configuration_panel_json`.
     
-    This led to a discovery that:
-    a) The tests are *wrong*
-    b) The code is ***also** wrong*
-    c) None of this should have been working at all.
-    
-    With that in mind, this is a breakdown of the current commits
-    
-    * 823cd897a9 Exposing error states setting, and flipping it *on* for the
-    existing test. This fixes the race condition. Worryingly, this test
-    should not have been working at all given the configuration. We have
-    ERROR states disabled by default, so the SR should never put services in
-    ERROR...
-    * 33fe584300 Adding test for disabled error states, which won't work
-    because things are broken
-    * 63118bbeb1 Correcting the logic around when to step services
-    towards/away from ERROR. The commit message here contains the updated
-    pseudocode which is probably relevant for reviewers.
-    * d03241ea7e Amended tests
-    
-    I have put this against `r/19.x` since it affects that branch, but I'm
-    also not opposed to putting this in 20 instead.
-    
-    ### How to test this patch
-    
-    The unit tests should pass. However, the unit tests *also* previously
-    passed, most of the time. This is clearly not the best metric.
-    
-    
-    ### AI Usage
-    
-    N/A
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [ ] ~[close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists~
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] ~include migration scripts and documentation, if appropriate~
-    * [x] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [ ] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    PR against legacy as the docs have been incorrect since v17.x

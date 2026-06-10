@@ -297,17 +297,45 @@ must:</p>
 <p>The attribute <code>if</code> specifies the execution condition in means of the operation only being executed if that condition
 evaluates to true. You can find more details on conditional execution in the next section.</p>
 <p>Once the operation is configured to accept a variable, we need to describe how to gather the value from the
-administrative user. The <code>&lt;configuration_panel_json&gt;</code> element of a workflow definitions describes this user interface
+administrative user. The <code>configuration_panel_json</code> element of a workflow definitions describes this user interface
 snippet.  A simple configuration panel could look like this:</p>
 <pre><code>configuration_panel_json: |-
-  &lt;input id="someaction" name="someaction" type="checkbox" value="true" /&gt;
-  &lt;label for="someaction"&gt;Execute some operation?&lt;/label&gt;
+  [{
+    "fieldset": [{
+      "type": "checkbox",
+      "name": "someaction",
+      "label": "Execute some operation?",
+      "value": true
+    }]
+  }]
 </code></pre>
-<p>The checkbox in this <code>&lt;configuration_panel_json&gt;</code> will now be displayed in the administrative tools, and the user's
+<p>The checkbox in this <code>configuration_panel_json</code> will now be displayed in the administrative tools, and the user's
 selection will be used to replace the <code>${someaction}</code> variable in the workflow.</p>
+<p>The configuration panel json is an array of objects with these properties:
+- legend - title for the fieldset (optional)
+- fieldset - and array of user inputs
+- description - additional information (optional)</p>
+<p>The <code>fieldset</code> object can contain these properties:
+- type - input type, <code>checkbox|radio|text|number|datetime</code>
+- name - the variable name that will be available to the workflow
+- label - the text displayed for this input
+- value - the initial value for this variable, if not defined some type will create a sensible default. Each input type uses different value types:
+  - checkbox - <code>true|false</code>
+  - radio - <code>"option"</code>, see options below
+  - text - <code>"any string"</code>
+  - number - <code>any number</code>, see min and max below
+  - datetime-local - <code>"YY-MM-DDTHH:MM:SS"</code>
+- min - define lower value limits for type <code>number</code>
+- max - define upper value limits for type <code>number</code>
+- options - define values for type <code>radio</code>
+  - label - display name
+  - value - option value</p>
 <p>This input can also be sent by capture agents, using the ingest endpoints. Please note that capture agents usually do
 not load the configuration panel. Hence defaults set in the user interface will not apply to ingests. To circumvent
 this, the <a href="../../workflowoperationhandlers/defaults-woh/">defaults operation</a> can be used.</p>
+<p>NOTE: The old <code>configuration_panel</code> element defined the user input using HTML but is ignored by the new Admin UI. The
+old Admin UI was removed completely in v17.x and you will need to rewrite user input as JSON if updating from an earlier
+version.</p>
 <h2 id="organisation-properties">Organisation Properties</h2>
 <p>Workflows can access organisation properties stored as <code>prop.*</code> in the organisation configuration
 (<code>etc/org.opencastproject.organization-mh_default_org.cfg</code> for the default organisation <code>mh_default_org</code>). This allows
@@ -438,6 +466,11 @@ automatically and will be available in Opencast a few seconds later.</p>
   &lt;state-mappings&gt;
     &lt;state-mapping state=&quot;&quot;&gt;&lt;/state-mapping&gt;
   &lt;/state-mappings&gt;
+
+  &lt;!-- User Input --&gt;
+  &lt;configuration_panel_json&gt;
+    ...
+  &lt;/configuration_panel_json&gt;
 
   &lt;!-- Operations --&gt;
   &lt;operations&gt;
