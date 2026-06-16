@@ -218,9 +218,9 @@ the response:</p>
 <td style="text-align: left;">The (potentially empty) list of workflow tags of this workflow instance</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>configuration_panel</code></td>
+<td style="text-align: left;"><code>configuration</code></td>
 <td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
-<td style="text-align: left;">The configuration panel of this workflow instance</td>
+<td style="text-align: left;">The configuration of this workflow instance</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>operations</code></td>
@@ -287,9 +287,9 @@ the response:</p>
 <td style="text-align: left;">The (potentially empty) list of workflow tags of this workflow instance</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>configuration_panel</code></td>
+<td style="text-align: left;"><code>configuration</code></td>
 <td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
-<td style="text-align: left;">The configuration panel of this workflow instance</td>
+<td style="text-align: left;">The configuration of this workflow instance</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>operations</code></td>
@@ -612,6 +612,11 @@ the response:</p>
 <td style="text-align: left;">Whether the workflow operations should be included in the response</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>withconfigurationpaneljson</code></td>
+<td style="text-align: left;"><a href="../types/#basic"><code>boolean</code></a></td>
+<td style="text-align: left;">Whether the workflow configuration panel in JSON should be included in the response</td>
+</tr>
+<tr>
 <td style="text-align: left;"><code>withconfigurationpanel</code></td>
 <td style="text-align: left;"><a href="../types/#basic"><code>boolean</code></a></td>
 <td style="text-align: left;">Whether the workflow configuration panel should be included in the response</td>
@@ -654,6 +659,11 @@ each element is a JSON object with the following fields:</p>
 <td style="text-align: left;">The (potentially empty) list of workflow tags of this workflow definition</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>configuration_panel_json</code></td>
+<td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
+<td style="text-align: left;">The configuration panel defined JSON of this workflow definition</td>
+</tr>
+<tr>
 <td style="text-align: left;"><code>configuration_panel</code></td>
 <td style="text-align: left;"><a href="../types/#basic"><code>string</code></a></td>
 <td style="text-align: left;">The configuration panel of this workflow definition</td>
@@ -676,7 +686,7 @@ each element is a JSON object with the following fields:</p>
       &quot;schedule&quot;,
       &quot;upload&quot;
     ],
-    &quot;configuration_panel&quot;: &quot;\n    \n      &lt;div id=\&quot;workflow-configuration\&quot;&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Add a comment that the recording needs:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;comment\&quot; name=\&quot;comment\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; /&gt;\n              &lt;label for=\&quot;comment\&quot;&gt;Review / Cutting&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Immediately distribute the recording to:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToMediaModule\&quot; name=\&quot;publishToMediaModule\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToMediaModule\&quot;&gt;Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToOaiPmh\&quot; name=\&quot;publishToOaiPmh\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToOaiPmh\&quot;&gt;Default OAI-PMH Repository&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Publish live stream:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishLive\&quot; name=\&quot;publishLive\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;false\&quot; /&gt;\n              &lt;label for=\&quot;publishLive\&quot;&gt;Add live event to Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n      &lt;/div&gt;\n    \n  &quot;,
+    &quot;configuration_panel_json&quot;: &quot;[{\n  \&quot;fieldset\&quot;: [\n    {\n      \&quot;type\&quot;: \&quot;checkbox\&quot;,\n      \&quot;name\&quot;: \&quot;straightToPublishing\&quot;,\n      \&quot;label\&quot;: \&quot;Straight to publishing\&quot;,\n      \&quot;value\&quot;: true\n    }\n  ]\n}]&quot;,
     &quot;operations&quot;: [
       {
         &quot;id&quot;: &quot;defaults&quot;,
@@ -790,7 +800,7 @@ each element is a JSON object with the following fields:</p>
     &quot;schedule&quot;,
     &quot;upload&quot;
   ],
-  &quot;configuration_panel&quot;: &quot;\n    \n      &lt;div id=\&quot;workflow-configuration\&quot;&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Add a comment that the recording needs:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;comment\&quot; name=\&quot;comment\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; /&gt;\n              &lt;label for=\&quot;comment\&quot;&gt;Review / Cutting&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Immediately distribute the recording to:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToMediaModule\&quot; name=\&quot;publishToMediaModule\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToMediaModule\&quot;&gt;Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishToOaiPmh\&quot; name=\&quot;publishToOaiPmh\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;true\&quot; checked=checked /&gt;\n              &lt;label for=\&quot;publishToOaiPmh\&quot;&gt;Default OAI-PMH Repository&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n        &lt;fieldset&gt;\n          &lt;legend&gt;Publish live stream:&lt;/legend&gt;\n          &lt;ul&gt;\n            &lt;li&gt;\n              &lt;input id=\&quot;publishLive\&quot; name=\&quot;publishLive\&quot; type=\&quot;checkbox\&quot; class=\&quot;configField\&quot; value=\&quot;false\&quot; /&gt;\n              &lt;label for=\&quot;publishLive\&quot;&gt;Add live event to Opencast Media Module&lt;/label&gt;\n            &lt;/li&gt;\n          &lt;/ul&gt;\n        &lt;/fieldset&gt;\n      &lt;/div&gt;\n    \n  &quot;,
+  &quot;configuration_panel_json&quot;: &quot;[{\n  \&quot;fieldset\&quot;: [\n    {\n      \&quot;type\&quot;: \&quot;checkbox\&quot;,\n      \&quot;name\&quot;: \&quot;straightToPublishing\&quot;,\n      \&quot;label\&quot;: \&quot;Straight to publishing\&quot;,\n      \&quot;value\&quot;: true\n    }\n  ]\n}]&quot;,
   &quot;operations&quot;: [
     {
       &quot;id&quot;: &quot;defaults&quot;,

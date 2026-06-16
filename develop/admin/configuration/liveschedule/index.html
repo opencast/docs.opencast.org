@@ -227,16 +227,18 @@ publish URL something like rtmp://a.bcd.e.akamaientrypoint.net/EntryPoint. The s
 <h3 id="step-3-configure-the-workflow">Step 3: Configure the Workflow</h3>
 <p>When scheduling a live event via the admin UI, the workflow needs to have the <em>publishLive</em> configuration set to true
 (this is already included in the sample workflows).
-If not using the sample Opencast workflows, add to the <code>&lt;configuration_panel_json&gt;</code>:</p>
-<pre><code>        &lt;fieldset&gt;
-          &lt;legend&gt;Publish live stream:&lt;/legend&gt;
-          &lt;ul&gt;
-            &lt;li&gt;
-              &lt;input id=&quot;publishLive&quot; name=&quot;publishLive&quot; type=&quot;checkbox&quot; class=&quot;configField&quot; value=&quot;false&quot; /&gt;
-              &lt;label for=&quot;publishLive&quot;&gt;Add live event to Opencast Media Module&lt;/label&gt;
-            &lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/fieldset&gt;
+If not using the sample Opencast workflows, add to the <code>configuration_panel_json</code>:</p>
+<pre><code class="language-json">  {
+    &quot;legend&quot;: &quot;Publish live stream&quot;,
+    &quot;fieldset&quot;: [
+      {
+        &quot;type&quot;: &quot;checkbox&quot;,
+        &quot;name&quot;: &quot;publishLive&quot;,
+        &quot;label&quot;: &quot;Add live event to Opencast Media Module&quot;,
+        &quot;value&quot;: false
+      }
+    ]
+  }
 </code></pre>
 <p>And to the <em>defaults</em> operation:</p>
 <pre><code>  - id: defaults

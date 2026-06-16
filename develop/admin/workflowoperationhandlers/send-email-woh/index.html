@@ -99,8 +99,8 @@ workflow.</p>
 <p>The email body, if not specified by body or body-template-file, will consist of a single line of the form:
 <code>&lt;Recording Title&gt; (&lt;Mediapackage ID&gt;)</code>.</p>
 <p>Freemarker templates can be used in the following fields to allow replacement with values obtained from the workflow or
-media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker 
-template file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body. A more in deep explanation of how to use 
+media package: to, cc, bcc, subject, and body. If body-template-file is specified, the operation will use a Freemarker
+template file located in <code>&lt;config_dir&gt;/etc/email</code> to generate the email body. A more in deep explanation of how to use
 Freemarker variables can be found in the <a href="#appendix-freemarker-variable-usage-guide">Appendix</a>.</p>
 <p>Usernames can be provided in <code>to</code>, <code>cc</code>, or <code>bcc</code> in lieu of email addresses so that the user directory is searched
 and that user's email address is used (see Example 5).</p>
@@ -319,7 +319,7 @@ failed operation), catalogs, and any incidents. Fields should be tested for null
 </code></pre>
 <h3 id="catalog-fields">Catalog fields</h3>
 <p>Use <code>${catalogs['FLAVOR']['FIELD']}</code></p>
-<p>Deprecation notice: Opencast versions before 13 used <code>${catalogs['SUBFLAVOR']['FIELD']}</code> for <code>dublincore/SUBFLAVOR</code> 
+<p>Deprecation notice: Opencast versions before 13 used <code>${catalogs['SUBFLAVOR']['FIELD']}</code> for <code>dublincore/SUBFLAVOR</code>
 catalogs. This syntax is still accepted but deprecation. Future versions might remove support.</p>
 <h4 id="examples_1">Examples</h4>
 <table>
@@ -417,50 +417,18 @@ Event Date: ${mediaPackage.date?datetime?iso_local}
       - body-template-file: sample
 </code></pre>
 <p>Workflow Configuration Panel:</p>
-<pre><code class="language-yaml">  configuration_panel_json: |-
-    &lt;!-- Add after the other configuration fields (Holds, Archive, etc) --&gt;
-    &lt;fieldset&gt;
-      &lt;legend&gt;Notification&lt;/legend&gt;
-      &lt;ul class=&quot;oc-ui-form-list&quot;&gt;
-        &lt;li class=&quot;ui-helper-clearfix&quot;&gt;
-          &lt;label class=&quot;scheduler-label&quot;&gt;
-            &lt;span class=&quot;color-red&quot;&gt;* &lt;/span&gt;&lt;span id=&quot;i18n_email_label&quot;&gt;Email Address&lt;/span&gt;:
-          &lt;/label&gt;
-          &lt;span id=&quot;emailconfig&quot;&gt;
-            &lt;input id=&quot;emailAddress&quot; name=&quot;emailAddress&quot; type=&quot;text&quot; class=&quot;configField&quot;
-                    value=&quot;my-email-account@my-email-domain.org&quot;/&gt;
-          &lt;/span&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/fieldset&gt;
-
-    &lt;script type=&quot;text/javascript&quot;&gt;
-
-      // Add email variable
-      var emailAddress = $('input#emailAddress');
-
-      // Register email configuration property
-      ocWorkflowPanel.registerComponents = function(components){
-        /* components with keys that begin with 'org.opencastproject.workflow.config' will be passed
-          * into the workflow. The component's nodeKey must match the components array key.
-          *
-          * Example:'org.opencastproject.workflow.config.myProperty' will be available at ${my.property}
-          */
-        // After the other components (Hold, Archive, etc), add:
-        components['org.opencastproject.workflow.config.emailAddress'] = new ocAdmin.Component(
-          ['emailAddress'],
-          {key: 'org.opencastproject.workflow.config.emailAddress'},
-          {getValue: function(){ return this.fields.emailAddress.value;}
-          });
-
-          //etc...
+<p>After the other configuration fields (Holds, Archive, etc) add to the <code>configuration_panel_json</code>:</p>
+<pre><code class="language-json">  {
+    &quot;legend&quot;: &quot;Notification&quot;,
+    &quot;fieldset&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;name&quot;: &quot;emailAddresses&quot;,
+        &quot;label&quot;: &quot;Email Address&quot;,
+        &quot;value&quot;: &quot;my-email-account@my-email-domain.org&quot;
       }
-      ocWorkflowPanel.setComponentValues = function(values, components){
-        // After the other components (Hold, Archive, etc), add:
-        components['org.opencastproject.workflow.config.emailAddress'].setValue(
-          values['org.opencastproject.workflow.config.emailAddress']);
-      }
-    &lt;/script&gt;
+    ]
+  }
 </code></pre>
 <h3 id="example-4">Example 4</h3>
 <p>In error handling workflow (email-error):</p>
@@ -539,11 +507,11 @@ Requires the user account to have a valid email address.</p>
       - subject: ${mediaPackage.title} has been published
 </code></pre>
 <h2 id="appendix-freemarker-variable-usage-guide">Appendix: Freemarker Variable Usage Guide</h2>
-<p>Freemarker is a powerful template engine that allows you to embed dynamic content in your templates. 
-One of the key features is its ability to handle variables. This guide will walk you through the basics of using 
+<p>Freemarker is a powerful template engine that allows you to embed dynamic content in your templates.
+One of the key features is its ability to handle variables. This guide will walk you through the basics of using
 variables in Freemarker templates.</p>
 <h3 id="declaring-variables">Declaring Variables</h3>
-<p>In Freemarker, you don't explicitly declare variables. You usually pass them from your application code to the template. 
+<p>In Freemarker, you don't explicitly declare variables. You usually pass them from your application code to the template.
 However, you can also set local variables using the <code>&lt;#assign&gt;</code> directive:</p>
 <pre><code class="language-freemarker">&lt;#assign myVariable = &quot;Hello, World!&quot;&gt;
 </code></pre>
@@ -617,7 +585,7 @@ ${x / y}
 
 &lt;@greet name=&quot;John&quot;/&gt;
 </code></pre>
-<p>This guide provides a quick overview of how to use variables in Freemarker. For more advanced topics and complete 
+<p>This guide provides a quick overview of how to use variables in Freemarker. For more advanced topics and complete
 documentation, you can refer to the <a href="https://freemarker.apache.org/docs/">official Freemarker documentation</a>.</p>
 
   <br>
