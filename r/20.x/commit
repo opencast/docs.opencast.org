@@ -1,5 +1,37 @@
-commit b2f5334b7c9fbf381639280e416afba257f3b917
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Jun 16 16:25:43 2026 -0600
+commit ff83affd32464485e4e0b9a56f4c8d28c9421267
+Author: Martin Wygas <wygas@elan-ev.de>
+Date:   Wed Jun 17 16:36:46 2026 +0200
 
-    Merge branch 'r/19.x' into r/20.x
+    engage-ui: Fix test after previous merge from r19 (#7727)
+    
+    Yesterday, commit 0bbc2e8 merged 6665dee into release 20 without
+    adjusting the Paella path. Since OC20 uses Paella 8 by default and the
+    test case asserts Paella 7, the test fails.
+    
+    ```
+    [INFO] -------------------------------------------------------
+    [INFO]  T E S T S
+    [INFO] -------------------------------------------------------
+    [INFO] Running org.opencastproject.engage.ui.PlayerRedirectTest
+    SLF4J(W): No SLF4J providers were found.
+    SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+    SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+    [ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.176 s <<< FAILURE! -- in org.opencastproject.engage.ui.PlayerRedirectTest
+    [ERROR] org.opencastproject.engage.ui.PlayerRedirectTest.shouldPreserveQueryParameters -- Time elapsed: 0.007 s <<< FAILURE!
+    org.opentest4j.AssertionFailedError: expected: </paella7/ui/watch.html?id=event1&t=10&foo=bar&id=something-else> but was: </paella8/ui/watch.html?id=event1&t=10&foo=bar&id=something-else>
+            at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+            at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+            at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+            at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:184)
+            at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:179)
+            at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1188)
+            at org.opencastproject.engage.ui.PlayerRedirectTest.shouldPreserveQueryParameters(PlayerRedirectTest.java:144)
+    
+    [INFO]
+    [INFO] Results:
+    [INFO]
+    [ERROR] Failures:
+    [ERROR]   PlayerRedirectTest.shouldPreserveQueryParameters:144 expected: </paella7/ui/watch.html?id=event1&t=10&foo=bar&id=something-else> but was: </paella8/ui/watch.html?id=event1&t=10&foo=bar&id=something-else>
+    [INFO]
+    [ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0
+    ```
