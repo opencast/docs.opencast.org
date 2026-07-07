@@ -1,148 +1,232 @@
-commit 3cdefed9b6e156de247d87aac8b097ef71b36427
+commit 50154b78f9018e5d3b0fb743bb188f41a3c21f78
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Jul 7 17:26:07 2026 +0200
+Date:   Tue Jul 7 17:52:38 2026 +0200
 
-    Bump js-yaml from 4.1.1 to 4.3.0 in /modules/graphql-ui (#7743)
+    Build(deps): bump qs and express in /modules/lti (#7681)
     
-    Bumps [js-yaml](https://github.com/nodeca/js-yaml) from 4.1.1 to 4.3.0.
+    Bumps [qs](https://github.com/ljharb/qs) and
+    [express](https://github.com/expressjs/express). These dependencies
+    needed to be updated together.
+    Updates `qs` from 6.14.1 to 6.15.2
     <details>
     <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/nodeca/js-yaml/blob/master/CHANGELOG.md">js-yaml's
+    href="https://github.com/ljharb/qs/blob/main/CHANGELOG.md">qs's
     changelog</a>.</em></p>
     <blockquote>
-    <h2>4.3.0, 3.15.0 - 2026-06-27</h2>
-    <h3>Security</h3>
+    <h2><strong>6.15.2</strong></h2>
     <ul>
-    <li>Backported <code>maxTotalMergeKeys</code> option.</li>
+    <li>[Fix] <code>stringify</code>: skip null/undefined entries in
+    <code>arrayFormat: 'comma'</code> + <code>encodeValuesOnly</code>
+    instead of crashing in <code>encoder</code></li>
+    <li>[Fix] <code>stringify</code>: use configured <code>delimiter</code>
+    after <code>charsetSentinel</code> (<a
+    href="https://redirect.github.com/ljharb/qs/issues/555">#555</a>)</li>
+    <li>[Fix] <code>stringify</code>: apply <code>formatter</code> to
+    encoded key under <code>strictNullHandling</code> (<a
+    href="https://redirect.github.com/ljharb/qs/issues/554">#554</a>)</li>
+    <li>[Fix] <code>stringify</code>: skip null/undefined filter-array
+    entries instead of crashing in <code>encoder</code> (<a
+    href="https://redirect.github.com/ljharb/qs/issues/551">#551</a>)</li>
+    <li>[Fix] <code>parse</code>: handle nested bracket groups and add
+    regression tests (<a
+    href="https://redirect.github.com/ljharb/qs/issues/530">#530</a>)</li>
+    <li>[readme] fix grammar (<a
+    href="https://redirect.github.com/ljharb/qs/issues/550">#550</a>)</li>
+    <li>[Dev Deps] update <code>@ljharb/eslint-config</code></li>
+    <li>[Tests] add regression tests for keys containing percent-encoded
+    bracket text</li>
     </ul>
-    <h2>[5.2.0] - 2026-06-26</h2>
-    <h3>Added</h3>
+    <h2><strong>6.15.1</strong></h2>
     <ul>
-    <li>Added <code>maxTotalMergeKeys</code> (10000) loader option to limit
-    the total number of
-    keys processed by YAML merge (<code>&lt;&lt;</code>) across one
-    <code>load()</code> / <code>loadAll()</code> call.</li>
-    <li>Added <code>maxAliases</code> (-1) loader option to limit the number
-    of YAML aliases per
-    document.</li>
+    <li>[Fix] <code>parse</code>: <code>parameterLimit: Infinity</code> with
+    <code>throwOnLimitExceeded: true</code> silently drops all
+    parameters</li>
+    <li>[Deps] update <code>@ljharb/eslint-config</code></li>
+    <li>[Dev Deps] update <code>@ljharb/eslint-config</code>,
+    <code>iconv-lite</code></li>
+    <li>[Tests] increase coverage</li>
     </ul>
-    <h3>Removed</h3>
+    <h2><strong>6.15.0</strong></h2>
     <ul>
-    <li><code>maxMergeSeqLength</code> replaced with
-    <code>maxTotalMergeKeys</code> for limiting YAML merge
-    processing.</li>
+    <li>[New] <code>parse</code>: add <code>strictMerge</code> option to
+    wrap object/primitive conflicts in an array (<a
+    href="https://redirect.github.com/ljharb/qs/issues/425">#425</a>, <a
+    href="https://redirect.github.com/ljharb/qs/issues/122">#122</a>)</li>
+    <li>[Fix] <code>duplicates</code> option should not apply to bracket
+    notation keys (<a
+    href="https://redirect.github.com/ljharb/qs/issues/514">#514</a>)</li>
     </ul>
-    <h3>Fixed</h3>
+    <h2><strong>6.14.2</strong></h2>
     <ul>
-    <li>Round-trip of integers with exponential form (&gt;=
-    <code>1e21</code>)</li>
+    <li>[Fix] <code>parse</code>: mark overflow objects for indexed notation
+    exceeding <code>arrayLimit</code> (<a
+    href="https://redirect.github.com/ljharb/qs/issues/546">#546</a>)</li>
+    <li>[Fix] <code>arrayLimit</code> means max count, not max index, in
+    <code>combine</code>/<code>merge</code>/<code>parseArrayValue</code></li>
+    <li>[Fix] <code>parse</code>: throw on <code>arrayLimit</code> exceeded
+    with indexed notation when <code>throwOnLimitExceeded</code> is true (<a
+    href="https://redirect.github.com/ljharb/qs/issues/529">#529</a>)</li>
+    <li>[Fix] <code>parse</code>: enforce <code>arrayLimit</code> on
+    <code>comma</code>-parsed values</li>
+    <li>[Fix] <code>parse</code>: fix error message to reflect arrayLimit as
+    max index; remove extraneous comments (<a
+    href="https://redirect.github.com/ljharb/qs/issues/545">#545</a>)</li>
+    <li>[Robustness] avoid <code>.push</code>, use <code>void</code></li>
+    <li>[readme] document that <code>addQueryPrefix</code> does not add
+    <code>?</code> to empty output (<a
+    href="https://redirect.github.com/ljharb/qs/issues/418">#418</a>)</li>
+    <li>[readme] clarify <code>parseArrays</code> and
+    <code>arrayLimit</code> documentation (<a
+    href="https://redirect.github.com/ljharb/qs/issues/543">#543</a>)</li>
+    <li>[readme] replace runkit CI badge with shields.io check-runs
+    badge</li>
+    <li>[meta] fix changelog typo (<code>arrayLength</code> →
+    <code>arrayLimit</code>)</li>
+    <li>[actions] fix rebase workflow permissions</li>
     </ul>
-    <h2>[5.1.0] - 2026-06-23</h2>
-    <h3>Added</h3>
-    <ul>
-    <li>Collection tags can finalize an incrementally populated carrier into
-    a
-    different result value.</li>
-    </ul>
-    <h3>Changed</h3>
-    <ul>
-    <li>[breaking] <code>quoteStyle</code> now selects the preferred quote
-    style; use the
-    restored <code>forceQuotes</code> option to force quoting non-key
-    strings.</li>
-    </ul>
-    <h2>[5.0.0] - 2026-06-20</h2>
-    <h3>Added</h3>
-    <ul>
-    <li>Added named exports for schemas, tags, parser events and AST
-    utilities.</li>
-    <li>Reworked <code>JSON_SCHEMA</code> and <code>CORE_SCHEMA</code> with
-    spec-compliant scalar resolution
-    rules, and added <code>YAML11_SCHEMA</code>.</li>
-    <li>Added <code>realMapTag</code> for lossless mappings with non-string
-    and complex keys.
-    Object-based mappings now reject complex keys instead of stringifying
-    them.</li>
-    <li>Added <code>dump()</code> <code>transform</code> option for changing
-    the generated AST before
-    rendering.</li>
-    <li>Added <code>dump()</code> options <code>seqInlineFirst</code>,
-    <code>flowBracketPadding</code>,
-    <code>flowSkipCommaSpace</code>, <code>flowSkipColonSpace</code>,
-    <code>quoteFlowKeys</code>, <code>quoteStyle</code> and
-    <code>tagBeforeAnchor</code>.</li>
-    <li>Added formal data layers (events and AST) for modular data
-    pipelines.
-    <ul>
-    <li>Added low-level parser (to events), presenter and visitor APIs.</li>
-    </ul>
-    </li>
-    <li>Added the <a href="https://github.com/yaml/yaml-test-suite">YAML
-    Test Suite</a> to the
-    test set.</li>
-    </ul>
-    <h3>Changed</h3>
-    <ul>
-    <li>See the <a
-    href="https://github.com/nodeca/js-yaml/blob/master/docs/migrate_v4_to_v5.md">migration
-    guide</a> for upgrade notes.</li>
-    <li>Rewritten in TypeScript and reorganized the public API around flat
-    named
-    exports.</li>
-    </ul>
-    <!-- raw HTML omitted -->
     </blockquote>
-    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/33d05b5d29a8c21360f620f7e1c1706e24522eda"><code>33d05b5</code></a>
-    4.3.0 released</li>
+    href="https://github.com/ljharb/qs/commit/9aca4076fe788338c67cf7e115f0be6bc58d85a8"><code>9aca407</code></a>
+    v6.15.2</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/663bfab6db2b4a146a9366fd685f069345be4ddb"><code>663bfab</code></a>
-    Drop demo publish, to not override new v5 one.</li>
+    href="https://github.com/ljharb/qs/commit/5e33d33447ed0bf1ddab9abc41d27dea4687d992"><code>5e33d33</code></a>
+    [Dev Deps] update <code>@ljharb/eslint-config</code></li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/1cb8c7b94bf75e15116869c1c0482dcb22785986"><code>1cb8c7b</code></a>
-    Add v4-legacy tag for publish</li>
+    href="https://github.com/ljharb/qs/commit/21f80b33e5c8b3f7eba1034fff0da4a4a37a1d41"><code>21f80b3</code></a>
+    [Fix] <code>stringify</code>: skip null/undefined entries in
+    <code>arrayFormat: 'comma'</code> + `e...</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/02f27afad532763263cd2b6be35c24ee8e1f6157"><code>02f27af</code></a>
-    Restore umd builds back to es5</li>
+    href="https://github.com/ljharb/qs/commit/a0a81ea2071acce3eff41a040f719ac8f5c4f64c"><code>a0a81ea</code></a>
+    [Fix] <code>stringify</code>: use configured <code>delimiter</code>
+    after <code>charsetSentinel</code></li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/8be84edaf15e7c394fa3b813179d1bcc280e87fb"><code>8be84ed</code></a>
-    Fix es5 compatibility</li>
+    href="https://github.com/ljharb/qs/commit/e3062f78f5233b338ceeb8e8dfa5a07dea4b32a8"><code>e3062f7</code></a>
+    [Fix] <code>stringify</code>: apply <code>formatter</code> to encoded
+    key under <code>strictNullHandling</code></li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/59423c6f8cdc78742ac00e25a4dd39ef16b702e4"><code>59423c6</code></a>
-    Replace <code>maxMergeSeqLength</code> option with
-    <code>maxTotalMergeKeys</code> (more robust). Ba...</li>
+    href="https://github.com/ljharb/qs/commit/0c180a40adb8c6703fffc85b2ff06ca209f5c1e0"><code>0c180a4</code></a>
+    [Fix] <code>stringify</code>: skip null/undefined filter-array entries
+    instead of crashi...</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/6842ef6a02df01ca7282ea01dc3c70787710c05d"><code>6842ef6</code></a>
-    doc polish</li>
+    href="https://github.com/ljharb/qs/commit/3a8b94aec19bd664720f6f6b1e66c4a0dfe4b656"><code>3a8b94a</code></a>
+    [Tests] add regression tests for keys containing percent-encoded bracket
+    text</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/590dbabadd172b099c07654fab2eabec8c7a07b9"><code>590dbab</code></a>
-    4.2.0 released</li>
+    href="https://github.com/ljharb/qs/commit/96755abd357c0e534dd3442a84a04d08864bfe0d"><code>96755ab</code></a>
+    [readme] fix grammar</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/f944dc5cd132251752499bdb157f33027d362177"><code>f944dc5</code></a>
-    Add package.json funding field</li>
+    href="https://github.com/ljharb/qs/commit/a419ce5bbfcdb98a299f1a0bb47ea055baef20e6"><code>a419ce5</code></a>
+    [Fix] <code>parse</code>: handle nested bracket groups and add
+    regression tests</li>
     <li><a
-    href="https://github.com/nodeca/js-yaml/commit/f6927192223355b64f2a6e19f3071ccc579ee718"><code>f692719</code></a>
-    Changelog update</li>
+    href="https://github.com/ljharb/qs/commit/3f5e1c528c967d915096787efbffa73cf6044170"><code>3f5e1c5</code></a>
+    v6.15.1</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/nodeca/js-yaml/compare/4.1.1...4.3.0">compare
+    href="https://github.com/ljharb/qs/compare/v6.14.1...v6.15.2">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `express` from 4.22.1 to 4.22.2
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/expressjs/express/releases">express's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>v4.22.2</h2>
+    <h2>What's Changed</h2>
+    <ul>
+    <li>fix: restore &gt;20 array parsing for <code>req.query</code>
+    repeated keys (<a
+    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe6</code></a>)
+    <ul>
+    <li>This also unifies array-cap behavior across notations. Indexed
+    notation (<code>a[0]=...</code>) was historically capped at qs's default
+    <code>arrayLimit</code> of 20 even in older qs versions; after this
+    change it also allows up to 1000 items.</li>
+    </ul>
+    </li>
+    <li>deps: qs@~6.15.1</li>
+    <li>deps: body-parser@~1.20.5</li>
+    </ul>
+    <h2>New Contributors</h2>
+    <ul>
+    <li><a
+    href="https://github.com/suuuuuuminnnnnn"><code>@​suuuuuuminnnnnn</code></a>
+    made their first contribution in <a
+    href="https://redirect.github.com/expressjs/express/pull/7021">expressjs/express#7021</a></li>
+    <li><a href="https://github.com/SAY-5"><code>@​SAY-5</code></a> made
+    their first contribution in <a
+    href="https://redirect.github.com/expressjs/express/pull/7181">expressjs/express#7181</a></li>
+    </ul>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/expressjs/express/compare/v4.22.1...v4.22.2">https://github.com/expressjs/express/compare/v4.22.1...v4.22.2</a></p>
+    </blockquote>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/expressjs/express/blob/v4.22.2/History.md">express's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h1>4.22.2 / 2026-05-011</h1>
+    <ul>
+    <li>fix: restore &gt;20 array parsing for <code>req.query</code>
+    repeated keys (<a
+    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe6</code></a>)
+    <ul>
+    <li>This also unifies array-cap behavior across notations. Indexed
+    notation (<code>a[0]=...</code>) was historically capped at qs's default
+    <code>arrayLimit</code> of 20 even in older qs versions; after this
+    change it also allows up to 1000 items.</li>
+    </ul>
+    </li>
+    <li>deps: qs@~6.15.1</li>
+    <li>deps: body-parser@~1.20.5</li>
+    </ul>
+    </blockquote>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/expressjs/express/commit/df0abc9333a3398b97b71f6ea7cd77d5ea3e9f97"><code>df0abc9</code></a>
+    4.22.2</li>
+    <li><a
+    href="https://github.com/expressjs/express/commit/836d36668ea750f78b4373b4de79bbd22634e6ec"><code>836d366</code></a>
+    <code>4.x</code> update qs to 6.15.1, body-parser 1.20.5 (<a
+    href="https://redirect.github.com/expressjs/express/issues/7224">#7224</a>)</li>
+    <li><a
+    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe</code></a>
+    fix: restore array parsing for req.query repeated keys (<a
+    href="https://redirect.github.com/expressjs/express/issues/7181">#7181</a>)</li>
+    <li><a
+    href="https://github.com/expressjs/express/commit/d39e8ad1778a0b8a606a5a7b17096d0cc5ec722d"><code>d39e8ad</code></a>
+    deps: body-parser@~1.20.4 (<a
+    href="https://redirect.github.com/expressjs/express/issues/7021">#7021</a>)</li>
+    <li><a
+    href="https://github.com/expressjs/express/commit/efe85d9fdc9e3a62f7a1121b4f5f484862298b48"><code>efe85d9</code></a>
+    deps: qs@^6.14.1 (<a
+    href="https://redirect.github.com/expressjs/express/issues/6972">#6972</a>)</li>
+    <li><a
+    href="https://github.com/expressjs/express/commit/f62378e1bc776259c0a471476c2dc043a02ac762"><code>f62378e</code></a>
+    📝 add note to history</li>
+    <li>See full diff in <a
+    href="https://github.com/expressjs/express/compare/v4.22.1...v4.22.2">compare
     view</a></li>
     </ul>
     </details>
     <br />
     
     
-    [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=js-yaml&package-manager=npm_and_yarn&previous-version=4.1.1&new-version=4.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
-    
-    Dependabot will resolve any conflicts with this PR as long as you don't
-    alter it yourself. You can also trigger a rebase manually by commenting
-    `@dependabot rebase`.
+    You can trigger a rebase of this PR by commenting `@dependabot rebase`.
     
     [//]: # (dependabot-automerge-start)
     [//]: # (dependabot-automerge-end)
@@ -173,3 +257,7 @@ Date:   Tue Jul 7 17:26:07 2026 +0200
     page](https://github.com/opencast/opencast/network/alerts).
     
     </details>
+    
+    > **Note**
+    > Automatic rebases have been disabled on this pull request as it has
+    been open for over 30 days.
