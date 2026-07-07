@@ -1,144 +1,95 @@
-commit 0f2d2680f2fcd3fa4d3a830b5e523a01f9f43507
+commit 3cdefed9b6e156de247d87aac8b097ef71b36427
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Jul 3 00:37:27 2026 +0200
+Date:   Tue Jul 7 17:26:07 2026 +0200
 
-    Build(deps): bump @babel/plugin-transform-modules-systemjs from 7.18.6 to 7.29.4 in /modules/lti (#7644)
+    Bump js-yaml from 4.1.1 to 4.3.0 in /modules/graphql-ui (#7743)
     
-    Bumps
-    [@babel/plugin-transform-modules-systemjs](https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs)
-    from 7.18.6 to 7.29.4.
+    Bumps [js-yaml](https://github.com/nodeca/js-yaml) from 4.1.1 to 4.3.0.
     <details>
-    <summary>Release notes</summary>
+    <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/babel/babel/releases">@​babel/plugin-transform-modules-systemjs's
-    releases</a>.</em></p>
+    href="https://github.com/nodeca/js-yaml/blob/master/CHANGELOG.md">js-yaml's
+    changelog</a>.</em></p>
     <blockquote>
-    <h2>v7.29.4 (2026-05-05)</h2>
-    <h4>:bug: Bug Fix</h4>
+    <h2>4.3.0, 3.15.0 - 2026-06-27</h2>
+    <h3>Security</h3>
     <ul>
-    <li><code>babel-plugin-transform-modules-systemjs</code>
+    <li>Backported <code>maxTotalMergeKeys</code> option.</li>
+    </ul>
+    <h2>[5.2.0] - 2026-06-26</h2>
+    <h3>Added</h3>
     <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17974">#17974</a>
-    [7.x backport]fix(systemjs): improve module string name support (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
+    <li>Added <code>maxTotalMergeKeys</code> (10000) loader option to limit
+    the total number of
+    keys processed by YAML merge (<code>&lt;&lt;</code>) across one
+    <code>load()</code> / <code>loadAll()</code> call.</li>
+    <li>Added <code>maxAliases</code> (-1) loader option to limit the number
+    of YAML aliases per
+    document.</li>
+    </ul>
+    <h3>Removed</h3>
+    <ul>
+    <li><code>maxMergeSeqLength</code> replaced with
+    <code>maxTotalMergeKeys</code> for limiting YAML merge
+    processing.</li>
+    </ul>
+    <h3>Fixed</h3>
+    <ul>
+    <li>Round-trip of integers with exponential form (&gt;=
+    <code>1e21</code>)</li>
+    </ul>
+    <h2>[5.1.0] - 2026-06-23</h2>
+    <h3>Added</h3>
+    <ul>
+    <li>Collection tags can finalize an incrementally populated carrier into
+    a
+    different result value.</li>
+    </ul>
+    <h3>Changed</h3>
+    <ul>
+    <li>[breaking] <code>quoteStyle</code> now selects the preferred quote
+    style; use the
+    restored <code>forceQuotes</code> option to force quoting non-key
+    strings.</li>
+    </ul>
+    <h2>[5.0.0] - 2026-06-20</h2>
+    <h3>Added</h3>
+    <ul>
+    <li>Added named exports for schemas, tags, parser events and AST
+    utilities.</li>
+    <li>Reworked <code>JSON_SCHEMA</code> and <code>CORE_SCHEMA</code> with
+    spec-compliant scalar resolution
+    rules, and added <code>YAML11_SCHEMA</code>.</li>
+    <li>Added <code>realMapTag</code> for lossless mappings with non-string
+    and complex keys.
+    Object-based mappings now reject complex keys instead of stringifying
+    them.</li>
+    <li>Added <code>dump()</code> <code>transform</code> option for changing
+    the generated AST before
+    rendering.</li>
+    <li>Added <code>dump()</code> options <code>seqInlineFirst</code>,
+    <code>flowBracketPadding</code>,
+    <code>flowSkipCommaSpace</code>, <code>flowSkipColonSpace</code>,
+    <code>quoteFlowKeys</code>, <code>quoteStyle</code> and
+    <code>tagBeforeAnchor</code>.</li>
+    <li>Added formal data layers (events and AST) for modular data
+    pipelines.
+    <ul>
+    <li>Added low-level parser (to events), presenter and visitor APIs.</li>
     </ul>
     </li>
+    <li>Added the <a href="https://github.com/yaml/yaml-test-suite">YAML
+    Test Suite</a> to the
+    test set.</li>
     </ul>
-    <h4>Committers: 1</h4>
+    <h3>Changed</h3>
     <ul>
-    <li>Huáng Jùnliàng (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    <h2>v7.29.3 (2026-04-30)</h2>
-    <h4>:eyeglasses: Spec Compliance</h4>
-    <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17923">#17923</a>
-    Support flow extends bound (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h4>:bug: Bug Fix</h4>
-    <ul>
-    <li><code>babel-helper-create-class-features-plugin</code>,
-    <code>babel-plugin-proposal-decorators</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17931">#17931</a>
-    fix(decorators): replace super within all removed static elements (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    <li><code>babel-register</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17915">#17915</a> Fix
-    thread synchronization issues in <code>@babel/register</code> (<a
-    href="https://github.com/liuxingbaoyu"><code>@​liuxingbaoyu</code></a>)</li>
-    </ul>
-    </li>
-    <li><code>babel-compat-data</code>,
-    <code>babel-plugin-bugfix-safari-rest-destructuring-rhs-array</code>,
-    <code>babel-preset-env</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17788">#17788</a> Add
-    bugfix plugin for Safari array rest destructuring bug (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h4>:nail_care: Polish</h4>
-    <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17782">#17782</a>
-    Improve trailing comma comment handling (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h4>:memo: Documentation</h4>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17847">#17847</a>
-    Replace npmjs.com links with npmx.dev (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    <h4>:running_woman: Performance</h4>
-    <ul>
-    <li><code>babel-helper-import-to-platform-api</code>,
-    <code>babel-plugin-proposal-import-wasm-source</code>,
-    <code>babel-plugin-transform-json-modules</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17818">#17818</a>
-    Load async Wasm and JSON imports in parallel (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h4>Committers: 4</h4>
-    <ul>
-    <li>Babel Bot (<a
-    href="https://github.com/babel-bot"><code>@​babel-bot</code></a>)</li>
-    <li>Huáng Jùnliàng (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    <li>Nicolò Ribaudo (<a
-    href="https://github.com/nicolo-ribaudo"><code>@​nicolo-ribaudo</code></a>)</li>
-    <li><a
-    href="https://github.com/liuxingbaoyu"><code>@​liuxingbaoyu</code></a></li>
-    </ul>
-    <h2>v7.29.2 (2026-03-16)</h2>
-    <h4>:eyeglasses: Spec Compliance</h4>
-    <ul>
-    <li><code>babel-parser</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17840">#17840</a>
-    [7.x backport] async x =&gt; {} must be in leading pos (<a
-    href="https://github.com/JLHwung"><code>@​JLHwung</code></a>)</li>
-    </ul>
-    </li>
-    </ul>
-    <h4>:bug: Bug Fix</h4>
-    <ul>
-    <li><code>babel-helpers</code>,
-    <code>babel-plugin-transform-async-generator-functions</code>,
-    <code>babel-preset-env</code>, <code>babel-runtime-corejs3</code>
-    <ul>
-    <li><a
-    href="https://redirect.github.com/babel/babel/pull/17805">#17805</a>
-    [7.x backport] fix: Properly handle await in finally (<a
-    href="https://github.com/liuxingbaoyu"><code>@​liuxingbaoyu</code></a>)</li>
-    </ul>
-    </li>
-    <li><code>babel-preset-env</code></li>
+    <li>See the <a
+    href="https://github.com/nodeca/js-yaml/blob/master/docs/migrate_v4_to_v5.md">migration
+    guide</a> for upgrade notes.</li>
+    <li>Rewritten in TypeScript and reorganized the public API around flat
+    named
+    exports.</li>
     </ul>
     <!-- raw HTML omitted -->
     </blockquote>
@@ -148,62 +99,50 @@ Date:   Fri Jul 3 00:37:27 2026 +0200
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/babel/babel/commit/a458f66074b97d54773db8159af673d23b26079b"><code>a458f66</code></a>
-    v7.29.4</li>
+    href="https://github.com/nodeca/js-yaml/commit/33d05b5d29a8c21360f620f7e1c1706e24522eda"><code>33d05b5</code></a>
+    4.3.0 released</li>
     <li><a
-    href="https://github.com/babel/babel/commit/32ebd5aaf2526ddd176fd6a3d1e3dc594abdc8d9"><code>32ebd5a</code></a>
-    [7.x backport]fix(systemjs): improve module string name support (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17974">#17974</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/663bfab6db2b4a146a9366fd685f069345be4ddb"><code>663bfab</code></a>
+    Drop demo publish, to not override new v5 one.</li>
     <li><a
-    href="https://github.com/babel/babel/commit/aa8394e454337d118ac3d40bfa3ee1a3cb3f3ed2"><code>aa8394e</code></a>
-    v7.29.0</li>
+    href="https://github.com/nodeca/js-yaml/commit/1cb8c7b94bf75e15116869c1c0482dcb22785986"><code>1cb8c7b</code></a>
+    Add v4-legacy tag for publish</li>
     <li><a
-    href="https://github.com/babel/babel/commit/0053db620c05acf0036f593b5aaf4e372daa79d0"><code>0053db6</code></a>
-    Update polyfill packages (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17727">#17727</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/02f27afad532763263cd2b6be35c24ee8e1f6157"><code>02f27af</code></a>
+    Restore umd builds back to es5</li>
     <li><a
-    href="https://github.com/babel/babel/commit/61647ae2397c82c3c71f077b5ab109106a5cac0f"><code>61647ae</code></a>
-    v7.28.5</li>
+    href="https://github.com/nodeca/js-yaml/commit/8be84edaf15e7c394fa3b813179d1bcc280e87fb"><code>8be84ed</code></a>
+    Fix es5 compatibility</li>
     <li><a
-    href="https://github.com/babel/babel/commit/a177d551adba99773f4ff00ea9bf46550def6132"><code>a177d55</code></a>
-    [Babel 8] Use <code>t.traverseFast</code> to replace some
-    <code>path.traverse</code> (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17518">#17518</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/59423c6f8cdc78742ac00e25a4dd39ef16b702e4"><code>59423c6</code></a>
+    Replace <code>maxMergeSeqLength</code> option with
+    <code>maxTotalMergeKeys</code> (more robust). Ba...</li>
     <li><a
-    href="https://github.com/babel/babel/commit/eebd3a06021c13d335b5b0bd79734df3abbea678"><code>eebd3a0</code></a>
-    v7.27.1</li>
+    href="https://github.com/nodeca/js-yaml/commit/6842ef6a02df01ca7282ea01dc3c70787710c05d"><code>6842ef6</code></a>
+    doc polish</li>
     <li><a
-    href="https://github.com/babel/babel/commit/317e332e650bc04907bc787ab79f930288a3e71e"><code>317e332</code></a>
-    Enforce node protocol import (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17207">#17207</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/590dbabadd172b099c07654fab2eabec8c7a07b9"><code>590dbab</code></a>
+    4.2.0 released</li>
     <li><a
-    href="https://github.com/babel/babel/commit/fdc0fb59e119ee0b38bced63867a344a5b4bc2f3"><code>fdc0fb5</code></a>
-    [Babel 8] Bump nodejs requirements to <code>^20.19.0 || &gt;=
-    22.12.0</code> (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17204">#17204</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/f944dc5cd132251752499bdb157f33027d362177"><code>f944dc5</code></a>
+    Add package.json funding field</li>
     <li><a
-    href="https://github.com/babel/babel/commit/cd24cc07ef6558b7f6510f9177f6393c91b0549f"><code>cd24cc0</code></a>
-    chore: Update TS 5.7 (<a
-    href="https://github.com/babel/babel/tree/HEAD/packages/babel-plugin-transform-modules-systemjs/issues/17053">#17053</a>)</li>
+    href="https://github.com/nodeca/js-yaml/commit/f6927192223355b64f2a6e19f3071ccc579ee718"><code>f692719</code></a>
+    Changelog update</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/babel/babel/commits/v7.29.4/packages/babel-plugin-transform-modules-systemjs">compare
+    href="https://github.com/nodeca/js-yaml/compare/4.1.1...4.3.0">compare
     view</a></li>
     </ul>
-    </details>
-    <details>
-    <summary>Maintainer changes</summary>
-    <p>This version was pushed to npm by <a
-    href="https://www.npmjs.com/~GitHub%20Actions">GitHub Actions</a>, a new
-    releaser for <code>@​babel/plugin-transform-modules-systemjs</code>
-    since your current version.</p>
     </details>
     <br />
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=@babel/plugin-transform-modules-systemjs&package-manager=npm_and_yarn&previous-version=7.18.6&new-version=7.29.4)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=js-yaml&package-manager=npm_and_yarn&previous-version=4.1.1&new-version=4.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    You can trigger a rebase of this PR by commenting `@dependabot rebase`.
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
     
     [//]: # (dependabot-automerge-start)
     [//]: # (dependabot-automerge-end)
@@ -234,7 +173,3 @@ Date:   Fri Jul 3 00:37:27 2026 +0200
     page](https://github.com/opencast/opencast/network/alerts).
     
     </details>
-    
-    > **Note**
-    > Automatic rebases have been disabled on this pull request as it has
-    been open for over 30 days.
