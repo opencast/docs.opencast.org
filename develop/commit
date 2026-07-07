@@ -1,230 +1,40 @@
-commit 50154b78f9018e5d3b0fb743bb188f41a3c21f78
+commit a08c1e70bd921939f8718008f298aafd99aebe20
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Tue Jul 7 17:52:38 2026 +0200
+Date:   Tue Jul 7 17:54:11 2026 +0200
 
-    Build(deps): bump qs and express in /modules/lti (#7681)
+    Build(deps): bump follow-redirects from 1.15.11 to 1.16.0 in /modules/lti (#7580)
     
-    Bumps [qs](https://github.com/ljharb/qs) and
-    [express](https://github.com/expressjs/express). These dependencies
-    needed to be updated together.
-    Updates `qs` from 6.14.1 to 6.15.2
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/ljharb/qs/blob/main/CHANGELOG.md">qs's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h2><strong>6.15.2</strong></h2>
-    <ul>
-    <li>[Fix] <code>stringify</code>: skip null/undefined entries in
-    <code>arrayFormat: 'comma'</code> + <code>encodeValuesOnly</code>
-    instead of crashing in <code>encoder</code></li>
-    <li>[Fix] <code>stringify</code>: use configured <code>delimiter</code>
-    after <code>charsetSentinel</code> (<a
-    href="https://redirect.github.com/ljharb/qs/issues/555">#555</a>)</li>
-    <li>[Fix] <code>stringify</code>: apply <code>formatter</code> to
-    encoded key under <code>strictNullHandling</code> (<a
-    href="https://redirect.github.com/ljharb/qs/issues/554">#554</a>)</li>
-    <li>[Fix] <code>stringify</code>: skip null/undefined filter-array
-    entries instead of crashing in <code>encoder</code> (<a
-    href="https://redirect.github.com/ljharb/qs/issues/551">#551</a>)</li>
-    <li>[Fix] <code>parse</code>: handle nested bracket groups and add
-    regression tests (<a
-    href="https://redirect.github.com/ljharb/qs/issues/530">#530</a>)</li>
-    <li>[readme] fix grammar (<a
-    href="https://redirect.github.com/ljharb/qs/issues/550">#550</a>)</li>
-    <li>[Dev Deps] update <code>@ljharb/eslint-config</code></li>
-    <li>[Tests] add regression tests for keys containing percent-encoded
-    bracket text</li>
-    </ul>
-    <h2><strong>6.15.1</strong></h2>
-    <ul>
-    <li>[Fix] <code>parse</code>: <code>parameterLimit: Infinity</code> with
-    <code>throwOnLimitExceeded: true</code> silently drops all
-    parameters</li>
-    <li>[Deps] update <code>@ljharb/eslint-config</code></li>
-    <li>[Dev Deps] update <code>@ljharb/eslint-config</code>,
-    <code>iconv-lite</code></li>
-    <li>[Tests] increase coverage</li>
-    </ul>
-    <h2><strong>6.15.0</strong></h2>
-    <ul>
-    <li>[New] <code>parse</code>: add <code>strictMerge</code> option to
-    wrap object/primitive conflicts in an array (<a
-    href="https://redirect.github.com/ljharb/qs/issues/425">#425</a>, <a
-    href="https://redirect.github.com/ljharb/qs/issues/122">#122</a>)</li>
-    <li>[Fix] <code>duplicates</code> option should not apply to bracket
-    notation keys (<a
-    href="https://redirect.github.com/ljharb/qs/issues/514">#514</a>)</li>
-    </ul>
-    <h2><strong>6.14.2</strong></h2>
-    <ul>
-    <li>[Fix] <code>parse</code>: mark overflow objects for indexed notation
-    exceeding <code>arrayLimit</code> (<a
-    href="https://redirect.github.com/ljharb/qs/issues/546">#546</a>)</li>
-    <li>[Fix] <code>arrayLimit</code> means max count, not max index, in
-    <code>combine</code>/<code>merge</code>/<code>parseArrayValue</code></li>
-    <li>[Fix] <code>parse</code>: throw on <code>arrayLimit</code> exceeded
-    with indexed notation when <code>throwOnLimitExceeded</code> is true (<a
-    href="https://redirect.github.com/ljharb/qs/issues/529">#529</a>)</li>
-    <li>[Fix] <code>parse</code>: enforce <code>arrayLimit</code> on
-    <code>comma</code>-parsed values</li>
-    <li>[Fix] <code>parse</code>: fix error message to reflect arrayLimit as
-    max index; remove extraneous comments (<a
-    href="https://redirect.github.com/ljharb/qs/issues/545">#545</a>)</li>
-    <li>[Robustness] avoid <code>.push</code>, use <code>void</code></li>
-    <li>[readme] document that <code>addQueryPrefix</code> does not add
-    <code>?</code> to empty output (<a
-    href="https://redirect.github.com/ljharb/qs/issues/418">#418</a>)</li>
-    <li>[readme] clarify <code>parseArrays</code> and
-    <code>arrayLimit</code> documentation (<a
-    href="https://redirect.github.com/ljharb/qs/issues/543">#543</a>)</li>
-    <li>[readme] replace runkit CI badge with shields.io check-runs
-    badge</li>
-    <li>[meta] fix changelog typo (<code>arrayLength</code> →
-    <code>arrayLimit</code>)</li>
-    <li>[actions] fix rebase workflow permissions</li>
-    </ul>
-    </blockquote>
-    </details>
+    Bumps
+    [follow-redirects](https://github.com/follow-redirects/follow-redirects)
+    from 1.15.11 to 1.16.0.
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/ljharb/qs/commit/9aca4076fe788338c67cf7e115f0be6bc58d85a8"><code>9aca407</code></a>
-    v6.15.2</li>
+    href="https://github.com/follow-redirects/follow-redirects/commit/0c23a223067201c368035e82954c11eb2578a33b"><code>0c23a22</code></a>
+    Release version 1.16.0 of the npm package.</li>
     <li><a
-    href="https://github.com/ljharb/qs/commit/5e33d33447ed0bf1ddab9abc41d27dea4687d992"><code>5e33d33</code></a>
-    [Dev Deps] update <code>@ljharb/eslint-config</code></li>
+    href="https://github.com/follow-redirects/follow-redirects/commit/844c4d302ac963d29bdb5dc1754ec7df3d70d7f9"><code>844c4d3</code></a>
+    Add sensitiveHeaders option.</li>
     <li><a
-    href="https://github.com/ljharb/qs/commit/21f80b33e5c8b3f7eba1034fff0da4a4a37a1d41"><code>21f80b3</code></a>
-    [Fix] <code>stringify</code>: skip null/undefined entries in
-    <code>arrayFormat: 'comma'</code> + `e...</li>
+    href="https://github.com/follow-redirects/follow-redirects/commit/5e8b8d024e2c76f804a284258e585ecb49a575be"><code>5e8b8d0</code></a>
+    ci: add Node.js 24.x to the CI matrix</li>
     <li><a
-    href="https://github.com/ljharb/qs/commit/a0a81ea2071acce3eff41a040f719ac8f5c4f64c"><code>a0a81ea</code></a>
-    [Fix] <code>stringify</code>: use configured <code>delimiter</code>
-    after <code>charsetSentinel</code></li>
+    href="https://github.com/follow-redirects/follow-redirects/commit/7953e2255aa0b93602eed3804f3bc5e6923a03af"><code>7953e22</code></a>
+    ci: upgrade GitHub Actions to use setup-node@v6 and checkout@v6</li>
     <li><a
-    href="https://github.com/ljharb/qs/commit/e3062f78f5233b338ceeb8e8dfa5a07dea4b32a8"><code>e3062f7</code></a>
-    [Fix] <code>stringify</code>: apply <code>formatter</code> to encoded
-    key under <code>strictNullHandling</code></li>
-    <li><a
-    href="https://github.com/ljharb/qs/commit/0c180a40adb8c6703fffc85b2ff06ca209f5c1e0"><code>0c180a4</code></a>
-    [Fix] <code>stringify</code>: skip null/undefined filter-array entries
-    instead of crashi...</li>
-    <li><a
-    href="https://github.com/ljharb/qs/commit/3a8b94aec19bd664720f6f6b1e66c4a0dfe4b656"><code>3a8b94a</code></a>
-    [Tests] add regression tests for keys containing percent-encoded bracket
-    text</li>
-    <li><a
-    href="https://github.com/ljharb/qs/commit/96755abd357c0e534dd3442a84a04d08864bfe0d"><code>96755ab</code></a>
-    [readme] fix grammar</li>
-    <li><a
-    href="https://github.com/ljharb/qs/commit/a419ce5bbfcdb98a299f1a0bb47ea055baef20e6"><code>a419ce5</code></a>
-    [Fix] <code>parse</code>: handle nested bracket groups and add
-    regression tests</li>
-    <li><a
-    href="https://github.com/ljharb/qs/commit/3f5e1c528c967d915096787efbffa73cf6044170"><code>3f5e1c5</code></a>
-    v6.15.1</li>
-    <li>Additional commits viewable in <a
-    href="https://github.com/ljharb/qs/compare/v6.14.1...v6.15.2">compare
-    view</a></li>
-    </ul>
-    </details>
-    <br />
-    
-    Updates `express` from 4.22.1 to 4.22.2
-    <details>
-    <summary>Release notes</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/expressjs/express/releases">express's
-    releases</a>.</em></p>
-    <blockquote>
-    <h2>v4.22.2</h2>
-    <h2>What's Changed</h2>
-    <ul>
-    <li>fix: restore &gt;20 array parsing for <code>req.query</code>
-    repeated keys (<a
-    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe6</code></a>)
-    <ul>
-    <li>This also unifies array-cap behavior across notations. Indexed
-    notation (<code>a[0]=...</code>) was historically capped at qs's default
-    <code>arrayLimit</code> of 20 even in older qs versions; after this
-    change it also allows up to 1000 items.</li>
-    </ul>
-    </li>
-    <li>deps: qs@~6.15.1</li>
-    <li>deps: body-parser@~1.20.5</li>
-    </ul>
-    <h2>New Contributors</h2>
-    <ul>
-    <li><a
-    href="https://github.com/suuuuuuminnnnnn"><code>@​suuuuuuminnnnnn</code></a>
-    made their first contribution in <a
-    href="https://redirect.github.com/expressjs/express/pull/7021">expressjs/express#7021</a></li>
-    <li><a href="https://github.com/SAY-5"><code>@​SAY-5</code></a> made
-    their first contribution in <a
-    href="https://redirect.github.com/expressjs/express/pull/7181">expressjs/express#7181</a></li>
-    </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/expressjs/express/compare/v4.22.1...v4.22.2">https://github.com/expressjs/express/compare/v4.22.1...v4.22.2</a></p>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Changelog</summary>
-    <p><em>Sourced from <a
-    href="https://github.com/expressjs/express/blob/v4.22.2/History.md">express's
-    changelog</a>.</em></p>
-    <blockquote>
-    <h1>4.22.2 / 2026-05-011</h1>
-    <ul>
-    <li>fix: restore &gt;20 array parsing for <code>req.query</code>
-    repeated keys (<a
-    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe6</code></a>)
-    <ul>
-    <li>This also unifies array-cap behavior across notations. Indexed
-    notation (<code>a[0]=...</code>) was historically capped at qs's default
-    <code>arrayLimit</code> of 20 even in older qs versions; after this
-    change it also allows up to 1000 items.</li>
-    </ul>
-    </li>
-    <li>deps: qs@~6.15.1</li>
-    <li>deps: body-parser@~1.20.5</li>
-    </ul>
-    </blockquote>
-    </details>
-    <details>
-    <summary>Commits</summary>
-    <ul>
-    <li><a
-    href="https://github.com/expressjs/express/commit/df0abc9333a3398b97b71f6ea7cd77d5ea3e9f97"><code>df0abc9</code></a>
-    4.22.2</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/836d36668ea750f78b4373b4de79bbd22634e6ec"><code>836d366</code></a>
-    <code>4.x</code> update qs to 6.15.1, body-parser 1.20.5 (<a
-    href="https://redirect.github.com/expressjs/express/issues/7224">#7224</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/8d09bfe6d88983da5c3e12cfdd54782c4dc675db"><code>8d09bfe</code></a>
-    fix: restore array parsing for req.query repeated keys (<a
-    href="https://redirect.github.com/expressjs/express/issues/7181">#7181</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/d39e8ad1778a0b8a606a5a7b17096d0cc5ec722d"><code>d39e8ad</code></a>
-    deps: body-parser@~1.20.4 (<a
-    href="https://redirect.github.com/expressjs/express/issues/7021">#7021</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/efe85d9fdc9e3a62f7a1121b4f5f484862298b48"><code>efe85d9</code></a>
-    deps: qs@^6.14.1 (<a
-    href="https://redirect.github.com/expressjs/express/issues/6972">#6972</a>)</li>
-    <li><a
-    href="https://github.com/expressjs/express/commit/f62378e1bc776259c0a471476c2dc043a02ac762"><code>f62378e</code></a>
-    📝 add note to history</li>
+    href="https://github.com/follow-redirects/follow-redirects/commit/86dc1f86e4b56bcd642c78384d51f10f123aea75"><code>86dc1f8</code></a>
+    Sanitizing input.</li>
     <li>See full diff in <a
-    href="https://github.com/expressjs/express/compare/v4.22.1...v4.22.2">compare
+    href="https://github.com/follow-redirects/follow-redirects/compare/v1.15.11...v1.16.0">compare
     view</a></li>
     </ul>
     </details>
     <br />
     
+    
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=follow-redirects&package-manager=npm_and_yarn&previous-version=1.15.11&new-version=1.16.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     You can trigger a rebase of this PR by commenting `@dependabot rebase`.
     
