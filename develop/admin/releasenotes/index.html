@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 20: Release Notes", url: "#_top", children: [
+              {title: "Opencast 20.1", url: "#opencast-201" },
               {title: "Opencast 20.0", url: "#opencast-200" },
               {title: "Release Schedule", url: "#release-schedule" },
               {title: "Release Managers", url: "#release-managers" },
@@ -88,6 +89,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-20-release-notes">Opencast 20: Release Notes</h1>
+<h2 id="opencast-201">Opencast 20.1</h2>
+<p>This release contains minor admin ui fixes and code cleanups. Also it adds <code>/play</code> route enhancements described below.</p>
+<h3 id="preserve-query-parameters-on-play-redirect">Preserve query parameters on <code>/play</code> redirect</h3>
+<p>The <code>/play</code> route now passes through query parameters to the target player URL.
+  This allows parameters like <code>jwt=...</code> or <code>t=10</code> to be preserved
+  when redirecting to the configured player.</p>
+<p>This is particularly useful for third-party integrations
+  where authentication tokens (like JWTs) or specific player settings
+  need to be passed through the redirect to the actual player interface,
+  while preserving the ability to configure the exact player on the Opencast side.</p>
+<p>If a parameter with the same name already exists in the configured player path,
+  the value from the request will be appended, creating a multi-valued parameter.
+  This behavior ensures that parameters are never lost,
+  though player implementations may need to handle multiple values if they occur.</p>
 <h2 id="opencast-200">Opencast 20.0</h2>
 <h3 id="features">Features</h3>
 <ul>
