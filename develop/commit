@@ -1,5 +1,398 @@
-commit 8af395fb678ea463184ae0329287fc59e819f7c0
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Wed Jul 8 15:57:13 2026 -0600
+commit d5e88f1874fd260ed7a310b4befd101e0115de3c
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Mon Jul 13 16:48:08 2026 +0200
 
-    Merge branch 'r/20.x' into develop
+    Bump axios from 1.15.0 to 1.18.1 in /modules/engage-paella-player-8 (#7757)
+    
+    Bumps [axios](https://github.com/axios/axios) from 1.15.0 to 1.18.1.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/axios/axios/releases">axios's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>v1.18.1 — June 21, 2026</h2>
+    <p>This release focuses on Node HTTP adapter fixes, safer AxiosError
+    serialisation, runtime/type correctness fixes, documentation updates,
+    and dependency maintenance.</p>
+    <h2>🐛 Bug Fixes</h2>
+    <ul>
+    <li>AxiosError Serialisation: Made AxiosError#cause non-enumerable to
+    prevent circular JSON serialisation failures when errors include nested
+    causes. (<a
+    href="https://redirect.github.com/axios/axios/issues/10913">#10913</a>)</li>
+    <li>Node HTTP Adapter: Guarded socket.setKeepAlive for proxy agent
+    streams, accepted path-only URLs when socketPath is configured, deferred
+    environment proxy handling to Node, and explicitly passed maxBodyLength
+    through to follow-redirects. (<a
+    href="https://redirect.github.com/axios/axios/issues/10917">#10917</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/10930">#10930</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/10942">#10942</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/10993">#10993</a>)</li>
+    <li>Runtime and Type Correctness: Fixed several runtime crashes, type
+    definition mismatches, and incorrect error handling paths. (<a
+    href="https://redirect.github.com/axios/axios/issues/10959">#10959</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11021">#11021</a>)</li>
+    <li>AxiosURLSearchParams: Switched the encoder callback to an arrow
+    function so <code>encoder.call(this)</code> receives the
+    <code>AxiosURLSearchParams</code> instance correctly. (<a
+    href="https://redirect.github.com/axios/axios/issues/11019">#11019</a>)</li>
+    </ul>
+    <h2>🔧 Maintenance &amp; Chores</h2>
+    <ul>
+    <li>
+    <p>Documentation: Documented sensitive headers and status transition
+    behaviour, prepared cleaned-up docs, added Deno install instructions,
+    and clarified that request data is request-specific (<a
+    href="https://redirect.github.com/axios/axios/issues/11007">#11007</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11010">#11010</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11023">#11023</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11025">#11025</a>)</p>
+    </li>
+    <li>
+    <p>Dependencies: Bumped vite, rollup, form-data, js-yaml, and multer
+    across the root project, docs, smoke tests, and module test workspaces.
+    (<a
+    href="https://redirect.github.com/axios/axios/issues/11011">#11011</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11012">#11012</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11013">#11013</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11014">#11014</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11015">#11015</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11016">#11016</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11017">#11017</a>,
+    <a
+    href="https://redirect.github.com/axios/axios/issues/11026">#11026</a>)</p>
+    </li>
+    </ul>
+    <h2>🌟 New Contributors</h2>
+    <p>We are thrilled to welcome our new contributors. Thank you for
+    helping improve axios:</p>
+    <ul>
+    <li><a
+    href="https://github.com/webdevelopersrinu"><code>@​webdevelopersrinu</code></a>
+    (<a
+    href="https://redirect.github.com/axios/axios/issues/10913">#10913</a>)</li>
+    <li><a href="https://github.com/sijie-Z"><code>@​sijie-Z</code></a> (<a
+    href="https://redirect.github.com/axios/axios/issues/10993">#10993</a>)</li>
+    <li><a
+    href="https://github.com/bartlomieju"><code>@​bartlomieju</code></a> (<a
+    href="https://redirect.github.com/axios/axios/issues/11023">#11023</a>)</li>
+    <li><a href="https://github.com/JSap0914"><code>@​JSap0914</code></a>
+    (<a
+    href="https://redirect.github.com/axios/axios/issues/11019">#11019</a>)</li>
+    </ul>
+    <p><a
+    href="https://github.com/axios/axios/compare/v1.18.0...v1.18.1">Full
+    Changelog</a></p>
+    <h2>v1.18.0 — June 13, 2026</h2>
+    <p>This release hardens redirect and URL handling, improves the
+    validateStatus configuration semantics, and includes updates to
+    documentation, dependencies, and release metadata.</p>
+    <h2>🔒 Security Fixes</h2>
+    <ul>
+    <li>
+    <p><strong>Redirect Header Safety:</strong> Added Node HTTP adapter
+    support for stripping caller-specified sensitive headers on cross-origin
+    redirects, helping prevent custom auth headers such as API keys from
+    leaking to another origin. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10892">#10892</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>URL And Request Hardening:</strong> Rejects malformed
+    <code>http:</code> and <code>https:</code> URLs that omit
+    <code>//</code> with <code>ERR_INVALID_URL</code>, while tightening
+    prototype-pollution-safe config reads, stream size limits, FormData
+    depth handling, data URL sizing, and local <code>NO_PROXY</code>
+    matching. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/11000">#11000</a></strong>)</p>
+    </li>
+    </ul>
+    <h2>🐛 Bug Fixes</h2>
+    <ul>
+    <li><strong>Status Validation:</strong> Added
+    <code>transitional.validateStatusUndefinedResolves</code> so
+    applications can opt in to treating <code>validateStatus:
+    undefined</code> like the option was omitted, while
+    <code>validateStatus: null</code> remains the explicit way to accept
+    every status. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10899">#10899</a></strong>)</li>
+    </ul>
+    <h2>🔧 Maintenance &amp; Chores</h2>
+    <ul>
+    <li>
+    <p><strong>Documentation:</strong> Published the v1.17.0 release notes,
+    fixed a changelog typo, clarified the package update PR policy, and
+    marked the <code>proxy</code> request config as Node.js-only in the
+    advanced docs. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10984">#10984</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10988">#10988</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10992">#10992</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10995">#10995</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>Dependencies:</strong> Bumped <code>@babel/core</code>,
+    <code>@babel/preset-env</code>, <code>@commitlint/cli</code>,
+    <code>@commitlint/config-conventional</code>,
+    <code>@rollup/plugin-babel</code>, <code>@rollup/plugin-commonjs</code>,
+    <code>@vitest/browser</code>, <code>@vitest/browser-playwright</code>,
+    <code>eslint</code>, <code>lint-staged</code>, <code>rollup</code>,
+    <code>vitest</code>, and <code>actions/checkout</code>. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10989">#10989</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10996">#10996</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10997">#10997</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>Release Metadata:</strong> Prepared the 1.18.0 release by
+    updating package metadata and the runtime <code>VERSION</code> value.
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/11003">#11003</a></strong>)</p>
+    </li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/axios/axios/blob/v1.x/CHANGELOG.md">axios's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h1>Changelog</h1>
+    <h2>v1.18.0 — June 13, 2026</h2>
+    <p>This release hardens redirect and URL handling, improves the
+    validateStatus configuration semantics, and includes updates to
+    documentation, dependencies, and release metadata.</p>
+    <h2>🔒 Security Fixes</h2>
+    <ul>
+    <li>
+    <p><strong>Redirect Header Safety:</strong> Added Node HTTP adapter
+    support for stripping caller-specified sensitive headers on cross-origin
+    redirects, helping prevent custom auth headers such as API keys from
+    leaking to another origin. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10892">#10892</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>URL And Request Hardening:</strong> Rejects malformed
+    <code>http:</code> and <code>https:</code> URLs that omit
+    <code>//</code> with <code>ERR_INVALID_URL</code>, while tightening
+    prototype-pollution-safe config reads, stream size limits, FormData
+    depth handling, data URL sizing, and local <code>NO_PROXY</code>
+    matching. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/11000">#11000</a></strong>)</p>
+    </li>
+    </ul>
+    <h2>🐛 Bug Fixes</h2>
+    <ul>
+    <li><strong>Status Validation:</strong> Added
+    <code>transitional.validateStatusUndefinedResolves</code> so
+    applications can opt in to treating <code>validateStatus:
+    undefined</code> like the option was omitted, while
+    <code>validateStatus: null</code> remains the explicit way to accept
+    every status. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10899">#10899</a></strong>)</li>
+    </ul>
+    <h2>🔧 Maintenance &amp; Chores</h2>
+    <ul>
+    <li>
+    <p><strong>Documentation:</strong> Published the v1.17.0 release notes,
+    fixed a changelog typo, clarified the package update PR policy, and
+    marked the <code>proxy</code> request config as Node.js-only in the
+    advanced docs. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10984">#10984</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10988">#10988</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10992">#10992</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10995">#10995</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>Dependencies:</strong> Bumped <code>@babel/core</code>,
+    <code>@babel/preset-env</code>, <code>@commitlint/cli</code>,
+    <code>@commitlint/config-conventional</code>,
+    <code>@rollup/plugin-babel</code>, <code>@rollup/plugin-commonjs</code>,
+    <code>@vitest/browser</code>, <code>@vitest/browser-playwright</code>,
+    <code>eslint</code>, <code>lint-staged</code>, <code>rollup</code>,
+    <code>vitest</code>, and <code>actions/checkout</code>. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10989">#10989</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10996">#10996</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10997">#10997</a></strong>)</p>
+    </li>
+    <li>
+    <p><strong>Release Metadata:</strong> Prepared the 1.18.0 release by
+    updating package metadata and the runtime <code>VERSION</code> value.
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/11003">#11003</a></strong>)</p>
+    </li>
+    </ul>
+    <h2>🌟 New Contributors</h2>
+    <p>We are thrilled to welcome our new contributors. Thank you for
+    helping improve axios:</p>
+    <ul>
+    <li><strong><a
+    href="https://github.com/drori12"><code>@​drori12</code></a></strong>
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10984">#10984</a></strong>)</li>
+    <li><strong><a
+    href="https://github.com/eyupcanakman"><code>@​eyupcanakman</code></a></strong>
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10899">#10899</a></strong>)</li>
+    <li><strong><a
+    href="https://github.com/Adi-Beker"><code>@​Adi-Beker</code></a></strong>
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10995">#10995</a></strong>)</li>
+    </ul>
+    <p><a
+    href="https://github.com/axios/axios/compare/v1.17.0...v1.18.0">Full
+    Changelog</a></p>
+    <h2>v1.17.0 — June 1, 2026</h2>
+    <p>This release adds Node HTTP zstd decompression, hardens config and
+    release workflows, and fixes authentication, header, proxy, and
+    type-handling regressions.</p>
+    <h2>🔒 Security Fixes</h2>
+    <ul>
+    <li><strong>Config Hardening:</strong> Guarded <code>socketPath</code>,
+    <code>params</code>, and <code>paramsSerializer</code> reads with
+    own-property checks to prevent inherited prototype values from affecting
+    request behavior, including SSRF-sensitive paths. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10901">#10901</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10922">#10922</a></strong>)</li>
+    <li><strong>Release Publishing:</strong> Switched the publish workflow
+    to npm staged publishing for safer, auditable package releases with
+    provenance. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10926">#10926</a></strong>)</li>
+    </ul>
+    <h2>🚀 New Features</h2>
+    <ul>
+    <li><strong>HTTP Compression:</strong> Added Node HTTP adapter support
+    for zstd response decompression, with
+    <code>transitional.advertiseZstdAcceptEncoding</code> controlling
+    whether <code>zstd</code> is advertised in <code>Accept-Encoding</code>.
+    (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/6792">#6792</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10920">#10920</a></strong>)</li>
+    </ul>
+    <h2>🐛 Bug Fixes</h2>
+    <ul>
+    <li><strong>Authentication Handling:</strong> Restored Basic auth on
+    same-origin Node redirects while continuing to strip credentials
+    cross-origin, and aligned the fetch adapter with HTTP adapter behavior
+    for URL-embedded Basic auth. (<strong><a
+    href="https://redirect.github.com/axios/axios/issues/10929">#10929</a></strong>,
+    <strong><a
+    href="https://redirect.github.com/axios/axios/issues/10896">#10896</a></strong>)</li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/axios/axios/commit/a209bfb1e5dcbce3cecbf4bd955339d006358887"><code>a209bfb</code></a>
+    chore(release): prepare release 1.18.1 (<a
+    href="https://redirect.github.com/axios/axios/issues/11027">#11027</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/fa6a55ef99235074d2c11d80a1064ef02850d598"><code>fa6a55e</code></a>
+    chore(deps-dev): bump multer from 2.1.1 to 2.2.0 (<a
+    href="https://redirect.github.com/axios/axios/issues/11026">#11026</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/40e7be8a78dd43caaeb2313cc4be3f8e714be91d"><code>40e7be8</code></a>
+    docs: clarifies that request data is request-specific in axios (<a
+    href="https://redirect.github.com/axios/axios/issues/11025">#11025</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/a446b39b19c8b570214a4158520c5ddd5b020366"><code>a446b39</code></a>
+    fix(AxiosURLSearchParams): use arrow function so encoder.call(this)
+    receives ...</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/cf1306a42d97960b635c894c83658f2692e53585"><code>cf1306a</code></a>
+    docs: add Deno to install instructions (<a
+    href="https://redirect.github.com/axios/axios/issues/11023">#11023</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/b32880af48017457a1203ab2e63720902d3b71b3"><code>b32880a</code></a>
+    fix: incorrect use of error (<a
+    href="https://redirect.github.com/axios/axios/issues/11021">#11021</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/1792eda11aff8fe0f8c8a6e5ae6ff305740a6460"><code>1792eda</code></a>
+    fix: ensure maxBodyLength is explicitly passed to follow-redirects (<a
+    href="https://redirect.github.com/axios/axios/issues/10993">#10993</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/30499d6af0961ec38619792013a534d1933b08a9"><code>30499d6</code></a>
+    fix: various runtime crashes and type definition mismatches (<a
+    href="https://redirect.github.com/axios/axios/issues/10959">#10959</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/20ce9c412ebd88823d1a4a47000cb133a8f79440"><code>20ce9c4</code></a>
+    fix(http): defer env proxy handling to Node (<a
+    href="https://redirect.github.com/axios/axios/issues/10942">#10942</a>)</li>
+    <li><a
+    href="https://github.com/axios/axios/commit/e64bcf9c5af231d6f37d8389b1e57ded314fff86"><code>e64bcf9</code></a>
+    chore(deps): merge branch 'v1.x' into tests/module/cjs (<a
+    href="https://redirect.github.com/axios/axios/issues/11014">#11014</a>)</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/axios/axios/compare/v1.15.0...v1.18.1">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=axios&package-manager=npm_and_yarn&previous-version=1.15.0&new-version=1.18.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
+    
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
+    You can disable automated security fix PRs for this repo from the
+    [Security Alerts
+    page](https://github.com/opencast/opencast/network/alerts).
+    
+    </details>
