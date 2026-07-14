@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 20: Release Notes", url: "#_top", children: [
+              {title: "Opencast 20.2", url: "#opencast-202" },
               {title: "Opencast 20.1", url: "#opencast-201" },
               {title: "Opencast 20.0", url: "#opencast-200" },
               {title: "Release Schedule", url: "#release-schedule" },
@@ -89,6 +90,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-20-release-notes">Opencast 20: Release Notes</h1>
+<h2 id="opencast-202">Opencast 20.2</h2>
+<p>This version contains addition updates for the admin, editor, and studio submodules, along with the usual collection of
+bug fixes.  There are three things worthy of special attention:</p>
+<ul>
+<li><a href="https://github.com/opencast/opencast/pull/7752">#7752</a> makes a change to a workflow, which will need to be manually
+  applied by adopters if they are using the <code>output-background</code> configuration key.</li>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-m6c8-jcw2-5r25">GHSA-m6c8-jcw2-5r25</a> resolves a XSS
+  issue in Paella.</li>
+<li><a href="https://github.com/opencast/opencast/security/advisories/GHSA-6f53-jp7x-gg7p">GHSA-6f53-jp7x-gg7p</a> resolves a
+  session fixation issue which allowed for account takeovers via malicious links.</li>
+</ul>
+<p>Neither security issue requires any changes by adopters, and they are both dropin compatible with existing 19.x installs.</p>
 <h2 id="opencast-201">Opencast 20.1</h2>
 <p>This release contains minor admin ui fixes and code cleanups. Also it adds <code>/play</code> route enhancements described below.</p>
 <h3 id="preserve-query-parameters-on-play-redirect">Preserve query parameters on <code>/play</code> redirect</h3>
