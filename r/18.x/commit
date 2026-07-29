@@ -1,28 +1,14 @@
-commit f8dcaa36fa34f107cdbbbf98d0fbc9accfe625c8
-Author: Jonas Dühring <32971521+jduehring@users.noreply.github.com>
-Date:   Wed Jul 29 11:44:41 2026 +0200
+commit 0c231079f7799d19b155556cd97451d639497f58
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Tue Jun 23 15:14:14 2026 -0600
 
-    Update paella player 7 (#7739)
+    Fix for GHSA-6f53-jp7x-gg7p: Disable parsing jsessionid from url
     
-    This PR updates paella player 7 to the latest version.
+    As reported in GHSA-6f53-jp7x-gg7p, spring parses the (arbitrary) value
+    of the jsessionid from the URL if no other session cookie is already
+    present.  This presents issues if you can trick a user into following a
+    link with your malicious session id and then logging in, since it allows
+    for a session hijack attack.
     
-    ### Your pull request should…
-    
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [ ] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    Unclear if this is going to break any of our integrations, but barring
+    those *requiring* that this be enabled, this seems like the correct fix.
