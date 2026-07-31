@@ -1,18 +1,18 @@
-commit 069049730c2b89acb08a06208749d72520445ecf
+commit 81f92bfcfe9d7a39acedcb599ad38600b8e64a03
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Jul 31 10:58:43 2026 +0200
+Date:   Fri Jul 31 11:32:37 2026 +0200
 
-    Fix fragile debug-flag detection in OpencastRest (#7767)
+    Wire in existing en-GB and zh-TW locale files (#7766)
     
-    window.location.search.includes("&debug=true") missed the flag whenever
-    debug was the first query parameter (e.g. "?debug=true&foo=bar" has no
-    literal "&debug=true" substring).
-    
-    Use the existing parsedQueryString() helper instead, matching how every
-    other query parameter in this module is read.
+    lang-en_GB.json and lang-zh_TW.json existed under src/i18n/ but were
+    never imported or registered with i18next, so those locales were
+    unreachable and always fell back to en/zh. Register them as en-GB and
+    zh-TW resources, matching the BCP-47 tags reported by
+    i18next-browser-languagedetector.
     
     ### AI Usage
-    Worked with Claude Sonnet to do the review.
+    
+    Noticed in an AI review.
     
     ### Your pull request should…
     
