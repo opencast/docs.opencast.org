@@ -1,5 +1,22 @@
-commit f117d76dc97068ce446c4160053bd2a9d98aba45
-Author: Crowdin Bot <crowdin-bot@opencast.org>
-Date:   Mon Aug 3 08:26:08 2026 +0000
+commit bbacb7a8e8f864960b28580991003c814906f730
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Mon Aug 3 14:54:33 2026 +0200
 
-    Automatically update translation keys (develop)
+    Improvements for Deletion (#7716)
+    
+    How it started: Trying to delete an event.
+    How it's going: ...
+    
+    The main problem was that the snapshot in the delete workflow failed bc
+    assets were missing on disk and could not be hardlinked to. Since we
+    want to delete anyway, we don't need to include them in this snapshot
+    imo.
+    
+    Then deletion got stuck running the workflow bc the AssetManager had not
+    been properly updated and still thought the engage publication existed,
+    but retraction was skipped bc the mediapackage was no longer in search.
+    
+    The rest is small docs changes and a duplicate dependency in a pom.
+    **However**, this also renames the delete-workflow to
+    `retract-for-deletion` to avoid confusion bc the delete workflow doesn't
+    actually delete the event. This might be controversial. Thoughts?
