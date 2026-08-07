@@ -110,13 +110,19 @@ metadata contained within the Dublin Core catalogs.</p>
 <tr>
 <td>dccatalog</td>
 <td>"episode" or "series"</td>
-<td>the type of catalog in which to search for <code>dcterm</code></td>
+<td>the subtype of catalog in which to search for <code>dcterm</code></td>
 <td>EMPTY</td>
 </tr>
 <tr>
+<td>dccatalog-type</td>
+<td>"dublincore"</td>
+<td>the type of catalog in which to search for <code>dcterm</code></td>
+<td>"dublincore"</td>
+</tr>
+<tr>
 <td>dcterm</td>
-<td>"creator"</td>
-<td>the name of the Dublin Core term which to check</td>
+<td>"{http://purl.org/dc/terms/}creator"</td>
+<td>the XML Expanded Name, consists of a namespace and the name of the Dublin Core term which to check</td>
 <td>EMPTY</td>
 </tr>
 <tr>
@@ -140,10 +146,15 @@ metadata contained within the Dublin Core catalogs.</p>
 </tbody>
 </table>
 <h3 id="dccatalog">dccatalog</h3>
-<p>The type of Dublin Core catalog in which to look for the <code>dcterm</code>. This will usually be <code>episode</code> or <code>series</code>.</p>
+<p>The flavor subtype of Dublin Core catalog in which to look for the <code>dcterm</code>. This will usually be <code>episode</code> or <code>series</code>.</p>
+<h3 id="dccatalog-type">dccatalog-type</h3>
+<p>The flavor type of Dublin Core catalog in which to look for the <code>dcterm</code>. This will usually be <code>dublincore</code>.
+Will default to 'dublincore'.</p>
 <h3 id="dcterm">dcterm</h3>
-<p>The name of the Dublin Core term to look for in the <code>dccatalog</code>. This could be one of the terms set by Opencast or an
-additional term adding to the catalog.</p>
+<p>The expanded name is a pair consisting of a namespace name and a local name.
+The local name is the name of the Dublin Core term to look for in the <code>dccatalog</code> and the namespace name is the name of 
+the namespace it belongs to.
+The Dublin Core term could be one of the terms set by Opencast or an additional term adding to the catalog.</p>
 <h3 id="match-value">match-value</h3>
 <p>The value of the <code>dcterm</code> which to match against. The comparison is case sensitive.</p>
 <h3 id="default-value">default-value</h3>
@@ -164,7 +175,7 @@ conditions can be negated though so it is possible to skip subsequent operations
     description: Configure publication channel by dcterm
     configurations:
       - dccatalog: episode
-      - dcterm: audience
+      - dcterm: &quot;{http://purl.org/dc/terms/}audience&quot;
       - match-value: private
       - publishPrivate: true
 
