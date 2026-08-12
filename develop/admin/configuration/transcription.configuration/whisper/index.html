@@ -111,6 +111,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li>Enable whisper and set Job load in <code>org.opencastproject.speechtotext.impl.SpeechToTextServiceImpl.cfg</code>.</li>
 <li>Set the target model to use in <code>org.opencastproject.speechtotext.impl.engine.WhisperEngine</code>.</li>
+<li>If Whisper jobs are going to run asynchronously, outside the scope of the originating workflow, and subtitles attached by a separate workflow, enable the feature and configure the workflow to attach the subtitles in:
+<code>org.opencastproject.speechtotext.async.impl.SpeechToTextWorkflowSchedulerQuartz</code>.
+The workflow should use the <code>speechtotext-attach</code> woh to add the subtitles and then republish the media package.
+In the same configuration file, you can also configure a workflow to retry subtitle generation if an error occurs during generation and the maximum number of attempts. The retry workflow should use the <code>speechtotext</code> woh to start the process all over again.</li>
 </ol>
 <h2 id="additional-notes">Additional Notes</h2>
 <ul>
