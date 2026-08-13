@@ -194,11 +194,29 @@ respective name of the Shibboleth attribute you use in your Shibboleth Federatio
               interface="org.opencastproject.userdirectory.api.UserReferenceProvider" /&gt;
 </code></pre>
 <p>Since the Opencast login page is not used when Shibboleth authentication is in place, there is no point in redirecting
-unauthenticated requests to the Opencast login form. You can redirect them directly to the administrative user
-interface which is supposed to be protected by Shibboleth.</p>
-<pre><code>&lt;!-- Redirects unauthenticated requests to the login form --&gt;
-&lt;bean id="userEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"&gt;
-  &lt;property name="loginFormUrl" value="/admin-ui/index.html" /&gt;
+unauthenticated requests to the Opencast login form. You can instead redirect them to your Shibboleth login page,
+which will send the user back to the originally requested URL afterwards.</p>
+<p>All necessary changes for this are marked with a <code>Shibboleth Auth:</code> tag. You can use the find function of your
+editor to find the parts of the file you need to modify.</p>
+<p>In the <em>Shibboleth Support</em> section, uncomment the <code>shibbolethEntryPoint</code> bean (adjusting the login URL and query
+parameter to match your Shibboleth Service Provider configuration if necessary):</p>
+<pre><code>&lt;!--bean id="shibbolethEntryPoint" class="org.opencastproject.kernel.security.RedirectQueryParamAuthenticationEntryPoint"&gt;
+  &lt;constructor-arg index="0" value="/Shibboleth.sso/Login" /&gt;
+  &lt;constructor-arg index="1" value="target" /&gt;
+&lt;/bean--&gt;
+</code></pre>
+<p><strong>IMPORTANT:</strong> Do <em>not</em> rename this bean to <code>userEntryPoint</code>. That id is already used by the default entry point
+bean further up in the file, and defining it twice will break the Spring configuration, causing every request to
+be rejected with <code>HTTP 403 Forbidden</code> instead of being redirected. Instead, point the <code>opencastEntryPoint</code> bean's
+<code>userEntryPoint</code> property to the <code>shibbolethEntryPoint</code> bean by swapping the comment on the lines tagged
+<code>Shibboleth Auth:</code>, so that the bean ends up looking like this:</p>
+<pre><code>&lt;bean id="opencastEntryPoint" class="org.opencastproject.kernel.security.DelegatingAuthenticationEntryPoint"&gt;
+  &lt;!-- Shibboleth Auth:  Comment this if using Shibboleth authentication --&gt;
+  &lt;!-- &lt;property name="userEntryPoint" ref="userEntryPoint" /&gt; --&gt;
+  &lt;!-- Shibboleth Auth:  Uncomment this if using Shibboleth authentication --&gt;
+  &lt;property name="userEntryPoint" ref="shibbolethEntryPoint" /&gt;
+  &lt;property name="digestAuthenticationEntryPoint" ref="digestEntryPoint" /&gt;
+  &lt;property name="basicAuthenticationEntryPoint" ref="basicEntryPoint" /&gt;
 &lt;/bean&gt;
 </code></pre>
 <p>Last but not least, you need to add the <em>preauthAuthProvider</em> authentication provider to the <em>authentication-manager</em>:</p>
