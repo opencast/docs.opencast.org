@@ -1,67 +1,106 @@
-commit 09928c83ef97c0315d728e373075aeb24d8d38a7
+commit 7ed7e175921512a7b41d71812491c13597ddbf4a
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Aug 20 00:12:32 2026 +0200
+Date:   Thu Aug 20 00:22:13 2026 +0200
 
-    Use a valid charset when building the force-remove query string (#7901)
+    Do not overwrite terminal state in WorkflowServiceImpl.stop() (#7868)
     
-    Fixes #7881.
+    `WorkflowServiceImpl.stop()` guarded its state update with `!= STOPPED`
+    only:
     
-    `WorkflowServiceRemoteImpl.remove(long, boolean)` passes the string
-    `"UTF_8"` to `URLEncodedUtils.format`. `"UTF_8"` is neither the
-    canonical name nor a registered alias for UTF-8, so
-    `Charset.forName("UTF_8")` throws `UnsupportedCharsetException` and
-    force-removing a workflow through the remote proxy fails before any
-    request is sent. Verified on JDK 21:
-    
-    ```
-    Charset.forName("UTF_8")         -> java.nio.charset.UnsupportedCharsetException: UTF_8
-    StandardCharsets.UTF_8.aliases() -> [unicode-1-1-utf-8, UTF8]
+    ```java
+    if (instance.getState() != STOPPED) {
+      instance.setState(STOPPED);
+      update(instance);
+    }
     ```
     
-    The name is syntactically legal — underscore is a permitted charset-name
-    character — so this fails at lookup, at runtime, rather than being
-    caught earlier. The branch is only reached when `force` is `true`, so
-    plain removal is unaffected, and only deployments where
-    `WorkflowService` resolves to `workflow-service-remote` are affected.
-    Introduced by 7cb88de04 ("Add a force parameter to remove running
-    workflows"), first released in 9.0.
+    So calling `stop()` on a workflow that had already `SUCCEEDED` or
+    `FAILED`
+    rewrote that terminal state to `STOPPED`, discarding the record of how
+    the
+    workflow actually ended. This replaces the check with the existing
+    `WorkflowState.isTerminated()` predicate, which covers `STOPPED`,
+    `SUCCEEDED`
+    and `FAILED` — the same predicate `remove()` already uses a few methods
+    below.
     
-    Passing `StandardCharsets.UTF_8` to the `Charset`-typed overload rules
-    out this class of typo rather than just correcting the spelling.
-    `StandardCharsets` is already imported and used elsewhere in the file.
+    `FAILING` is deliberately still stoppable, since it is not yet
+    terminated.
+    
+    ### A note on the interpretation of the issue
+    
+    The issue says stopping "doesn't make a lot of sense" in some states,
+    which
+    could also be read as asking `stop()` to *reject* those states, the way
+    `resume()` throws `IllegalStateException`. I did not do that, because it
+    would
+    break event deletion: `IndexServiceImpl.removeEvent()` calls `stop()` on
+    every
+    workflow belonging to an event — including terminated ones — before
+    calling
+    `remove()`, and a thrown `WorkflowException` there is caught and aborts
+    the
+    deletion. `WorkflowsEndpoint` also documents `succeeded -> stopped` and
+    `failed -> stopped` as permitted transitions in the external API.
+    
+    Making the state update a no-op keeps every existing caller working
+    while
+    still fixing the data loss. Temporary file cleanup deliberately stays
+    outside
+    the guard so `stop()` remains usable as a cleanup entry point for
+    workflows in
+    any state. Happy to switch to the stricter throwing behaviour if that is
+    what
+    was intended, but it would need those callers updated first.
+    
+    Fixes #5961
     
     ### How to test this patch
     
-    `WorkflowServiceRemoteImplTest` covers both paths:
+    `WorkflowServiceImplTest.testStopDoesNotOverwriteTerminatedState` covers
+    it:
     
-    - `testRemoveWithForceBuildsQueryString` — expects
-    `/remove/42?force=true`
-    - `testRemoveWithoutForceOmitsQueryString` — expects `/remove/42`
+    ```
+    mvn test -pl modules/workflow-service-impl -Dtest=WorkflowServiceImplTest
+    ```
     
-    The force test was confirmed to fail against unpatched code with
-    `java.nio.charset.UnsupportedCharsetException: UTF_8` before the fix was
-    applied, while the non-force test passed — which is what shows the
-    defect is confined to the `force == true` branch.
+    The test fails on `develop` with `expected:<SUCCEEDED> but
+    was:<STOPPED>` and
+    passes with this patch.
     
-    The tests override the `protected` `getResponse` seam inherited from
-    `RemoteBase` to capture the request URI and return a canned `204`, so
-    they exercise the real method with no service registry and no HTTP
-    traffic. That also means a clustered deployment is not needed to
-    reproduce this.
+    Manually: run a workflow to completion, then stop it via the admin
+    interface or
     
-    The module had no test class, so one was added along with the `junit`
-    test-scoped dependency; the bundle's runtime dependencies are unchanged.
+    ```
+    curl -u admin:opencast -X POST localhost:8080/workflow/stop -d "id=<workflow-id>"
+    ```
     
-    Module suite: 2 tests, 0 failures. Repo-wide `mvnw checkstyle:check`
-    reports 0 violations.
+    Before this patch the workflow's state flips from `SUCCEEDED` to
+    `STOPPED`;
+    after it, the state is left alone. Deleting an event with completed
+    workflows
+    should continue to work in both cases.
+    
+    Test runs: `modules/workflow-service-impl` 36/36 pass,
+    `modules/index-service`
+    50/50 pass (it is the main caller affected by the change), repo-wide
+    `mvn checkstyle:check` reports 0 violations.
     
     ### AI Usage
     
-    This change was prepared with the assistance of Claude Code (model
-    Claude Opus 5, provider Anthropic). The tool was used to verify the
-    charset behaviour against the JDK, write the fix and its tests, and
-    draft this description. A human reviewed the change and approved sending
-    it.
+    This patch was produced almost entirely by AI: Claude (Opus 5,
+    Anthropic) run
+    through Claude Code, as part of a sprint evaluating agent-assisted
+    contribution
+    to Opencast.
+    
+    The AI read the issue, traced the callers of `stop()`, determined that
+    the
+    literal reading of the issue would break
+    `IndexServiceImpl.removeEvent()`,
+    chose the non-breaking fix, wrote the regression test, verified it fails
+    without the change, ran the test suites and checkstyle, and wrote this
+    description. A human reviewed the change and approved sending it.
     
     ### Your pull request should…
     
@@ -71,15 +110,14 @@ Date:   Thu Aug 20 00:12:32 2026 +0200
     if one exists
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
+    * [x] include migration scripts and documentation, if appropriate — n/a
     * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
     * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
+    targeting the legacy branch — n/a, targets `develop`
     * [x] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    if a feature — n/a, bugfix
