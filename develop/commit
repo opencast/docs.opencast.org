@@ -1,123 +1,56 @@
-commit 7ed7e175921512a7b41d71812491c13597ddbf4a
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Aug 20 00:22:13 2026 +0200
+commit 519efd5090e6f867b49e10e6853e17b4f01e8ff1
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Fri Aug 21 15:04:08 2026 +0200
 
-    Do not overwrite terminal state in WorkflowServiceImpl.stop() (#7868)
+    Fix short-circuit skipping AssetManager cleanup on engage retraction (#7914)
     
-    `WorkflowServiceImpl.stop()` guarded its state update with `!= STOPPED`
-    only:
+    Fixes a short-circuiting `||` in
+    `RetractEngageWorkflowOperationHandler.start()` that let a successful
+    `removeFromEngage()` call skip `removeFromArchive()` entirely, so the
+    `engage-player` publication was never stripped from the media package
+    during `retract-for-deletion`. `RetractionListener` then refused to
+    complete the deletion, leaving the event gone from search but
+    permanently stuck in the Asset Manager.
     
-    ```java
-    if (instance.getState() != STOPPED) {
-      instance.setState(STOPPED);
-      update(instance);
-    }
-    ```
+    To reproduce: publish an event to Engage, then delete it via the
+    External API (`DELETE /api/events/{id}`). The retraction workflow
+    completes, but the event stays behind indefinitely with its
+    `engage-player` publication still attached.
     
-    So calling `stop()` on a workflow that had already `SUCCEEDED` or
-    `FAILED`
-    rewrote that terminal state to `STOPPED`, discarding the record of how
-    the
-    workflow actually ended. This replaces the check with the existing
-    `WorkflowState.isTerminated()` predicate, which covers `STOPPED`,
-    `SUCCEEDED`
-    and `FAILED` — the same predicate `remove()` already uses a few methods
-    below.
-    
-    `FAILING` is deliberately still stoppable, since it is not yet
-    terminated.
-    
-    ### A note on the interpretation of the issue
-    
-    The issue says stopping "doesn't make a lot of sense" in some states,
-    which
-    could also be read as asking `stop()` to *reject* those states, the way
-    `resume()` throws `IllegalStateException`. I did not do that, because it
-    would
-    break event deletion: `IndexServiceImpl.removeEvent()` calls `stop()` on
-    every
-    workflow belonging to an event — including terminated ones — before
-    calling
-    `remove()`, and a thrown `WorkflowException` there is caught and aborts
-    the
-    deletion. `WorkflowsEndpoint` also documents `succeeded -> stopped` and
-    `failed -> stopped` as permitted transitions in the external API.
-    
-    Making the state update a no-op keeps every existing caller working
-    while
-    still fixing the data loss. Temporary file cleanup deliberately stays
-    outside
-    the guard so `stop()` remains usable as a cleanup entry point for
-    workflows in
-    any state. Happy to switch to the stricter throwing behaviour if that is
-    what
-    was intended, but it would need those callers updated first.
-    
-    Fixes #5961
+    The fix evaluates both cleanup calls unconditionally instead of
+    short-circuiting, matching the original intent of a468a0bfe9 ("Always
+    remove publication from AM on retraction").
     
     ### How to test this patch
     
-    `WorkflowServiceImplTest.testStopDoesNotOverwriteTerminatedState` covers
-    it:
+    1. Ingest and process an event so it publishes to Engage.
+    2. Confirm `processing_state` is `SUCCEEDED` via `GET /api/events/{id}`.
+    3. `DELETE /api/events/{id}` and wait for the `retract-for-deletion`
+    workflow to finish.
+    4. `GET /api/events/{id}` should now return `404`. Before this fix, it
+    kept returning `200` with `publication_status: ["engage-player"]`.
     
-    ```
-    mvn test -pl modules/workflow-service-impl -Dtest=WorkflowServiceImplTest
-    ```
-    
-    The test fails on `develop` with `expected:<SUCCEEDED> but
-    was:<STOPPED>` and
-    passes with this patch.
-    
-    Manually: run a workflow to completion, then stop it via the admin
-    interface or
-    
-    ```
-    curl -u admin:opencast -X POST localhost:8080/workflow/stop -d "id=<workflow-id>"
-    ```
-    
-    Before this patch the workflow's state flips from `SUCCEEDED` to
-    `STOPPED`;
-    after it, the state is left alone. Deleting an event with completed
-    workflows
-    should continue to work in both cases.
-    
-    Test runs: `modules/workflow-service-impl` 36/36 pass,
-    `modules/index-service`
-    50/50 pass (it is the main caller affected by the change), repo-wide
-    `mvn checkstyle:check` reports 0 violations.
+    Unit tests are included: `RetractEngageWorkflowOperationHandlerTest`
+    covers the successful-retraction case (the regression), the
+    already-gone-from-search case, and the nothing-to-retract `SKIP` case.
     
     ### AI Usage
     
-    This patch was produced almost entirely by AI: Claude (Opus 5,
-    Anthropic) run
-    through Claude Code, as part of a sprint evaluating agent-assisted
-    contribution
-    to Opencast.
-    
-    The AI read the issue, traced the callers of `stop()`, determined that
-    the
-    literal reading of the issue would break
-    `IndexServiceImpl.removeEvent()`,
-    chose the non-breaking fix, wrote the regression test, verified it fails
-    without the change, ran the test suites and checkstyle, and wrote this
-    description. A human reviewed the change and approved sending it.
+    Used Claude Code to investigate the issue, apply the fix, add regression
+    tests, and verify the build/tests in the project's `compose.build.yaml`
+    container.
     
     ### Your pull request should…
     
     * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate — n/a
+    * [x] close an accompanying issue - Closes #7911
+    * [x] be against the correct branch - `develop` (bug introduced there,
+    not present on release branches)
+    * [ ] include migration scripts and documentation, if appropriate - n/a
     * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch — n/a, targets `develop`
-    * [x] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature — n/a, bugfix
+    * [x] have proper commit messages (title and body) for all commits
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch - n/a, not targeting legacy
+    * [ ] include a release note - n/a, bug fix only
