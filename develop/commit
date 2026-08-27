@@ -1,56 +1,57 @@
-commit 519efd5090e6f867b49e10e6853e17b4f01e8ff1
-Author: Katrin Ihler <ihler@elan-ev.de>
-Date:   Fri Aug 21 15:04:08 2026 +0200
+commit d0259b4a8e7ba4ddadebe32e8902a60370d1a27c
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Thu Aug 27 09:17:38 2026 +0200
 
-    Fix short-circuit skipping AssetManager cleanup on engage retraction (#7914)
+    Add debug ports to multinode config (#7893)
     
-    Fixes a short-circuiting `||` in
-    `RetractEngageWorkflowOperationHandler.start()` that let a successful
-    `removeFromEngage()` call skip `removeFromArchive()` entirely, so the
-    `engage-player` publication was never stripped from the media package
-    during `retract-for-deletion`. `RetractionListener` then refused to
-    complete the deletion, leaving the event gone from search but
-    permanently stuck in the Asset Manager.
-    
-    To reproduce: publish an event to Engage, then delete it via the
-    External API (`DELETE /api/events/{id}`). The retraction workflow
-    completes, but the event stays behind indefinitely with its
-    `engage-player` publication still attached.
-    
-    The fix evaluates both cleanup calls unconditionally instead of
-    short-circuiting, matching the original intent of a468a0bfe9 ("Always
-    remove publication from AM on retraction").
+    This PR adds debug ports (5005, 5006, 5007) to the various nodes running
+    in the multi node test config. Makes zero difference to the GHA use, but
+    if you're using that script to test locally it can be handy to be able
+    to get into the JVMs with a debugger.
     
     ### How to test this patch
     
-    1. Ingest and process an event so it publishes to Engage.
-    2. Confirm `processing_state` is `SUCCEEDED` via `GET /api/events/{id}`.
-    3. `DELETE /api/events/{id}` and wait for the `retract-for-deletion`
-    workflow to finish.
-    4. `GET /api/events/{id}` should now return `404`. Before this fix, it
-    kept returning `200` with `publication_status: ["engage-player"]`.
+    Run the script, then start admin, worker, and presentation to make sure
+    each one is listening on its port
     
-    Unit tests are included: `RetractEngageWorkflowOperationHandlerTest`
-    covers the successful-retraction case (the regression), the
-    already-gone-from-search case, and the nothing-to-retract `SKIP` case.
+    <!--
+    Explain how to test this patch. If this requires a particular set-up or
+    configuration, explain that as well and provide
+    the necessary configuration if possible. The easier it is for others to
+    test the patch, the faster this will get
+    reviewed and merged.
+    
+    For more information, see
+    https://docs.opencast.org/develop/#participate/development-process/#ai-policy-for-pull-requests
+    -->
     
     ### AI Usage
     
-    Used Claude Code to investigate the issue, apply the fix, add regression
-    tests, and verify the build/tests in the project's `compose.build.yaml`
-    container.
+    N/A
+    <!--
+    If you used AI in a significant way to create this pull request, please
+    explain how you used it and what you used it for. This is for us to
+    better understand and deal with AI contributions. Your pull request will
+    not be declined just becasue of AI usage.
+    -->
     
     ### Your pull request should…
     
     * [x] have a concise title
-    * [x] close an accompanying issue - Closes #7911
-    * [x] be against the correct branch - `develop` (bug introduced there,
-    not present on release branches)
-    * [ ] include migration scripts and documentation, if appropriate - n/a
+    * [ ] ~[close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists~
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] ~include migration scripts and documentation, if appropriate~
     * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
-    * [x] have proper commit messages (title and body) for all commits
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch - n/a, not targeting legacy
-    * [ ] include a release note - n/a, bug fix only
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] ~explain why it needs to be merged into the legacy branch, if it
+    is targeting the legacy branch~
+    * [ ] ~include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)~
