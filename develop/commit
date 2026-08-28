@@ -1,57 +1,44 @@
-commit d0259b4a8e7ba4ddadebe32e8902a60370d1a27c
+commit 7d572cfa335c22c83b43f1100c8f3a5cfc1fcafe
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Thu Aug 27 09:17:38 2026 +0200
+Date:   Fri Aug 28 14:42:13 2026 +0200
 
-    Add debug ports to multinode config (#7893)
+    Log exception on storage cleanup failure (#7934)
     
-    This PR adds debug ports (5005, 5006, 5007) to the various nodes running
-    in the multi node test config. Makes zero difference to the GHA use, but
-    if you're using that script to test locally it can be handy to be able
-    to get into the JVMs with a debugger.
+    When a directory cleanup failed, we logged an ERROR stating only that
+    the cleanup failed and then discarded the IOException that caused it.
+    The resulting log line has no cause and no stack trace, so there is no
+    way to tell whether the storage is unreachable, a permission changed or
+    a single file was locked. Since the caller in WorkspaceImpl discards the
+    boolean return value, that log line is the only signal such a failure
+    produces.
     
-    ### How to test this patch
+    Pass the caught exception to the logger, like the symlink resolution
+    branch a few lines above already does. The two identical cases in
+    WorkingFileRepositoryCleaner are fixed as well.
     
-    Run the script, then start admin, worker, and presentation to make sure
-    each one is listening on its port
-    
-    <!--
-    Explain how to test this patch. If this requires a particular set-up or
-    configuration, explain that as well and provide
-    the necessary configuration if possible. The easier it is for others to
-    test the patch, the faster this will get
-    reviewed and merged.
-    
-    For more information, see
-    https://docs.opencast.org/develop/#participate/development-process/#ai-policy-for-pull-requests
-    -->
+    Fixes #7922
     
     ### AI Usage
-    
-    N/A
-    <!--
-    If you used AI in a significant way to create this pull request, please
-    explain how you used it and what you used it for. This is for us to
-    better understand and deal with AI contributions. Your pull request will
-    not be declined just becasue of AI usage.
-    -->
+    Used Claude for the initial log analysis and for generating issue and
+    patch.
     
     ### Your pull request should…
     
     * [x] have a concise title
-    * [ ] ~[close an accompanying
+    * [x] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists~
+    if one exists
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] ~include migration scripts and documentation, if appropriate~
+    * [x] include migration scripts and documentation, if appropriate
     * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] ~explain why it needs to be merged into the legacy branch, if it
-    is targeting the legacy branch~
-    * [ ] ~include a [release
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
-    feature)~
+    feature)
