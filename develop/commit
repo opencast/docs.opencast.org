@@ -1,26 +1,30 @@
-commit 7d572cfa335c22c83b43f1100c8f3a5cfc1fcafe
+commit 89ea15ea66b662a2048b46f4ba057cb9e64baacb
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Aug 28 14:42:13 2026 +0200
+Date:   Fri Aug 28 15:08:10 2026 +0200
 
-    Log exception on storage cleanup failure (#7934)
+    Stop logging and rethrowing snapshot failures (#7931)
     
-    When a directory cleanup failed, we logged an ERROR stating only that
-    the cleanup failed and then discarded the IOException that caused it.
-    The resulting log line has no cause and no stack trace, so there is no
-    way to tell whether the storage is unreachable, a permission changed or
-    a single file was locked. Since the caller in WorkspaceImpl discards the
-    boolean return value, that log line is the only signal such a failure
-    produces.
+    `AssetManagerImpl.takeSnapshotInternal()` caught every exception, logged
+    it at ERROR and then rethrew it. Since the callers – and ultimately CXF
+    – report it again, a single failed snapshot logged the same ~150 frame
+    stack trace several times. The additional message carried no context
+    atall:
     
-    Pass the caught exception to the logger, like the symlink resolution
-    branch a few lines above already does. The two identical cases in
-    WorkingFileRepositoryCleaner are fixed as well.
+        ERROR (AssetManagerImpl:501) - An error occurred
     
-    Fixes #7922
+    `addInternal()` did the same one level down, additionally wrapping the
+    exception in another `AssetManagerException` for no reason.
+    
+    Drop both log statements and instead name the media package in the
+    exception thrown by `takeSnapshotInternal()`, so the layer which
+    actually handles the failure can report it with context. The try/catch
+    in `addInternal()` is gone entirely; the method declares `throws
+    Exception` anyway, hence the URI rewriting needs no catch of its own.
+    
+    Fixes #7926
     
     ### AI Usage
-    Used Claude for the initial log analysis and for generating issue and
-    patch.
+    Clause was used for log analysis and implementation.
     
     ### Your pull request should…
     
