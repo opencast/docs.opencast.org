@@ -1,5 +1,92 @@
-commit 10fca4e8517d4147070e4fcac86b0af72f6b7a77
-Author: Martin Wygas <wygas@elan-ev.de>
-Date:   Wed Aug 26 09:52:45 2026 +0200
+commit 453b6b9cf68cf9798d0eecb66e0016672839eec9
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Mon Aug 31 15:59:36 2026 +0200
 
-    20.3 release notes and changelog
+    Validate target flavors, not target tags, for targetFlavors=atLeastOne (#7900)
+    
+    Fixes #7882.
+    
+    The `atLeastOne` branch of the target flavors switch in
+    `AbstractWorkflowOperationHandler.getTagsAndFlavors` populates
+    `targetFlavorList` but then tests `targetTagList.isEmpty()`, so it
+    validates the wrong list:
+    
+    - an operation requiring at least one target flavor passes validation
+    whenever a target tag happens to be set, and
+    - it raises `Configuration key 'target-flavors' or 'target-flavor' must
+    be set` when flavors *are* set but tags are not — an error naming the
+    flavor keys while actually complaining about tags, which would send
+    whoever hits it looking in the wrong place.
+    
+    The corresponding branch of the target tags switch above uses the same
+    expression in the place where it belongs, which is consistent with a
+    copy-paste slip when the second branch was added in 08160e57b (first
+    released in 20.0).
+    
+    No handler currently passes `Configuration.atLeastOne` in the
+    `targetFlavors` position, so the defect is dormant on `develop`. It is
+    still worth fixing: it sits in the configuration path every operation
+    handler routes through, and it would fire as a *silently skipped
+    validation* rather than an error the first time a handler requires
+    at-least-one target flavor.
+    
+    ### How to test this patch
+    
+    **This branch currently has no caller**, so there is no configuration
+    that reaches it in a running Opencast. The only use of `atLeastOne` in
+    the tree is `SegmentPreviewsWorkflowOperationHandler.java:192`, and that
+    passes it as `srcTagsAndFlavors` on the 4-argument overload while giving
+    `Configuration.one` for target flavors — so it does not hit this branch.
+    Verified with `grep -rn "Configuration.atLeastOne" --include='*.java'
+    modules/`.
+    
+    That makes this a latent defect on a shared base class: the moment any
+    handler configures `targetFlavors=atLeastOne`, validation silently
+    checks the wrong list. A missing target flavor would pass whenever a
+    target *tag* happened to be set, and a correctly-set target flavor would
+    be rejected whenever no tag was — the check is not merely weak, it is
+    inverted with respect to its own error message.
+    
+    The fastest review is reading the one-character diff in context: the
+    branch assigns `targetFlavorList` on the line above and the error
+    message names `TARGET_FLAVORS` / `TARGET_FLAVOR`, so `targetTagList` is
+    unambiguously the wrong variable.
+    
+    An earlier revision added an `AbstractWorkflowOperationHandlerTest`
+    covering both directions. **It was removed at @Arnei's request**,
+    consistent with the same call on #7898, and `pom.xml` is untouched
+    again. For the record, those tests did fail against unpatched code — the
+    first by not throwing at all, the second by throwing while the flavor
+    was correctly set — so the defect was demonstrated before the fix went
+    in.
+    
+    Module builds clean on `r/20.x` with 0 checkstyle violations.
+    
+    ### AI Usage
+    
+    This change was prepared with the assistance of Claude Code (model
+    Claude Opus 5, provider Anthropic). The tool was used to verify the
+    reported defect against the source, write the fix, confirm the branch
+    has no caller, and draft this description. A human reviewed the change
+    and approved sending it.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
