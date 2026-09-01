@@ -1,12 +1,41 @@
-commit f51308ca8db7e5834d6a87ae19b73c1b1004534e
+commit 3749937cf0f3cbd4625d8f4c85613cd54a43fcfd
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Aug 31 16:03:18 2026 +0200
+Date:   Tue Sep 1 13:49:01 2026 +0200
 
-    Fix some maven warnings (#7804)
+    Add possibility to upload audio-only as presentation track (#7547)
     
-    Fixes some warnings during the maven build. See individual commits for
-    some more details.
+    This PR adds the necessary operations to be able to upload and process
+    audio-files that were uploaded as a `presentation` track. This aims to
+    fix https://github.com/opencast/opencast/issues/7379 .
     
-    This was created with the help of Opencode (the harness) using the
-    Opencode (the service provider) Zen „Big Pickle“ model (which is a
-    stealth model, though, so this is not really useful information).
+    ### How to test this patch
+    
+    Upload a audio file with the `presentation` flavor and see if it is
+    processed correctly.
+    
+    **Note:** There currently appears to be an issue with playback of
+    audio-only files in Paella Player 8, as such streams are not being
+    detected. This is unrelated to this PR and likely needs to be fixed in
+    the paella8 repository. For now, please test using Paella Player 7.
+    
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
