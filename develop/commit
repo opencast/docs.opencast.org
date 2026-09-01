@@ -1,23 +1,42 @@
-commit 095374391cc9f13d4eb6e540cd862ea5def1c9ac
+commit ae67d2b9eca544bb550cfed7ccea45c79eff1deb
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Sep 1 17:02:48 2026 +0200
+Date:   Tue Sep 1 17:05:11 2026 +0200
 
-    Log ACL update rejections during workflows at debug (#7929)
+    Fix NullPointerException when deleting assets (#7936)
     
-    IndexServiceImpl.updateEventAcl() deliberately refuses to change the ACL
-    of an event whose workflow is currently running, since distribution may
-    already have happened. EventsEndpoint handles that properly and returns
-    403, but logged the condition at ERROR with a full stack trace and the
-    entire serialized ACL inlined into the message, producing multi-kilobyte
-    alarming log entries for an expected, client-visible condition.
+    AbstractFileSystemAssetStore.delete() resolved the root directory of a
+    media package twice, but checked the result for null only the first
+    time. The second lookup happens directly after the directory has been
+    deleted and, for a deletion selector without a version, that directory
+    is exactly the one the lookup searches for. If the cached lookup result
+    had expired in the meantime, the reload found nothing, returned null and
+    the null was passed straight into PathSupport.path(), throwing a
+    NullPointerException out of the asset store:
     
-    Log these at debug instead, like the ACL parse failures handled a few
-    lines above already do.
+    ```
+      java.lang.NullPointerException: Cannot invoke "String.replaceAll(String, String)" because "path" is null
+        at org.opencastproject.util.PathSupport.adjustSeparator(PathSupport.java:114)
+        …
+        at org.opencastproject.assetmanager.storage.impl.fs.AbstractFileSystemAssetStore.delete(…:162)
+        at org.opencastproject.scheduler.impl.SchedulerServiceImpl.removeEvent(…:876)
+    ```
     
-    Fixes #7924
+    That aborted the removal of the event and left orphaned data behind.
+    
+    The root directory is now resolved once, before anything is deleted, and
+    that value is reused afterwards. Simply skipping the cleanup on a null
+    result would have avoided the exception as well, but it would also skip
+    deleting the now empty media package directory and invalidating the
+    cache in precisely the case where both are needed.
+    
+    Additionally, PathSupport.concat() now rejects null elements right away
+    instead of failing deep inside adjustSeparator(), which made this kind
+    of problem needlessly hard to trace.
+    
+    Fixes #7921
     
     ### AI Usage
-    Yes, for initial analysis.
+    Used Claude for initial log analysis and patch
     
     ### Your pull request should…
     
