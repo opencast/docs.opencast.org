@@ -1,42 +1,28 @@
-commit ae67d2b9eca544bb550cfed7ccea45c79eff1deb
+commit 4fc7b626784c00f3b3f45c29a0d29b7aeefa7760
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Sep 1 17:05:11 2026 +0200
+Date:   Tue Sep 1 17:20:41 2026 +0200
 
-    Fix NullPointerException when deleting assets (#7936)
+    Stop logging stack traces for HTTP client errors (#7940)
     
-    AbstractFileSystemAssetStore.delete() resolved the root directory of a
-    media package twice, but checked the result for null only the first
-    time. The second lookup happens directly after the directory has been
-    deleted and, for a deletion selector without a version, that directory
-    is exactly the one the lookup searches for. If the cached lookup result
-    had expired in the meantime, the reload found nothing, returned null and
-    the null was passed straight into PathSupport.path(), throwing a
-    NullPointerException out of the asset store:
+    CXF's WebApplicationExceptionMapper logs a full stack trace at WARN for
+    every client error other than 404, and we ship the whole org.apache.cxf
+    tree at WARN. On a public-facing presentation node that means every
+    malformed or hostile request writes about 140 lines into opencast.log.
+    On our presentation node 97% of the log consisted of such traces, nearly
+    all of them from a single burst of HTTP 405s caused by a scanner.
     
-    ```
-      java.lang.NullPointerException: Cannot invoke "String.replaceAll(String, String)" because "path" is null
-        at org.opencastproject.util.PathSupport.adjustSeparator(PathSupport.java:114)
-        …
-        at org.opencastproject.assetmanager.storage.impl.fs.AbstractFileSystemAssetStore.delete(…:162)
-        at org.opencastproject.scheduler.impl.SchedulerServiceImpl.removeEvent(…:876)
-    ```
+    The traces contain neither the request path, nor the method, nor the
+    client address, so they are not actionable, and they let an
+    unauthenticated client inflate the log by ~14KB per request.
     
-    That aborted the removal of the event and left orphaned data behind.
+    Silence that mapper. Note that this also drops the trace for a
+    WebApplicationException carrying a 5xx, but server faults are logged by
+    the endpoints themselves anyway.
     
-    The root directory is now resolved once, before anything is deleted, and
-    that value is reused afterwards. Simply skipping the cleanup on a null
-    result would have avoided the exception as well, but it would also skip
-    deleting the now empty media package directory and invalidating the
-    cache in precisely the case where both are needed.
-    
-    Additionally, PathSupport.concat() now rejects null elements right away
-    instead of failing deep inside adjustSeparator(), which made this kind
-    of problem needlessly hard to trace.
-    
-    Fixes #7921
+    Fixes #7937
     
     ### AI Usage
-    Used Claude for initial log analysis and patch
+    Used Claude for log analysis and patch
     
     ### Your pull request should…
     
