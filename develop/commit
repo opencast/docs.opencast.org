@@ -1,97 +1,96 @@
-commit 7006dc9b045f18999d34e1a23d1801a1f1b685a1
+commit 7b1cab7e091f0af5fec53a86efb018782ab78e60
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Sep 1 16:11:38 2026 +0200
+Date:   Tue Sep 1 16:21:18 2026 +0200
 
-    Fix trailing slash in documented paths of root endpoints (#7896)
+    Read the response body when checking for active workflows (#7902)
     
-    Fixes #6109.
+    Fixes #7879.
     
-    Endpoints sitting at the root of their service declare `@Path("")` — the
-    External API's
-    `createSeries` is one — or `@Path("/")`. `RestDocData.addEndpoint()`
-    normalised both to `"/"`,
-    and since the documentation template renders the service base URL
-    immediately followed by the
-    endpoint path (`${meta.url}${endpoint.path}`), they were documented as
-    `POST /api/series/`
-    rather than `POST /api/series`.
+    `WorkflowServiceRemoteImpl.mediaPackageHasActiveWorkflows` and
+    `userHasActiveWorkflows` call `Boolean.parseBoolean` on the `toString()`
+    of the entity's `InputStream` instead of on the response body:
     
-    The Spring security configuration declares those paths without the
-    trailing slash:
-    
-    ```xml
-    <sec:intercept-url pattern="/api/series" method="POST" access="hasAnyRole('ROLE_ADMIN', 'ROLE_API_SERIES_CREATE')" />
+    ```java
+    return Boolean.parseBoolean(response.getEntity().getContent().toString());
     ```
     
-    so the documented path is not the one that is intercepted. Admin users
-    do not notice, which is
-    why the forms on the documentation page have always appeared to work for
-    them, but for other
-    users both the documented path and the test form on the documentation
-    page — which posts to
-    that same URL — do not work.
+    `getContent()` returns an `InputStream`, which does not override
+    `Object.toString()`, so `parseBoolean` is handed something like
+    `org.apache.http.conn.EofSensorInputStream@6d06d69c` and returns `false`
+    for every response. The body is never read, so the entity is also not
+    consumed and the connection is not released.
     
-    The root path is now normalised to the empty string, so it contributes
-    no segment of its own.
-    `isValidPath()` previously rejected the empty string, so it had to
-    accept it in the same change;
-    otherwise every root endpoint would fail its `RestEndpointData`
-    constructor check. Note that a
-    genuine trailing slash such as `sample/` was already rejected as an
-    invalid path, and no
-    endpoint in the tree declares one, so the bare slash was the only way
-    this could occur.
+    The server side is already correct — `WorkflowRestService` returns
+    `Response.ok(Boolean.toString(...))` for both endpoints, which is
+    exactly what `parseBoolean` expects. Only the client is wrong.
+    
+    ### Why this matters
+    
+    **No shipped assembly reaches this code** — thanks to @Arnei for
+    catching that my original description overstated the impact.
+    `assemblies/karaf-features/src/main/feature/feature.xml` puts the remote
+    bundle and its callers on disjoint node types:
+    
+    | feature | `workflow-service-remote` | `workflow-service-impl` |
+    `admin-service` | `external-api` |
+    |---|---|---|---|---|
+    | allinone / admin / adminpresentation | – | yes | yes | yes |
+    | worker / presentation / ingest | yes | – | – | – |
+    
+    The only two callers in the tree are `EventsEndpoint.java:2532` and
+    `UsersEndpoint.java:575` (`grep -rn HasActiveWorkflows
+    --include='*.java' modules/` finds no others). They ship only on the
+    admin-side features, which resolve `WorkflowService` to the local
+    `workflow-service-impl` — the correct path. The nodes that load this
+    broken client have no caller for it.
+    
+    So this is a **latent defect on a public `WorkflowService` API method**,
+    not an observed failure. A custom assembly, or any future caller added
+    on a worker or presentation node, would get a silently wrong `false`
+    from it, and the unconsumed entity also leaks the connection back to the
+    pool unreleased.
+    
+    `EntityUtils.toString` reads the body and consumes the entity, which
+    also releases the connection. `EntityUtils` is already imported in the
+    file, so the fix adds no imports. The `trim()` guards against trailing
+    whitespace in the body. Per @Arnei's review the explicit
+    `StandardCharsets.UTF_8` was dropped — the body is only `true` or
+    `false`, which is pure ASCII and decodes identically either way, and the
+    no-charset form matches the existing `EntityUtils.toString` call at line
+    373 of the same file.
     
     ### How to test this patch
     
-    Open the REST documentation for a service with an endpoint at its root,
-    for example
-    `/docs.html?path=/api/series` on a running instance, and look at the
-    "Method / Path" row for
-    `createseries`. Before the patch it reads `POST /api/series/`; after it
-    reads `POST /api/series`,
-    matching the pattern in `etc/security/mh_default_org.xml`. The test form
-    on that page targets
-    the same URL, so it starts working for non-admin users.
+    Honest answer: **you cannot usefully exercise this by hand.** Per the
+    table above, no shipped assembly puts a caller and this client on the
+    same node, so there is no deployment where the broken path runs. The
+    quickest review is to read the two-line diff against
+    `WorkflowRestService`, which already returns
+    `Response.ok(Boolean.toString(...))` — exactly what `parseBoolean`
+    expects.
     
-    Automated coverage comes with the patch:
+    If you want it exercised in code,
+    `WorkflowServiceRemoteImplHasActiveWorkflowsTest` covers both methods
+    against both answers. It overrides the `protected` `getResponse` /
+    `closeConnection` seams from `RemoteBase` to return a canned `200` with
+    a `StringEntity`, so no service registry and no HTTP traffic are
+    involved. Against unpatched code the two `true` cases fail while the two
+    `false` cases pass, which is what demonstrates the methods were stuck on
+    `false`; the `true` cases also assert the request URI so a wrong path
+    cannot make them pass for the wrong reason. After the fix: 4 tests, 0
+    failures.
     
-    ```
-    ./mvnw test -pl modules/runtime-info
-    ```
-    
-    `RestDocsAnnotationTest.testRootPathHasNoTrailingSlash` drives the real
-    `addEndpoint()` with
-    sample methods annotated `@Path("")` and `@Path("/")` and asserts
-    neither is documented with a
-    trailing slash. It fails against the unpatched code with `expected:<[]>
-    but was:<[/]>`.
+    The `junit` test-scoped dependency was added to the module; the bundle's
+    runtime dependencies are unchanged. Repo-wide `mvnw checkstyle:check`
+    reports 0 violations.
     
     ### AI Usage
     
-    Claude Code (Claude Opus 5, Anthropic) was used for this pull request:
-    to trace the path from
-    the `@Path` annotation through `RestDocData` and the `restdocs` template
-    to the rendered page,
-    to write the fix, and to write the test.
-    
-    The result was verified before submitting rather than taken on trust.
-    The test was written
-    first and confirmed to fail against the unpatched code, then confirmed
-    to fail again when the
-    fix was reverted while the test was left in place, so that it is known
-    to catch a regression
-    rather than passing regardless. The full `runtime-info` suite and a
-    repo-wide
-    `./mvnw checkstyle:check` both pass. The initially assumed one-line
-    change to the normalisation
-    turned out to be incomplete — it would have made every root endpoint
-    throw
-    `IllegalArgumentException` in the `RestEndpointData` constructor, since
-    `isValidPath()` rejected
-    the empty string — and that was caught by running the code.
-    
-    A human reviewed the change and approved sending it.
+    This change was prepared with the assistance of Claude Code (model
+    Claude Opus 5, provider Anthropic). The tool was used to verify the
+    reported behaviour against the source and the JDK, identify the affected
+    releases, write the fix and its tests, and draft this description. A
+    human reviewed the change and approved sending it.
     
     ### Your pull request should…
     
