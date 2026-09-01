@@ -1,96 +1,23 @@
-commit 7b1cab7e091f0af5fec53a86efb018782ab78e60
+commit 095374391cc9f13d4eb6e540cd862ea5def1c9ac
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Sep 1 16:21:18 2026 +0200
+Date:   Tue Sep 1 17:02:48 2026 +0200
 
-    Read the response body when checking for active workflows (#7902)
+    Log ACL update rejections during workflows at debug (#7929)
     
-    Fixes #7879.
+    IndexServiceImpl.updateEventAcl() deliberately refuses to change the ACL
+    of an event whose workflow is currently running, since distribution may
+    already have happened. EventsEndpoint handles that properly and returns
+    403, but logged the condition at ERROR with a full stack trace and the
+    entire serialized ACL inlined into the message, producing multi-kilobyte
+    alarming log entries for an expected, client-visible condition.
     
-    `WorkflowServiceRemoteImpl.mediaPackageHasActiveWorkflows` and
-    `userHasActiveWorkflows` call `Boolean.parseBoolean` on the `toString()`
-    of the entity's `InputStream` instead of on the response body:
+    Log these at debug instead, like the ACL parse failures handled a few
+    lines above already do.
     
-    ```java
-    return Boolean.parseBoolean(response.getEntity().getContent().toString());
-    ```
-    
-    `getContent()` returns an `InputStream`, which does not override
-    `Object.toString()`, so `parseBoolean` is handed something like
-    `org.apache.http.conn.EofSensorInputStream@6d06d69c` and returns `false`
-    for every response. The body is never read, so the entity is also not
-    consumed and the connection is not released.
-    
-    The server side is already correct — `WorkflowRestService` returns
-    `Response.ok(Boolean.toString(...))` for both endpoints, which is
-    exactly what `parseBoolean` expects. Only the client is wrong.
-    
-    ### Why this matters
-    
-    **No shipped assembly reaches this code** — thanks to @Arnei for
-    catching that my original description overstated the impact.
-    `assemblies/karaf-features/src/main/feature/feature.xml` puts the remote
-    bundle and its callers on disjoint node types:
-    
-    | feature | `workflow-service-remote` | `workflow-service-impl` |
-    `admin-service` | `external-api` |
-    |---|---|---|---|---|
-    | allinone / admin / adminpresentation | – | yes | yes | yes |
-    | worker / presentation / ingest | yes | – | – | – |
-    
-    The only two callers in the tree are `EventsEndpoint.java:2532` and
-    `UsersEndpoint.java:575` (`grep -rn HasActiveWorkflows
-    --include='*.java' modules/` finds no others). They ship only on the
-    admin-side features, which resolve `WorkflowService` to the local
-    `workflow-service-impl` — the correct path. The nodes that load this
-    broken client have no caller for it.
-    
-    So this is a **latent defect on a public `WorkflowService` API method**,
-    not an observed failure. A custom assembly, or any future caller added
-    on a worker or presentation node, would get a silently wrong `false`
-    from it, and the unconsumed entity also leaks the connection back to the
-    pool unreleased.
-    
-    `EntityUtils.toString` reads the body and consumes the entity, which
-    also releases the connection. `EntityUtils` is already imported in the
-    file, so the fix adds no imports. The `trim()` guards against trailing
-    whitespace in the body. Per @Arnei's review the explicit
-    `StandardCharsets.UTF_8` was dropped — the body is only `true` or
-    `false`, which is pure ASCII and decodes identically either way, and the
-    no-charset form matches the existing `EntityUtils.toString` call at line
-    373 of the same file.
-    
-    ### How to test this patch
-    
-    Honest answer: **you cannot usefully exercise this by hand.** Per the
-    table above, no shipped assembly puts a caller and this client on the
-    same node, so there is no deployment where the broken path runs. The
-    quickest review is to read the two-line diff against
-    `WorkflowRestService`, which already returns
-    `Response.ok(Boolean.toString(...))` — exactly what `parseBoolean`
-    expects.
-    
-    If you want it exercised in code,
-    `WorkflowServiceRemoteImplHasActiveWorkflowsTest` covers both methods
-    against both answers. It overrides the `protected` `getResponse` /
-    `closeConnection` seams from `RemoteBase` to return a canned `200` with
-    a `StringEntity`, so no service registry and no HTTP traffic are
-    involved. Against unpatched code the two `true` cases fail while the two
-    `false` cases pass, which is what demonstrates the methods were stuck on
-    `false`; the `true` cases also assert the request URI so a wrong path
-    cannot make them pass for the wrong reason. After the fix: 4 tests, 0
-    failures.
-    
-    The `junit` test-scoped dependency was added to the module; the bundle's
-    runtime dependencies are unchanged. Repo-wide `mvnw checkstyle:check`
-    reports 0 violations.
+    Fixes #7924
     
     ### AI Usage
-    
-    This change was prepared with the assistance of Claude Code (model
-    Claude Opus 5, provider Anthropic). The tool was used to verify the
-    reported behaviour against the source and the JDK, identify the affected
-    releases, write the fix and its tests, and draft this description. A
-    human reviewed the change and approved sending it.
+    Yes, for initial analysis.
     
     ### Your pull request should…
     
