@@ -35,13 +35,8 @@
         var pageToc = [
           {title: "Create a Custom Workflow", url: "#_top", children: [
               {title: "Overview", url: "#overview" },
-              {title: "Create a Workflow", url: "#create-a-workflow" },
-              {title: "Accept User Input", url: "#accept-user-input" },
-              {title: "Organisation Properties", url: "#organisation-properties" },
-              {title: "Conditional Execution", url: "#conditional-execution" },
-              {title: "Thumbnail Support", url: "#thumbnail-support" },
-              {title: "Test the Workflow", url: "#test-the-workflow" },
-              {title: "Using XML Files with Workflows", url: "#using-xml-files-with-workflows" },
+              {title: "Creating a Simple Workflow", url: "#creating-a-simple-workflow" },
+              {title: "Workflow Reference", url: "#workflow-reference" },
           ]},
         ];
 
@@ -99,20 +94,26 @@ a public repo.</p>
 <p><a href="https://github.com/opencast/community-workflows">Community Workflow Repository</a></p>
 </blockquote>
 <p>Please feel free to contribute your workflows when you have Opencast in production!</p>
-<p>This document will help you get started with creating your own Opencast workflows. For a list of available workflow
-operations, see:</p>
+<p>For a list of available workflow operations, see:</p>
 <blockquote>
 <p><a href="../../workflowoperationhandlers/">List of Workflow Operation Handler</a></p>
 </blockquote>
 <p>For a video introduction to workflow, take a look at this <a href="https://explore.opencast.org/conferences/2020/summit/v/CQeYQie869O">workflow workshop</a>.
 Or for longer session, check out this <a href="https://explore.opencast.org/webinars/v/CjqLfpgeTVW">in-depth webinar on workflows</a>.</p>
+<p>This page is split into two parts:</p>
+<ul>
+<li><a href="#creating-a-simple-workflow">Creating a Simple Workflow</a> is a step-by-step guide that walks you through building a
+  small but complete workflow from scratch.</li>
+<li><a href="#workflow-reference">Workflow Reference</a> documents features you can use in any workflow, such as accepting user
+  input or executing operations conditionally.</li>
+</ul>
 <h2 id="overview">Overview</h2>
-<p>A Opencast workflow is an ordered list of operations. There is no limit to the number of operations or their
+<p>An Opencast workflow is an ordered list of operations. There is no limit to the number of operations or their
 repetition in a given workflow.</p>
 <p>Workflow operations can be configured using configuration elements. The use of string replacement in configuration
 values allows workflows to dynamically adapt to a given input or user decision.</p>
-<h3 id="document">Document</h3>
-<p>Opencast workflows are defined in YAML, or alternatively in <a href="./#using-xml-files-with-workflows">XML</a> .  The structure of a Opencast workflow looks like this:</p>
+<p>Opencast workflows are defined in YAML, or alternatively in <a href="#xml-workflow-definitions">XML</a>. The structure of an
+Opencast workflow looks like this:</p>
 <pre><code class="language-yaml"># Description
 id:
 title: &quot;&quot;
@@ -123,10 +124,10 @@ operations:
   - id:
   ...
 </code></pre>
-<h2 id="create-a-workflow">Create a Workflow</h2>
+<h2 id="creating-a-simple-workflow">Creating a Simple Workflow</h2>
 <p>This section will walk you through creating a custom workflow, which will encode ingested tracks to defined output
 format.</p>
-<h3 id="step-1-encoding-profiles">Step 1: Encoding Profiles</h3>
+<h3 id="step-1-choose-encoding-profiles">Step 1: Choose Encoding Profiles</h3>
 <p>First create or select the encoding profiles you want to use. For more details on this, have a look at the <a href="../encoding/">Encoding
 Profile Configuration Guide</a>. For this guide we assume that we have an encoding profile <code>mov-low.http</code>
 which creates a distribution format definition for mp4 video and a <code>player-preview.http</code> encoding profile to create
@@ -195,7 +196,7 @@ operations:
 </code></pre>
 <p>The <em>fail-on-error</em> attribute is a boolean determining whether the workflow will throw an error to the
 exception-handler-workflow or simply proceed with the remaining operations.</p>
-<h3 id="step-4-encoding">Step 4: Encoding</h3>
+<h3 id="step-4-encode-the-media">Step 4: Encode the Media</h3>
 <p>The next operations will encode the media to the Mp4 format:</p>
 <pre><code class="language-yaml"># Description
 # ...
@@ -231,7 +232,7 @@ operations:
   media as input for other operations, using their <code>source-tags</code> attribute.</li>
 <li>The <code>encoding-profile</code> attribute refers to an encoding profile defined in <code>etc/encoding</code>.</li>
 </ul>
-<h3 id="step-5-encode-to-thumbnail">Step 5: Encode to Thumbnail</h3>
+<h3 id="step-5-create-thumbnails">Step 5: Create Thumbnails</h3>
 <p>The next operations will create thumbnails from the media:</p>
 <pre><code class="language-yaml"># ...
 operations:
@@ -281,8 +282,13 @@ operations:
 <ul>
 <li>The publish-engage operation uses all media tagged as <em>publish</em> as input.</li>
 </ul>
-<!-- _Are the next sections still part of Creating a Custom Workflow? -->
-<h2 id="accept-user-input">Accept User Input</h2>
+<h3 id="step-7-test-the-workflow">Step 7: Test the Workflow</h3>
+<p>The easiest way to test a workflow is to just put it into the workflows folder where it will be picked up by Opencast
+automatically and will be available in Opencast a few seconds later.</p>
+<h2 id="workflow-reference">Workflow Reference</h2>
+<p>The following sections document workflow features that are not specific to the example above and can be used in any
+workflow.</p>
+<h3 id="accepting-user-input">Accepting User Input</h3>
 <p>Workflow definitions may optionally include variables to be replaced by user input. For instance, this may be used to
 select optional parts of a workflow. To enable user control of individual workflow instances, the workflow definition
 must:</p>
@@ -295,7 +301,8 @@ must:</p>
   if: "${somevar}"
 </code></pre>
 <p>The attribute <code>if</code> specifies the execution condition in means of the operation only being executed if that condition
-evaluates to true. You can find more details on conditional execution in the next section.</p>
+evaluates to true. You can find more details on conditional execution in the <a href="#conditional-execution">Conditional
+Execution</a> section below.</p>
 <p>Once the operation is configured to accept a variable, we need to describe how to gather the value from the
 administrative user. The <code>configuration_panel_json</code> element of a workflow definitions describes this user interface
 snippet.  A simple configuration panel could look like this:</p>
@@ -336,12 +343,12 @@ this, the <a href="../../workflowoperationhandlers/defaults-woh/">defaults opera
 <p>NOTE: The old <code>configuration_panel</code> element defined the user input using HTML but is ignored by the new Admin UI. The
 old Admin UI was removed completely in v17.x and you will need to rewrite user input as JSON if updating from an earlier
 version.</p>
-<h2 id="organisation-properties">Organisation Properties</h2>
+<h3 id="organisation-properties">Organisation Properties</h3>
 <p>Workflows can access organisation properties stored as <code>prop.*</code> in the organisation configuration
 (<code>etc/org.opencastproject.organization-mh_default_org.cfg</code> for the default organisation <code>mh_default_org</code>). This allows
 for organisation specific configuration of your workflow. To access the property use the <code>org_</code> prefix, e.g.
 <code>prop.my.var</code> can be access using <code>${org_my.var}</code>.</p>
-<h2 id="conditional-execution">Conditional Execution</h2>
+<h3 id="conditional-execution">Conditional Execution</h3>
 <p>The attribute <code>if</code> of the <code>operation</code> element can be used to specify a condition to control whether the workflow
 operation should be executed. This so-called execution condition is a boolean expression of the following form:</p>
 <pre><code>&lt;expression&gt; ::= &lt;term&gt; ["OR" &lt;expression&gt;]
@@ -398,7 +405,7 @@ used quoted in attributes. The following table shows all those characters:</p>
 - <a href="../../workflowoperationhandlers/analyze-tracks-woh/">analyze-tracks</a>
 - <a href="../../workflowoperationhandlers/analyze-mediapackage-woh/">analyze-mediapackage</a>
 - <a href="../../workflowoperationhandlers/import-wf-properties-woh/">import-wf-properties</a></p>
-<h2 id="thumbnail-support">Thumbnail Support</h2>
+<h3 id="thumbnail-support">Thumbnail Support</h3>
 <p>The Admin UI comes with explicit support for thumbnails that are supposed to represent events visually, e.g. in lists
 of events as commonly used in video portals and other similar systems.
 To make it possible to implement the required processing and retain flexibility, the Admin UI will store the following
@@ -449,12 +456,9 @@ information in variables of workflow instances:</p>
 </table>
 <p>To fully support the thumbnail feature, your workflows should take care of creating the different types of thumbnails
 and be consistent to the Admin UI thumbnail configuration (see <a href="../admin-ui/thumbnails/">Thumbnail Configuration</a>)</p>
-<h2 id="test-the-workflow">Test the Workflow</h2>
-<p>The easiest way to test a workflow is to just put it into the workflows folder where it will be picked up by Opencast
-automatically and will be available in Opencast a few seconds later.</p>
-<h2 id="using-xml-files-with-workflows">Using XML Files with Workflows</h2>
+<h3 id="xml-workflow-definitions">XML Workflow Definitions</h3>
 <p>As an alternative to YAML workflow configuration files, it is possible to use XML files with the following structure.</p>
-<h3 id="xml-workflow-definition-structure">XML Workflow Definition Structure</h3>
+<h4 id="xml-workflow-definition-structure">XML Workflow Definition Structure</h4>
 <pre><code class="language-xml">&lt;definition xmlns=&quot;http://workflow.opencastproject.org&quot;&gt;
 
   &lt;!-- Description --&gt;
@@ -480,7 +484,7 @@ automatically and will be available in Opencast a few seconds later.</p>
 
 &lt;/definition&gt;
 </code></pre>
-<h3 id="xml-operation-structure">XML Operation Structure</h3>
+<h4 id="xml-operation-structure">XML Operation Structure</h4>
 <pre><code class="language-xml">    &lt;operation
       id=&quot;&quot;
       if=&quot;&quot;

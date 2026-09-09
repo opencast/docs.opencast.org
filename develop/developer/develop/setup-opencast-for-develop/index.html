@@ -297,6 +297,30 @@ To use it in IntelliJ, follow these steps:</p>
 </li>
 </ul>
 <p>To use the plugin, you can run manually the check-style plugin through the menu View → Tool Windows → Checkstyle.</p>
+<h4 id="automatic-code-formatting">Automatic Code Formatting</h4>
+<p>Some of the style rules are not just checked but fixed automatically by the
+<a href="https://github.com/diffplug/spotless">Spotless</a> Maven plugin, above all the import order, which is
+tedious to get right by hand. Spotless runs as part of every build, before Checkstyle, so a normal</p>
+<pre><code>./mvnw install
+</code></pre>
+<p>will silently repair the imports of the modules it builds. You can also run it on its own, either
+for the whole repository or for single modules:</p>
+<pre><code>./mvnw spotless:apply
+./mvnw -pl modules/&lt;module&gt; spotless:apply
+</code></pre>
+<p>Pass <code>-Dspotless.apply.skip=true</code> if you want a build to leave your sources alone. Continuous
+integration does exactly that and runs <code>./mvnw spotless:check</code> instead, so unformatted code cannot
+be merged.</p>
+<p>What Spotless takes care of:</p>
+<ul>
+<li>the import order and grouping, including the removal of unused imports</li>
+<li>a final newline at the end of every file</li>
+</ul>
+<p>Everything else, including the license header and the indentation, is only checked by Checkstyle and
+still has to be written correctly by hand.</p>
+<p>One limitation worth knowing: Spotless reads imports line by line and cannot handle a single import
+statement wrapped over two lines. Should you ever need such an import, add the file to the
+<code>&lt;excludes&gt;</code> of the plugin configuration in the root <code>pom.xml</code>.</p>
 <p>Now your IDE should be ready for developing.</p>
 <h4 id="slow-intellij-idea-fix">Slow IntelliJ IDEA Fix</h4>
 <p>Edit following file</p>
