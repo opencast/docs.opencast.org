@@ -1,23 +1,20 @@
-commit fafa5e20f1d339a09d39cbec3703bb945c0f9718
+commit b694be61a9ab01fa83e51758d1a4c2b9ab5fcfd4
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Sep 21 09:02:54 2026 +0200
+Date:   Mon Sep 21 09:41:01 2026 +0200
 
-    Create YouTube playlists with non-public privacy status (#7204)
+    Improve YouTube video retraction (#7387)
     
-    This is part of opencast/roadmap#17 and adds a new configuration option
-    to the YouTube publication service which controls the privacy status of
-    any playlists newly created by the service. It does **not** affect
-    existing playlists!
+    Previously, the retraction of YouTube videos relied on searching for the
+    video by its episode name. This was unreliable if multiple videos had
+    the same name or if the name had changed.
     
-    Some questions for @ypatios, who commissioned this feature:
+    This commit changes the retraction logic to extract the YouTube video ID
+    directly from the publication's URI stored in the MediaPackage.
     
-    - Is this enough for you or do you need this for videos as well?
-    [Here](https://github.com/opencast/roadmap/issues/17#issuecomment-3280869877)
-    we talked only about playlists, but in your [original
-    post](https://github.com/opencast/roadmap/issues/17#issuecomment-2797040594)
-    you mentioned videos as well. Note that you can already create public
-    and private videos. What's missing is “just” an option to upload
-    unlisted videos.
-    - I hope putting this towards `develop` is fine?
-    - Is this service level configurability enough for you or do you need
-    this per workflow run?
+    Note that during retraction we now attempt to remove the video from the
+    specific playlist referenced in the publication URL (the YouTube watch
+    URL includes both `v` and `list` parameters). This removal is
+    best-effort and failures are ignored; we do not try to remove the video
+    from any other playlists. Since a video can be part of multiple
+    playlists, including ones not managed by Opencast, broad automated
+    removals remain intentionally unsupported.
