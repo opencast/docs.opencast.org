@@ -231,6 +231,14 @@ profile.parallel.http.ffmpeg.command = -i #{in.video.path} \
 </tr>
 </tbody>
 </table>
+<h3 id="random-range-placeholder">Random Range Placeholder</h3>
+<p>The <code>ffmpeg.command</code> templating also supports random range placeholders in the form <code>#{random:min:max}</code>.
+The generated value is an integer in the inclusive range between <code>min</code> and <code>max</code> (for example, <code>#{random:0:3}</code> can produce <code>0</code>, <code>1</code>, <code>2</code>, or <code>3</code>).</p>
+<p>This is useful when worker nodes have multiple GPUs and you want a simple distribution of jobs across devices, for example:</p>
+<pre><code class="language-properties">profile.parallel.http.ffmpeg.command = -i #{in.video.path} -gpu #{random:0:3} \
+  -c:v h264_nvenc #{out.dir}/#{out.name}#{out.suffix.low-quality}
+</code></pre>
+<p>In this example, each encoding invocation picks one GPU index from <code>0</code> to <code>3</code>, which provides a basic form of load balancing.</p>
 
   <br>
     
