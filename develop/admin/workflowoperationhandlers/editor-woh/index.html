@@ -92,6 +92,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="description">Description</h2>
 <p>The editor operation cuts the source file(s) according to the given <em>SMIL</em> file(s). SMIL file(s) are usually generated
 by the video editor frontend.</p>
+<p>It expects a SMIL catalog (<code>smil-flavors</code>) describing one or more segments to keep, and one or more source tracks
+(<code>source-flavors</code>) to cut. For every matching source track it produces a new, derived track whose flavor subtype is
+replaced with <code>target-flavor-subtype</code> (e.g. <code>presenter/source</code> becomes <code>presenter/trimmed</code>), containing only the
+segments the SMIL defines. The SMIL catalog itself is rewritten in place under <code>target-smil-flavor</code> with the source
+tracks it references resolved to the actual tracks that were cut.</p>
+<p>If <code>skip-if-not-trimmed</code> is enabled and the SMIL contains only a single segment spanning the entire recording (i.e.
+nothing was actually cut), no encoding is performed. Instead, the tracks named by <code>skipped-flavors</code> are cloned
+directly to the target flavor, unchanged. The same cloning happens if the operation is configured to run
+non-interactively and no SMIL catalog has been created for the media package yet, in which case cutting is skipped
+entirely.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -115,7 +125,7 @@ by the video editor frontend.</p>
 <tr>
 <td>skipped-flavors</td>
 <td><code>*/work</code></td>
-<td>The flavor(s) of all media files to be "processed" (cloned) if the editor operation is skipped</td>
+<td>(Optional) The flavor(s) of the media files to clone to the target flavor when the editor operation is skipped (see <code>skip-if-not-trimmed</code>) or run non-interactively without ever holding for edits. Defaults to the value of <code>source-flavors</code>. This only needs to be set to something different from <code>source-flavors</code> when the tracks used for interactive editing are not the tracks that should continue through the workflow when no trimming happens, e.g. when <code>source-flavors</code> points at lower-resolution <code>*/preview</code> tracks used just for the editor UI, but skipping should pass through the full-quality <code>*/work</code> tracks instead.</td>
 </tr>
 <tr>
 <td>target-flavor-subtype</td>
@@ -125,7 +135,7 @@ by the video editor frontend.</p>
 <tr>
 <td>target-smil-flavor</td>
 <td><code>smil/cutting</code></td>
-<td>the flavor of the SMIL file containing the final video segments.<br/>Should be the same as the <code>smil.catalog.flavor</code> property in <code>etc/org.opencastproject.adminui.cfg</code></td>
+<td>the flavor of the SMIL file containing the final video segments.<br/>Should be the same as the <code>smil.catalog.flavor</code> property in <code>etc/org.opencastproject.editor.EditorServiceImpl.cfg</code></td>
 </tr>
 <tr>
 <td>skip-if-not-trimmed</td>
@@ -140,7 +150,7 @@ by the video editor frontend.</p>
 <tr>
 <td><em>preview_flavors</em></td>
 <td><em><code>*/preview</code></em></td>
-<td><em>(Legacy) Flavors used to preview the video in the editor.</em><br/><strong><em>Currently has no effect. Preview flavors are now configured in the file <code>etc/org.opencastproject.adminui.cfg</code></em></strong></td>
+<td><em>(Legacy) Flavors used to preview the video in the editor.</em><br/><strong><em>Currently has no effect. Preview flavors are now configured in the file <code>etc/org.opencastproject.editor.EditorServiceImpl.cfg</code></em></strong></td>
 </tr>
 <tr>
 <td><em>interactive</em></td>
