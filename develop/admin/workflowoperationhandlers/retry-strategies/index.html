@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Retry Strategies", url: "#_top", children: [
+              {title: "max-attempts", url: "#max-attempts" },
           ]},
         ];
 
@@ -108,6 +109,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tr>
 </tbody>
 </table>
+<h2 id="max-attempts">max-attempts</h2>
+<p><code>max-attempts</code> limits how often an operation is attempted. It only takes effect together with a
+<code>retry-strategy</code> of <code>retry</code> or <code>hold</code>: with the default strategy <code>none</code> a failed operation is never
+retried, so setting <code>max-attempts</code> on its own has no effect and is logged as a warning.</p>
 <p><strong>Example 1</strong>: No retry</p>
 <p>If the operation1 fails, the workflow will fail because fail-on-error="true".</p>
 <pre><code class="language-yaml">  - id: operation1
