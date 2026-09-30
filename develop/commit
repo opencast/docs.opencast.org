@@ -1,12 +1,20 @@
-commit 4f35394d510a65edd6bbb18e4c7eb8e472ee0e84
+commit f0ae89244507b1d7712b7d9b77f862a8e5cc75da
 Author: Matthias Neugebauer <mtneug@shio.solutions>
-Date:   Wed Sep 30 11:56:39 2026 +0200
+Date:   Wed Sep 30 11:57:34 2026 +0200
 
-    Fix setRecordingState REST doc to match actual behavior (#8034)
+    Fix workflowInstanceId typo in capture agent guide (#8035)
     
-    Fixes #7886.
+    Fixes #7887.
     
-    Fix description for `capture-admin/recordings/{id}`
+    The guide told integrators to pass the event UID as `workfloeInstanceId`
+    to /ingest/ingest. Since that endpoint accepts arbitrary form fields as
+    workflow properties without validation, the misspelled parameter is
+    silently ignored: the ingest succeeds but the scheduled event is never
+    matched.
+    
+    ### AI Usage
+    
+    Claude Sonnet 5 was used to correct this spelling mistake.
     
     ### Your pull request should…
     
