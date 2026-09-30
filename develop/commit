@@ -1,9 +1,41 @@
-commit 1fd45fa50b435141f6e141d3eeed41dbdb681c2f
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Fri Sep 25 11:09:43 2026 -0600
+commit d8e5acb41794d742ef963eb7c201e2602d4a059f
+Author: Matthias Neugebauer <mtneug@shio.solutions>
+Date:   Wed Sep 30 10:09:43 2026 +0200
 
-    Merge branch 'fix/7890-7891-max-attempts' of Odrec/opencast into develop
+    Report SKIP action when analyze-tracks/select-tracks find no matching tracks (#8021)
     
-    Pull request #7904
-    Fixes #7891
-      Warn when max-attempts is set without a retry-strategy
+    Fixes #1864.
+    
+    Both operations returned CONTINUE even when no tracks matched the
+    configured source flavor, so the admin UI could not show them as skipped
+    despite doing nothing.
+    
+    ### How to test this patch
+    
+    Probably does not even need testing tbh.
+    
+    ### AI Usage
+    
+    Claude Sonnet 5 was used to change CONTINUE to SKIP (yes I was that
+    lazy).
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
