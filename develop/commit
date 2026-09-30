@@ -1,20 +1,17 @@
-commit f0ae89244507b1d7712b7d9b77f862a8e5cc75da
+commit 57b270c391fe997955ee0404a76354f21adc2471
 Author: Matthias Neugebauer <mtneug@shio.solutions>
-Date:   Wed Sep 30 11:57:34 2026 +0200
+Date:   Wed Sep 30 13:40:49 2026 +0200
 
-    Fix workflowInstanceId typo in capture agent guide (#8035)
+    Fix the stale REST doc for the health endpoint (#8049)
     
-    Fixes #7887.
-    
-    The guide told integrators to pass the event UID as `workfloeInstanceId`
-    to /ingest/ingest. Since that endpoint accepts arbitrary form fields as
-    workflow properties without validation, the misspelled parameter is
-    silently ignored: the ingest succeeds but the scheduled event is never
-    matched.
+    health.json/health.xml claimed to return NO_CONTENT for a healthy
+    system, but this has not been the case since the endpoint was written to
+    count services by state instead: it always returns 200 with those counts
+    as its body, e.g. {"health":{"healthy":82,"warning":0,"error":0}}.
     
     ### AI Usage
     
-    Claude Sonnet 5 was used to correct this spelling mistake.
+    Written by Claude Sonnet 5.
     
     ### Your pull request should…
     
