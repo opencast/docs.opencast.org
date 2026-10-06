@@ -33,7 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Under construction", url: "#_top", children: [
+          {title: "Job Dispatch", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Automatic dispatcher election", url: "#automatic-dispatcher-election" },
           ]},
         ];
 
@@ -82,8 +84,39 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="under-construction">Under construction</h1>
-<p>While this page is being constructed, consider checking out <a href="https://explore.opencast.org/webinars/v/PGom1gu6yO4">this webinar on Job Dispatching and Job Loads</a>.</p>
+    <h1 id="job-dispatch">Job Dispatch</h1>
+<p>For a general introduction, consider checking out <a href="https://explore.opencast.org/webinars/v/PGom1gu6yO4">this webinar on Job Dispatching and Job Loads</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>The job dispatcher (<code>JobDispatcher</code>, in the <code>serviceregistry</code> module) periodically looks for queued jobs and
+assigns each one to the least loaded service capable of handling it. It is a scheduled polling loop that
+queries the database.</p>
+<h2 id="automatic-dispatcher-election">Automatic dispatcher election</h2>
+<p>Job dispatching is enabled by default on every node that runs this component. The cluster automatically elects a single
+active dispatcher among all candidate nodes at runtime, and fails over to another candidate automatically if the current
+one goes down.</p>
+<p>Leader election is implemented as a lease stored in a single database row (<code>oc_dispatch_lock</code>). Every candidate node's
+dispatch tick first tries to acquire or renew this lease (<code>DispatchLeaseManager.tryAcquireOrRenew()</code>) before doing
+anything else; only the node holding a valid lease actually dispatches jobs that round. Acquisition is a single,
+portable JPQL bulk update:</p>
+<pre><code class="language-sql">UPDATE DispatchLock d
+   SET d.owner = :me, d.leaseExpires = :newExpiry
+ WHERE d.owner = :me OR d.leaseExpires &lt; CURRENT_TIMESTAMP
+</code></pre>
+<p>The comparison uses the database's own <code>CURRENT_TIMESTAMP</code> rather than any node's local clock, so every competing
+node judges lease freshness against one shared clock instead of against each other. Race safety comes entirely from
+the database engine's row-level locking during the update itself - no advisory locks, no pessimistic entity
+locking, and no vendor-specific SQL, so this works identically on both supported databases (MariaDB and PostgreSQL)
+as well as the H2 database used for testing.</p>
+<p>The lease timeout (<code>dispatch.lock.timeout</code>, default <code>3 * dispatch.interval</code>) should be a small multiple of the
+dispatch interval, so that one missed tick doesn't cause an unnecessary failover, while a genuinely dead node is
+still detected and replaced quickly. On clean shutdown, a node proactively releases its lease
+(<code>DispatchLeaseManager.release()</code>) so a standby node can take over immediately rather than waiting out the full
+timeout.</p>
+<p>As a second line of defense, JPA optimistic locking (the <code>@Version</code> column on <code>JpaJob</code>) still guards against
+double-dispatch of the same job even in the unlikely event that two nodes both believe they hold the lease during
+a narrow race window.</p>
+<p>To exclude a specific node from ever becoming the dispatcher, set <code>dispatch.interval=0</code> on that node in
+<code>org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>.</p>
 
   <br>
     
