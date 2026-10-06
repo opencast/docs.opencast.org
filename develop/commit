@@ -1,39 +1,23 @@
-commit b07cd706833b6a0462e627a20ac784ac09e618f2
+commit 765a037b828869a203e1c69b8acebc1801b04c34
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Tue Oct 6 08:45:14 2026 +0200
+Date:   Tue Oct 6 11:16:20 2026 +0200
 
-    Set proper language in YouTube publication (#7205)
+    Set YouTube license according to metadata (#7206)
     
-    Part of opencast/roadmap#17. This adds the possibility to transfer the
-    language in the media package's metadata to YouTube during publication.
-    To this end, a group of configuration option is added.
+    This is part of opencast/roadmap#17, and it allows you to set the
+    license of a YouTube video while publishing there, according to the
+    videos metadata in Opencast.
     
-    The first controls where the language ends up in YouTube. YouTube knows
-    about two languages (apart from captions) per video: the language of the
-    metadata (description, title) and the default audio language. Since
-    Opencast only knows one language in most cases, I opted to make it
-    configurable whether we use that for the metadata language, the audio
-    language, both, or neither.
+    Since there are only two licenses on YouTube, namely YouTube Standard
+    and Creavie Commons, and the former is the standard, all we need is a
+    way to identify the CC licenses. Since the license field in the DC
+    catalogs is basically just text, we provide a regex that must be matched
+    in order for the video to have its license set to CC. This is similar to
+    how we do languages in #7205.
     
-    A possible extension of this feature would maybe allow you to configure
-    independent metadata fields for these two languages.
+    As with the other YouTube PRs, some Questions for @ypatios:
     
-    The rest of the settings is a list of rules to translate whatever data
-    people have in their language DC field to the BCP-47 codes YouTube
-    expects. This is done using regular expressions. For every BCP-47 code
-    you might want to upload, you provide a regex that matches whatever you
-    want to see in the DC catalog for the language.
-    
-    This is a bit roundabout, but I couldn't see any other way to deal with
-    the fact that there are no restrictions in Opencast as to what the
-    language field can contain.
-    
-    Note that this means that videos in languages that aren't matched by any
-    of these patterns won't have its language set in YouTube!
-    
-    As in #7204 I have a few questions specifically for @ypatios:
-    
-    - Is this roughly what you had in mind?
+    - Is this what you had in mind?
     - I hope putting this towards `develop` is fine?
     - Is this service level configurability enough for you or do you need
     this per workflow run?
