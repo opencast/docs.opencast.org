@@ -1,26 +1,9 @@
-commit e800c9087a6aeda47d005da8210974ee6bd0b15d
-Author: Arnei <arnewilken@yahoo.de>
-Date:   Fri Oct 2 13:30:48 2026 +0200
+commit 7895c3fbe1cb68cdc5e3c088c744a33c05d5a6cb
+Author: Greg Logan <gregorydlogan@gmail.com>
+Date:   Wed Oct 7 10:26:24 2026 -0600
 
-    Don't let an untouched blank required field block unrelated metadata updates
+    Merge branch 'opensearch-version-upgrade' of Arnei/opencast into develop
     
-    DublinCoreMetadataUtil.updateDublincoreCatalog() validated every
-    required field in the collection, including ones the caller never
-    touched. An event or series whose stored catalog already had a blank
-    required field (e.g. title) therefore rejected every future update,
-    even to a completely unrelated field, since the same untouched blank
-    field failed validation every time.
-    
-    That blanket check was deliberately introduced to fix #6032 (silently
-    creating an event/series without a title when no metadata was
-    submitted at all), which relies on validating fields regardless of
-    whether they were touched. Reconciles the two: the check in
-    updateDublincoreCatalog() is scoped back to fields the caller actually
-    touched, and the previous, unconditional check is split out into a
-    new validateRequiredFieldsPresent(), called explicitly at the two
-    creation call sites (event and series) where #6032's guarantee still
-    needs to hold.
-    
-    Fixes #7920
-    
-    AI was used in creating this commit.
+    Pull request #7930
+    Fixes #6711
+      Switch to Opensearch 3
