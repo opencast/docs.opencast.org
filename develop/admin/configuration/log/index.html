@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Logging", url: "#_top", children: [
+              {title: "Log Rotation", url: "#log-rotation" },
               {title: "Graylog", url: "#graylog" },
           ]},
         ];
@@ -93,6 +94,35 @@ The following requirements have to be met:</p>
 <li>It needs to be a Log4J appender</li>
 <li>The used bundle needs to be a fragment-bundle</li>
 </ul>
+<h2 id="log-rotation">Log Rotation</h2>
+<p>By default, <code>opencast.log</code> is written by a plain <code>File</code> appender that never rotates or truncates it on its own, so
+it grows without bound for as long as Opencast keeps running. How to handle that is deliberately left to the
+administrator, since the right approach — rotate by size, by time, how many old logs to keep, whether to compress
+them — depends on the deployment, and Opencast does not assume one by default.</p>
+<p>Installing from certain packages pre-configures this for you: the <a href="https://github.com/opencast/opencast-rpmbuild">RPM
+packaging</a> ships an <code>/etc/logrotate.d</code> entry that rotates Opencast's
+logs weekly, keeping 52 compressed rotations. Other installation methods have no such rotation configured and need
+one of the approaches below.</p>
+<p>To enable size-based rotation, replace the <code>File</code> appender with a <code>RollingRandomAccessFile</code> one in
+<code>etc/org.ops4j.pax.logging.cfg</code>:</p>
+<pre><code># Rolling file appender. Rotates once opencast.log exceeds the configured size.
+log4j2.appender.out.type = RollingRandomAccessFile
+log4j2.appender.out.name = File
+log4j2.appender.out.fileName = ${karaf.data}/log/opencast.log
+log4j2.appender.out.filePattern = ${karaf.data}/log/opencast.log.%i
+log4j2.appender.out.append = true
+log4j2.appender.out.layout.type = PatternLayout
+log4j2.appender.out.layout.pattern = ${log4j2.pattern}
+log4j2.appender.out.policies.type = Policies
+log4j2.appender.out.policies.size.type = SizeBasedTriggeringPolicy
+log4j2.appender.out.policies.size.size = 50MB
+</code></pre>
+<p><code>policies.size.size</code> is the threshold at which <code>opencast.log</code> is rotated to <code>opencast.log.1</code> (and so on); adjust it
+to fit the deployment. Log4j2 also supports capping how many rotated files are kept (via a <code>DefaultRolloverStrategy</code>
+and its <code>max</code> setting), time-based rotation (<code>TimeBasedTriggeringPolicy</code>), and combining multiple policies — see
+<a href="https://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender">Log4j2's own <code>RollingFile</code> appender
+documentation</a> for the full set of
+options.</p>
 <h2 id="graylog">Graylog</h2>
 <p>To have all log data available and accessible in one central location one can use Graylog.
 A guide to install Graylog can be found <a href="https://docs.graylog.org/docs/installing">in Graylog's documentation</a>.</p>

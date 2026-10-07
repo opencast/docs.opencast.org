@@ -1,9 +1,48 @@
-commit 67743f0cc5808912c42563d814e7fb8b44c3075f
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Oct 6 16:21:24 2026 -0600
+commit 0412f327c1dfe968498438d015cf2be650ab0a2b
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Wed Oct 7 12:20:31 2026 +0200
 
-    Merge branch 'revert-sanitize-config-change' of mtneug/fork-opencast-opencast into develop
+    Add size-based log rotation documentation (#8062)
     
-    Pull request #8105
+    Related to #5190.
     
-      Revert unintended change to sanitize configuration
+    #5190 asks for a size based log rotate. ~This switches the appender to
+    RollingRandomAccessFile with a 50MB SizeBasedTriggeringPolicy, matching
+    the style Karaf's own bundled config uses for karaf.log.~
+    
+    ~More importantly this PR asks the question on whether we want to have
+    certain log rotation settings by default, and where we want those to
+    live. Apparently the rpm builds add a time based log rotation, but that
+    of course only affects rpm builds.~
+    
+    This adds a suggestion for size based log rotation to the docs.
+    
+    ### How to test this patch
+    
+    Set `log4j2.appender.out.policies.size.size` to something smaller, e.g
+    10KB, and start Opencast.
+    
+    ### AI Usage
+    
+    Claude Sonnet 5 was used with this PR.
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
