@@ -93,7 +93,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The publish YouTube operation publishes a single stream to YouTube. This stream must meet YouTube's format
 requirements, and may consist of one audio and/or video stream. If you want to publish both your presenter and presentation
 streams we suggest using the <a href="../composite-woh/">Composite</a> workflow operation handler to prepare a composite file
-with both streams inside of it.  </p>
+with both streams inside of it.</p>
+<h3 id="thumbnails">Thumbnails</h3>
+<p>YouTube has specific restrictions for custom thumbnails:
+- The image must be in a supported format (e.g., JPG, PNG).
+- The file size must be less than 2MB.
+- The YouTube account must be verified with a phone number to upload custom thumbnails.
+- For more details, see the <a href="https://developers.google.com/youtube/v3/docs/thumbnails/set">YouTube API documentation</a>.</p>
 <h2 id="parameter-table">Parameter Table</h2>
 <table>
 <thead>
@@ -111,6 +117,14 @@ with both streams inside of it.  </p>
 <td>source-tags</td>
 <td>The tags to publish to YouTube</td>
 </tr>
+<tr>
+<td>thumbnail-flavors</td>
+<td>The flavors of the thumbnail to publish to YouTube</td>
+</tr>
+<tr>
+<td>thumbnail-tags</td>
+<td>The tags of the thumbnail to publish to YouTube</td>
+</tr>
 </tbody>
 </table>
 <h2 id="operation-example">Operation Example</h2>
@@ -118,6 +132,7 @@ with both streams inside of it.  </p>
     description: Publishing to YouTube
     configurations:
       - source-tags: youtube
+      - thumbnail-tags: youtube-thumbnail
 </code></pre>
 
   <br>
