@@ -41,6 +41,7 @@
               {title: "Step 5: HTTPS Configuration", url: "#step-5-https-configuration" },
               {title: "Step 6: Setting the Storage Directory (optional)", url: "#step-6-setting-the-storage-directory-optional" },
               {title: "Finish Installation", url: "#finish-installation" },
+              {title: "Checking That Opencast Is Working", url: "#checking-that-opencast-is-working" },
           ]},
         ];
 
@@ -174,6 +175,24 @@ sudo -u opencast rm /path/to/data/folder/test
 <h2 id="finish-installation">Finish Installation</h2>
 <p>If you came here as part of an installation, please head back to the installation guide you used for notes on how to run
 Opencast as a service.</p>
+<h2 id="checking-that-opencast-is-working">Checking That Opencast Is Working</h2>
+<p>Once Opencast is running, check that it answers and that the admin credentials from
+<a href="#step-2-setting-authentication-details">Step 2</a> work:</p>
+<pre><code>curl -u admin:opencast https://your-server/info/me.json
+</code></pre>
+<p>This should return information about the admin user. A connection error means Opencast either is not running yet or
+is not reachable at that address; an authentication error means the credentials are wrong.</p>
+<p>Next, check that all of Opencast's services actually started up correctly:</p>
+<pre><code>curl -u admin:opencast https://your-server/services/health.json
+</code></pre>
+<p>This returns a count of services by state, e.g. <code>{"health":{"healthy":82,"warning":0,"error":0}}</code>. A non-zero
+<code>warning</code> or <code>error</code> count usually means a service failed to start. Find out which one by checking
+<code>https://your-server/services/services.json</code> for entries whose <code>service_state</code> is not <code>NORMAL</code>, then take a look at
+<code>data/log/opencast.log</code> for the reason.</p>
+<p>On a multi-node installation, run both checks against the admin node. Since all nodes share the same service
+registry, <code>health.json</code> reports on the state of the whole cluster, not just the admin node.</p>
+<p>Finally, log into the administration interface at <code>https://your-server/</code> with the same credentials to confirm that
+the frontend is being served correctly as well.</p>
 
   <br>
     

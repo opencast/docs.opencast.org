@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "LDAP Authentication and Authorization", url: "#_top", children: [
+              {title: "The Two Configuration Files", url: "#the-two-configuration-files" },
               {title: "Security Configuration", url: "#security-configuration" },
               {title: "LDAP Service Configuration", url: "#ldap-service-configuration" },
               {title: "Combination with Existing authorization Mechanisms", url: "#combination-with-existing-authorization-mechanisms" },
@@ -93,12 +94,60 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>This page describes how to use LDAP as an authentication and user provider Opencast.
 There are separate instructions on how to <a href="../security.cas/">configure an LDAP-backed CAS server</a>.</p>
 </blockquote>
+<h2 id="the-two-configuration-files">The Two Configuration Files</h2>
+<p>Setting up LDAP involves two configuration files, and several of their settings look alike. They have different jobs:</p>
+<ul>
+<li><code>etc/security/mh_default_org.xml</code> takes care of <strong>authentication</strong>. It defines how Opencast finds a user in LDAP and
+  checks the password when the user logs in. This decides who can log in.</li>
+<li><code>etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg</code> takes care of <strong>authorization</strong>. It defines how the roles, name
+  and email address of a user are read from LDAP. It does not decide who can log in.</li>
+</ul>
+<p>The <code>&lt;ID&gt;</code> links both files: The security configuration refers to <code>ldapAuthoritiesPopulator_&lt;ID&gt;</code>, which is provided by
+the LDAP service configuration with the matching <code>org.opencastproject.userdirectory.ldap.id</code>.</p>
+<p>Both files need to describe the same LDAP directory. These are the settings which appear in both of them:</p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Security configuration</th>
+<th>LDAP service configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address of the LDAP server</td>
+<td><code>contextSource</code>, constructor argument</td>
+<td><code>org.opencastproject.userdirectory.ldap.url</code></td>
+</tr>
+<tr>
+<td>Account used to search in LDAP</td>
+<td><code>userDn</code> and <code>password</code> of <code>contextSource</code></td>
+<td><code>userDn</code> and <code>password</code> (optional)</td>
+</tr>
+<tr>
+<td>Where and how to find the user</td>
+<td><code>userDnPatterns</code> and <code>userSearch</code></td>
+<td><code>searchbase</code> and <code>searchfilter</code></td>
+</tr>
+</tbody>
+</table>
+<p>The search settings are used for different things:</p>
+<ul>
+<li>The <code>userDnPatterns</code> and <code>userSearch</code> of the security configuration find the user who wants to log in. They decide who
+  is allowed to log in. To restrict the login to certain users, restrict them there, for example with a filter which
+  also requires a group membership, like <code>(&amp;(uid={0})(memberOf=cn=opencast,ou=groups,dc=example,dc=org))</code>.</li>
+<li>The <code>searchbase</code> and <code>searchfilter</code> of the LDAP service configuration are used whenever Opencast needs the details of
+  a user, for example to determine their roles, name and email address. The results are cached. If the filter finds no
+  entry for a user, Opencast gets no LDAP data about this user from this provider. This does not prevent the user from
+  logging in.</li>
+</ul>
+<p>Usually, both should search the same part of the directory with the same filter.</p>
 <h2 id="security-configuration">Security Configuration</h2>
 <p>Edit the <code>etc/org.opencastproject.kernel.security.SpringSecurityConfigurationArtifactInstaller.cfg</code>, adding all the expected ldap service configurations for each organization:</p>
 <pre><code># ldap.instances.&lt;organization_id&gt;=&lt;comma_separated_ldap_configuration_list&gt;
 ldap.instances.mh_default_org=ldapinstance1,ldapinstance2
 </code></pre>
-<p>In the example above, <em>ldapinstance1</em> and <em>ldapinstance1</em> correspond to LDAP service instances configured in <code>etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg</code> (see <em>LDAP Service Configuration</em> below).</p>
+<p>In the example above, <em>ldapinstance1</em> and <em>ldapinstance2</em> correspond to LDAP service instances configured in <code>etc/org.opencastproject.userdirectory.ldap-&lt;ID&gt;.cfg</code> (see <em>LDAP Service Configuration</em> below).</p>
 <p>Edit the security configuration file at <code>etc/security/mh_default_org.xml</code>. In a multi-tenant set-up, you will have one
 configuration file for each tenant at <code>etc/security/&lt;organization_id&gt;.xml</code>.</p>
 <p>You will find several commented out LDAP sections in this file.
@@ -178,9 +227,10 @@ rename it as:</p>
 <p>…where <code>&lt;ID&gt;</code> is a unique identifier for each LDAP connection.</p>
 <p>Now adjust the service configuration to your needs.
 The parameters in this file control the user authorization, i.e. how the roles obtained from LDAP are handled and
-assigned to the users.</p>
+assigned to the users. Note that the <code>searchbase</code> and <code>searchfilter</code> do not restrict who can log in, see
+<a href="#the-two-configuration-files">The Two Configuration Files</a>.</p>
 <h2 id="combination-with-existing-authorization-mechanisms">Combination with Existing authorization Mechanisms</h2>
-<p>In the default configuration included in the <code>security_sample_ldap.xml-example</code> file, the LDAP is tried after the
+<p>In the default configuration in <code>etc/security/mh_default_org.xml</code>, the LDAP is tried after the
 normal authorization mechanisms (i.e. the database). This means that if a user is present in both the database and the
 LDAP, the database will take precedence. The order is determined by the order in which the authentication providers
 appear on the security file. The relevant snippet is this:</p>
@@ -290,7 +340,7 @@ at the bottom of the file. Please see the example below:</p>
   &lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
 &lt;/sec:authentication-manager&gt;
 </code></pre>
-<p>Then, a separate <code>.cfg</code> must be generated for each of the configured providers, as explained <a href="#cfg">here</a>. Please make
+<p>Then, a separate <code>.cfg</code> must be generated for each of the configured providers, as explained in <a href="#ldap-service-configuration">LDAP Service Configuration</a>. Please make
 sure to configure the <code>org.opencastproject.userdirectory.ldap.id</code> parameter correctly. In this case, the values should
 be <code>theId</code> and <code>theId2</code>, respectively.</p>
 
