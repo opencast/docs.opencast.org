@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>LifeCycle Management API - Developer Guide</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Information", url: "#_top", children: [
+              {title: "GET /api/lifecyclemanagement/policies/{id}", url: "#get-apilifecyclemanagementpoliciesid" },
+              {title: "GET /api/lifecyclemanagement/policies", url: "#get-apilifecyclemanagementpolicies" },
+              {title: "GET /api/lifecyclemanagement/policies/actions", url: "#get-apilifecyclemanagementpoliciesactions" },
+              {title: "GET /api/lifecyclemanagement/policies/targettypes", url: "#get-apilifecyclemanagementpoliciestargettypes" },
+              {title: "GET /api/lifecyclemanagement/policies/timings", url: "#get-apilifecyclemanagementpoliciestimings" },
+              {title: "POST /api/lifecyclemanagement/policies", url: "#post-apilifecyclemanagementpolicies" },
+              {title: "PUT /api/lifecyclemanagement/policies/{id}", url: "#put-apilifecyclemanagementpoliciesid" },
+              {title: "DELETE /api/lifecyclemanagement/policies/{id}", url: "#delete-apilifecyclemanagementpoliciesid" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../javascript/extra.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../listprovider-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../listprovider-api/" class="btn btn-xs btn-link">
+        ListProvider API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../events-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../events-api/" class="btn btn-xs btn-link">
+        Events API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <div class="toc">
+<ul>
+<li><a href="#information">Information</a><ul>
+<li><a href="#get-apilifecyclemanagementpoliciesid">GET /api/lifecyclemanagement/policies/{id}</a></li>
+<li><a href="#get-apilifecyclemanagementpolicies">GET /api/lifecyclemanagement/policies</a></li>
+<li><a href="#get-apilifecyclemanagementpoliciesactions">GET /api/lifecyclemanagement/policies/actions</a></li>
+<li><a href="#get-apilifecyclemanagementpoliciestargettypes">GET /api/lifecyclemanagement/policies/targettypes</a></li>
+<li><a href="#get-apilifecyclemanagementpoliciestimings">GET /api/lifecyclemanagement/policies/timings</a></li>
+<li><a href="#post-apilifecyclemanagementpolicies">POST /api/lifecyclemanagement/policies</a></li>
+<li><a href="#put-apilifecyclemanagementpoliciesid">PUT /api/lifecyclemanagement/policies/{id}</a></li>
+<li><a href="#delete-apilifecyclemanagementpoliciesid">DELETE /api/lifecyclemanagement/policies/{id}</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="information">Information</h1>
+<p>The LifeCycle Management API is available since API version 1.12.0.</p>
+<h3 id="get-apilifecyclemanagementpoliciesid">GET /api/lifecyclemanagement/policies/{id}</h3>
+<p>Returns a lifecycle policy.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A policy as JSON.<br />
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
+<code>404 (NOT FOUND)</code>: The specified policy does not exist.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;actionParameters&quot;: &quot;{ workflowId: noop }&quot;,
+  &quot;timing&quot;: &quot;SPECIFIC_DATE&quot;,
+  &quot;action&quot;: &quot;START_WORKFLOW&quot;,
+  &quot;targetType&quot;: &quot;EVENT&quot;,
+  &quot;id&quot;: &quot;601&quot;,
+  &quot;title&quot;: &quot;My first policy&quot;,
+  &quot;isActive&quot;: false,
+  &quot;actionDate&quot;: &quot;2023-11-30T16:16:47Z&quot;,
+  &quot;targetFilters&quot;: &quot;&quot;,
+  &quot;accessControlEntries&quot;: [
+    {
+      &quot;allow&quot;: true,
+      &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+      &quot;action&quot;: &quot;read&quot;,
+      &quot;id&quot;: 602
+    }
+  ]
+}
+</code></pre>
+<h3 id="get-apilifecyclemanagementpolicies">GET /api/lifecyclemanagement/policies</h3>
+<p>Get lifecycle policies. Policies that you do not have read access to will not show up.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A JSON object containing an array.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>limit</code></td>
+<td><a href="../types/#basic"><code>int</code></a></td>
+<td>The maximum number of results to return for a single request</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td><a href="../types/#basic"><code>int</code></a></td>
+<td>The index of the first result to return</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Sort the results based upon a sorting criteria. A criteria is specified as a pair such as: <Sort Name>:ASC or <Sort Name>:DESC. Adding the suffix ASC or DESC sets the order as ascending or descending order and is mandatory. Sort Name is case sensitive. Supported Sort Names are 'updated'</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">{
+  &quot;total&quot;: 1,
+  &quot;offset&quot;: 0,
+  &quot;limit&quot;: 100,
+  &quot;results&quot;: [
+    {
+      &quot;actionParameters&quot;: &quot;{ workflowId: noop }&quot;,
+      &quot;timing&quot;: &quot;SPECIFIC_DATE&quot;,
+      &quot;action&quot;: &quot;START_WORKFLOW&quot;,
+      &quot;targetType&quot;: &quot;EVENT&quot;,
+      &quot;id&quot;: &quot;601&quot;,
+      &quot;title&quot;: &quot;My first policy&quot;,
+      &quot;isActive&quot;: false,
+      &quot;actionDate&quot;: &quot;2023-11-30T16:16:47Z&quot;,
+      &quot;targetFilters&quot;: &quot;&quot;,
+      &quot;accessControlEntries&quot;: [
+        {
+          &quot;allow&quot;: true,
+          &quot;role&quot;: &quot;ROLE_USER_BOB&quot;,
+          &quot;action&quot;: &quot;read&quot;,
+          &quot;id&quot;: 602
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h3 id="get-apilifecyclemanagementpoliciesactions">GET /api/lifecyclemanagement/policies/actions</h3>
+<p>Returns a lifecycle policy actions.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A list of actions as JSON.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">[
+  &quot;START_WORKFLOW&quot;
+]
+</code></pre>
+<h3 id="get-apilifecyclemanagementpoliciestargettypes">GET /api/lifecyclemanagement/policies/targettypes</h3>
+<p>Returns a lifecycle policy target types.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A list of targets types as JSON.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">[
+  &quot;EVENT&quot;
+]
+</code></pre>
+<h3 id="get-apilifecyclemanagementpoliciestimings">GET /api/lifecyclemanagement/policies/timings</h3>
+<p>Returns a lifecycle policy timings.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: A list of timings as JSON.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-json">[
+  &quot;SPECIFIC_DATE&quot;,
+  &quot;REPEATING&quot;,
+  &quot;ALWAYS&quot;
+]
+</code></pre>
+<h3 id="post-apilifecyclemanagementpolicies">POST /api/lifecyclemanagement/policies</h3>
+<p>Creates a new policy.</p>
+<p><strong>Response</strong></p>
+<p><code>201 (CREATED)</code>: The policy was successfully created.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Policy Title</td>
+</tr>
+<tr>
+<td><code>targetType</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>Which entities the policy should affect. Possible values: EVENT</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>The action that should be performed. Possible values: START_WORKFLOW</td>
+</tr>
+<tr>
+<td><code>actionParameters</code></td>
+<td><a href="../types/#LifeCycle-Policy-Action-Parameters"><code>JSON object</code></a></td>
+<td>JSON. Depends on the type of action</td>
+</tr>
+<tr>
+<td><code>actionDate</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Required if timing is SPECIFIC_DATE. Should be an ISO string</td>
+</tr>
+<tr>
+<td><code>cronTrigger</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Required if timing is REPEATING. https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.htm</td>
+</tr>
+<tr>
+<td><code>timing</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>When the policy should be applied. Possible values: SPECIFIC_DATE, REPEATING, ALWAYS</td>
+</tr>
+<tr>
+<td><code>targetFilters</code></td>
+<td><a href="../types/#LifeCycle-Policy-Filters"><code>JSON object</code></a></td>
+<td>The filter(s) used to select applicable entities.</td>
+</tr>
+<tr>
+<td><code>accessControlEntries</code></td>
+<td><a href="../types/#acl"><code>string</code></a></td>
+<td>Policy ACL in JSON format.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-apilifecyclemanagementpoliciesid">PUT /api/lifecyclemanagement/policies/{id}</h3>
+<p>Updates a policy.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The policy was successfully updated.
+<code>400 (BAD REQUEST)</code>: The request is invalid or inconsistent.<br />
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Policy Title</td>
+</tr>
+<tr>
+<td><code>targetType</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>Which entities the policy should affect. Possible values: EVENT</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>The action that should be performed. Possible values: START_WORKFLOW</td>
+</tr>
+<tr>
+<td><code>actionParameters</code></td>
+<td><a href="../types/#LifeCycle-Policy-Action-Parameters"><code>JSON object</code></a></td>
+<td>JSON. Depends on the type of action</td>
+</tr>
+<tr>
+<td><code>actionDate</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Required if timing is SPECIFIC_DATE. Should be an ISO string</td>
+</tr>
+<tr>
+<td><code>cronTrigger</code></td>
+<td><a href="../types/#basic"><code>string</code></a></td>
+<td>Required if timing is REPEATING. https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.htm</td>
+</tr>
+<tr>
+<td><code>timing</code></td>
+<td>[<code>enumeration</code>]</td>
+<td>When the policy should be applied. Possible values: SPECIFIC_DATE, REPEATING, ALWAYS</td>
+</tr>
+<tr>
+<td><code>targetFilters</code></td>
+<td><a href="../types/#LifeCycle-Policy-Filters"><code>JSON object</code></a></td>
+<td>The filter(s) used to select applicable entities.</td>
+</tr>
+<tr>
+<td><code>accessControlEntries</code></td>
+<td><a href="../types/#acl"><code>string</code></a></td>
+<td>JSON for ACL.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-apilifecyclemanagementpoliciesid">DELETE /api/lifecyclemanagement/policies/{id}</h3>
+<p>Removes a policy.</p>
+<p><strong>Response</strong></p>
+<p><code>200 (OK)</code>: The policy was successfully deleted.
+<code>403 (FORBIDDEN)</code>: The user doesn't have the rights to make this request.<br />
+<code>404 (NOT FOUND)</code>: The specified policy does not exist.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../listprovider-api/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../listprovider-api/" class="btn btn-xs btn-link">
+        ListProvider API
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../events-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../events-api/" class="btn btn-xs btn-link">
+        Events API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/architecture/api/lifecycle-management-api.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

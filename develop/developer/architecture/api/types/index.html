@@ -43,6 +43,7 @@
               {title: "Workflow", url: "#workflow" },
               {title: "Statistics", url: "#statistics" },
               {title: "Playlists", url: "#playlists" },
+              {title: "LifeCycle Management", url: "#lifecycle-management" },
           ]},
         ];
 
@@ -135,6 +136,18 @@ sections that start with general information about how the types are supposed to
 <li><a href="#playlists">Playlists</a><ul>
 <li><a href="#playlist">Playlist</a></li>
 <li><a href="#playlist-entry">Playlist Entry</a></li>
+</ul>
+</li>
+<li><a href="#lifecycle-management">LifeCycle Management</a><ul>
+<li><a href="#lifecycle-policy-action-parameters">LifeCycle Policy Action Parameters</a><ul>
+<li><a href="#start_workflow-action-parameters">START_WORKFLOW Action Parameters</a></li>
+</ul>
+</li>
+<li><a href="#lifecycle-policy-filters">LifeCycle Policy Filters</a><ul>
+<li><a href="#types">Types</a></li>
+<li><a href="#supported-filter-fields">Supported filter fields</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -976,6 +989,261 @@ about supported data query parameters using this JSON object.</p>
 <td><code>type</code></td>
 <td><a href="./#basic"><code>string</code></a></td>
 <td>Enumeration, current possible values are EVENT, INACCESSIBLE. Typically EVENT, set to INACCESSIBLE by Opencast if the requesting user lacks permissions on the event.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lifecycle-management">LifeCycle Management</h2>
+<h3 id="lifecycle-policy-action-parameters">LifeCycle Policy Action Parameters</h3>
+<h4 id="start_workflow-action-parameters">START_WORKFLOW Action Parameters</h4>
+<p>A JSON object that expects specific fields.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workflowId</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Required. Identifier of the workflow to run.</td>
+</tr>
+<tr>
+<td><code>workflowParameters</code></td>
+<td><a href="./#basic"><code>object</code></a></td>
+<td>Workflow config. Key-Value pairs.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-json">{
+  &quot;workflowId&quot;: &quot;schedule-and-publish&quot;,
+  &quot;workflowParameters&quot;: {
+    &quot;straightToPublishing&quot;: true
+  }
+}
+</code></pre>
+<h3 id="lifecycle-policy-filters">LifeCycle Policy Filters</h3>
+<p>A JSON object specifying "fields" that events can be filtered by.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value</code></td>
+<td><a href="./#basic"><code>object</code></a></td>
+<td>Required. The value to filter the field by.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><a href="./#basic"><code>enumeration</code></a></td>
+<td>Query type. Possible values: SEARCH, WILDCARD. Default: SEARCH</td>
+</tr>
+<tr>
+<td><code>must</code></td>
+<td><a href="./#basic"><code>boolean</code></a></td>
+<td>Whether the value must be in the field or must not be in the field. Default: true</td>
+</tr>
+</tbody>
+</table>
+<p>Example: Get all events with the series "banana", which do not have the word "conference" anywhere in their description.</p>
+<pre><code class="language-json">{
+  &quot;series_name&quot;: {
+    &quot;value&quot;: &quot;banana&quot;
+  },
+  &quot;description&quot;: {
+    &quot;value&quot;: &quot;*conference*&quot;,
+    &quot;type&quot;: &quot;WILDCARD&quot;,
+    &quot;must&quot;: false
+  }
+}
+</code></pre>
+<p>Example: Get all events whose start date lies in a specified range, that do not have "Albert Einstein" as a presenter
+and "conference" anywhere in their title.</p>
+<pre><code class="language-json">{
+  &quot;start_date_range&quot;: {
+    &quot;value&quot;: &quot;2023-11-30T16:16:47Z/2025-11-30T16:16:47Z&quot;
+  },
+  &quot;presenter&quot;: {
+    &quot;value&quot;: &quot;Albert Einstein&quot;,
+    &quot;must&quot;: false
+  },
+  &quot;title&quot;: {
+    &quot;value&quot;: &quot;*conference*&quot;,
+    &quot;type&quot;: &quot;WILDCARD&quot;,
+    &quot;must&quot;: false
+  }
+}
+</code></pre>
+<p>Example: Get all events with a start date older than 2 years from now (where "now" is every time the policy runs)
+that do not have "Albert Einstein" as a presenter, "conference" anywhere in their title and the series "Archive".</p>
+<pre><code class="language-json">{
+  &quot;start_date_relative&quot;: {
+    &quot;value&quot;: &quot;-P2Y0M0D&quot;,
+    &quot;type&quot;: &quot;LESS_THAN&quot;
+  },
+  &quot;presenter&quot;: {
+    &quot;value&quot;: &quot;Albert Einstein&quot;,
+    &quot;must&quot;: false
+  },
+  &quot;title&quot;: {
+    &quot;value&quot;: &quot;*conference*&quot;,
+    &quot;type&quot;: &quot;WILDCARD&quot;,
+    &quot;must&quot;: false
+  },
+  &quot;series_name&quot;: {
+    &quot;value&quot;: &quot;Archive&quot;,
+    &quot;must&quot;: false
+  }
+}
+</code></pre>
+<p>Example: Get all events with series “08/15 Algebra - 2024” three days after the actual lecture recording happened.</p>
+<pre><code class="language-json">{
+  &quot;series_name&quot;: {
+    &quot;value&quot;: &quot;08/15 Algebra - 2024&quot;
+  } ,
+  &quot;start_date_relative&quot;: {
+    &quot;value&quot;: &quot;-P0Y0M3D&quot;,
+    &quot;type&quot;: &quot;LESS_THAN&quot;
+  }
+}
+</code></pre>
+<h4 id="types">Types</h4>
+<ul>
+<li>SEARCH: The given value must match the value in the field exactly. (default)</li>
+<li>WILDCARD: The given string must match the value in the field exactly, unless wildcard characters are specified.
+  Supported wildcard characters are:</li>
+<li><code>?</code>, which matches any single character</li>
+<li><code>*</code>, which can match zero or more characters, including an empty one
+  Avoid beginning patterns with * or ?. This can increase the iterations needed to find matching terms and slow search performance.
+  Matches alphabetically, and not by date.  <code>2024-10-*</code> will not match dates in October of 2024.</li>
+<li>GREATER_THAN: The given value is greater than the value in field.
+  Can only be used for dates.</li>
+<li>LESS_THAN: The given value is less than the value in field.
+  Can only be used for dates.</li>
+</ul>
+<h4 id="supported-filter-fields">Supported filter fields</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata title</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata description</td>
+</tr>
+<tr>
+<td><code>presenter</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata presenter. Can be specified multiple times</td>
+</tr>
+<tr>
+<td><code>contributor</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata contributor. Can be specified multiple times</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata subject</td>
+</tr>
+<tr>
+<td><code>location</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata location</td>
+</tr>
+<tr>
+<td><code>series_id</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata series id</td>
+</tr>
+<tr>
+<td><code>series_name</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata series name</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata language</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata source</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><a href="./#basic"><code>date</code></a></td>
+<td>Metadata created</td>
+</tr>
+<tr>
+<td><code>creator</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata creator</td>
+</tr>
+<tr>
+<td><code>publisher</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata publisher</td>
+</tr>
+<tr>
+<td><code>license</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata license</td>
+</tr>
+<tr>
+<td><code>rights</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata rights</td>
+</tr>
+<tr>
+<td><code>start_date</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata start date</td>
+</tr>
+<tr>
+<td><code>start_date_relative</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Period. Added to "now" when policy is checked and compared to the Metadata start date. Format: period (i.e. -P0Y0M2D)</td>
+</tr>
+</tbody>
+</table>
+<p>Fields that are also supported, but for which only a value can be specified:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>identifier</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata id</td>
+</tr>
+<tr>
+<td><code>start_date_range</code></td>
+<td><a href="./#basic"><code>string</code></a></td>
+<td>Metadata start date in between two dates. Format: date/date</td>
 </tr>
 </tbody>
 </table>
