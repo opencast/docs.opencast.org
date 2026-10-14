@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Paella plugins - Administration Guide</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <link href="../../../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Paella player plugins", url: "#_top", children: [
+              {title: "Plugins provided by Paella player", url: "#plugins-provided-by-paella-player" },
+              {title: "Plugins provided by Opencast", url: "#plugins-provided-by-opencast" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../javascript/extra.js"></script>
+      <script src="../../../../javascript/popper.js"></script>
+      <script src="../../../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../../playlists/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../../playlists/" class="btn btn-xs btn-link">
+        Playlists
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../url.parameter/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../url.parameter/" class="btn btn-xs btn-link">
+        URL Parameters
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="paella-player-plugins">Paella player plugins</h1>
+<p>Almost every paella feature is a plugin that can be enabled/disabled by each organization.
+You need to modify the <code>plugins</code> section of the <a href="../configuration/">paella config file</a>.</p>
+<p>To enable/disable a plugin you need to set the plugin <code>enabled</code> property to <code>true</code>/<code>false</code>.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  ...
+  &quot;plugins&quot;: {
+    &quot;list&quot;: {
+      &quot;org.opencast.paella.downloadsPlugin&quot;: {
+        &quot;enabled&quot;: true
+      },
+      ...
+    }
+  }
+}
+</code></pre>
+<h2 id="plugins-provided-by-paella-player">Plugins provided by Paella player</h2>
+<p>To view a full list of plugins, see the the paella <a href="https://paellaplayer.webs.upv.es/plugins/plugins/">documentation page</a></p>
+<h2 id="plugins-provided-by-opencast">Plugins provided by Opencast</h2>
+<p>The paella bundle for Opencast comes with a list of plugins to integrate with Opencast</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_downloadsplugin/">org.opencast.paella.downloadsPlugin</a></td>
+<td style="text-align: left;">Adds a downloads button in the player interface that allows users to download video tracks and attachments. The plugin provides filtering options for tracks and attachments based on flavors, tags and MIME types.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_editorplugin/">org.opencast.paella.editorPlugin</a></td>
+<td style="text-align: left;">Adds a button in the player interface that allows access to the Opencast video editor to modify and enhance video content.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_eventdetailsplugin/">org.opencast.paella.eventDetailsPlugin</a></td>
+<td style="text-align: left;">Adds a panel with the video description information.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_loginplugin/">org.opencast.paella.loginPlugin</a></td>
+<td style="text-align: left;">Adds a login button in the player interface that allows users to authenticate and access additional features and personalized content.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_matomo_usertrackingdataplugin/">org.opencast.paella.matomo.userTrackingDataPlugin</a></td>
+<td style="text-align: left;">Enables user statistics gathering via <a href="../../../admin-ui/statistics/matomo-statistics-provider/">a Matomo service</a> to track usage data.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_relatedvideosdataplugin/">org.opencast.paella.data.relatedVideosDataPlugin</a></td>
+<td style="text-align: left;">This data plugin retrieves and provides access to videos related to the current video event. It searches for other videos in the same series and makes them available to other plugins that need related video functionality.</td>
+</tr>
+<tr>
+<td><a href="https://polimediaupv.github.io/paella-opencast/reference/paella-opencast-plugins/plugin_relateddocumentsdataplugin/">org.opencast.paella.data.relatedDocumentsDataPlugin</a></td>
+<td style="text-align: left;">This data plugin extracts and provides access to documents related to the current video event. It retrieves content from Opencast tracks and attachments based on configured flavors and makes them available to other plugins that need related document functionality.</td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../../playlists/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../../playlists/" class="btn btn-xs btn-link">
+        Playlists
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../url.parameter/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../url.parameter/" class="btn btn-xs btn-link">
+        URL Parameters
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/player/paella.player8/plugins.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

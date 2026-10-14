@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Database - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Database Configuration", url: "#_top", children: [
+              {title: "Requirements", url: "#requirements" },
+              {title: "Step 1: Select a Database", url: "#step-1-select-a-database" },
+              {title: "Step 2: Set up the Database", url: "#step-2-set-up-the-database" },
+              {title: "Step 4: Configure Opencast", url: "#step-4-configure-opencast" },
+              {title: "Step 5: OAI-PMH Database (optional)", url: "#step-5-oai-pmh-database-optional" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../https/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../https/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basic/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basic/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="database-configuration">Database Configuration</h1>
+<p>Opencast ships with embedded H2, MariaDB and PostgreSQL JDBC drivers.
+The built-in H2 database is used by default and needs no configuration,
+but is not suited for production.</p>
+<p>The MariaDB driver also supports connecting to MySQL.
+But this may need additional setting and it not part of Opencast's documentation.
+We also do not test this, and hence do not guarantee that this will work.</p>
+<div class=warn>
+  __H2__ is not supported for updates or distributed systems. Use it for testing only!
+</div>
+
+<h3 id="requirements">Requirements</h3>
+<p>Before following this guide, you should have:</p>
+<ul>
+<li><a href="../../installation/">Installed Opencast</a></li>
+<li>Followed the <a href="../basic/">Basic Configuration instructions</a></li>
+</ul>
+<h2 id="step-1-select-a-database">Step 1: Select a Database</h2>
+<p>The EclipseLink JPA implementation which is used in Opencast supports several different databases, although
+some databases might require additional drivers.
+Official support only exists for MariaDB, PostgreSQL and H2.
+Other database engines are not tested and specific issues will likely not be addressed.</p>
+<ul>
+<li><strong>MariaDB</strong> is the recommended database engine.
+  It is used by most adopters and is well tested.</li>
+<li><strong>PostgreSQL</strong> is fully supported and a production ready alternative.</li>
+<li><strong>H2</strong> is not suitable for anything but testing and development.
+  It cannot be used in distributed environments.</li>
+</ul>
+<h2 id="step-2-set-up-the-database">Step 2: Set up the Database</h2>
+<p>This step is not Opencast-specific and may be different depending on your scenario and system.
+The following is an example of database setup using MariaDB, followed by an example for PostgreSQL, and is assuming CentOS 8 as Linux distribution.
+Look at your distribution's documentation for setting up a database.</p>
+<h3 id="mariadb">MariaDB</h3>
+<p>Install and start MariaDB:</p>
+<pre><code class="language-sh">% dnf install mariadb mariadb-server
+% systemctl start mariadb.service
+% systemctl enable mariadb.service
+</code></pre>
+<p>Finally, set root user credentials by running</p>
+<pre><code class="language-sh">% mysql_secure_installation
+</code></pre>
+<p>The first step is to create a database for Opencast.
+You can use any other database client, e.g. phpMyAdmin, for this as well.</p>
+<pre><code class="language-sh">% mysql -u root -p
+</code></pre>
+<p>You will be asked for the password of the user root.
+Next, create a database called <code>opencast</code> by executing:</p>
+<pre><code class="language-sql">CREATE DATABASE opencast CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+</code></pre>
+<p>Then create a user <code>opencast</code> with a password and grant it all necessary rights:</p>
+<pre><code class="language-sql">GRANT ALL PRIVILEGES ON opencast.* TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
+</code></pre>
+<details>
+
+<summary>Limiting the granted privileges</summary>
+
+You can limit the granted privileges further if you want to.
+The rights granted here are sufficient to run Opencast:
+
+
+<pre><code class="language-sql">GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,ALTER,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES,REFERENCES ON opencast.*
+  TO 'opencast'@'localhost' IDENTIFIED BY 'opencast_password';
+</code></pre>
+
+</details>
+
+<p>You can choose other names for the users and the database, and you should use a different password.</p>
+<p>In a distributed system, apart from <code>'username'@'localhost'</code> (which would allow access from the local machine only),
+you should grant a external user access to the database by running the same command for a user like
+<code>'username'@'10.0.1.%'</code>, where the <code>10.0.1.%</code> specifies the IP range allowed to access the server.
+For more details on MariaDB user creation, have a look at <a href="https://mariadb.com/kb/en/mariadb/grant/">MariaDB Reference Manual :: <code>GRANT</code> statement
+</a></p>
+<p>Finally, leave the client and restart the database server to enable the new user(s):</p>
+<pre><code class="language-sh">% systemctl restart mariadb.service
+</code></pre>
+<h3 id="postgresql">PostgreSQL</h3>
+<p>Install PostgreSQL, create a database and a user.
+You may need to enable password authentication in your <code>pg_hba.conf</code> first.
+Please refer to the PostgreSQL documentation for more details.</p>
+<pre><code>sudo -u postgres psql
+postgres=# create database opencast;
+postgres=# create user opencast with encrypted password 'opencast_password';
+postgres=# grant all privileges on database opencast to opencast;
+</code></pre>
+<h2 id="step-4-configure-opencast">Step 4: Configure Opencast</h2>
+<p>The following changes must be made in <code>etc/custom.properties</code>.
+Examples are provided for MariaDB and PostgreSQL.</p>
+<ol>
+<li>
+<p>Configure Opencast to use the JDBC driver for MariaDB or PostgreSQL.
+   The MariaDB driver will also work for MySQL.</p>
+<pre><code># MariaDB
+org.opencastproject.db.jdbc.driver=org.mariadb.jdbc.Driver
+# PostgreSQL
+org.opencastproject.db.jdbc.driver=org.postgresql.Driver
+</code></pre>
+</li>
+<li>
+<p>Configure the host where Opencast will find the database (<code>127.0.0.1</code>) and the database name (<code>opencast</code>).</p>
+<pre><code># MariaDB
+org.opencastproject.db.jdbc.url=jdbc:mariadb://127.0.0.1/opencast?useMysqlMetadata=true
+# PostgreSQL
+org.opencastproject.db.jdbc.url=jdbc:postgresql://127.0.0.1/opencast
+</code></pre>
+</li>
+<li>
+<p>Configure the database username and password.</p>
+<pre><code>org.opencastproject.db.jdbc.user=opencast
+org.opencastproject.db.jdbc.pass=opencast_password
+</code></pre>
+</li>
+</ol>
+<h2 id="step-5-oai-pmh-database-optional">Step 5: OAI-PMH Database (optional)</h2>
+<p>The database tables are automatically generated by Opencast when they are needed.
+One exception to this is the OAI-PMH publication database which requires an additional trigger.
+Trying to generate the schema automatically will most likely fail.</p>
+<p>If you want to use OAI-PMH, you must create the necessary table manually.</p>
+<p>Use the following code to generate the OAI-PMH database table on MariaDB.
+PostgreSQL is not yet supported.</p>
+<pre><code class="language-sql">CREATE TABLE oc_oaipmh (
+  mp_id VARCHAR(128) NOT NULL,
+  organization VARCHAR(128) NOT NULL,
+  repo_id VARCHAR(255) NOT NULL,
+  series_id VARCHAR(128),
+  deleted tinyint(1) DEFAULT '0',
+  modification_date DATETIME DEFAULT NULL,
+  mediapackage_xml TEXT(65535) NOT NULL,
+  PRIMARY KEY (mp_id, repo_id, organization),
+  CONSTRAINT UNQ_oc_oaipmh UNIQUE (modification_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX IX_oc_oaipmh_modification_date ON oc_oaipmh (modification_date);
+
+-- set to current date and time on insert
+CREATE TRIGGER oc_init_oaipmh_date BEFORE INSERT ON `oc_oaipmh`
+FOR EACH ROW SET NEW.modification_date = NOW();
+
+-- set to current date and time on update
+CREATE TRIGGER oc_update_oaipmh_date BEFORE UPDATE ON `oc_oaipmh`
+FOR EACH ROW SET NEW.modification_date = NOW();
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../https/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../https/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basic/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basic/" class="btn btn-xs btn-link">
+        Basic
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/database.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

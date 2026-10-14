@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>External Monitoring - Administration Guide</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Monitoring", url: "#_top", children: [
+              {title: "Calling the Health-Check", url: "#calling-the-health-check" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../javascript/extra.js"></script>
+      <script src="../../javascript/popper.js"></script>
+      <script src="../../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../firewall/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../firewall/" class="btn btn-xs btn-link">
+        Firewall
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../external-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../external-api/" class="btn btn-xs btn-link">
+        External API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="monitoring">Monitoring</h1>
+<p>To assist in the operation of Opencast an application health-check is available. This will quickly
+return the state of the specific node, whether it is running properly, has minor issues or is unavailable
+for some reason e.g. in maintenance mode. Regular calls to the health-check from whatever monitoring
+software you choose to use will give you confidence that the Opencast nodes are running correctly and alert
+you when they are not.</p>
+<p>For larger deployments the health-check can be used by load-balancers* and trigger fail-overs if one of the
+nodes goes down.</p>
+<p>* The only nodes that make sense to load-balance are the externally facing ones, <em>ingest</em> and <em>presentation</em>.</p>
+<h2 id="calling-the-health-check">Calling the Health-Check</h2>
+<p>The Runtime module provides the health-check endpoint at <code>/info/health</code> and a simple HTTP GET request
+will return a HTTP status code indicating the health of the node and response in JSON providing further details.</p>
+<pre><code>curl "http://oc-admin.example.com/info/health"
+</code></pre>
+<p>The HTTP status code will just indicate whether the node is running or not, the response contains a <em>status</em> field
+that indicates the actual health of the node. The status can have the values <strong>pass</strong>, <strong>warn</strong> and <strong>fail</strong>. The response
+ implements the health-check format proposed here <a href="https://inadarei.github.io/rfc-healthcheck">https://inadarei.github.io/rfc-healthcheck</a>.</p>
+<p>The table below shows the HTTP status codes the health-check status and the conditions for which they can occur.</p>
+<table>
+<thead>
+<tr>
+<th><em>status</em></th>
+<th><em>notes</em></th>
+<th>HTTP code</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pass</td>
+<td>n/a</td>
+<td>200</td>
+<td>All is OK</td>
+</tr>
+<tr>
+<td>warn</td>
+<td>service(s) in WARN state</td>
+<td>200</td>
+<td>Partially working service here</td>
+</tr>
+<tr>
+<td>warn</td>
+<td>services(s) in ERROR state</td>
+<td>200</td>
+<td>Look for service on another node</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>maintenance</td>
+<td>503</td>
+<td>Node not available, try again later</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>disabled</td>
+<td>503</td>
+<td>Node not available, try another node</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>offline</td>
+<td>503</td>
+<td>Node not running, try another node</td>
+</tr>
+</tbody>
+</table>
+<p>In all cases where the health-check status is not <strong>pass</strong> the JSON response provides more details.
+A summary of the problem(s) are list in the <em>notes</em> field. In the case of services in non <strong>NORMAL</strong>
+states these are listing the <em>checks</em> field. An example response for a <strong>warn</strong> status is shown below</p>
+<pre><code>{
+    "description" : "Opencast node's health status",
+    "releaseId" : "8",
+    "serviceId" : "http://oc-admin.example.com",
+    "version" : "1",
+    "status" : "warn",
+    "notes" : [
+       "service(s) in WARN state",
+       "service(s) in ERROR state"
+    ],
+    "checks" : {
+       "service:states" : [
+          {
+             "changed" : "Tue Jun 04 11:10:12 BST 2019",
+             "links" : {
+                "path" : "service1"
+             },
+             "observedValue" : "WARNING",
+             "componentId" : "service1"
+          },
+          {
+             "changed" : "Tue Jun 04 11:15:27 BST 2019",
+             "links" : {
+                "path" : "service2"
+             },
+             "observedValue" : "ERROR",
+             "componentId" : "service2"
+          }
+       ]
+    }
+}
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../firewall/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../firewall/" class="btn btn-xs btn-link">
+        Firewall
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../external-api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../external-api/" class="btn btn-xs btn-link">
+        External API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/configuration/monitoring.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

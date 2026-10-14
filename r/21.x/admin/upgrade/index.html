@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Upgrade Guide - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Upgrading Opencast from 19.x to 20.x", url: "#_top", children: [
+              {title: "Configuration Changes", url: "#configuration-changes" },
+              {title: "Database Upgrade", url: "#database-upgrade" },
+              {title: "Index Rebuild", url: "#index-rebuild" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../registration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../registration/" class="btn btn-xs btn-link">
+        Registration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="upgrading-opencast-from-19x-to-20x">Upgrading Opencast from 19.x to 20.x</h1>
+<p>This guide describes how to upgrade Opencast 19.x to 20.x.
+In case you need to upgrade older versions of Opencast, please refer to the documentation of
+<a href="https://docs.opencast.org">those versions</a> first.</p>
+<ol>
+<li>Read the <a href="../releasenotes/">release notes</a></li>
+<li>Stop your current Opencast instance</li>
+<li>Replace Opencast with the new version</li>
+<li>Review the <a href="#configuration-changes">configuration changes</a> and adjust your configuration accordingly</li>
+<li>Upgrade the database using <a href="#database-upgrade">the upgrade script (if needed)</a></li>
+<li>Start Opencast and <a href="../configuration/basic/#checking-that-opencast-is-working">check that it is working</a></li>
+<li><a href="#index-rebuild">Rebuild the index (if needed)</a></li>
+</ol>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<p>Check for changes in the configuration and apply those relevant to your setup to your files. You can use the following
+command to list all changes:</p>
+<pre><code>git diff origin/r/20.x origin/r/21.x -- etc/
+</code></pre>
+<p>The most important changes are:</p>
+<ul>
+<li>Paella 8 is now the default Paella version.  Paella 7 is scheduled for removal in Opencast 21. [<a href="https://github.com/opencast/opencast/pull/7214">#7214</a>]</li>
+<li>The circular dependency between index and list providers has been eliminated. The configuration for the ACL additional
+  actions list provider has been moved to the organization configuration. <a href="https://github.com/opencast/opencast/pull/7128">#7128</a></li>
+<li>JMX beans appear to be unused, and there are performance concerns surrounding JMX statistics. Therefore, they have
+  been removed to simplify our code. [<a href="https://github.com/opencast/opencast/pull/7317">#7317</a>]</li>
+<li>Disable service states by default. These tended to cause more issues in modern systems.  Functionality is still
+  present, just disabled by default. [<a href="https://github.com/opencast/opencast/pull/7450">#7450</a>]</li>
+<li>The configuration option "heartbeat.interval" was removed from <code>etc/org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>
+  Furthermore, only dispatching nodes will have a heartbeat from now on. [<a href="https://github.com/opencast/opencast/issues/7311">#7311</a>]</li>
+<li>All capture agent inputs are now preselected when scheduling a new event in the Admin UI [<a href="https://github.com/opencast/opencast/issues/1566">Admin Interface #1566</a>]</li>
+<li>Whether you were uploading or scheduling a new event in the Admin UI, the "Create Event" modal would always offer you
+  workflows tagged with either "upload" or "schedule". Now if you are uploading, you only get workflows tagged with
+  "upload". And if you are scheduling, you only get workflows tagged with "schedule". [<a href="https://github.com/opencast/admin-interface/issues/1567">Admin Interface #1567</a>]</li>
+<li>A new config option to filter available roles in the Admin UI access policy dropdowns was added. Allows you to
+  effectively remove catgories of roles (like ROLE_GROUP) from the dropdowns to make them more usable.
+  [<a href="https://github.com/opencast/admin-interface/issues/1561">Admin Interface #1561</a>]
+  [<a href="https://github.com/opencast/opencast/pull/7541">#7541</a>]</li>
+<li>The editor thumbnail view has been improved. [<a href="https://github.com/opencast/editor/pull/1663">Editor #1663</a>]</li>
+</ul>
+<h2 id="database-upgrade">Database Upgrade</h2>
+<p>A database upgrade for 20.x is not required if upgrading from an 19.x system. Upgrading from a version prior to 19.x
+may require a database upgrade, follow the corresponding upgrade guides for details.</p>
+<h2 id="index-rebuild">Index Rebuild</h2>
+<p>An index rebuild for 20.x is not required if upgrading from an 19.x system. Upgrading from a version prior to 19.x
+may require an index rebuild, follow the corresponding upgrade guides for details.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../registration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../registration/" class="btn btn-xs btn-link">
+        Registration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../releasenotes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../releasenotes/" class="btn btn-xs btn-link">
+        Release Notes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/upgrade.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
