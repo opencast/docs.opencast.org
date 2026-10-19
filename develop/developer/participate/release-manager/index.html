@@ -188,6 +188,7 @@ git submodule foreach git push &lt;remote&gt; r/22.x
 <li>
 <p>Merge the new release branch forward, then fix the submodule versions back to develop</p>
 <pre><code>git checkout develop
+git submodule foreach git checkout develop
 git merge r/22.x
 sed -i 's#branch = .*#branch = develop#g' .gitmodules
 git add .gitmodules
