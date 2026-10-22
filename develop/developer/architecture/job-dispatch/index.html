@@ -1,163 +1,213 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    
-    <link rel="shortcut icon" href="../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Job dispatch - Developer Guide</title>
-    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/highlight.css">
-    <link href="../../css/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<title>Job dispatch - Developer Guide</title>
+<link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+<link href="../../css/font-awesome-4.7.0.css" rel="stylesheet"/>
+<link href="../../css/base.css" rel="stylesheet"/>
+<link href="../../css/highlight.css" rel="stylesheet"/>
+<link href="../../css/extra.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/bootstrap-3.3.7.min.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+<base target="_top"/>
+<script>
       var base_url = '../..';
       var is_top_frame = false;
         
         var pageToc = [
           {title: "Job Dispatch", url: "#_top", children: [
-              {title: "Overview", url: "#overview" },
-              {title: "Automatic dispatcher election", url: "#automatic-dispatcher-election" },
+              {title: "Jobs and Load", url: "#jobs-and-load" },
+              {title: "The Dispatch Loop", url: "#the-dispatch-loop" },
+              {title: "Electing the Dispatcher", url: "#electing-the-dispatcher" },
+              {title: "Choosing a Service", url: "#choosing-a-service" },
+              {title: "The Dispatch Handshake", url: "#the-dispatch-handshake" },
+              {title: "Watching for Unresponsive Nodes", url: "#watching-for-unresponsive-nodes" },
           ]},
         ];
 
     </script>
-    <script src="../../js/base.js"></script>
-      <script src="../../javascript/extra.js"></script> 
+<script src="../../js/base.js"></script>
+<script src="../../javascript/extra.js"></script>
 </head>
-
 <body>
 <script>
 if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </script>
-
-
-
 <div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../oaipmh/" class="btn btn-xs btn-default pull-right">
+<a name="_top"></a>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../oaipmh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../oaipmh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../oaipmh/">
         OAI-PMH
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../filesystem/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../filesystem/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../filesystem/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../filesystem/">
         Filesystem
       </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="job-dispatch">Job Dispatch</h1>
-<p>For a general introduction, consider checking out <a href="https://explore.opencast.org/webinars/v/PGom1gu6yO4">this webinar on Job Dispatching and Job Loads</a>.</p>
-<h2 id="overview">Overview</h2>
-<p>The job dispatcher (<code>JobDispatcher</code>, in the <code>serviceregistry</code> module) periodically looks for queued jobs and
-assigns each one to the least loaded service capable of handling it. It is a scheduled polling loop that
-queries the database.</p>
-<h2 id="automatic-dispatcher-election">Automatic dispatcher election</h2>
-<p>Job dispatching is enabled by default on every node that runs this component. The cluster automatically elects a single
-active dispatcher among all candidate nodes at runtime, and fails over to another candidate automatically if the current
-one goes down.</p>
-<p>Leader election is implemented as a lease stored in a single database row (<code>oc_dispatch_lock</code>). Every candidate node's
-dispatch tick first tries to acquire or renew this lease (<code>DispatchLeaseManager.tryAcquireOrRenew()</code>) before doing
-anything else; only the node holding a valid lease actually dispatches jobs that round. Acquisition is a single,
-portable JPQL bulk update:</p>
+</div>
+</div>
+<h1 id="job-dispatch">Job Dispatch</h1>
+<p>Workflow operations rarely do their own work. Instead, they create one or more <a href="../overview/#jobs-and-services">jobs</a>
+and hand them to the service registry, which is responsible for getting each job to a service instance that can run
+it. This page covers how that happens: the scheduled dispatch loop, how the node that does the dispatching is
+elected, how a service is chosen, and the handshake between that node and the node accepting the job.</p>
+<p>For a walkthrough with diagrams, see <a href="https://explore.opencast.org/webinars/v/PGom1gu6yO4">this webinar on job dispatching and job loads</a>.</p>
+<h2 id="jobs-and-load">Jobs and Load</h2>
+<p>A <em>job</em> moves through a small set of states (<code>INSTANTIATED</code>, <code>QUEUED</code>, <code>DISPATCHING</code>, <code>RUNNING</code>, <code>PAUSED</code>, <code>RESTART</code>,
+<code>FINISHED</code>, <code>FAILED</code>, <code>CANCELLED</code>, <code>DELETED</code>, <code>WAITING</code>). Dispatching is only concerned with jobs in <code>QUEUED</code> or
+<code>RESTART</code>; everything else is either not ready yet or already spoken for.</p>
+<p>Every job also carries a <a href="https://docs.opencast.org/stable/admin/#configuration/load/">load</a>, a float describing how
+much of a node's capacity it is expected to consume. Job producers (workflow operation handlers and other services
+that create jobs) look up their own load value per operation via <code>LoadUtil.getConfiguredLoadValue()</code>, which reads a
+service-specific configuration key — for example <code>job.load.inspect</code> for the media inspection service — falling back
+to a default if it is not set. A node's own capacity is its <em>max load</em>, configured per host via
+<code>org.opencastproject.server.maxload</code> in <code>custom.properties</code> and defaulting to the number of CPU threads. Dispatching
+is, at its core, an attempt to keep the sum of running jobs' loads on any one node under that node's max load.</p>
+<h2 id="the-dispatch-loop">The Dispatch Loop</h2>
+<p><code>JobDispatcher</code> runs a scheduled task every <code>dispatch.interval</code> seconds
+(<code>org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>). Each round, it pages through dispatchable jobs
+(<code>RESTART</code> first, then <code>QUEUED</code>, a page at a time) and tries to dispatch each one.</p>
+<p>Dispatching is enabled by default on every node: <code>dispatch.interval</code> defaults to 2 seconds, and setting it to <code>0</code>
+excludes a node from dispatching. These nodes are only <em>candidates</em>, though. At any time, just one of them is the
+elected dispatcher, and only that node dispatches jobs. In a round on any other candidate, the loop notices that it is
+not the elected dispatcher and returns without doing anything. So nobody has to pick a dispatcher node by hand.</p>
+<p>Jobs of type <code>org.opencastproject.workflow</code> — which represent starting a workflow or its next operation, rather than
+a unit of actual processing — are collected separately and dispatched only after every other job in that round.</p>
+<h2 id="electing-the-dispatcher">Electing the Dispatcher</h2>
+<p>The election is a lease stored in a single database row (<code>oc_dispatch_lock</code>). At the start of every round, each
+candidate tries to acquire or renew the lease (<code>DispatchLeaseManager.tryAcquireOrRenew()</code>). The node that holds a
+valid lease goes on to dispatch, the others skip the round. Acquisition is a single, portable JPQL bulk update:</p>
 <pre><code class="language-sql">UPDATE DispatchLock d
    SET d.owner = :me, d.leaseExpires = :newExpiry
  WHERE d.owner = :me OR d.leaseExpires &lt; CURRENT_TIMESTAMP
 </code></pre>
-<p>The comparison uses the database's own <code>CURRENT_TIMESTAMP</code> rather than any node's local clock, so every competing
-node judges lease freshness against one shared clock instead of against each other. Race safety comes entirely from
-the database engine's row-level locking during the update itself - no advisory locks, no pessimistic entity
-locking, and no vendor-specific SQL, so this works identically on both supported databases (MariaDB and PostgreSQL)
-as well as the H2 database used for testing.</p>
-<p>The lease timeout (<code>dispatch.lock.timeout</code>, default <code>3 * dispatch.interval</code>) should be a small multiple of the
-dispatch interval, so that one missed tick doesn't cause an unnecessary failover, while a genuinely dead node is
-still detected and replaced quickly. On clean shutdown, a node proactively releases its lease
-(<code>DispatchLeaseManager.release()</code>) so a standby node can take over immediately rather than waiting out the full
+<p>The comparison uses the database's own <code>CURRENT_TIMESTAMP</code> instead of any node's local clock, so all candidates judge
+whether the lease has expired against one shared clock and not against each other. The race between candidates is
+decided entirely by the row-level locking of the database during the update, with no advisory locks and no
+vendor-specific SQL, so it works the same on MariaDB, PostgreSQL and the H2 database used in tests.</p>
+<p>The lease stays valid for <code>dispatch.lock.timeout</code> seconds, by default three times <code>dispatch.interval</code>. If the
+dispatcher stops renewing it, because it crashed or lost its connection to the database, another candidate takes over
+once it has expired. The timeout should be a small multiple of the interval, so that one missed round does not cause a
+needless change of dispatcher, while a dead node is still replaced quickly. When a node shuts down cleanly or is
+reconfigured, it releases the lease, so that another candidate can take over immediately instead of waiting for the
 timeout.</p>
-<p>As a second line of defense, JPA optimistic locking (the <code>@Version</code> column on <code>JpaJob</code>) still guards against
-double-dispatch of the same job even in the unlikely event that two nodes both believe they hold the lease during
-a narrow race window.</p>
-<p>To exclude a specific node from ever becoming the dispatcher, set <code>dispatch.interval=0</code> on that node in
-<code>org.opencastproject.serviceregistry.impl.JobDispatcher.cfg</code>.</p>
-
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../oaipmh/" class="btn btn-xs btn-default pull-right">
+<p>Optimistic locking remains as a second line of defense. Each dispatch attempt updates the job's database row (the
+<code>@Version</code> column of <code>JpaJob</code>), so even if two nodes both believe they hold the lease during a narrow race, the second
+one gets its update rejected and moves on, and the job is not dispatched twice.</p>
+<h2 id="choosing-a-service">Choosing a Service</h2>
+<p>What counts as a viable candidate service depends on the job being dispatched. For most jobs — a root job with no
+parent (a new workflow or the next workflow operation), any workflow-type job, or a job whose siblings (other
+children of the same parent) are already running — the dispatcher only considers services that have spare capacity
+<em>right now</em> (<code>getServiceRegistrationsWithCapacity</code>). Workflow-type jobs always fall into this group, which is why
+they wait for the workflow service itself to have room for another workflow or operation, rather than being queued
+up regardless.</p>
+<p>The one exception is a non-workflow child job whose siblings are <em>not</em> running yet — the first of that parent's
+children to be dispatched. That job is matched against the full list of services for its job type, ordered by load
+(<code>getServiceRegistrationsByLoad</code>), and queued at whichever service is least busy even if none currently has headroom
+to spare. In effect, the first of a parent's children can queue ahead of time; the rest wait for a service that can
+actually take them right now.</p>
+<p>Either way, the resulting list of services is filtered down to ones that are online, not in maintenance mode, not in
+an error state, and of the right job type, then sorted by a <code>LoadComparator</code>: ascending by current load factor, with
+near-tied services (within 0.01) broken by descending max load, so the most capable node wins a tie.</p>
+<p>One exception to that ordering: jobs of type <code>org.opencastproject.composer</code> are sorted by <code>LoadComparatorEncoding</code>
+instead, which prefers hosts listed in <code>org.opencastproject.encoding.workers</code> up to the load factor set in
+<code>org.opencastproject.encoding.workers.threshold</code>, before falling back to the same ordering as everything else.</p>
+<h2 id="the-dispatch-handshake">The Dispatch Handshake</h2>
+<p>The dispatcher works down the sorted candidate list, <code>POST</code>ing to each one's <code>/dispatch</code> endpoint in turn, until a
+service accepts the job or the list is exhausted:</p>
+<div class="mermaid">graph TD
+  d[JobDispatcher] --&gt;|"POST id, operation"| svc[Candidate service]
+  svc --&gt; ready{isReadyToAcceptJobs?}
+  ready --&gt;|"no (503)"| more{more candidates?}
+  ready --&gt;|yes| strong{isReadyToAccept?}
+  strong --&gt;|permanently refused| failed[412: job set to FAILED]
+  strong --&gt;|"too busy right now (503)"| more
+  strong --&gt;|"job load exceeds this node's max load"| exceeding{accept oversized jobs?}
+  strong --&gt;|room available| running[204: job set to RUNNING]
+  exceeding --&gt;|"job.load.acceptexceeding = false (503)"| more
+  exceeding --&gt;|"job.load.acceptexceeding = true, with a warning"| running
+  more --&gt;|yes| svc
+  more --&gt;|no| queued[job set back to QUEUED]
+</div>
+<p>The two decline reasons look similar but mean different things. "Too busy right now" is about the <em>current</em> moment:
+the job's load would fit this node's max load in principle, but added to what the node is already running, it would
+not right now — a different, less-busy node might take it immediately. "Job load exceeds this node's max load" is a
+property of the job on <em>this</em> node specifically, independent of anything running at the moment. It only comes up on
+the single most capable node the dispatcher could find for this job type, since the dispatcher already filters out
+every other candidate once it sees the job's load exceeds the best one available — so if that node declines too, no
+node in the cluster is configured to take this job at all. Whether it declines depends on
+<code>org.opencastproject.job.load.acceptexceeding</code>, a per-node configuration option that defaults to enabled: if enabled,
+the node accepts the job anyway, with a warning logged; if disabled, it declines like the too-busy case, and the job
+stays <code>QUEUED</code> forever unless a node capable of running it comes online. This is a deadlock — see the admin guide's
+<a href="https://docs.opencast.org/stable/admin/#configuration/load/#troubleshooting">load configuration troubleshooting</a>
+section.</p>
+<p>Both decline paths behave the same either way: the dispatcher moves on to the next candidate, and a
+<code>405 Method Not Allowed</code> response (the service isn't reachable yet) is treated the same way. <code>412 Precondition
+Failed</code>, the one response that gets a job marked <code>FAILED</code> outright, is not something either of these checks produces
+— <code>isReadyToAccept</code>'s default implementation never throws for a load reason. It is a hook service implementations can
+use for their own permanent-refusal reasons; <code>WorkflowServiceImpl</code>, for example, uses it to refuse starting a
+workflow whose job data is invalid or whose creator lacks authorization, not for anything load-related.</p>
+<p>If the candidate list is exhausted, the job goes back to <code>QUEUED</code> for the next round. When
+<code>org.opencastproject.job.load.acceptexceeding</code> allowed accepting an oversized job, the job is also remembered in an
+in-memory priority list keyed to the last host it tried, so the next round retries it against that same host first
+rather than cycling through the whole list again — this is the mechanism that eventually gets an oversized job
+running on the most capable node, once that node has drained enough other work to fit it.</p>
+<h2 id="watching-for-unresponsive-nodes">Watching for Unresponsive Nodes</h2>
+<p>Every 60 seconds — a fixed interval, not itself configurable — a heartbeat sends a <code>HEAD /dispatch</code> to every known
+job-producing service, to check that it is still there. A service that fails to respond as expected is added to a
+watch list; if it fails again on the <em>next</em> heartbeat, it is unregistered and marked offline. One missed heartbeat is
+tolerated, two in a row is not.</p>
+<p>The heartbeat runs on every node that has dispatching enabled, so on all candidates and not only on the elected
+dispatcher. On a node where <code>dispatch.interval</code> is <code>0</code>, both are disabled together.</p>
+<br/>
+<div aria-label="navigation" class="row wm-article-nav-buttons" role="navigation">
+<div class="wm-article-nav pull-right">
+<a class="btn btn-xs btn-default pull-right" href="../oaipmh/">
         Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../oaipmh/" class="btn btn-xs btn-link">
+        <i aria-hidden="true" class="fa fa-chevron-right"></i>
+</a>
+<a class="btn btn-xs btn-link" href="../oaipmh/">
         OAI-PMH
       </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../filesystem/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../filesystem/" class="btn btn-xs btn-link">
+</div>
+<div class="wm-article-nav">
+<a class="btn btn-xs btn-default pull-left" href="../filesystem/">
+<i aria-hidden="true" class="fa fa-chevron-left"></i>
+        Previous</a><a class="btn btn-xs btn-link" href="../filesystem/">
         Filesystem
       </a>
-    </div>
-    
-  </div>
-
-    <br>
 </div>
-
+</div>
+<br/>
+</div>
 <footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/architecture/job-dispatch.md"><i class="fa fa-github"></i>
+<p>
+<a href="https://github.com/opencast/opencast/edit/develop/docs/guides/developer/docs/architecture/job-dispatch.md"><i class="fa fa-github"></i>
 Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({
+    theme: "neutral"
+});</script></body>
 </html>
