@@ -1,191 +1,55 @@
-commit 26d2a2fdd35e870efea8fb00c38b6a6ab8335fa1
+commit 39bf7ef5bfac3d6ce72a96437a83a9f2c43e95c9
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Sun Nov 1 21:33:56 2026 +0100
+Date:   Sun Nov 1 21:36:09 2026 +0100
 
-    Bump query-string from 9.5.1 to 10.0.0 in /modules/lti (#8201)
+    Bump js-yaml from 5.4.3 to 5.5.0 in /modules/engage-ui (#8191)
     
-    Bumps [query-string](https://github.com/sindresorhus/query-string) from
-    9.5.1 to 10.0.0.
+    Bumps [js-yaml](https://github.com/nodeca/js-yaml) from 5.4.3 to 5.5.0.
     <details>
-    <summary>Release notes</summary>
+    <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/sindresorhus/query-string/releases">query-string's
-    releases</a>.</em></p>
+    href="https://github.com/nodeca/js-yaml/blob/master/CHANGELOG.md">js-yaml's
+    changelog</a>.</em></p>
     <blockquote>
-    <h2>v10.0.0</h2>
-    <h3>Breaking</h3>
+    <h2>[5.5.0] - 2026-10-16</h2>
+    <h3>Changed</h3>
     <ul>
-    <li>Require Node.js 22  dc9cd5e</li>
-    <li><code>stringify()</code> now throws a <code>TypeError</code> for
-    values it cannot represent, like objects, functions, symbols, and
-    <code>Date</code> 99d9c07
+    <li>Updated <code>argparse</code> to v3.</li>
+    <li>Updated development dependencies.</li>
+    </ul>
+    <h3>Fixed</h3>
     <ul>
-    <li>Before, <code>{a: {}}</code> became
-    <code>a=%5Bobject%20Object%5D</code>. Use the <a
-    href="https://github.com/sindresorhus/query-string?tab=readme-ov-file#replacer"><code>replacer</code></a>
-    option to convert such values.</li>
+    <li>Correct percent-encoding of shorthand and verbatim tags.</li>
+    <li>Reject <code>,</code>, <code>]</code>, and <code>}</code> at the
+    start of block plain scalars, <a
+    href="https://redirect.github.com/nodeca/js-yaml/issues/801">#801</a>.</li>
+    <li>Report the exact position of non-printable characters in errors, <a
+    href="https://redirect.github.com/nodeca/js-yaml/issues/801">#801</a>.</li>
     </ul>
-    </li>
-    <li><code>parse()</code> now collects a repeated key into an array with
-    every <a
-    href="https://github.com/sindresorhus/query-string?tab=readme-ov-file#arrayformat"><code>arrayFormat</code></a>
-    27018f4 a6d6a7f
-    <ul>
-    <li>Before, <code>bracket</code>, <code>index</code>,
-    <code>colon-list-separator</code>, <code>bracket-separator</code>,
-    <code>comma</code>, and <code>separator</code> kept only the last value,
-    so <code>foo=1&amp;foo=2</code> gave <code>{foo: '2'}</code>.</li>
-    </ul>
-    </li>
-    <li>An explicit <a
-    href="https://github.com/sindresorhus/query-string?tab=readme-ov-file#types"><code>types</code></a>
-    entry now always takes precedence over <code>parseNumbers</code> and
-    <code>parseBooleans</code>, and a value that does not match its type
-    stays a string 04649de f48a249</li>
-    <li>The <code>string[]</code> and <code>number[]</code> types now always
-    give an array (except with <code>arrayFormat: 'none'</code>, as
-    documented) 04649de 2a6984f</li>
-    <li>A percent-encoded byte that is not valid UTF-8 now decodes to
-    <code>U+FFFD</code>, like <code>URLSearchParams</code>, instead of being
-    kept as-is 19331de</li>
-    <li><code>arrayFormat: 'bracket-separator'</code> no longer splits on a
-    percent-encoded separator, like <code>comma</code> and
-    <code>separator</code> (<a
-    href="https://redirect.github.com/sindresorhus/query-string/issues/398">#398</a>)
-    deb9784
-    <ul>
-    <li><code>foo[]=a%2Cb,c</code> now gives <code>['a,b', 'c']</code>.</li>
-    </ul>
-    </li>
-    <li><code>stringifyUrl()</code> now percent-encodes <code>%</code> in
-    <code>fragmentIdentifier</code> 1602ae0
-    <ul>
-    <li>The fragment identifier is now a decoded value, like the query
-    values, so it round-trips with <code>parseUrl()</code>. If you passed an
-    already encoded fragment identifier, pass it decoded.</li>
-    </ul>
-    </li>
-    <li><code>pick()</code> and <code>exclude()</code> now write the kept
-    parameters back exactly as they were in the URL 1646c64 e087ca9 a7391f2
-    <ul>
-    <li>Options like <code>parseNumbers</code>, <code>parseBooleans</code>,
-    <code>types</code>, and <code>decode</code> only change the value the
-    filter receives. Before, <code>pick('https://foo.bar?id=007', ['id'],
-    {parseNumbers: true})</code> gave <code>id=7</code>.</li>
-    </ul>
-    </li>
-    </ul>
-    <h3>Improvements</h3>
-    <ul>
-    <li>Remove the <code>decode-uri-component</code> dependency and decode
-    in linear time 19331de
-    <ul>
-    <li>The old decoder was quadratic for some malformed input.</li>
-    </ul>
-    </li>
-    <li>Fix <code>parse()</code> being quadratic for a key that repeats many
-    times with <code>arrayFormat: 'comma'</code> and
-    <code>'separator'</code> 00a52ff</li>
-    <li>TypeScript: The parsed value types now follow the
-    <code>parseNumbers</code>, <code>parseBooleans</code>, and
-    <code>types</code> options, also for <code>parseUrl()</code>,
-    <code>pick()</code>, and <code>exclude()</code> d239f4f 472777f
-    789fc36</li>
-    <li>An option that is explicitly <code>undefined</code> now uses its
-    default value 1646c64</li>
-    </ul>
-    <h3>Fixes</h3>
-    <ul>
-    <li>Fix <code>stringify()</code> output that did not parse back to the
-    same value 13bc381 b63dc56 deb9784
-    <ul>
-    <li>This affected a separator like <code>-</code> or <code>.</code>
-    inside a value, <code>null</code> items with
-    <code>colon-list-separator</code>, and arrays that became empty after
-    skipping items with <code>bracket-separator</code>.</li>
-    </ul>
-    </li>
-    <li>Fix <code>stringify()</code> throwing <code>URIError</code> for a
-    string with a lone surrogate b9ff3f8</li>
-    <li>Fix the <code>sort</code> option  220906a 678ddff 6c6506d
-    <ul>
-    <li><code>sort: true</code> threw in <code>stringify()</code>,
-    <code>parse()</code> threw when <code>sort</code> was not a boolean or a
-    function, <code>sort: false</code> broke <code>arrayFormat:
-    'index'</code>, and <code>pick()</code> ignored <code>sort:
-    false</code>.</li>
-    </ul>
-    </li>
-    <li>Fix <code>stringifyUrl()</code> turning an <code>index</code> format
-    array that is already in the URL into <code>[object Object]</code> (<a
-    href="https://redirect.github.com/sindresorhus/query-string/issues/422">#422</a>)
-    220906a</li>
-    <li>Fix <code>stringifyUrl()</code>, <code>pick()</code>, and
-    <code>exclude()</code> corrupting the query and the fragment identifier
-    with <code>encode: false</code> 7268b7a c75c681</li>
-    <li>Fix <code>stringifyUrl()</code> changing the parameters that are
-    already in the URL when you give it parse options 93c3e1e</li>
-    <li>Fix <code>parseUrl()</code> and <code>stringifyUrl()</code> keeping
-    leading and trailing whitespace 1d91dbf 93c3e1e</li>
-    <li>Fix <code>parse()</code> throwing for <code>arrayFormat:
-    'index'</code> when a plain value comes before the indexed entries
-    8e9d58d</li>
-    <li>Fix <code>parse()</code> using <code>types</code> keys inherited
-    from <code>Object.prototype</code>, like <code>toString</code> (<a
-    href="https://redirect.github.com/sindresorhus/query-string/issues/421">#421</a>)
-    0682872</li>
-    <li>Fix <code>stringify()</code> ignoring the <code>replacer</code>
-    result for <code>skipNull</code> and <code>skipEmptyString</code>
-    42210ea</li>
-    <li>Fix <code>stringify()</code> reading each value twice, which ran
-    getters and <code>Proxy</code> traps two times 5e50210</li>
-    <li>Fix <code>stringifyUrl()</code> not accepting an
-    <code>interface</code> for <code>query</code> cd042b8</li>
-    </ul>
-    <hr />
-    <p><a
-    href="https://github.com/sindresorhus/query-string/compare/v9.5.1...v10.0.0">https://github.com/sindresorhus/query-string/compare/v9.5.1...v10.0.0</a></p>
     </blockquote>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/sindresorhus/query-string/commit/bea7bdc46ddb31796d11e3ef9bc2889bccfdcc1a"><code>bea7bdc</code></a>
-    10.0.0</li>
+    href="https://github.com/nodeca/js-yaml/commit/cb62b2dbbaa0b3e7379d83a5d69d8d52d21b6efb"><code>cb62b2d</code></a>
+    5.5.0 released</li>
     <li><a
-    href="https://github.com/sindresorhus/query-string/commit/76b39689a41b5bfd9b6fa48a9fb36fa03e6aca94"><code>76b3968</code></a>
-    Tweaks</li>
+    href="https://github.com/nodeca/js-yaml/commit/87aed909346687fbc183232c62b6d1030c365576"><code>87aed90</code></a>
+    Deps bump</li>
     <li><a
-    href="https://github.com/sindresorhus/query-string/commit/678ddff0166e5ad4dc4c487f3ad69beedf9aa183"><code>678ddff</code></a>
-    Fix <code>parse()</code> throwing for a <code>sort</code> that is not a
-    boolean or a function</li>
+    href="https://github.com/nodeca/js-yaml/commit/3aec5117254d979ae2a8a31ede79255a64b774e9"><code>3aec511</code></a>
+    Fix error positions for non-printable characters, <a
+    href="https://redirect.github.com/nodeca/js-yaml/issues/801">#801</a></li>
     <li><a
-    href="https://github.com/sindresorhus/query-string/commit/c75c68100cb17a3e3f902aa13685cd4da2207120"><code>c75c681</code></a>
-    Fix <code>pick()</code> and <code>exclude()</code> corrupting the query
-    for an <code>encode</code> that is <code>null</code></li>
+    href="https://github.com/nodeca/js-yaml/commit/11aa483b2857e1006ec297dc1b5647fe95ec3f56"><code>11aa483</code></a>
+    Reject flow indicators at the start of block plain scalars, <a
+    href="https://redirect.github.com/nodeca/js-yaml/issues/801">#801</a></li>
     <li><a
-    href="https://github.com/sindresorhus/query-string/commit/19331ded1cda7f0c7d06517b873186e0bcabc313"><code>19331de</code></a>
-    Replace <code>decode-uri-component</code> with a linear decoder</li>
-    <li><a
-    href="https://github.com/sindresorhus/query-string/commit/dc9cd5efe3c3e08c803ee7dd52ddb87db9efbdf6"><code>dc9cd5e</code></a>
-    Require Node.js 22</li>
-    <li><a
-    href="https://github.com/sindresorhus/query-string/commit/8623e202ebf23a07cff828c1cb8d6b8b970cd2f3"><code>8623e20</code></a>
-    Ignore a <code>types</code> value that is not a supported type for an
-    array too</li>
-    <li><a
-    href="https://github.com/sindresorhus/query-string/commit/c4cd28ab4214d92bf7252ceb3db01095a77b6650"><code>c4cd28a</code></a>
-    More tests</li>
-    <li><a
-    href="https://github.com/sindresorhus/query-string/commit/f01614265b209743719b3195b1cc6129b82b8515"><code>f016142</code></a>
-    Simplify the array format encoder and parser</li>
-    <li><a
-    href="https://github.com/sindresorhus/query-string/commit/93c3e1e156c4c2c58e8d93ac02922aea01a48150"><code>93c3e1e</code></a>
-    Fix <code>stringifyUrl()</code> rewriting the query parameters in the
-    URL and keeping le...</li>
-    <li>Additional commits viewable in <a
-    href="https://github.com/sindresorhus/query-string/compare/v9.5.1...v10.0.0">compare
+    href="https://github.com/nodeca/js-yaml/commit/339d8e0444b1f7db66d3c89fdeb0644017126aaf"><code>339d8e0</code></a>
+    Refactor tag encoder and decoder to match the YAML specification</li>
+    <li>See full diff in <a
+    href="https://github.com/nodeca/js-yaml/compare/5.4.3...5.5.0">compare
     view</a></li>
     </ul>
     </details>
@@ -193,7 +57,7 @@ Date:   Sun Nov 1 21:33:56 2026 +0100
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=query-string&package-manager=npm_and_yarn&previous-version=9.5.1&new-version=10.0.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=js-yaml&package-manager=npm_and_yarn&previous-version=5.4.3&new-version=5.5.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
