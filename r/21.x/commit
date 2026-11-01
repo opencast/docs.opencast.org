@@ -1,8 +1,256 @@
-commit e19e87025f2500a431687f2bedd4b79e83142a4d
-Author: Martin Wygas <wygas@elan-ev.de>
-Date:   Thu Oct 29 10:17:04 2026 +0100
+commit d9a73e448ab4c6fbc812a9ca94b980761bbe0e7b
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Sun Nov 1 23:20:22 2026 +0100
 
-    Merge remote-tracking branch 'origin/r/20.x' into 21.x
+    Bump org.mariadb.jdbc:mariadb-java-client from 3.5.10 to 3.5.11 in /modules/db (#8183)
     
-    # Conflicts:
-    #       docs/guides/admin/docs/releasenotes.md
+    Bumps
+    [org.mariadb.jdbc:mariadb-java-client](https://github.com/mariadb-corporation/mariadb-connector-j)
+    from 3.5.10 to 3.5.11.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/releases">org.mariadb.jdbc:mariadb-java-client's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>MariaDB Connector/Java 3.5.11</h2>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.5.11">3.5.11</a>
+    (Oct 2026)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.5.10...3.5.11">Full
+    Changelog</a></p>
+    <h4>Key Enhancements</h4>
+    <ul>
+    <li>CONJ-1386 - New sslMode=allow: verify-full when the server announces
+    TLS, unencrypted otherwise, for a mix of
+    servers with and without TLS behind one connection string</li>
+    <li>CONJ-1353 - Generate a CycloneDX 1.6 SBOM meeting the CISA 2026
+    minimum elements</li>
+    <li>CONJ-1356 - parsec authentication without BouncyCastle on Java 8/11
+    and without provider-dependent key derivation</li>
+    <li>CONJ-1355 - Add NonRegisteringDriver so that DataSources and pools
+    never register the driver in DriverManager, which pinned the class
+    loader (report by mario-schwede-hivemq)</li>
+    <li>CONJ-1348 - Reassembling packets larger than 16 MB copied the
+    accumulated content once per fragment</li>
+    </ul>
+    <h4>Issues Resolved</h4>
+    <ul>
+    <li>CONJ-1383 - Connection init rebuilds session_track_system_variables
+    from @<a href="https://github.com/global"><code>@​global</code></a>,
+    discarding the session-level
+    last_gtid set by MaxScale (report by Sawan Patel)</li>
+    <li>CONJ-1379 - Set an explicit session tracking list and guard
+    character_set_results like character_set_client
+    (report by fg0x0)</li>
+    <li>CONJ-1381 - Bound server-declared lengths by the packet before
+    allocating and reading from them (report by fg0x0)</li>
+    <li>CONJ-1357 - XA recover() must not trust server-supplied
+    gtrid_length/bqual_length (report by fg0x0)</li>
+    <li>CONJ-1374 - Redirect URL password partially logged when containing
+    '@' (report by <a
+    href="https://github.com/manus-pi"><code>@​manus-pi</code></a>)</li>
+    <li>CONJ-1372 - caching_sha2_password full authentication fails over a
+    Unix socket when SSL is disabled (report by 工藤航)</li>
+    <li>CONJ-1360 - Incorrect dependency check in AwsIamCredentialPlugin
+    (report by Dheeraj Nalluri)</li>
+    <li>CONJ-1358 - Client-side query timeout thread cannot be stopped and
+    outlives an idle driver</li>
+    <li>CONJ-1352 - Batched statements fail when a trigger produces a result
+    set (report by Christopher Schultz)</li>
+    <li>CONJ-1351 - Reading an invalid DATE value might throw unchecked
+    exceptions instead of SQLException</li>
+    <li>CONJ-1346 - Log-and-throw antipattern: server errors and hostname
+    verification failures logged at DEBUG instead of
+    WARN/INFO (report by Alexander Schwartz)</li>
+    <li>CONJ-1345 - DatabaseMetaData#getURL() exposes database password
+    since Connector/J 3.5.10 (report by Klaas)</li>
+    <li>CONJ-1344 - DatabaseMetaData imported/exported keys ignore
+    lower_case_table_names when using SHOW CREATE TABLE
+    (report by plantegg ren)</li>
+    <li>CONJ-1343 - DatabaseMetaData.getSQLKeywords() includes eight pairs
+    of concatenated words (report by Adam Rauch)</li>
+    <li>CONJ-1349 - DatabaseMetaData.getBestRowIdentifier() returns primary
+    key columns in an undefined order</li>
+    </ul>
+    </blockquote>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/blob/main/CHANGELOG.md">org.mariadb.jdbc:mariadb-java-client's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.5.11">3.5.11</a>
+    (Oct 2026)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.5.10...3.5.11">Full
+    Changelog</a></p>
+    <h4>Key Enhancements</h4>
+    <ul>
+    <li>CONJ-1353 - Generate a CycloneDX 1.6 SBOM meeting the CISA 2026
+    minimum elements</li>
+    <li>CONJ-1356 - parsec authentication without BouncyCastle on Java 8/11
+    and without provider-dependent key derivation</li>
+    <li>CONJ-1355 - Add NonRegisteringDriver so that DataSources and pools
+    never register the driver in DriverManager, which pinned the class
+    loader (report by mario-schwede-hivemq)</li>
+    <li>CONJ-1348 - Reassembling packets larger than 16 MB copied the
+    accumulated content once per fragment</li>
+    </ul>
+    <h4>Issues Resolved</h4>
+    <ul>
+    <li>CONJ-1383 - Connection init rebuilds session_track_system_variables
+    from @<a href="https://github.com/global"><code>@​global</code></a>,
+    discarding the session-level
+    last_gtid set by MaxScale (report by Sawan Patel)</li>
+    <li>CONJ-1379 - Set an explicit session tracking list and guard
+    character_set_results like character_set_client
+    (report by fg0x0)</li>
+    <li>CONJ-1381 - Bound server-declared lengths by the packet before
+    allocating and reading from them (report by fg0x0)</li>
+    <li>CONJ-1357 - XA recover() must not trust server-supplied
+    gtrid_length/bqual_length (report by fg0x0)</li>
+    <li>CONJ-1374 - Redirect URL password partially logged when containing
+    '@' (report by <a
+    href="https://github.com/manus-pi"><code>@​manus-pi</code></a>)</li>
+    <li>CONJ-1372 - caching_sha2_password full authentication fails over a
+    Unix socket when SSL is disabled (report by 工藤航)</li>
+    <li>CONJ-1360 - Incorrect dependency check in AwsIamCredentialPlugin
+    (report by Dheeraj Nalluri)</li>
+    <li>CONJ-1358 - Client-side query timeout thread cannot be stopped and
+    outlives an idle driver</li>
+    <li>CONJ-1352 - Batched statements fail when a trigger produces a result
+    set (report by Christopher Schultz)</li>
+    <li>CONJ-1351 - Reading an invalid DATE value might throw unchecked
+    exceptions instead of SQLException</li>
+    <li>CONJ-1346 - Log-and-throw antipattern: server errors and hostname
+    verification failures logged at DEBUG instead of
+    WARN/INFO (report by Alexander Schwartz)</li>
+    <li>CONJ-1345 - DatabaseMetaData#getURL() exposes database password
+    since Connector/J 3.5.10 (report by Klaas)</li>
+    <li>CONJ-1344 - DatabaseMetaData imported/exported keys ignore
+    lower_case_table_names when using SHOW CREATE TABLE
+    (report by plantegg ren)</li>
+    <li>CONJ-1343 - DatabaseMetaData.getSQLKeywords() includes eight pairs
+    of concatenated words (report by Adam Rauch)</li>
+    <li>CONJ-1349 - DatabaseMetaData.getBestRowIdentifier() returns primary
+    key columns in an undefined order</li>
+    </ul>
+    <h2><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/tree/3.4.5">3.4.5</a>
+    (Oct 2026)</h2>
+    <p><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.4.4...3.4.5">Full
+    Changelog</a></p>
+    <h5>Bugs Fixed</h5>
+    <ul>
+    <li>CONJ-1383 Connection init rebuilds session_track_system_variables
+    from @<a href="https://github.com/global"><code>@​global</code></a>,
+    discarding the session-level
+    last_gtid set by MaxScale (report by Sawan Patel)</li>
+    <li>CONJ-1379 Set an explicit session tracking list and guard
+    character_set_results like character_set_client (report by fg0x0)</li>
+    <li>CONJ-1381 Bound server-declared lengths by the packet before
+    allocating and reading from them (report by fg0x0)</li>
+    <li>CONJ-1380 Rogue server can crash the client during
+    caching_sha2_password authentication (report by shadow043)</li>
+    <li>CONJ-1338 Validate length-encoded integers fit a non-negative int
+    before use as a length (report by fg0x0)</li>
+    <li>CONJ-1357 XA recover() must not trust server-supplied
+    gtrid_length/bqual_length (report by fg0x0)</li>
+    <li>CONJ-1349 DatabaseMetaData.getBestRowIdentifier() returns primary
+    key columns in an undefined order</li>
+    <li>CONJ-1279 metadata table name addition for 12.1</li>
+    <li>CONJ-1252 GSSAPI error when exchanges from server starts with 0x01
+    byte</li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/a4891f877f1c885a573194771c1ed0aacec0ce1d"><code>a4891f8</code></a>
+    [CONJ-1387] LOAD DATA LOCAL INFILE file check must not match text inside
+    iden...</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/a05255fc5331cbde1067380a7dd1e7499eb3c8ae"><code>a05255f</code></a>
+    bump 3.5.11 version</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/33fd9365a49304241f03f853954ed856e319241f"><code>33fd936</code></a>
+    [CONJ-1386] Support sslMode=allow</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/c97c185da5487958beb9942d447fe31ac38c077c"><code>c97c185</code></a>
+    [misc] java warning correction</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/ec50245bd7bec3aab5fdd5873fc71b565b833af3"><code>ec50245</code></a>
+    [CONJ-1360] AWS-IAM plugin checks for the rds artifact it needs, not for
+    auth</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/ed5fb06c01ca11b0b6e39458125a61b68cc94b78"><code>ed5fb06</code></a>
+    [CONJ-1372] caching_sha2_password full authentication fails over a Unix
+    socke...</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/0ff6739fc6f6bea51bec85e35a18c81285e0431e"><code>0ff6739</code></a>
+    [misc] test addition</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/28cea3b70c4e8d7fb7c920cf8c73e1a6453b4a2f"><code>28cea3b</code></a>
+    [misc] Set the SBOM creation timestamp when Maven's Reproducible Builds
+    defau...</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/8ceb02dcd6e4f918f3872ca32fed0d12103401cc"><code>8ceb02d</code></a>
+    [CONJ-1383] Keep last_gtid tracked when the session already tracks
+    it</li>
+    <li><a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/commit/52538206298db39062ad67939f1446b767cacde4"><code>5253820</code></a>
+    [CONJ-1381] Bound server-declared lengths by the packet before reading
+    from them</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/mariadb-corporation/mariadb-connector-j/compare/3.5.10...3.5.11">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.mariadb.jdbc:mariadb-java-client&package-manager=maven&previous-version=3.5.10&new-version=3.5.11)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
+    
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
+    You can disable automated security fix PRs for this repo from the
+    [Security Alerts
+    page](https://github.com/opencast/opencast/network/alerts).
+    
+    </details>
