@@ -1,13 +1,15 @@
-commit aed9fb069b3c1f7d8bc593e2a93b915b1e7480e0
+commit 6a861e301f8143d088c0021582f57f48cd92989d
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 6 15:21:31 2026 +0100
+Date:   Fri Nov 6 15:24:39 2026 +0100
 
-    Fix .mvn path filter in site build workflow (#8174)
+    Make .gitmodules branch check work on push (#8175)
     
-    The trigger path `.mvn` only matches a file with exactly that name. The
-    Maven wrapper configuration lives in files below `.mvn/`, so changes to
-    it never triggered the site build. Use `.mvn/**` like the main build
-    workflow does.
+    The check grepped for `branch = ${{ github.base_ref }}`, but base_ref is
+    only set for pull request events. On pushes the pattern degraded to
+    `branch = ` and matched any three branch lines, so the check always
+    passed. Fall back to the pushed branch name there, anchor the pattern so
+    `develop` does not match `development`, and print what was found when
+    the check fails.
     
     ### AI Usage
     
