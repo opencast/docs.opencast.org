@@ -1,19 +1,17 @@
-commit c9d3f122131576f6c26f119eb89df2a2aa89d0d8
+commit fec704074ce5e0d7f3b5c8ba0d89e0b72ae3899d
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 6 14:39:01 2026 +0100
+Date:   Fri Nov 6 14:47:40 2026 +0100
 
-    Remove PR build link comment workflow (#8168)
+    Update merge conflict label action to v3 (#8169)
     
-    The workflow listened for runs of a workflow named "Test Opencast". That
-    workflow was renamed to "Deploy » Opencast" a year ago, so the comment
-    has not been posted since. Even before that, it only worked for pull
-    requests from branches within this repository, since the workflow_run
-    event carries no pull request information for forks. In practice this
-    meant Dependabot pull requests only.
+    The `releases/2.x` branch of this action declares Node.js 16 as its
+    runtime. GitHub removed Node.js 20 from its runners in September 2026
+    and Node.js 24 is the only runtime left, so this only still works as
+    long as the runner keeps forcing old actions onto the newer runtime.
+    Version 3 declares Node.js 24. Its inputs are unchanged.
     
-    Nobody missed it, so remove it along with the workflow artifact upload
-    of the all-in-one distribution which only existed to be linked from that
-    comment. The nightly upload to S3 is unaffected.
+    Referencing a tag instead of a branch also lets Dependabot keep the
+    action up to date from now on.
     
     ### AI Usage
     
