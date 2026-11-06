@@ -1,13 +1,13 @@
-commit 7e3626a0e80db72567078a8b84f3bb40316ff03d
+commit aed9fb069b3c1f7d8bc593e2a93b915b1e7480e0
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 6 14:58:34 2026 +0100
+Date:   Fri Nov 6 15:21:31 2026 +0100
 
-    Document why the build tests Java 23 (#8172)
+    Fix .mvn path filter in site build workflow (#8174)
     
-    Java 23 is a non-LTS release that no longer receives updates, which
-    makes it look like an oversight next to Java 21. It is there because
-    Karaf 4.4.x does not run on Java 25 yet. Say so in the workflow before
-    someone helpfully swaps it.
+    The trigger path `.mvn` only matches a file with exactly that name. The
+    Maven wrapper configuration lives in files below `.mvn/`, so changes to
+    it never triggered the site build. Use `.mvn/**` like the main build
+    workflow does.
     
     ### AI Usage
     
