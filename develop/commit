@@ -1,12 +1,16 @@
-commit 2197f3ee3611efa0e2348a3663b87088bcfa9341
+commit 71310889a8b5c5f31dfe5e9f7215d68bff70bde1
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 6 14:52:21 2026 +0100
+Date:   Fri Nov 6 14:56:08 2026 +0100
 
-    Build Maven site on Ubuntu 24.04 (#8170)
+    Use GITHUB_OUTPUT in RPM repository workflow (#8171)
     
-    GitHub started deprecating the ubuntu-22.04 runner image in September
-    2026. It will be browned out in March and April 2027 and removed on
-    April 17th, 2027. All other test workflows already run on ubuntu-24.04.
+    The workflow still passes the version between steps using the
+    ::set-output workflow command. GitHub deprecated this in 2022 and warns
+    on every run that it will be disabled. Once that happens, the version
+    silently becomes empty and the repository metadata would be created
+    under a path like `oc-/x86_64`.
+    
+    Write the output to the GITHUB_OUTPUT environment file instead.
     
     ### AI Usage
     
