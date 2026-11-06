@@ -1,5 +1,41 @@
-commit 03a430e24740a3b499f41820c3246e58c621b680
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Wed Nov 4 15:30:00 2026 -0600
+commit c9d3f122131576f6c26f119eb89df2a2aa89d0d8
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Fri Nov 6 14:39:01 2026 +0100
 
-    Merge branch 'r/21.x' into develop
+    Remove PR build link comment workflow (#8168)
+    
+    The workflow listened for runs of a workflow named "Test Opencast". That
+    workflow was renamed to "Deploy » Opencast" a year ago, so the comment
+    has not been posted since. Even before that, it only worked for pull
+    requests from branches within this repository, since the workflow_run
+    event carries no pull request information for forks. In practice this
+    meant Dependabot pull requests only.
+    
+    Nobody missed it, so remove it along with the workflow artifact upload
+    of the all-in-one distribution which only existed to be linked from that
+    comment. The nightly upload to S3 is unaffected.
+    
+    ### AI Usage
+    
+    Used Claude Opus for analysis and fix.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
