@@ -1,16 +1,13 @@
-commit 71310889a8b5c5f31dfe5e9f7215d68bff70bde1
+commit 7e3626a0e80db72567078a8b84f3bb40316ff03d
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 6 14:56:08 2026 +0100
+Date:   Fri Nov 6 14:58:34 2026 +0100
 
-    Use GITHUB_OUTPUT in RPM repository workflow (#8171)
+    Document why the build tests Java 23 (#8172)
     
-    The workflow still passes the version between steps using the
-    ::set-output workflow command. GitHub deprecated this in 2022 and warns
-    on every run that it will be disabled. Once that happens, the version
-    silently becomes empty and the repository metadata would be created
-    under a path like `oc-/x86_64`.
-    
-    Write the output to the GITHUB_OUTPUT environment file instead.
+    Java 23 is a non-LTS release that no longer receives updates, which
+    makes it look like an oversight next to Java 21. It is there because
+    Karaf 4.4.x does not run on Java 25 yet. Say so in the workflow before
+    someone helpfully swaps it.
     
     ### AI Usage
     
