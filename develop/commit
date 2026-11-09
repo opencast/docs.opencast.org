@@ -1,23 +1,32 @@
-commit 9f4695ba980cea44f7bea986054dcfe976b0bca9
+commit a196e8908edf74b64c0f89ec278dfd2eb7e59bca
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 15:10:04 2026 +0100
+Date:   Mon Nov 9 15:21:56 2026 +0100
 
-    Remove stale dependency analysis ignore entries (#8224)
+    Remove hppc from the elasticsearch-impl module (#8226)
     
-    These ignoredUnusedDeclaredDependency entries refer to dependencies that
-    are either no longer declared by the module or are actually used, so
-    they have no effect anymore. This includes the last mention of Jersey 1
-    (com.sun.jersey:jersey-bundle) in the code base.
+    The High Performance Primitive Collections library was added when this
+    module still embedded the Elasticsearch 7 client, which used it.
+    OpenSearch no longer depends on it and none of the other embedded
+    libraries reference it either. Lucene ships its own internal copy of the
+    collections it needs.
     
-    Part of #8214
+    Dropping it shrinks the bundle by about 1 MB. Its bundle imports and
+    exports stay the same.
+    
+    Note that the exclusion of com.carrotsearch.randomizedtesting from the
+    imported packages is still needed even though it belongs to the same
+    project. OpenSearch probes for it via Class.forName() to detect its test
+    framework, which bnd turns into a package import.
+    
+    This is part of #8214.
     
     ### How to test this patch
     
-    If the build passes, this has to be good.
+    Basically just boot up Opencast.
     
     ### AI Usage
     
-    Used Claude Opus for the analysis and editting.
+    Analyzed this with Claude Opus
     
     ### Your pull request should…
     
@@ -28,7 +37,7 @@ Date:   Mon Nov 9 15:10:04 2026 +0100
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
+    * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
