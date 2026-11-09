@@ -1,48 +1,50 @@
-commit 5388d3bdbe855e57ec2c3c2d319b6c93a939d1a3
+commit d786a3b02b8593389d41c00d00cd086209d374df
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 14:26:40 2026 +0100
+Date:   Mon Nov 9 14:38:58 2026 +0100
 
-    Fix DST-dependent scheduler conflict test (#8206)
+    Remove JNA from the db module (#8212)
     
-    CI tests failed for pull request #8183 on a time-dependent test that
-    broke because the run happened just before the US switch from daylight
-    saving time back to standard time. In short: Tomorrow at the same time
-    is not necessarily 24h away.
+    JNA was embedded in the opencast-db bundle for the MariaDB driver, which
+    needed it for Unix domain sockets and Windows named pipes. Since version
+    4.0, the MariaDB driver uses the JDK implementation instead and no
+    longer references JNA.
     
-    SchedulerServiceImplTest.testFindConflictingEvents used the current time
-    to schedule events and expected a daily RRule evaluated in
-    America/Chicago to hit an event scheduled exactly 24 hours later. The
-    RRule keeps the same local time, so whenever a DST change happens within
-    the next 24 hours, the second occurrence is shifted by one hour and the
-    test fails (e.g. CI runs on 2026-10-31 after 07:00 UTC).
+    The only other user is the PostgreSQL driver's SSPI support (Windows
+    single sign-on). That code path is only taken if a PostgreSQL server on
+    Windows requests SSPI authentication or gsslib=sspi is set explicitly,
+    and it additionally requires jna-platform and Waffle, neither of which
+    Opencast ships. SSPI therefore never worked in Opencast, and Kerberos
+    authentication against non-Windows servers uses the JDK's GSSAPI
+    implementation without touching JNA.
     
-    Use a fixed time far away from any DST change instead.
+    Removing it shrinks the bundle from 8.3 MB to 6.4 MB.
     
     ### How to test this patch
-    Basically just read the test, but you can set your clock to right before
-    daylight saving time changes and check that the test no longer fails.
+    
+    Build and spin up Opencast with MariaDB
     
     ### AI Usage
     
-    Used Claude to analyze the original failure and to make this change.
+    Claude Opus pointed out that the MariaDB driver 4 no longer needs this
+    during the dependabot review.
     
     ### Your pull request should…
     
-    * [x] have a concise title
-    * [x] [close an accompanying
+    * [ ] have a concise title
+    * [ ] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [x] [be against the correct
+    * [ ] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
+    * [ ] include migration scripts and documentation, if appropriate
     * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
-    * [x] include a [release
+    * [ ] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)
