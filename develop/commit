@@ -1,32 +1,27 @@
-commit a196e8908edf74b64c0f89ec278dfd2eb7e59bca
+commit ca4be2ef33131adcb10c5b40d81712f3db62e769
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 15:21:56 2026 +0100
+Date:   Mon Nov 9 15:25:41 2026 +0100
 
-    Remove hppc from the elasticsearch-impl module (#8226)
+    Remove typesafe config from the db module (#8227)
     
-    The High Performance Primitive Collections library was added when this
-    module still embedded the Elasticsearch 7 client, which used it.
-    OpenSearch no longer depends on it and none of the other embedded
-    libraries reference it either. Lucene ships its own internal copy of the
-    collections it needs.
+    The db bundle embedded the typesafe config library only because
+    mchange-commons, which c3p0 is built on, can read HOCON configuration
+    files if the library is available. Opencast does not use that. It
+    configures the connection pool programmatically, and the bundle contains
+    no HOCON files which c3p0 could read.
     
-    Dropping it shrinks the bundle by about 1 MB. Its bundle imports and
-    exports stay the same.
+    Without the library, c3p0 skips the HOCON configuration with a debug
+    message and still reads its configuration from properties files and
+    system properties. The package is excluded from the bundle imports, so
+    these stay unchanged.
     
-    Note that the exclusion of com.carrotsearch.randomizedtesting from the
-    imported packages is still needed even though it belongs to the same
-    project. OpenSearch probes for it via Class.forName() to detect its test
-    framework, which bnd turns into a package import.
+    Dropping it shrinks the bundle by about 290 KB.
     
     This is part of #8214.
     
-    ### How to test this patch
-    
-    Basically just boot up Opencast.
-    
     ### AI Usage
     
-    Analyzed this with Claude Opus
+    Analyzed via Claude Opus.
     
     ### Your pull request should…
     
@@ -37,7 +32,7 @@ Date:   Mon Nov 9 15:21:56 2026 +0100
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
+    * [ ] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
