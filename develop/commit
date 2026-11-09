@@ -1,39 +1,51 @@
-commit 149f789a7b8716eae2d74307dc32726129037de1
+commit 349a57da52591efae52e79a9c8769d3ce3564f1c
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 15:38:08 2026 +0100
+Date:   Mon Nov 9 15:44:00 2026 +0100
 
-    Remove duplicate Jackson bundles from the distributions (#8223)
+    Do not install the full CXF feature (#8222)
     
-    CXF's cxf-jackson feature, pulled in by cxf-jaxrs, installs its own
-    Jackson 2.22.1 bundles (core, databind, dataformat-yaml,
-    datatype-jsr310, jaxrs-base, jaxrs-json-provider) next to our
-    ${jackson.version}. Karaf's spring-legacy features additionally put core
-    and databind 2.22.2 into system/. Since the resolver prefers the highest
-    version, nothing was wired to these except CXF's
-    jackson-datatype-jsr310, which swagger-core used. They were dead weight
-    (about 4.8 MB) and made security scanners report old Jackson versions.
+    The ext-core feature pulled in the complete `cxf` Karaf feature,
+    although Opencast only uses CXF's JAX-RS implementation, which is
+    already installed through `cxf-jaxrs`, `cxf-http-jetty` and
+    `cxf-rs-description-openapi-v3`. The full feature additionally installs
+    the SOAP/JAX-WS stack, CORBA (JacORB), JMS, UDP, WS-Addressing, WS-RM,
+    WS-Policy, WS-Security (WSS4J, OpenSAML, xmlsec), Aegis, the JavaScript
+    frontend (Rhino), Ehcache, metrics and more, none of which is used by
+    any Opencast bundle.
     
-    Blacklist all Jackson 2 bundles older than ${jackson.version} in the
-    assembly. The plugin also writes the blacklist to
-    etc/org.apache.karaf.features.xml, so it applies at runtime as well.
-    jackson-annotations is left out because its version (2.22) would match
-    the range. Since our jackson-datatype-jsr310 was only a dependency
-    bundle of opencast-graphql-tp, add it to ext-core so swagger-core still
-    resolves.
+    Two bundles from that set are mandatory imports of other bundles we
+    install, which is why they are now listed explicitly:
     
-    Each Jackson artifact is now shipped and installed exactly once (8
-    instead of 13 bundles in dist-develop).
+    - bcel, imported by Xalan
+    - mina-core, imported by spring-security-ldap
     
-    This is part of https://github.com/opencast/opencast/issues/8214
+    Effect on a develop distribution (all-in-one, H2, idle after startup),
+    mean of 12 boots per variant (6 cold, 6 warm), ± standard deviation:
+    
+    ```
+                                      full cxf        without      change
+      installed bundles                    423            379     -44 (-10%)
+      time to first HTTP 200       8.5 s ± 0.5    7.7 s ± 0.4    -0.8 s (-9%)
+      time to all REST endpoints   8.8 s ± 0.5    8.3 s ± 0.4    -0.5 s (-6%)
+      CPU time during startup           40.3 s         40.7 s    none
+      heap used after full GC         176.5 MB       169.1 MB    -7.4 MB (-4%)
+      metaspace                       128.6 MB       127.6 MB    -1.0 MB
+      loaded classes                    21,032         20,823    -210 (-1%)
+      RSS                        1037 MB ± 70   1020 MB ± 56    within noise
+      system/ directory                 464 MB         439 MB    -25 MB
+    ```
+    
+    The removed bundles were installed but hardly ever loaded, hence the
+    small effect on memory. The main gain is a smaller runtime with fewer
+    third-party libraries to keep track of.
     
     ### How to test this patch
     
-    - Build and run Opencast.
-    - Look at the installed bundles in the Karaf console
+    Boot up Opencast and test that it works
     
     ### AI Usage
     
-    Used Claude Opus
+    I used Claude Opus for analysis, execution and testing.
     
     ### Your pull request should…
     
@@ -55,3 +67,5 @@ Date:   Mon Nov 9 15:38:08 2026 +0100
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)
+    
+    Part of #8214
