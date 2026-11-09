@@ -39,6 +39,7 @@
               {title: "LDAP Service Configuration", url: "#ldap-service-configuration" },
               {title: "Combination with Existing authorization Mechanisms", url: "#combination-with-existing-authorization-mechanisms" },
               {title: "Adding more LDAP servers", url: "#adding-more-ldap-servers" },
+              {title: "Example: Public LDAP Test Server", url: "#example-public-ldap-test-server" },
           ]},
         ];
 
@@ -343,6 +344,61 @@ at the bottom of the file. Please see the example below:</p>
 <p>Then, a separate <code>.cfg</code> must be generated for each of the configured providers, as explained in <a href="#ldap-service-configuration">LDAP Service Configuration</a>. Please make
 sure to configure the <code>org.opencastproject.userdirectory.ldap.id</code> parameter correctly. In this case, the values should
 be <code>theId</code> and <code>theId2</code>, respectively.</p>
+<h2 id="example-public-ldap-test-server">Example: Public LDAP Test Server</h2>
+<p>This is a complete, tested configuration using the
+<a href="https://www.forumsys.com/2022/05/10/online-ldap-test-server/">Online LDAP Test Server</a> kindly provided by Forum
+Systems. It is useful for trying out LDAP with Opencast, but do not use it in production: the server is public, its
+credentials are publicly known and it only supports unencrypted connections.</p>
+<p>All users on the test server, e.g. <code>einstein</code>, <code>newton</code> or <code>tesla</code>, have the password <code>password</code>.</p>
+<p>In <code>etc/org.opencastproject.kernel.security.SpringSecurityConfigurationArtifactInstaller.cfg</code>:</p>
+<pre><code class="language-properties">ldap.instances.mh_default_org=forumsys
+</code></pre>
+<p>In <code>etc/security/mh_default_org.xml</code>, uncomment the LDAP sections and set:</p>
+<pre><code class="language-xml">&lt;bean id=&quot;contextSource&quot;
+  class=&quot;org.springframework.security.ldap.DefaultSpringSecurityContextSource&quot;&gt;
+  &lt;constructor-arg value=&quot;ldap://ldap.forumsys.com:389&quot; /&gt;
+  &lt;property name=&quot;userDn&quot; value=&quot;cn=read-only-admin,dc=example,dc=com&quot; /&gt;
+  &lt;property name=&quot;password&quot; value=&quot;password&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;userDetailsMapper&quot; class=&quot;org.opencastproject.security.ldap.OpencastUserDetailsMapper&quot;&gt;
+  &lt;constructor-arg ref=&quot;userDetailsService&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;ldapAuthProvider&quot;
+  class=&quot;org.springframework.security.ldap.authentication.LdapAuthenticationProvider&quot;&gt;
+  &lt;constructor-arg&gt;
+    &lt;bean class=&quot;org.springframework.security.ldap.authentication.BindAuthenticator&quot;&gt;
+      &lt;constructor-arg ref=&quot;contextSource&quot; /&gt;
+      &lt;property name=&quot;userDnPatterns&quot;&gt;
+        &lt;list&gt;
+          &lt;value&gt;uid={0},dc=example,dc=com&lt;/value&gt;
+        &lt;/list&gt;
+      &lt;/property&gt;
+    &lt;/bean&gt;
+  &lt;/constructor-arg&gt;
+  &lt;property name=&quot;userDetailsContextMapper&quot; ref=&quot;userDetailsMapper&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>…and enable the provider in the <code>sec:authentication-manager</code>:</p>
+<pre><code class="language-xml">&lt;sec:authentication-provider ref=&quot;ldapAuthProvider&quot; /&gt;
+</code></pre>
+<p>Create <code>etc/org.opencastproject.userdirectory.ldap-forumsys.cfg</code>:</p>
+<pre><code class="language-properties">org.opencastproject.userdirectory.ldap.id=forumsys
+org.opencastproject.userdirectory.ldap.url=ldap://ldap.forumsys.com:389
+org.opencastproject.userdirectory.ldap.userDn=cn=read-only-admin,dc=example,dc=com
+org.opencastproject.userdirectory.ldap.password=password
+org.opencastproject.userdirectory.ldap.searchbase=dc=example,dc=com
+org.opencastproject.userdirectory.ldap.searchfilter=(uid={0})
+org.opencastproject.userdirectory.ldap.roleattributes=uid
+org.opencastproject.userdirectory.ldap.userattributes.name=cn
+org.opencastproject.userdirectory.ldap.userattributes.mail=mail
+# Grants every LDAP user full access. Only acceptable for testing.
+org.opencastproject.userdirectory.ldap.extra.roles=ROLE_ADMIN
+</code></pre>
+<p>After a restart, you can log in as <code>einstein</code> with the password <code>password</code>. <code>/info/me.json</code> then shows the name
+<code>Albert Einstein</code>, the email address <code>einstein@ldap.forumsys.com</code> and, among others, the roles <code>ROLE_EINSTEIN</code> (from the
+<code>uid</code> attribute) and <code>ROLE_ADMIN</code> (from <code>extra.roles</code>).</p>
 
   <br>
     
