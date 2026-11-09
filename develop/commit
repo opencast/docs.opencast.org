@@ -1,47 +1,29 @@
-commit 4dcf12749b81e3bac555987b409779c055345ba1
+commit 45d0f12b3a29c7a2cb6fcc6942d1c095be74d8ec
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 09:06:29 2026 +0100
+Date:   Mon Nov 9 10:43:51 2026 +0100
 
-    Handle metadata validation errors in the External API (#7939)
+    Drop the unused release tag workflow (#8176)
     
-    Updating event or series metadata via the External API could fail with
-    an unhandled IllegalArgumentException thrown while storing the Dublin
-    Core catalog. Nothing caught it, so CXF turned it into an HTTP 500 and
-    logged two full stack traces per request: a WARN from
-    PhaseInterceptorChain and an ERROR from
-    AbstractFaultChainInitiatorObserver claiming an unexpected error
-    occurred during error handling. The latter is particularly misleading
-    since it suggests a defect in Opencast's error handling. On a production
-    admin node a single misbehaving client caused 598 such log blocks within
-    five days.
+    The "Cut Release Tag" workflow was added in 2022 to automate cutting a
+    release from the GitHub Actions user interface. It has never produced a
+    release: no tag in the repository was created by it, and the release
+    manager documentation never referred to it.
     
-    The exception has two rather different causes which deserve different
-    responses:
+    It also cannot work any more. The checkout does not fetch the submodules
+    the root pom.xml has listed since March 2026, so the build fails at
+    once. The script calls the standalone docker-compose binary, which the
+    Ubuntu 24.04 runner image no longer ships. The tag it would push is
+    unsigned and pushed with the workflow token, which triggers neither the
+    release build nor the Matrix room update. And the documented process
+    meanwhile also tags the three submodule repositories, which the script
+    knows nothing about.
     
-    - the client sent a value which ends up empty for a required field. The
-    endpoint's own validation misses this if the value only becomes empty
-    after being transformed, e.g. an empty list of subjects.
-    - a required field the client never touched is already empty in the
-    stored catalog. Since all catalogs are loaded and stored again, such a
-    pre-existing inconsistency aborts a completely unrelated update and
-    there is nothing the client can do about it.
-    
-    To tell those apart, DublinCoreMetadataUtil now throws a
-    MetadataValidationException naming the field which failed validation. It
-    extends IllegalArgumentException so that all existing handlers keep
-    working. The endpoints remember which fields a request actually modified
-    and answer with 400 for the client's own values or with 500, logging a
-    single line naming the event and the field, if the stored catalog is at
-    fault.
-    
-    Additionally, invalid start dates and malformed subject lists sent by a
-    client are answered with 400 instead of escaping as well, and the
-    documented response codes have been updated.
-    
-    Fixes #7919
+    Rather than carry a dead workflow, remove it. Release automation can be
+    rebuilt against the current documented procedure if wanted.
     
     ### AI Usage
-    Used Claude for analysis and fix.
+    
+    Used Claude Opus for analysis and fix.
     
     ### Your pull request should…
     
@@ -52,7 +34,7 @@ Date:   Mon Nov 9 09:06:29 2026 +0100
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
+    * [ ] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
