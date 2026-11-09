@@ -1,27 +1,14 @@
-commit ca4be2ef33131adcb10c5b40d81712f3db62e769
+commit 74904c42fc1a840bea6a0f78b96e59b007815b66
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 15:25:41 2026 +0100
+Date:   Mon Nov 9 15:36:59 2026 +0100
 
-    Remove typesafe config from the db module (#8227)
+    Add development containers to Dependabot configuration (#8237)
     
-    The db bundle embedded the typesafe config library only because
-    mchange-commons, which c3p0 is built on, can read HOCON configuration
-    files if the library is available. Opencast does not use that. It
-    configures the connection pool programmatically, and the bundle contains
-    no HOCON files which c3p0 could read.
-    
-    Without the library, c3p0 skips the HOCON configuration with a debug
-    message and still reads its configuration from properties files and
-    system properties. The package is excluded from the bundle imports, so
-    these stay unchanged.
-    
-    Dropping it shrinks the bundle by about 290 KB.
-    
-    This is part of #8214.
-    
-    ### AI Usage
-    
-    Analyzed via Claude Opus.
+    This lets Dependabot keep the container images used by the compose files
+    and the OpenSearch Containerfile in
+    docs/scripts/devel-dependency-containers up to date. The locally built
+    opencast/opensearch image is ignored since it is not available from any
+    registry.
     
     ### Your pull request should…
     
