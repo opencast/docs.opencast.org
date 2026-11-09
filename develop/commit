@@ -1,25 +1,17 @@
-commit 45d0f12b3a29c7a2cb6fcc6942d1c095be74d8ec
+commit a320003f94e372088ccdfa0d17c3b7189203892d
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 10:43:51 2026 +0100
+Date:   Mon Nov 9 10:51:38 2026 +0100
 
-    Drop the unused release tag workflow (#8176)
+    Push submodule updates with the deploy key (#8177)
     
-    The "Cut Release Tag" workflow was added in 2022 to automate cutting a
-    release from the GitHub Actions user interface. It has never produced a
-    release: no tag in the repository was created by it, and the release
-    manager documentation never referred to it.
+    The workflow prepares an SSH deploy key but then pushes through the
+    HTTPS remote left behind by actions/checkout, which is authenticated
+    with the workflow token. Commits pushed with that token never trigger
+    workflows, so the daily submodule updates on develop and the release
+    branches have not been getting a CI run.
     
-    It also cannot work any more. The checkout does not fetch the submodules
-    the root pom.xml has listed since March 2026, so the build fails at
-    once. The script calls the standalone docker-compose binary, which the
-    Ubuntu 24.04 runner image no longer ships. The tag it would push is
-    unsigned and pushed with the workflow token, which triggers neither the
-    release build nor the Matrix room update. And the documented process
-    meanwhile also tags the three submodule repositories, which the script
-    knows nothing about.
-    
-    Rather than carry a dead workflow, remove it. Release automation can be
-    rebuilt against the current documented procedure if wanted.
+    Push over SSH with the deploy key instead, which is what the key was set
+    up for and what the Crowdin workflow already does.
     
     ### AI Usage
     
