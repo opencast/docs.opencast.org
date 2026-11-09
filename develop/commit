@@ -1,17 +1,18 @@
-commit a320003f94e372088ccdfa0d17c3b7189203892d
+commit 852aa29dc3bdfe9b1958747bb3eb14d3f2e642c2
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 10:51:38 2026 +0100
+Date:   Mon Nov 9 14:20:01 2026 +0100
 
-    Push submodule updates with the deploy key (#8177)
+    Use Node.js version from pom.xml in workflows (#8179)
     
-    The workflow prepares an SSH deploy key but then pushes through the
-    HTTPS remote left behind by actions/checkout, which is authenticated
-    with the workflow token. Commits pushed with that token never trigger
-    workflows, so the daily submodule updates on develop and the release
-    branches have not been getting a CI run.
+    The Maven build pins the Node.js version it uses for the frontend
+    modules in the root pom.xml. The documentation build and the LTI tests
+    run npm directly on the runner and use whatever Node.js the runner image
+    ships, which changes whenever GitHub moves the image. Install the
+    version from pom.xml instead so CI and the Maven build cannot drift
+    apart and bumping Node.js stays a single edit.
     
-    Push over SSH with the deploy key instead, which is what the key was set
-    up for and what the Crowdin workflow already does.
+    The extraction lives in a small composite action so other workflows can
+    share it.
     
     ### AI Usage
     
