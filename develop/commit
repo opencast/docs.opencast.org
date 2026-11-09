@@ -1,50 +1,48 @@
-commit d786a3b02b8593389d41c00d00cd086209d374df
+commit 8ab899c3ee3212cbb1f93d4feb310d26b67e5dc9
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 14:38:58 2026 +0100
+Date:   Mon Nov 9 14:41:19 2026 +0100
 
-    Remove JNA from the db module (#8212)
+    Remove commons-lang 2.6 from the ext-core feature (#8216)
     
-    JNA was embedded in the opencast-db bundle for the MariaDB driver, which
-    needed it for Unix domain sockets and Windows named pipes. Since version
-    4.0, the MariaDB driver uses the JDK implementation instead and no
-    longer references JNA.
+    No installed bundle imports org.apache.commons.lang, neither mandatorily
+    nor optionally nor dynamically. The FIXME assumed the Spring LDAP bundle
+    needs it, but only Spring LDAP 1.x depended on commons-lang; the 2.4.1
+    bundle we ship does not.
     
-    The only other user is the PostgreSQL driver's SSPI support (Windows
-    single sign-on). That code path is only taken if a PostgreSQL server on
-    Windows requests SSPI authentication or gsslib=sspi is set explicitly,
-    and it additionally requires jna-platform and Waffle, neither of which
-    Opencast ships. SSPI therefore never worked in Opencast, and Kerberos
-    authentication against non-Windows servers uses the JDK's GSSAPI
-    implementation without touching JNA.
+    Tested LDAP with and without commons-lang against the public forumsys
+    LDAP test server, with identical results: login through LDAP bind
+    authentication, rejected logins for a wrong password and an unknown
+    user, database login still working, and name, email and roles provided
+    by the LDAP user directory. No class loading or wiring errors in the
+    logs.
     
-    Removing it shrinks the bundle from 8.3 MB to 6.4 MB.
+    Part of #8214
     
     ### How to test this patch
     
-    Build and spin up Opencast with MariaDB
+    Start up Opencast
     
     ### AI Usage
     
-    Claude Opus pointed out that the MariaDB driver 4 no longer needs this
-    during the dependabot review.
+    Run the LDAP tests (including LDAP configuration) via Claude Opus.
     
     ### Your pull request should…
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    * [x] have a concise title
+    * [x] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [ ] [be against the correct
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
+    * [x] include migration scripts and documentation, if appropriate
     * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    * [x] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
-    * [ ] include a [release
+    * [x] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)
