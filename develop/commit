@@ -1,71 +1,421 @@
-commit 349a57da52591efae52e79a9c8769d3ce3564f1c
-Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Mon Nov 9 15:44:00 2026 +0100
+commit 6a84f89cf3b7b4aa6855b3ac226125d5831d7ede
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Nov 10 22:38:06 2026 +0100
 
-    Do not install the full CXF feature (#8222)
+    Bump graphql-ws from 5.16.2 to 6.4.1 in /modules/graphql-ui (#8259)
     
-    The ext-core feature pulled in the complete `cxf` Karaf feature,
-    although Opencast only uses CXF's JAX-RS implementation, which is
-    already installed through `cxf-jaxrs`, `cxf-http-jetty` and
-    `cxf-rs-description-openapi-v3`. The full feature additionally installs
-    the SOAP/JAX-WS stack, CORBA (JacORB), JMS, UDP, WS-Addressing, WS-RM,
-    WS-Policy, WS-Security (WSS4J, OpenSAML, xmlsec), Aegis, the JavaScript
-    frontend (Rhino), Ehcache, metrics and more, none of which is used by
-    any Opencast bundle.
+    Bumps [graphql-ws](https://github.com/enisdenjo/graphql-ws) from 5.16.2
+    to 6.4.1.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/enisdenjo/graphql-ws/releases">graphql-ws's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>v6.4.1</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/703">#703</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/707c38cbf7bad4fefd21d276cbabcce079606522"><code>707c38c</code></a>
+    Thanks <a href="https://github.com/lprnmns"><code>@​lprnmns</code></a>!
+    - Use the <code>jsonMessageReplacer</code> when automatically responding
+    to a ping with a pong, on both the client and the server</li>
+    </ul>
+    <h2>v6.4.0</h2>
+    <h3>Minor Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/696">#696</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/83be0521d510e3d53ee61288fda0f57dcfee78af"><code>83be052</code></a>
+    Thanks <a
+    href="https://github.com/niukanen1"><code>@​niukanen1</code></a>! - Add
+    an <code>isProd</code> option to the <code>ws</code>,
+    <code>uWebSockets.js</code> and <code>@fastify/websocket</code>
+    use-server helpers, matching the existing <code>crossws</code> option.
+    It controls whether internal error messages are masked with
+    <code>Internal server error</code> before reaching the client,
+    defaulting to the <code>NODE_ENV === 'production'</code> check as
+    before. This lets apps running in production keep reporting
+    <code>onConnect</code> error messages to the client by opting out, or
+    mask eagerly in non-production environments.</li>
+    </ul>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/700">#700</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/d8aeda6504268e8b6a74e49c128393b9617a0ed5"><code>d8aeda6</code></a>
+    Thanks <a href="https://github.com/kratam"><code>@​kratam</code></a>! -
+    Fix the client closing an in-use socket when many subscriptions complete
+    at once and a new one subscribes within the
+    <code>lazyCloseTimeout</code></p>
+    <p>Every completing subscription scheduled its own lazy close timeout,
+    but only the last one got cleared on the next connect. The client now
+    keeps a single lazy close timeout and checks for active subscriptions
+    before closing.</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/702">#702</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/1e05c8c2e6701d006b0e09c849dfadc234a79f4c"><code>1e05c8c</code></a>
+    Thanks <a href="https://github.com/Meemaw"><code>@​Meemaw</code></a>! -
+    Avoid an unhandled rejection when a subscription is disposed before the
+    connection is acknowledged and the socket closes before the subscription
+    releases its connection lock (for example, when the client is disposed
+    while connecting and the WebSocket implementation delivers the close
+    event on a microtask).</p>
+    </li>
+    </ul>
+    <h2>v6.3.0</h2>
+    <h3>Minor Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/691">#691</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/b5f53cd4c051130b43fdb8df936d0cfdb489f084"><code>b5f53cd</code></a>
+    Thanks <a
+    href="https://github.com/niukanen1"><code>@​niukanen1</code></a>! - Add
+    <code>onPing</code> and <code>onPong</code> server callbacks to
+    <code>ServerOptions</code>, similar to <code>onConnect</code> and
+    <code>onDisconnect</code>. The callbacks receive the connection
+    <code>Context</code> as the first argument and the ping/pong
+    <code>payload</code> as the second, allowing apps to log or react to
+    subprotocol-level pings with access to connection state. The automatic
+    pong reply is preserved when using the server-level <code>onPing</code>
+    callback; the low-level websocket <code>onPing</code> listener still
+    disables the automatic reply for full manual control.</li>
+    </ul>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/693">#693</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/c41433e8ae07cdab30978d9cfce4e5f86f9b7dc5"><code>c41433e</code></a>
+    Thanks <a href="https://github.com/smnbbrv"><code>@​smnbbrv</code></a>!
+    - fix the client leaking memory per operation on long-living
+    connections</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/695">#695</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/93c8ebf2096e31b5b6b06037d288732c00aa69a6"><code>93c8ebf</code></a>
+    Thanks <a
+    href="https://github.com/zerolxy612"><code>@​zerolxy612</code></a>! -
+    Allow operation IDs that match properties inherited from
+    <code>Object.prototype</code>.</p>
+    </li>
+    </ul>
+    <h2>v6.2.2</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/690">#690</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/10293141727978d03f24e6b97844df47ce8376c4"><code>1029314</code></a>
+    Thanks <a
+    href="https://github.com/Haasini-kudala"><code>@​Haasini-kudala</code></a>!
+    - Support crossws 0.4 by selecting the GraphQL WebSocket subprotocol
+    during the upgrade handshake. Preserve automatic protocol negotiation in
+    the legacy crossws 0.3 Node and uWebSockets adapters.</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/686">#686</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/536960e68c1c042db27d0f26e35f621dabf2f85f"><code>536960e</code></a>
+    Thanks <a
+    href="https://github.com/cpruijsen"><code>@​cpruijsen</code></a>! - Fix
+    the CrossWS adapter ignoring socket closes issued from
+    <code>server.opened</code></p>
+    <p><code>makeHooks</code> only registered the peer in the clients map
+    after <code>server.opened</code> returned, while
+    <code>send</code>/<code>close</code> no-op'd unless the peer was already
+    in that map. A protocol-mismatch close (and any other close from inside
+    <code>opened</code>) was therefore dropped, the WebSocket stayed open,
+    and no <code>ConnectionAck</code> was ever sent because the message
+    handler was never installed.</p>
+    </li>
+    </ul>
+    <h2>v6.2.1</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/660">#660</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/61731f0ebe3eea7ffe878c3f57f6281bda5f4e09"><code>61731f0</code></a>
+    Thanks <a
+    href="https://github.com/fkaempfer"><code>@​fkaempfer</code></a>! - Fix
+    typings for WebSocketServer</li>
+    </ul>
+    <h2>v6.2.0</h2>
+    <h3>Minor Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/682">#682</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/1e70c1a986265ecc446cfd6c0e590000525080d7"><code>1e70c1a</code></a>
+    Thanks <a
+    href="https://github.com/jwatzman"><code>@​jwatzman</code></a>! - Add
+    <code>parse</code> option for custom GraphQL parsing</li>
+    </ul>
+    <h2>v6.1.1</h2>
+    <h3>Patch Changes</h3>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/enisdenjo/graphql-ws/blob/master/CHANGELOG.md">graphql-ws's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>6.4.1</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/703">#703</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/707c38cbf7bad4fefd21d276cbabcce079606522"><code>707c38c</code></a>
+    Thanks <a href="https://github.com/lprnmns"><code>@​lprnmns</code></a>!
+    - Use the <code>jsonMessageReplacer</code> when automatically responding
+    to a ping with a pong, on both the client and the server</li>
+    </ul>
+    <h2>6.4.0</h2>
+    <h3>Minor Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/696">#696</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/83be0521d510e3d53ee61288fda0f57dcfee78af"><code>83be052</code></a>
+    Thanks <a
+    href="https://github.com/niukanen1"><code>@​niukanen1</code></a>! - Add
+    an <code>isProd</code> option to the <code>ws</code>,
+    <code>uWebSockets.js</code> and <code>@fastify/websocket</code>
+    use-server helpers, matching the existing <code>crossws</code> option.
+    It controls whether internal error messages are masked with
+    <code>Internal server error</code> before reaching the client,
+    defaulting to the <code>NODE_ENV === 'production'</code> check as
+    before. This lets apps running in production keep reporting
+    <code>onConnect</code> error messages to the client by opting out, or
+    mask eagerly in non-production environments.</li>
+    </ul>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/700">#700</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/d8aeda6504268e8b6a74e49c128393b9617a0ed5"><code>d8aeda6</code></a>
+    Thanks <a href="https://github.com/kratam"><code>@​kratam</code></a>! -
+    Fix the client closing an in-use socket when many subscriptions complete
+    at once and a new one subscribes within the
+    <code>lazyCloseTimeout</code></p>
+    <p>Every completing subscription scheduled its own lazy close timeout,
+    but only the last one got cleared on the next connect. The client now
+    keeps a single lazy close timeout and checks for active subscriptions
+    before closing.</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/702">#702</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/1e05c8c2e6701d006b0e09c849dfadc234a79f4c"><code>1e05c8c</code></a>
+    Thanks <a href="https://github.com/Meemaw"><code>@​Meemaw</code></a>! -
+    Avoid an unhandled rejection when a subscription is disposed before the
+    connection is acknowledged and the socket closes before the subscription
+    releases its connection lock (for example, when the client is disposed
+    while connecting and the WebSocket implementation delivers the close
+    event on a microtask).</p>
+    </li>
+    </ul>
+    <h2>6.3.0</h2>
+    <h3>Minor Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/691">#691</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/b5f53cd4c051130b43fdb8df936d0cfdb489f084"><code>b5f53cd</code></a>
+    Thanks <a
+    href="https://github.com/niukanen1"><code>@​niukanen1</code></a>! - Add
+    <code>onPing</code> and <code>onPong</code> server callbacks to
+    <code>ServerOptions</code>, similar to <code>onConnect</code> and
+    <code>onDisconnect</code>. The callbacks receive the connection
+    <code>Context</code> as the first argument and the ping/pong
+    <code>payload</code> as the second, allowing apps to log or react to
+    subprotocol-level pings with access to connection state. The automatic
+    pong reply is preserved when using the server-level <code>onPing</code>
+    callback; the low-level websocket <code>onPing</code> listener still
+    disables the automatic reply for full manual control.</li>
+    </ul>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/693">#693</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/c41433e8ae07cdab30978d9cfce4e5f86f9b7dc5"><code>c41433e</code></a>
+    Thanks <a href="https://github.com/smnbbrv"><code>@​smnbbrv</code></a>!
+    - fix the client leaking memory per operation on long-living
+    connections</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/695">#695</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/93c8ebf2096e31b5b6b06037d288732c00aa69a6"><code>93c8ebf</code></a>
+    Thanks <a
+    href="https://github.com/zerolxy612"><code>@​zerolxy612</code></a>! -
+    Allow operation IDs that match properties inherited from
+    <code>Object.prototype</code>.</p>
+    </li>
+    </ul>
+    <h2>6.2.2</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/690">#690</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/10293141727978d03f24e6b97844df47ce8376c4"><code>1029314</code></a>
+    Thanks <a
+    href="https://github.com/Haasini-kudala"><code>@​Haasini-kudala</code></a>!
+    - Support crossws 0.4 by selecting the GraphQL WebSocket subprotocol
+    during the upgrade handshake. Preserve automatic protocol negotiation in
+    the legacy crossws 0.3 Node and uWebSockets adapters.</p>
+    </li>
+    <li>
+    <p><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/686">#686</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/536960e68c1c042db27d0f26e35f621dabf2f85f"><code>536960e</code></a>
+    Thanks <a
+    href="https://github.com/cpruijsen"><code>@​cpruijsen</code></a>! - Fix
+    the CrossWS adapter ignoring socket closes issued from
+    <code>server.opened</code></p>
+    <p><code>makeHooks</code> only registered the peer in the clients map
+    after <code>server.opened</code> returned, while
+    <code>send</code>/<code>close</code> no-op'd unless the peer was already
+    in that map. A protocol-mismatch close (and any other close from inside
+    <code>opened</code>) was therefore dropped, the WebSocket stayed open,
+    and no <code>ConnectionAck</code> was ever sent because the message
+    handler was never installed.</p>
+    </li>
+    </ul>
+    <h2>6.2.1</h2>
+    <h3>Patch Changes</h3>
+    <ul>
+    <li><a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/pull/660">#660</a>
+    <a
+    href="https://github.com/enisdenjo/graphql-ws/commit/61731f0ebe3eea7ffe878c3f57f6281bda5f4e09"><code>61731f0</code></a>
+    Thanks <a
+    href="https://github.com/fkaempfer"><code>@​fkaempfer</code></a>! - Fix
+    typings for WebSocketServer</li>
+    </ul>
+    <h2>6.2.0</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/7281f1b8f09637ab383c1aab4d14247d683bc15d"><code>7281f1b</code></a>
+    Upcoming Release Changes (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/704">#704</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/707c38cbf7bad4fefd21d276cbabcce079606522"><code>707c38c</code></a>
+    fix: use the JSON message replacer for automatic pongs (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/703">#703</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/895b747c8b2966e3f8f7e88cc25d0ef84f5b258f"><code>895b747</code></a>
+    Upcoming Release Changes (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/698">#698</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/d8aeda6504268e8b6a74e49c128393b9617a0ed5"><code>d8aeda6</code></a>
+    fix(client): keep a single lazy close timeout and respect active locks
+    (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/700">#700</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/1e05c8c2e6701d006b0e09c849dfadc234a79f4c"><code>1e05c8c</code></a>
+    fix(client): avoid unhandled rejection when a subscription is disposed
+    before...</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/83be0521d510e3d53ee61288fda0f57dcfee78af"><code>83be052</code></a>
+    Add isProd option to the ws, uWebSockets.js and
+    <code>@​fastify/websocket</code> use-server...</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/53f321e59b394f58c13a9a01566d8cbcdf0fc91f"><code>53f321e</code></a>
+    Upcoming Release Changes (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/694">#694</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/93c8ebf2096e31b5b6b06037d288732c00aa69a6"><code>93c8ebf</code></a>
+    fix: support Object prototype operation IDs (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/695">#695</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/b5f53cd4c051130b43fdb8df936d0cfdb489f084"><code>b5f53cd</code></a>
+    feat(server): add onPing and onPong callbacks to ServerOptions (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/691">#691</a>)</li>
+    <li><a
+    href="https://github.com/enisdenjo/graphql-ws/commit/c41433e8ae07cdab30978d9cfce4e5f86f9b7dc5"><code>c41433e</code></a>
+    Fix the client leaking memory per operation on long-living connections
+    (<a
+    href="https://redirect.github.com/enisdenjo/graphql-ws/issues/693">#693</a>)</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/enisdenjo/graphql-ws/compare/v5.16.2...v6.4.1">compare
+    view</a></li>
+    </ul>
+    </details>
+    <details>
+    <summary>Maintainer changes</summary>
+    <p>This version was pushed to npm by <a
+    href="https://www.npmjs.com/~GitHub%20Actions">GitHub Actions</a>, a new
+    releaser for graphql-ws since your current version.</p>
+    </details>
+    <br />
     
-    Two bundles from that set are mandatory imports of other bundles we
-    install, which is why they are now listed explicitly:
     
-    - bcel, imported by Xalan
-    - mina-core, imported by spring-security-ldap
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=graphql-ws&package-manager=npm_and_yarn&previous-version=5.16.2&new-version=6.4.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    Effect on a develop distribution (all-in-one, H2, idle after startup),
-    mean of 12 boots per variant (6 cold, 6 warm), ± standard deviation:
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
     
-    ```
-                                      full cxf        without      change
-      installed bundles                    423            379     -44 (-10%)
-      time to first HTTP 200       8.5 s ± 0.5    7.7 s ± 0.4    -0.8 s (-9%)
-      time to all REST endpoints   8.8 s ± 0.5    8.3 s ± 0.4    -0.5 s (-6%)
-      CPU time during startup           40.3 s         40.7 s    none
-      heap used after full GC         176.5 MB       169.1 MB    -7.4 MB (-4%)
-      metaspace                       128.6 MB       127.6 MB    -1.0 MB
-      loaded classes                    21,032         20,823    -210 (-1%)
-      RSS                        1037 MB ± 70   1020 MB ± 56    within noise
-      system/ directory                 464 MB         439 MB    -25 MB
-    ```
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
     
-    The removed bundles were installed but hardly ever loaded, hence the
-    small effect on memory. The main gain is a smaller runtime with fewer
-    third-party libraries to keep track of.
+    ---
     
-    ### How to test this patch
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
     
-    Boot up Opencast and test that it works
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
     
-    ### AI Usage
     
-    I used Claude Opus for analysis, execution and testing.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [x] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
-    
-    Part of #8214
+    </details>
