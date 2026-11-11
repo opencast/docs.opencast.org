@@ -1,50 +1,48 @@
-commit 1fdeb53513605b6a78392d4a93f52ecdf18cbb0d
+commit 18028744687e9e8dd34076d6cefd0811f4ac43ca
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Nov 11 08:59:24 2026 +0100
+Date:   Wed Nov 11 09:00:38 2026 +0100
 
-    Declare token permissions in all workflows (#8178)
+    Run the dependency analysis from the root pom (#8225)
     
-    Only the ICLA check declared what its GITHUB_TOKEN may do. Every other
-    workflow ran with the repository default, which is read and write to
-    everything. That is far more than any of them needs: most only read the
-    repository, pushes and deployments go through deploy keys or S3, and the
-    two workflows handling pull_request_target events from forks could have
-    modified anything in the repository.
+    Every module that wanted the dependency analysis had to declare the
+    `maven-dependency-plugin` itself, and 71 of them
+    also carried the same `ignoredUnusedDeclaredDependency` entry for
+    `org.slf4j:slf4j-reload4j`. That dependency is
+    declared only to provide a logger for tests, so the analysis rightfully
+    reports it as unused.
     
-    Declare the minimum for each workflow. Write access remains only where
-    the token is actually used to push (npm and submodule updates, release
-    tag), to create a release, or to label and comment on pull requests. The
-    submodule update keeps write access until #8177 switches it to the
-    deploy key; it can then drop to read as well.
+    This pull request moves both into the root pom:
     
-    Follow-up once this is merged: wait until the workflows which still
-    write with the token (npm update, submodule update, release) have each
-    run successfully once, then switch the repository default under Settings
-    » Actions » General » Workflow permissions to "Read repository contents
-    and packages permissions". From then on, the blocks declared here are
-    the only source of write access.
+    - The exception for `slf4j-reload4j` is configured once, as
+    `ignoredDependencies`. It cannot go into
+    `ignoredUnusedDeclaredDependencies`, because a module that sets its own
+    list replaces the inherited one instead of
+      merging with it.
+    - The plugin is activated for all modules from the root pom. 140 modules
+    no longer need to declare it at all. The 89
+      modules with their own analysis configuration keep their declaration.
+    - Distributions (`karaf-assembly` packaging) are excluded from the
+    analysis explicitly. They contain no code, and the
+      analysis would otherwise report their feature dependencies as unused.
+    
+    Altogether, this removes about 570 lines of boilerplate from the module
+    poms.
+    
+    ### How to test this patch
+    
+    Run a full build, e.g. `./mvnw clean install -DskipTests`. It should
+    succeed, with the analysis reporting
+    "No dependency problems found" for every module and "Skipping
+    karaf-assembly project" for the distributions.
+    
+    To see that the analysis still runs in modules that no longer declare
+    the plugin, add an unused dependency to one of
+    them, e.g. `commons-io` to `modules/dictionary-regexp/pom.xml`. The
+    build of that module should fail with
+    "Unused declared dependencies found".
     
     ### AI Usage
     
-    Used Claude Opus for analysis and fix.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [x] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    I used Claude Opus to find the redundant configuration, write the
+    changes and run the builds and checks described
+    above.
