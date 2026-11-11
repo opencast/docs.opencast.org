@@ -1,48 +1,192 @@
-commit 18028744687e9e8dd34076d6cefd0811f4ac43ca
+commit a635d1134dd7940a4d0c7199eddadde40ca2a979
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Wed Nov 11 09:00:38 2026 +0100
+Date:   Wed Nov 11 12:05:02 2026 +0100
 
-    Run the dependency analysis from the root pom (#8225)
+    Replace json-simple with Gson (#7944)
     
-    Every module that wanted the dependency analysis had to declare the
-    `maven-dependency-plugin` itself, and 71 of them
-    also carried the same `ignoredUnusedDeclaredDependency` entry for
-    `org.slf4j:slf4j-reload4j`. That dependency is
-    declared only to provide a logger for tests, so the analysis rightfully
-    reports it as unused.
+    > [!NOTE]
+    > This patch is one I wanted for the last 10ish years. Why do we have
+    multiple JSON parser? No one knows! Also, `json-simple` is unmaintained
+    for over a decade…
     
-    This pull request moves both into the root pom:
+    `com.googlecode.json-simple` 1.1.1 has been unmaintained since 2012 and
+    is not an OSGi bundle, so it
+    had to be pulled into the Karaf feature behind a `wrap:` prefix. It was
+    the second most widespread
+    JSON library in the code base. This replaces every use of it with Gson
+    and removes the dependency.
     
-    - The exception for `slf4j-reload4j` is configured once, as
-    `ignoredDependencies`. It cannot go into
-    `ignoredUnusedDeclaredDependencies`, because a module that sets its own
-    list replaces the inherited one instead of
-      merging with it.
-    - The plugin is activated for all modules from the root pom. 140 modules
-    no longer need to declare it at all. The 89
-      modules with their own analysis configuration keep their declaration.
-    - Distributions (`karaf-assembly` packaging) are excluded from the
-    analysis explicitly. They contain no code, and the
-      analysis would otherwise report their feature dependencies as unused.
+    The 107 source files across 33 modules that used it all move;
+    `org.json.simple` no longer appears
+    anywhere in the tree, and `dependency:tree` finds no trace of it in the
+    reactor. The diff is larger
+    than that because the `Jsons`/`JsonObj` DSL that wrapped json-simple
+    goes with it.
     
-    Altogether, this removes about 570 lines of boilerplate from the module
-    poms.
+    Deliberately out of scope: `MediaPackageParser.getAsJSON()` and
+    `RestPublisher.OpencastJSONProvider`
+    are frozen Jettison wire formats and keep using Jettison. Jackson stays
+    where it is, in GraphQL, YAML
+    and the LMS client DTOs.
+    
+    ### Notes for reviewers
+    
+    Most of this is mechanical, but a few things are not.
+    
+    **The signed URL policy is now written out by hand** rather than handed
+    to a JSON library
+    (`b9c9507`). Its exact bytes are part of our contract with anything that
+    has ever signed a URL:
+    `getPolicySignature` digests the JSON text, and the verifier re-renders
+    the decoded policy and
+    compares digests. Re-ordering a key or changing an escape would
+    invalidate every signed URL in
+    circulation and break third-party signers. Writing it by hand means the
+    format cannot drift when a
+    dependency is upgraded or swapped. Output was verified byte-identical
+    across 144 generated policies,
+    and `PolicyUtilsTest` pins the escaping.
+    
+    **A shared, strict Gson instance** (`GsonUtil`) overrides four Gson
+    defaults that are wrong for
+    Opencast: HTML escaping (we serialize URLs everywhere), dropping null
+    members (the External API
+    requires empty fields to be present), reading every number as `Double`,
+    and lenient parsing. The last
+    one matters most: without it a malformed request body would quietly
+    become a 200 instead of a 400.
+    
+    **Bugs found and fixed on the way.** These are separate commits and can
+    be reviewed on their own:
+    
+    * `930430b` — `SeriesServiceRemoteImpl.getSeriesProperties` and
+    `getSeriesElements` parsed with
+    json-simple and cast the result to jettison's `JSONArray`. Those are
+    unrelated types, so both casts
+    always threw `ClassCastException`, which the surrounding catch turned
+    into a `SeriesException`.
+      Neither method could ever return a value.
+    * `c98e2c0d` — `ServicesEndpoint.Service` carried two renderings of
+    itself, a Gson `toJSON()` and a
+    json-simple `toJSONString()` reached through `JSONAware`. Only the first
+    is ever called, and the two
+    had drifted: the dead one stringified every number, dropped the status
+    translation prefix, and
+    passed nulls through. This was Opencast's only `JSONAware`
+    implementation, so the interface leaves
+      the code base with it.
+    * `6e745e91` — `PlaylistRestService.parseJsonToPlaylist` declared
+    json-simple's `ParseException` but
+    parses with Jackson and never threw it. That declaration alone pulled
+    json-simple into three
+      modules.
+    * `fe8763ef` — `security-aai` had no JUnit dependency of its own.
+    json-simple 1.1.1 declares
+    `junit` at compile scope, so its tests were compiling against the copy
+    that leaked through.
+    
+    **Two test fixtures were never valid JSON** and only worked because
+    json-simple accepted them:
+    `TestEventEndpoint`'s access policy had a stray trailing quote, and
+    `usersettings.json` was missing a
+    comma. Both are fixed rather than worked around.
+    
+    **One deliberate behaviour change.**
+    `ServiceRegistryEndpoint.removeJobs` had no error handling around
+    parsing its `jobIds` parameter, so a malformed value became a 500. It
+    answers 400 now, and the
+    `@RestQuery` documents that response.
+    
+    **One removal that needed care.** `basiclti-util` pulls in json-simple
+    1.1 transitively, and the
+    `dependencyManagement` entry had been quietly pinning that up to 1.1.1
+    for the whole build. None of
+    `basiclti-util`'s class files reference `org/json/simple`; its own pom
+    simply declares a dependency it
+    does not use, so it is excluded at that one call site.
     
     ### How to test this patch
     
-    Run a full build, e.g. `./mvnw clean install -DskipTests`. It should
-    succeed, with the analysis reporting
-    "No dependency problems found" for every module and "Skipping
-    karaf-assembly project" for the distributions.
+    No configuration or migration is required. Existing serialized ACLs and
+    other stored JSON keep working
+    — only the key order of newly written documents changes, and nothing
+    compares the text.
     
-    To see that the analysis still runs in modules that no longer declare
-    the plugin, add an unused dependency to one of
-    them, e.g. `commons-io` to `modules/dictionary-regexp/pom.xml`. The
-    build of that module should fail with
-    "Unused declared dependencies found".
+    Automated:
+    
+    ```
+    ./mvnw clean install -Pdev
+    ./mvnw dependency:tree -Dincludes='com.googlecode.json-simple:*'   # expect no matches
+    ```
+    
+    Manually, against a running instance, the paths that changed shape:
+    
+    * create and update a series through the External API, and check that
+    `subjects` come back as a list
+    of plain strings and that empty fields are still present as `""` / `[]`
+    / `{}`
+    * the admin UI event and series detail views, in particular
+    `access.json` for both, which splices ACL
+      documents built with jettison into a Gson response
+    * a bulk update of several events
+    * the statistics endpoints, admin and External API
+    * the workflow and scheduler REST endpoints
+    
+    **Signed URL playback deserves a specific check.** With URL signing
+    configured, confirm that a URL
+    signed by Opencast plays, that a tampered signature is rejected and that
+    an expired policy is
+    rejected. If you have a third-party signer, confirm it still produces an
+    accepted signature: the
+    policy for a resource valid until `1893456000000` must render as
+    
+    ```json
+    {"Statement":{"Condition":{"DateLessThan":1893456000000},"Resource":"http:\/\/localhost:8080\/files\/mediapackage\/abc\/def\/test.mp4"}}
+    ```
+    
+    with the forward slashes escaped, base64url encoded into `policy` and
+    HMAC-SHA256 hex encoded into
+    `signature`.
     
     ### AI Usage
     
-    I used Claude Opus to find the redundant configuration, write the
-    changes and run the builds and checks described
-    above.
+    Claude was used extensively for this pull request, driven interactively
+    rather than autonomously.
+    
+    It carried out the file-by-file migration, wrote the commit messages,
+    and did the investigation behind
+    the findings listed above — including bisecting the
+    `AccessControlParser` regression to a typo in a
+    test fixture, identifying the `ClassCastException` in the remote series
+    service, and tracing the
+    transitive json-simple and leaked JUnit dependencies exposed by the
+    removal.
+    
+    Behavioural claims about the two libraries were checked by running them
+    side by side rather than
+    asserted from memory, and every commit was verified with a build and the
+    relevant module's tests. The
+    whole branch was verified with a full build and test run, and against a
+    running Opencast, including
+    the signed URL checks above.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
