@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 20.x to 21.x", url: "#_top", children: [
+              {title: "Configuration Changes", url: "#configuration-changes" },
           ]},
         ];
 
@@ -89,6 +90,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 In case you need to upgrade older versions of Opencast, please refer to the documentation of
 <a href="https://docs.opencast.org">those versions</a> first.</p>
 <p>TODO</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<ul>
+<li>Opencast now uses Apache HttpClient 5 instead of the end-of-life HttpClient 4 for all internal HTTP communication.
+  Requests between nodes share a connection pool whose size can be configured with the new options
+  <code>org.opencastproject.security.http.max.connections.per.route</code> and <code>org.opencastproject.security.http.max.connections</code>
+  in <code>etc/custom.properties</code>. The digest nonce retry options <code>org.opencastproject.security.digest.nonce.*</code> keep their
+  meaning but now trigger on a stale nonce reported by the server. External plugins using the <code>TrustedHttpClient</code>
+  service must be migrated to the HttpClient 5 API (<code>ClassicHttpRequest</code>, <code>ClassicHttpResponse</code>, <code>getCode()</code>).</li>
+</ul>
 
   <br>
     
