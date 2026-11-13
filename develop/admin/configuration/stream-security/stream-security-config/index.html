@@ -195,15 +195,14 @@ The signed URLs can also be configured to restrict access to the user’s IP add
 </tr>
 </tbody>
 </table>
-<p>The URLs will be signed by the first signing provider that will accept the URL’s path based upon the signing provider’s
-configuration. This makes it flexible to support many different scenarios. For example, we could configure the signing
-provider to have one key for any URL that begins with one scheme, such as http, which would cover all of the URLs to be
-signed with a single key. Or it could be configured so that each different scheme and hostname pair would have a
-different keys protecting each host’s URLs separately etc. Having the timing configurations separate from the key
-configuration allows the different types of URLs to be signed differently depending on the needs of the users without
-needing to configure this timing for all of the different keys.</p>
-<!-- _Very wordy.If this paragraph of examples is necessary, consider making it a list instead (and not full complete sentences) -->
-
+<p>The URLs will be signed by the first signing provider that accepts the URL’s path, based on the signing provider’s
+configuration. This supports many different scenarios, for example:</p>
+<ul>
+<li>One key for all URLs starting with a scheme such as <code>http</code>, so that a single key signs all URLs.</li>
+<li>A separate key for each pair of scheme and host name, so that each host’s URLs are protected by their own key.</li>
+</ul>
+<p>Since the timing configuration is separate from the key configuration, different types of URLs can be signed with
+different timing without configuring it for every key.</p>
 <h3 id="signing-for-opencast-internal-access">Signing for Opencast-internal access</h3>
 <p>Signing of requests for internal use is performed by a core component called <em>TrustedHttpClientImpl</em>, which is used to
 establish all internal HTTP connections. More specifically, the HTTP client needs access to internal storage areas such
@@ -383,10 +382,6 @@ dGVMZXNzVGhhbiI6MTQyNTE3MDc3NzAwMCwiRGF0ZUdyZWF0ZXJUaGFuIjoxNDI1MDg0Mzc5MDAwLCJJ
 <li>URLs where the policy was modified and resigned with a different key</li>
 </ul>
 <h2 id="further-information">Further information</h2>
-<p>For an overview of Stream Security: <!-- _This info is already given at the very beginning of the page! --></p>
-<ul>
-<li><a href="../stream-security-overview/">Stream Security Overview</a></li>
-</ul>
 <p>For further developer information, please have a look at the stream security section in the developer guide.</p>
 
   <br>
