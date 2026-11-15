@@ -1,9 +1,41 @@
-commit b02777268931c7f1d1575cb9d8cb0ef619b04e25
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Tue Nov 10 14:22:48 2026 -0600
+commit 840684b5d1648886d3141df0044e9d7621684e69
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Sun Nov 15 14:38:01 2026 +0100
 
-    Merge branch 'asset-manager-prefix-dirs' of lkiesow/opencast into r/20.x
+    Recommend tenant-specific admin role in multi-tenancy guide (#8283)
     
-    Pull request #8165
-    Fixes #8163
-      Asset manager prefix dirs
+    The multi-tenancy guide's example tenant configuration used
+    admin_role=ROLE_ADMIN. ROLE_ADMIN is Opencast's global administrator
+    role and grants administrative access across all tenants, so reusing it
+    for an individual tenant gives that tenant's administrators privileges
+    far beyond their own tenant.
+    
+    Use a tenant-specific administrator role (e.g. ROLE_TENANT1_ADMIN) in
+    the example instead, explain why, and describe how to grant that role
+    access in the tenant's security configuration. The default organization
+    keeps ROLE_ADMIN, since its administrator is the system-wide one.
+    
+    ### AI Usage
+    
+    Used Claude Opus.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
