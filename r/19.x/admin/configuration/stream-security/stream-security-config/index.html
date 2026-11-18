@@ -176,6 +176,10 @@ the default valid times do not seem secure enough or is more secure than needed.
 <code>url.signing.expires.seconds</code> that defines the validity in seconds. The default valid time is 7200 seconds (2 hours).
 The signed URLs can also be configured to restrict access to the user’s IP address by setting the property
 <code>url.signing.use.client.ip</code> to true. By default this is disabled.</p>
+<p>If you run Opencast behind a reverse proxy, that restriction depends on Opencast learning the client’s address from
+the proxy rather than from the client itself. Make sure your proxy is listed in
+<a href="../../trusted-proxies/">Trusted Proxies</a> before turning this on, since otherwise clients get to choose the address
+their URLs are bound to.</p>
 <p>Overview of configuration files for services that are able to automatically sign URLs on behalf of users:</p>
 <table>
 <thead>
@@ -192,6 +196,10 @@ The signed URLs can also be configured to restrict access to the user’s IP add
 <tr>
 <td>Admin UI links</td>
 <td>org.opencastproject.adminui.endpoint.OsgiEventEndpoint.cfg</td>
+</tr>
+<tr>
+<td>Video editor content</td>
+<td>org.opencastproject.editor.EditorServiceImpl.cfg</td>
 </tr>
 </tbody>
 </table>

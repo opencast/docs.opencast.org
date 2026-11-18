@@ -115,6 +115,11 @@ command to list all changes:</p>
 <li>The plugin <code>opencast-plugin-legacy-annotation</code> has been removed from <code>org.opencastproject.plugin.impl.PluginManagerImpl.cfg</code>.
   [<a href="https://github.com/opencast/opencast/pull/6902">#6902</a>]</li>
 <li>Target tag handling has changed with [<a href="https://github.com/opencast/opencast/pull/6648">#6648</a>]:</li>
+<li>The <code>X-Forwarded-For</code>, <code>X-Forwarded-Proto</code> and <code>X-Forwarded-SSL</code> headers are now only honored if the request came
+  from a reverse proxy listed in the new <code>etc/org.opencastproject.kernel.filter.proxy.TrustedProxies.cfg</code>. Its default
+  covers loopback and the private address ranges, so the usual set-up with a proxy next to Opencast keeps working. If
+  your proxy reaches Opencast from a public address, add it there, or Opencast will log the proxy as the client and
+  serve plain HTTP URLs. See <a href="../configuration/trusted-proxies/">Trusted Proxies</a>.</li>
 </ul>
 <h2 id="database-upgrade">Database Upgrade</h2>
 <p>This script will drop a table which is no longer used in Opencast 19. You will find database
