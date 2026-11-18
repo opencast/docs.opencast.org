@@ -36,6 +36,7 @@
           {title: "Microsoft Azure Attach Transcription Workflow Operation", url: "#_top", children: [
               {title: "Description", url: "#description" },
               {title: "Parameter Table", url: "#parameter-table" },
+              {title: "Template data", url: "#template-data" },
               {title: "Workflow properties", url: "#workflow-properties" },
               {title: "Examples", url: "#examples" },
           ]},
@@ -135,6 +136,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tbody>
 </table>
 <p>*For conventionally used tags see the general page on <a href="../../configuration/subtitles/">Subtitles</a>.</p>
+<h2 id="template-data">Template data</h2>
+<p>The <code>target-flavor</code>, <code>target-tags</code> and <code>target-tag</code> values are evaluated as FreeMarker templates before they are
+parsed as a flavor and as a tag list. In addition to the workflow properties listed below, organization properties
+are available with the <code>org_</code> prefix, eg. <code>${org_player}</code>. Organization properties whose name contains a <code>.</code>
+(period) can be referenced with the dot, eg. <code>${org_org.opencastproject.engage.ui.url}</code>, or in a flattened form
+with underscores instead of dots, eg. <code>${org_org_opencastproject_engage_ui_url}</code>. The <code>${name:default}</code> form is
+not supported; use <code>${name!'default'}</code> instead. If a variable is missing, the operation fails.</p>
 <h2 id="workflow-properties">Workflow properties</h2>
 <p>This workflow operation is not intended to be started by the user. This will be done by the <a href="../../configuration/transcription.configuration/microsoftazure/">Microsoft Azure Transcription Engine</a>. It will also set some workflow properties listed below.</p>
 <table>

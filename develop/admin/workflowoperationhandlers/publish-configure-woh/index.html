@@ -247,10 +247,15 @@ execution of the workflow operation.</p>
 <p>The organization properties are also available and can be accessed with the <code>org_</code> prefix followed by the property name,
 eg. <code>${org_player}</code> will be replaced by the value of the organization property named <code>player</code>.</p>
 <p>Note some organization properties contain an <code>.</code> (period) in their name (e.g. <code>org.opencastproject.external.api.url</code>).
-As this character have an special meaning in the FreeMarker library (used for substitution), all occurrences are replaced
-with <code>_</code> (underscore).</p>
+Such properties can be referenced with the dot, eg. <code>${org_org.opencastproject.external.api.url}</code>, or in a flattened
+form with underscores instead of dots, eg. <code>${org_org_opencastproject_external_api_url}</code>. If one property name is a
+dot prefix of another property's name (e.g. <code>player</code> and <code>player.mobile</code>, or <code>a.b</code> and <code>a.b.c</code>), only one of the two
+has a dotted form; use the flattened form for both, which always works.</p>
 <p>Additional to the organization properties you can use <code>org_id</code>, <code>org_name</code>, <code>org_admin_role</code> and
 <code>org_anonymous_role</code> as well.</p>
+<p>Workflow properties are also available under their property name. The <code>url-pattern</code> is evaluated as a FreeMarker
+template, so the <code>${name:default}</code> form is not supported; use <code>${name!'default'}</code> instead. If a variable is missing,
+the operation fails.</p>
 <h2 id="publication-channel-labels-and-icons">Publication Channel Labels and Icons</h2>
 <p>Using this workflow operation, you can create arbitrary custom publication channels. Without further action, the
 administrative user interface will label these channels "Custom". You can specify both a label and an icon for each

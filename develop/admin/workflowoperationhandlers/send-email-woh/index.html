@@ -181,7 +181,9 @@ and that user's email address is used (see Example 5).</p>
 <p>If both a text and HTML body is set, a multipart email body is sent.</p>
 <h2 id="variable-substitution">Variable Substitution</h2>
 <p>The template will have access to the media package, workflow instance (including its configuration properties and last
-failed operation), catalogs, and any incidents. Fields should be tested for null/empty values before being used.</p>
+failed operation), catalogs, and any incidents. Fields should be tested for null/empty values before being used.
+Workflow properties are also available under their property name. The <code>${name:default}</code> form is not supported; use
+<code>${name!'default'}</code> instead. If a variable is missing, the operation fails.</p>
 <h3 id="media-package-information">Media Package Information</h3>
 <p>Use <code>${mediaPackage.FIELD}</code></p>
 <h4 id="examples">Examples</h4>
@@ -349,7 +351,10 @@ catalogs. This syntax is still accepted but deprecation. Future versions might r
 </tbody>
 </table>
 <h3 id="organization-properties">Organization properties</h3>
-<p>Use <code>${organization['PROPERTY']}</code></p>
+<p>Use <code>${organization['PROPERTY']}</code>, or the <code>org_</code> prefix followed by the property name. Organization properties
+whose name contains a <code>.</code> (period) can be referenced with the dot, eg.
+<code>${org_org.opencastproject.engage.ui.url}</code>, or in a flattened form with underscores instead of dots, eg.
+<code>${org_org_opencastproject_engage_ui_url}</code>.</p>
 <h4 id="examples_2">Examples</h4>
 <table>
 <thead>
