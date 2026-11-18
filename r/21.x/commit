@@ -1,7 +1,47 @@
-commit 31a6ee1b705c8ca94ca9e9828da85c529bd89669
-Author: Sascha Nösberger <103581881+snoesberger@users.noreply.github.com>
-Date:   Wed Nov 18 10:55:39 2026 +0100
+commit 0582829e6bee987555a4fd6b351a459a25a1b9a7
+Author: Martin Wygas <wygas@elan-ev.de>
+Date:   Wed Nov 18 14:20:25 2026 +0100
 
-    Merge commit from fork
+    Merge branch 'r/20.x' into r/21.x
     
-    Enforce write permission when deleting an event
+    Brings the security fixes released with Opencast 20.6 into 21.x.
+    
+    New on 21.x with this merge:
+    
+    - GHSA-jrcq-hch7-gvv5: Only trust X-Forwarded-* headers from configured
+      proxies (c23be1df19)
+    - GHSA-qqqp-5j2v-jvfp: Only list playlists of the current organization
+      (05f870bc9e)
+    - GHSA-x4wc-h58f-2wm9: HTML-encode the path query parameter in the REST
+      docs servlet (65c5474f6d)
+    - GHSA-gr3h-hxr8-phqm: Harden the FreeMarker configuration used by
+      DocUtil (74001ac87c)
+    
+    Already on 21.x as branch-specific commits and therefore not applied a
+    second time:
+    
+    - GHSA-87w3-phwh-q8vx: Reject path traversal sequences in media package
+      identifiers (eb0b9fa68f on 20.x, f44c809eb8 on 21.x)
+    - GHSA-hgqh-jpvg-xx9f: Enforce write permission when deleting an event
+      (139dee420d on 20.x, 3a628085e0 on 21.x)
+    
+    Every file touched by these two fixes is kept exactly as it is on 21.x.
+    This covers the reported conflicts as well as
+    AbstractFileSystemAssetStore.java and SchedulerServiceImpl.java, where
+    git would otherwise have added a second copy of the new helper methods
+    without reporting a conflict.
+    
+    Adjustments needed for 21.x:
+    
+    - TrustedProxies: IpAddressMatcher lives in
+      org.springframework.security.web.util.matcher in Spring Security 5.
+    - RestDocsServlet and its test: use StringEscapeUtils from commons-text,
+      since 21.x no longer uses the deprecated commons-lang3 class.
+    
+    Documentation: releasenotes.md and upgrade.md stay as they are on 21.x.
+    The 20.6 release notes section and the 19.x to 20.x upgrade steps do not
+    belong into the Opencast 21 documents, and the section on media package
+    identifier validation is already identical on both branches. The 20.6
+    changelog is merged as usual.
+    
+    Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>
