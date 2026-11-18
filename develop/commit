@@ -1,80 +1,239 @@
-commit 70b78c4b4b1eac7600a70b419ef7ce50d26908fc
+commit 27b422a863ee693491a079f2b551c7e5c89a1588
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Nov 18 23:51:47 2026 +0100
+Date:   Thu Nov 19 00:46:43 2026 +0100
 
-    Bump org.sonatype.central:central-publishing-maven-plugin from 0.11.0 to 0.12.0 in /modules/metrics-exporter (#8192)
+    Bump commons-codec:commons-codec from 1.22.1 to 1.23.0 in /modules/db (#8246)
     
     Bumps
-    [org.sonatype.central:central-publishing-maven-plugin](https://github.com/sonatype-nexus-community/central-publishing-maven-plugin)
-    from 0.11.0 to 0.12.0.
+    [commons-codec:commons-codec](https://github.com/apache/commons-codec)
+    from 1.22.1 to 1.23.0.
     <details>
-    <summary>Release notes</summary>
+    <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/releases">org.sonatype.central:central-publishing-maven-plugin's
-    releases</a>.</em></p>
+    href="https://github.com/apache/commons-codec/blob/master/RELEASE-NOTES.txt">commons-codec:commons-codec's
+    changelog</a>.</em></p>
     <blockquote>
-    <h2>release-0.12.0</h2>
-    <h2>What's Changed</h2>
+    <h2>Apache Commons Codec 1.23.0 Release Notes</h2>
+    <p>The Apache Commons Codec team is pleased to announce the release of
+    Apache Commons Codec 1.23.0.</p>
+    <p>The Apache Commons Codec component contains encoders and decoders for
+    formats such as Base16, Base32, Base64, digest, and Hexadecimal. In
+    addition to these
+    widely used encoders and decoders, the codec package also maintains a
+    collection of phonetic encoding utilities.</p>
+    <p>This is a feature and maintenance release. Java 8 or later is
+    required.</p>
+    <h2>New features</h2>
     <ul>
-    <li>feat: add <code>skipUpload</code> property to build the bundle
-    without uploading it by <a
-    href="https://github.com/madpah"><code>@​madpah</code></a> in <a
-    href="https://redirect.github.com/sonatype-nexus-community/central-publishing-maven-plugin/pull/6">sonatype-nexus-community/central-publishing-maven-plugin#6</a></li>
-    <li>fix: remove local repository files from the bundle on Maven 3.10 by
-    <a href="https://github.com/madpah"><code>@​madpah</code></a> in <a
-    href="https://redirect.github.com/sonatype-nexus-community/central-publishing-maven-plugin/pull/3">sonatype-nexus-community/central-publishing-maven-plugin#3</a></li>
+    <li>
+    <pre><code> Add and use PhoneticEngine.Builder and deprecate old
+    constructors. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Add BeiderMorseEncoder.Builder and deprecate old
+    constructor. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Add PhoneticEngine.Builder.setMaxInputLength(int). Thanks to
+    Yu Bao, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code>        Add Base45 support. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Add URLCodec.decodeUrl(BitSet, byte[]) to decode with a
+    custom safe set. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
     </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/compare/release-0.11.1...release-0.12.0">https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/compare/release-0.11.1...release-0.12.0</a></p>
-    <h2>0.11.1</h2>
-    <p>This is the same source as for release <code>0.11.0</code>, but now
-    open-sourced under Apache-2.0 license.</p>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/commits/release-0.11.1">https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/commits/release-0.11.1</a></p>
+    <h2>Fixed Bugs</h2>
+    <ul>
+    <li>
+    <pre><code> GitIdentifiers orders tree entries by unsigned UTF-8 bytes,
+    as Git does, instead of UTF-16 code units. Thanks to Jeff Lenamon.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Optimize PhoneticEngine.encode(String, LanguageSet) for
+    speed. Thanks to Yu Bao, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> RFC1522Codec.decodeText(String) now throws a
+    DecoderException instead of a StringIndexOutOfBoundsException when a
+    separator is missing. Thanks to Yu Bao, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Optimize Base58.convertFromBase58(byte[], Context) for speed
+    and temporary object allocation. Thanks to Yu Bao, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Allocate a single MessageDigest and use it in
+    Sha2Crypt.sha2Crypt(byte[], String, String, int, String). Thanks to Yu
+    Bao, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code>        Javadoc improvements. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Throw IOException instead of IllegalArgumentException in
+    BaseNCodecOutputStream and BaseNCodecOutputStream IO methods. Thanks to
+    Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Throw DecoderException instead of IllegalArgumentException
+    in RFC1522Codec.decodeText(String). Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Fix Blake3 KDF example and clarify finalization semantics.
+    Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Base32 and Base64 STRICT decoding now require the encoder's
+    canonical alphabet, padding, and line separators, and validate streams
+    through EOF. Use LENIENT to retain permissive decoding. Thanks to Gary
+    Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Limit Base58 decoding to 8192 encoded bytes by default,
+    checking cumulative stream input before buffering. Use
+    Base58.Builder.setMaxDecodeLength(int) for larger trusted input.
+    Encoding defaults to a configurable 8192-byte binary input limit through
+    Base58.Builder.setMaxEncodeLength(int). Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Grow Base58 accumulation buffers geometrically within the
+    configured input limits and validate actual accumulated length. Thanks
+    to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Implement Base58 encoded-length calculation and explicitly
+    reject unsupported line chunking. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Close the underlying BaseNCodecOutputStream output even when
+    final conversion or flushing fails, preserving suppressed close
+    exceptions. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Reject invalid GitIdentifiers tree entry names and
+    file/directory name conflicts to prevent ambiguous tree serialization
+    and colliding identifiers. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Hex decoding now accepts only ASCII hexadecimal characters
+    (0-9, A-F, a-f). Previously accepted non-ASCII Unicode digits and
+    fullwidth letters now cause DecoderException, including when supplied as
+    UTF-8 bytes or ByteBuffers. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Restrict Hex decoding to ASCII hexadecimal characters.
+    Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Validate BinaryCodec input while preserving leading-bit
+    truncation. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Reject oversized Beider-Morse input before language
+    guessing. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> QuotedPrintableCodec decoding now preserves hard CRLF line
+    breaks and, leniently, unpaired CR and LF bytes instead of discarding
+    them. Soft line breaks require the full =CRLF sequence; previously
+    accepted =CR without LF now throws DecoderException. This affects both
+    constructor modes and QCodec, which shares the decoder. Thanks to Gary
+    Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Bound Sha2Crypt rounds from caller-supplied salts. Thanks to
+    Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Bound Sha2Crypt password length to prevent quadratic CPU
+    DoS. Thanks to Gary Gregory.
+    </code></pre>
+    </li>
+    <li>
+    <pre><code> Make the @param names in BaseNCodec match the parameters
+    they document
+    ([#444](https://github.com/apache/commons-codec/issues/444)). Thanks to
+    geonseok, Gary Gregory.
+    </code></pre>
+    </li>
+    <li>CODEC-345: Restore URLCodec.encodeUrl(BitSet, byte[]) support for
+    custom safe sets containing percent and plus, and document the decoding
+    limitations. Thanks to Ganesh Gautam, Gary Gregory.</li>
+    <li>CODEC-245: Reject malformed Sha2Crypt salt syntax (<a
+    href="https://redirect.github.com/apache/commons-codec/issues/445">#445</a>).
+    Thanks to Efe, Gary Gregory.</li>
+    </ul>
+    <!-- raw HTML omitted -->
     </blockquote>
+    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
-    <li>See full diff in <a
-    href="https://github.com/sonatype-nexus-community/central-publishing-maven-plugin/commits/release-0.12.0">compare
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/1147e788058ee67509616903cbe2ddd149e02a04"><code>1147e78</code></a>
+    Add github.autolink_jira</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/129a2899eecdba9238a9f660a3a534c6d9d6a523"><code>129a289</code></a>
+    Prepare for the release candidate 1.23.0 RC1</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/d7bff678de1efdf767f713c5a178ba9dd9e1562d"><code>d7bff67</code></a>
+    Prepare for the release candidate</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/89d6498d60ac9b8d4fe4550d7577b2242aa94756"><code>89d6498</code></a>
+    Update GH CI from Java 26 to 27</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/5444a15a34dada7b6d92f6f96c58bef74cee2817"><code>5444a15</code></a>
+    [test] Bump org.apache.commons:commons-lang3 from 3.20.0 to 3.21.0</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/668582627d8effe1f0a0575d4a1031bc871ebf9e"><code>6685826</code></a>
+    Bump org.apache.commons:commons-lang3 from 3.20.0 to 3.21.0 (<a
+    href="https://redirect.github.com/apache/commons-codec/issues/446">#446</a>)</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/72210738423ebdd766e433d7839d401436793639"><code>7221073</code></a>
+    Parameterize some unit tests</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/cb9c04d964f4b28b6e5f03d603959d071f863aed"><code>cb9c04d</code></a>
+    Parameterize some unit tests</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/6837802c8f23cb970513035c0fede41a1e30bb23"><code>6837802</code></a>
+    [CODEC-245] Reject malformed Sha2Crypt salt syntax</li>
+    <li><a
+    href="https://github.com/apache/commons-codec/commit/3e05f66920c3ec1d5a2f22f1795a76fdbbfd4e34"><code>3e05f66</code></a>
+    [CODEC-245] Reject malformed Sha2Crypt salt syntax (<a
+    href="https://redirect.github.com/apache/commons-codec/issues/445">#445</a>)</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/commons-codec/compare/rel/commons-codec-1.22.1...rel/commons-codec-1.23.0">compare
     view</a></li>
     </ul>
     </details>
     <br />
-    
-    
-    [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.sonatype.central:central-publishing-maven-plugin&package-manager=maven&previous-version=0.11.0&new-version=0.12.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
-    
-    Dependabot will resolve any conflicts with this PR as long as you don't
-    alter it yourself. You can also trigger a rebase manually by commenting
-    `@dependabot rebase`.
-    
-    [//]: # (dependabot-automerge-start)
-    [//]: # (dependabot-automerge-end)
-    
-    ---
-    
-    <details>
-    <summary>Dependabot commands and options</summary>
-    <br />
-    
-    You can trigger Dependabot actions by commenting on this PR:
-    - `@dependabot rebase` will rebase this PR
-    - `@dependabot recreate` will recreate this PR, overwriting any edits
-    that have been made to it
-    - `@dependabot show <dependency name> ignore conditions` will show all
-    of the ignore conditions of the specified dependency
-    - `@dependabot ignore this major version` will close this PR and stop
-    Dependabot creating any more for this major version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this minor version` will close this PR and stop
-    Dependabot creating any more for this minor version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this dependency` will close this PR and stop
-    Dependabot creating any more for this dependency (unless you reopen the
-    PR or upgrade to it yourself)
-    
-    
-    </details>
