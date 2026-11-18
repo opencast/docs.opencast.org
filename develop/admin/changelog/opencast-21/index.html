@@ -35,6 +35,12 @@
         var pageToc = [
           {title: "Opencast 21 Changelog", url: "#_top", children: [
           ]},
+          {title: "Opencast 21.0 (2026-11-18)", url: "#opencast-210-2026-11-18", children: [
+              {title: "Opencast Core changes", url: "#opencast-core-changes" },
+              {title: "Admin Interface submodule changes", url: "#admin-interface-submodule-changes" },
+              {title: "Editor submodules changes", url: "#editor-submodules-changes" },
+              {title: "Studio submodule changes", url: "#studio-submodule-changes" },
+          ]},
         ];
 
     </script>
@@ -85,6 +91,561 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h2 id="opencast-21-changelog">Opencast 21 Changelog</h2>
+<h2 id="opencast-210-2026-11-18">Opencast 21.0 (2026-11-18)</h2>
+<h3 id="opencast-core-changes">Opencast Core changes</h3>
+<h4 id="features-enhancements-and-api-changes">🚀 Features, Enhancements, and API changes</h4>
+<ul>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7376)">#7376</a>] - Add metric for storage usage</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7332)">#7332</a>] - Get Extended Metadata of Events from API via the Index</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7496)">#7496</a>] - Add API endpoints for playlist management in the admin interface</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7540)">#7540</a>] - Show user roles without associated users in the user table in the ACL…</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7497)">#7497</a>] - The Admin UI search improvements</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7705)">#7705</a>] - Automate Changelog Generation</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7557)">#7557</a>] - Enhance HTTP Notify WOH to include mediaPackageId in request parameters</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7547)">#7547</a>] - Add possibility to upload audio-only as presentation track</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7870)">#7870</a>] - Reject unparsable dates in ingest instead of failing later</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7956)">#7956</a>] - Limit queries to RoleProviders a bit in findRoles()</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7867)">#7867</a>] - Report ACLs with deny rules once per index rebuild</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7204)">#7204</a>] - Create YouTube playlists with non-public privacy status</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7387)">#7387</a>] - Improve YouTube video retraction</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7958)">#7958</a>] - Add "hasUser" to UserAndRoleDirectoryServiceImpl.findRoles([...])</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7874)">#7874</a>] - Include WhisperC++ output when it produces no subtitles</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7953)">#7953</a>] - Add <code>#{random:min:max}</code> expansion to FFmpeg parameter templating</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7904)">#7904</a>] - Warn when max-attempts is set without a retry-strategy</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8021)">#8021</a>] - Report SKIP action when analyze-tracks/select-tracks find no matching tracks</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7205)">#7205</a>] - Set proper language in YouTube publication</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7206)">#7206</a>] - Set YouTube license according to metadata</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7774)">#7774</a>] - Elect the job dispatcher automatically via a database lease</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8020)">#8020</a>] - Include the specific reason in engage publication criteria errors</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7930)">#7930</a>] - Switch to Opensearch 3</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7320)">#7320</a>] - Add thumbnail support to YouTube publication service</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7383)">#7383</a>] - Add support for uploading captions to YouTube</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7910)">#7910</a>] - Make check-availability configurable for auto-updates on series changes</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8024)">#8024</a>] - Fix/lti upload invalid file warning</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8061)">#8061</a>] - Don't retry or log a malformed search query as a server error</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/6139)">#6139</a>] - Add new feature LifeCycle Management</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7963)">#7963</a>] - Refresh YouTube OAuth token on credential load</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7892)">#7892</a>] - Centralize global/org admin bypass check for permission checking</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7945)">#7945</a>] - Rename Elasticsearch to OpenSearch</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8162)">#8162</a>] - Use first matching asset manager directory for local file access</li>
+</ul>
+<h4 id="fixes">🐛 Fixes</h4>
+<ul>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7619)">#7619</a>] - Fix incorrect submodule versions in develop</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7666)">#7666</a>] - Properly update git submodules</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7692)">#7692</a>] - Service error states incorrectly cleared</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7700)">#7700</a>] - Fix typo in mh_default_org.xml</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7670)">#7670</a>] - Only switch org if orgs are different</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7730)">#7730</a>] - Enforce absense of ACL deny rules</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7713)">#7713</a>] - Properly sort the docs version</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7745)">#7745</a>] - Fix POST /api/playlists returning 405 without a trailing path segment</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7723)">#7723</a>] - Return "bad request" for bad sort param for /admin-ng/services.json</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7773)">#7773</a>] - Fix bundle_name column too short for long install paths</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7716)">#7716</a>] - Improvements for Deletion</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7771)">#7771</a>] - Fix LTI upload tool error when no series is specified</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7847)">#7847</a>] - Update documentation in organization-mh_default_org.cfg</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7842)">#7842</a>] - Avoid failing ZipWOH at inopportune time</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7841)">#7841</a>] - Fix some metrics in MetricsExporter not going back to 0</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7901)">#7901</a>] - Use a valid charset when building the force-remove query string</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7868)">#7868</a>] - Do not overwrite terminal state in WorkflowServiceImpl.stop()</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7914)">#7914</a>] - Fix short-circuit skipping AssetManager cleanup on engage retraction</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7786)">#7786</a>] - Adopter registration backend fixes</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7934)">#7934</a>] - Log exception on storage cleanup failure</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7931)">#7931</a>] - Stop logging and rethrowing snapshot failures</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7801)">#7801</a>] - Remove namespaces added by merge.</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7896)">#7896</a>] - Fix trailing slash in documented paths of root endpoints</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7902)">#7902</a>] - Read the response body when checking for active workflows</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7929)">#7929</a>] - Log ACL update rejections during workflows at debug</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7936)">#7936</a>] - Fix NullPointerException when deleting assets</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7932)">#7932</a>] - Do not warn about missing XACML files in workspace</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7955)">#7955</a>] - Deduplicate roles before pagination in findRoles()</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7843)">#7843</a>] - Respect overwrite parameter for track streams in inspect WOH</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7897)">#7897</a>] - Reject JWTs whose algorithm does not match the JWK set's key type</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7883)">#7883</a>] - Reject series/event creation with missing required metadata</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7803)">#7803</a>] - Prevent scheduler from deleting events that have been processed</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8038)">#8038</a>] - Fix ClassCastException when scheduling multiple events as non-admin</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8056)">#8056</a>] - Fix missing dependency commons-text</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8058)">#8058</a>] - Include commons-text in karaf assemblies</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7960)">#7960</a>] - fix: Return 400 instead of 500 when creating a group without a name</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8108)">#8108</a>] - Resolve build issue caused dependencies</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7961)">#7961</a>] - fix: Return 400 instead of 500 when signing a URL with a malformed date</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8011)">#8011</a>] - Fix workflow conditions silently misevaluating on case mismatches</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8030)">#8030</a>] - Log clear "could not reach node" message on remote dispatch failure</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8026)">#8026</a>] - Fix editor triggering two AssetManager snapshots per save</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8027)">#8027</a>] - Fix crash from null-valued workflow properties (#5366)</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8025)">#8025</a>] - Fix PUT /api/series/{id}/metadata rejecting the subjects field</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8029)">#8029</a>] - Clear the search service's own OpenSearch index on index clear/rebuild</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8028)">#8028</a>] - Fix incorrect field type for custom ACL actions in search index</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8032)">#8032</a>] - Fix wrong database pool config default</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8104)">#8104</a>] - Don't let an untouched blank required field block unrelated metadata updates</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8046)">#8046</a>] - Make the service load comparators transitive</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8042)">#8042</a>] - Don't count interrupted uploads against the ingest service</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8037)">#8037</a>] - Fix NPE and dead fallback branch in applyAclToEpisode</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8036)">#8036</a>] - Fix unreachable BAD_REQUEST handling for malformed cutoff in getCalendar</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8033)">#8033</a>] - Fix wrong mpeg7 namespace URI in Mpeg7CatalogImpl</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8096)">#8096</a>] - Don't abort directory cleanup when a directory vanishes mid-walk</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8060)">#8060</a>] - Waveform ffmpeg error logging</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8047)">#8047</a>] - Don't let CXF eat '+' from multipart ingest requests</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8110)">#8110</a>] - Fix YouTube publication for events without a license</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8106)">#8106</a>] - Make claimVersion() atomic to stop concurrent snapshots claiming the same version</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8103)">#8103</a>] - Include failed job ids and hosts when a SMIL processing job fails</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8123)">#8123</a>] - Sort roles ignoring case</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8112)">#8112</a>] - Skip wildcard-led queries in LMS user providers</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8143)">#8143</a>] - Fix workflow service remote calls for media package workflows</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8138)">#8138</a>] - Return 400 for invalid sort in playlist endpoints</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8160)">#8160</a>] - Fix OpenSearch client hanging on HTTPS connections</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8144)">#8144</a>] - Ignore query of URIs when looking up local files</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8294)">#8294</a>] - Update default delete workflow in the lifecycle module</li>
+</ul>
+<h4 id="tests-and-performance">Tests and Performance</h4>
+<ul>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7708)">#7708</a>] - Test used workflow definition element, configuration_panel</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7769)">#7769</a>] - Replace Selenium/Python tests with Playwright</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7893)">#7893</a>] - Add debug ports to multinode config</li>
+</ul>
+<h4 id="submodule">Submodule</h4>
+<ul>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7582)">#7582</a>] - Update develop Studio</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7581)">#7581</a>] - Update develop Editor</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7540)">#7540</a>] - Show user roles without associated users in the user table in the ACL…</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7723)">#7723</a>] - Return "bad request" for bad sort param for /admin-ng/services.json</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7958)">#7958</a>] - Add "hasUser" to UserAndRoleDirectoryServiceImpl.findRoles([...])</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7698)">#7698</a>] - Editor - Thumbnails in backend</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8123)">#8123</a>] - Sort roles ignoring case</li>
+</ul>
+<h4 id="maintenance">Maintenance</h4>
+<ul>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7589)">#7589</a>] - Remove Paella 7 from OC 21</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7619)">#7619</a>] - Fix incorrect submodule versions in develop</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7451)">#7451</a>] - AI PR Policy</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7627)">#7627</a>] - Remove Paella 7 from crowdin config file</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7636)">#7636</a>] - Update node version</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7665)">#7665</a>] - Opencast 19.5 changelogs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7669)">#7669</a>] - Install markdownlint if needed</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7673)">#7673</a>] - Update meeting room links on docs landing page</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7675)">#7675</a>] - Paging while we fetch the list of branches in Opencast</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7687)">#7687</a>] - Shorten line lengths in develop release notes and upgrade docs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7688)">#7688</a>] - Shorten line lengths in develop release notes and upgrade docs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7671)">#7671</a>] - Modify targets of opencast.service unit file</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7703)">#7703</a>] - Correct and expand configuration panel json documentation</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7705)">#7705</a>] - Automate Changelog Generation</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7725)">#7725</a>] - 19.6 release notes and changelog</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7713)">#7713</a>] - Properly sort the docs version</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7487)">#7487</a>] - Drop use of proxy_cookie_path for setting cookie flags</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7767)">#7767</a>] - Fix fragile debug-flag detection in OpencastRest</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7766)">#7766</a>] - Wire in existing en-GB and zh-TW locale files</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7769)">#7769</a>] - Replace Selenium/Python tests with Playwright</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7770)">#7770</a>] - Replace FontAwesome with Lucide in LTI tools</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7875)">#7875</a>] - Remove unused config key from acl.default.create.properties</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7912)">#7912</a>] - 19.8 changelog</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7804)">#7804</a>] - Fix some maven warnings</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7940)">#7940</a>] - Stop logging stack traces for HTTP client errors</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7946)">#7946</a>] - Clean up duplicate and dead dependency declarations</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7871)">#7871</a>] - Docs: resolve remaining thumbnail-config TODOs from #7835</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7903)">#7903</a>] - Restructure workflow.md</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7876)">#7876</a>] - Remove Collections.java</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7948)">#7948</a>] - Drop unused bundles from the ext-core feature</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7949)">#7949</a>] - Enforce dependency analysis during the build</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7954)">#7954</a>] - Use effective human author for ICLA checks on Copilot-authored PRs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8053)">#8053</a>] - Opencast 19.9 release notes</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7993)">#7993</a>] - Modernize deprecated JDK API usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7992)">#7992</a>] - Remove deprecated AbstractWorkflowOperationHandler.getCfg and MimeTyp…</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7990)">#7990</a>] - Remove deprecated WorkflowUtil.isActive(WorkflowState) and DublinCore…</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7989)">#7989</a>] - Remove deprecated IoSupport.readFileFromURL methods</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7988)">#7988</a>] - Remove deprecated restutils methods</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7980)">#7980</a>] - Replace SmartIterator's manual loop with Stream skip/limit</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7981)">#7981</a>] - Remove PathSupport</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7978)">#7978</a>] - Remove unused Booleans/Eithers helpers, simplify Misc/Strings</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7991)">#7991</a>] - Modernize deprecated stringutils usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7995)">#7995</a>] - Modernize deprecated commons-lang3 API usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8019)">#8019</a>] - Clarify editor WOH docs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7999)">#7999</a>] - Modernize deprecated url constructor usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7998)">#7998</a>] - Modernize remaining one-off deprecated API usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7997)">#7997</a>] - Modernize deprecated Apache HttpClient API usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7996)">#7996</a>] - Modernize deprecated commons-collections4 API usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7994)">#7994</a>] - Modernize deprecated commons-io usages</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7982)">#7982</a>] - Back DateTimeSupport with java.time</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8034)">#8034</a>] - Fix setRecordingState REST doc to match actual behavior</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8035)">#8035</a>] - Fix workflowInstanceId typo in capture agent guide</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8049)">#8049</a>] - Fix the stale REST doc for the health endpoint</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7941)">#7941</a>] - Clean up JSON dependency declarations</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7979)">#7979</a>] - Remove unused util.data.Iterators helper</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/7987)">#7987</a>] - Remove deprecated methods from EqualsUtil</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8039)">#8039</a>] - Refactor paella-8 module: Fetch engage-paella-player via npm to remove duplicated code</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8032)">#8032</a>] - Fix wrong database pool config default</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8105)">#8105</a>] - Revert unintended change to sanitize configuration</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8102)">#8102</a>] - Update maven, wrapper and plugins</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8101)">#8101</a>] - Update release note generation</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8062)">#8062</a>] - Add size-based log rotation documentation</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8010)">#8010</a>] - Eliminate managed services</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8041)">#8041</a>] - Split ServiceRegistry#getChildJobs into child and descendant jobs</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8048)">#8048</a>] - Document how to check that Opencast is working</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8045)">#8045</a>] - Explain the two LDAP configuration files</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8044)">#8044</a>] - Document the requirements of the Brightspace user provider</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8135)">#8135</a>] - Update the release manager documentation.</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8122)">#8122</a>] - Replace anonymous curl calls to GH rest endpoints with authenticated gh
+-cli calls</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8146)">#8146</a>] - Prepare release documentation for Opencast 21</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8159)">#8159</a>] - Opencast 19.10 release notes</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8161)">#8161</a>] - Document multiple asset manager storage directories</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8211)">#8211</a>] - Update readme for development dependency containers</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8209)">#8209</a>] - Remove duplicated OpenSearch configuration from compose files</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8208)">#8208</a>] - Use fully qualified base image for OpenSearch container</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8182)">#8182</a>] - Clarify release note instructions</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8181)">#8181</a>] - Update AGENTS.md now that Spotless fixes the imports</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8139)">#8139</a>] - Remove duplicate intercept-url for admin-ng</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8210)">#8210</a>] - Update development PostgreSQL container to version 18</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8043)">#8043</a>] - Resolve the remaining documentation review markers</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8228)">#8228</a>] - Remove Paella 8 source from Crowdin configuration</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8283)">#8283</a>] - Recommend tenant-specific admin role in multi-tenancy guide</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8298)">#8298</a>] - Add upgrade guide for Opencast 20 to 21</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8264)">#8264</a>] - Opencast 21.0 release notes</li>
+<li>[<a href="(https://github.com/opencast/opencast/pull/8294)">#8294</a>] - Update default delete workflow in the lifecycle module</li>
+</ul>
+<details>
+<summary>Dependencies</summary>
+
+- [[#7594]((https://github.com/opencast/opencast/pull/7594))] - Build(deps): bump softprops/action-gh-release from 2 to 3
+- [[#7751]((https://github.com/opencast/opencast/pull/7751))] - Bump globals from 17.4.0 to 17.7.0 in /docs/checkstyle/eslint-config
+- [[#7750]((https://github.com/opencast/opencast/pull/7750))] - Bump mikepenz/release-changelog-builder-action from 6.2.2 to 6.2.3
+- [[#7749]((https://github.com/opencast/opencast/pull/7749))] - Bump actions/checkout from 4 to 7
+- [[#7748]((https://github.com/opencast/opencast/pull/7748))] - Bump actions/cache from 5 to 6
+- [[#7744]((https://github.com/opencast/opencast/pull/7744))] - Bump js-yaml and markdownlint-cli in /docs/guides
+- [[#7721]((https://github.com/opencast/opencast/pull/7721))] - Bump form-data in /modules/lti
+- [[#7720]((https://github.com/opencast/opencast/pull/7720))] - Bump ws in /modules/lti
+- [[#7712]((https://github.com/opencast/opencast/pull/7712))] - Bump shell-quote from 1.7.3 to 1.8.4 in /modules/lti
+- [[#7643]((https://github.com/opencast/opencast/pull/7643))] - Build(deps): bump fast-uri from 3.1.0 to 3.1.2 in /modules/lti
+- [[#7644]((https://github.com/opencast/opencast/pull/7644))] - Build(deps): bump @babel/plugin-transform-modules-systemjs from 7.18.6 to 7.29.4 in /modules/lti
+- [[#7743]((https://github.com/opencast/opencast/pull/7743))] - Bump js-yaml from 4.1.1 to 4.3.0 in /modules/graphql-ui
+- [[#7681]((https://github.com/opencast/opencast/pull/7681))] - Build(deps): bump qs and express in /modules/lti
+- [[#7580]((https://github.com/opencast/opencast/pull/7580))] - Build(deps): bump follow-redirects from 1.15.11 to 1.16.0 in /modules/lti
+- [[#7545]((https://github.com/opencast/opencast/pull/7545))] - Build(deps): bump lodash from 4.17.23 to 4.18.1 in /modules/lti
+- [[#7520]((https://github.com/opencast/opencast/pull/7520))] - Build(deps): bump brace-expansion from 1.1.12 to 1.1.13 in /modules/lti
+- [[#7757]((https://github.com/opencast/opencast/pull/7757))] - Bump axios from 1.15.0 to 1.18.1 in /modules/engage-paella-player-8
+- [[#7683]((https://github.com/opencast/opencast/pull/7683))] - Update ltitools to React 19
+- [[#7663]((https://github.com/opencast/opencast/pull/7663))] - Build(deps): bump ws from 8.18.3 to 8.20.1 in /modules/engage-paella-player-8
+- [[#7623]((https://github.com/opencast/opencast/pull/7623))] - Build(deps): bump postcss from 8.5.6 to 8.5.12 in /modules/engage-paella-player-8
+- [[#7599]((https://github.com/opencast/opencast/pull/7599))] - Build(deps-dev): bump vite-plugin-static-copy from 3.1.4 to 4.1.0 in /modules/engage-paella-player-8
+- [[#7715]((https://github.com/opencast/opencast/pull/7715))] - Bump @grpc/grpc-js from 1.14.2 to 1.14.4 in /modules/engage-paella-player-8
+- [[#7682]((https://github.com/opencast/opencast/pull/7682))] - Build(deps-dev): bump qs from 6.15.0 to 6.15.2 in /modules/engage-paella-player-8
+- [[#7649]((https://github.com/opencast/opencast/pull/7649))] - Build(deps): bump @protobufjs/utf8 from 1.1.0 to 1.1.1 in /modules/engage-paella-player-8
+- [[#7608]((https://github.com/opencast/opencast/pull/7608))] - Build(deps-dev): bump @tailwindcss/vite from 4.1.17 to 4.2.4 in /modules/engage-paella-player-8
+- [[#7606]((https://github.com/opencast/opencast/pull/7606))] - Build(deps-dev): bump typescript from 5.9.3 to 6.0.3 in /modules/engage-paella-player-8
+- [[#7579]((https://github.com/opencast/opencast/pull/7579))] - Build(deps): bump follow-redirects from 1.15.11 to 1.16.0 in /modules/engage-paella-player-8
+- [[#7668]((https://github.com/opencast/opencast/pull/7668))] - Build(deps): bump protobufjs from 7.5.4 to 7.6.0 in /modules/engage-paella-player-8
+- [[#7598]((https://github.com/opencast/opencast/pull/7598))] - Bump i18next from 26.3.4 to 26.3.6 in /modules/lti
+- [[#7609]((https://github.com/opencast/opencast/pull/7609))] - Bump react-i18next from 17.0.8 to 17.0.9 in /modules/lti
+- [[#7710]((https://github.com/opencast/opencast/pull/7710))] - Bump shell-quote from 1.8.1 to 1.9.0 in /modules/graphql-ui
+- [[#7679]((https://github.com/opencast/opencast/pull/7679))] - Build(deps): bump org.springframework.ldap:spring-ldap-core from 2.4.1 to 2.4.4 in /modules/userdirectory-ldap
+- [[#7678]((https://github.com/opencast/opencast/pull/7678))] - Build(deps): bump org.bouncycastle:bcpkix-jdk18on from 1.78.1 to 1.84 in /modules/security-cas-client-wrapper
+- [[#7731]((https://github.com/opencast/opencast/pull/7731))] - Bump webpack-dev-server from 5.2.1 to 5.2.5 in /modules/graphql-ui
+- [[#7611]((https://github.com/opencast/opencast/pull/7611))] - Build(deps): bump io.swagger.core.v3:swagger-annotations from 2.1.13 to 2.2.48 in /modules/metrics-exporter
+- [[#7741]((https://github.com/opencast/opencast/pull/7741))] - Bump js-yaml from 4.1.1 to 4.3.0 in /modules/engage-paella-player-8
+- [[#7823]((https://github.com/opencast/opencast/pull/7823))] - Bump @playwright/test from 1.61.1 to 1.62.0 in /modules/lti
+- [[#7817]((https://github.com/opencast/opencast/pull/7817))] - Bump actions/setup-node from 6 to 7
+- [[#7810]((https://github.com/opencast/opencast/pull/7810))] - Bump actions/setup-java from 5 to 5.6.0
+- [[#7813]((https://github.com/opencast/opencast/pull/7813))] - Bump actions/setup-python from 6 to 7
+- [[#7834]((https://github.com/opencast/opencast/pull/7834))] - Group dependabot PRs for minor/patch updates in lti module
+- [[#7865]((https://github.com/opencast/opencast/pull/7865))] - Bump nanoid from 3.3.15 to 3.3.18 in /modules/lti
+- [[#7819]((https://github.com/opencast/opencast/pull/7819))] - Bump typescript from 6.0.3 to 7.0.2 in /modules/lti
+- [[#7917]((https://github.com/opencast/opencast/pull/7917))] - Bump the minor-and-patch group across 1 directory with 10 updates
+- [[#7947]((https://github.com/opencast/opencast/pull/7947))] - Remove Commons HttpClient 3.1
+- [[#7526]((https://github.com/opencast/opencast/pull/7526))] - Bump org.apache.commons:commons-lang3 from 3.18.0 to 3.20.0 in /modules/metrics-exporter
+- [[#8016]((https://github.com/opencast/opencast/pull/8016))] - Bump REST Assured from 4.4.0 to 6.0.1
+- [[#7862]((https://github.com/opencast/opencast/pull/7862))] - Bump com.mchange:mchange-commons-java from 0.2.20 to 0.6.1 in /modules/db
+- [[#7825]((https://github.com/opencast/opencast/pull/7825))] - Bump org.apache.maven.plugins:maven-surefire-report-plugin from 2.22.2 to 3.6.0 in /modules/metrics-exporter
+- [[#7826]((https://github.com/opencast/opencast/pull/7826))] - Bump org.apache.maven.plugins:maven-enforcer-plugin from 3.5.0 to 3.6.3 in /modules/metrics-exporter
+- [[#7969]((https://github.com/opencast/opencast/pull/7969))] - Bump actions/setup-java from 5.6.0 to 6.0.0
+- [[#8108]((https://github.com/opencast/opencast/pull/8108))] - Resolve build issue caused dependencies
+- [[#8014]((https://github.com/opencast/opencast/pull/8014))] - Migrate to ical4j 4.3.0
+- [[#8031]((https://github.com/opencast/opencast/pull/8031))] - Update MariaDB driver to 3.5.10
+- [[#7930]((https://github.com/opencast/opencast/pull/7930))] - Switch to Opensearch 3
+- [[#8015]((https://github.com/opencast/opencast/pull/8015))] - Remove unused dependencyManagement entries
+- [[#8085]((https://github.com/opencast/opencast/pull/8085))] - Bump org.jacoco:jacoco-maven-plugin from 0.8.12 to 0.8.15 in /modules/metrics-exporter
+- [[#8086]((https://github.com/opencast/opencast/pull/8086))] - Bump actions/setup-java from 6.0.0 to 6.0.1
+- [[#8083]((https://github.com/opencast/opencast/pull/8083))] - Bump commons-codec:commons-codec from 1.21.0 to 1.22.1 in /modules/metrics-exporter
+- [[#8080]((https://github.com/opencast/opencast/pull/8080))] - Bump org.apache.commons:commons-lang3 from 3.20.0 to 3.21.0 in /modules/db
+- [[#8079]((https://github.com/opencast/opencast/pull/8079))] - Bump com.google.guava:failureaccess from 1.0.2 to 1.0.3 in /modules/metrics-exporter
+- [[#8077]((https://github.com/opencast/opencast/pull/8077))] - Bump org.apache.maven.plugins:maven-plugin-plugin from 3.15.1 to 3.16.0 in /modules/metrics-exporter
+- [[#7863]((https://github.com/opencast/opencast/pull/7863))] - Bump org.postgresql:postgresql from 42.7.2 to 42.7.14 in /modules/db
+- [[#8129]((https://github.com/opencast/opencast/pull/8129))] - Switch graphql-ui to vite
+- [[#7986]((https://github.com/opencast/opencast/pull/7986))] - Bump @humanfs/node from 0.16.7 to 0.16.8 in /docs/checkstyle/eslint-config
+- [[#7783]((https://github.com/opencast/opencast/pull/7783))] - Bump linkify-it from 5.0.1 to 5.0.2 in /docs/guides
+- [[#7533]((https://github.com/opencast/opencast/pull/7533))] - Bump org.apache.commons:commons-csv from 1.9.0 to 1.14.1 in /modules/db
+- [[#8088]((https://github.com/opencast/opencast/pull/8088))] - Bump globals from 17.7.0 to 17.12.0 in /docs/checkstyle/eslint-config
+- [[#8073]((https://github.com/opencast/opencast/pull/8073))] - Bump brace-expansion from 5.0.5 to 5.0.12 in /docs/checkstyle/eslint-config
+- [[#8068]((https://github.com/opencast/opencast/pull/8068))] - Bump markdown-it and markdownlint-cli in /docs/guides
+- [[#8071]((https://github.com/opencast/opencast/pull/8071))] - Bump brace-expansion from 5.0.7 to 5.0.12 in /docs/guides
+- [[#6600]((https://github.com/opencast/opencast/pull/6600))] - Bump org.influxdb:influxdb-java from 2.15 to 2.25 in /modules/db
+- [[#8136]((https://github.com/opencast/opencast/pull/8136))] - Revert push of 6600
+- [[#7971]((https://github.com/opencast/opencast/pull/7971))] - Bump @types/node from 25.9.1 to 26.4.0 in /modules/lti
+- [[#8114]((https://github.com/opencast/opencast/pull/8114))] - Bump source-map-js from 1.2.1 to 1.2.2 in /modules/lti
+- [[#8092]((https://github.com/opencast/opencast/pull/8092))] - Bump com.mchange:c3p0 from 0.9.5.5 to 0.14.2 in /modules/db
+- [[#8137]((https://github.com/opencast/opencast/pull/8137))] - Bump the minor-and-patch group across 1 directory with 12 updates
+- [[#8183]((https://github.com/opencast/opencast/pull/8183))] - Bump org.mariadb.jdbc:mariadb-java-client from 3.5.10 to 3.5.11 in /modules/db
+
+</details>
+
+<details>
+<summary>Uncategorized</summary>
+
+- [[#7618]((https://github.com/opencast/opencast/pull/7618))] - Remove checkstyle suppression
+- [[#7476]((https://github.com/opencast/opencast/pull/7476))] - Get listproviders for metadata from External API
+- [[#7574]((https://github.com/opencast/opencast/pull/7574))] - Remove unused(?) waveform operation
+- [[#7371]((https://github.com/opencast/opencast/pull/7371))] - Spring Security 5 Upgrade
+- [[#7707]((https://github.com/opencast/opencast/pull/7707))] - Replace deprecated assert function
+- [[#7685]((https://github.com/opencast/opencast/pull/7685))] - Make `/play` preserve query parameters
+- [[#7697]((https://github.com/opencast/opencast/pull/7697))] - Fix missed subtitle-timeshift configuration key
+- [[#7727]((https://github.com/opencast/opencast/pull/7727))] - engage-ui: Fix test after previous merge from r19
+- [[#7753]((https://github.com/opencast/opencast/pull/7753))] - Fix tag operation by adding missing callback
+- [[#7500]((https://github.com/opencast/opencast/pull/7500))] - Bug fix: hls m3u8 files rewritten but their size/checksum not updated in media package
+- [[#7866]((https://github.com/opencast/opencast/pull/7866))] - Consistently use the configure-s3cmd action
+- [[#7872]((https://github.com/opencast/opencast/pull/7872))] - Fix duplicate userEntryPoint bean id for Shibboleth auth
+- [[#7869]((https://github.com/opencast/opencast/pull/7869))] - Fix intermittent SchedulerServiceImplTest failures
+- [[#7040]((https://github.com/opencast/opencast/pull/7040))] - Make speech to text fully asynchronous
+- [[#7878]((https://github.com/opencast/opencast/pull/7878))] - Fix 500 error on GET /api/groups for API versions < 1.6.0
+- [[#7943]((https://github.com/opencast/opencast/pull/7943))] - Add logging to aid debugging of videosegmenter issues
+- [[#7933]((https://github.com/opencast/opencast/pull/7933))] - Log media package merging at debug level
+- [[#7899]((https://github.com/opencast/opencast/pull/7899))] - Match capture device keys by prefix, not substring
+- [[#7895]((https://github.com/opencast/opencast/pull/7895))] - Add the anonymous role to every user
+- [[#7898]((https://github.com/opencast/opencast/pull/7898))] - Resolve wildcard timeline previews target flavor per track
+- [[#7900]((https://github.com/opencast/opencast/pull/7900))] - Validate target flavors, not target tags, for targetFlavors=atLeastOne
+- [[#7913]((https://github.com/opencast/opencast/pull/7913))] - Add AGENTS.md with code style notes
+- [[#7915]((https://github.com/opencast/opencast/pull/7915))] - Fix Import Order Automatically Using Spotless
+- [[#7772]((https://github.com/opencast/opencast/pull/7772))] - Fix TypeScript check in modules/lti and add it to CI
+- [[#8165]((https://github.com/opencast/opencast/pull/8165))] - Asset manager prefix dirs
+
+</details>
+
+<h3 id="admin-interface-submodule-changes">Admin Interface submodule changes</h3>
+<h4 id="features">🚀 Features</h4>
+<ul>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1579">opencast/admin-interface#1579</a>] - Add UI for playlist management</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1624">opencast/admin-interface#1624</a>] - Make "Create User" dialog similar to other create dialogs</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1672">opencast/admin-interface#1672</a>] - Reset sort when searching</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1671">opencast/admin-interface#1671</a>] - Just show active chevron for sorted table column</li>
+</ul>
+<h4 id="fixes_1">🐛 Fixes</h4>
+<ul>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1610">opencast/admin-interface#1610</a>] - Fix typo for cancelled wf processes</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1621">opencast/admin-interface#1621</a>] - Enable PR test builds into GH pages</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1619">opencast/admin-interface#1619</a>] - Enable writing to ghcr from pull requests</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1620">opencast/admin-interface#1620</a>] - Fix use of NODE_VERSION variable</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1625">opencast/admin-interface#1625</a>] - Flip quote types in pr filter</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1637">opencast/admin-interface#1637</a>] - Additional GHA bugs</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1617">opencast/admin-interface#1617</a>] - Reset to page 1 when clicking on filter cells</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1606">opencast/admin-interface#1606</a>] - Allow only custom actions in ACL</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1616">opencast/admin-interface#1616</a>] - Fix datetime-local field for workflow config</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1624">opencast/admin-interface#1624</a>] - Make "Create User" dialog similar to other create dialogs</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1612">opencast/admin-interface#1612</a>] - Fix workflow displayOrder not being respected</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1639">opencast/admin-interface#1639</a>] - Fix eslint warning in PlaylistActionsCell</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1633">opencast/admin-interface#1633</a>] - Fix workflow parameters in scheduled events (PR 1476)</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1640">opencast/admin-interface#1640</a>] - Final GHA polish</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1600">opencast/admin-interface#1600</a>] - Show registration modal only when unregistered</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1658">opencast/admin-interface#1658</a>] - Avoid sorting formik in place in scheduling tab</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1655">opencast/admin-interface#1655</a>] - Minor dropdown fixes</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1667">opencast/admin-interface#1667</a>] - Fix "for" label in workflow config</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1674">opencast/admin-interface#1674</a>] - Yet more GHA issues</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1686">opencast/admin-interface#1686</a>] - Add style for disabled wizard 'next' button</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1685">opencast/admin-interface#1685</a>] - Fix tabbing between fields not working with mixed_text field</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1689">opencast/admin-interface#1689</a>] - Fix <code>undefined</code> sorting params in playlists table</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1687">opencast/admin-interface#1687</a>] - Fix to event title in upload progress message</li>
+</ul>
+<h4 id="accessibility">Accessibility</h4>
+<ul>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1618">opencast/admin-interface#1618</a>] - Fix various color contrast issues</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1623">opencast/admin-interface#1623</a>] - Color variables everywhere</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1659">opencast/admin-interface#1659</a>] - Notify user if series theme could not be saved</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1638">opencast/admin-interface#1638</a>] - Add a simple error boundary to the app</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1663">opencast/admin-interface#1663</a>] - Title tooltip in dropdowns</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1662">opencast/admin-interface#1662</a>] - Render overflowing dropdown options with ellipsis</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1661">opencast/admin-interface#1661</a>] - Add minwidth to acl dropdown table</li>
+<li>[<a href="https://github.com/opencast/admin-interface/pull/1671">opencast/admin-interface#1671</a>] - Just show active chevron for sorted table column</li>
+</ul>
+<details>
+<summary>Dependencies</summary>
+
+- [[opencast/admin-interface#1575](https://github.com/opencast/admin-interface/pull/1575)] - Update vite to new major version 8
+- [[opencast/admin-interface#1582](https://github.com/opencast/admin-interface/pull/1582)] - Bump the minor-and-patch group across 1 directory with 3 updates
+- [[opencast/admin-interface#1599](https://github.com/opencast/admin-interface/pull/1599)] - Bump react-tooltip from 5.30.1 to 6.0.0
+- [[opencast/admin-interface#1585](https://github.com/opencast/admin-interface/pull/1585)] - Update i18n to major version 26
+- [[opencast/admin-interface#1614](https://github.com/opencast/admin-interface/pull/1614)] - Update Mui material to version 9
+- [[opencast/admin-interface#1587](https://github.com/opencast/admin-interface/pull/1587)] - Remove @types/uuid
+- [[opencast/admin-interface#1634](https://github.com/opencast/admin-interface/pull/1634)] - Update react-hotkeys-hook to 5.3.3
+- [[opencast/admin-interface#1636](https://github.com/opencast/admin-interface/pull/1636)] - Update minor-patch group with 20 updates
+- [[opencast/admin-interface#1648](https://github.com/opencast/admin-interface/pull/1648)] - Bump http-proxy-middleware from 3.0.7 to 4.2.0
+- [[opencast/admin-interface#1646](https://github.com/opencast/admin-interface/pull/1646)] - Bump react-router from 7.18.1 to 8.3.0
+- [[opencast/admin-interface#1651](https://github.com/opencast/admin-interface/pull/1651)] - Bump the minor-and-patch group across 1 directory with 13 updates
+- [[opencast/admin-interface#1649](https://github.com/opencast/admin-interface/pull/1649)] - Bump @types/node from 25.6.0 to 26.1.2
+- [[opencast/admin-interface#1664](https://github.com/opencast/admin-interface/pull/1664)] - Bump the minor-and-patch group with 16 updates
+
+</details>
+
+<details>
+<summary>Uncategorized</summary>
+
+- [[opencast/admin-interface#1601](https://github.com/opencast/admin-interface/pull/1601)] - Ensure node version matches parent pom
+- [[opencast/admin-interface#1591](https://github.com/opencast/admin-interface/pull/1591)] - Bump actions/github-script from 7 to 9
+- [[opencast/admin-interface#1586](https://github.com/opencast/admin-interface/pull/1586)] - Move to node 24 in gh workflows
+- [[opencast/admin-interface#1622](https://github.com/opencast/admin-interface/pull/1622)] - Improve npm checks
+- [[opencast/admin-interface#1611](https://github.com/opencast/admin-interface/pull/1611)] - Simplify configurationPanelJson typing
+- [[opencast/admin-interface#1605](https://github.com/opencast/admin-interface/pull/1605)] - Enable eslint no-misused-promises
+- [[opencast/admin-interface#1627](https://github.com/opencast/admin-interface/pull/1627)] - Bump dorny/paths-filter from 3 to 4
+- [[opencast/admin-interface#1628](https://github.com/opencast/admin-interface/pull/1628)] - Bump actions/github-script from 7 to 9
+- [[opencast/admin-interface#1609](https://github.com/opencast/admin-interface/pull/1609)] - Enable eslint no-explicit-any
+- [[opencast/admin-interface#1631](https://github.com/opencast/admin-interface/pull/1631)] - Bump actions/upload-artifact from 4 to 7
+- [[opencast/admin-interface#1630](https://github.com/opencast/admin-interface/pull/1630)] - Bump actions/download-artifact from 4 to 8
+- [[opencast/admin-interface#1629](https://github.com/opencast/admin-interface/pull/1629)] - Bump docker/build-push-action from 6 to 7
+- [[opencast/admin-interface#1657](https://github.com/opencast/admin-interface/pull/1657)] - Remove some debug logging statements
+- [[opencast/admin-interface#1656](https://github.com/opencast/admin-interface/pull/1656)] - Fix <td> <td> nesting
+- [[opencast/admin-interface#1626](https://github.com/opencast/admin-interface/pull/1626)] - Fix a bunch of eslint and type-checker complaints
+- [[opencast/admin-interface#1669](https://github.com/opencast/admin-interface/pull/1669)] - Assorted CSS code style improvements
+- [[opencast/admin-interface#1653](https://github.com/opencast/admin-interface/pull/1653)] - Type acl default config keys
+
+</details>
+
+<h3 id="editor-submodules-changes">Editor submodules changes</h3>
+<h4 id="uncategorized">📦 Uncategorized</h4>
+<ul>
+<li>Fix focus loss caused by sliders affecting keyboard shortcuts (follow-up to [<a href="https://github.com/opencast/editor/pull/1650">#1650</a>])</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1694">#1694</a>]</li>
+<li>Allow typing time in current time field</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1675">#1675</a>]</li>
+<li>Add configurable hotkeys</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1677">#1677</a>]</li>
+<li>Bump actions/github-script from 8 to 9</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1699">#1699</a>]</li>
+<li>Ensure node version matches parent pom</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1700">#1700</a>]</li>
+<li>Properly label GHA dependeabot updates</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1701">#1701</a>]</li>
+<li>Enable PR test builds into GH pages</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1709">#1709</a>]</li>
+<li>Improve npm checks</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1710">#1710</a>]</li>
+<li>Additional GHA bugs</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1712">#1712</a>]</li>
+<li>Update to React 19</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1705">#1705</a>]</li>
+<li>Bump the minor-and-patch group across 1 directory with 22 updates</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1716">#1716</a>]</li>
+<li>Final GHA polish</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1715">#1715</a>]</li>
+<li>Flip quote types in pr filter, correct indentation level</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1711">#1711</a>]</li>
+<li>Enable chapter view for development</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1719">#1719</a>]</li>
+<li>Bump the minor-and-patch group with 15 updates</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1726">#1726</a>]</li>
+<li>Bump jsdom from 29.1.1 to 30.0.1</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1728">#1728</a>]</li>
+<li>Subtitle timeline consolidation</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1731">#1731</a>]</li>
+<li>Prevent user from making video too short</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1717">#1717</a>]</li>
+<li>Make editor audio-only proof</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1706">#1706</a>]</li>
+<li>Yet more GHA issues</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1733">#1733</a>]</li>
+<li>Thumbnails in backend</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1708">#1708</a>]</li>
+<li>Redesign editor.opencast.org landing page</li>
+<li>PR: [<a href="https://github.com/opencast/editor/pull/1720">#1720</a>]</li>
+</ul>
+<h3 id="studio-submodule-changes">Studio submodule changes</h3>
+<h4 id="fixes_2">🐛 Fixes</h4>
+<ul>
+<li>[<a href="https://github.com/opencast/studio/pull/1333">opencast/studio#1333</a>] - Improve npm checks</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1360">opencast/studio#1360</a>] - Fix broken step navigation buttons</li>
+</ul>
+<h4 id="accessibility_1">Accessibility</h4>
+<ul>
+<li>no matching PRs</li>
+</ul>
+<h4 id="everything-else">Everything Else</h4>
+<ul>
+<li>[<a href="https://github.com/opencast/studio/pull/1315">opencast/studio#1315</a>] - Build(deps-dev): Bump follow-redirects from 1.15.11 to 1.16.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1323">opencast/studio#1323</a>] - Build(deps): Bump dawidd6/action-download-artifact from 19 to 21</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1324">opencast/studio#1324</a>] - Build(deps): Bump softprops/action-gh-release from 2 to 3</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1322">opencast/studio#1322</a>] - Build(deps-dev): Bump eslint-webpack-plugin from 5.0.3 to 6.0.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1325">opencast/studio#1325</a>] - Ensure node version matches parent pom</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1336">opencast/studio#1336</a>] - Build(deps): Bump @babel/core from 7.29.0 to 7.29.6</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1335">opencast/studio#1335</a>] - Build(deps-dev): Bump launch-editor from 2.12.0 to 2.14.1</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1334">opencast/studio#1334</a>] - Build(deps): Bump js-yaml from 4.1.1 to 4.2.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1331">opencast/studio#1331</a>] - Build(deps): Bump the minor-and-patch group across 1 directory with 17 updates</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1330">opencast/studio#1330</a>] - Build(deps): Bump qs and express</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1327">opencast/studio#1327</a>] - Build(deps): Bump @babel/plugin-transform-modules-systemjs from 7.28.5 to 7.29.7</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1326">opencast/studio#1326</a>] - Build(deps): Bump fast-uri from 3.1.0 to 3.1.2</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1337">opencast/studio#1337</a>] - Build(deps): Bump serialize-javascript and copy-webpack-plugin</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1338">opencast/studio#1338</a>] - Build(deps): Bump the minor-and-patch group with 7 updates</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1343">opencast/studio#1343</a>] - Build(deps): Bump actions/checkout from 6 to 7</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1345">opencast/studio#1345</a>] - Build(deps-dev): Bump websocket-driver from 0.7.4 to 0.7.5</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1344">opencast/studio#1344</a>] - Build(deps-dev): Bump ws from 8.18.3 to 8.21.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1347">opencast/studio#1347</a>] - Build(deps): Bump fast-uri from 3.1.2 to 3.1.4</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1346">opencast/studio#1346</a>] - Build(deps): Bump svgo from 3.3.3 to 3.3.4</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1349">opencast/studio#1349</a>] - Build(deps-dev): Bump webpack-dev-server from 5.2.5 to 5.2.6</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1350">opencast/studio#1350</a>] - Build(deps-dev): Bump shell-quote from 1.8.4 to 1.10.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1351">opencast/studio#1351</a>] - Build(deps-dev): Bump http-proxy-middleware from 2.0.9 to 2.0.10</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1352">opencast/studio#1352</a>] - Build(deps): Bump actions/setup-node from 6 to 7</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1355">opencast/studio#1355</a>] - Build(deps): Bump fast-uri from 3.1.4 to 3.1.5</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1356">opencast/studio#1356</a>] - Build(deps): Bump js-yaml from 4.2.0 to 4.3.1</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1357">opencast/studio#1357</a>] - Build(deps-dev): Bump brace-expansion from 1.1.15 to 1.1.18</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1361">opencast/studio#1361</a>] - Build(deps): Bump fast-uri from 3.1.5 to 3.1.7</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1362">opencast/studio#1362</a>] - Build(deps-dev): Bump @humanfs/node from 0.16.7 to 0.16.8</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1363">opencast/studio#1363</a>] - Build(deps): Bump browserslist from 4.28.1 to 4.28.8</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1364">opencast/studio#1364</a>] - Build(deps): Bump svgo from 3.3.4 to 3.3.5</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1366">opencast/studio#1366</a>] - Build(deps): Bump js-yaml from 4.3.1 to 4.3.2</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1368">opencast/studio#1368</a>] - Build(deps): Bump fast-uri from 3.1.7 to 3.1.8</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1369">opencast/studio#1369</a>] - Build(deps-dev): Bump brace-expansion from 1.1.18 to 1.1.21</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1367">opencast/studio#1367</a>] - Build(deps): Bump dawidd6/action-download-artifact from 21 to 26</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1370">opencast/studio#1370</a>] - Build(deps-dev): Bump proxy-addr from 2.0.7 to 2.0.8</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1371">opencast/studio#1371</a>] - Build(deps): Bump source-map-js from 1.2.1 to 1.2.2</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1373">opencast/studio#1373</a>] - Build(deps-dev): Bump shell-quote from 1.10.0 to 1.12.0</li>
+<li>[<a href="https://github.com/opencast/studio/pull/1372">opencast/studio#1372</a>] - Build(deps-dev): Bump compression from 1.8.1 to 1.8.2</li>
+</ul>
+<details>
+<summary>Uncategorized</summary>
+
+- [[opencast/studio#1315](https://github.com/opencast/studio/pull/1315)] - Build(deps-dev): Bump follow-redirects from 1.15.11 to 1.16.0
+- [[opencast/studio#1323](https://github.com/opencast/studio/pull/1323)] - Build(deps): Bump dawidd6/action-download-artifact from 19 to 21
+- [[opencast/studio#1324](https://github.com/opencast/studio/pull/1324)] - Build(deps): Bump softprops/action-gh-release from 2 to 3
+- [[opencast/studio#1322](https://github.com/opencast/studio/pull/1322)] - Build(deps-dev): Bump eslint-webpack-plugin from 5.0.3 to 6.0.0
+- [[opencast/studio#1325](https://github.com/opencast/studio/pull/1325)] - Ensure node version matches parent pom
+- [[opencast/studio#1336](https://github.com/opencast/studio/pull/1336)] - Build(deps): Bump @babel/core from 7.29.0 to 7.29.6
+- [[opencast/studio#1335](https://github.com/opencast/studio/pull/1335)] - Build(deps-dev): Bump launch-editor from 2.12.0 to 2.14.1
+- [[opencast/studio#1334](https://github.com/opencast/studio/pull/1334)] - Build(deps): Bump js-yaml from 4.1.1 to 4.2.0
+- [[opencast/studio#1331](https://github.com/opencast/studio/pull/1331)] - Build(deps): Bump the minor-and-patch group across 1 directory with 17 updates
+- [[opencast/studio#1330](https://github.com/opencast/studio/pull/1330)] - Build(deps): Bump qs and express
+- [[opencast/studio#1327](https://github.com/opencast/studio/pull/1327)] - Build(deps): Bump @babel/plugin-transform-modules-systemjs from 7.28.5 to 7.29.7
+- [[opencast/studio#1326](https://github.com/opencast/studio/pull/1326)] - Build(deps): Bump fast-uri from 3.1.0 to 3.1.2
+- [[opencast/studio#1337](https://github.com/opencast/studio/pull/1337)] - Build(deps): Bump serialize-javascript and copy-webpack-plugin
+- [[opencast/studio#1338](https://github.com/opencast/studio/pull/1338)] - Build(deps): Bump the minor-and-patch group with 7 updates
+- [[opencast/studio#1343](https://github.com/opencast/studio/pull/1343)] - Build(deps): Bump actions/checkout from 6 to 7
+- [[opencast/studio#1345](https://github.com/opencast/studio/pull/1345)] - Build(deps-dev): Bump websocket-driver from 0.7.4 to 0.7.5
+- [[opencast/studio#1344](https://github.com/opencast/studio/pull/1344)] - Build(deps-dev): Bump ws from 8.18.3 to 8.21.0
+- [[opencast/studio#1347](https://github.com/opencast/studio/pull/1347)] - Build(deps): Bump fast-uri from 3.1.2 to 3.1.4
+- [[opencast/studio#1346](https://github.com/opencast/studio/pull/1346)] - Build(deps): Bump svgo from 3.3.3 to 3.3.4
+- [[opencast/studio#1349](https://github.com/opencast/studio/pull/1349)] - Build(deps-dev): Bump webpack-dev-server from 5.2.5 to 5.2.6
+- [[opencast/studio#1350](https://github.com/opencast/studio/pull/1350)] - Build(deps-dev): Bump shell-quote from 1.8.4 to 1.10.0
+- [[opencast/studio#1351](https://github.com/opencast/studio/pull/1351)] - Build(deps-dev): Bump http-proxy-middleware from 2.0.9 to 2.0.10
+- [[opencast/studio#1352](https://github.com/opencast/studio/pull/1352)] - Build(deps): Bump actions/setup-node from 6 to 7
+- [[opencast/studio#1355](https://github.com/opencast/studio/pull/1355)] - Build(deps): Bump fast-uri from 3.1.4 to 3.1.5
+- [[opencast/studio#1356](https://github.com/opencast/studio/pull/1356)] - Build(deps): Bump js-yaml from 4.2.0 to 4.3.1
+- [[opencast/studio#1357](https://github.com/opencast/studio/pull/1357)] - Build(deps-dev): Bump brace-expansion from 1.1.15 to 1.1.18
+- [[opencast/studio#1361](https://github.com/opencast/studio/pull/1361)] - Build(deps): Bump fast-uri from 3.1.5 to 3.1.7
+- [[opencast/studio#1362](https://github.com/opencast/studio/pull/1362)] - Build(deps-dev): Bump @humanfs/node from 0.16.7 to 0.16.8
+- [[opencast/studio#1363](https://github.com/opencast/studio/pull/1363)] - Build(deps): Bump browserslist from 4.28.1 to 4.28.8
+- [[opencast/studio#1364](https://github.com/opencast/studio/pull/1364)] - Build(deps): Bump svgo from 3.3.4 to 3.3.5
+- [[opencast/studio#1366](https://github.com/opencast/studio/pull/1366)] - Build(deps): Bump js-yaml from 4.3.1 to 4.3.2
+- [[opencast/studio#1368](https://github.com/opencast/studio/pull/1368)] - Build(deps): Bump fast-uri from 3.1.7 to 3.1.8
+- [[opencast/studio#1369](https://github.com/opencast/studio/pull/1369)] - Build(deps-dev): Bump brace-expansion from 1.1.18 to 1.1.21
+- [[opencast/studio#1367](https://github.com/opencast/studio/pull/1367)] - Build(deps): Bump dawidd6/action-download-artifact from 21 to 26
+- [[opencast/studio#1370](https://github.com/opencast/studio/pull/1370)] - Build(deps-dev): Bump proxy-addr from 2.0.7 to 2.0.8
+- [[opencast/studio#1371](https://github.com/opencast/studio/pull/1371)] - Build(deps): Bump source-map-js from 1.2.1 to 1.2.2
+- [[opencast/studio#1373](https://github.com/opencast/studio/pull/1373)] - Build(deps-dev): Bump shell-quote from 1.10.0 to 1.12.0
+- [[opencast/studio#1372](https://github.com/opencast/studio/pull/1372)] - Build(deps-dev): Bump compression from 1.8.1 to 1.8.2
+
+</details>
 
   <br>
     
