@@ -1,9 +1,48 @@
-commit 3d65d64c47f8bfcb584dca0d81bead1f348cd275
+commit af3cff2eda9fafbfc5d40ef23ef3ff2d48ce268d
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Nov 19 23:48:49 2026 +0100
+Date:   Fri Nov 20 00:05:22 2026 +0100
 
-    Revert "Bump com.graphql-java:graphql-java-extended-scalars" (#8310)
+    Fix capture agents in other organizations never being marked offline (#8271)
     
-    This reverts commit f7b04799aacf88cb0afe9f2a29521b03c01fbb14. The
-    version breaks Opencast if the feature is enabled. I shouldn't have
-    merged that Dependabot update.
+    Fixes #7885.
+    
+    The agent cache's RemovalListener, which marks an expired agent offline,
+    used securityService.getOrganization() - the organization of whichever
+    thread happened to trigger the eviction - instead of the organization
+    already encoded in the cache key (agentName;==;org). In a multi-tenant
+    deployment, eviction processed on behalf of one organization could not
+    find another organization's agent, the resulting NotFoundException was
+    swallowed, and that agent was never transitioned to offline.
+    
+    Split the org out of the key the same way the cache loader already does,
+    instead of asking securityService for the calling thread's organization.
+    
+    ### How to test this patch
+    
+    Proper testing requires a multi-tenant setup, but testing the included
+    test might be good enough?
+    
+    ### AI Usage
+    
+    Fixed with Claude Sonnet 5.
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
