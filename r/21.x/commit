@@ -1,19 +1,67 @@
-commit aa062a42503a7f922dcbbb00be6f607ea48228f8
+commit 2fbc78597ff2898285fd90388f41492ea9ef28a6
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 20 00:05:52 2026 +0100
+Date:   Fri Nov 20 12:04:47 2026 +0100
 
-    Fix outdated names in LTI documentation (#8311)
+    Invalidate cached users after group changes are persisted (#8303)
     
-    The LTI configuration guide still referred to the
-    oauthProtectedResourceFilter, which was replaced by the
-    lti11AuthenticationFilter with the update to Spring Security 5, and to
-    the old name of the LTI launch authentication handler configuration
-    file.
+    `JpaGroupRoleProvider` invalidated the affected users in the user cache
+    *before* it persisted a group membership change. A user who was loaded
+    between the invalidation and the commit was cached again with the old
+    group roles and kept them until the cache entry expired.
     
+    This patch moves the invalidation after the `addGroup(group)` call in
+    the three methods named in #8293:
+    
+    - `removeMemberFromGroup`
+    - `addMemberToGroup`
+    - `updateGroup`
+    
+    As a side effect, no user is invalidated any longer if `addGroup(…)`
+    throws an `UnauthorizedException`, since nothing changed in that case.
+    
+    I considered putting the invalidation into `addGroup(…)` itself, but
+    that method does not know which members changed and is also used for
+    plain group creation, so it would have to invalidate every member on
+    every call. Moving the three existing calls is the smaller change and is
+    what the issue suggests.
+    
+    This targets `r/21.x` since it is a small bug fix that changes no
+    database tables, indexes, translation keys or configuration. The code is
+    identical on `develop`.
+    
+    Fixes #8293
+    
+    ### How to test this patch
+    
+    This is a race condition, so it cannot be triggered reliably on a
+    running system. The patch adds unit tests to `JpaGroupRoleProviderTest`
+    instead:
+    
+    - For each of the three methods, a mocked `UserDirectoryService` checks
+    at the moment `invalidate(…)` is called that the new membership can
+    already be loaded from the database.
+    - One test checks that no user is invalidated when the change is
+    rejected with an `UnauthorizedException`.
+    
+    All four new tests fail without the change to `JpaGroupRoleProvider` and
+    pass with it:
+    
+    ```
+    ./mvnw -pl modules/userdirectory test -Dtest=JpaGroupRoleProviderTest
+    ```
+    
+    I also ran `./mvnw -pl modules/userdirectory install`: Checkstyle
+    reports 0 violations. Locally I only had JDK 27 available, on which
+    `JpaUserProviderTest` fails in `setUp` with an EasyMock class-mocking
+    error, with and without this patch; the other tests of the module pass.
+    I did not test this on a running Opencast.
     
     ### AI Usage
     
-    Used Claude Fable 5.2
+    This pull request was created with an AI coding agent (Claude by
+    Anthropic, used through Claude Code). The agent traced the code path
+    described in the issue, wrote the change and the tests, and ran the
+    build and tests described above.
     
     ### Your pull request should…
     
@@ -23,15 +71,15 @@ Date:   Fri Nov 20 00:05:52 2026 +0100
     if one exists
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [x] pass automated tests
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
-    * [x] include a [release
+    * [ ] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)
