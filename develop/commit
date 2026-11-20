@@ -1,30 +1,24 @@
-commit af3cff2eda9fafbfc5d40ef23ef3ff2d48ce268d
+commit 1ba8cf1980f177795bb297cf572d4287cb1e6ed5
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 20 00:05:22 2026 +0100
+Date:   Fri Nov 20 12:10:16 2026 +0100
 
-    Fix capture agents in other organizations never being marked offline (#8271)
+    Fix 500 error for GET /api/playlists with multi-value Accept header (#8267)
     
-    Fixes #7885.
+    Fixes #8132.
     
-    The agent cache's RemovalListener, which marks an expired agent offline,
-    used securityService.getOrganization() - the organization of whichever
-    thread happened to trigger the eviction - instead of the organization
-    already encoded in the cache key (agentName;==;org). In a multi-tenant
-    deployment, eviction processed on behalf of one organization could not
-    find another organization's agent, the resulting NotFoundException was
-    swallowed, and that agent was never transitioned to offline.
-    
-    Split the org out of the key the same way the cache loader already does,
-    instead of asking securityService for the calling thread's organization.
+    Response.ok(entity, mediaType) requires a single media type, but clients
+    commonly send several, e.g. the XHR default "text/plain, */*; q=0.01".
+    Route through ApiResponseBuilder.Json.ok() instead, which already
+    handles this via ApiMediaType.parse(), matching the other external-API
+    endpoints.
     
     ### How to test this patch
     
-    Proper testing requires a multi-tenant setup, but testing the included
-    test might be good enough?
+    See linked issue.
     
     ### AI Usage
     
-    Fixed with Claude Sonnet 5.
+    Analysis and fix written with Claude Sonnet 5.
     
     ### Your pull request should…
     
