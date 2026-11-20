@@ -36,6 +36,7 @@
           {title: "Scheduler", url: "#_top", children: [
               {title: "Modules", url: "#modules" },
               {title: "Database", url: "#database" },
+              {title: "Conflict Detection and Recurring Events", url: "#conflict-detection-and-recurring-events" },
               {title: "API", url: "#api" },
           ]},
         ];
@@ -86,6 +87,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="scheduler">Scheduler</h1>
+<p>The scheduler service manages recordings that have been booked for the future: when, on which capture agent, and
+with what workflow configuration. For the protocol capture agents use to pick up their schedule and report back
+recordings, see the <a href="../capture-agent/capture-agent/">capture agent guide</a>; this page covers the scheduler service's
+own internals instead.</p>
 <h2 id="modules">Modules</h2>
 <p>The scheduler service consists of the following modules:</p>
 <ul>
@@ -97,26 +102,38 @@ The default implementation of the scheduler service as an OSGi service.</li>
 The remote implementation of the scheduler service as an OSGi service.</li>
 </ul>
 <h2 id="database">Database</h2>
-<p>The scheduler service stores snapshots using the AssetManager and additionally uses two tables:</p>
+<p>A scheduled event is, underneath, an AssetManager snapshot: the same storage the rest of Opencast uses for actual
+recordings, just taken before any media exists. Fields that don't fit a media package — start and end time, which
+capture agent, which users — are kept separately in two scheduler-specific tables:</p>
 <ul>
 <li><code>oc_scheduled_extended_event</code>
-  Manages scheduled event meta data such as start date, end date, capture agent ID, and so on.</li>
+  The actual scheduling data per event: start date, end date, capture agent ID, and so on.</li>
 <li><code>oc_scheduled_last_modified</code>
-  Manages the last recording modification date of a status change on an event sent by the capture agent.</li>
+  One row per capture agent, touched on every create, update, or delete of any of that agent's events. This is
+  what lets the calendar endpoint a capture agent polls respond with an HTTP ETag, letting an agent skip
+  reprocessing its schedule when nothing has actually changed for it.</li>
 </ul>
+<h2 id="conflict-detection-and-recurring-events">Conflict Detection and Recurring Events</h2>
+<p>Creating or updating an event checks for other events already scheduled on the <em>same capture agent</em> with an
+overlapping time window; if any are found, the call fails with a <code>SchedulerConflictException</code> rather than silently
+double-booking the agent.</p>
+<p>A series of recurring events can be scheduled in one call by passing an iCal <code>RRule</code> instead of a single start and
+end time. The service expands the rule into a list of individual time periods and creates one independent event
+per period, each from the same template media package but with its own generated ID. There is no ongoing link
+between them afterward — each is a regular scheduled event like any other, subject to the same per-agent conflict
+check as the rest.</p>
 <h2 id="api">API</h2>
 <p>Here is a sample to create a single event with the scheduler Java API.</p>
-<pre><code class="language-java">  public void createEvent(Event event) {
-    schedulerService.addEvent(event.getStart(),
-                              event.getEnd(),
-                              event.getAgentId(),
-                              event.getUsers(),
-                              event.getMediaPackage(),
-                              event.getWfProperties(),
-                              event.getCaMetadata(),
-                              event.getSource(),
-                              &quot;organization-xyz-script&quot;;
-  }
+<pre><code class="language-java">public void createEvent(Event event) {
+  schedulerService.addEvent(event.getStart(),
+                            event.getEnd(),
+                            event.getAgentId(),
+                            event.getUsers(),
+                            event.getMediaPackage(),
+                            event.getWfProperties(),
+                            event.getCaMetadata(),
+                            Optional.of(&quot;organization-xyz-script&quot;));
+}
 </code></pre>
 
   <br>
