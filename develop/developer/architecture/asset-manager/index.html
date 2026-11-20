@@ -91,20 +91,87 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The AssetManager consists of the following modules:</p>
 <ul>
 <li><code>asset-manager-api</code>
-An API module defining the core AssetManager functions, properties and the query language.</li>
+An API module defining the core AssetManager functions and properties.</li>
 <li><code>asset-manager-impl</code>
 The default implementation of the AssetManager as an OSGi service, containing the storage API for pluggable asset stores.</li>
 <li><code>asset-manager-storage-fs</code>
-The default  implementation of the AssetStore. Depends on asset-manager-impl.</li>
-<li><code>asset-manager-util</code>
-Additional functionality for the AssetManager providing utilities such as starting workflows on archived snapshots, etc.</li>
+An implementation of the AssetStore that archives to the local filesystem. Depends on asset-manager-impl.</li>
+<li><code>asset-manager-storage-aws</code>
+An implementation of the AssetStore that archives to an S3 bucket, with its own small database mapping stored assets
+to S3 objects. Depends on asset-manager-impl.</li>
+<li><code>asset-manager-static-file-authorization</code>
+Authorizes direct, static access to archived files by checking the requesting user's roles against the ACL a
+snapshot's elements were archived with, stored as properties.</li>
 <li><code>asset-manager-workflowoperation</code>
-A workflow operation handler to take media package snapshots of a media package from inside a running workflow.</li>
+Workflow operation handlers to take a snapshot, move it between stores, delete it, or select a specific version,
+all from inside a running workflow.</li>
+<li><code>shared-filesystem-utils</code>
+Utilities that build on the AssetManager, such as starting a workflow on the latest archived snapshot of each of a
+given list of episodes.</li>
 </ul>
 <h3 id="high-level-view">High Level View</h3>
-<p>TODO Describes components and how they relate.</p>
+<p>The AssetManager is a facade (<code>AssetManager</code>, implemented by the OSGi service <code>AssetManagerImpl</code>) in front of two
+separate concerns: a database, and one or more <a href="#assetstore">asset stores</a> that hold media package elements'
+actual bytes. An element's content always goes to an asset store, never the database — but the database is not
+just bookkeeping about the stores, either: each snapshot's full media package manifest is kept as XML directly in a
+database column (<code>SnapshotDto.mediaPackageXml</code>), duplicating the <code>manifest.xml</code> archived separately to the asset
+store, and <a href="#working-with-properties">properties</a> are typed values stored entirely in the database, with no asset
+store involved at all. For elements themselves, what the database consistently tracks is which snapshot each one
+belongs to, its checksum, and which store currently holds it — tracking that makes it possible to move a snapshot
+between stores without the <code>AssetManager</code> API consumer ever needing to know where a given version's bytes actually
+live. Running more than one store side by side is a real, supported deployment: alongside the default local
+filesystem store, <code>asset-manager-storage-aws</code> can archive to S3, and the admin guide's <a href="https://docs.opencast.org/stable/admin/#workflowoperationhandlers/move-storage-woh/">move storage workflow
+operation</a> is built specifically
+to move snapshots to that kind of colder storage — the admin guide's own example is moving the raw input media there
+once initial processing is done.</p>
+<p>Taking a <a href="#taking-snapshots">snapshot</a> with <code>takeSnapshot()</code> walks a media package's elements and, for each one,
+asks the <a href="../filesystem/#the-workspace">workspace</a> for the bytes and hands them to the local <code>AssetStore</code>
+(<code>getLocalAssetStore().put()</code>) under a <code>StoragePath</code> keyed by organization, media package ID, version, and element
+ID — the same archiving path <a href="../filesystem/#from-workspace-to-the-archive">filesystem.md</a> already describes for the
+filesystem-backed store. Before writing fresh content, though, <code>AssetManagerImpl</code> checks the database for an asset
+with the same checksum already archived anywhere in that store; if one exists, it copies (hard-links, where the
+store supports it) rather than storing the bytes again. This is a second, independent form of deduplication from
+the workspace's hard-linking: it applies across the whole archive and all episodes, not just within one node's
+local cache.</p>
+<p>Every snapshot is versioned and immutable — a version, once archived, is never rewritten, only superseded by a new
+one or deleted outright. Read and write access to a media package's snapshots is checked on every operation
+(<code>isAuthorized()</code>) against the media package's <a href="#security">access control list</a>; that same ACL is also copied into
+the episode's properties at snapshot time, which lets other components — the <a href="#modules">static file authorization
+module</a> among them — check access without going through the full <code>AssetManager</code> API.</p>
 <h3 id="classes">Classes</h3>
-<p>TODO Most important classes and how they relate</p>
+<ul>
+<li><code>AssetManager</code> / <code>AssetManagerImpl</code>
+  The facade described <a href="#high-level-view">above</a>; the entry point for every AssetManager operation.</li>
+<li><code>Snapshot</code> / <code>SnapshotImpl</code>
+  One archived, immutable version of a media package: its <code>Version</code>, organization, owner, <code>Availability</code>, the ID of
+  the asset store holding it, and the media package itself. At archive time, each element's URI is rewritten to a
+  storage-neutral <code>urn:matterhorn:...</code> identifier rather than a live URL, since the snapshot's storage location can
+  change later; <code>HttpAssetProvider</code> rewrites these back into real, fetchable URLs whenever a snapshot is retrieved
+  through the API.</li>
+<li><code>Asset</code> / <code>AssetImpl</code>
+  One archived media package element's content: its checksum, MIME type, size, <code>Availability</code>, and the ID of the
+  asset store holding it. A snapshot owns many assets, one per element.</li>
+<li><code>AssetId</code>
+  Identifies an asset as the triple {<code>Version</code>, media package ID, media package element ID}, used at the
+  <code>AssetManager</code> API level, for example by <code>getAsset()</code>. Distinct from <code>StoragePath</code> below.</li>
+<li><code>StoragePath</code>
+  The coordinate an <code>AssetStore</code> actually keys a stored element's location by: {organization ID, media package ID,
+  <code>Version</code>, element ID}. It carries the organization ID that <code>AssetId</code> leaves out, since a store can be shared
+  across organizations even though <code>AssetId</code> values are already unique without it.</li>
+<li><code>Version</code> / <code>VersionImpl</code>
+  An ordered, comparable version number, unique per media package. Claimed via <code>Database.claimVersion()</code>, which
+  increments the last-claimed value for that media package ID or starts at <code>VersionImpl.FIRST</code> for a new episode.</li>
+<li><code>Property</code> / <code>PropertyId</code> / <code>Value</code>
+  A typed key-value pair scoped to an episode by <code>PropertyId</code>'s {media package ID, namespace, name}, not to a single
+  snapshot. Covered in detail under <a href="#working-with-properties">Working with Properties</a> below.</li>
+<li><code>AssetStore</code> / <code>RemoteAssetStore</code>
+  The pluggable storage interface described under <a href="#assetstore">AssetStore</a>; <code>RemoteAssetStore</code> is the sub-interface
+  additional, non-local stores implement so more than one can be bound at once, as <a href="#high-level-view">described
+  above</a>.</li>
+<li><code>Database</code>
+  The persistence layer, in <code>asset-manager-impl</code>'s <code>persistence</code> package. Its DTOs (<code>SnapshotDto</code>, <code>AssetDto</code>,
+  <code>PropertyDto</code>, <code>VersionClaimDto</code>) map onto the four tables described under <a href="#database">Database</a> below.</li>
+</ul>
 <h2 id="default-implementation">Default Implementation</h2>
 <h3 id="assetstore">AssetStore</h3>
 <p>Assets are stored in the following directory structure.</p>
@@ -129,14 +196,49 @@ A workflow operation handler to take media package snapshots of a media package 
   Manages the next free version number per episode.</li>
 </ul>
 <h3 id="security">Security</h3>
-<p>TODO</p>
+<p>Every <code>AssetManager</code> read or write method checks <code>isAuthorized(mediaPackageId, action)</code> first, where <code>action</code> is
+either <code>READ_ACTION</code> or <code>WRITE_ACTION</code>. What that check does depends on the caller:</p>
+<ul>
+<li>A global administrator is always granted access.</li>
+<li>An organization administrator is granted access as long as a snapshot for that media package exists in their own
+  organization — no further per-episode check.</li>
+<li>Any other user must first belong to the same organization, and then either hold the synthetic role
+  <code>ROLE_EPISODE_&lt;mediaPackageId&gt;_&lt;ACTION&gt;</code> — the same scoped-access mechanism used elsewhere in Opencast to grant
+  access without an actual ACL role, for example to a signed URL's session — or have a role that matches one of the
+  media package's archived ACL entries.</li>
+</ul>
+<p>The <em>active ACL</em> of a media package is whichever access control list currently applies to it: its own episode-level
+XACML attachment if it has one, else its series' XACML attachment, else the organization's global default. It is
+resolved fresh, on demand, via <code>AuthorizationService.getActiveAcl()</code>, and it can change over time — for instance
+when an editor changes an event's access rights.</p>
+<p>The ACL check against an archived snapshot's roles does not resolve the active ACL this way. Instead,
+<code>takeSnapshot()</code> resolves it once, at the moment the snapshot is taken, and copies each of its entries into a
+property under the <code>org.opencastproject.assetmanager.security</code> namespace, keyed by <code>"&lt;role&gt; | &lt;action&gt;"</code>. From then
+on, that snapshot's authorization check reads only this stored copy — it is never re-resolved or kept in sync with
+the active ACL afterward. If the active ACL changes later, only snapshots taken after that change reflect it; older
+snapshots keep the access rules that were active when <em>they</em> were archived. This also lets other components check
+access without going through the <code>AssetManager</code> API at all: <a href="#modules"><code>asset-manager-static-file-authorization</code></a>
+queries these stored properties directly to gate static file access.</p>
+<p><code>AssetManagerImpl</code>'s check reads that stored copy. The general-purpose <code>AuthorizationService.hasPermission()</code>
+implements the same episode-role-then-ACL pattern, but does not read a stored copy at all — it resolves the active
+ACL fresh on every call instead. The two are separate, duplicate implementations of the same logic against two
+different sources of truth, and the code carries its own acknowledgment that unifying them is not safe to do
+casually.</p>
+<p>One thing the ACL check above does <em>not</em> cover: <code>takeSnapshot()</code> still tags every snapshot with an owner
+(<code>Snapshot.getOwner()</code>), but that ownership is no longer enforced as an access boundary anywhere. Deleting a
+snapshot (<code>deleteSnapshots()</code>, <code>deleteAllButLatestSnapshot()</code>) checks only <code>isAuthorized(mpId, WRITE_ACTION)</code> — any
+user with write access to the media package can delete any of its snapshots, regardless of who owns them.</p>
 <h2 id="usage">Usage</h2>
 <h3 id="taking-snapshots">Taking Snapshots</h3>
-<p>TODO</p>
+<p><code>takeSnapshot(MediaPackage mp)</code> archives a versioned copy of a media package, as described under <a href="#high-level-view">High Level
+View</a>. It reuses the owner of the media package's existing latest snapshot, or
+<code>AssetManager.DEFAULT_OWNER</code> if this is the first snapshot of the episode; <code>takeSnapshot(String owner, MediaPackage
+mp)</code> lets a caller set the owner explicitly instead. As covered under <a href="#security">Security</a>, that owner is recorded
+but no longer enforced as an access boundary.</p>
 <h3 id="working-with-properties">Working with Properties</h3>
-<p>Properties are associated with an episode, not a single snapshot. They act as annotations helping services to work with
-saved media packages without having to implement their own storage layer. Properties are typed and can be used to create
-queries.</p>
+<p>Properties are associated with an episode, not a single snapshot. They act as annotations helping services to work
+with saved media packages without having to implement their own storage layer. Properties are typed, and identified
+by a <code>PropertyId</code>: a media package ID, a namespace, and a name.</p>
 <h4 id="getting-started">Getting Started</h4>
 <p>Let's start with an fictious example of an ApprovalService. The approval service keeps track of approvals given by an
 editor to publish a media package. Only approved media packages may be published and the editor should also be able to
@@ -150,89 +252,21 @@ am.setProperty(Property.mk(PropertyId.mk(
   Value.mk(true)));
 </code></pre>
 <p>It is recommended to use namespace names after the service's package name, in the example:
-<code>org.opencastproject.approval</code>. This code looks overly verbose. Also you need to deal with namespace names and property
-names directly. That's cumbersome and error prone even though you might intoduce constants for them. To help remedy this
-situation a little helper class class <code>PropertySchema</code> exists. It is strongly recommended to make use of it. Here's how
-it goes.</p>
-<pre><code>static class ApprovalPops extends PropertySchema {
- public ApprovalProps(AQueryBuilder q) {
-   super(q, "org.opencastproject.approval");
- }
-
- public PropertyField&lt;Boolean&gt; approved() {
-   return booleanProp("approved");
- }
-
- public PropertyField&lt;String&gt; comment() {
-   return stringProp("comment");
- }
-
- public PropertyField&lt;Date&gt; date() {
-   return dateProp("date");
- }
-}
+<code>org.opencastproject.approval</code>. Beyond that, there is no dedicated helper class for grouping related properties —
+namespaces and names are just plain strings, so services typically define their own constants for them rather than
+repeating literals.</p>
+<h4 id="reading-and-deleting-properties">Reading and Deleting Properties</h4>
+<p><code>selectProperties(mediaPackageId, namespace)</code> returns every property in that namespace for a given media package.</p>
+<pre><code>List&lt;Property&gt; approvalProperties = am.selectProperties(mp, "org.opencastproject.approval");
 </code></pre>
-<p>Now you can set properties like this.</p>
-<pre><code>am.setProperty(p.approved().mk(mp, false));
-am.setProperty(p.comment().mk(mp, "Audio quality is too poor!"));
-am.setProperty(p.date().mk(mp, new Date());
-</code></pre>
-<p>Now, if you want to find all episodes that have been rejected you need to create and run the following query.</p>
-<pre><code>AQueryBuilder q = am.createQuery();
-AResult r = q.select(q.snapshot()).where(p.approved().eq(true)).run();
-</code></pre>
-<p>This query yields all snapshots of all episodes that have been approved. But that's not exactly what we want as we are
-only interested in the latest snapshot generated when we re-run the approval process, and resetting all previous
-approvals.</p>
-<pre><code>q.select(q.snapshot())
-  .where(p.approved().eq(true).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>This will only return the latest version of each episode. However, along with the information of the approved
-episodes,we want to display when they were approved. Looking at the AResult and ARecord interfaces it seems that
-properties need to be selected in order to fetch them.</p>
-<pre><code>q.select(q.snapshot(), q.properties())
-  .where(p.approved().eq(true).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>Here we go. Now we can access all properties stored with the returned snapshots. Now, let's assume other services make
-heavy use of properties too. This may cause serious database IO if we always select all properties like we did using the
-q.properties() target. Let's do better.</p>
-<pre><code>q.select(q.snapshot(), q.propertiesOf("org.opencastproject.approval"))
-  .where(p.approved().eq(true).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>This will return only the properties of our service's namespace. But do we have to deal with namespace strings again?
-No.</p>
-<pre><code>q.select(q.snapshot(), q.propertiesOf(p.allProperties()))
-  .where(p.approved().eq(true).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>Our implementation of <code>PropertySchema</code> provides as with a ready to use target for the properties of our namespace only.
-In our use case we could reduce IO even further since we're only interested in the date property.</p>
-<pre><code>q.select(q.snapshot(), q.propertiesOf(p.date().target()))
-  .where(p.approved().eq(true).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>This is the query returns only the latest snapshots of all episodes being approved together with the date of approval.
-Now that you've seen how to create properties let's move on to delete them again.</p>
-<h4 id="deleting-properties">Deleting Properties</h4>
-<p>Properties are deleted pretty much like they are queried, using a delete query.</p>
-<pre><code>q.delete(q.propertiesOf(p.allProperties())).run();
-</code></pre>
-<p>The above query deletes all properties that belong to schema p from all episodes. If you want to restrict deletion to a
-single episode, add an id predicate to the where clause.</p>
-<pre><code>q.delete(q.propertiesOf(p.allProperties()))
-  .where(q.mediaPackageId(mpId))
-  .run();
-</code></pre>
-<p>Deleting just a single property from all episodes is also possible.</p>
-<pre><code>q.delete(p.approved()).run();
-</code></pre>
-<p>Or multiple properties at once.</p>
-<pre><code>q.delete(p.approved(), p.comment()).run();
-</code></pre>
-<p>Please see the query API documentation for further information.</p>
+<p>There is no query language for combining a property lookup with a snapshot lookup in a single call, and no way to
+filter episodes by a property's value across the whole archive either — a caller has to already have a candidate
+list of media package IDs from somewhere else (the search index, for instance), then call <code>getLatestSnapshot(mpId)</code>
+and <code>selectProperties(mpId, namespace)</code> separately for each one and correlate the two itself. This isn't a pattern
+used anywhere in the current codebase; it's simply what combining the two calls would require.</p>
+<p><code>deleteProperties(mediaPackageId)</code> deletes every property for a media package; <code>deleteProperties(mediaPackageId,
+namespace)</code> restricts that to one namespace. <code>deletePropertiesWithCurrentUser(mediaPackageId, namespace)</code> does the
+same but is further scoped by <a href="#security">the current user's authorization</a>.</p>
 <h4 id="value-types">Value Types</h4>
 <p>The following type are available for properties:</p>
 <ul>
@@ -267,67 +301,20 @@ for (Value v : vs) {
 </code></pre>
 <p>The class <code>org.opencastproject.assetmanager.api.fn.Properties</code> contains various utility functions to help extracting
 values from properties.</p>
-<h4 id="using-propertyschema">Using PropertySchema</h4>
-<p>You've already seen that a property is constructed from a media package id, a namespace, a property name and a value.
-Since this is a bit cumbersome, the API features an abstract base class to construct property schemas. The resulting
-schema implementations encapsulate all the string constants so that you don't have to deal with them manually. Please
-see the example in the <em>Getting Started</em> section. It is strongly recommended to work with schemas as much as possible.</p>
-<h3 id="creating-and-running-queries">Creating and Running Queries</h3>
-<p>Creating and running a query is a two step process. First, you create a new <code>AQueryBuilder</code>.</p>
-<pre><code>AQueryBuilder q = am.createQuery();
+<h3 id="retrieving-and-deleting-snapshots">Retrieving and Deleting Snapshots</h3>
+<p>Beyond <code>getLatestSnapshot(mediaPackageId)</code>, already used under <a href="#working-with-properties">Working with Properties</a>,
+<code>AssetManager</code> offers a family of purpose-built getters rather than a general query language:
+<code>getSnapshotsById</code>, <code>getSnapshotsByIdAndVersion</code>, <code>getSnapshotsByDateOrderedById</code>, <code>getLatestSnapshotsBySeriesId</code>,
+and others — see the interface's own Javadoc for the full list.</p>
+<pre><code>List&lt;Snapshot&gt; versions = am.getSnapshotsById(mpId);
 </code></pre>
-<p>Next, you build a query like this.</p>
-<pre><code>ASelectQuery s = q.select(q.snapshot())
-  .where(q.mediaPackageId(mpId).and(q.version().isLatest());
+<p>Deleting works the same way: <code>deleteSnapshots(mediaPackageId)</code> removes every snapshot of a media package, and
+<code>deleteAllButLatestSnapshot(mediaPackageId)</code> removes every version but the newest — the more common case, for
+reclaiming disk space without losing the current version.</p>
+<pre><code>int removed = am.deleteAllButLatestSnapshot(mpId);
 </code></pre>
-<p>Now it's time to actually run the query against the database.</p>
-<pre><code>AResult r = s.run();
-</code></pre>
-<p>All this can, of course, be done in a single statement, but it has been broken up in several steps  to show you the
-intermediate types.</p>
-<pre><code>am.createQuery()
-  .select(q.snapshot())
-  .where(q.mediaPackageId(mpId).and(q.version().isLatest())
-  .run();
-</code></pre>
-<p>The result set <code>r</code> contains the retrieved data encapsulated in stream of <code>ARecord</code> objects. If nothing matched the given
-predicates then a call to r.getRecords() yields an empty stream. Please note that even though a <code>Stream</code> is returned, it
-does not mean that the result set is actually streamed—or lazily loaded—from the database. The <code>Stream</code> interface is
-just far more powerful than the collection types from JCL.</p>
-<h4 id="a-note-on-immutability">A note on immutability</h4>
-<p>Please note that all classes of the query API are immutable and therefore safe to be used in a concurrent environment.
-Whenever you call a factory method on an instance of one of the query classes a new instance is yielded. They never
-mutate state.</p>
-<h3 id="accessing-query-results">Accessing Query Results</h3>
-<p>Running a query yields an object of type <code>AResult</code> which in turn yields the found result records. Besides it also
-provides some general result metadata like the set limit, offset etc. An <code>ARecord</code> holds the found snapshots and
-properties, depending on the select targets and the predicates. If no snapshots have been selected then, none will be
-returned here. The same holds true for properties. However, an <code>ARecord</code> instance holding the media package id is
-created regardless of the requested targets. The typical pattern to access query results is to iterate over the stream
-of records. This can be accomplished using a simple for loop or one of the functional methods that the <code>Stream</code> type
-provides, e.g. map over the elements of a stream to create a new one. For easy access to fetched resources you may wrap
-the result in an enrichment.</p>
-<pre><code>AResult r = …;
-RichAResult rr = Enrichments.enrich(r);
-</code></pre>
-<p><code>RichAResult</code> features methods to directly access all fetched snapshots and properties.</p>
-<h3 id="deleting-snapshots">Deleting Snapshots</h3>
-<p>This works exactly like deleting properties, except that you need to specify snapshots instead of properties.
-Please note that it's also possible to specify snapshots and properties simultanously.</p>
-<pre><code>q.delete("owner", q.snapshot()).where(q.version().isLatest().not()).run();
-</code></pre>
-<p>The above query deletes all snapshots but the latest. This is a good query to free up some disc space.</p>
-<p>Snapshots can only be deleted per owner.</p>
-<h3 id="query-language-reference">Query Language Reference</h3>
-<p>The query API features</p>
-<ul>
-<li>select clause and targets</li>
-<li>where clause with boolean and relational operations, nesting of boolean operations</li>
-<li>selecting by properties</li>
-<li>order-by clause</li>
-<li>querying and deleting</li>
-</ul>
-<p>Please see the API doc for further information about the various elements and how to create them.</p>
+<p>As covered under <a href="#security">Security</a>, deletion is not scoped by owner: either call requires only write access to
+the media package as a whole.</p>
 
   <br>
     
