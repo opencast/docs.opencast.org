@@ -1,36 +1,205 @@
-commit a7c77137953e20d7873b80826d9dd8628cb6a422
+commit b5d60c0bba6d68a1ca1f1fdd7a7e19e6a0b7f72e
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 20 14:08:48 2026 +0100
+Date:   Fri Nov 20 15:48:20 2026 +0100
 
-    Write the filesystem architecture page (#8066)
+    Bump com.google.crypto.tink:tink from 1.16.0 to 1.24.0 in /modules/metrics-exporter (#8188)
     
-    Replaces the "under construction" placeholder with an explanation of the
-    working file repository, the per-node workspace cache in front of it,
-    and how archiving a snapshot extends the same hard-link chain into the
-    asset store, grounded directly in the working-file-repository, workspace
-    and asset-manager-storage-fs code.
+    Bumps
+    [com.google.crypto.tink:tink](https://github.com/tink-crypto/tink-java)
+    from 1.16.0 to 1.24.0.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/tink-crypto/tink-java/releases">com.google.crypto.tink:tink's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>Tink Java v1.24.0</h2>
+    <p>Tink is a multi-language, cross-platform library that provides simple
+    and
+    misuse-proof APIs for common cryptographic tasks.</p>
+    <p><strong>This is Tink Java 1.24.0</strong></p>
+    <p>The complete list of changes since 1.23.0 can be found <a
+    href="https://github.com/tink-crypto/tink-java/compare/v1.23.0...v1.24.0">here</a>.</p>
+    <h2>New Features</h2>
+    <ul>
+    <li>
+    <p>APIs which depend on what algorithms are registered now have an
+    overload taking a configuration argument. Using these overloads allows
+    to ensure that behavior is independent of what else is linked in the
+    binary. For example, instead of
+    <code>keysetHandle.getPrimitive(Aead.class)</code>, users can now write
+    <code>keysetHandle.getPrimitive(TinkConfig2026.get(),
+    Aead.class)</code>. Similary for key generation and serialization of
+    keysets.</p>
+    <p>The following configs are available: <code>AeadConfig2026</code>
+    (which does not contain the KMS algorithms; use
+    <code>KmsAeadConfig2026</code> for those),
+    <code>DeterministicAeadConfig2026</code>, <code>HybridConfig2026</code>,
+    <code>JwtConfig2026</code>, <code>KeyDerivationConfig2026</code>,
+    <code>MacConfig2026</code>, <code>PrfConfig2026</code>,
+    <code>SignatureConfig2026</code>, <code>StreamingAeadConfig2026</code>.
+    In addition, <code>TinkConfig2026</code> contains all of the above
+    algorithms (except the KMS algorithms). Finally,
+    <code>RegistryConfiguration.java</code> is available to make previous
+    behavior (examining the registered algorithms) explicit.</p>
+    <p>Finally, the <code>Configuration</code> interface needed to implement
+    new behavior is completely public, and users can implement it
+    themselves.</p>
+    </li>
+    <li>
+    <p>Added support for <code>JWT ML-DSA</code> signatures.</p>
+    </li>
+    <li>
+    <p>Added support for <code>MLDSA44-Ed25519-SHA512</code> and
+    <code>MLDSA65-Ed25519-SHA512</code> Composite ML-DSA algorithms.</p>
+    </li>
+    <li>
+    <p>X-Wing HPKE is now also available on Android. In particular, it is
+    available natively on Android 17 (or above), or otherwise on Android 12
+    (or above) with SDK Extensions version 22 or later.</p>
+    </li>
+    <li>
+    <p>Added predefined HPKE parameters.</p>
+    </li>
+    <li>
+    <p>Added the <code>Prehash</code> primitive interface for computing
+    prehashes of messages, to support the prehash-and-sign paradigm (such as
+    ML-DSA External Mu).</p>
+    </li>
+    <li>
+    <p>Updated 'org.conscrypt:conscrypt-openjdk-uber' to version 2.7.0.</p>
+    </li>
+    </ul>
+    <h2>Changes</h2>
+    <ul>
+    <li>Changed the named parameter name for SLH-DSA-SHA2-128S with Tink
+    output prefix type from <code>SLH_DSA_SHA2_128S_TINK</code> to
+    <code>SLH_DSA_SHA2_128S</code> for consistency with the other Tink
+    languages.</li>
+    <li>In <code>SignaturePemKeysetReader</code>, treat Base64 decoding
+    failures like other PEM key parsing errors.</li>
+    <li>In <code>SignaturePemKeysetReader</code>, continue parsing multi-key
+    PEM bundles after encountering an unparsable key.</li>
+    <li>In <code>SignaturePemKeysetReader</code>, preserve the parsed RSA
+    public exponent when importing RSA public keys instead of hardcoding
+    <code>65537</code> (<code>F4</code>).</li>
+    <li>Fixed unchecked runtime exceptions in
+    <code>JwkSetConverter.toPublicKeysetHandle</code> and
+    <code>SignatureJwkSetConverter.toPublicKeysetHandle</code> when
+    importing malformed JWK sets, ensuring they consistently throw a
+    <code>GeneralSecurityException</code>.</li>
+    <li>Validate coordinate lengths against curve field size in
+    <code>JwkSetConverter</code> and
+    <code>SignatureJwkSetConverter</code>.</li>
+    <li>Fixed unchecked runtime exceptions in
+    <code>JsonKeysetReader.read</code> and
+    <code>JsonKeysetReader.readEncrypted</code> when reading malformed
+    keysets, ensuring they consistently throw an
+    <code>IOException</code>.</li>
+    <li><code>AesGcmSiv</code> now uses Conscrypt if it's available on the
+    class path, even if it is not installed. Previously, a Conscrypt
+    provider needed to be installed for it to work.</li>
+    <li>Enforce canonical Base64url encoding in
+    <code>JwtFormat.strictUrlSafeDecode</code>, preventing signature/MAC
+    malleability from unused trailing bits.</li>
+    <li>Fixed <code>StreamingAeadSeekableDecryptingChannel.read</code> to
+    always authenticate the final ciphertext segment when reaching the end
+    of the plaintext, ensuring valid empty plaintexts return <code>-1</code>
+    (EOF) and rejecting truncated or unauthenticated empty trailing segments
+    with an <code>IOException</code>.</li>
+    </ul>
+    <h3>Maven:</h3>
+    <pre><code>&lt;dependency&gt;
+        &lt;groupId&gt;com.google.crypto.tink&lt;/groupId&gt;
+        &lt;artifactId&gt;tink&lt;/artifactId&gt;
+        &lt;version&gt;1.24.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    </code></pre>
+    <h3>Gradle:</h3>
+    <pre><code>dependencies {
+      implementation 'com.google.crypto.tink:tink-android:1.24.0'
+    &lt;/tr&gt;&lt;/table&gt;
+    </code></pre>
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/e0367100a393d8d08bdd9a24a3c33d9d3fa1001b"><code>e036710</code></a>
+    Update encrypted Maven Central Token</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/2454497f60ef85f65888d5ff90a8316c4ce19337"><code>2454497</code></a>
+    Tag tink_java version 1.24.0.</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/2b71d716e67e55a2339f7ffd31a95c64d88258d8"><code>2b71d71</code></a>
+    Replace usages of RegistryConfiguration, MacConfig, and PrfConfig in
+    Tink Jav...</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/236d1d5e2eafc3a7effb37e8d713ab0f29685478"><code>236d1d5</code></a>
+    Replace usages of RegistryConfiguration and SignatureConfig in Tink Java
+    sign...</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/5f5fb39442870f6cb25c7d375bb94de805f06430"><code>5f5fb39</code></a>
+    Use *Config2026 instead of RegistryConfiguration in internal and subtle
+    tests</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/9bb6629135764ab0a02a7d03374536d39ae22788"><code>9bb6629</code></a>
+    Use *Config2026 instead of RegistryConfiguration in parameters,
+    signature, st...</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/20038c6220092b99ac6159a765ebe15a16acf3d9"><code>20038c6</code></a>
+    Use AeadConfig2026 in Tink Java walkthrough examples and tests</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/e4c67d1bf90f9737dca953c37e45269d12d9e819"><code>e4c67d1</code></a>
+    Use SignatureConfig2026 in SignaturePemKeysetReader.read()</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/3e24a7d760683c85321d8f23f30c80a875ba85e5"><code>3e24a7d</code></a>
+    Use AeadConfig2026 in Tink Java AEAD and cleartextkeyset examples</li>
+    <li><a
+    href="https://github.com/tink-crypto/tink-java/commit/2f510a5313528a35c8c356a4be7f13e2eaf33208"><code>2f510a5</code></a>
+    Explicitly pass RegistryConfiguration in Tink Java primitive wrapper
+    tests.</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/tink-crypto/tink-java/compare/v1.16.0...v1.24.0">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
     
-    ### AI Usage
     
-    Written by Claude Sonnet 5.
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=com.google.crypto.tink:tink&package-manager=maven&previous-version=1.16.0&new-version=1.24.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    ### Your pull request should…
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [ ] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
+    
+    
+    </details>
