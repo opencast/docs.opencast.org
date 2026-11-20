@@ -33,7 +33,20 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "In construction", url: "#_top", children: [
+          {title: "Glossary", url: "#_top", children: [
+              {title: "Asset", url: "#asset" },
+              {title: "Capture Agent", url: "#capture-agent" },
+              {title: "Element (Media Package Element)", url: "#element-media-package-element" },
+              {title: "Episode", url: "#episode" },
+              {title: "Event", url: "#event" },
+              {title: "Flavor", url: "#flavor" },
+              {title: "Job", url: "#job" },
+              {title: "Load", url: "#load" },
+              {title: "Media Package", url: "#media-package" },
+              {title: "Service", url: "#service" },
+              {title: "Snapshot", url: "#snapshot" },
+              {title: "Workflow, Workflow Instance, Workflow Operation", url: "#workflow-workflow-instance-workflow-operation" },
+              {title: "Working File Repository, Workspace", url: "#working-file-repository-workspace" },
           ]},
         ];
 
@@ -72,7 +85,67 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="in-construction">In construction</h1>
+    <h1 id="glossary">Glossary</h1>
+<p>Short definitions of terms used throughout the architecture documentation, especially ones that are easy to
+confuse with one another.</p>
+<h2 id="asset">Asset</h2>
+<p>One archived media package element's content — its checksum, MIME type, size, and which asset store holds it.
+Distinct from a <em>snapshot</em>, which is the whole archived media package a given asset belongs to. See <a href="../architecture/asset-manager/#classes">Asset
+Manager: Classes</a>.</p>
+<h2 id="capture-agent">Capture Agent</h2>
+<p>Hardware or software that records at a scheduled time and place and uploads the result to Opencast. See the
+<a href="../architecture/capture-agent/capture-agent/">capture agent guide</a>.</p>
+<h2 id="element-media-package-element">Element (Media Package Element)</h2>
+<p>One piece of a media package: a track, catalog, attachment, or publication, tagged with a <em>flavor</em> and addressed
+by its own element ID. See <a href="../architecture/overview/#media-package">Architecture Overview: Media Package</a>.</p>
+<h2 id="episode">Episode</h2>
+<p>The set of all snapshots of a given media package — effectively its full history of archived versions.
+Confusingly close to, but distinct from, both <em>media package</em> (a single version's content) and <em>event</em> (the index's
+read model of it); "episode" mostly surfaces in the asset manager, where properties are associated with an episode
+rather than any one snapshot. See <a href="../architecture/asset-manager/#working-with-properties">Asset Manager: Working with Properties</a>.</p>
+<h2 id="event">Event</h2>
+<p>Not a separate object Opencast processes — it is what the search index, and through it the admin UI and the
+External API, call a media package once it has been scheduled, recorded, or ingested, assembled from the
+scheduler, workflow service, and asset manager. A workflow operation works with a <em>media package</em>; the event
+shown afterward is a read model built from that, not something manipulated directly. See <a href="../architecture/overview/#events">Architecture Overview:
+Events</a>.</p>
+<h2 id="flavor">Flavor</h2>
+<p>A <code>type/subtype</code> pair, such as <code>presenter/source</code> or <code>dublincore/episode</code>, that identifies what role a media
+package element plays. Workflow operations and services use flavors, not file names or ordering, to find the
+elements they are supposed to work on. See <a href="../architecture/overview/#media-package">Architecture Overview: Media Package</a>.</p>
+<h2 id="job">Job</h2>
+<p>The service registry's record of a unit of service work: its type, operation, arguments, status and load. Most jobs
+are <em>dispatched</em> — for example, a workflow operation creates a job to "encode this track with this profile", and the
+service registry hands it to a suitable service instance to run asynchronously. Some jobs are never dispatched:
+the service creates them itself, does the work synchronously (as the ingest service does for a zipped media package),
+and sets their status as it goes, so that the work is tracked in the service registry. See <a href="../architecture/job-dispatch/">Job
+Dispatch</a>.</p>
+<h2 id="load">Load</h2>
+<p>A float describing how much of a node's capacity a job is expected to consume. A node's own capacity is its <em>max
+load</em>; dispatching tries to keep the sum of a node's running jobs' loads under that limit. See <a href="../architecture/job-dispatch/#jobs-and-load">Job Dispatch:
+Jobs and Load</a>.</p>
+<h2 id="media-package">Media Package</h2>
+<p>The unit of content Opencast processes: a container for a set of elements plus an identifier and an optional
+series reference. A media package is not itself a store of files — its elements point to files kept by the
+working file repository or the asset manager. See <a href="../architecture/overview/#media-package">Architecture Overview: Media
+Package</a>.</p>
+<h2 id="service">Service</h2>
+<p>A component registered with the service registry to process jobs of a particular type. Several instances
+of the same service can run on different cluster nodes. See <a href="../architecture/overview/#jobs-and-services">Architecture Overview: Jobs and
+Services</a>.</p>
+<h2 id="snapshot">Snapshot</h2>
+<p>One archived, immutable version of a media package, including all of its assets. See <a href="../architecture/asset-manager/#classes">Asset Manager:
+Classes</a>.</p>
+<h2 id="workflow-workflow-instance-workflow-operation">Workflow, Workflow Instance, Workflow Operation</h2>
+<p>A <em>workflow</em> is a <code>WorkflowDefinition</code> listing a sequence of operations; a <code>WorkflowInstance</code> is one run of such a
+definition against one media package. Each step is a <code>WorkflowOperationInstance</code>, backed by a
+<code>WorkflowOperationHandler</code> that does the actual work. See <a href="../architecture/overview/#workflows-and-operations">Architecture Overview: Workflows and
+Operations</a>.</p>
+<h2 id="working-file-repository-workspace">Working File Repository, Workspace</h2>
+<p>The <em>working file repository</em> is the HTTP-exposed store a media package element lives in while being actively
+processed. The <em>workspace</em> is a separate, per-node cache in front of it, used to avoid downloading the same file
+more than once; almost everything, including writes, goes through the workspace rather than the working file
+repository directly. See <a href="../architecture/filesystem/">Filesystem</a>.</p>
 
   <br>
     
