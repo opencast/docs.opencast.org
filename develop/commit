@@ -1,5 +1,47 @@
-commit 4dcd3ddef77048b5c996925193de0f5f21d068a8
+commit 02dd1ea8e5a28a86e6dd3fc7aea0b0b21265fcd7
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 20 13:13:38 2026 +0100
+Date:   Fri Nov 20 13:32:19 2026 +0100
 
-    Merge r/21.x into develop
+    Eliminate managed services part 2 (#8158)
+    
+    Follow up on #8010 which left quite a few ManagedService implementations
+    in the code.
+    
+    Replaces ManagedService with declarative service in most of the
+    remaining classes. Only does the replacement for relatively easy cases.
+    Classes with ManagedServiceFactories or special cases like
+    ConfigureableLoginHandler were intentionally left alone.
+    
+    Might allow us to close
+    https://github.com/opencast/opencast/issues/1174, since the properties
+    object cannot be null when using declarative services.
+    
+    ### How to test this patch
+    
+    Ideally test if the services still properly load their configuration. I
+    only did this randomly for a few cases.
+    
+    ### AI Usage
+    
+    These commits werelargely written by Claude Sonnet 5.
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
