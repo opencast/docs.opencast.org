@@ -1,5 +1,16 @@
-commit f51db6e3e3209d01309d5a3ae63110a406f0f091
-Author: Martin Wygas <wygas@elan-ev.de>
-Date:   Wed Nov 18 11:48:31 2026 +0100
+commit 7a2a90c49c11fd289f6839d9be240ccc86143997
+Author: Katrin Ihler <ihler@elan-ev.de>
+Date:   Fri Nov 20 17:39:54 2026 +0100
 
-    Fix docs linting errors
+    Fix deletion of events for admins (#8313)
+    
+    The recently added checks for permission before deletion assume that
+    hasPermission() of the XACMLAuthorizationService also checks for admin
+    rights, which it does in fact not do (AI hallucination?). It only looks
+    at the ACL and the episode id roles. This adds a check for admin rights
+    in the necessary places as we already do in other services.
+    PlaylistOffsetDataFetcher might also have been affected by this all
+    along, but I didn't have time to figure out what that actually does, so
+    I didn't touch it. (cc @Arnei ?)
+    
+    Fixes #8312.
