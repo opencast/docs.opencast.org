@@ -1,35 +1,155 @@
-commit 0553709ff995b68fc7cba1b83c59cfbe0b9efef6
+commit d385d9f26cc3826a438d1b70f596e68fbd9b72f5
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 20 18:20:54 2026 +0100
+Date:   Fri Nov 20 18:40:19 2026 +0100
 
-    Write the asset manager page TODOs (#8076)
+    Bump com.nimbusds:nimbus-jose-jwt from 10.4.2 to 10.10 in /modules/db (#8189)
     
-    Fill in various open todos on the docs page for the asset manager. This
-    includes a high level overview, a classes overview and details on
-    accesss security. It also rewrites the parts concerning the now removed
-    query language.
+    Bumps
+    [com.nimbusds:nimbus-jose-jwt](https://bitbucket.org/connect2id/nimbus-jose-jwt)
+    from 10.4.2 to 10.10.
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/src/master/CHANGELOG.txt">com.nimbusds:nimbus-jose-jwt's
+    changelog</a>.</em></p>
+    <blockquote>
+    <p>10.4.2 (2025-08-14)
+    * Updates GSon to 2.13.1.
+    * Updates BouncyCastle to 1.81.</p>
+    <p>10.5 (2025-09-05)
+    * Support for specifying a ScheduledExecutorService instance in
+    RefreshAheadCachingJWKSetSource and JWKSourceBuilder (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/592">#592</a>).</p>
+    <p>10.6 (2025-11-06)
+    * Adds static CollectionUtils.containsNull(Set) method.
+    * DefaultJWTClaimsVerifier accepted &quot;aud&quot; (audience) argument
+    must be
+    compatible with Set.of (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/499">#499</a>).
+    * The DefaultJWTClaimsVerifier must not include JWT claim values in
+    BadJWTException messages (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/605">#605</a>).</p>
+    <p>10.7 (2026-01-08)
+    * Adds MaxCompressedCipherTextLength that implements JWEDecrypterOption,
+    to
+    to configure the maximum allowed length of compressed cipher text.
+    * Adds JWEObject.decrypt(JWEDecrypter, Set<!-- raw HTML omitted -->)
+    method to
+    support the MaxCompressedCipherTextLength option.</p>
+    <p>10.8 (2026-02-19)
+    * Adds a PasswordBasedDecrypter(byte[], Set<!-- raw HTML omitted -->)
+    constructor to specify
+    names of the critical header parameters that are deferred to the
+    application for processing. Aligns with other JWEDecrypter and
+    CriticalHeaderParamsAware implementations (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/610">#610</a>).
+    * Fixes getDeferredCriticalHeaderParams() in AESDecrypter,
+    DirectDecrypter,
+    RSADecrypter, ECDHDecrypter, X25519Decrypter, ECDH1PUDecrypter,
+    ECDH1PUX25519Decrypter, MultiDecrypter, MACVerifier, ECDSAVerifier and
+    Ed25519Verifier. Must internally call
+    critPolicy.getDeferredCriticalHeaderParams(), not
+    critPolicy.getProcessedCriticalHeaderParams() (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/612">#612</a>).</p>
+    <p>10.9 (2026-04-02)
+    * Adds X509CertUtils.computeSHA1Thumbprint(X509Certificate) method to
+    compute the SHA-1 thumbprint of an X.509 certificate for the
+    &quot;x5t&quot; (X.509
+    certificate SHA-1 thumbprint) JWK and JOSE header parameter.</p>
+    <p>10.9.1 (2026-05-31)
+    * Fixes health status reporting when RefreshAheadCachingJWKSetSource,
+    JWKSetSourceWithHealthStatusReporting and OutageTolerantJWKSetSource are
+    used together. A failed refresh-ahead background update could previously
+    cause JWKSetSourceWithHealthStatusReporting to mark the JWK set source
+    as
+    UNHEALTHY, even though OutageTolerantJWKSetSource was still within its
+    configured outage tolerance window and regular JWT validation could
+    continue using the cached JWK set. Refresh-ahead failures that are
+    covered by outage tolerance no longer cause the health status to become
+    unhealthy before the outage tolerance period has been exceeded (iss
+    <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/619">#619</a>).</p>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/78e86f82a0e65fafa1791b3588e8b9acc3299210"><code>78e86f8</code></a>
+    DefaultJWTClaimsVerifier accepted &quot;aud&quot; (audience) argument
+    must be compatibl...</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/d4c1e0538c678653a6a71b653e75316a72aa284b"><code>d4c1e05</code></a>
+    [maven-release-plugin] prepare release 10.6</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/6a6d0b3d7cf3a7a9830cc8c1e8f54b7a993c706a"><code>6a6d0b3</code></a>
+    [maven-release-plugin] prepare for next development iteration</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/72ba7d29cc413af01c71cb15339647d02a2e0080"><code>72ba7d2</code></a>
+    Add configurable max compressed cipher text length for JWE decryption
+    (iss <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/issues/570">#570</a>)</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/74d1dd17b8de97fc329c584e42b9eb5a5c54a609"><code>74d1dd1</code></a>
+    Merged in feature/configurable-max-compressed-ciphertext-length (pull
+    request...</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/1b4a3ebc773dd19b406732cd14d831c7cc398cce"><code>1b4a3eb</code></a>
+    Edits JavaDocs, CHANGELOG.txt for 10.7 release</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/9f4752d5d365bc5bb40d253535183c74f59fd3dd"><code>9f4752d</code></a>
+    Adds casts to tests</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/ebdea4e171a86ddc33655fc498b9ebf33495b638"><code>ebdea4e</code></a>
+    [maven-release-plugin] prepare release 10.7</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/9509dc54d154a6d8835ff96639297770de2a0cbf"><code>9509dc5</code></a>
+    [maven-release-plugin] prepare for next development iteration</li>
+    <li><a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/commits/0e27c9c6dd06ccd91311f5db34d02ede7b546a11"><code>0e27c9c</code></a>
+    Adds a PasswordBasedDecrypter(byte[], Set&lt;String&gt;) constructor to
+    specify nam...</li>
+    <li>Additional commits viewable in <a
+    href="https://bitbucket.org/connect2id/nimbus-jose-jwt/branches/compare/10.10..10.4.2">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
     
-    ### AI Usage
     
-    Written by Claude Sonnet 5.
+    [![Dependabot compatibility
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=com.nimbusds:nimbus-jose-jwt&package-manager=maven&previous-version=10.4.2&new-version=10.10)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
-    ### Your pull request should…
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [ ] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [ ] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore this major version` will close this PR and stop
+    Dependabot creating any more for this major version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this minor version` will close this PR and stop
+    Dependabot creating any more for this minor version (unless you reopen
+    the PR or upgrade to it yourself)
+    - `@dependabot ignore this dependency` will close this PR and stop
+    Dependabot creating any more for this dependency (unless you reopen the
+    PR or upgrade to it yourself)
+    
+    
+    </details>
