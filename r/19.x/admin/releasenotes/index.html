@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Opencast 19: Release Notes", url: "#_top", children: [
+              {title: "Opencast 19.11", url: "#opencast-1911" },
               {title: "Opencast 19.10", url: "#opencast-1910" },
               {title: "Opencast 19.9", url: "#opencast-199" },
               {title: "Opencast 19.8", url: "#opencast-198" },
@@ -98,6 +99,78 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="opencast-19-release-notes">Opencast 19: Release Notes</h1>
+<h2 id="opencast-1911">Opencast 19.11</h2>
+<p>This version contains only a number of security issue fixes, two of which are rated critical.  The fixes, in order of
+severity rating are:</p>
+<ul>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-87w3-phwh-q8vx">GHSA-87w3-phwh-q8vx</a>] -
+  Path traversal through unvalidated media package and element identifiers leading to arbitrary file write, deletion,
+  and remote code execution</li>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-gr3h-hxr8-phqm">GHSA-gr3h-hxr8-phqm</a>] -
+  Server-side template injection via workflow properties in FreeMarker-rendered workflow operation settings</li>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-hgqh-jpvg-xx9f">GHSA-hgqh-jpvg-xx9f</a>] -
+  Users can delete events they only have read access to</li>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-x4wc-h58f-2wm9">GHSA-x4wc-h58f-2wm9</a>] -
+  Unauthenticated reflected XSS in the REST documentation endpoint (/docs.html)</li>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-qqqp-5j2v-jvfp">GHSA-qqqp-5j2v-jvfp</a>] -
+  Cross-tenant exposure of playlists in multi-organization installations</li>
+<li>[<a href="https://github.com/opencast/opencast/security/advisories/GHSA-jrcq-hch7-gvv5">GHSA-jrcq-hch7-gvv5</a>] -
+  Unconditional Trust of X-Forwarded-* Headers (No Trusted-Proxy Allowlist)</li>
+</ul>
+<h3 id="potentially-breaking-changes">Potentially breaking changes</h3>
+<p>This release is unusual in the sense that there are additional checks you should run <strong>before</strong>
+applying the upgrade.  Please read the following completely and address</p>
+<p><strong>Path traversal via media package and element components (GHSA-hgqh-jpvg-xx9f)</strong></p>
+<p>Media package and media package element identifiers are now validated for path traversal when a
+media package is ingested or otherwise parsed from XML. The validation covers the media package
+identifier and the identifiers of all of its elements, including the tracks, attachments and
+catalogs nested inside a publication. Identifiers that are empty, that consist of the current or
+parent directory reference (<code>.</code> or <code>..</code>), or that contain a path separator (<code>/</code> or <code>\</code>)
+are rejected; such identifiers could be used to read, write or delete files outside the
+configured storage roots. A <code>..</code> sequence <em>inside</em> an identifier (e.g. <code>track..1</code>) is a
+harmless literal file system name and keeps working. Media packages with an explicitly empty
+identifier (<code>id=""</code>) are rejected at the parse boundary; media packages without an <code>id</code>
+attribute at all keep working and receive a generated identifier.</p>
+<p>Note for existing data: media package or element identifiers that contain a path separator (e.g.
+DOI-style ids like <code>10.0000/2</code>), or that are empty or consist of <code>.</code> or <code>..</code>, were
+accepted by some Opencast versions, but are now rejected at the parse boundary. Media packages
+with such identifiers can no longer be loaded - events or snapshots that use them cannot be
+listed or retracted through the API. If your deployment uses such identifiers, the affected
+events must be dealt with before the upgrade; the upgrade guide has queries for finding them.
+Operations that load several media packages no longer fail because of a single affected one:
+when the search index is rebuilt, when the search service
+fills in missing series ids at start-up, when a series is loaded, and when the asset manager
+rebuilds its index or loads several snapshots at once (e.g. all snapshots of a series), an
+affected media package is skipped and an error is logged.</p>
+<p>The working file repository rejects unsafe identifiers for media packages, elements,
+collections and file names in every operation that resolves a path, including the read-only
+collection operations (size, contents, cleanup). The file system asset stores reject unsafe
+organization, media package and element identifiers and, for deletions, additionally verify
+that the target is exactly the media package directory (or one of its version sub-directories)
+below the store root. The download and the streaming distribution services reject publication
+channel identifiers that are empty, <code>.</code> or <code>..</code> or contain a path separator, and verify that
+every resolved file system path stays within the organization's distribution subtree (the checks
+are lexical, so deployments that keep parts of the storage tree in symlinked directories, e.g.
+on separate mounts, keep working). The download distribution service also rejects distribute and
+retract operations in which the publication URI of an element does not refer to the channel and
+media package of the operation, as well as retractions whose target is not a regular file, and
+the streaming distribution service derives the location of a SMIL file from the channel, the
+media package and the element flavor instead of parsing it from the element URI; it no longer
+distributes an element whose URI already points to the streaming server. The workspace rejects
+files that resolve outside its root.</p>
+<p>The working file repository copy and move operations no longer delete a pre-existing
+destination file when the operation fails; they report the failure instead.</p>
+<p>No database schema or search index changes.  Prior to upgrading run the checks listed in the <a href="../upgrade#data-changes-1911-only">upgrade guide</a>.</p>
+<p><strong>Email templates and workflow operation templating (GHSA-gr3h-hxr8-phqm)</strong></p>
+<p>The FreeMarker engine used to render templates (e.g. email templates or workflow operation settings
+such as the publish URL pattern) is now restricted: templates can no longer instantiate Java classes
+(<code>?new</code> built-in), access the Java API (<code>?api</code> built-in) or load other templates
+(<code>#include</code>/<code>&lt;#include&gt;</code>, <code>#import</code>/<code>&lt;#import&gt;</code>). Templates that relied on these features now fail to
+process; the failure is logged with details to <code>data/log/opencast.log</code>.</p>
+<p>In addition, when template processing fails, the error message shown in workflow error output no
+longer contains the template source and the data model; only the template name is shown. The full
+details are available in the log.</p>
+<p>There are no database schema or search index changes.</p>
 <h2 id="opencast-1910">Opencast 19.10</h2>
 <p>This version contains minor updates for the admin, and editor submodules.  This release also updates Karaf to
 <a href="https://lists.apache.org/thread/wc4nszwz0csvzc3hwmxsg36zldh1nxq3">4.4.12</a>, which addresses some security issues.</p>
@@ -130,6 +203,18 @@ bug fixes.  There are three things worthy of special attention:</p>
 <h2 id="opencast-196">Opencast 19.6</h2>
 <p>This version contains addition updates for the admin, editor, and studio submodules, along with the usual collection of
 bug fixes.</p>
+<h3 id="integration-notes">Integration notes</h3>
+<p>The <code>/play</code> route now passes through query parameters to the target player URL.
+This allows parameters like <code>jwt=...</code> or <code>t=10</code> to be preserved
+when redirecting to the configured player.</p>
+<p>This is particularly useful for third-party integrations
+where authentication tokens (like JWTs) or specific player settings
+need to be passed through the redirect to the actual player interface,
+while preserving the ability to configure the exact player on the Opencast side.</p>
+<p>If a parameter with the same name already exists in the configured player path,
+the value from the request will be appended, creating a multi-valued parameter.
+This behavior ensures that parameters are never lost,
+though player implementations may need to handle multiple values if they occur.</p>
 <h2 id="opencast-195">Opencast 19.5</h2>
 <p>This version contains updates for the admin, editor, and studio submodules, along with the usual collection of bug fixes.</p>
 <h2 id="opencast-194">Opencast 19.4</h2>
