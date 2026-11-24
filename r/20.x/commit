@@ -1,5 +1,11 @@
-commit 8bfe0e68ee80d8d130475b6f927e8ee47701324b
-Author: Greg Logan <gregorydlogan@gmail.com>
-Date:   Mon Nov 23 13:08:25 2026 -0600
+commit 15545cd4480f7c8096dfd9cce384a50b0eb5b174
+Author: Lars Kiesow <lkiesow@uos.de>
+Date:   Tue Nov 24 22:44:21 2026 +0100
 
-    Merge branch 'r/19.x' into r/20.x
+    Don't stop event deletion prematurely (#8317)
+    
+    Found during work on #8313. A NotfoundException was not properly caught
+    and could lead to a premature stop of the event deletion process.
+    
+    I'm open to point this at 21 if that fix is not deemed important enough
+    for 20. In either case this needs testing.
