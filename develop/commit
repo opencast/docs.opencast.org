@@ -1,31 +1,31 @@
-commit e529121974d17307049751d98fbecc54df4e309d
+commit 610793fcc8d088a1ab8fc363bc565f831f74893b
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Nov 26 22:41:54 2026 +0100
+Date:   Thu Nov 26 23:35:43 2026 +0100
 
-    Document how to create a service (#8147)
+    Limit the number of results of External API events/series list endpoints (#8180)
     
-    Fixes #5410.
+    Fixes #3536
     
-    Add a developer guide page that explains how to write an OSGi service
-    from scratch: DS components and immediate, configuration with @Modified,
-    REST endpoints, job producers, and why not to use ManagedService. The
-    examples are taken from the hello-world and media inspection modules.
+    A request to /api/events without a limit tried to load all events at
+    once, which fails with a server error for installations with a large
+    number of events.
     
-    Also fixes a couple minor things in the hello world example service.
+    This adds a hard cap to events (and series), so any requests that try to
+    set the limit over 10.000 now get a 400.
+    If no limit is specified, the events endpoint now behaves the same as
+    the series endpoint and sets limit to 100.
+    The 10.000 is very much a magic number and should maybe be lower?
     
-    While looking at this I found `OsgiAbstractJobProducer`, which seems to
-    be less boilerplatey version of `AbstractJobProducer`, but is only used
-    in one example service. Is `OsgiAbstractJobProducer` something we should
-    be using everywhere, should we get rid of it, any opinions? :D
+    Adds a new API version cause this is technically a breaking change.
     
     ### How to test this patch
     
-    Compiling should be enough for the hello world modules, so this is
-    mostly just reading.
+    Test the API with all kinds of limits, ideally with an Opencast with
+    over 10.000 events.
     
     ### AI Usage
     
-    Claude Sonnet 5 was used to write the bulk of this.
+    Claude Sonnet 5 was used with this PR.
     
     ### Your pull request should…
     

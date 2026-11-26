@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Upgrading Opencast from 21.x to 22.x", url: "#_top", children: [
+              {title: "Configuration Changes", url: "#configuration-changes" },
           ]},
         ];
 
@@ -89,6 +90,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 In case you need to upgrade older versions of Opencast, please refer to the documentation of
 <a href="https://docs.opencast.org">those versions</a> first.</p>
 <p>TODO</p>
+<h2 id="configuration-changes">Configuration Changes</h2>
+<ul>
+<li>The External API (API version 1.13.0 and newer) now returns at most 100 events from <code>/api/events</code> if the request does
+  not specify a limit, and rejects limits larger than 10000 for <code>/api/events</code> and <code>/api/series</code> with
+  <code>400 Bad Request</code>. Clients which do not request a specific API version get this behavior. Check integrations (for
+  example LMS plugins) which expect <code>/api/events</code> to return all events in a single response: they have to page through
+  the results using <code>limit</code> and <code>offset</code>. The response contains no total count, so a client can only tell that more
+  results exist if it receives exactly as many results as it asked for. Clients which request API version 1.12.0 or
+  older keep the previous behavior.</li>
+</ul>
 
   <br>
     
