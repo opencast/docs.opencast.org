@@ -1,5 +1,49 @@
-commit a2c05ac23647a66c2100994882d98e32a668f359
+commit e529121974d17307049751d98fbecc54df4e309d
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Nov 25 10:08:34 2026 +0100
+Date:   Thu Nov 26 22:41:54 2026 +0100
 
-    Merge r/21.x into develop
+    Document how to create a service (#8147)
+    
+    Fixes #5410.
+    
+    Add a developer guide page that explains how to write an OSGi service
+    from scratch: DS components and immediate, configuration with @Modified,
+    REST endpoints, job producers, and why not to use ManagedService. The
+    examples are taken from the hello-world and media inspection modules.
+    
+    Also fixes a couple minor things in the hello world example service.
+    
+    While looking at this I found `OsgiAbstractJobProducer`, which seems to
+    be less boilerplatey version of `AbstractJobProducer`, but is only used
+    in one example service. Is `OsgiAbstractJobProducer` something we should
+    be using everywhere, should we get rid of it, any opinions? :D
+    
+    ### How to test this patch
+    
+    Compiling should be enough for the hello world modules, so this is
+    mostly just reading.
+    
+    ### AI Usage
+    
+    Claude Sonnet 5 was used to write the bulk of this.
+    
+    ### Your pull request should…
+    
+    * [ ] have a concise title
+    * [ ] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [ ] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [ ] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [ ] have a clean commit history
+    * [ ] does not incorrectly update the submodules
+    * [ ] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [ ] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
