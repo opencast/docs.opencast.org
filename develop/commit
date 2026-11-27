@@ -1,99 +1,1002 @@
-commit e93a22eb852b8f2d937b7941af9a62ce3ed721db
+commit 7e236b1607a091ed0d788975c50a8e214e47ed5c
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 27 22:08:04 2026 +0100
+Date:   Fri Nov 27 23:08:47 2026 +0100
 
-    Bump actions/setup-java from 6.2.0 to 6.3.0 (#8379)
+    Bump the httpcomponents group with 5 updates (#8411)
     
-    Bumps [actions/setup-java](https://github.com/actions/setup-java) from
-    6.2.0 to 6.3.0.
+    Bumps the httpcomponents group with 5 updates:
+    
+    | Package | From | To |
+    | --- | --- | --- |
+    |
+    [org.apache.httpcomponents.client5:httpclient5](https://github.com/apache/httpcomponents-client)
+    | `5.6.3` | `5.6.5` |
+    |
+    [org.apache.httpcomponents.client5:httpclient5-fluent](https://github.com/apache/httpcomponents-client)
+    | `5.6.3` | `5.6.5` |
+    |
+    [org.apache.httpcomponents.core5:httpcore5](https://github.com/apache/httpcomponents-core)
+    | `5.4.3` | `5.5` |
+    |
+    [org.apache.httpcomponents.core5:httpcore5-h2](https://github.com/apache/httpcomponents-core)
+    | `5.4.3` | `5.5` |
+    |
+    [org.apache.httpcomponents.core5:httpcore5-reactive](https://github.com/apache/httpcomponents-core)
+    | `5.4.3` | `5.5` |
+    
+    Updates `org.apache.httpcomponents.client5:httpclient5` from 5.6.3 to
+    5.6.5
     <details>
-    <summary>Release notes</summary>
+    <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/actions/setup-java/releases">actions/setup-java's
-    releases</a>.</em></p>
+    href="https://github.com/apache/httpcomponents-client/blob/rel/v5.6.5/RELEASE_NOTES.txt">org.apache.httpcomponents.client5:httpclient5's
+    changelog</a>.</em></p>
     <blockquote>
-    <h2>v6.3.0</h2>
-    <h2>Behavior change: Java problem matcher is now opt-in</h2>
-    <p>Starting with v6.3.0, <code>setup-java</code> no longer registers the
-    Java problem matcher by default (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1326">#1326</a>,
-    fixes <a
-    href="https://redirect.github.com/actions/setup-java/issues/1322">#1322</a>).
-    Java compiler warnings, compiler errors, and uncaught exceptions are no
-    longer turned into annotations on pull request diffs unless you opt
-    in.</p>
-    <p>To keep annotations, set <code>problem-matcher: true</code>:</p>
-    <pre lang="yaml"><code>- uses: actions/setup-java@v6
-      with:
-        distribution: temurin
-        java-version: '25'
-        problem-matcher: true
-    </code></pre>
-    <p>Compiler output still appears in the build logs, and compilation
-    errors still fail the build. Only annotations are affected.</p>
-    <p><strong>Why:</strong> inline annotations cluttered pull request
-    reviews, and GitHub Actions caps annotations at 10 errors, 10 warnings,
-    and 10 notices per step, and 50 per job. Larger Java builds therefore
-    showed only a truncated subset of their diagnostics as annotations. See
-    <a
-    href="https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#java-problem-matcher-compiler-annotations">Java
-    problem matcher (compiler annotations)</a>.</p>
-    <h2>What's Changed</h2>
+    <h2>Release 5.6.5</h2>
+    <p>This maintenance release fixes several defects found since the
+    previous release
+    including the defect in the async Brotli decompression code that can
+    cause
+    the message exchange to hang indefinitely. It also upgrades HttpCore to
+    version 5.4.4.</p>
+    <h2>Change Log</h2>
     <ul>
-    <li>Architecture validation for JDK file installs by <a
-    href="https://github.com/v-mahabaleshwars"><code>@​v-mahabaleshwars</code></a>
-    in <a
-    href="https://redirect.github.com/actions/setup-java/pull/1324">actions/setup-java#1324</a></li>
-    <li>chore(deps): bump fast-xml-parser from 5.11.2 to 5.12.0 by <a
-    href="https://github.com/dependabot"><code>@​dependabot</code></a>[bot]
-    in <a
-    href="https://redirect.github.com/actions/setup-java/pull/1323">actions/setup-java#1323</a></li>
-    <li>Add Microsoft OpenJDK 25.0.5.0.2 support by <a
-    href="https://github.com/brunoborges"><code>@​brunoborges</code></a>
-    with <a href="https://github.com/Copilot"><code>@​Copilot</code></a> in
-    <a
-    href="https://redirect.github.com/actions/setup-java/pull/1320">actions/setup-java#1320</a></li>
-    <li>Fix JetBrains Runtime hotfix version selection by <a
-    href="https://github.com/brunoborges"><code>@​brunoborges</code></a>
-    with <a href="https://github.com/Copilot"><code>@​Copilot</code></a> in
-    <a
-    href="https://redirect.github.com/actions/setup-java/pull/1321">actions/setup-java#1321</a></li>
-    <li>Make Java problem matcher opt-in (default problem-matcher to false)
-    by <a
-    href="https://github.com/brunoborges"><code>@​brunoborges</code></a> in
-    <a
-    href="https://redirect.github.com/actions/setup-java/pull/1326">actions/setup-java#1326</a></li>
+    <li>
+    <p>Upgraded HttpCore to version 5.4.4.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay.
+    Contributed by Matthias Kurz &lt;m.kurz at irregular.at&gt;</p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2432: Fixed connection-pool leak in
+    ResponseEntityProxy#cleanup() when
+    runtime #disconnectEndpoint throws an exception (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/883">#883</a>).
+    Contributed by Victor Alekseev <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Decode punycode public suffixes in PublicSuffixMatcher#verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>).
+    Contributed by Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed Brotli decompression hang with large input buffers.
+    Contributed by Arturo Bernal <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTP cache to treat malformed delta-seconds as absent.
+    Contributed by Arturo Bernal Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Bug-fix: ResponseCachingPolicy incorrectly applies
+    <code>neverCache1_1ResponsesWithQueryString</code>
+    config parameter. This config parameter and related functionality will
+    be deprecated
+    in the next feature release and removed in the future.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Removed invalid request version check from ResponseCachingPolicy.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed resource leaking on error in AsyncCachingExec
+    Contributed by Jeremie Bolduc &lt;16137441+Jouramie at
+    users.noreply.github.com&gt;</p>
+    </li>
     </ul>
-    <p><strong>Full Changelog</strong>: <a
-    href="https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0">https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0</a></p>
+    <h2>Release 5.6.4</h2>
+    <p>This maintenance release fixes SSL parameter application in the async
+    TLS upgrade
+    strategy.</p>
+    <h2>Change Log</h2>
+    <!-- raw HTML omitted -->
     </blockquote>
+    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/actions/setup-java/commit/d1374f8ac74474200d16ef8ecee22c7ae7a51880"><code>d1374f8</code></a>
-    Make Java problem matcher opt-in (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1326">#1326</a>)</li>
+    href="https://github.com/apache/httpcomponents-client/commit/e6970b4b9da00485bc6e702a3c632933d19d6f3f"><code>e6970b4</code></a>
+    HttpClient 5.6.5 release</li>
     <li><a
-    href="https://github.com/actions/setup-java/commit/5fb63c9bc97316aca87b7eae68a3404a62579dd7"><code>5fb63c9</code></a>
-    Fix JetBrains Runtime hotfix version selection (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1321">#1321</a>)</li>
+    href="https://github.com/apache/httpcomponents-client/commit/d0ff6ec0d53afc79ada7f8790df6226de4204654"><code>d0ff6ec</code></a>
+    Updated release notes for HttpClient 5.6.5 release</li>
     <li><a
-    href="https://github.com/actions/setup-java/commit/a1bf0b5568e6a2d842b3426fa2d47b4cf0ad5d1b"><code>a1bf0b5</code></a>
-    Add Microsoft OpenJDK 25.0.5.0.2 support (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1320">#1320</a>)</li>
+    href="https://github.com/apache/httpcomponents-client/commit/03a2abc5fa2dccccaaa9de0a1e4ed6d5ba150515"><code>03a2abc</code></a>
+    Upgraded HttpCore to version 5.4.4</li>
     <li><a
-    href="https://github.com/actions/setup-java/commit/a3c80683014bc0e5a1aa6bf9fa3a1d2b32a593a0"><code>a3c8068</code></a>
-    chore(deps): bump fast-xml-parser from 5.11.2 to 5.12.0 (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1323">#1323</a>)</li>
+    href="https://github.com/apache/httpcomponents-client/commit/7ed9d66d0fe108123ebf43d0392f1de0b90ad1c1"><code>7ed9d66</code></a>
+    HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay</li>
     <li><a
-    href="https://github.com/actions/setup-java/commit/9ce5b12cb90c06fc1b0e3343c3e65bb977578591"><code>9ce5b12</code></a>
-    Architecture validation for JDK file installs (<a
-    href="https://redirect.github.com/actions/setup-java/issues/1324">#1324</a>)</li>
-    <li>See full diff in <a
-    href="https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0">compare
+    href="https://github.com/apache/httpcomponents-client/commit/bd278a662a615aa6155f251842ed736b4abaa60f"><code>bd278a6</code></a>
+    Improved connection expiry and eviction example</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/02f11ebeeea92dc0b3156b357cebd56cadedd8f8"><code>02f11eb</code></a>
+    HTTPCLIENT-2432: fix connection-pool leak in
+    ResponseEntityProxy.cleanup() wh...</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/8e45f17619dd5e7e139f11d58cbc9419ba0c3cc3"><code>8e45f17</code></a>
+    decode punycode public suffixes in PublicSuffixMatcher.verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/6d8319a2532595bad3098f98587d4a72b618aea6"><code>6d8319a</code></a>
+    Fix Brotli decompression hang with large input buffers</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/908ccc12050b3a54709103b9969907a52a73c3b3"><code>908ccc1</code></a>
+    treat malformed delta-seconds as absent in deltaSeconds</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/815043adf57b31cd7c99f911dcfb573fffcb5e4d"><code>815043a</code></a>
+    Moved timeout and stale connection related integration tests into
+    separate gr...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-client/compare/rel/v5.6.3...rel/v5.6.5">compare
     view</a></li>
     </ul>
     </details>
     <br />
+    
+    Updates `org.apache.httpcomponents.client5:httpclient5-fluent` from
+    5.6.3 to 5.6.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-client/blob/rel/v5.6.5/RELEASE_NOTES.txt">org.apache.httpcomponents.client5:httpclient5-fluent's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.6.5</h2>
+    <p>This maintenance release fixes several defects found since the
+    previous release
+    including the defect in the async Brotli decompression code that can
+    cause
+    the message exchange to hang indefinitely. It also upgrades HttpCore to
+    version 5.4.4.</p>
+    <h2>Change Log</h2>
+    <ul>
+    <li>
+    <p>Upgraded HttpCore to version 5.4.4.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay.
+    Contributed by Matthias Kurz &lt;m.kurz at irregular.at&gt;</p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2432: Fixed connection-pool leak in
+    ResponseEntityProxy#cleanup() when
+    runtime #disconnectEndpoint throws an exception (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/883">#883</a>).
+    Contributed by Victor Alekseev <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Decode punycode public suffixes in PublicSuffixMatcher#verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>).
+    Contributed by Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed Brotli decompression hang with large input buffers.
+    Contributed by Arturo Bernal <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTP cache to treat malformed delta-seconds as absent.
+    Contributed by Arturo Bernal Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Bug-fix: ResponseCachingPolicy incorrectly applies
+    <code>neverCache1_1ResponsesWithQueryString</code>
+    config parameter. This config parameter and related functionality will
+    be deprecated
+    in the next feature release and removed in the future.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Removed invalid request version check from ResponseCachingPolicy.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed resource leaking on error in AsyncCachingExec
+    Contributed by Jeremie Bolduc &lt;16137441+Jouramie at
+    users.noreply.github.com&gt;</p>
+    </li>
+    </ul>
+    <h2>Release 5.6.4</h2>
+    <p>This maintenance release fixes SSL parameter application in the async
+    TLS upgrade
+    strategy.</p>
+    <h2>Change Log</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/e6970b4b9da00485bc6e702a3c632933d19d6f3f"><code>e6970b4</code></a>
+    HttpClient 5.6.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/d0ff6ec0d53afc79ada7f8790df6226de4204654"><code>d0ff6ec</code></a>
+    Updated release notes for HttpClient 5.6.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/03a2abc5fa2dccccaaa9de0a1e4ed6d5ba150515"><code>03a2abc</code></a>
+    Upgraded HttpCore to version 5.4.4</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/7ed9d66d0fe108123ebf43d0392f1de0b90ad1c1"><code>7ed9d66</code></a>
+    HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/bd278a662a615aa6155f251842ed736b4abaa60f"><code>bd278a6</code></a>
+    Improved connection expiry and eviction example</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/02f11ebeeea92dc0b3156b357cebd56cadedd8f8"><code>02f11eb</code></a>
+    HTTPCLIENT-2432: fix connection-pool leak in
+    ResponseEntityProxy.cleanup() wh...</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/8e45f17619dd5e7e139f11d58cbc9419ba0c3cc3"><code>8e45f17</code></a>
+    decode punycode public suffixes in PublicSuffixMatcher.verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/6d8319a2532595bad3098f98587d4a72b618aea6"><code>6d8319a</code></a>
+    Fix Brotli decompression hang with large input buffers</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/908ccc12050b3a54709103b9969907a52a73c3b3"><code>908ccc1</code></a>
+    treat malformed delta-seconds as absent in deltaSeconds</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/815043adf57b31cd7c99f911dcfb573fffcb5e4d"><code>815043a</code></a>
+    Moved timeout and stale connection related integration tests into
+    separate gr...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-client/compare/rel/v5.6.3...rel/v5.6.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.client5:httpclient5-fluent` from
+    5.6.3 to 5.6.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-client/blob/rel/v5.6.5/RELEASE_NOTES.txt">org.apache.httpcomponents.client5:httpclient5-fluent's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.6.5</h2>
+    <p>This maintenance release fixes several defects found since the
+    previous release
+    including the defect in the async Brotli decompression code that can
+    cause
+    the message exchange to hang indefinitely. It also upgrades HttpCore to
+    version 5.4.4.</p>
+    <h2>Change Log</h2>
+    <ul>
+    <li>
+    <p>Upgraded HttpCore to version 5.4.4.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay.
+    Contributed by Matthias Kurz &lt;m.kurz at irregular.at&gt;</p>
+    </li>
+    <li>
+    <p>HTTPCLIENT-2432: Fixed connection-pool leak in
+    ResponseEntityProxy#cleanup() when
+    runtime #disconnectEndpoint throws an exception (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/883">#883</a>).
+    Contributed by Victor Alekseev <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Decode punycode public suffixes in PublicSuffixMatcher#verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>).
+    Contributed by Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed Brotli decompression hang with large input buffers.
+    Contributed by Arturo Bernal <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>HTTP cache to treat malformed delta-seconds as absent.
+    Contributed by Arturo Bernal Javid Khan <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Bug-fix: ResponseCachingPolicy incorrectly applies
+    <code>neverCache1_1ResponsesWithQueryString</code>
+    config parameter. This config parameter and related functionality will
+    be deprecated
+    in the next feature release and removed in the future.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Removed invalid request version check from ResponseCachingPolicy.
+    Contributed by Oleg Kalnichevski <!-- raw HTML omitted --></p>
+    </li>
+    <li>
+    <p>Fixed resource leaking on error in AsyncCachingExec
+    Contributed by Jeremie Bolduc &lt;16137441+Jouramie at
+    users.noreply.github.com&gt;</p>
+    </li>
+    </ul>
+    <h2>Release 5.6.4</h2>
+    <p>This maintenance release fixes SSL parameter application in the async
+    TLS upgrade
+    strategy.</p>
+    <h2>Change Log</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/e6970b4b9da00485bc6e702a3c632933d19d6f3f"><code>e6970b4</code></a>
+    HttpClient 5.6.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/d0ff6ec0d53afc79ada7f8790df6226de4204654"><code>d0ff6ec</code></a>
+    Updated release notes for HttpClient 5.6.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/03a2abc5fa2dccccaaa9de0a1e4ed6d5ba150515"><code>03a2abc</code></a>
+    Upgraded HttpCore to version 5.4.4</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/7ed9d66d0fe108123ebf43d0392f1de0b90ad1c1"><code>7ed9d66</code></a>
+    HTTPCLIENT-2433: Prevent concurrent HTTP/2 request body replay</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/bd278a662a615aa6155f251842ed736b4abaa60f"><code>bd278a6</code></a>
+    Improved connection expiry and eviction example</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/02f11ebeeea92dc0b3156b357cebd56cadedd8f8"><code>02f11eb</code></a>
+    HTTPCLIENT-2432: fix connection-pool leak in
+    ResponseEntityProxy.cleanup() wh...</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/8e45f17619dd5e7e139f11d58cbc9419ba0c3cc3"><code>8e45f17</code></a>
+    decode punycode public suffixes in PublicSuffixMatcher.verify (<a
+    href="https://redirect.github.com/apache/httpcomponents-client/issues/876">#876</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/6d8319a2532595bad3098f98587d4a72b618aea6"><code>6d8319a</code></a>
+    Fix Brotli decompression hang with large input buffers</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/908ccc12050b3a54709103b9969907a52a73c3b3"><code>908ccc1</code></a>
+    treat malformed delta-seconds as absent in deltaSeconds</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-client/commit/815043adf57b31cd7c99f911dcfb573fffcb5e4d"><code>815043a</code></a>
+    Moved timeout and stale connection related integration tests into
+    separate gr...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-client/compare/rel/v5.6.3...rel/v5.6.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.core5:httpcore5` from 5.4.3 to 5.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-core/blob/master/RELEASE_NOTES.txt">org.apache.httpcomponents.core5:httpcore5's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.5</h2>
+    <p>This is the first GA release in the 5.4 release series. This release
+    improves HTTP/2 protocol
+    conformance and prevention of commom HTTP/2 denial-of-service attacks,
+    improves connection
+    and session pool implementations, adds support for Structured Field
+    Values and QUERY method.</p>
+    <p>This release includes all fixes from the stable 5.4 branch.</p>
+    <p>Notable changes and features included in the 5.5 series:</p>
+    <ul>
+    <li>
+    <p>Improved connection pool implementation.</p>
+    </li>
+    <li>
+    <p>Added HTTP message stream APIs and support for HTTP/2 message stream
+    timeouts.</p>
+    </li>
+    <li>
+    <p>Updated SSLContexts to respect system properties by default.</p>
+    </li>
+    <li>
+    <p>Limited pending HTTP/2 request commands per connection.</p>
+    </li>
+    <li>
+    <p>Improved conformance with RFC 7540, HPACK (RFC 7541), and HTTP/2 (RFC
+    9113).</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    <li>
+    <p>Added support for the QUERY method (RFC 10008).</p>
+    </li>
+    <li>
+    <p>Added support for Structured Field Values for HTTP (RFC 9651).</p>
+    </li>
+    <li>
+    <p>Added support for Digest Fields (RFC 9530).</p>
+    </li>
+    <li>
+    <p>Improved async IOSession pool implementation.</p>
+    </li>
+    <li>
+    <p>HTTP/2 control frame excessive use and rapid stream reset
+    protection.</p>
+    </li>
+    </ul>
+    <p>Compatibility notes:</p>
+    <ul>
+    <li>
+    <p>HTTP requesters and servers respect SSL/TLS system properties by
+    default.</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    </ul>
+    <h2>Change Log</h2>
+    <ul>
+    <li>Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>).
+    Contributed by Gary Gregory <!-- raw HTML omitted --></li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/4edc2fbeebe00eccb8818889b151aaa65573d21b"><code>4edc2fb</code></a>
+    HttpCore 5.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/e94f59828993d0ba444785a36a0ff9bf7a95d062"><code>e94f598</code></a>
+    Updated release notes for HttpCore 5.5 GA release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/b67349e79708d25cbd805164c64811e5145192a7"><code>b67349e</code></a>
+    Use assertj in tests</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/25fbb531a3758751a69bb00dc850d5d60d613455"><code>25fbb53</code></a>
+    HTTPCORE-804: H2Config.copy() does not copy maxContinuations</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/2f7e88e884aa0818a1999b39752c03ed5123cf6d"><code>2f7e88e</code></a>
+    Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/ad6a88f6483bad4485c414e28a80c19abdb9ab6e"><code>ad6a88f</code></a>
+    Bump the all group across 1 directory with 2 updates</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/930711091df934804a52bac5ef684dcf56e9bfe2"><code>9307110</code></a>
+    Add HTTP/2 rapid reset protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/efb46e4bf830d93547aa101bcecab382240cb4b9"><code>efb46e4</code></a>
+    Fix premature termination of incomplete chunked messages</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/428c959d5ae186ab0284dcf2cdff5b0914c18467"><code>428c959</code></a>
+    Add HTTP/2 control frame overhead protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/57428d2b8c8e9c087a88258359b7ea353a45d971"><code>57428d2</code></a>
+    HTTPCLIENT-2437: LaxConnPool fails expired lease requests queued behind
+    a liv...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-core/compare/rel/v5.4.3...rel/v5.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.core5:httpcore5-h2` from 5.4.3 to 5.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-core/blob/master/RELEASE_NOTES.txt">org.apache.httpcomponents.core5:httpcore5-h2's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.5</h2>
+    <p>This is the first GA release in the 5.4 release series. This release
+    improves HTTP/2 protocol
+    conformance and prevention of commom HTTP/2 denial-of-service attacks,
+    improves connection
+    and session pool implementations, adds support for Structured Field
+    Values and QUERY method.</p>
+    <p>This release includes all fixes from the stable 5.4 branch.</p>
+    <p>Notable changes and features included in the 5.5 series:</p>
+    <ul>
+    <li>
+    <p>Improved connection pool implementation.</p>
+    </li>
+    <li>
+    <p>Added HTTP message stream APIs and support for HTTP/2 message stream
+    timeouts.</p>
+    </li>
+    <li>
+    <p>Updated SSLContexts to respect system properties by default.</p>
+    </li>
+    <li>
+    <p>Limited pending HTTP/2 request commands per connection.</p>
+    </li>
+    <li>
+    <p>Improved conformance with RFC 7540, HPACK (RFC 7541), and HTTP/2 (RFC
+    9113).</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    <li>
+    <p>Added support for the QUERY method (RFC 10008).</p>
+    </li>
+    <li>
+    <p>Added support for Structured Field Values for HTTP (RFC 9651).</p>
+    </li>
+    <li>
+    <p>Added support for Digest Fields (RFC 9530).</p>
+    </li>
+    <li>
+    <p>Improved async IOSession pool implementation.</p>
+    </li>
+    <li>
+    <p>HTTP/2 control frame excessive use and rapid stream reset
+    protection.</p>
+    </li>
+    </ul>
+    <p>Compatibility notes:</p>
+    <ul>
+    <li>
+    <p>HTTP requesters and servers respect SSL/TLS system properties by
+    default.</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    </ul>
+    <h2>Change Log</h2>
+    <ul>
+    <li>Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>).
+    Contributed by Gary Gregory <!-- raw HTML omitted --></li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/4edc2fbeebe00eccb8818889b151aaa65573d21b"><code>4edc2fb</code></a>
+    HttpCore 5.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/e94f59828993d0ba444785a36a0ff9bf7a95d062"><code>e94f598</code></a>
+    Updated release notes for HttpCore 5.5 GA release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/b67349e79708d25cbd805164c64811e5145192a7"><code>b67349e</code></a>
+    Use assertj in tests</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/25fbb531a3758751a69bb00dc850d5d60d613455"><code>25fbb53</code></a>
+    HTTPCORE-804: H2Config.copy() does not copy maxContinuations</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/2f7e88e884aa0818a1999b39752c03ed5123cf6d"><code>2f7e88e</code></a>
+    Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/ad6a88f6483bad4485c414e28a80c19abdb9ab6e"><code>ad6a88f</code></a>
+    Bump the all group across 1 directory with 2 updates</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/930711091df934804a52bac5ef684dcf56e9bfe2"><code>9307110</code></a>
+    Add HTTP/2 rapid reset protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/efb46e4bf830d93547aa101bcecab382240cb4b9"><code>efb46e4</code></a>
+    Fix premature termination of incomplete chunked messages</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/428c959d5ae186ab0284dcf2cdff5b0914c18467"><code>428c959</code></a>
+    Add HTTP/2 control frame overhead protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/57428d2b8c8e9c087a88258359b7ea353a45d971"><code>57428d2</code></a>
+    HTTPCLIENT-2437: LaxConnPool fails expired lease requests queued behind
+    a liv...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-core/compare/rel/v5.4.3...rel/v5.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.core5:httpcore5-reactive` from 5.4.3
+    to 5.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-core/blob/master/RELEASE_NOTES.txt">org.apache.httpcomponents.core5:httpcore5-reactive's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.5</h2>
+    <p>This is the first GA release in the 5.4 release series. This release
+    improves HTTP/2 protocol
+    conformance and prevention of commom HTTP/2 denial-of-service attacks,
+    improves connection
+    and session pool implementations, adds support for Structured Field
+    Values and QUERY method.</p>
+    <p>This release includes all fixes from the stable 5.4 branch.</p>
+    <p>Notable changes and features included in the 5.5 series:</p>
+    <ul>
+    <li>
+    <p>Improved connection pool implementation.</p>
+    </li>
+    <li>
+    <p>Added HTTP message stream APIs and support for HTTP/2 message stream
+    timeouts.</p>
+    </li>
+    <li>
+    <p>Updated SSLContexts to respect system properties by default.</p>
+    </li>
+    <li>
+    <p>Limited pending HTTP/2 request commands per connection.</p>
+    </li>
+    <li>
+    <p>Improved conformance with RFC 7540, HPACK (RFC 7541), and HTTP/2 (RFC
+    9113).</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    <li>
+    <p>Added support for the QUERY method (RFC 10008).</p>
+    </li>
+    <li>
+    <p>Added support for Structured Field Values for HTTP (RFC 9651).</p>
+    </li>
+    <li>
+    <p>Added support for Digest Fields (RFC 9530).</p>
+    </li>
+    <li>
+    <p>Improved async IOSession pool implementation.</p>
+    </li>
+    <li>
+    <p>HTTP/2 control frame excessive use and rapid stream reset
+    protection.</p>
+    </li>
+    </ul>
+    <p>Compatibility notes:</p>
+    <ul>
+    <li>
+    <p>HTTP requesters and servers respect SSL/TLS system properties by
+    default.</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    </ul>
+    <h2>Change Log</h2>
+    <ul>
+    <li>Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>).
+    Contributed by Gary Gregory <!-- raw HTML omitted --></li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/4edc2fbeebe00eccb8818889b151aaa65573d21b"><code>4edc2fb</code></a>
+    HttpCore 5.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/e94f59828993d0ba444785a36a0ff9bf7a95d062"><code>e94f598</code></a>
+    Updated release notes for HttpCore 5.5 GA release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/b67349e79708d25cbd805164c64811e5145192a7"><code>b67349e</code></a>
+    Use assertj in tests</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/25fbb531a3758751a69bb00dc850d5d60d613455"><code>25fbb53</code></a>
+    HTTPCORE-804: H2Config.copy() does not copy maxContinuations</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/2f7e88e884aa0818a1999b39752c03ed5123cf6d"><code>2f7e88e</code></a>
+    Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/ad6a88f6483bad4485c414e28a80c19abdb9ab6e"><code>ad6a88f</code></a>
+    Bump the all group across 1 directory with 2 updates</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/930711091df934804a52bac5ef684dcf56e9bfe2"><code>9307110</code></a>
+    Add HTTP/2 rapid reset protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/efb46e4bf830d93547aa101bcecab382240cb4b9"><code>efb46e4</code></a>
+    Fix premature termination of incomplete chunked messages</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/428c959d5ae186ab0284dcf2cdff5b0914c18467"><code>428c959</code></a>
+    Add HTTP/2 control frame overhead protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/57428d2b8c8e9c087a88258359b7ea353a45d971"><code>57428d2</code></a>
+    HTTPCLIENT-2437: LaxConnPool fails expired lease requests queued behind
+    a liv...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-core/compare/rel/v5.4.3...rel/v5.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.core5:httpcore5-h2` from 5.4.3 to 5.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-core/blob/master/RELEASE_NOTES.txt">org.apache.httpcomponents.core5:httpcore5-h2's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.5</h2>
+    <p>This is the first GA release in the 5.4 release series. This release
+    improves HTTP/2 protocol
+    conformance and prevention of commom HTTP/2 denial-of-service attacks,
+    improves connection
+    and session pool implementations, adds support for Structured Field
+    Values and QUERY method.</p>
+    <p>This release includes all fixes from the stable 5.4 branch.</p>
+    <p>Notable changes and features included in the 5.5 series:</p>
+    <ul>
+    <li>
+    <p>Improved connection pool implementation.</p>
+    </li>
+    <li>
+    <p>Added HTTP message stream APIs and support for HTTP/2 message stream
+    timeouts.</p>
+    </li>
+    <li>
+    <p>Updated SSLContexts to respect system properties by default.</p>
+    </li>
+    <li>
+    <p>Limited pending HTTP/2 request commands per connection.</p>
+    </li>
+    <li>
+    <p>Improved conformance with RFC 7540, HPACK (RFC 7541), and HTTP/2 (RFC
+    9113).</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    <li>
+    <p>Added support for the QUERY method (RFC 10008).</p>
+    </li>
+    <li>
+    <p>Added support for Structured Field Values for HTTP (RFC 9651).</p>
+    </li>
+    <li>
+    <p>Added support for Digest Fields (RFC 9530).</p>
+    </li>
+    <li>
+    <p>Improved async IOSession pool implementation.</p>
+    </li>
+    <li>
+    <p>HTTP/2 control frame excessive use and rapid stream reset
+    protection.</p>
+    </li>
+    </ul>
+    <p>Compatibility notes:</p>
+    <ul>
+    <li>
+    <p>HTTP requesters and servers respect SSL/TLS system properties by
+    default.</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    </ul>
+    <h2>Change Log</h2>
+    <ul>
+    <li>Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>).
+    Contributed by Gary Gregory <!-- raw HTML omitted --></li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/4edc2fbeebe00eccb8818889b151aaa65573d21b"><code>4edc2fb</code></a>
+    HttpCore 5.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/e94f59828993d0ba444785a36a0ff9bf7a95d062"><code>e94f598</code></a>
+    Updated release notes for HttpCore 5.5 GA release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/b67349e79708d25cbd805164c64811e5145192a7"><code>b67349e</code></a>
+    Use assertj in tests</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/25fbb531a3758751a69bb00dc850d5d60d613455"><code>25fbb53</code></a>
+    HTTPCORE-804: H2Config.copy() does not copy maxContinuations</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/2f7e88e884aa0818a1999b39752c03ed5123cf6d"><code>2f7e88e</code></a>
+    Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/ad6a88f6483bad4485c414e28a80c19abdb9ab6e"><code>ad6a88f</code></a>
+    Bump the all group across 1 directory with 2 updates</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/930711091df934804a52bac5ef684dcf56e9bfe2"><code>9307110</code></a>
+    Add HTTP/2 rapid reset protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/efb46e4bf830d93547aa101bcecab382240cb4b9"><code>efb46e4</code></a>
+    Fix premature termination of incomplete chunked messages</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/428c959d5ae186ab0284dcf2cdff5b0914c18467"><code>428c959</code></a>
+    Add HTTP/2 control frame overhead protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/57428d2b8c8e9c087a88258359b7ea353a45d971"><code>57428d2</code></a>
+    HTTPCLIENT-2437: LaxConnPool fails expired lease requests queued behind
+    a liv...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-core/compare/rel/v5.4.3...rel/v5.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    Updates `org.apache.httpcomponents.core5:httpcore5-reactive` from 5.4.3
+    to 5.5
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/apache/httpcomponents-core/blob/master/RELEASE_NOTES.txt">org.apache.httpcomponents.core5:httpcore5-reactive's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>Release 5.5</h2>
+    <p>This is the first GA release in the 5.4 release series. This release
+    improves HTTP/2 protocol
+    conformance and prevention of commom HTTP/2 denial-of-service attacks,
+    improves connection
+    and session pool implementations, adds support for Structured Field
+    Values and QUERY method.</p>
+    <p>This release includes all fixes from the stable 5.4 branch.</p>
+    <p>Notable changes and features included in the 5.5 series:</p>
+    <ul>
+    <li>
+    <p>Improved connection pool implementation.</p>
+    </li>
+    <li>
+    <p>Added HTTP message stream APIs and support for HTTP/2 message stream
+    timeouts.</p>
+    </li>
+    <li>
+    <p>Updated SSLContexts to respect system properties by default.</p>
+    </li>
+    <li>
+    <p>Limited pending HTTP/2 request commands per connection.</p>
+    </li>
+    <li>
+    <p>Improved conformance with RFC 7540, HPACK (RFC 7541), and HTTP/2 (RFC
+    9113).</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    <li>
+    <p>Added support for the QUERY method (RFC 10008).</p>
+    </li>
+    <li>
+    <p>Added support for Structured Field Values for HTTP (RFC 9651).</p>
+    </li>
+    <li>
+    <p>Added support for Digest Fields (RFC 9530).</p>
+    </li>
+    <li>
+    <p>Improved async IOSession pool implementation.</p>
+    </li>
+    <li>
+    <p>HTTP/2 control frame excessive use and rapid stream reset
+    protection.</p>
+    </li>
+    </ul>
+    <p>Compatibility notes:</p>
+    <ul>
+    <li>
+    <p>HTTP requesters and servers respect SSL/TLS system properties by
+    default.</p>
+    </li>
+    <li>
+    <p>Building HttpCore with Maven now requires Java 17 or newer. Published
+    artifacts remain compatible with Java 8.</p>
+    </li>
+    </ul>
+    <h2>Change Log</h2>
+    <ul>
+    <li>Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>).
+    Contributed by Gary Gregory <!-- raw HTML omitted --></li>
+    </ul>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/4edc2fbeebe00eccb8818889b151aaa65573d21b"><code>4edc2fb</code></a>
+    HttpCore 5.5 release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/e94f59828993d0ba444785a36a0ff9bf7a95d062"><code>e94f598</code></a>
+    Updated release notes for HttpCore 5.5 GA release</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/b67349e79708d25cbd805164c64811e5145192a7"><code>b67349e</code></a>
+    Use assertj in tests</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/25fbb531a3758751a69bb00dc850d5d60d613455"><code>25fbb53</code></a>
+    HTTPCORE-804: H2Config.copy() does not copy maxContinuations</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/2f7e88e884aa0818a1999b39752c03ed5123cf6d"><code>2f7e88e</code></a>
+    Add httpcore5-bom module (<a
+    href="https://redirect.github.com/apache/httpcomponents-core/issues/747">#747</a>)</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/ad6a88f6483bad4485c414e28a80c19abdb9ab6e"><code>ad6a88f</code></a>
+    Bump the all group across 1 directory with 2 updates</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/930711091df934804a52bac5ef684dcf56e9bfe2"><code>9307110</code></a>
+    Add HTTP/2 rapid reset protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/efb46e4bf830d93547aa101bcecab382240cb4b9"><code>efb46e4</code></a>
+    Fix premature termination of incomplete chunked messages</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/428c959d5ae186ab0284dcf2cdff5b0914c18467"><code>428c959</code></a>
+    Add HTTP/2 control frame overhead protection</li>
+    <li><a
+    href="https://github.com/apache/httpcomponents-core/commit/57428d2b8c8e9c087a88258359b7ea353a45d971"><code>57428d2</code></a>
+    HTTPCLIENT-2437: LaxConnPool fails expired lease requests queued behind
+    a liv...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/apache/httpcomponents-core/compare/rel/v5.4.3...rel/v5.5">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
+    
+    
+    Dependabot will resolve any conflicts with this PR as long as you don't
+    alter it yourself. You can also trigger a rebase manually by commenting
+    `@dependabot rebase`.
+    
+    [//]: # (dependabot-automerge-start)
+    [//]: # (dependabot-automerge-end)
+    
+    ---
+    
+    <details>
+    <summary>Dependabot commands and options</summary>
+    <br />
+    
+    You can trigger Dependabot actions by commenting on this PR:
+    - `@dependabot rebase` will rebase this PR
+    - `@dependabot recreate` will recreate this PR, overwriting any edits
+    that have been made to it
+    - `@dependabot show <dependency name> ignore conditions` will show all
+    of the ignore conditions of the specified dependency
+    - `@dependabot ignore <dependency name> major version` will close this
+    group update PR and stop Dependabot creating any more for the specific
+    dependency's major version (unless you unignore this specific
+    dependency's major version or upgrade to it yourself)
+    - `@dependabot ignore <dependency name> minor version` will close this
+    group update PR and stop Dependabot creating any more for the specific
+    dependency's minor version (unless you unignore this specific
+    dependency's minor version or upgrade to it yourself)
+    - `@dependabot ignore <dependency name>` will close this group update PR
+    and stop Dependabot creating any more for the specific dependency
+    (unless you unignore this specific dependency or upgrade to it yourself)
+    - `@dependabot unignore <dependency name>` will remove all of the ignore
+    conditions of the specified dependency
+    - `@dependabot unignore <dependency name> <ignore condition>` will
+    remove the ignore condition of the specified dependency and ignore
+    conditions
+    
+    
+    </details>
