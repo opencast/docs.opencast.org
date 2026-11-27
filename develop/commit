@@ -1,19 +1,25 @@
-commit d12533accf60e1aa2137a10a098f09cdf60c9b4f
+commit c1e86fa2b9d28bd244ca13299e13f56123139b72
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 27 13:04:52 2026 +0100
+Date:   Fri Nov 27 13:06:28 2026 +0100
 
-    Remove unused globalMacro map from REST docs servlet (#8279)
+    Name the LTI Dependabot group after the module (#8282)
     
-    The RestDocsServlet kept a map of "global macro" values which was filled
-    on activation and written to on every documentation request, but never
-    read anywhere. Since the servlet instance is shared between requests,
-    the unsynchronized HashMap writes could also race with each other.
+    Grouped Dependabot pull requests are titled after the group name and do
+    not mention the directory, so the generic name minor-and-patch hid that
+    these updates are for the LTI module. Renaming the group to
+    lti-minor-and-patch makes this visible in the pull request title.
     
-    This patch removes the map and the code populating it.
+    Example #8276 is not easily identifiable as an LTI patch:
     
+        Bump the minor-and-patch group across 1 directory with 8 updates
+    
+    With this change, the title would become:
+    
+        Bump the lti-minor-and-patch group across 1 directory with 8 updates
     
     ### AI Usage
-    Used Claude Opus.
+    
+    yes, for planning.
     
     ### Your pull request should…
     
@@ -24,7 +30,7 @@ Date:   Fri Nov 27 13:04:52 2026 +0100
     * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
     * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
+    * [x] pass automated tests
     * [x] have a clean commit history
     * [x] does not incorrectly update the submodules
     * [x] [have proper commit messages (title and body) for all
