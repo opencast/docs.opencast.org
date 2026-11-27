@@ -1,234 +1,62 @@
-commit 857e4cf10e76b4f2b386a7cb07a3004ceb2ff863
+commit 4c5a0e1ef71cf2aa013069760b88f8278d210487
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 27 20:49:58 2026 +0100
+Date:   Fri Nov 27 21:31:22 2026 +0100
 
-    Bump org.apache.maven.plugins:maven-surefire-plugin from 3.6.0 to 3.6.1 in /modules/metrics-exporter (#8409)
+    Bump uk.co.datumedge:hamcrest-json from 0.2 to 0.3 in /modules/db (#8400)
     
     Bumps
-    [org.apache.maven.plugins:maven-surefire-plugin](https://github.com/apache/maven-surefire)
-    from 3.6.0 to 3.6.1.
+    [uk.co.datumedge:hamcrest-json](https://github.com/hertzsprung/hamcrest-json)
+    from 0.2 to 0.3.
     <details>
-    <summary>Release notes</summary>
+    <summary>Changelog</summary>
     <p><em>Sourced from <a
-    href="https://github.com/apache/maven-surefire/releases">org.apache.maven.plugins:maven-surefire-plugin's
-    releases</a>.</em></p>
+    href="https://github.com/hertzsprung/hamcrest-json/blob/master/NEWS.md">uk.co.datumedge:hamcrest-json's
+    changelog</a>.</em></p>
     <blockquote>
-    <h2>3.6.1</h2>
-    <!-- raw HTML omitted -->
-    <h2>🚀 New features and improvements</h2>
-    <ul>
-    <li>Group module path heuristics in a single class
-    ModulePathJpmsArguments (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3541">#3541</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix out of memory errors with big JUnit 4 suites (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3511">#3511</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3515">#3515</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/SUREFIRE-3459">[SUREFIRE-3459]</a>
-    - Allow opting out of StackWalker stack capture (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3493">#3493</a>)
-    <a
-    href="https://github.com/goutamadwant"><code>@​goutamadwant</code></a></li>
-    </ul>
-    <h2>🐛 Bug Fixes</h2>
-    <ul>
-    <li>Fix IllegalAccessError when the main module requires JUnit (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3532">#3532</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3538">#3538</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix groups and excludedGroups being ignored when TestNG is on the
-    classpath (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3534">#3534</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Don't let runOrder replace JUnit orderers set elsewhere (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3529">#3529</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3530">#3530</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix groups and excludedGroups for Spock and Jupiter tests when JUnit
-    4 is on the classpath (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3468">#3468</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3503">#3503</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3517">#3517</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Issue <a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3462">#3462</a>
-    TestNG extension onStart/onFinish called too many times (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3470">#3470</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix forked JVM hanging forever when the exit timeout fires (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3500">#3500</a>),
-    Possible NPE if a thread ends while building the thread dump (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3506">#3506</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Stop rewriting the class report for every nested suite (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3511">#3511</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3514">#3514</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix IllegalAccessError in the forked JVM on Java 8 and 11 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3511">#3511</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3513">#3513</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/SUREFIRE-3460">[SUREFIRE-3460]</a>
-    - Don't NPE when StackWalkerStrategy inits with a null TCCL (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3464">#3464</a>)
-    <a
-    href="https://github.com/kalayciburak"><code>@​kalayciburak</code></a></li>
-    <li><a
-    href="https://issues.apache.org/jira/browse/SUREFIRE-3465">[SUREFIRE-3465]</a>
-    - Match includes/excludes the way the scanner does (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3466">#3466</a>)
-    <a href="https://github.com/orion0616"><code>@​orion0616</code></a></li>
-    <li>[Issue-3456] Apply systemPropertyVariables before the fork
-    initializes networking (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3467">#3467</a>)
-    <a
-    href="https://github.com/joseluisll"><code>@​joseluisll</code></a></li>
-    <li>Fix inverted filter predicate in ForkStarter#readTestClassNames (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3453">#3453</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    </ul>
-    <h2>📝 Documentation updates</h2>
-    <ul>
-    <li>Clean up deprecated parameters and fix TestNG parallel modes (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3452">#3452</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3519">#3519</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Merge the two timeout extension pages into one. The guide and the
-    example page covered the same things twice. (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3520">#3520</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Drop the Source Xref menu items (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3479">#3479</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    </ul>
-    <h2>👻 Maintenance</h2>
-    <ul>
-    <li>Use push for PR Automation (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3536">#3536</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Use workflow_run for PR check (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3531">#3531</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Add project metadata for ATR (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3522">#3522</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Add PR check workflow (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3507">#3507</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Fix ForkCountIT failing on Windows with Maven 3.10.0 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3509">#3509</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>Fix ITs for Maven 3.10.0 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3508">#3508</a>)
-    <a
-    href="https://github.com/slawekjaranowski"><code>@​slawekjaranowski</code></a></li>
-    <li>Migrate surefire-its fixture from maven-verifier to maven-executor
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3484">#3484</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    <li>Port the IT scripts from BeanShell to Groovy (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3480">#3480</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    <li>Drop the Source Xref menu items (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3479">#3479</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    <li>Implement getOutputPath() and deprecate getOutputName() (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3469">#3469</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    </ul>
-    <h2>🔧 Build</h2>
-    <ul>
-    <li>Drop the Maven 3.9.0 CI job (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3525">#3525</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    <li>Fix ForkCountIT failing on Windows with Maven 3.10.0 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3509">#3509</a>)
-    <a href="https://github.com/olamy"><code>@​olamy</code></a></li>
-    <li>fix test due to uneven Maven API migration, Maven 4 build (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3502">#3502</a>)
-    <a href="https://github.com/sebtiem"><code>@​sebtiem</code></a></li>
-    <li>Keep Dependabot off JUnit 6 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3497">#3497</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    <li>Verify the plugin on Maven 3.9.0 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3478">#3478</a>)
-    <a
-    href="https://github.com/slachiewicz"><code>@​slachiewicz</code></a></li>
-    </ul>
-    <!-- raw HTML omitted -->
+    <h1>Version history</h1>
     </blockquote>
-    <p>... (truncated)</p>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/5bf0dcf034365f13dc7fdc7a2776e936e636bc52"><code>5bf0dcf</code></a>
-    [maven-release-plugin] prepare release surefire-3.6.1</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/63e11f24829e8bc99746611b97ef2488dcc18c14"><code>63e11f2</code></a>
+    [maven-release-plugin] prepare release hamcrest-json-0.3</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/7f73580532a727e1bde77e102aa227bc3e278d1a"><code>7f73580</code></a>
-    Bump doxiaVersion from 2.1.0 to 2.2.0 (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3542">#3542</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/8b1845cd6fc542a980359e9f09a707493bb8bfeb"><code>8b1845c</code></a>
+    add .idea files</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/ab7ce2fdf38aa53d63e8d0fbaab65e8facab54fe"><code>ab7ce2f</code></a>
-    Bump org.testng:testng (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3539">#3539</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/5104fcbbf8557b990b45a89521c199e5d24e195b"><code>5104fcb</code></a>
+    update deployment config</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/ff3b768b8b92b005b784ccb451ddf44f43c0d932"><code>ff3b768</code></a>
-    Group module path heuristics in ModulePathJpmsArguments (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3541">#3541</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/cbb490fb1ce154bb8ad5d8fc718ed271f7c2817e"><code>cbb490f</code></a>
+    support Java 8 minimum</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/a343e4dcb51db7fa68cb09a2572dd8c25f4e5304"><code>a343e4d</code></a>
-    Fix IllegalAccessError when the main module requires JUnit (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3532">#3532</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3538">#3538</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/46d305cc6efe27f4179e1260cfbb74028d150315"><code>46d305c</code></a>
+    Merge branch 'master' of github.com:hertzsprung/hamcrest-json</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/907a2e21646744b5f4707e4b0b4a05b4358e9c83"><code>907a2e2</code></a>
-    Fix groups and excludedGroups being ignored when TestNG is on the
-    classpath (...</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/520636d30f5d46c2194add504a954f5b07b738da"><code>520636d</code></a>
+    try to avoid two workflow runs per commit</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/cc69b3c4cda47b35815b30a4bc3ff92988492f4a"><code>cc69b3c</code></a>
-    Use push for PR Automation</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/22745702a30804e074239028cc5db1f2748d48e6"><code>2274570</code></a>
+    Merge pull request <a
+    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/14">#14</a>
+    from hertzsprung/dependabot/maven/org.hamcrest-hamcres...</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/b11901901c43d65c7f3888f7c311c39803c6cdfd"><code>b119019</code></a>
-    Install the JUnit Platform provider for the ITs (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3535">#3535</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/a07932dfb48703252a170dcaaad5a69fbe67373d"><code>a07932d</code></a>
+    Merge pull request <a
+    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/15">#15</a>
+    from hertzsprung/dependabot/maven/org.apache.maven.plu...</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/2cdec2eec3f7e10832e99905fe08ac01a1ff99c1"><code>2cdec2e</code></a>
-    Don't let runOrder replace JUnit orderers set elsewhere (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3529">#3529</a>)
-    (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3530">#3530</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/a8fa43fab68dd34f7123af051d2cbc45be606966"><code>a8fa43f</code></a>
+    Merge pull request <a
+    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/13">#13</a>
+    from hertzsprung/dependabot/maven/org.apache.maven.plu...</li>
     <li><a
-    href="https://github.com/apache/maven-surefire/commit/1e4f6b98e4076e120455e37b1049688354f49a11"><code>1e4f6b9</code></a>
-    Use workflow_run for PR check (<a
-    href="https://redirect.github.com/apache/maven-surefire/issues/3531">#3531</a>)</li>
+    href="https://github.com/hertzsprung/hamcrest-json/commit/896159867829bbef568f3389d936608df38309e7"><code>8961598</code></a>
+    Bump maven-gpg-plugin from 1.4 to 3.1.0</li>
     <li>Additional commits viewable in <a
-    href="https://github.com/apache/maven-surefire/compare/surefire-3.6.0...surefire-3.6.1">compare
+    href="https://github.com/hertzsprung/hamcrest-json/compare/hamcrest-json-0.2...hamcrest-json-0.3">compare
     view</a></li>
     </ul>
     </details>
@@ -236,7 +64,7 @@ Date:   Fri Nov 27 20:49:58 2026 +0100
     
     
     [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=org.apache.maven.plugins:maven-surefire-plugin&package-manager=maven&previous-version=3.6.0&new-version=3.6.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
+    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=uk.co.datumedge:hamcrest-json&package-manager=maven&previous-version=0.2&new-version=0.3)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
     
     Dependabot will resolve any conflicts with this PR as long as you don't
     alter it yourself. You can also trigger a rebase manually by commenting
