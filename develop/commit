@@ -1,34 +1,543 @@
-commit 555b1fb5956ecf0a9a11f21aaaf52096f5928d25
+commit 5f1c4a66e559985cf0c6542dd1281d54b5cd4703
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 27 19:54:50 2026 +0100
+Date:   Fri Nov 27 20:37:40 2026 +0100
 
-    Fix RestDocsServletTest after removal of globalMacro map (#8421)
+    Bump i18next from 26.4.3 to 27.2.7 in /modules/lti (#8396)
     
-    The regression test for the XSS in the REST docs servlet expected the
-    servlet to read three bundle context properties on activation. These
-    reads were removed together with the unused globalMacro map (#8279).
-    Both changes passed CI on their own, but combined on develop the strict
-    mock verification fails.
-    
-    This patch removes the stale expectations from the test.
-    
-    ### Your pull request should…
-    
-    * [x] have a concise title
-    * [x] [close an accompanying
-    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
-    if one exists
-    * [x] [be against the correct
-    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [x] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [x] have a clean commit history
-    * [x] does not incorrectly update the submodules
-    * [x] [have proper commit messages (title and body) for all
-    commits](https://medium.com/@steveamaza/e028865e5791)
-    * [x] explain why it needs to be merged into the legacy branch, if it is
-    targeting the legacy branch
-    * [x] include a [release
-    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
-    if a feature, or supports a feature (ie, backend part of a frontend
-    feature)
+    Bumps [i18next](https://github.com/i18next/i18next) from 26.4.3 to
+    27.2.7.
+    <details>
+    <summary>Release notes</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/i18next/i18next/releases">i18next's
+    releases</a>.</em></p>
+    <blockquote>
+    <h2>v27.2.7</h2>
+    <ul>
+    <li>fix: <code>addResource</code>, and with it <code>saveMissing</code>
+    writing to the store, keeps a key below a number, a boolean or an
+    array's <code>length</code> flat, like it already did below a string,
+    instead of throwing <code>Cannot create property</code> or <code>Invalid
+    array length</code>. A request to <code>i18next-http-middleware</code>'s
+    <code>missingKeyHandler</code> with
+    <code>{&quot;a&quot;:5,&quot;a.b&quot;:&quot;x&quot;}</code> got a 500
+    from that throw.</li>
+    </ul>
+    <h2>v27.2.6</h2>
+    <ul>
+    <li>fix: an empty plural default value counts, like <code>defaultValue:
+    ''</code>: <code>t('key', { count: 0, defaultValue_zero: '',
+    defaultValue_other: '{{count}} items' })</code> returns <code>''</code>
+    instead of &quot;0 items&quot;, and saveMissing saves <code>''</code>
+    for a form given as <code>''</code> (<code>key_zero</code> too) instead
+    of another form's text. A form without its own default saves
+    <code>defaultValue</code>, then the <code>other</code> default, instead
+    of the default resolved for the current count. Thanks <a
+    href="https://github.com/arba-octo"><code>@​arba-octo</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2480">#2480</a>)</li>
+    </ul>
+    <h2>v27.2.5</h2>
+    <ul>
+    <li>fix(types): <code>LoggerModule</code>'s <code>log</code>,
+    <code>warn</code> and <code>error</code> take one array, the way i18next
+    calls them (<code>log(args)</code>); they were typed with rest
+    parameters, so a logger typed to spread <code>...args</code> got the
+    array as its only argument. Loggers typed either way still compile.</li>
+    <li>fix(types): <code>I18nFormatModule</code> declares the members
+    i18next calls: <code>init</code>, <code>parse</code>,
+    <code>addLookupKeys</code>, <code>handleAsObject</code> and
+    <code>getResource</code>, all optional. It declared only
+    <code>type</code>, so an object-literal i18n format with these members
+    failed to compile.</li>
+    </ul>
+    <h2>v27.2.4</h2>
+    <ul>
+    <li>fix(types): <code>BackendModule.create</code> takes the parameters
+    i18next passes it: a backend with <code>callbackApi: true</code> gets
+    <code>create(languages, namespace, key, fallbackValue, callback,
+    options)</code>, one with <code>callbackApi: false</code> gets
+    <code>create(languages, namespace, key, fallbackValue, options)</code>
+    and may return a promise. The types declared only the first four
+    parameters, so a required fifth or sixth parameter failed to compile and
+    an object-literal backend could not take them at all. One rare case now
+    fails: a <code>create: (...args) =&gt; other.create(...args)</code> that
+    forwards to a <code>create</code> typed with exactly four parameters.
+    The doc comments of <code>read</code> and <code>readMulti</code> now
+    describe their promise form (<code>read(language, namespace)</code>
+    returning the data or a promise of it), which the types already
+    accepted.</li>
+    <li>fix(types): <code>getFixedT()</code> takes its fourth parameter,
+    <code>{ scopeNs }</code>, the full list of namespaces the returned
+    <code>t</code> is bound to, which selector keys use to find a namespace
+    prefix; lookups still use <code>ns</code> (react-i18next's
+    <code>useTranslation</code> passes it).</li>
+    <li>fix(types): the doc comment of <code>saveMissingPlurals</code> says
+    <code>@default true</code>, the runtime default since the option came in
+    10.3.0, not <code>false</code>.</li>
+    </ul>
+    <h2>v27.2.3</h2>
+    <ul>
+    <li>fix: a variable in the options of a nested <code>$t(key, {
+    &quot;name&quot;: &quot;{{name}}&quot; })</code> is escaped once. With
+    the default <code>escapeValue: true</code> it was escaped for HTML
+    before the options were parsed and again by the nested <code>t()</code>,
+    so <code>Tom &amp; Jerry</code> came out as <code>Tom &amp;amp;amp;
+    Jerry</code> (and react-i18next's <code>Trans</code> has shown <code>Tom
+    &amp;amp; Jerry</code> since 17.1.10, with <code>escapeValue:
+    false</code> too). These variables are now escaped for the options'
+    JSON, whatever <code>escapeValue</code> is, and the nested
+    <code>t()</code> escapes them like the values of a direct call;
+    <code>defaultValue</code> and <code>joinArrays</code> there, which it
+    does not interpolate, stay escaped once. A value with
+    <code>&quot;</code>, <code>'</code>, <code>\</code> or a line break no
+    longer breaks the options, with <code>escapeValue: false</code> a value
+    can no longer inject options such as <code>lng</code>, and with
+    <code>skipOnVariables</code> a <code>{{placeholder}}</code> inside a
+    value is no longer interpolated a second time. The warning added in
+    26.0.6 now covers <code>{{- var}}</code> in these options, the one form
+    still inserted unescaped, instead of <code>escapeValue:
+    false</code>.</li>
+    </ul>
+    <h2>v27.2.2</h2>
+    <ul>
+    <li>fix: <code>setDefaultNamespace()</code> works on a clone. A clone's
+    translator keeps its own options object, so the call changed
+    <code>i18n.options.defaultNS</code> while <code>t()</code> kept using
+    the old default namespace. i18next-http-middleware hands every request a
+    clone, so <code>req.i18n.setDefaultNamespace()</code> did nothing there.
+    (<a
+    href="https://github.com/i18next/i18next/discussions/2106">#2106</a>)</li>
+    <li>fix: <code>supportedLngs</code> works in any casing. Every other
+    language code is formatted (<code>pt-br</code> to <code>pt-BR</code>,
+    <code>EN</code> to <code>en</code>, all lowercase with
+    <code>lowerCaseLng</code>), but <code>supportedLngs</code> was compared
+    as written, so <code>supportedLngs: ['pt-br']</code>,
+    <code>['EN']</code>, or <code>['pt-BR']</code> with <code>lowerCaseLng:
+    true</code> refused that language and fell back. They are now compared
+    in that formatted form (also by <code>loadLanguages()</code>), while
+    <code>options.supportedLngs</code> stays as written. (<a
+    href="https://github.com/i18next/i18next/discussions/1791">#1791</a>)</li>
+    <li>fix(types): resources typed with named <code>interface</code>s get
+    their nested keys. The key types only walked into objects with an index
+    signature, which a type alias has and an interface does not, so
+    <code>t('nested.key')</code> failed with TS2345 while
+    <code>t('nested')</code> compiled. Interfaces now give the same keys as
+    type aliases, so <code>t('nested')</code> without
+    <code>returnObjects</code> is rejected for them too. (<a
+    href="https://github.com/i18next/i18next/discussions/2326">#2326</a>)</li>
+    <li>fix(types): typed keys work with <code>strictNullChecks:
+    false</code>. Without strict null checks <code>undefined</code> passes
+    <code>extends string</code>, so the key prefix, namespace and context
+    checks took a missing <code>keyPrefix</code>, <code>ns</code> or
+    <code>context</code> for a value: <code>t('title')</code> was rejected
+    (only <code>t('ns:title')</code> compiled), <code>t()</code> returned
+    <code>string</code>, and react-i18next's <code>Trans</code> accepted no
+    <code>i18nKey</code>. A new type test project compiles with
+    <code>strictNullChecks: false</code>; with strict null checks the types
+    resolve as before. (<a
+    href="https://github.com/i18next/i18next/discussions/2085">#2085</a>)</li>
+    </ul>
+    <h2>v27.2.1</h2>
+    <ul>
+    <li>fix: a variable passed as <code>undefined</code> renders as an empty
+    string when its placeholder has a format too (<code>{{amount,
+    number}}</code>), as <code>{{amount}}</code> already did. The
+    placeholder stayed in the result with the default <code>skipOnVariables:
+    true</code>, and debug mode logged &quot;missed to pass in
+    variable&quot; with either setting. Thanks <a
+    href="https://github.com/Vineet829"><code>@​Vineet829</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2479">#2479</a>)</li>
+    </ul>
+    <h2>v27.2.0</h2>
+    <ul>
+    <li>fix: an error thrown by a load callback or a listener (the callback
+    of <code>init</code>, <code>changeLanguage</code>,
+    <code>loadNamespaces</code> or <code>loadLanguages</code>, or a
+    <code>languageChanged</code> / <code>loaded</code> listener) is no
+    longer handed back to the backend connector as if the read had failed.
+    With a backend whose <code>read</code> returns a value or a promise, the
+    connector got that error a second time: the namespace that had loaded
+    was marked as failed, <code>failedLoading</code> was emitted with your
+    error and the count of running reads dropped to -1. The error now
+    reaches your app: it is thrown from the call that started the load for a
+    <code>read</code> that returns a value, and it is an unhandled rejection
+    for a <code>read</code> that returns a promise, which ends a Node.js
+    process unless you handle <code>unhandledRejection</code>. Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2477">#2477</a>)</li>
+    <li>fix: when a load callback throws, the other callbacks waiting for
+    the same namespaces are still called and the <code>loaded</code> event
+    is still emitted, and the error is thrown on after that. A second
+    <code>loadNamespaces()</code> for the same namespace never called back
+    before.</li>
+    <li>fix: <code>addResourceBundle(lng, ns, resources, true, true)</code>
+    overwrites numbers and booleans too. Only strings were replaced, so
+    <code>{ n: 0 }</code> stayed 0 after adding <code>{ n: 5 }</code>, and
+    adding an object where the bundle had a number, boolean or null threw
+    <code>Cannot create property ... on number</code>, also without
+    <code>overwrite</code>. With <code>overwrite</code>, a number, boolean
+    or null now also replaces a nested object, as a string already did.
+    Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2476">#2476</a>)</li>
+    <li>fix: with <code>keySeparator: false</code>, a namespace separator
+    inside the key after the namespace is kept.
+    <code>t('common:errors:required')</code> looked up
+    <code>'errorsfalserequired'</code> instead of the flat key
+    <code>'errors:required'</code> that i18next-cli extracts (also for a
+    selector like <code>$ =&gt; $.common['errors:required']</code>), and
+    reported the missing key under that name. This dates back to 11.3.
+    Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2478">#2478</a>)</li>
+    </ul>
+    <h2>v27.1.5</h2>
+    <ul>
+    <li>fix: <code>off(event, listener)</code> removes a listener added with
+    <code>once()</code>. <code>once()</code> registers a wrapper, so
+    <code>off()</code> with the listener itself found nothing and the
+    listener still ran on the next event. A <code>once()</code> listener is
+    now also removed before it runs, so one that emits the same event again
+    (like calling <code>changeLanguage()</code> from
+    <code>languageChanged</code>) or throws runs only once. Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2475">#2475</a>)</li>
+    </ul>
+    <h2>v27.1.4</h2>
+    <ul>
+    <li>fix(types): with <code>enableSelector</code>, assigning a
+    <code>t</code> function to a wider <code>TFunction</code>
+    (<code>TFunction&lt;'ns'&gt;</code> to <code>TFunction&lt;'ns',
+    string&gt;</code> or <code>TFunction&lt;Namespace&gt;</code>, or a key
+    prefix to a wider one) failed with TS2590 &quot;Expression produces a
+    union type that is too complex to represent&quot; once the namespaces
+    had about 600 top-level keys together. This started in 26.3.3. Selector
+    results for JSON arrays that mix arrays with objects or strings also
+    keep the inner arrays as arrays. Thanks <a
+    href="https://github.com/reckter"><code>@​reckter</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2474">#2474</a>)</li>
+    </ul>
+    <h2>v27.1.3</h2>
+    <ul>
+    <li>security: a language code named after a property every object
+    inherits (<code>hasOwnProperty</code>, <code>isPrototypeOf</code>,
+    <code>toLocaleString</code>, <code>__defineGetter__</code>, ...) made
+    the backend connector throw <code>obj[k].push is not a function</code>
+    when its load finished. A language detector passes such a code on from a
+    request (<code>?lng=hasOwnProperty</code>), and with an asynchronous
+    backend nothing caught the throw, so one request ended a Node.js server
+    process (in a browser, <code>init()</code> never resolved). Now these
+    codes load like any other unknown language. Thanks <a
+    href="https://github.com/superbot-helper"><code>@​superbot-helper</code></a>
+    (<a
+    href="https://github.com/i18next/i18next/security/advisories/GHSA-q76c-gcvw-89x9">GHSA-q76c-gcvw-89x9</a>)</li>
+    <li>fix: with an object <code>fallbackLng</code>, a language code named
+    like an <code>Object.prototype</code> property
+    (<code>constructor</code>, <code>toString</code>,
+    <code>hasOwnProperty</code>, <code>constructor-US</code>) gets the
+    <code>default</code> fallback instead of making <code>t()</code>,
+    <code>exists()</code>, <code>getFixedT()</code> and
+    <code>changeLanguage()</code> throw <code>fallbackCodes.forEach is not a
+    function</code>. Thanks <a
+    href="https://github.com/cyphercodes"><code>@​cyphercodes</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2473">#2473</a>,
+    <a
+    href="https://redirect.github.com/i18next/i18next/issues/2472">#2472</a>)</li>
+    </ul>
+    <h2>v27.1.2</h2>
+    <ul>
+    <li>security: language codes and namespaces that come from requests no
+    longer grow the memory of a server without end. The backend connector
+    kept one entry per failed load, so that it does not read it again, and
+    the language hierarchy and plural rule caches kept one entry per
+    language code. With the default <code>supportedLngs: false</code>, every
+    made-up language a detector found (<code>?lng=xx1</code>,
+    <code>?lng=xx2</code>, ...) or every made-up namespace requested from
+    i18next-http-middleware's <code>getResourcesHandler</code> added about
+    180 bytes for good. Now only the most recent 1000 failed loads are kept
+    (an older one is read again when it is needed), and both caches are
+    emptied at 1000 codes, as the formatted language codes already were.
+    Pairs with i18next-http-middleware 3.10.1 (<a
+    href="https://github.com/i18next/i18next-http-middleware/security/advisories/GHSA-mjcw-gfh6-3cxm">GHSA-mjcw-gfh6-3cxm</a>).</li>
+    </ul>
+    <h2>v27.1.1</h2>
+    <ul>
+    <li>perf: <code>t()</code> skips the interpolation and nesting regexp
+    scans when the text has no interpolation or nesting prefix, about 6-14%
+    faster for short texts and up to 75% for long ones. The output does not
+    change. Thanks <a href="https://github.com/g4lb"><code>@​g4lb</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2469">#2469</a>)</li>
+    </ul>
+    <h2>v27.1.0</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Changelog</summary>
+    <p><em>Sourced from <a
+    href="https://github.com/i18next/i18next/blob/master/CHANGELOG.md">i18next's
+    changelog</a>.</em></p>
+    <blockquote>
+    <h2>27.2.7</h2>
+    <ul>
+    <li>fix: <code>addResource</code>, and with it <code>saveMissing</code>
+    writing to the store, keeps a key below a number, a boolean or an
+    array's <code>length</code> flat, like it already did below a string,
+    instead of throwing <code>Cannot create property</code> or <code>Invalid
+    array length</code>. A request to <code>i18next-http-middleware</code>'s
+    <code>missingKeyHandler</code> with
+    <code>{&quot;a&quot;:5,&quot;a.b&quot;:&quot;x&quot;}</code> got a 500
+    from that throw.</li>
+    </ul>
+    <h2>27.2.6</h2>
+    <ul>
+    <li>fix: an empty plural default value counts, like <code>defaultValue:
+    ''</code>: <code>t('key', { count: 0, defaultValue_zero: '',
+    defaultValue_other: '{{count}} items' })</code> returns <code>''</code>
+    instead of &quot;0 items&quot;, and saveMissing saves <code>''</code>
+    for a form given as <code>''</code> (<code>key_zero</code> too) instead
+    of another form's text. A form without its own default saves
+    <code>defaultValue</code>, then the <code>other</code> default, instead
+    of the default resolved for the current count. Thanks <a
+    href="https://github.com/arba-octo"><code>@​arba-octo</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2480">#2480</a>)</li>
+    </ul>
+    <h2>27.2.5</h2>
+    <ul>
+    <li>fix(types): <code>LoggerModule</code>'s <code>log</code>,
+    <code>warn</code> and <code>error</code> take one array, the way i18next
+    calls them (<code>log(args)</code>); they were typed with rest
+    parameters, so a logger typed to spread <code>...args</code> got the
+    array as its only argument. Loggers typed either way still compile.</li>
+    <li>fix(types): <code>I18nFormatModule</code> declares the members
+    i18next calls: <code>init</code>, <code>parse</code>,
+    <code>addLookupKeys</code>, <code>handleAsObject</code> and
+    <code>getResource</code>, all optional. It declared only
+    <code>type</code>, so an object-literal i18n format with these members
+    failed to compile.</li>
+    </ul>
+    <h2>27.2.4</h2>
+    <ul>
+    <li>fix(types): <code>BackendModule.create</code> takes the parameters
+    i18next passes it: a backend with <code>callbackApi: true</code> gets
+    <code>create(languages, namespace, key, fallbackValue, callback,
+    options)</code>, one with <code>callbackApi: false</code> gets
+    <code>create(languages, namespace, key, fallbackValue, options)</code>
+    and may return a promise. The types declared only the first four
+    parameters, so a required fifth or sixth parameter failed to compile and
+    an object-literal backend could not take them at all. One rare case now
+    fails: a <code>create: (...args) =&gt; other.create(...args)</code> that
+    forwards to a <code>create</code> typed with exactly four parameters.
+    The doc comments of <code>read</code> and <code>readMulti</code> now
+    describe their promise form (<code>read(language, namespace)</code>
+    returning the data or a promise of it), which the types already
+    accepted.</li>
+    <li>fix(types): <code>getFixedT()</code> takes its fourth parameter,
+    <code>{ scopeNs }</code>, the full list of namespaces the returned
+    <code>t</code> is bound to, which selector keys use to find a namespace
+    prefix; lookups still use <code>ns</code> (react-i18next's
+    <code>useTranslation</code> passes it).</li>
+    <li>fix(types): the doc comment of <code>saveMissingPlurals</code> says
+    <code>@default true</code>, the runtime default since the option came in
+    10.3.0, not <code>false</code>.</li>
+    </ul>
+    <h2>27.2.3</h2>
+    <ul>
+    <li>fix: a variable in the options of a nested <code>$t(key, {
+    &quot;name&quot;: &quot;{{name}}&quot; })</code> is escaped once. With
+    the default <code>escapeValue: true</code> it was escaped for HTML
+    before the options were parsed and again by the nested <code>t()</code>,
+    so <code>Tom &amp; Jerry</code> came out as <code>Tom &amp;amp;amp;
+    Jerry</code> (and react-i18next's <code>Trans</code> has shown <code>Tom
+    &amp;amp; Jerry</code> since 17.1.10, with <code>escapeValue:
+    false</code> too). These variables are now escaped for the options'
+    JSON, whatever <code>escapeValue</code> is, and the nested
+    <code>t()</code> escapes them like the values of a direct call;
+    <code>defaultValue</code> and <code>joinArrays</code> there, which it
+    does not interpolate, stay escaped once. A value with
+    <code>&quot;</code>, <code>'</code>, <code>\</code> or a line break no
+    longer breaks the options, with <code>escapeValue: false</code> a value
+    can no longer inject options such as <code>lng</code>, and with
+    <code>skipOnVariables</code> a <code>{{placeholder}}</code> inside a
+    value is no longer interpolated a second time. The warning added in
+    26.0.6 now covers <code>{{- var}}</code> in these options, the one form
+    still inserted unescaped, instead of <code>escapeValue:
+    false</code>.</li>
+    </ul>
+    <h2>27.2.2</h2>
+    <ul>
+    <li>fix: <code>setDefaultNamespace()</code> works on a clone. A clone's
+    translator keeps its own options object, so the call changed
+    <code>i18n.options.defaultNS</code> while <code>t()</code> kept using
+    the old default namespace. i18next-http-middleware hands every request a
+    clone, so <code>req.i18n.setDefaultNamespace()</code> did nothing there.
+    (<a
+    href="https://github.com/i18next/i18next/discussions/2106">#2106</a>)</li>
+    <li>fix: <code>supportedLngs</code> works in any casing. Every other
+    language code is formatted (<code>pt-br</code> to <code>pt-BR</code>,
+    <code>EN</code> to <code>en</code>, all lowercase with
+    <code>lowerCaseLng</code>), but <code>supportedLngs</code> was compared
+    as written, so <code>supportedLngs: ['pt-br']</code>,
+    <code>['EN']</code>, or <code>['pt-BR']</code> with <code>lowerCaseLng:
+    true</code> refused that language and fell back. They are now compared
+    in that formatted form (also by <code>loadLanguages()</code>), while
+    <code>options.supportedLngs</code> stays as written. (<a
+    href="https://github.com/i18next/i18next/discussions/1791">#1791</a>)</li>
+    <li>fix(types): resources typed with named <code>interface</code>s get
+    their nested keys. The key types only walked into objects with an index
+    signature, which a type alias has and an interface does not, so
+    <code>t('nested.key')</code> failed with TS2345 while
+    <code>t('nested')</code> compiled. Interfaces now give the same keys as
+    type aliases, so <code>t('nested')</code> without
+    <code>returnObjects</code> is rejected for them too. (<a
+    href="https://github.com/i18next/i18next/discussions/2326">#2326</a>)</li>
+    <li>fix(types): typed keys work with <code>strictNullChecks:
+    false</code>. Without strict null checks <code>undefined</code> passes
+    <code>extends string</code>, so the key prefix, namespace and context
+    checks took a missing <code>keyPrefix</code>, <code>ns</code> or
+    <code>context</code> for a value: <code>t('title')</code> was rejected
+    (only <code>t('ns:title')</code> compiled), <code>t()</code> returned
+    <code>string</code>, and react-i18next's <code>Trans</code> accepted no
+    <code>i18nKey</code>. A new type test project compiles with
+    <code>strictNullChecks: false</code>; with strict null checks the types
+    resolve as before. (<a
+    href="https://github.com/i18next/i18next/discussions/2085">#2085</a>)</li>
+    </ul>
+    <h2>27.2.1</h2>
+    <ul>
+    <li>fix: a variable passed as <code>undefined</code> renders as an empty
+    string when its placeholder has a format too (<code>{{amount,
+    number}}</code>), as <code>{{amount}}</code> already did. The
+    placeholder stayed in the result with the default <code>skipOnVariables:
+    true</code>, and debug mode logged &quot;missed to pass in
+    variable&quot; with either setting. Thanks <a
+    href="https://github.com/Vineet829"><code>@​Vineet829</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2479">#2479</a>)</li>
+    </ul>
+    <h2>27.2.0</h2>
+    <ul>
+    <li>fix: an error thrown by a load callback or a listener (the callback
+    of <code>init</code>, <code>changeLanguage</code>,
+    <code>loadNamespaces</code> or <code>loadLanguages</code>, or a
+    <code>languageChanged</code> / <code>loaded</code> listener) is no
+    longer handed back to the backend connector as if the read had failed.
+    With a backend whose <code>read</code> returns a value or a promise, the
+    connector got that error a second time: the namespace that had loaded
+    was marked as failed, <code>failedLoading</code> was emitted with your
+    error and the count of running reads dropped to -1. The error now
+    reaches your app: it is thrown from the call that started the load for a
+    <code>read</code> that returns a value, and it is an unhandled rejection
+    for a <code>read</code> that returns a promise, which ends a Node.js
+    process unless you handle <code>unhandledRejection</code>. Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2477">#2477</a>)</li>
+    <li>fix: when a load callback throws, the other callbacks waiting for
+    the same namespaces are still called and the <code>loaded</code> event
+    is still emitted, and the error is thrown on after that. A second
+    <code>loadNamespaces()</code> for the same namespace never called back
+    before.</li>
+    <li>fix: <code>addResourceBundle(lng, ns, resources, true, true)</code>
+    overwrites numbers and booleans too. Only strings were replaced, so
+    <code>{ n: 0 }</code> stayed 0 after adding <code>{ n: 5 }</code>, and
+    adding an object where the bundle had a number, boolean or null threw
+    <code>Cannot create property ... on number</code>, also without
+    <code>overwrite</code>. With <code>overwrite</code>, a number, boolean
+    or null now also replaces a nested object, as a string already did.
+    Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2476">#2476</a>)</li>
+    <li>fix: with <code>keySeparator: false</code>, a namespace separator
+    inside the key after the namespace is kept.
+    <code>t('common:errors:required')</code> looked up
+    <code>'errorsfalserequired'</code> instead of the flat key
+    <code>'errors:required'</code> that i18next-cli extracts (also for a
+    selector like <code>$ =&gt; $.common['errors:required']</code>), and
+    reported the missing key under that name. This dates back to 11.3.
+    Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2478">#2478</a>)</li>
+    </ul>
+    <h2>27.1.5</h2>
+    <ul>
+    <li>fix: <code>off(event, listener)</code> removes a listener added with
+    <code>once()</code>. <code>once()</code> registers a wrapper, so
+    <code>off()</code> with the listener itself found nothing and the
+    listener still ran on the next event. A <code>once()</code> listener is
+    now also removed before it runs, so one that emits the same event again
+    (like calling <code>changeLanguage()</code> from
+    <code>languageChanged</code>) or throws runs only once. Thanks <a
+    href="https://github.com/SudeepGowda55"><code>@​SudeepGowda55</code></a>
+    (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2475">#2475</a>)</li>
+    </ul>
+    <h2>27.1.4</h2>
+    <ul>
+    <li>fix(types): with <code>enableSelector</code>, assigning a
+    <code>t</code> function to a wider <code>TFunction</code>
+    (<code>TFunction&lt;'ns'&gt;</code> to <code>TFunction&lt;'ns',
+    string&gt;</code> or <code>TFunction&lt;Namespace&gt;</code>, or a key
+    prefix to a wider one) failed with TS2590 &quot;Expression produces a
+    union type that is too complex to represent&quot; once the namespaces
+    had about 600 top-level keys together. This started in 26.3.3. Selector
+    results for JSON arrays that mix arrays with objects or strings also
+    keep the inner arrays as arrays. Thanks <a
+    href="https://github.com/reckter"><code>@​reckter</code></a> (<a
+    href="https://redirect.github.com/i18next/i18next/pull/2474">#2474</a>)</li>
+    </ul>
+    <h2>27.1.3</h2>
+    <!-- raw HTML omitted -->
+    </blockquote>
+    <p>... (truncated)</p>
+    </details>
+    <details>
+    <summary>Commits</summary>
+    <ul>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/020335066f004c0d1b0933fb502c27b46efcc743"><code>0203350</code></a>
+    27.2.7</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/b34dbe54bb3e30cc790ebba99d145c3a65aa4e67"><code>b34dbe5</code></a>
+    changelog for 27.2.7</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/fe0640bae85f8bc0f702186f7a7232bac9a5a3ff"><code>fe0640b</code></a>
+    fix: setPath keeps a key below a number, boolean or array length flat
+    instead...</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/4f8ce990dcc3445389842e54fa88c819426991b8"><code>4f8ce99</code></a>
+    27.2.6</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/de0330622cb587ee85b5b326e7c007dcacd37f7a"><code>de03306</code></a>
+    changelog for 27.2.6</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/3a3bdfbb0c7b092734f4bf7017d69c9ed6b0f05f"><code>3a3bdfb</code></a>
+    fix: saveMissing gives a plural form without its own default the plain
+    or &quot;ot...</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/87fabd73e48b6b67e441a5169e1628e36dbcbc58"><code>87fabd7</code></a>
+    fix: preserve empty plural default values (<a
+    href="https://redirect.github.com/i18next/i18next/issues/2480">#2480</a>)</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/4b6860ecaebbe405a11f1417d2a5021659636bac"><code>4b6860e</code></a>
+    27.2.5</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/57ada53c24798b09612bc3eac2d99f275f6fe250"><code>57ada53</code></a>
+    changelog for 27.2.5</li>
+    <li><a
+    href="https://github.com/i18next/i18next/commit/70a1fb8682744822e6ab6e9b5020224323291544"><code>70a1fb8</code></a>
+    fix(types): LoggerModule takes one array, I18nFormatModule declares the
+    membe...</li>
+    <li>Additional commits viewable in <a
+    href="https://github.com/i18next/i18next/compare/v26.4.3...v27.2.7">compare
+    view</a></li>
+    </ul>
+    </details>
+    <br />
