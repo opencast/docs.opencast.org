@@ -1,26 +1,33 @@
-commit a6d6a93057d0834a0cde4911430eb652736f40ed
+commit b038756323fbc3248dca761135840bfd4907ec76
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 27 13:53:08 2026 +0100
+Date:   Fri Nov 27 14:18:12 2026 +0100
 
-    Make max-attempts of publish-engage take effect (#8320)
+    Don't fail ingest with 500 if a media URL can't be fetched (#8339)
     
-    The default workflows fast and partial-publish set max-attempts: 2 on
-    publish-engage without a retry-strategy. With the default strategy none,
-    a failed operation is never retried, so the setting had no effect. Since
-    0fc08998e0 (#7890), Opencast logs a warning for this combination, so
-    every run of the default workflows warns about its own configuration.
+    If the ingest service could not fetch content from a URL a client
+    specified, e.g. because the host was unreachable or responded with an
+    error, the client got an HTTP 500, Opencast logged a full stack trace
+    and the failed job put the ingest service into the WARNING state.
     
-    The setting clearly expresses the intent to try publishing twice, and an
-    automatic second attempt is reasonable for a publication. Add
-    retry-strategy: retry so that max-attempts takes effect as intended. Do
-    the same in the operation examples of publish-engage and
-    publish-engage-aws in the documentation, which suggest the same
-    ineffective combination.
+    A URL which cannot be fetched is a problem of the request, though. The
+    ingest service now throws a dedicated MediaFetchException in this case,
+    marks the job as failed because of its data, which does not affect the
+    service state, and the REST endpoints respond with HTTP 400 and a single
+    warning in the log. Failures to store the downloaded content are still
+    treated as problems of the service.
     
-    Fixes #8319
+    This also fixes a NullPointerException for URLs without file name
+    extension and without Content-Disposition header.
     
-    > This is the version for 21 which does not modify Opencast's behavior.
-    > #8321 fixes this for develop by actually modifying the behavior.
+    Fixes #8322
+    
+    ### How to test this patch
+    
+    This should return an 500 internal server error + log a stack trace
+    without this patch and a 400 bad request with this patch:
+    ```
+    curl -i -u admin:opencast https://develop.opencast.org/ingest/addMediaPackage/fast  -F 'flavor=presenter/source' -F 'mediaUri=https://invalid.example.com/video.mp4'  -F title=Test
+    ```
     
     ### AI Usage
     
