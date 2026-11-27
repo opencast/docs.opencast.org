@@ -1,99 +1,99 @@
-commit 4c5a0e1ef71cf2aa013069760b88f8278d210487
+commit e93a22eb852b8f2d937b7941af9a62ce3ed721db
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 27 21:31:22 2026 +0100
+Date:   Fri Nov 27 22:08:04 2026 +0100
 
-    Bump uk.co.datumedge:hamcrest-json from 0.2 to 0.3 in /modules/db (#8400)
+    Bump actions/setup-java from 6.2.0 to 6.3.0 (#8379)
     
-    Bumps
-    [uk.co.datumedge:hamcrest-json](https://github.com/hertzsprung/hamcrest-json)
-    from 0.2 to 0.3.
+    Bumps [actions/setup-java](https://github.com/actions/setup-java) from
+    6.2.0 to 6.3.0.
     <details>
-    <summary>Changelog</summary>
+    <summary>Release notes</summary>
     <p><em>Sourced from <a
-    href="https://github.com/hertzsprung/hamcrest-json/blob/master/NEWS.md">uk.co.datumedge:hamcrest-json's
-    changelog</a>.</em></p>
+    href="https://github.com/actions/setup-java/releases">actions/setup-java's
+    releases</a>.</em></p>
     <blockquote>
-    <h1>Version history</h1>
+    <h2>v6.3.0</h2>
+    <h2>Behavior change: Java problem matcher is now opt-in</h2>
+    <p>Starting with v6.3.0, <code>setup-java</code> no longer registers the
+    Java problem matcher by default (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1326">#1326</a>,
+    fixes <a
+    href="https://redirect.github.com/actions/setup-java/issues/1322">#1322</a>).
+    Java compiler warnings, compiler errors, and uncaught exceptions are no
+    longer turned into annotations on pull request diffs unless you opt
+    in.</p>
+    <p>To keep annotations, set <code>problem-matcher: true</code>:</p>
+    <pre lang="yaml"><code>- uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: '25'
+        problem-matcher: true
+    </code></pre>
+    <p>Compiler output still appears in the build logs, and compilation
+    errors still fail the build. Only annotations are affected.</p>
+    <p><strong>Why:</strong> inline annotations cluttered pull request
+    reviews, and GitHub Actions caps annotations at 10 errors, 10 warnings,
+    and 10 notices per step, and 50 per job. Larger Java builds therefore
+    showed only a truncated subset of their diagnostics as annotations. See
+    <a
+    href="https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#java-problem-matcher-compiler-annotations">Java
+    problem matcher (compiler annotations)</a>.</p>
+    <h2>What's Changed</h2>
+    <ul>
+    <li>Architecture validation for JDK file installs by <a
+    href="https://github.com/v-mahabaleshwars"><code>@​v-mahabaleshwars</code></a>
+    in <a
+    href="https://redirect.github.com/actions/setup-java/pull/1324">actions/setup-java#1324</a></li>
+    <li>chore(deps): bump fast-xml-parser from 5.11.2 to 5.12.0 by <a
+    href="https://github.com/dependabot"><code>@​dependabot</code></a>[bot]
+    in <a
+    href="https://redirect.github.com/actions/setup-java/pull/1323">actions/setup-java#1323</a></li>
+    <li>Add Microsoft OpenJDK 25.0.5.0.2 support by <a
+    href="https://github.com/brunoborges"><code>@​brunoborges</code></a>
+    with <a href="https://github.com/Copilot"><code>@​Copilot</code></a> in
+    <a
+    href="https://redirect.github.com/actions/setup-java/pull/1320">actions/setup-java#1320</a></li>
+    <li>Fix JetBrains Runtime hotfix version selection by <a
+    href="https://github.com/brunoborges"><code>@​brunoborges</code></a>
+    with <a href="https://github.com/Copilot"><code>@​Copilot</code></a> in
+    <a
+    href="https://redirect.github.com/actions/setup-java/pull/1321">actions/setup-java#1321</a></li>
+    <li>Make Java problem matcher opt-in (default problem-matcher to false)
+    by <a
+    href="https://github.com/brunoborges"><code>@​brunoborges</code></a> in
+    <a
+    href="https://redirect.github.com/actions/setup-java/pull/1326">actions/setup-java#1326</a></li>
+    </ul>
+    <p><strong>Full Changelog</strong>: <a
+    href="https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0">https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0</a></p>
     </blockquote>
     </details>
     <details>
     <summary>Commits</summary>
     <ul>
     <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/63e11f24829e8bc99746611b97ef2488dcc18c14"><code>63e11f2</code></a>
-    [maven-release-plugin] prepare release hamcrest-json-0.3</li>
+    href="https://github.com/actions/setup-java/commit/d1374f8ac74474200d16ef8ecee22c7ae7a51880"><code>d1374f8</code></a>
+    Make Java problem matcher opt-in (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1326">#1326</a>)</li>
     <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/8b1845cd6fc542a980359e9f09a707493bb8bfeb"><code>8b1845c</code></a>
-    add .idea files</li>
+    href="https://github.com/actions/setup-java/commit/5fb63c9bc97316aca87b7eae68a3404a62579dd7"><code>5fb63c9</code></a>
+    Fix JetBrains Runtime hotfix version selection (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1321">#1321</a>)</li>
     <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/5104fcbbf8557b990b45a89521c199e5d24e195b"><code>5104fcb</code></a>
-    update deployment config</li>
+    href="https://github.com/actions/setup-java/commit/a1bf0b5568e6a2d842b3426fa2d47b4cf0ad5d1b"><code>a1bf0b5</code></a>
+    Add Microsoft OpenJDK 25.0.5.0.2 support (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1320">#1320</a>)</li>
     <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/cbb490fb1ce154bb8ad5d8fc718ed271f7c2817e"><code>cbb490f</code></a>
-    support Java 8 minimum</li>
+    href="https://github.com/actions/setup-java/commit/a3c80683014bc0e5a1aa6bf9fa3a1d2b32a593a0"><code>a3c8068</code></a>
+    chore(deps): bump fast-xml-parser from 5.11.2 to 5.12.0 (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1323">#1323</a>)</li>
     <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/46d305cc6efe27f4179e1260cfbb74028d150315"><code>46d305c</code></a>
-    Merge branch 'master' of github.com:hertzsprung/hamcrest-json</li>
-    <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/520636d30f5d46c2194add504a954f5b07b738da"><code>520636d</code></a>
-    try to avoid two workflow runs per commit</li>
-    <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/22745702a30804e074239028cc5db1f2748d48e6"><code>2274570</code></a>
-    Merge pull request <a
-    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/14">#14</a>
-    from hertzsprung/dependabot/maven/org.hamcrest-hamcres...</li>
-    <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/a07932dfb48703252a170dcaaad5a69fbe67373d"><code>a07932d</code></a>
-    Merge pull request <a
-    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/15">#15</a>
-    from hertzsprung/dependabot/maven/org.apache.maven.plu...</li>
-    <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/a8fa43fab68dd34f7123af051d2cbc45be606966"><code>a8fa43f</code></a>
-    Merge pull request <a
-    href="https://redirect.github.com/hertzsprung/hamcrest-json/issues/13">#13</a>
-    from hertzsprung/dependabot/maven/org.apache.maven.plu...</li>
-    <li><a
-    href="https://github.com/hertzsprung/hamcrest-json/commit/896159867829bbef568f3389d936608df38309e7"><code>8961598</code></a>
-    Bump maven-gpg-plugin from 1.4 to 3.1.0</li>
-    <li>Additional commits viewable in <a
-    href="https://github.com/hertzsprung/hamcrest-json/compare/hamcrest-json-0.2...hamcrest-json-0.3">compare
+    href="https://github.com/actions/setup-java/commit/9ce5b12cb90c06fc1b0e3343c3e65bb977578591"><code>9ce5b12</code></a>
+    Architecture validation for JDK file installs (<a
+    href="https://redirect.github.com/actions/setup-java/issues/1324">#1324</a>)</li>
+    <li>See full diff in <a
+    href="https://github.com/actions/setup-java/compare/v6.2.0...v6.3.0">compare
     view</a></li>
     </ul>
     </details>
     <br />
-    
-    
-    [![Dependabot compatibility
-    score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=uk.co.datumedge:hamcrest-json&package-manager=maven&previous-version=0.2&new-version=0.3)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores)
-    
-    Dependabot will resolve any conflicts with this PR as long as you don't
-    alter it yourself. You can also trigger a rebase manually by commenting
-    `@dependabot rebase`.
-    
-    [//]: # (dependabot-automerge-start)
-    [//]: # (dependabot-automerge-end)
-    
-    ---
-    
-    <details>
-    <summary>Dependabot commands and options</summary>
-    <br />
-    
-    You can trigger Dependabot actions by commenting on this PR:
-    - `@dependabot rebase` will rebase this PR
-    - `@dependabot recreate` will recreate this PR, overwriting any edits
-    that have been made to it
-    - `@dependabot show <dependency name> ignore conditions` will show all
-    of the ignore conditions of the specified dependency
-    - `@dependabot ignore this major version` will close this PR and stop
-    Dependabot creating any more for this major version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this minor version` will close this PR and stop
-    Dependabot creating any more for this minor version (unless you reopen
-    the PR or upgrade to it yourself)
-    - `@dependabot ignore this dependency` will close this PR and stop
-    Dependabot creating any more for this dependency (unless you reopen the
-    PR or upgrade to it yourself)
-    
-    
-    </details>
