@@ -1,5 +1,48 @@
-commit dd25931b5420bc7672129da75bf211ca42e151d6
-Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Wed Nov 25 10:08:14 2026 +0100
+commit a6d6a93057d0834a0cde4911430eb652736f40ed
+Author: Arne Wilken <Arnei@users.noreply.github.com>
+Date:   Fri Nov 27 13:53:08 2026 +0100
 
-    Merge r/20.x into r/21.x
+    Make max-attempts of publish-engage take effect (#8320)
+    
+    The default workflows fast and partial-publish set max-attempts: 2 on
+    publish-engage without a retry-strategy. With the default strategy none,
+    a failed operation is never retried, so the setting had no effect. Since
+    0fc08998e0 (#7890), Opencast logs a warning for this combination, so
+    every run of the default workflows warns about its own configuration.
+    
+    The setting clearly expresses the intent to try publishing twice, and an
+    automatic second attempt is reasonable for a publication. Add
+    retry-strategy: retry so that max-attempts takes effect as intended. Do
+    the same in the operation examples of publish-engage and
+    publish-engage-aws in the documentation, which suggest the same
+    ineffective combination.
+    
+    Fixes #8319
+    
+    > This is the version for 21 which does not modify Opencast's behavior.
+    > #8321 fixes this for develop by actually modifying the behavior.
+    
+    ### AI Usage
+    
+    Used Claude Opus 5.5
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
