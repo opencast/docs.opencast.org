@@ -1,5 +1,34 @@
-commit 24514308820106556e218bd8f83254b910116da9
+commit 555b1fb5956ecf0a9a11f21aaaf52096f5928d25
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Fri Nov 27 19:06:12 2026 +0100
+Date:   Fri Nov 27 19:54:50 2026 +0100
 
-    Merge remote-tracking branch 'upstream/r/21.x' into develop
+    Fix RestDocsServletTest after removal of globalMacro map (#8421)
+    
+    The regression test for the XSS in the REST docs servlet expected the
+    servlet to read three bundle context properties on activation. These
+    reads were removed together with the unused globalMacro map (#8279).
+    Both changes passed CI on their own, but combined on develop the strict
+    mock verification fails.
+    
+    This patch removes the stale expectations from the test.
+    
+    ### Your pull request should…
+    
+    * [x] have a concise title
+    * [x] [close an accompanying
+    issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
+    if one exists
+    * [x] [be against the correct
+    branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
+    * [x] include migration scripts and documentation, if appropriate
+    * [ ] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
+    commits](https://medium.com/@steveamaza/e028865e5791)
+    * [x] explain why it needs to be merged into the legacy branch, if it is
+    targeting the legacy branch
+    * [x] include a [release
+    note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
+    if a feature, or supports a feature (ie, backend part of a frontend
+    feature)
