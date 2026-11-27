@@ -1,46 +1,37 @@
-commit e91695bc356b227db8d041864c49c9f3fa0ea657
+commit d12533accf60e1aa2137a10a098f09cdf60c9b4f
 Author: Arne Wilken <Arnei@users.noreply.github.com>
-Date:   Fri Nov 27 12:51:19 2026 +0100
+Date:   Fri Nov 27 13:04:52 2026 +0100
 
-    Remove whitespace from @Path parameter declarations (#8243)
+    Remove unused globalMacro map from REST docs servlet (#8279)
     
-    JAX-RS ignores whitespace around the name and regular expression of a
-    path parameter, but the REST docs do not. RestDocData.isValidPath()
-    rejects such paths, which makes the whole REST docs page of the UI
-    configuration service fail with an HTTP 500:
+    The RestDocsServlet kept a map of "global macro" values which was filled
+    on activation and written to on every documentation request, but never
+    read anywhere. Since the servlet instance is shared between requests,
+    the unsynchronized HashMap writes could also race with each other.
     
-        Path '/{component}/{filename : .+}' must not be null and must look
-        something like /a/b/{c}.
+    This patch removes the map and the code populating it.
     
-    The placeholder handling of the docs testing form would not recognize
-    these parameters either.
-    
-    Remove the whitespace from all such declarations. The endpoints behave
-    exactly as before.
-    
-    Fixes #8242
     
     ### AI Usage
-    
-    Used Claude Opus
+    Used Claude Opus.
     
     ### Your pull request should…
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    * [x] have a concise title
+    * [x] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [ ] [be against the correct
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
+    * [x] include migration scripts and documentation, if appropriate
     * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    * [x] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
-    * [ ] include a [release
+    * [x] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)

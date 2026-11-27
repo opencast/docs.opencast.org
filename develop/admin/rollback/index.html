@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Rolling Back an Upgrade - Administration Guide</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Rolling Back an Upgrade", url: "#_top", children: [
+              {title: "Before Starting Opencast on the New Version", url: "#before-starting-opencast-on-the-new-version" },
+              {title: "After Starting Opencast on the New Version", url: "#after-starting-opencast-on-the-new-version" },
+              {title: "Steps to Roll Back", url: "#steps-to-roll-back" },
+              {title: "OpenSearch", url: "#opensearch" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../javascript/extra.js"></script>
+      <script src="../javascript/popper.js"></script>
+      <script src="../javascript/tippy.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../registration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../registration/" class="btn btn-xs btn-link">
+        Registration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade Guide
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="rolling-back-an-upgrade">Rolling Back an Upgrade</h1>
+<p>There is no tool or script to reverse an upgrade: the database upgrade scripts described in the
+<a href="../upgrade/">upgrade guide</a> only ever migrate forward. How far back you can go depends on how far the upgrade got
+before you decided to stop.</p>
+<h2 id="before-starting-opencast-on-the-new-version">Before Starting Opencast on the New Version</h2>
+<p>If you have neither run the database upgrade script nor started Opencast on the new version, rolling back is simple:
+reinstall the previous version's binaries and start it again. Nothing persistent has changed yet, since Opencast only
+creates or modifies database tables once it actually runs.</p>
+<h2 id="after-starting-opencast-on-the-new-version">After Starting Opencast on the New Version</h2>
+<p>Once the database upgrade script has been run or Opencast has been started on the new version, rolling back is only
+reliable by restoring a backup taken <em>before</em> the upgrade. This is because starting Opencast, not just running the
+database upgrade script, can already change the database: Opencast creates tables that do not exist yet on startup,
+whether or not you ran the upgrade script for that version. There is no supported way to reverse either of these
+changes, so plan for this <strong>before</strong> you upgrade rather than after.</p>
+<p>To be able to roll back, back up beforehand:</p>
+<ul>
+<li><strong>The database.</strong> This is the backup that actually matters for rolling back. Restore it, and only it, if the
+  upgrade already changed the database; do not try to reuse the database as it is after the failed upgrade.</li>
+<li><strong>The <code>etc/</code> configuration directory</strong>, or at least a note of your own customizations. Configuration keys are
+  sometimes added, renamed or removed between versions (see the configuration changes in the
+  <a href="../upgrade/">upgrade guide</a>), so the old version's configuration is not guaranteed to be a subset of the new one.</li>
+</ul>
+<p>The search index does not need a backup of its own for this purpose: it is rebuilt from the database and the asset
+store, not a source of truth in itself. The working file repository and asset store are not usually touched by an
+upgrade, but as always, check that specific version's upgrade notes to be sure. Back them up as part of your regular
+backup routine regardless, independent of upgrading.</p>
+<h2 id="steps-to-roll-back">Steps to Roll Back</h2>
+<ol>
+<li>Stop Opencast.</li>
+<li>Reinstall the previous version's binaries.</li>
+<li>Restore the <code>etc/</code> configuration you backed up before the upgrade, or manually undo the changes listed in the
+   <a href="../upgrade/">upgrade guide</a>.</li>
+<li>If Opencast was started on the new version, or the database upgrade script was run, restore the database backup
+   taken before the upgrade. If neither happened, the database does not need to be touched.</li>
+<li>Clear Opencast's own runtime state, in particular <code>data/cache</code> and <code>data/generated-bundles</code>, so that the
+   previous version does not start with a bundle cache left behind by the newer one. Keep <code>data/log</code> if you want to
+   preserve the logs.</li>
+<li>Start Opencast.</li>
+<li>If you restored a database backup, rebuild the index as described in the <a href="../upgrade/">upgrade guide</a>.</li>
+</ol>
+<h2 id="opensearch">OpenSearch</h2>
+<p>Rolling back Opencast does not roll back OpenSearch. If upgrading Opencast also involved changing the OpenSearch
+version, decide separately whether that needs to be rolled back too.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../registration/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../registration/" class="btn btn-xs btn-link">
+        Registration
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../upgrade/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../upgrade/" class="btn btn-xs btn-link">
+        Upgrade Guide
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/opencast/opencast/edit/develop/docs/guides/admin/docs/rollback.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
