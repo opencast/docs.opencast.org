@@ -1,49 +1,41 @@
-commit 610793fcc8d088a1ab8fc363bc565f831f74893b
+commit d36c38520902ba1f763dc0da2d213ead5ce1d8d4
 Author: Lars Kiesow <lkiesow@uos.de>
-Date:   Thu Nov 26 23:35:43 2026 +0100
+Date:   Fri Nov 27 09:04:26 2026 +0100
 
-    Limit the number of results of External API events/series list endpoints (#8180)
+    Cache the Maven wrapper in CI (#8305)
     
-    Fixes #3536
+    The Maven wrapper jar and the Maven distribution it downloads live
+    outside of the cached local repository, so every CI run downloaded them
+    again. If downloading the jar fails, mvnw stays silent and Maven fails
+    with a confusing ClassNotFoundException for MavenWrapperMain.
     
-    A request to /api/events without a limit tried to load all events at
-    once, which fails with a server error for installations with a large
-    number of events.
-    
-    This adds a hard cap to events (and series), so any requests that try to
-    set the limit over 10.000 now get a 400.
-    If no limit is specified, the events endpoint now behaves the same as
-    the series endpoint and sets limit to 100.
-    The 10.000 is very much a magic number and should maybe be lower?
-    
-    Adds a new API version cause this is technically a breaking change.
-    
-    ### How to test this patch
-    
-    Test the API with all kinds of limits, ideally with an Opencast with
-    over 10.000 events.
+    Both are now cached, keyed by the hash of mvnw and the wrapper
+    properties. Updating the wrapper or Maven changes the key and thereby
+    invalidates the cache. There are deliberately no restore keys, since
+    mvnw only checks whether the jar exists and would silently keep using an
+    outdated one.
     
     ### AI Usage
     
-    Claude Sonnet 5 was used with this PR.
+    Used Claude Opus 5.5
     
     ### Your pull request should…
     
-    * [ ] have a concise title
-    * [ ] [close an accompanying
+    * [x] have a concise title
+    * [x] [close an accompanying
     issue](https://docs.opencast.org/develop/developer/#participate/development-process/#automatically-closing-issues-when-a-pr-is-merged)
     if one exists
-    * [ ] [be against the correct
+    * [x] [be against the correct
     branch](https://docs.opencast.org/develop/developer/development-process#acceptance-criteria-for-patches-in-different-versions)
-    * [ ] include migration scripts and documentation, if appropriate
-    * [ ] pass automated tests
-    * [ ] have a clean commit history
-    * [ ] does not incorrectly update the submodules
-    * [ ] [have proper commit messages (title and body) for all
+    * [x] include migration scripts and documentation, if appropriate
+    * [x] pass automated tests
+    * [x] have a clean commit history
+    * [x] does not incorrectly update the submodules
+    * [x] [have proper commit messages (title and body) for all
     commits](https://medium.com/@steveamaza/e028865e5791)
-    * [ ] explain why it needs to be merged into the legacy branch, if it is
+    * [x] explain why it needs to be merged into the legacy branch, if it is
     targeting the legacy branch
-    * [ ] include a [release
+    * [x] include a [release
     note](https://docs.opencast.org/develop/developer/#participate/development-process/#release-notes)
     if a feature, or supports a feature (ie, backend part of a frontend
     feature)
